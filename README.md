@@ -1,17 +1,12 @@
-### Important - read the following before trying the preview javascript SDK! (will be removed before making repo public)
-Until this is published in npm, I've included lib/ in source control.  That means the browser and javascript versions are both there to be directly referenced instead of requiring a node module or using bower.  See [samples/node/node-sample.js](samples/node/node-sample.js) to get started with the Node example.  Notice that at the top of this sample is the line `var MicrosoftGraph = require("../../lib/index.js");` which gets the index.js which is for node testing.  You'll need to copy secrets.example.json to secrets.json and update the access token.  Also run `npm install` since you're not using the packaged node module and you need to install the dependencies.  When you're ready to run the sample, I'd recommend commenting out most of node-sample.js and just start running a few examples at a time instead of the entire file.  Run `node samples/node/node-sample.js` when you're ready!
-
 # Microsoft Graph JavaScript SDK
 The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph typings](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
 
 ## Installation
 ### Node
 
-(@TODO - Not published yet)
 ```npm install msgraph-sdk-javascript```
 
 Include the library in your JavaScript file with `const MicrosoftGraph = require("msgraph-sdk-javascript");`
-> To use the library before it's been published in NPM, reference it directly with `var MicrosoftGraph = require("lib/index.js");`. Note your path to lib/index.js might be different depending on how your project is set up. (@TODO remove this note before publishing)
 
 ### Browser
 
