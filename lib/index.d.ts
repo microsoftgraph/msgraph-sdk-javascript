@@ -66,7 +66,7 @@ export declare class GraphRequest {
     put(stream: any, errorCallback: Function): void;
     private configureRequest(requestBuilder, accessToken);
     getResultIterator(): IterableIterator<(callback: any) => void>;
-    query(queryDictionary: {
+    query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
     private handleResponse(err, res, callback);

@@ -1,6 +1,6 @@
 {
   "name": "msgraph-sdk-javascript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Microsoft Graph JavaScript SDK",
   "main": "lib/index.js",
   "typings": "lib/index",
@@ -20,5 +20,9 @@
   },
   "dependencies": {
     "superagent": "^2.2.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
   }
 }
