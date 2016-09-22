@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Browser test</title>
+	<script type="text/javascript" src="../../lib/graph-js-sdk-web.js"></script>
+	<script type="text/javascript" src="secrets.js"></script>
+	<script type="text/javascript">
+		var client = MicrosoftGraph.init({
+			debugLogging: true,
+			authProvider: function(done) {
+				done(null, SECRETS.ACCESS_TOKEN);
+			}
+		});
+
+		client
+			.api('/me')
+			.select("displayName")
+			.get((err, res) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				console.log(res);
+			});
+	</script>
+</head>
+<body>
+Open your browser JavaScript console to see the result!
+<br>
+
+Please check the Node.js sample for tons of examples on calling the graph.  This sample is just for how to include the sdk in an HTML page
+</body>
+</html>

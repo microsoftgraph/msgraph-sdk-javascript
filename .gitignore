@@ -1,0 +1,17 @@
+.vscode/
+.DS_Store
+.tmp
+tmp
+node_modules
+typings
+src/**/*.js
+coverage
+**/*.tgz
+samples/node/secrets.json
+samples/browser/secrets.js
+npm-debug.log
+samples/typescript/sample.js
+samples/typescript/sample.d.ts
+samples/typescript/graph-typings.d.ts
+src/index.d.ts
+test/secrets.json

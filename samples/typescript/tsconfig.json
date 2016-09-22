@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "sourceMap": false,
+    "target": "es6",
+    "declaration": true
+  },
+  "files": [
+    "sample.ts"
+  ]
+}
