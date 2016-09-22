@@ -1,3 +1,4 @@
+![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=2592000)
 # Microsoft Graph JavaScript SDK
 The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph typings](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
 
