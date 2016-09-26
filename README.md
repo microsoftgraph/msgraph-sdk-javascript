@@ -309,8 +309,10 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 ## Additional resources
 
 * [Microsoft Graph website](https://graph.microsoft.io)
-* [Office Dev Center](http://dev.office.com/)
 * [Microsoft Graph TypeScript typings](https://github.com/microsoftgraph/msgraph-typescript-typings/)
+* [Angular.js sample using the JavaScript SDK](https://github.com/microsoftgraph/angular-connect-sample)
+* [Node.js sample using the JavaScript SDK](https://github.com/microsoftgraph/nodejs-connect-sample)
+* [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
 Copyright (c) 2016 Microsoft. All rights reserved.
