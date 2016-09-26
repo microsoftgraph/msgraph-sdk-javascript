@@ -4,6 +4,7 @@ The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft
 
 ## Installation
 ### Node
+You can find installation instructions at the [Node.js website](https://nodejs.org/).
 
 ```npm install msgraph-sdk-javascript```
 
