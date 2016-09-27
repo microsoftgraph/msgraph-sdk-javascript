@@ -20,7 +20,7 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript">
 const client = MicrosoftGraph.init({
     authProvider: (done) => {
-        done(null, "PassAccessTokenHere"); //first parameter takes an error if you can't get an access token
+        done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
 });
 ...
@@ -34,7 +34,7 @@ This SDK only handles authentication in the most basic way possible. The applica
 
 var client = MicrosoftGraph.init({
     authProvider: (done) => {
-        done(null, "PassAccessTokenHere"); //first parameter takes an error if you can't get an access token
+        done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
 });
 
