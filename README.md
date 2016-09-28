@@ -1,9 +1,12 @@
-![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=2592000)
 # Microsoft Graph JavaScript SDK
+[![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=2592000)](https://www.npmjs.com/package/msgraph-sdk-javascript)
+[![Travis](https://img.shields.io/travis/microsoftgraph/msgraph-sdk-javascript.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
+
 The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph typings](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
 
 ## Installation
 ### Node
+You can find installation instructions at the [Node.js website](https://nodejs.org/).
 
 ```npm install msgraph-sdk-javascript```
 
@@ -17,7 +20,7 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript">
 const client = MicrosoftGraph.init({
     authProvider: (done) => {
-        done(null, "PassAccessTokenHere"); //first parameter takes an error if you can't get an access token
+        done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
 });
 ...
@@ -31,7 +34,7 @@ This SDK only handles authentication in the most basic way possible. The applica
 
 var client = MicrosoftGraph.init({
     authProvider: (done) => {
-        done(null, "PassAccessTokenHere"); //first parameter takes an error if you can't get an access token
+        done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
 });
 
@@ -306,8 +309,10 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 ## Additional resources
 
 * [Microsoft Graph website](https://graph.microsoft.io)
-* [Office Dev Center](http://dev.office.com/)
 * [Microsoft Graph TypeScript typings](https://github.com/microsoftgraph/msgraph-typescript-typings/)
+* [Angular.js sample using the JavaScript SDK](https://github.com/microsoftgraph/angular-connect-sample)
+* [Node.js sample using the JavaScript SDK](https://github.com/microsoftgraph/nodejs-connect-sample)
+* [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
 Copyright (c) 2016 Microsoft. All rights reserved.
