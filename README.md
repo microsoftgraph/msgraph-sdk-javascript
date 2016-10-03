@@ -4,6 +4,8 @@
 
 The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph typings](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
 
+> This SDK is currently in preview and we would love to hear your feedback!  You can file an issue in this repository or write on our [uservoice page](https://officespdev.uservoice.com/).  We're also trying to add more intellisense support beyond the current typings so we're also especially interested in feedback on the [Microsoft Graph TypeScript Typings](https://github.com/microsoftgraph/msgraph-typescript-typings).
+
 ## Installation
 ### Node
 You can find installation instructions at the [Node.js website](https://nodejs.org/).
