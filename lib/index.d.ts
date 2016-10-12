@@ -63,7 +63,7 @@ export declare class GraphRequest {
     private routeResponseToCallback(requestBuilder, callback);
     private sendRequestAndRouteResponse(requestBuilder, callback?);
     getStream(callback: GraphRequestCallback): void;
-    put(stream: any, errorCallback: Function): void;
+    put(stream: any, callback: Function): void;
     private configureRequest(requestBuilder, accessToken);
     getResultIterator(): IterableIterator<(callback: any) => void>;
     query(queryDictionaryOrString: string | {

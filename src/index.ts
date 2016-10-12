@@ -361,13 +361,20 @@ export class GraphRequest {
         });
     }
 
-    put(stream:any, errorCallback:Function) {
+    put(stream:any, callback:Function) {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
                 let req:request.Request = this.configureRequest(request.put(url), accessToken);
                 req.type('application/octet-stream');
-                stream.pipe(req).on('error', errorCallback);
+                stream
+                    .pipe(req)
+                    .on('error', function(err) {
+                        callback(err, null)
+                    })
+                    .on('end', function() {
+                        callback(null)
+                    });
             }
         });
     }
