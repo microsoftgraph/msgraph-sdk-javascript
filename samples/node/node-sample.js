@@ -259,7 +259,7 @@ client
 let photoReadStream = fs.createReadStream('../logo.png');
 client
     .api('/me/drive/root/children/logo234.png/content')
-    .put(photoReadStream, (err) => {
+    .putStream(photoReadStream, (err) => {
         console.log(err);
     });
 
@@ -277,7 +277,7 @@ let profilePhotoReadStream = fs.createReadStream('me.jpg');
 
 client
     .api('/me/photo/$value')
-    .put(profilePhotoReadStream, (err) => {
+    .putStream(profilePhotoReadStream, (err) => {
         if (err) {
             console.log(err);
             return;
