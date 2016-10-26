@@ -22,12 +22,42 @@
 				}
 				console.log(res);
 			});
+
+		function updateProfilePicture() {
+			var file = document.querySelector('input[type=file]').files[0];
+			var reader = new FileReader();
+
+			reader.addEventListener("load", function () {
+				client
+					.api('/me/photo/$value')
+					.put(file, (err, res) => {
+						if (err) {
+							console.log(err);
+							return;
+						}
+						console.log("We've updated your picture!");
+					});
+			}, false);
+
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		}
 	</script>
 </head>
 <body>
-Open your browser JavaScript console to see the result!
+
+<p>
+	By loading this page, we called /me endpoint on the Microsoft Graph.  Open your browser JavaScript console to see the result!
+</p>
 <br>
 
-Please check the Node.js sample for tons of examples on calling the graph.  This sample is just for how to include the sdk in an HTML page
+<p>
+Also, you can update your profile picture:
+<input type="file" onchange="updateProfilePicture()"><br>
+</p>
+<br>
+<p>Please check the Node.js sample for more examples on calling the Graph.  This sample is just for how to include the SDK in an HTML page</p>
+
 </body>
 </html>

@@ -132,8 +132,26 @@ client
     })
 
 ````
-### `.put()`
-Use `.put()` to upload files to Microsoft Graph with streams.
+### `.put()` and `.putStream()`
+
+You can upload files to the graph using `.put()`.  For example, this can be used to update a profile picture from an HTML input form.  See the [browser sample](samples/browser) for complete code.
+
+```javascript
+var file = document.querySelector('input[type=file]').files[0];
+
+client
+    .api('/me/photo/$value')
+    .put(file, (err, res) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log("We've updated your picture!");
+    });
+```
+
+
+Use `.putStream()` to upload files to Microsoft Graph with Node.js streams.
 ````javascript
 
 // Upload a file to OneDrive
