@@ -274,6 +274,17 @@ export class GraphRequest {
         );
     }
 
+    put(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+        let url = this.buildFullUrl();
+        return this.sendRequestAndRouteResponse(
+            request
+                .put(url)
+                .type('application/octet-stream')
+                .send(content),
+                callback
+        );
+    }
+
     // request aliases
     // alias for post
     create(content:any, callback?:GraphRequestCallback):Promise<any>|void {
@@ -361,7 +372,7 @@ export class GraphRequest {
         });
     }
 
-    put(stream:any, callback:Function) {
+    putStream(stream:any, callback:Function) {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
