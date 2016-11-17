@@ -31,12 +31,12 @@ export interface GraphRequestCallback {
 }
 
 export interface GraphError {
-    statusCode: number,
-    code: string,
-    message: string,
-    requestId: string,
-    date: Date,
-    body: string
+    statusCode: number, // 503
+    code: string, // "SearchEvents"
+    message: string, // "The parameter $search is not currently supported on the Events resource."
+    requestId: string, // "ca269f81-55d7-483f-a9e6-2b04a2a2d0e2"
+    date: Date, // new Date(2016-11-17T18:49:59)
+    body: string // original graph response
 }
 
 export class GraphRequest {
@@ -58,29 +58,46 @@ export class GraphRequest {
         this.parsePath(path);
     }
 
-    private parseError(rawErr):GraphError {
-        let err:GraphError = {
-            statusCode: rawErr.status,
-            code: null,
-            message: rawErr.message,
-            requestId: null,
-            date: null,
-            body: (rawErr.response !== undefined) ? rawErr.response.text : null
-        };
-
-        // even if we can't parse out the error object, still return a GraphError with the
-        // statusCode, message, and body properties
-
-        try {
-            let errObj = rawErr.response.body.error;
-
-            err.code = errObj.code;
-            err.message = errObj.message;
-            err.requestId = errObj.innerError["request-id"];
-            err.date = new Date(errObj.innerError["date"]);
-        } catch(e) {
-
+/*
+    Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
+    {
+        "error": {
+            "code": "SearchEvents",
+            "message": "The parameter $search is not currently supported on the Events resource.",
+            "innerError": {
+                "request-id": "b31c83fd-944c-4663-aa50-5d9ceb367e19",
+                "date": "2016-11-17T18:37:45"
+            }
         }
+    }
+*/
+    private parseError(rawErr):GraphError {
+        let errObj; // path to object containing innerError (see above schema)
+       
+        if (!('rawResponse' in rawErr)) { // if superagent correctly parsed the JSON
+            errObj = rawErr.response.body.error; 
+        } else {
+            // if there was an error parsing the JSON
+            // possibly because of http://stackoverflow.com/a/38749510/2517012
+            errObj = JSON.parse(rawErr.rawResponse.replace(/^\uFEFF/, '')).error;
+        }
+
+        // parse out statusCode
+        let statusCode:number;
+        if (rawErr.response !== undefined && rawErr.response.status !== undefined) {
+            statusCode = rawErr.response.status;
+        } else {
+            statusCode = rawErr.statusCode;
+        }
+        
+        let err:GraphError = {
+            statusCode,
+            code: errObj.code,
+            message: errObj.message,
+            requestId: errObj.innerError["request-id"],
+            date: new Date(errObj.innerError.date),
+            body: errObj
+        };
 
         return err;
     }
