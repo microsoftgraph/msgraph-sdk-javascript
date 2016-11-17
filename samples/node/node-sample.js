@@ -136,7 +136,7 @@ client
 
 // GET 3 of my events
 client
-    .api('/me/events') //full URLs can be passed
+    .api('/me/events')
     .top(3)
     .get((err, res) => {
         if (err) {
@@ -272,7 +272,6 @@ client
     });
 
 // Update my photo
-let fs = require('fs');
 let profilePhotoReadStream = fs.createReadStream('me.jpg');
 
 client
