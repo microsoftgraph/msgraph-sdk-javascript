@@ -33,6 +33,7 @@ export declare class GraphRequest {
     _headers: {
         [key: string]: string | number;
     };
+    _responseType: string;
     constructor(config: Options, path: string);
     private parseError(rawErr);
     header(headerKey: string, headerValue: string): this;
@@ -51,6 +52,7 @@ export declare class GraphRequest {
     skip(n: number): GraphRequest;
     skipToken(token: string): GraphRequest;
     count(count: boolean): GraphRequest;
+    responseType(responseType: string): GraphRequest;
     private addCsvQueryParamater(propertyName, propertyValue, additionalProperties);
     delete(callback?: GraphRequestCallback): Promise<any> | void;
     patch(content: any, callback?: GraphRequestCallback): Promise<any> | void;

@@ -30,10 +30,10 @@
 			.get((err, res, rawResponse) => {
 				if (err) throw err;
 
-				var url = window.URL;
-				var blobUrl = url.createObjectURL(rawResponse.xhr.response)
+				const url = window.URL;
+				const blobUrl = url.createObjectURL(rawResponse.xhr.response);
 				document.getElementById("profileImg").setAttribute("src", blobUrl);
-			})
+			});
 
 		function updateProfilePicture() {
 			var file = document.querySelector('input[type=file]').files[0];
@@ -58,18 +58,19 @@
 	</script>
 </head>
 <body>
+<h2>Please check the Node.js sample for more examples on calling the Graph.</h2>
 
 <p>
-By loading this page, we called /me endpoint on the Microsoft Graph.  Open your browser JavaScript console to see the result!
+By loading this page, we called /me endpoint on the Microsoft Graph.  Open your browser's' JavaScript console to see the result!
 </p>
 <br>
+<p>Your user photo from /me/photo/$value:</p>
 <img id="profileImg" />
 <p>
 Also, you can update your profile picture:
 <input type="file" onchange="updateProfilePicture()"><br>
 </p>
 <br>
-<p>Please check the Node.js sample for more examples on calling the Graph.  This sample is just for how to include the SDK in an HTML page</p>
 
 </body>
 </html>
