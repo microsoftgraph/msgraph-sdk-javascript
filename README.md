@@ -267,6 +267,10 @@ You can pass in additional request headers, either individually or in a dictiona
 .headers({"someHeaderName":"someHeaderValue"})
 
 ````
+
+### .responseType()
+To set a custom response type, use the `.responseType(string)` method.  To see an example, check the [browser sample](samples/browser/index.html) that downloads an image and displays it in an `<img>` element.
+
 ## Additional information
 ### Options in `MicrosoftGraph.init()`
 
