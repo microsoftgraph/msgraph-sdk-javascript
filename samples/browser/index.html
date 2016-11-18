@@ -30,7 +30,6 @@
 			.get((err, res, rawResponse) => {
 				if (err) throw err;
 
-				debugger;
 				var url = window.URL;
 				var blobUrl = url.createObjectURL(rawResponse.xhr.response)
 				document.getElementById("profileImg").setAttribute("src", blobUrl);
