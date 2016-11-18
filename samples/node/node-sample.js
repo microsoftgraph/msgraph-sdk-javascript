@@ -18,8 +18,7 @@ const client = MicrosoftGraph.init({
 // Get the name of the authenticated user with callbacks
 client
     .api('/me')
-    .select("displayName")
-    .get((err, res) => {
+    .post({}, (err, res) => {
         if (err) {
             console.log(err)
             return;
