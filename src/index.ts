@@ -73,11 +73,13 @@ export class GraphRequest {
         }
     }
 */
-    private parseError(rawErr):GraphError {
+    public static parseError(rawErr):GraphError {
         let errObj; // path to object containing innerError (see above schema)
-       
+
         if (!('rawResponse' in rawErr)) { // if superagent correctly parsed the JSON
-            errObj = rawErr.response.body.error; 
+            if ('error' in rawErr.response.body) { // some 404s don't return an error object
+                errObj = rawErr.response.body.error;
+            }
         } else {
             // if there was an error parsing the JSON
             // possibly because of http://stackoverflow.com/a/38749510/2517012
@@ -92,6 +94,18 @@ export class GraphRequest {
             statusCode = rawErr.statusCode;
         }
         
+        // if we couldn't find an error obj to parse, just return an object with a status code and date
+        if (errObj === undefined) {
+            return {
+                statusCode,
+                code: null,
+                message: null,
+                requestId: null,
+                date: new Date(),
+                body: null
+            }
+        }
+
         let err:GraphError = {
             statusCode,
             code: errObj.code,
@@ -349,7 +363,7 @@ export class GraphRequest {
                         resolve(res.body)
                     } else { // not OK response
                         // parse the error object, regardless if it was passed to the err or res param
-                        reject(_this.parseError((err == null && res.error !== null) ? res : err));
+                        reject(GraphRequest.parseError((err == null && res.error !== null) ? res : err));
                     }
                 })
             });
@@ -484,9 +498,9 @@ export class GraphRequest {
             callback(null, res.body, res)
         } else { // not OK response
             if (err == null && res.error !== null) // if error was passed to body
-                callback(this.parseError(res), null, res);
+                callback(GraphRequest.parseError(res), null, res);
             else // pass back error as first param
-                callback(this.parseError(err), null, res)
+                callback(GraphRequest.parseError(err), null, res)
         }
     }
 

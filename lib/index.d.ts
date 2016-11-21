@@ -35,7 +35,7 @@ export declare class GraphRequest {
     };
     _responseType: string;
     constructor(config: Options, path: string);
-    private parseError(rawErr);
+    static parseError(rawErr: any): GraphError;
     header(headerKey: string, headerValue: string): this;
     headers(headers: {
         [key: string]: string | number;
