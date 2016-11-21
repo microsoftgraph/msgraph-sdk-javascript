@@ -43,6 +43,8 @@ export class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
     _headers:{ [key: string] : string|number; } // other headers to pass through to superagent
+    _responseType: string;
+
 
     constructor(config: Options, path:string) {
         this.config = config;
@@ -242,6 +244,11 @@ export class GraphRequest {
         this.urlComponents.oDataQueryParams["$count"] = count.toString();
         return this;
     }
+    
+    responseType(responseType:string):GraphRequest {
+        this._responseType = responseType;
+        return this;
+    }
 
     // helper for $select, $expand and $orderby (must be comma separated)
     private addCsvQueryParamater(propertyName:string, propertyValue:string|[string], additionalProperties:IArguments) {
@@ -408,10 +415,16 @@ export class GraphRequest {
     }
 
     private configureRequest(requestBuilder:request.SuperAgentRequest, accessToken:string):request.SuperAgentRequest {
-        return requestBuilder
+        let request = requestBuilder
             .set('Authorization', 'Bearer ' + accessToken)
             .set(this._headers)
             .set('SdkVersion', "graph-js-" + packageInfo.version)
+
+        if (this._responseType !== undefined) {
+            request.responseType(this._responseType);
+        }
+
+        return request;
     }
 
     getResultIterator() {
