@@ -350,7 +350,7 @@ export class GraphRequest {
     // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and return a promise
     private routeResponseToPromise(requestBuilder:request.SuperAgentRequest) {
         return new Promise((resolve, reject) => {
-            routeResponseToCallback(requestBuilder, (err, body) => {
+            this.routeResponseToCallback(requestBuilder, (err, body) => {
                 if (err != null) {
                     reject(err);
                 } else {
