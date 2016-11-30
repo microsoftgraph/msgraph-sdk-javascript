@@ -1,9 +1,9 @@
-"use strict";
 // when using the npm module, use the following syntax
 // var MicrosoftGraph = require("msgraph-sdk-javascript");
 
 // for fast development, simply require the generated lib without bundling the npm module
-const MicrosoftGraph = require("../../lib/index.js");
+
+const MicrosoftGraph = require("../../lib/src/index.js").Client;
 
 const secrets = require("./secrets");
 
@@ -26,7 +26,7 @@ client
         }
         console.log(res.displayName);
     });
-
+/*
 // Get the name of the authenticated user with promises
 client
     .api('/me')
@@ -282,3 +282,6 @@ client
             return;
         }
     });
+
+
+*/

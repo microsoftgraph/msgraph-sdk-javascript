@@ -1,32 +1,5 @@
-/// <reference path="../typings/index.d.ts" />
-export interface Options {
-    debugLogging?: boolean;
-    defaultVersion?: string;
-    authProvider?: (done) => void;
-    baseUrl: string;
-}
-export interface URLComponents {
-    host: string;
-    version: string;
-    path?: string;
-    oDataQueryParams: {
-        [key: string]: string | number;
-    };
-    otherURLQueryParams: {
-        [key: string]: string | number;
-    };
-}
-export interface GraphRequestCallback {
-    (error: GraphError, response: any, rawResponse?: any): void;
-}
-export interface GraphError {
-    statusCode: number;
-    code: string;
-    message: string;
-    requestId: string;
-    date: Date;
-    body: string;
-}
+/// <reference path="../../typings/index.d.ts" />
+import { Options, URLComponents, GraphError, GraphRequestCallback } from "./CommonObj";
 export declare class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
@@ -72,6 +45,6 @@ export declare class GraphRequest {
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
-    private handleResponse(err, res, callback);
+    static handleResponse(err: any, res: any, callback: GraphRequestCallback): void;
     private createQueryString();
 }
