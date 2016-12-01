@@ -4,7 +4,7 @@ import {GraphRequest} from "../src/GraphRequest"
 
 const assert = require('assert');
 
-export const OK_SUPERAGENT_RES = {
+const OK_SUPERAGENT_RES = {
   ok: true,
   body: {
     a: 1
