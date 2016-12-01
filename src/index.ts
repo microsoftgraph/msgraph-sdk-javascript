@@ -3,7 +3,7 @@
 
 import * as request from 'superagent';
 
-import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./CommonObj"
+import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./common"
 import {GraphRequest} from "./GraphRequest"
 
 export class Client {

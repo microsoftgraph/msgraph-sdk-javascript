@@ -1,5 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
-import { Options } from "./CommonObj";
+import { Options } from "./common";
 import { GraphRequest } from "./GraphRequest";
 export declare class Client {
     config: Options;

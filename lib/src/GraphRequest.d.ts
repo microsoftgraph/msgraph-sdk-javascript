@@ -1,5 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
-import { Options, URLComponents, GraphError, GraphRequestCallback } from "./CommonObj";
+import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
@@ -8,7 +8,6 @@ export declare class GraphRequest {
     };
     _responseType: string;
     constructor(config: Options, path: string);
-    static parseError(rawErr: any): GraphError;
     header(headerKey: string, headerValue: string): this;
     headers(headers: {
         [key: string]: string | number;
@@ -45,6 +44,5 @@ export declare class GraphRequest {
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
-    static handleResponse(err: any, res: any, callback: GraphRequestCallback): void;
     private createQueryString();
 }
