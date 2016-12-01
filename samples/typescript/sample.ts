@@ -1,23 +1,25 @@
-/// <reference path="./typings/index.d.ts" />
-
-
-//
-// To reference Microsoft Graph typings, see directions at https://github.com/microsoftgraph/msgraph-typescript-typings/
-// The dependency has been added in typings.json, so just run typings install
-//
+/// <reference path="../../typings/index.d.ts" />
 
 // For more samples in JavaScript, see https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/samples/node/node-sample.js
 
 const secrets = require("../node/secrets");
-const Graph = require("../../lib/index.js"); // production apps should use require("msgraph-sdk-javascript"); to grab the NPM module
 
+// production apps should import from "msgraph-sdk-javascript"; to grab the NPM module with the types declarations
+
+import {Client as GraphClient} from "../../lib/src/index";
+
+
+// These are the typings for graph nodes that are published separetlely (User field types, etc.)
+// To reference Microsoft Graph typings, see directions at https://github.com/microsoftgraph/msgraph-typescript-typings/
+// The dependency has been added in typings.json, so just run typings install
 import * as MicrosoftGraph from "microsoft-graph"
 
-const client = Graph.init({
+
+const client = GraphClient.init({
     authProvider: function(done) {
         done(null, secrets.accessToken);
     }
-})
+});
 
 // Get the name of the authenticated user
 client
@@ -32,7 +34,7 @@ client
         console.log(user.displayName);
     });
 
-
+/*
 // GET /users
 client
     .api('/users')
@@ -68,3 +70,4 @@ client
         }
 
     })
+*/
