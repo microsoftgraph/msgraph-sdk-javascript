@@ -12,26 +12,26 @@ cases.push({
     url: "https://graph.microsoft.com/v1.0/me?$select=displayName",
     request: client.api("/me")
                 .select("displayName")
-})
+});
 
 cases.push({
     url:"https://graph.microsoft.com/v1.0/me?$select=displayName",
     request: client.api("/me")
                 .select(["displayName"])
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle",
     request: client.api("me")
                 .select(["displayName", "jobTitle"])
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle",
     request: client.api("/me")
                 .select(["displayName"])
                 .select("jobTitle")
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/beta/me?$select=displayName,jobTitle",

@@ -32,9 +32,15 @@ const _500_SUPERAGENT_RES = {
 
 
 describe('#handleResponse()', function() {
-    it('passes through response with no err', function() {
+    it('passes through response to callback', function() {
         ResponseHandler.init(null, _200_SUPERAGENT_RES, (err:GraphError, res) => {
             assert.equal(res, _200_SUPERAGENT_RES.body);
+        });
+    });
+
+    it('200 response => err is null', function() {
+        ResponseHandler.init(null, _200_SUPERAGENT_RES, (err:GraphError, res) => {
+            assert.equal(err, null);
         });
     });
 });
@@ -47,7 +53,6 @@ describe('#ParseError()', function() {
             assert.equal(res, null);
         });
     });
-
 
     it('extracts code and request-id from the JSON body of 500 errors', function() {
         ResponseHandler.init(null, _500_SUPERAGENT_RES, (err:GraphError, res) => {
