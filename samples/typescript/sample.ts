@@ -5,6 +5,7 @@
 const secrets = require("../node/secrets");
 
 // production apps should import from "msgraph-sdk-javascript"; to grab the NPM module with the types declarations
+
 import {Client as GraphClient} from "../../lib/src/index";
 
 
@@ -33,7 +34,7 @@ client
         console.log(user.displayName);
     });
 
-
+/*
 // GET /users
 client
     .api('/users')
@@ -69,3 +70,4 @@ client
         }
 
     })
+*/

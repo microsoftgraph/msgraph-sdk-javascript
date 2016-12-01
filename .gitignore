@@ -13,5 +13,6 @@ npm-debug.log
 samples/typescript/sample.js
 samples/typescript/sample.d.ts
 samples/typescript/graph-typings.d.ts
+samples/typescript/sample.js.map
 src/index.d.ts
 test/secrets.json
