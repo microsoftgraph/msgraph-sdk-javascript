@@ -11,9 +11,12 @@
     "outDir": "lib/"
   },
   "exclude": [
-      "node_modules"
+      "node_modules",
+      "lib",
+      "samples"
   ],
-  "files": [
-      "./src/index.ts"
+  "include": [
+      "./src/index.ts",
+      "./test/*.ts"
   ]
 }

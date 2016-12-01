@@ -1,8 +1,11 @@
-"use strict";
-var MicrosoftGraph = require("../lib/index.js");
-var assert = require('assert');
+/// <reference path="../typings/index.d.ts" />
 
-var client = MicrosoftGraph.init({});
+import * as assert from 'assert';
+
+import {Client as GraphClient} from "../src/index"
+
+const client = GraphClient.init();
+
 
 let testCases = {
     "/me": "https://graph.microsoft.com/v1.0/me",
@@ -25,4 +28,4 @@ describe('#parsePath()', function() {
             assert.equal(request.buildFullUrl(), testCases[path]);
         });
     }
-})
+});
