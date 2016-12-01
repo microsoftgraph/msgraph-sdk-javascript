@@ -29,7 +29,7 @@ export interface GraphRequestCallback {
 }
 
 
-// This is NOT what is returned from the graph
+// This is NOT what is returned from the Graph
 // GraphError is created from parsing JSON errors returned from the graph
 // Some fields are renamed ie, "request-id" => requestId so you can use dot notation
 

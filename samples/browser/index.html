@@ -5,7 +5,7 @@
 	<script type="text/javascript" src="../../lib/graph-js-sdk-web.js"></script>
 	<script type="text/javascript" src="secrets.js"></script>
 	<script type="text/javascript">
-		var client = MicrosoftGraph.init({
+		var client = MicrosoftGraph.Client.init({
 			debugLogging: true,
 			authProvider: function(done) {
 				done(null, SECRETS.ACCESS_TOKEN);

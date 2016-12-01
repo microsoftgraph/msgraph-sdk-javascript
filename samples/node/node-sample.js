@@ -1,5 +1,5 @@
 // when using the npm module, use the following syntax
-// var MicrosoftGraph = require("msgraph-sdk-javascript");
+// var MicrosoftGraph = require("msgraph-sdk-javascript").Client;
 
 // for fast development, simply require the generated lib without bundling the npm module
 
@@ -26,6 +26,7 @@ client
         }
         console.log(res.displayName);
     });
+
 /*
 // Get the name of the authenticated user with promises
 client
