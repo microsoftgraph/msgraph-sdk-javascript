@@ -2,10 +2,13 @@
 export declare const oDataQueryNames: string[];
 export declare const DEFAULT_VERSION: string;
 export declare const GRAPH_BASE_URL: string;
+export interface AuthProviderCallback {
+    (error: any, accessToken: string): void;
+}
 export interface Options {
     debugLogging?: boolean;
     defaultVersion?: string;
-    authProvider?: (done) => void;
+    authProvider?: (done: AuthProviderCallback) => void;
     baseUrl?: string;
 }
 export interface URLComponents {
