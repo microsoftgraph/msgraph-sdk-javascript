@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-const assert = require('assert');
+import * as assert from 'assert';
 
 import {Client as GraphClient} from "../src/index"
 
@@ -39,7 +39,7 @@ cases.push({
             .version("beta")
             .select(["displayName"])
             .select("jobTitle")
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/beta/me?$select=displayName,jobTitle",
@@ -47,10 +47,10 @@ cases.push({
                 .version("beta")
                 .select(["displayName"])
                 .select("jobTitle")
-})
+});
 
 
-// Need to fix
+// Need to figure out type signature of select() to allow string, array of strings, and unlimited string parameters
 // cases.push({
 //     url: "https://graph.microsoft.com/beta/me?$select=displayName,jobTitle,mailNickname",
 //     request: client.api("/me")
@@ -65,7 +65,7 @@ cases.push({
                 .select(["displayName"])
                 .select("title")
                 .count(true)
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/beta/me/people?$select=displayName,title&$count=true&$search=senior",
@@ -74,7 +74,7 @@ cases.push({
                 .select(['displayName', 'title'])
                 .count(true)
                 .query({"$search": "senior"})
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/beta/me/people?$select=displayName,title&$count=true&$search=senior",
@@ -83,14 +83,14 @@ cases.push({
                 .select(['displayName', 'title'])
                 .count(true)
                 .query("$search=senior")
-})
+});
 
 cases.push({
     url: "https://graph.microsoft.com/v1.0/me/drive/root?$expand=children($select=name),permissions",
     request: client.api("me/drive/root")
             .expand("children($select=name)")
             .expand("permissions")
-})
+});
 
 describe('parseErrors', function() {
     for (let i=0; i<cases.length; i++) {
@@ -99,4 +99,4 @@ describe('parseErrors', function() {
             assert.equal(testCase.url, testCase.request.buildFullUrl());
         })
     }
-})
+});

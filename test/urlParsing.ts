@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-const assert = require('assert');
+import * as assert from 'assert';
 
 import {Client as GraphClient} from "../src/index"
 
