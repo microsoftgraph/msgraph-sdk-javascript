@@ -92,7 +92,7 @@ cases.push({
             .expand("permissions")
 });
 
-describe('parseErrors', function() {
+describe('#buildFullUrl()', function() {
     for (let i=0; i<cases.length; i++) {
         let testCase = cases[i];
         it('should correctly build ' + testCase.url, function() {
