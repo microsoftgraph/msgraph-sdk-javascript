@@ -27,7 +27,7 @@ export class ResponseHandler {
             }
         }
     */
-    public static ParseError(rawErr):GraphError {
+    static ParseError(rawErr):GraphError {
         let errObj; // path to object containing innerError (see above schema)
 
         if (!('rawResponse' in rawErr)) { // if superagent correctly parsed the JSON

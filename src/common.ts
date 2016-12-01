@@ -4,11 +4,14 @@ export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$t
 export const DEFAULT_VERSION = "v1.0";
 export const GRAPH_BASE_URL = "https://graph.microsoft.com/";
 
+export interface AuthProviderCallback {
+    (error: any, accessToken: string): void
+}
 
 export interface Options {
     debugLogging?: boolean,
     defaultVersion?: string,
-    authProvider?: (done) => void,
+    authProvider?: (done:AuthProviderCallback) => void,
     baseUrl?: string
 }
 
@@ -24,6 +27,11 @@ export interface URLComponents {
 export interface GraphRequestCallback {
     (error: GraphError, response: any, rawResponse?: any): void
 }
+
+
+// This is NOT what is returned from the graph
+// GraphError is created from parsing JSON errors returned from the graph
+// Some fields are renamed ie, "request-id" => requestId so you can use dot notation
 
 export interface GraphError {
     statusCode: number, // 503

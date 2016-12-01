@@ -5,7 +5,7 @@
 const secrets = require("../node/secrets");
 
 // production apps should import from "msgraph-sdk-javascript"; to grab the NPM module with the types declarations
-import {Client as GraphClient} from "../../lib/src/index"
+import {Client as GraphClient} from "../../lib/src/index";
 
 
 // These are the typings for graph nodes that are published separetlely (User field types, etc.)
@@ -18,7 +18,7 @@ const client = GraphClient.init({
     authProvider: function(done) {
         done(null, secrets.accessToken);
     }
-})
+});
 
 // Get the name of the authenticated user
 client

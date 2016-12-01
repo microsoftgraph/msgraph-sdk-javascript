@@ -3,7 +3,7 @@
 
 // for fast development, simply require the generated lib without bundling the npm module
 
-const MicrosoftGraph = require("../../lib/src/index.js");
+const MicrosoftGraph = require("../../lib/src/index.js").Client;
 
 const secrets = require("./secrets");
 
