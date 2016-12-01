@@ -347,40 +347,28 @@ export class GraphRequest {
         );
     }
 
-
     // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and return a promise
     private routeResponseToPromise(requestBuilder:request.SuperAgentRequest) {
-        let _this = this;
         return new Promise((resolve, reject) => {
-            _this.config.authProvider((err, accessToken) => {
-                if (err) {
+            this.routeResponseToCallback(requestBuilder, (err, body) => {
+                if (err != null) {
                     reject(err);
-                    return;
+                } else {
+                    resolve(body);
                 }
-                let request = _this.configureRequest(requestBuilder, accessToken);
-                request.end((err, res) => {
-                    if (res && res.ok) { // 2xx
-                        resolve(res.body)
-                    } else { // not OK response
-                        // parse the error object, regardless if it was passed to the err or res param
-                        reject(GraphRequest.parseError((err == null && res.error !== null) ? res : err));
-                    }
-                })
             });
         });
     }
 
     // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and invoke the callback
     private routeResponseToCallback(requestBuilder:request.SuperAgentRequest, callback: GraphRequestCallback) {
-        // try to use a callback if it was passed in
         this.config.authProvider((err, accessToken) => {
-            if (err === null && accessToken !== null) {
+            if (err == null && accessToken != null) {
                 let request = this.configureRequest(requestBuilder, accessToken);
                 request.end((err, res) => {
-                    if (callback !== null)
-                        this.handleResponse(err, res, callback)
-                })
-            } else if (callback !== null) {
+                    this.handleResponse(err, res, callback)
+                });
+            } else {
                 callback(err, null, null);
             }
         });
@@ -392,10 +380,10 @@ export class GraphRequest {
      */
     private sendRequestAndRouteResponse(requestBuilder:request.SuperAgentRequest, callback?:GraphRequestCallback):Promise<any>|void {
         // return a promise when Promises are supported and no callback was provided
-        if (typeof callback === "undefined" && typeof Promise !== "undefined") {
+        if (callback == null && typeof Promise !== "undefined") {
             return this.routeResponseToPromise(requestBuilder);
         } else {
-            this.routeResponseToCallback(requestBuilder, callback);
+            this.routeResponseToCallback(requestBuilder, callback || function(){});
         }
     }
 
