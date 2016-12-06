@@ -1,6 +1,6 @@
 {
   "name": "msgraph-sdk-javascript",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Microsoft Graph JavaScript SDK",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
