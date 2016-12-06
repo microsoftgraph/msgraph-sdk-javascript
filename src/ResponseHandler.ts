@@ -31,7 +31,7 @@ export class ResponseHandler {
         let errObj; // path to object containing innerError (see above schema)
 
         if (!('rawResponse' in rawErr)) { // if superagent correctly parsed the JSON
-            if (rawErr.response !== undefined && 'body' in rawErr.response && 'error' in rawErr.response.body) { // some 404s don't return an error object
+            if (rawErr.response !== undefined && rawErr.response.body !== null && 'error' in rawErr.response.body) { // some 404s don't return an error object
                 errObj = rawErr.response.body.error;
             }
         } else {
