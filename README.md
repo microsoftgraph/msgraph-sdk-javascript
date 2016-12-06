@@ -12,7 +12,7 @@ You can find installation instructions at the [Node.js website](https://nodejs.o
 
 ```npm install msgraph-sdk-javascript```
 
-Include the library in your JavaScript file with `const MicrosoftGraph = require("msgraph-sdk-javascript");`
+Include the library in your JavaScript file with `const MicrosoftGraph = require("msgraph-sdk-javascript").Client;`
 
 ### Browser
 
@@ -20,7 +20,7 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 <script type="text/javascript">
-const client = MicrosoftGraph.init({
+const client = MicrosoftGraph.Client.init({
     authProvider: (done) => {
         done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
@@ -28,13 +28,19 @@ const client = MicrosoftGraph.init({
 ...
 </script>
 ```
+## Changelog
+#### 0.2.0
+* Initialize the client library with `MicrosoftGraph.Client.init({...})`
+* Added response handling tests to simulate Graph calls
+* Added type declarations file for core client library, which adds intelisense for chained methods.
+
 
 ## Usage
 ### Initialize SDK with access token provider
 This SDK only handles authentication in the most basic way possible. The application is responsible for refreshing tokens and returning an immediately valid access token in the authentication provider.
 ```javascript
 
-var client = MicrosoftGraph.init({
+var client = MicrosoftGraph.Client.init({
     authProvider: (done) => {
         done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
     }
@@ -272,9 +278,9 @@ You can pass in additional request headers, either individually or in a dictiona
 To set a custom response type, use the `.responseType(string)` method.  To see an example, check the [browser sample](samples/browser/index.html) that downloads an image and displays it in an `<img>` element.
 
 ## Additional information
-### Options in `MicrosoftGraph.init()`
+### Options in `MicrosoftGraph.Client.init()`
 
-The following are optional parameters to pass to MicrosoftGraph.init(), except for the authProvider:
+The following are optional parameters to pass to MicrosoftGraph.Client.init(), except for the authProvider:
 * defaultVersion - When .version() isn't called, this version is used. (defaults to v1.0)
 * debugLogging - Set to true to see the URL of the request printed.
 * authProvider - See the [usage](#usage) section for info.
