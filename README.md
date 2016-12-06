@@ -19,20 +19,12 @@ Include the library in your JavaScript file with `const MicrosoftGraph = require
 Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-web.js) in your page.
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
-<script type="text/javascript">
-const client = MicrosoftGraph.Client.init({
-    authProvider: (done) => {
-        done(null, "PassInAccessTokenHere"); //first parameter takes an error if you can't get an access token
-    }
-});
-...
-</script>
 ```
 ## Changelog
 #### 0.2.0
 * Initialize the client library with `MicrosoftGraph.Client.init({...})`
 * Added response handling tests to simulate Graph calls
-* Added type declarations file for core client library, which adds intelisense for chained methods.
+* Added type declarations file for core client library, which adds intellisense for chained methods.
 
 
 ## Usage
