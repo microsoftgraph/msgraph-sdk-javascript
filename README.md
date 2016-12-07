@@ -22,7 +22,7 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 ```
 ## Changelog
 #### 0.2.0
-* Initialize the client library with `MicrosoftGraph.Client.init({...})`
+* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
 * Added response handling tests to simulate Graph calls
 * Added type declarations file for core client library, which adds intellisense for chained methods.
 
