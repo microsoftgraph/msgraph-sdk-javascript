@@ -21,6 +21,9 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 ## Changelog
+#### 0.2.2
+* Updated SuperAgent to version ``` 3.3.0 ```
+
 #### 0.2.0
 * **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
 * Added response handling tests to simulate Graph calls
