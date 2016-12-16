@@ -36,7 +36,7 @@ client
     .then((res) => {
         console.log(res);
     }).catch((err) => {
-        console.log(res);
+        console.log(err);
     });
 
 // Update the authenticated users birthday.

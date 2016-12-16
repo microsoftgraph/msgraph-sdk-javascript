@@ -1,6 +1,6 @@
 {
   "name": "msgraph-sdk-javascript",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Microsoft Graph JavaScript SDK",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
@@ -20,7 +20,7 @@
     "test": "mocha lib/test"
   },
   "dependencies": {
-    "superagent": "^2.2.0"
+    "superagent": "~3.3.0"
   },
   "repository": {
     "type": "git",
