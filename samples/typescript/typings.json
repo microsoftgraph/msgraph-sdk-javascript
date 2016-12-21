@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "microsoft-graph": "registry:common/microsoft-graph#0.2.0+20160924230719"
-  },
-  "globalDependencies": {
-    "node": "registry:dt/node#6.0.0+20160928143418"
-  }
-}

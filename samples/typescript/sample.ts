@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 // For more samples in JavaScript, see https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/samples/node/node-sample.js
 
 const secrets = require("../node/secrets");
@@ -8,11 +6,10 @@ const secrets = require("../node/secrets");
 
 import {Client as GraphClient} from "../../lib/src/index";
 
-
-// These are the typings for graph nodes that are published separetlely (User field types, etc.)
-// To reference Microsoft Graph typings, see directions at https://github.com/microsoftgraph/msgraph-typescript-typings/
-// The dependency has been added in typings.json, so just run typings install
-import * as MicrosoftGraph from "microsoft-graph"
+// These are the types for graph nodes that are published separetlely (User field types, messages, contacts, etc.)
+// To reference Microsoft Graph types, see directions at https://github.com/microsoftgraph/msgraph-typescript-typings/
+// The dependency has been added in package.json, so just run npm install
+import * as MicrosoftGraph from "microsoft-graph-typings"
 
 
 const client = GraphClient.init({

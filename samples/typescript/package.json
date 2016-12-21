@@ -1,0 +1,9 @@
+{
+  "name": "typescript-sample",
+  "version": "0.2.2",
+  "description": "TypeScript Sample",
+  "devDependencies": {
+    "msgraph-types": "https://github.com/microsoftgraph/msgraph-typescript-typings.git",
+    "typescript": "^2.1"
+  }
+}
