@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import * as assert from 'assert';
 
 import {Client as GraphClient} from "../src/index"

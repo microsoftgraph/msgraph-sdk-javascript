@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import {Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback} from "./common"
 import * as request from 'superagent';
 

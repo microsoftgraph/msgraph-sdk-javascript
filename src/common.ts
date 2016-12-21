@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$top", "$skip", "$skipToken", "$count"];
 export const DEFAULT_VERSION = "v1.0";
 export const GRAPH_BASE_URL = "https://graph.microsoft.com/";

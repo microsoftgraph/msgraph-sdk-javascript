@@ -1,6 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-'use strict';
-
 import * as request from 'superagent';
 
 import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./common"
