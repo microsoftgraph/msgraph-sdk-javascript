@@ -2,7 +2,7 @@
 [![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=86400)](https://www.npmjs.com/package/msgraph-sdk-javascript)
 [![Travis](https://img.shields.io/travis/microsoftgraph/msgraph-sdk-javascript.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
-The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph typings](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
+The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
 
 > This SDK is currently in preview and we would love to hear your feedback!  You can file an issue in this repository or write on our [uservoice page](https://officespdev.uservoice.com/).  We're also trying to add more intellisense support beyond the current typings so we're also especially interested in feedback on the [Microsoft Graph TypeScript Typings](https://github.com/microsoftgraph/msgraph-typescript-typings).
 
@@ -314,7 +314,7 @@ These steps are not required to use this SDK.
 
 ```npm run build``` generates lib/ files for node and browser versions.
 
-```npm pack``` bundles the npm module. This will automatically run ```typings install```.
+```npm pack``` bundles the npm module.
 
 ```npm test``` runs tests.
 
@@ -334,7 +334,7 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 ## Additional resources
 
 * [Microsoft Graph website](https://graph.microsoft.io)
-* [Microsoft Graph TypeScript typings](https://github.com/microsoftgraph/msgraph-typescript-typings/)
+* [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
 * [Angular.js sample using the JavaScript SDK](https://github.com/microsoftgraph/angular-connect-sample)
 * [Node.js sample using the JavaScript SDK](https://github.com/microsoftgraph/nodejs-connect-sample)
 * [Office Dev Center](http://dev.office.com/)
