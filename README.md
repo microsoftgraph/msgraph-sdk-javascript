@@ -1,10 +1,10 @@
-# Microsoft Graph JavaScript SDK
+# Microsoft Graph JavaScript Client Library
 [![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=86400)](https://www.npmjs.com/package/msgraph-sdk-javascript)
 [![Travis](https://img.shields.io/travis/microsoftgraph/msgraph-sdk-javascript.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
-The Microsoft Graph JavaScript SDK is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this SDK. 
+The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. 
 
-> This SDK is currently in preview and we would love to hear your feedback!  You can file an issue in this repository or write on our [uservoice page](https://officespdev.uservoice.com/).  We're also trying to add more intellisense support beyond the current typings so we're also especially interested in feedback on the [Microsoft Graph TypeScript Typings](https://github.com/microsoftgraph/msgraph-typescript-typings).
+> This client library is currently in preview and we would love to hear your feedback!  You can file an issue in this repository or write on our [uservoice page](https://officespdev.uservoice.com/).  We're also trying to add more intellisense support beyond the current typings so we're also especially interested in feedback on the [Microsoft Graph TypeScript Typings](https://github.com/microsoftgraph/msgraph-typescript-typings).
 
 ## Installation
 ### Node
@@ -22,7 +22,7 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 ```
 ## Changelog
 #### 0.3.0
-* Migrated away from typings in sdk core and TypeScript sample
+* Migrated away from typings in client library core and TypeScript sample
 
 #### 0.2.2
 * Updated SuperAgent to version ``` 3.3.0 ```
@@ -34,8 +34,8 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 
 
 ## Usage
-### Initialize SDK with access token provider
-This SDK only handles authentication in the most basic way possible. The application is responsible for refreshing tokens and returning an immediately valid access token in the authentication provider.
+### Initialize client with access token provider
+This client library only handles authentication in the most basic way possible. The application is responsible for refreshing tokens and returning an immediately valid access token in the authentication provider.
 ```javascript
 
 var client = MicrosoftGraph.Client.init({
@@ -310,7 +310,7 @@ client
 ```
 
 ## Development
-These steps are not required to use this SDK.
+These steps are not required to use this library.
 
 ```npm install``` installs development dependencies (TypeScript, Mocha, etc.).
 > **Note:** If you want to run ```tsc``` from the command line, install TypeScript globally with ```npm install -g typescript``` or reference `./node_modules/.bin/tsc`
@@ -328,7 +328,7 @@ node node-browserify.js > lib/graph-js-sdk-web.js
 
 ## Questions and comments
 
-We'd love to get your feedback about the Microsoft Graph JavaScript SDK. You can send your questions and suggestions to us in the [Issues](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues) section of this repository.
+We'd love to get your feedback about the Microsoft Graph JavaScript client library. You can send your questions and suggestions to us in the [Issues](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues) section of this repository.
 
 
 ## Contributing
@@ -338,8 +338,8 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 
 * [Microsoft Graph website](https://graph.microsoft.io)
 * [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
-* [Angular.js sample using the JavaScript SDK](https://github.com/microsoftgraph/angular-connect-sample)
-* [Node.js sample using the JavaScript SDK](https://github.com/microsoftgraph/nodejs-connect-sample)
+* [Angular.js sample using the JavaScript client library](https://github.com/microsoftgraph/angular-connect-sample)
+* [Node.js sample using the JavaScript client library](https://github.com/microsoftgraph/nodejs-connect-sample)
 * [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
