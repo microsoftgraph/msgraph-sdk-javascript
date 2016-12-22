@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
 import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;

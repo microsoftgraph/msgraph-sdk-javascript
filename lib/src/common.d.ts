@@ -1,7 +1,6 @@
-/// <reference path="../../typings/index.d.ts" />
 export declare const oDataQueryNames: string[];
-export declare const DEFAULT_VERSION: string;
-export declare const GRAPH_BASE_URL: string;
+export declare const DEFAULT_VERSION = "v1.0";
+export declare const GRAPH_BASE_URL = "https://graph.microsoft.com/";
 export interface AuthProviderCallback {
     (error: any, accessToken: string): void;
 }
