@@ -1,6 +1,6 @@
 {
   "name": "msgraph-sdk-javascript",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Microsoft Graph JavaScript SDK",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
@@ -9,13 +9,13 @@
   ],
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
-    "typescript": "^2.0",
+    "@types/superagent": "^2.0.36",
+    "@types/mocha": "^2.2.34",
     "browserify": "^13.1.0",
-    "mocha": "^3.0.2",
-    "typings": "^2.0.0"
+    "mocha": "^3.2.0",
+    "typescript": "^2.1"
   },
   "scripts": {
-    "prepublish": "typings install",
     "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js",
     "test": "mocha lib/test"
   },
