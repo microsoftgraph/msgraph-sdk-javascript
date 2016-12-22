@@ -21,6 +21,9 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 ## Changelog
+#### 0.3.0
+* Migrated away from typings in sdk core and TypeScript sample
+
 #### 0.2.2
 * Updated SuperAgent to version ``` 3.3.0 ```
 
