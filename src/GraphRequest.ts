@@ -80,7 +80,9 @@ export class GraphRequest {
             let queryParams = rawPath.substring(queryStrPos + 1, rawPath.length).split("&");
             for (let queryParam of queryParams) {
                 //queryParam:  a=b
-                let [key, value] = queryParam.split("=");
+                let queryParams = queryParam.split("=");
+                let key = queryParams[0];
+                let value = queryParams[1];
 
                 if (oDataQueryNames.indexOf(key)) {
                     this.urlComponents.oDataQueryParams[key] = value;
