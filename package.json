@@ -1,6 +1,6 @@
 {
   "name": "msgraph-sdk-javascript",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
