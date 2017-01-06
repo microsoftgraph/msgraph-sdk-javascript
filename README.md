@@ -21,6 +21,9 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 ## Changelog
+#### 0.3.1
+* Support for Node.js versions 4 and 5
+
 #### 0.3.0
 * Migrated away from typings in client library core and TypeScript sample
 
