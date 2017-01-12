@@ -1,5 +1,5 @@
 {
-  "name": "msgraph-sdk-javascript",
+  "name": "@microsoft/microsoft-graph-client",
   "version": "0.3.1",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
