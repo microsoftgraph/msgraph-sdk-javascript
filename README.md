@@ -10,7 +10,7 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 ### Node
 You can find installation instructions at the [Node.js website](https://nodejs.org/).
 
-```npm install msgraph-sdk-javascript```
+```npm install @microsoft/microsoft-graph-client```
 
 Include the library in your JavaScript file with `const MicrosoftGraph = require("msgraph-sdk-javascript");`
 
