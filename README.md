@@ -12,7 +12,7 @@ You can find installation instructions at the [Node.js website](https://nodejs.o
 
 ```npm install @microsoft/microsoft-graph-client```
 
-Include the library in your JavaScript file with `const MicrosoftGraph = require("msgraph-sdk-javascript");`
+Include the library in your JavaScript file with `const MicrosoftGraph = require("@microsoft/microsoft-graph-client");`
 
 ### Browser
 
