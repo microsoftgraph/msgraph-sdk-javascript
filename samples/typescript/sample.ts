@@ -9,7 +9,7 @@ import {Client as GraphClient} from "../../lib/src/index";
 // These are the types for graph nodes that are published separetlely (User field types, messages, contacts, etc.)
 // To reference Microsoft Graph types, see directions at https://github.com/microsoftgraph/msgraph-typescript-typings/
 // The dependency has been added in package.json, so just run npm install
-import * as MicrosoftGraph from "microsoft-graph-typings"
+import * as MicrosoftGraph from "@microsoft/microsoft-graph-types"
 
 
 const client = GraphClient.init({
