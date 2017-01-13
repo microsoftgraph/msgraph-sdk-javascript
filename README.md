@@ -1,4 +1,4 @@
-> Important update for 1/13/2017! We're migrating this package to the @microsoft npm acoount. In the meantime, please download from https://www.npmjs.com/package/msgraph-sdk-javascript
+> Important update for 1/13/2017! We're migrating this package to the @microsoft npm account. In the meantime, please download from https://www.npmjs.com/package/msgraph-sdk-javascript
 
 # Microsoft Graph JavaScript Client Library
 [![npm version badge](https://img.shields.io/npm/v/msgraph-sdk-javascript.svg?maxAge=86400)](https://www.npmjs.com/package/msgraph-sdk-javascript)
