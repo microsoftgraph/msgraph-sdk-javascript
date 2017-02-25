@@ -115,7 +115,7 @@ const mail = {
     subject: "MicrosoftGraph JavaScript SDK Samples",
     toRecipients: [{
         emailAddress: {
-            address: "dansil@microsoft.com"
+            address: "example@example.com"
         }
     }],
     body: {
