@@ -9,11 +9,12 @@
   ],
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
-    "@types/superagent": "^2.0.36",
     "@types/mocha": "^2.2.34",
+    "@types/superagent": "^2.0.36",
     "browserify": "^13.1.0",
+    "es6-promise": "^4.0.5",
     "mocha": "^3.2.0",
-    "typescript": "^2.1"
+    "typescript": "next"
   },
   "scripts": {
     "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js",
