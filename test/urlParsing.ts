@@ -17,6 +17,11 @@ let testCases = {
     "/me?a=b": "https://graph.microsoft.com/v1.0/me?a=b",
     "/me?$filter=b&c=d": "https://graph.microsoft.com/v1.0/me?$filter=b&c=d",
     "me?$filter=b&c=d": "https://graph.microsoft.com/v1.0/me?$filter=b&c=d",
+
+    // oData params should work with and without $
+    "me?$select=displayName": "https://graph.microsoft.com/v1.0/me?$select=displayName",
+    "me?select=displayName": "https://graph.microsoft.com/v1.0/me?select=displayName",
+    "https://graph.microsoft.com/beta/me?select=displayName": "https://graph.microsoft.com/beta/me?select=displayName"
 }
 
 describe('#parsePath()', function() {

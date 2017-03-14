@@ -1,6 +1,6 @@
 # Microsoft Graph JavaScript Client Library
 [![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
-[![Travis](https://img.shields.io/travis/microsoftgraph/msgraph-sdk-javascript.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
+[![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master&style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
 The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. 
 

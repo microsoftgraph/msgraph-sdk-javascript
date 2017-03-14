@@ -196,12 +196,12 @@ export class GraphRequest {
     }
 
 
-    delete(callback?:GraphRequestCallback):Promise<any>|void {
+    delete(callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(request.del(url), callback)
     }
 
-    patch(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+    patch(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         
         return this.sendRequestAndRouteResponse(
@@ -212,7 +212,7 @@ export class GraphRequest {
         );
     }
 
-    post(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+    post(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             request
@@ -222,7 +222,7 @@ export class GraphRequest {
         );
     }
 
-    put(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+    put(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             request
@@ -235,20 +235,20 @@ export class GraphRequest {
 
     // request aliases
     // alias for post
-    create(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+    create(content:any, callback?:GraphRequestCallback):Promise<any> {
         return this.post(content, callback);
     }
 
     // alias for patch
-    update(content:any, callback?:GraphRequestCallback):Promise<any>|void {
+    update(content:any, callback?:GraphRequestCallback):Promise<any> {
         return this.patch(content, callback);
     }
 
-    del(callback?:GraphRequestCallback):Promise<any>|void {
+    del(callback?:GraphRequestCallback):Promise<any> {
         return this.delete(callback);
     }
 
-    get(callback?:GraphRequestCallback):Promise<any>|void {
+    get(callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             request
@@ -289,7 +289,7 @@ export class GraphRequest {
      * Help method that's called from the final actions( .get(), .post(), etc.) that after making the request either invokes
      * routeResponseToCallback() or routeResponseToPromise()
      */
-    private sendRequestAndRouteResponse(requestBuilder:request.SuperAgentRequest, callback?:GraphRequestCallback):Promise<any>|void {
+    private sendRequestAndRouteResponse(requestBuilder:request.SuperAgentRequest, callback?:GraphRequestCallback):Promise<any> {
         // return a promise when Promises are supported and no callback was provided
         if (callback == null && typeof Promise !== "undefined") {
             return this.routeResponseToPromise(requestBuilder);

@@ -1,6 +1,9 @@
-export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$top", "$skip", "$skipToken", "$count"];
+export let oDataQueryNames = ["select", "expand", "orderby", "filter", "top", "skip", "skipToken", "count"]
 export const DEFAULT_VERSION = "v1.0";
 export const GRAPH_BASE_URL = "https://graph.microsoft.com/";
+
+// support oData params with and without $ prefix
+oDataQueryNames = oDataQueryNames.concat(oDataQueryNames.map((s) => "$"+s));
 
 export interface AuthProviderCallback {
     (error: any, accessToken: string): void
