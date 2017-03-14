@@ -1,4 +1,6 @@
+/// <reference types="node" />
 import { Options, URLComponents, GraphRequestCallback } from "./common";
+import { Promise } from 'es6-promise';
 export declare class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
