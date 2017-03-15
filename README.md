@@ -21,6 +21,10 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 ## Changelog
+#### 0.4.0
+* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
+* Removed iterator helper method.
+
 #### 0.3.1
 * Support for Node.js versions 4 and 5
 
@@ -231,26 +235,6 @@ client
 ````
 
 ## Other API methods
-
-### Iterating results
-We provide a helper method for iterating through results so you don't have to handle paging with skip tokens. Instead of calling `.get()`, use `.getResultIterator()`. Call `.next()` on the iterator to get the next value and fetch the next page if necessary.
-> **Note:** This feature requires ES6 generators, so it is not available on all platforms yet. Check [this compatibility info table](http://kangax.github.io/compat-table/es6/#test-generators) for details.
-
-````javascript
-let iter = client
-    .api('/me/messages')
-    .getResultIterator();
-
-// Example function that prints the subject of your messages
-function getNextMessage() {
-    iter.next().value((err, res) => {
-        console.log(res.subject);
-        getNextMessage();
-    })
-}
-
-getNextMessage();
-````
 
 ### .version()
 Passing in a version through `.version()` has the highest priority. It overrides the Microsoft Graph client default version from `.init()` and the global library default (currently v1.0).
