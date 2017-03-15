@@ -1,5 +1,5 @@
 // when using the npm module, use the following syntax
-// var MicrosoftGraph = require("msgraph-sdk-javascript").Client;
+// var MicrosoftGraph = require("@microsoft/microsoft-graph-client").Client;
 
 // for fast development, simply require the generated lib without bundling the npm module
 

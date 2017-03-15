@@ -1,4 +1,5 @@
 import { Options, URLComponents, GraphRequestCallback } from "./common";
+import { Promise } from 'es6-promise';
 export declare class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
@@ -39,7 +40,6 @@ export declare class GraphRequest {
     getStream(callback: GraphRequestCallback): void;
     putStream(stream: any, callback: Function): void;
     private configureRequest(requestBuilder, accessToken);
-    getResultIterator(): IterableIterator<(callback: any) => void>;
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;

@@ -1,5 +1,6 @@
 import {Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback} from "./common"
 import * as request from 'superagent';
+import { Promise } from 'es6-promise'
 
 import {ResponseHandler} from "./ResponseHandler"
 
@@ -337,41 +338,6 @@ export class GraphRequest {
         }
 
         return request;
-    }
-
-    getResultIterator() {
-        let values = [];
-        let nextLink:string;
-
-        let get = (url) => {
-            return (callback) => {
-
-                if (values.length > 0) {
-                    callback(null, values.splice(0, 1)[0]);
-                } else {
-                    if (nextLink != null) {
-                        url = nextLink;
-                    }
-                    _this.sendRequestAndRouteResponse(request.get(url), (err, res) => {
-                        if (err) {
-                            callback(err, null);
-                            return;
-                        }
-                        values = values.concat(res.value);
-                        nextLink = res["@odata.nextLink"];
-                        callback(null, values.splice(0, 1)[0]);
-                    });
-                }
-            }
-        }
-
-        let _this = this;
-        return function* () {        
-            let url = _this.buildFullUrl();
-            while(true) {
-                yield get(url);
-            }
-        }();
     }
 
     // append query strings to the url, accepts either a string like $select=displayName or a dictionary {"$select": "displayName"}
