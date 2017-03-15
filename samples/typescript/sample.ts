@@ -2,7 +2,7 @@
 
 const secrets = require("../node/secrets");
 
-// production apps should import from "msgraph-sdk-javascript"; to grab the NPM module with the types declarations
+// production apps should import from "@microsoft/microsoft-graph-client"; to grab the NPM module with the types declarations
 
 import {Client as GraphClient} from "../../lib/src/index";
 
