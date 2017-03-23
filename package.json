@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/microsoft-graph-client",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
@@ -20,7 +20,7 @@
     "test": "mocha lib/test"
   },
   "dependencies": {
-    "superagent": "~3.3.0",
+    "superagent": "^3.5.2",
     "es6-promise": "^4.1.0"
   },
   "repository": {
