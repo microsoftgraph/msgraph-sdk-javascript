@@ -221,27 +221,6 @@ client
         console.log(res)
     })
 
-// iterate through my messages
-let iter = client
-    .api('/me/messages')
-    .getResultIterator();
-    
-
-function getNextMessage() {
-    iter.next().value((err, res) => {
-        if (err) {
-            console.log(err)
-            return;
-        }
-
-        console.log(res.subject);
-        getNextMessage();
-    })
-}
-
-getNextMessage();
-
-
 
 // Download a file from OneDrive
 let fs = require('fs'); // requires filesystem module
