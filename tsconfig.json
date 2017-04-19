@@ -13,10 +13,11 @@
   "exclude": [
       "node_modules",
       "lib",
-      "samples"
+      "samples",
+      "spec/types"
   ],
   "include": [
       "./src/index.ts",
-      "./spec"
+      "./spec/core"
   ]
 }
