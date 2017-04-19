@@ -1,8 +1,9 @@
-import {Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback} from "./common"
 import * as request from 'superagent';
 import { Promise } from 'es6-promise'
 
-import {ResponseHandler} from "./ResponseHandler"
+
+import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
+import { ResponseHandler } from "./ResponseHandler"
 
 const packageInfo = require('../../package.json');
 

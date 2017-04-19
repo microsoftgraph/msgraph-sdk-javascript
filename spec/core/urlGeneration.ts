@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 
-import {Client as GraphClient} from "../src/index"
+import {Client as GraphClient} from "../../src/index"
 
 const client = GraphClient.init();
 
