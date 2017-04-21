@@ -1,5 +1,5 @@
-import {ResponseHandler} from "../src/ResponseHandler"
-import {GraphError} from '../src/common'
+import {ResponseHandler} from "../../src/ResponseHandler"
+import {GraphError} from '../../src/common'
 import * as mocha from 'mocha'
 
 import * as assert from 'assert';

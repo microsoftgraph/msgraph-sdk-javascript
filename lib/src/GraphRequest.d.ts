@@ -1,5 +1,5 @@
-import { Options, URLComponents, GraphRequestCallback } from "./common";
 import { Promise } from 'es6-promise';
+import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;
     urlComponents: URLComponents;

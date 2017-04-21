@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js",
-    "test": "mocha lib/test"
+    "test": "mocha lib/spec/core",
+    "test:types": "tsc --p spec/types && mocha spec/types"
   },
   "dependencies": {
     "superagent": "^3.5.2",
