@@ -68,8 +68,6 @@ describe('Users', function() {
       });
     });
   });
-
-
   
   it('[Callback] Modify and verify givenName property', function() {
     const givenName = randomString();
@@ -92,5 +90,13 @@ describe('Users', function() {
       assert.isDefined(users[0].id);
       assert.isDefined(users[0].mail);
     });
-  })
+  });
+
+
+  it('Filters on users list', function() {
+    return getClient()
+      .api("https://graph.microsoft.com/v1.0/users")
+      .filter("Department eq 'Finance'")
+      .get();
+  });
 });
