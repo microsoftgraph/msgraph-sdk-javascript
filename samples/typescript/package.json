@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "description": "TypeScript Sample",
   "devDependencies": {
-    "@microsoft/microsoft-graph-types": "^0.3.1",
+    "@microsoft/microsoft-graph-types": "^1.0.0",
     "typescript": "^2.1"
   }
 }
