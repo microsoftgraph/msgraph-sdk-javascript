@@ -2,9 +2,7 @@
 [![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
 [![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master&style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
-The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. 
-
-> This client library is currently in preview and we would love to hear your feedback!  You can file an issue in this repository or write on our [uservoice page](https://officespdev.uservoice.com/).  We're also trying to add more intellisense support beyond the current typings so we're also especially interested in feedback on the [Microsoft Graph TypeScript Typings](https://github.com/microsoftgraph/msgraph-typescript-typings).
+The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
 
 ## Installation
 ### Node
@@ -21,6 +19,10 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 ## Changelog
+
+#### 1.0.0
+* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
+
 #### 0.4.0
 * Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
 * Removed iterator helper method.
