@@ -2,19 +2,19 @@
 [![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
 [![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master&style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
-The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
+The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that can be used server-side and in the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
 
-Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!
+**Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!**
 
 [![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/readme-updates/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Installation
 ### Node
-You can find installation instructions at the [Node.js website](https://nodejs.org/).
+1) Install [Node.js and npm](https://nodejs.org/).
 
-```npm install @microsoft/microsoft-graph-client```
+2) ```npm install @microsoft/microsoft-graph-client```
 
-Include the library in your JavaScript file with `const MicrosoftGraph = require("@microsoft/microsoft-graph-client");`
+3) Include the library in your JavaScript file with `const MicrosoftGraph = require("@microsoft/microsoft-graph-client");`
 
 ### Browser
 
@@ -45,6 +45,8 @@ All calls to Microsoft Graph are chained together starting with `client.api(path
 * https://graph.microsoft.com/v1.0/me
 * https://graph.microsoft.com/beta/me
 * me/events?$filter=startswith(subject, 'ship')
+
+For more examples of accepted paths, see the [test cases](tests/urlParsing.js).
 
 ```javascript
 // Example calling /me with no parameters
@@ -336,4 +338,4 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 * [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
-Copyright (c) 2016 Microsoft. All rights reserved.
+Copyright (c) Microsoft Corporation. All rights reserved.
