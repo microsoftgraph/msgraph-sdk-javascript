@@ -338,4 +338,4 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 * [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
-Copyright (c) 2017 Microsoft. All rights reserved.
+Copyright (c) Microsoft Corporation. All rights reserved.
