@@ -4,6 +4,10 @@
 
 The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
 
+Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!
+
+![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/readme-updates/types-demo.PNG)
+
 ## Installation
 ### Node
 You can find installation instructions at the [Node.js website](https://nodejs.org/).
