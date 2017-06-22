@@ -18,29 +18,6 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
-## Changelog
-
-#### 1.0.0
-* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
-
-#### 0.4.0
-* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
-* Removed iterator helper method.
-
-#### 0.3.1
-* Support for Node.js versions 4 and 5
-
-#### 0.3.0
-* Migrated away from typings in client library core and TypeScript sample
-
-#### 0.2.2
-* Updated SuperAgent to version ``` 3.3.0 ```
-
-#### 0.2.0
-* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
-* Added response handling tests to simulate Graph calls
-* Added type declarations file for core client library, which adds intellisense for chained methods.
-
 
 ## Usage
 ### Initialize client with access token provider
@@ -324,6 +301,29 @@ We'd love to get your feedback about the Microsoft Graph JavaScript client libra
 
 ## Contributing
 Please see the [contributing guidelines](CONTRIBUTING.md).
+## Changelog
+
+#### 1.0.0
+* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
+
+#### 0.4.0
+* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
+* Removed iterator helper method.
+
+#### 0.3.1
+* Support for Node.js versions 4 and 5
+
+#### 0.3.0
+* Migrated away from typings in client library core and TypeScript sample
+
+#### 0.2.2
+* Updated SuperAgent to version ``` 3.3.0 ```
+
+#### 0.2.0
+* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
+* Added response handling tests to simulate Graph calls
+* Added type declarations file for core client library, which adds intellisense for chained methods.
+
 
 ## Additional resources
 
