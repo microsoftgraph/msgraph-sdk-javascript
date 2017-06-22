@@ -46,8 +46,6 @@ All calls to Microsoft Graph are chained together starting with `client.api(path
 * https://graph.microsoft.com/beta/me
 * me/events?$filter=startswith(subject, 'ship')
 
-For more examples of accepted paths, see the [test cases](tests/urlParsing.js).
-
 ```javascript
 // Example calling /me with no parameters
 client
