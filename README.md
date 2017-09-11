@@ -2,15 +2,19 @@
 [![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
 [![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master&style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
 
-The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that supports both Node and the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
+The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that can be used server-side and in the browser.  See the [samples](samples) folder for code examples.  You can also use our [TypeScript graph types](https://github.com/microsoftgraph/msgraph-typescript-typings) with this library. We love your feedback!  You can file an issue in this repository or write on our [UserVoice page](https://officespdev.uservoice.com/). 
+
+**Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!**
+
+[![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Installation
 ### Node
-You can find installation instructions at the [Node.js website](https://nodejs.org/).
+1) Install [Node.js and npm](https://nodejs.org/).
 
-```npm install @microsoft/microsoft-graph-client```
+2) ```npm install @microsoft/microsoft-graph-client```
 
-Include the library in your JavaScript file with `const MicrosoftGraph = require("@microsoft/microsoft-graph-client");`
+3) Include the library in your JavaScript file with `const MicrosoftGraph = require("@microsoft/microsoft-graph-client");`
 
 ### Browser
 
@@ -18,29 +22,6 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
-## Changelog
-
-#### 1.0.0
-* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
-
-#### 0.4.0
-* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
-* Removed iterator helper method.
-
-#### 0.3.1
-* Support for Node.js versions 4 and 5
-
-#### 0.3.0
-* Migrated away from typings in client library core and TypeScript sample
-
-#### 0.2.2
-* Updated SuperAgent to version ``` 3.3.0 ```
-
-#### 0.2.0
-* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
-* Added response handling tests to simulate Graph calls
-* Added type declarations file for core client library, which adds intellisense for chained methods.
-
 
 ## Usage
 ### Initialize client with access token provider
@@ -64,8 +45,6 @@ All calls to Microsoft Graph are chained together starting with `client.api(path
 * https://graph.microsoft.com/v1.0/me
 * https://graph.microsoft.com/beta/me
 * me/events?$filter=startswith(subject, 'ship')
-
-For more examples of accepted paths, see the [test cases](tests/urlParsing.js).
 
 ```javascript
 // Example calling /me with no parameters
@@ -324,6 +303,29 @@ We'd love to get your feedback about the Microsoft Graph JavaScript client libra
 
 ## Contributing
 Please see the [contributing guidelines](CONTRIBUTING.md).
+## Changelog
+
+#### 1.0.0
+* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
+
+#### 0.4.0
+* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
+* Removed iterator helper method.
+
+#### 0.3.1
+* Support for Node.js versions 4 and 5
+
+#### 0.3.0
+* Migrated away from typings in client library core and TypeScript sample
+
+#### 0.2.2
+* Updated SuperAgent to version ``` 3.3.0 ```
+
+#### 0.2.0
+* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
+* Added response handling tests to simulate Graph calls
+* Added type declarations file for core client library, which adds intellisense for chained methods.
+
 
 ## Additional resources
 
@@ -334,4 +336,4 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 * [Office Dev Center](http://dev.office.com/)
 
 ## Copyright
-Copyright (c) 2016 Microsoft. All rights reserved.
+Copyright (c) Microsoft Corporation. All rights reserved.
