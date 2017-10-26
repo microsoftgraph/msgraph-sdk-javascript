@@ -27,3 +27,6 @@ export class Client {
     }
 
 }
+
+export Options;
+export GraphRequest;
