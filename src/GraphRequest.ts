@@ -2,10 +2,8 @@ import * as request from 'superagent';
 import { Promise } from 'es6-promise'
 
 
-import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
+import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
-
-const packageInfo = require('../../package.json');
 
 export class GraphRequest {
     config: Options;
@@ -332,7 +330,7 @@ export class GraphRequest {
         let request = requestBuilder
             .set('Authorization', 'Bearer ' + accessToken)
             .set(this._headers)
-            .set('SdkVersion', "graph-js-" + packageInfo.version)
+            .set('SdkVersion', "graph-js-" + PACKAGE_VERSION)
 
         if (this._responseType !== undefined) {
             request.responseType(this._responseType);

@@ -1,5 +1,6 @@
 {
   "name": "@microsoft/microsoft-graph-client",
+  "//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in common.ts. If you change it here, also change it there.",
   "version": "1.0.0",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
