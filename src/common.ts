@@ -2,6 +2,10 @@ export let oDataQueryNames = ["select", "expand", "orderby", "filter", "top", "s
 export const DEFAULT_VERSION = "v1.0";
 export const GRAPH_BASE_URL = "https://graph.microsoft.com/";
 
+// NOTE: This should be kept up to date with the version used in package.json.
+// If you are changing this please ensure you are also changing it in package.json.
+export const PACKAGE_VERSION = "1.0.0";
+
 // support oData params with and without $ prefix
 oDataQueryNames = oDataQueryNames.concat(oDataQueryNames.map((s) => "$"+s));
 
