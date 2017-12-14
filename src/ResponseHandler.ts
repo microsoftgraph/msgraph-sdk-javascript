@@ -2,9 +2,9 @@ import {GraphRequest} from "./GraphRequest"
 import {GraphRequestCallback, GraphError} from "./common"
 
 export class ResponseHandler {
-  static init(err, res, callback:GraphRequestCallback):void {
+  static init(res, err, resContents, callback:GraphRequestCallback):void {
       if (res && res.ok) { // 2xx
-          callback(null, res.body, res)
+          callback(null, resContents, res)
       } else { // not OK response
           if (err == null && res.error !== null) // if error was passed to body
               callback(ResponseHandler.ParseError(res), null, res);
@@ -12,7 +12,6 @@ export class ResponseHandler {
               callback(ResponseHandler.ParseError(err), null, res)
       }
   }
-
 
     /*
         Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
@@ -30,15 +29,10 @@ export class ResponseHandler {
     static ParseError(rawErr):GraphError {
         let errObj; // path to object containing innerError (see above schema)
 
-        if (!('rawResponse' in rawErr)) { // if superagent correctly parsed the JSON
             if (rawErr.response !== undefined && rawErr.response.body !== null && 'error' in rawErr.response.body) { // some 404s don't return an error object
                 errObj = rawErr.response.body.error;
             }
-        } else {
-            // if there was an error parsing the JSON
-            // possibly because of http://stackoverflow.com/a/38749510/2517012
-            errObj = JSON.parse(rawErr.rawResponse.replace(/^\uFEFF/, '')).error;
-        }
+
 
         // parse out statusCode
         let statusCode:number;

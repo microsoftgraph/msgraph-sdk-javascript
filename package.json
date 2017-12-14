@@ -9,7 +9,6 @@
   ],
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
-    "@types/superagent": "^2.0.36",
     "@types/mocha": "^2.2.34",
     "browserify": "^13.1.0",
     "mocha": "^3.2.0",
@@ -21,7 +20,6 @@
     "test:types": "tsc --p spec/types && mocha spec/types"
   },
   "dependencies": {
-    "superagent": "^3.5.2",
     "es6-promise": "^4.1.0"
   },
   "repository": {

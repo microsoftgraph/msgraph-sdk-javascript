@@ -1,9 +1,9 @@
-import * as request from 'superagent';
 import { Promise } from 'es6-promise'
 
 
 import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
+import { RequestMethod } from './RequestMethod';
 
 const packageInfo = require('../../package.json');
 
@@ -199,16 +199,17 @@ export class GraphRequest {
 
     delete(callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(request.del(url), callback)
+        return this.sendRequestAndRouteResponse(
+            new Request(url, { method: RequestMethod.DELETE, headers: new Headers() }),
+            callback
+        );
     }
 
     patch(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         
         return this.sendRequestAndRouteResponse(
-            request
-                .patch(url)
-                .send(content),
+            new Request(url, { method: RequestMethod.PATCH, body: content, headers: new Headers() }),
             callback
         );
     }
@@ -216,21 +217,22 @@ export class GraphRequest {
     post(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
-            request
-                .post(url)
-                .send(content),
-                callback
+            new Request(url, { method: RequestMethod.POST, body: content, headers: new Headers() }),
+            callback
         );
     }
 
     put(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
-            request
-                .put(url)
-                .type('application/octet-stream')
-                .send(content),
-                callback
+            new Request(
+                url,
+                { 
+                    method: RequestMethod.PUT,
+                    body: content,
+                    headers: new Headers({ 'Content-Type' : 'application/octet-stream' })
+                }),
+            callback
         );
     }
 
@@ -252,17 +254,16 @@ export class GraphRequest {
     get(callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
-            request
-                .get(url),
-                callback
+            new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
+            callback
         );
     }
 
 
     // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and return a promise
-    private routeResponseToPromise(requestBuilder:request.SuperAgentRequest) {
+    private routeResponseToPromise(request: Request) {
         return new Promise((resolve, reject) => {
-            this.routeResponseToCallback(requestBuilder, (err, body) => {
+            this.routeResponseToCallback(request, (err, body) => {
                 if (err != null) {
                     reject(err);
                 } else {
@@ -273,12 +274,17 @@ export class GraphRequest {
     }
 
     // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and invoke the callback
-    private routeResponseToCallback(requestBuilder:request.SuperAgentRequest, callback: GraphRequestCallback) {
+    private routeResponseToCallback(request: Request, callback: GraphRequestCallback) {
         this.config.authProvider((err, accessToken) => {
             if (err == null && accessToken != null) {
-                let request = this.configureRequest(requestBuilder, accessToken);
-                request.end((err, res) => {
-                    ResponseHandler.init(err, res, callback)
+                fetch(this.configureRequest(request, accessToken)).then((response) => {
+                    this.convertResponseType(response).then((responseValue) => {
+                        ResponseHandler.init(response, undefined, responseValue, callback);
+                    }).catch((error) => {
+                        ResponseHandler.init(response, error, undefined, callback)                        
+                    });
+                }).catch((error) => {
+                    ResponseHandler.init(undefined, error, undefined, callback)
                 });
             } else {
                 callback(err, null, null);
@@ -290,12 +296,12 @@ export class GraphRequest {
      * Help method that's called from the final actions( .get(), .post(), etc.) that after making the request either invokes
      * routeResponseToCallback() or routeResponseToPromise()
      */
-    private sendRequestAndRouteResponse(requestBuilder:request.SuperAgentRequest, callback?:GraphRequestCallback):Promise<any> {
+    private sendRequestAndRouteResponse(request: Request, callback?:GraphRequestCallback):Promise<any> {
         // return a promise when Promises are supported and no callback was provided
         if (callback == null && typeof Promise !== "undefined") {
-            return this.routeResponseToPromise(requestBuilder);
+            return this.routeResponseToPromise(request);
         } else {
-            this.routeResponseToCallback(requestBuilder, callback || function(){});
+            this.routeResponseToCallback(request, callback || function(){});
         }
     }
 
@@ -303,7 +309,9 @@ export class GraphRequest {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
-                callback(null, this.configureRequest(request.get(url), accessToken));
+                callback(null, this.configureRequest(
+                    new Request(url, { method: RequestMethod.GET, headers: new Headers()}),
+                    accessToken));
             } else {
                 callback(err, null);
             }
@@ -314,8 +322,15 @@ export class GraphRequest {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
-                let req:request.Request = this.configureRequest(request.put(url), accessToken);
-                req.type('application/octet-stream');
+                let req: Request = this.configureRequest(
+                    new Request(
+                        url,
+                        { 
+                            method: RequestMethod.PUT,
+                            headers: new Headers({ 'Content-Type' : 'application/octet-stream' }) 
+                        }),
+                    accessToken
+                );
                 stream
                     .pipe(req)
                     .on('error', function(err) {
@@ -328,16 +343,14 @@ export class GraphRequest {
         });
     }
 
-    private configureRequest(requestBuilder:request.SuperAgentRequest, accessToken:string):request.SuperAgentRequest {
-        let request = requestBuilder
-            .set('Authorization', 'Bearer ' + accessToken)
-            .set(this._headers)
-            .set('SdkVersion', "graph-js-" + packageInfo.version)
+    private configureRequest(request: Request, accessToken:string): Request {
+        request.headers.append('Authorization', 'Bearer ' + accessToken);
 
-        if (this._responseType !== undefined) {
-            request.responseType(this._responseType);
+        for (const key in this._headers) {
+         request.headers.append(key, this._headers[key] as string);
         }
 
+        request.headers.append('SdkVersion', "graph-js-" + packageInfo.version);
         return request;
     }
 
@@ -381,5 +394,28 @@ export class GraphRequest {
         }
 
         return "";        
+    }
+    
+    private convertResponseType(response: Response): Promise<any> {
+        let responseValue: any;
+        switch (this._responseType.toLowerCase()) {
+            case "arraybuffer" :
+                responseValue = response.arrayBuffer();
+                break;
+            case "blob" :
+                responseValue = response.blob();
+                break;
+            case "document" :
+                // XMLHTTPRequest only :(
+                responseValue = response.text();
+                break;
+            case "json" :
+                responseValue = response.json();
+                break;
+            default:
+                responseValue = response.text();
+                break;
+        }
+        return responseValue;
     }
 }
