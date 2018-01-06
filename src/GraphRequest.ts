@@ -94,7 +94,7 @@ export class GraphRequest {
     }
 
     
-    private urlJoin(urlSegments:[string]):String {
+    private urlJoin(urlSegments:string[]):String {
         const tr = (s) => s.replace(/\/+$/, '');
         const tl = (s) => s.replace(/^\/+/, '');
         const joiner = (pre, cur) => [tr(pre), tl(cur)].join('/');
@@ -127,17 +127,23 @@ export class GraphRequest {
      *     and .select("displayName", "birthday")
      * 
      */
-    select(properties:string|[string]):GraphRequest {
+    select(properties: string[]):GraphRequest
+    select(properties: string, ...additionalProperties: string[]):GraphRequest
+    select(properties:string|string[]):GraphRequest {
         this.addCsvQueryParamater("$select", properties, arguments);
         return this;
     }
 
-    expand(properties:string|[string]):GraphRequest {
+    expand(properties: string[]):GraphRequest
+    expand(properties: string, ...additionalProperties: string[]):GraphRequest
+    expand(properties:string|string[]):GraphRequest {
         this.addCsvQueryParamater("$expand", properties, arguments);
         return this;
     }
 
-    orderby(properties:string|[string]):GraphRequest {
+    orderby(properties: string[]):GraphRequest
+    orderby(properties: string, ...additionalProperties: string[]):GraphRequest
+    orderby(properties:string|string[]):GraphRequest {
         this.addCsvQueryParamater("$orderby", properties, arguments);
         return this;
     }
@@ -174,7 +180,7 @@ export class GraphRequest {
     }
 
     // helper for $select, $expand and $orderby (must be comma separated)
-    private addCsvQueryParamater(propertyName:string, propertyValue:string|[string], additionalProperties:IArguments) {
+    private addCsvQueryParamater(propertyName:string, propertyValue:string|string[], additionalProperties:IArguments) {
         // if there are already $propertyName value there, append a ","
         this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
 
