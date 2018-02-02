@@ -1,4 +1,5 @@
 import { Promise } from 'es6-promise';
+import 'whatwg-fetch';
 import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;
@@ -34,14 +35,15 @@ export declare class GraphRequest {
     update(content: any, callback?: GraphRequestCallback): Promise<any>;
     del(callback?: GraphRequestCallback): Promise<any>;
     get(callback?: GraphRequestCallback): Promise<any>;
-    private routeResponseToPromise(requestBuilder);
-    private routeResponseToCallback(requestBuilder, callback);
-    private sendRequestAndRouteResponse(requestBuilder, callback?);
+    private routeResponseToPromise(request);
+    private routeResponseToCallback(request, callback);
+    private sendRequestAndRouteResponse(request, callback?);
     getStream(callback: GraphRequestCallback): void;
     putStream(stream: any, callback: Function): void;
-    private configureRequest(requestBuilder, accessToken);
+    private configureRequest(request, accessToken);
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
     private createQueryString();
+    private convertResponseType(response);
 }

@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise'
-
+import 'whatwg-fetch';
 
 import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
@@ -398,6 +398,9 @@ export class GraphRequest {
     
     private convertResponseType(response: Response): Promise<any> {
         let responseValue: any;
+        if (!this._responseType) {
+            this._responseType = '';
+        }
         switch (this._responseType.toLowerCase()) {
             case "arraybuffer" :
                 responseValue = response.arrayBuffer();
@@ -407,13 +410,16 @@ export class GraphRequest {
                 break;
             case "document" :
                 // XMLHTTPRequest only :(
-                responseValue = response.text();
+                responseValue = response.json();
                 break;
             case "json" :
                 responseValue = response.json();
                 break;
-            default:
+            case "text" :
                 responseValue = response.text();
+                break;
+            default:
+                responseValue = response.json();
                 break;
         }
         return responseValue;

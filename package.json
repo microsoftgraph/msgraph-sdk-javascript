@@ -10,9 +10,11 @@
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
     "@types/mocha": "^2.2.34",
+    "@types/node": "^9.4.0",
     "browserify": "^13.1.0",
     "mocha": "^3.2.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js",
