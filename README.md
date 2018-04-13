@@ -287,7 +287,7 @@ These steps are not required to use this library.
 
 ```npm pack``` bundles the npm module.
 
-```npm test``` runs tests of the core library (URL parsing, mock responses, etc)
+```npm test``` runs tests of the core library (URL parsing, mock responses, etc). You can also set breakpoints and run this from within Visual Studio Code by selecting the *Run core test* configuration from the Debug view.
 
 ```npm run test:types``` to run tests against the Graph API for users, groups, Excel, OneNote, etc.
 
