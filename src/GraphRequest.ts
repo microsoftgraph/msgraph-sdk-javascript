@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise'
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 
 import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
 import { ResponseHandler } from "./ResponseHandler"

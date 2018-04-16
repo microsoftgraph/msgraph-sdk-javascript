@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;
