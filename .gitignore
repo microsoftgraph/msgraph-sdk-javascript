@@ -1,4 +1,5 @@
-.vscode/
+/.vscode/*
+!/.vscode/launch.json
 .DS_Store
 .tmp
 tmp
