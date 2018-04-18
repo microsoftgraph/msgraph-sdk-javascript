@@ -7,6 +7,15 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Run node samples",
+            "program": "${workspaceRoot}/samples/node/node-sample.js",
+            "cwd": "${workspaceRoot}",
+            "outFiles": [],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Run core tests",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "args": [
