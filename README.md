@@ -243,6 +243,16 @@ You can pass in additional request headers, either individually or in a dictiona
 ### .responseType()
 To set a custom response type, use the `.responseType(string)` method.  To see an example, check the [browser sample](samples/browser/index.html) that downloads an image and displays it in an `<img>` element.
 
+## Running node samples
+You can run and debug the node samples found under [./samples/node/node-sample.js](./samples/node/node-sample.js) by running the *Run node samples* configuration from the **Debug** (Ctrl + Shift + D) menu in Visual Studio Code. Alternately, you can run the node samples from the CLI by entering `node ./samples/node/node-sample.js` (assuming you are at the root of this repo). You'll need to rename the *secrets.example.json* file to *secrets.json* and add a valid access token to it. You can get an access token by doing the following:
+1. Go to [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
+2. Login with the account you want to use to run the node samples.
+3. Open the F12 dev tools.
+4. Type `tokenPlease()` into the console to get an access token.
+5. Copy the access token and put it into the *secrets.json* file and save the file.
+
+We suggest that you become acquainted with these samples as they show some of the main use scenarios for this client library.
+
 ## Additional information
 ### Options in `MicrosoftGraph.Client.init()`
 
@@ -287,7 +297,7 @@ These steps are not required to use this library.
 
 ```npm pack``` bundles the npm module.
 
-```npm test``` runs tests of the core library (URL parsing, mock responses, etc)
+```npm test``` runs tests of the core library (URL parsing, mock responses, etc). You can also set breakpoints and run this from within Visual Studio Code by selecting the *Run core test* configuration from the Debug view.
 
 ```npm run test:types``` to run tests against the Graph API for users, groups, Excel, OneNote, etc.
 
@@ -339,3 +349,6 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Third Party Notices
+See [Third Party Notices](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/THIRD%20PARTY%20NOTICES) for information on the packages that are included in the [package.json](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/package.json)

@@ -1,11 +1,9 @@
 import { Promise } from 'es6-promise'
 import 'isomorphic-fetch';
 
-import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback } from "./common"
+import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
-
-const packageInfo = require('../../package.json');
 
 export class GraphRequest {
     config: Options;
