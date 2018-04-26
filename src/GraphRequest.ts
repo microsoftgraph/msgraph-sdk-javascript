@@ -209,7 +209,13 @@ export class GraphRequest {
         let url = this.buildFullUrl();
         
         return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.PATCH, body: content, headers: new Headers() }),
+            new Request(
+                url,
+                { 
+                    method: RequestMethod.PATCH,
+                    body: content,
+                    headers: new Headers(({ 'Content-Type' : 'application/json' })) 
+                }),
             callback
         );
     }
@@ -217,7 +223,13 @@ export class GraphRequest {
     post(content:any, callback?:GraphRequestCallback):Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.POST, body: content, headers: new Headers() }),
+            new Request(
+                url,
+                {
+                    method: RequestMethod.POST,
+                    body: content,
+                    headers: new Headers(({ 'Content-Type' : 'application/json'})) 
+                 }),
             callback
         );
     }
@@ -345,10 +357,9 @@ export class GraphRequest {
 
     private configureRequest(request: Request, accessToken:string): Request {
         request.headers.append('Authorization', 'Bearer ' + accessToken);
-
-        Object.keys(this._headers).forEach((key) => request.headers.append(key, this._headers[key] as string));
-
         request.headers.append('SdkVersion', "graph-js-" + packageInfo.version);
+
+        Object.keys(this._headers).forEach((key) => request.headers.set(key, this._headers[key] as string));
         return request;
     }
 
