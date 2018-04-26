@@ -355,7 +355,7 @@ export class GraphRequest {
 
     private configureRequest(request: Request, accessToken:string): Request {
         request.headers.append('Authorization', 'Bearer ' + accessToken);
-        request.headers.append('SdkVersion', "graph-js-" + packageInfo.version);
+        request.headers.append('SdkVersion', "graph-js-" + PACKAGE_VERSION);
 
         Object.keys(this._headers).forEach((key) => request.headers.set(key, this._headers[key] as string));
         return request;
