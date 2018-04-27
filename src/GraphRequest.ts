@@ -8,11 +8,11 @@ import { RequestMethod } from './RequestMethod';
 export class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
-    _headers:{ [key: string] : string|number; } // other headers to pass through to superagent
+    _headers: { [key: string]: string | number; } // other headers to pass through to superagent
     _responseType: string;
 
 
-    constructor(config: Options, path:string) {
+    constructor(config: Options, path: string) {
         this.config = config;
         this._headers = {};
 
@@ -26,23 +26,23 @@ export class GraphRequest {
         this.parsePath(path);
     }
 
-    public header(headerKey:string, headerValue:string) {
+    public header(headerKey: string, headerValue: string) {
         this._headers[headerKey] = headerValue;
         return this;
     }
 
-    public headers(headers:{ [key: string] : string|number }) {
+    public headers(headers: { [key: string]: string | number }) {
         for (let key in headers) {
             this._headers[key] = headers[key];
         }
         return this;
     }
 
-    public parsePath(rawPath:string) {
+    public parsePath(rawPath: string) {
         // break rawPath into this.urlComponents
 
         // strip out the base url if they passed it in
-        if (rawPath.indexOf("https://")!= -1) {
+        if (rawPath.indexOf("https://") != -1) {
             rawPath = rawPath.replace("https://", "");
 
             // find where the host ends
@@ -58,12 +58,12 @@ export class GraphRequest {
             // strip version from rawPath
             rawPath = rawPath.substring(endOfVersionStrPos + 1, rawPath.length);
         }
-        
+
         // strip out any leading "/"
         if (rawPath.charAt(0) == "/") {
             rawPath = rawPath.substr(1);
         }
-        
+
         let queryStrPos = rawPath.indexOf("?");
         // let afterPath = 
         if (queryStrPos == -1) {
@@ -71,7 +71,7 @@ export class GraphRequest {
             this.urlComponents.path = rawPath;
         } else {
             this.urlComponents.path = rawPath.substr(0, queryStrPos);
-            
+
             // capture query string into
             // this.urlComponents.oDataQueryParams
             // and
@@ -87,14 +87,14 @@ export class GraphRequest {
                 if (oDataQueryNames.indexOf(key)) {
                     this.urlComponents.oDataQueryParams[key] = value;
                 } else {
-                    this.urlComponents.otherURLQueryParams[key] = value;                    
+                    this.urlComponents.otherURLQueryParams[key] = value;
                 }
             }
         }
     }
 
-    
-    private urlJoin(urlSegments:[string]):String {
+
+    private urlJoin(urlSegments: string[]): String {
         const tr = (s) => s.replace(/\/+$/, '');
         const tl = (s) => s.replace(/^\/+/, '');
         const joiner = (pre, cur) => [tr(pre), tl(cur)].join('/');
@@ -103,11 +103,11 @@ export class GraphRequest {
         return parts.reduce(joiner);
     }
 
-    public buildFullUrl():string {
+    public buildFullUrl(): string {
         let url = this.urlJoin([this.urlComponents.host,
-                                this.urlComponents.version,
-                                this.urlComponents.path])
-                  + this.createQueryString();
+        this.urlComponents.version,
+        this.urlComponents.path])
+            + this.createQueryString();
 
         if (this.config.debugLogging) {
             console.log(url)
@@ -116,7 +116,7 @@ export class GraphRequest {
         return url;
     }
 
-    version(v:string):GraphRequest {
+    version(v: string): GraphRequest {
         this.urlComponents.version = v;
         return this;
     }
@@ -127,58 +127,58 @@ export class GraphRequest {
      *     and .select("displayName", "birthday")
      * 
      */
-    select(properties:string|[string]):GraphRequest {
+    select(properties: string | string[]): GraphRequest {
         this.addCsvQueryParamater("$select", properties, arguments);
         return this;
     }
 
-    expand(properties:string|[string]):GraphRequest {
+    expand(properties: string | string[]): GraphRequest {
         this.addCsvQueryParamater("$expand", properties, arguments);
         return this;
     }
 
-    orderby(properties:string|[string]):GraphRequest {
+    orderby(properties: string | string[]): GraphRequest {
         this.addCsvQueryParamater("$orderby", properties, arguments);
         return this;
     }
 
-    
-    filter(filterStr:string):GraphRequest {
+
+    filter(filterStr: string): GraphRequest {
         this.urlComponents.oDataQueryParams["$filter"] = filterStr;
         return this;
     }
 
-    top(n:number):GraphRequest {
+    top(n: number): GraphRequest {
         this.urlComponents.oDataQueryParams["$top"] = n;
         return this;
     }
 
-    skip(n:number):GraphRequest {
+    skip(n: number): GraphRequest {
         this.urlComponents.oDataQueryParams["$skip"] = n;
         return this;
     }
 
-    skipToken(token:string):GraphRequest {
+    skipToken(token: string): GraphRequest {
         this.urlComponents.oDataQueryParams["$skipToken"] = token;
         return this;
     }
 
-    count(count:boolean):GraphRequest {
+    count(count: boolean): GraphRequest {
         this.urlComponents.oDataQueryParams["$count"] = count.toString();
         return this;
     }
-    
-    responseType(responseType:string):GraphRequest {
+
+    responseType(responseType: string): GraphRequest {
         this._responseType = responseType;
         return this;
     }
 
     // helper for $select, $expand and $orderby (must be comma separated)
-    private addCsvQueryParamater(propertyName:string, propertyValue:string|[string], additionalProperties:IArguments) {
+    private addCsvQueryParamater(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments) {
         // if there are already $propertyName value there, append a ","
         this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
 
-        let allValues:string[] = [];
+        let allValues: string[] = [];
 
         if (typeof propertyValue === "string") {
             allValues.push(propertyValue);
@@ -195,7 +195,7 @@ export class GraphRequest {
     }
 
 
-    delete(callback?:GraphRequestCallback):Promise<any> {
+    delete(callback?: GraphRequestCallback): Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             new Request(url, { method: RequestMethod.DELETE, headers: new Headers() }),
@@ -203,22 +203,21 @@ export class GraphRequest {
         );
     }
 
-    patch(content:any, callback?:GraphRequestCallback):Promise<any> {
+    patch(content: any, callback?: GraphRequestCallback): Promise<any> {
         let url = this.buildFullUrl();
-        
         return this.sendRequestAndRouteResponse(
             new Request(
                 url,
-                { 
+                {
                     method: RequestMethod.PATCH,
                     body: content,
-                    headers: new Headers(({ 'Content-Type' : 'application/json' })) 
+                    headers: new Headers({ 'Content-Type': 'application/json' })
                 }),
             callback
         );
     }
 
-    post(content:any, callback?:GraphRequestCallback):Promise<any> {
+    post(content: any, callback?: GraphRequestCallback): Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             new Request(
@@ -226,21 +225,21 @@ export class GraphRequest {
                 {
                     method: RequestMethod.POST,
                     body: content,
-                    headers: new Headers(({ 'Content-Type' : 'application/json'})) 
-                 }),
+                    headers: new Headers({ 'Content-Type': 'application/json' })
+                }),
             callback
         );
     }
 
-    put(content:any, callback?:GraphRequestCallback):Promise<any> {
+    put(content: any, callback?: GraphRequestCallback): Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             new Request(
                 url,
-                { 
+                {
                     method: RequestMethod.PUT,
                     body: content,
-                    headers: new Headers({ 'Content-Type' : 'application/octet-stream' })
+                    headers: new Headers({ 'Content-Type': 'application/octet-stream' })
                 }),
             callback
         );
@@ -248,20 +247,20 @@ export class GraphRequest {
 
     // request aliases
     // alias for post
-    create(content:any, callback?:GraphRequestCallback):Promise<any> {
+    create(content: any, callback?: GraphRequestCallback): Promise<any> {
         return this.post(content, callback);
     }
 
     // alias for patch
-    update(content:any, callback?:GraphRequestCallback):Promise<any> {
+    update(content: any, callback?: GraphRequestCallback): Promise<any> {
         return this.patch(content, callback);
     }
 
-    del(callback?:GraphRequestCallback):Promise<any> {
+    del(callback?: GraphRequestCallback): Promise<any> {
         return this.delete(callback);
     }
 
-    get(callback?:GraphRequestCallback):Promise<any> {
+    get(callback?: GraphRequestCallback): Promise<any> {
         let url = this.buildFullUrl();
         return this.sendRequestAndRouteResponse(
             new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
@@ -291,7 +290,7 @@ export class GraphRequest {
                     this.convertResponseType(response).then((responseValue) => {
                         ResponseHandler.init(response, undefined, responseValue, callback);
                     }).catch((error) => {
-                        ResponseHandler.init(response, error, undefined, callback)                        
+                        ResponseHandler.init(response, error, undefined, callback)
                     });
                 }).catch((error) => {
                     ResponseHandler.init(undefined, error, undefined, callback)
@@ -306,21 +305,21 @@ export class GraphRequest {
      * Help method that's called from the final actions( .get(), .post(), etc.) that after making the request either invokes
      * routeResponseToCallback() or routeResponseToPromise()
      */
-    private sendRequestAndRouteResponse(request: Request, callback?:GraphRequestCallback):Promise<any> {
+    private sendRequestAndRouteResponse(request: Request, callback?: GraphRequestCallback): Promise<any> {
         // return a promise when Promises are supported and no callback was provided
         if (callback == null && typeof Promise !== "undefined") {
             return this.routeResponseToPromise(request);
         } else {
-            this.routeResponseToCallback(request, callback || function(){});
+            this.routeResponseToCallback(request, callback || function () { });
         }
     }
 
-    getStream(callback:GraphRequestCallback) {
+    getStream(callback: GraphRequestCallback) {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
                 callback(null, this.configureRequest(
-                    new Request(url, { method: RequestMethod.GET, headers: new Headers()}),
+                    new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
                     accessToken));
             } else {
                 callback(err, null);
@@ -328,32 +327,32 @@ export class GraphRequest {
         });
     }
 
-    putStream(stream:any, callback:Function) {
+    putStream(stream: any, callback: Function) {
         this.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
                 let url = this.buildFullUrl();
                 let req: Request = this.configureRequest(
                     new Request(
                         url,
-                        { 
+                        {
                             method: RequestMethod.PUT,
-                            headers: new Headers({ 'Content-Type' : 'application/octet-stream' }) 
+                            headers: new Headers({ 'Content-Type': 'application/octet-stream' })
                         }),
                     accessToken
                 );
                 stream
                     .pipe(req)
-                    .on('error', function(err) {
+                    .on('error', function (err) {
                         callback(err, null)
                     })
-                    .on('end', function() {
+                    .on('end', function () {
                         callback(null)
                     });
             }
         });
     }
 
-    private configureRequest(request: Request, accessToken:string): Request {
+    private configureRequest(request: Request, accessToken: string): Request {
         request.headers.append('Authorization', 'Bearer ' + accessToken);
         request.headers.append('SdkVersion', "graph-js-" + PACKAGE_VERSION);
 
@@ -362,10 +361,9 @@ export class GraphRequest {
     }
 
     // append query strings to the url, accepts either a string like $select=displayName or a dictionary {"$select": "displayName"}
-    query(queryDictionaryOrString:string|{ [key: string] : string|number; }):GraphRequest {
+    query(queryDictionaryOrString: string | { [key: string]: string | number; }): GraphRequest {
         if (typeof queryDictionaryOrString === "string") { // is string
             let queryStr = queryDictionaryOrString;
-            //split .query("$select=displayName") into key and balue
             let queryKey = queryStr.split("=")[0];
             let queryValue = queryStr.split("=")[1];
 
@@ -377,19 +375,19 @@ export class GraphRequest {
         }
         return this;
     }
-    
+
     // ex: ?$select=displayName&$filter=startsWith(displayName, 'A')
     // does not include starting ?
-    private createQueryString():string {
+    private createQueryString(): string {
         // need to combine first this.urlComponents.oDataQueryParams and this.urlComponents.otherURLQueryParams
-        let q:string[] = [];
+        let q: string[] = [];
 
         if (Object.keys(this.urlComponents.oDataQueryParams).length != 0) {
             for (let property in this.urlComponents.oDataQueryParams) {
                 q.push(property + "=" + this.urlComponents.oDataQueryParams[property]);
             }
         }
-        
+
         if (Object.keys(this.urlComponents.otherURLQueryParams).length != 0) {
             for (let property in this.urlComponents.otherURLQueryParams) {
                 q.push(property + "=" + this.urlComponents.otherURLQueryParams[property]);
@@ -400,29 +398,29 @@ export class GraphRequest {
             return "?" + q.join("&");
         }
 
-        return "";        
+        return "";
     }
-    
+
     private convertResponseType(response: Response): Promise<any> {
         let responseValue: any;
         if (!this._responseType) {
             this._responseType = '';
         }
         switch (this._responseType.toLowerCase()) {
-            case "arraybuffer" :
+            case "arraybuffer":
                 responseValue = response.arrayBuffer();
                 break;
-            case "blob" :
+            case "blob":
                 responseValue = response.blob();
                 break;
-            case "document" :
+            case "document":
                 // XMLHTTPRequest only :(
                 responseValue = response.json();
                 break;
-            case "json" :
+            case "json":
                 responseValue = response.json();
                 break;
-            case "text" :
+            case "text":
                 responseValue = response.text();
                 break;
             default:
