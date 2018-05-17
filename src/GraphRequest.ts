@@ -94,7 +94,7 @@ export class GraphRequest {
     }
 
     
-    private urlJoin(urlSegments:[string]):String {
+    private urlJoin(urlSegments:string[]):String {
         const tr = (s) => s.replace(/\/+$/, '');
         const tl = (s) => s.replace(/^\/+/, '');
         const joiner = (pre, cur) => [tr(pre), tl(cur)].join('/');
