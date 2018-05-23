@@ -32,6 +32,12 @@ cases.push({
 });
 
 cases.push({
+    url: "https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle",
+    request: client.api("/me")
+                .select("displayName", "jobTitle")
+});
+
+cases.push({
     url: "https://graph.microsoft.com/beta/me?$select=displayName,jobTitle",
     request: client.api("/me")
             .version("beta")
