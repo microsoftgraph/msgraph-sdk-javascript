@@ -16,9 +16,9 @@ export declare class GraphRequest {
     private urlJoin(urlSegments);
     buildFullUrl(): string;
     version(v: string): GraphRequest;
-    select(properties: string | [string]): GraphRequest;
-    expand(properties: string | [string]): GraphRequest;
-    orderby(properties: string | [string]): GraphRequest;
+    select(properties: string | string[]): GraphRequest;
+    expand(properties: string | string[]): GraphRequest;
+    orderby(properties: string | string[]): GraphRequest;
     filter(filterStr: string): GraphRequest;
     top(n: number): GraphRequest;
     skip(n: number): GraphRequest;
