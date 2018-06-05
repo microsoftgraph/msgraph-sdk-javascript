@@ -4,6 +4,7 @@ import 'isomorphic-fetch';
 import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
+import { GraphHelper } from './GraphHelper';
 
 export class GraphRequest {
     config: Options;
@@ -210,7 +211,7 @@ export class GraphRequest {
                 url,
                 {
                     method: RequestMethod.PATCH,
-                    body: content,
+                    body: GraphHelper.serializeContent(content),
                     headers: new Headers({ 'Content-Type': 'application/json' })
                 }),
             callback
@@ -224,7 +225,7 @@ export class GraphRequest {
                 url,
                 {
                     method: RequestMethod.POST,
-                    body: content,
+                    body: GraphHelper.serializeContent(content),
                     headers: new Headers({ 'Content-Type': 'application/json' })
                 }),
             callback
@@ -238,7 +239,7 @@ export class GraphRequest {
                 url,
                 {
                     method: RequestMethod.PUT,
-                    body: content,
+                    body: GraphHelper.serializeContent(content),
                     headers: new Headers({ 'Content-Type': 'application/octet-stream' })
                 }),
             callback
