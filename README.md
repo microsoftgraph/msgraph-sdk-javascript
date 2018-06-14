@@ -151,7 +151,7 @@ let fs = require('fs'); // requires filesystem module
 let stream = fs.createReadStream('./logo.png'); //path to local file
 client
     .api('/me/drive/root/children/logo.png/content') // path to the destination in OneDrive
-    .put(stream, (err) => {
+    .putStream(stream, (err) => {
         console.log(err);
     });
 ````
