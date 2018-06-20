@@ -1,4 +1,5 @@
 import { Promise } from 'es6-promise';
+import 'isomorphic-fetch';
 import { Options, URLComponents, GraphRequestCallback } from "./common";
 export declare class GraphRequest {
     config: Options;
@@ -16,9 +17,9 @@ export declare class GraphRequest {
     private urlJoin(urlSegments);
     buildFullUrl(): string;
     version(v: string): GraphRequest;
-    select(properties: string | [string]): GraphRequest;
-    expand(properties: string | [string]): GraphRequest;
-    orderby(properties: string | [string]): GraphRequest;
+    select(properties: string | string[]): GraphRequest;
+    expand(properties: string | string[]): GraphRequest;
+    orderby(properties: string | string[]): GraphRequest;
     filter(filterStr: string): GraphRequest;
     top(n: number): GraphRequest;
     skip(n: number): GraphRequest;
@@ -34,14 +35,15 @@ export declare class GraphRequest {
     update(content: any, callback?: GraphRequestCallback): Promise<any>;
     del(callback?: GraphRequestCallback): Promise<any>;
     get(callback?: GraphRequestCallback): Promise<any>;
-    private routeResponseToPromise(requestBuilder);
-    private routeResponseToCallback(requestBuilder, callback);
-    private sendRequestAndRouteResponse(requestBuilder, callback?);
+    private routeResponseToPromise(request);
+    private routeResponseToCallback(request, callback);
+    private sendRequestAndRouteResponse(request, callback?);
     getStream(callback: GraphRequestCallback): void;
     putStream(stream: any, callback: Function): void;
-    private configureRequest(requestBuilder, accessToken);
+    private configureRequest(request, accessToken);
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
     private createQueryString();
+    private convertResponseType(response);
 }
