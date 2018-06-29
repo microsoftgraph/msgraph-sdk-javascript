@@ -1,1 +1,1 @@
-export {};
+import 'isomorphic-fetch';
