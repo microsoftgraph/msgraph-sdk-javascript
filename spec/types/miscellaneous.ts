@@ -19,28 +19,28 @@ import { getClient, randomString } from "./test-helper"
 
 declare const describe, it;
 
-describe('Fetch messages', function() {
-    this.timeout(10*1000);
+describe('Fetch messages', function () {
+    this.timeout(10 * 1000);
     /* 
         Following test assumes that number of messages exceed the default number for @odata.nextLink 
         to exist
     */
-    it('Fetch the messages', function(done) {
-      return getClient().api("https://graph.microsoft.com/v1.0/me/messages").get((err, res) => {
-        assert.isTrue(err === null);
-        assert.isDefined(res['@odata.context']);
-        assert.isDefined(res['@odata.nextLink']);
-        assert.isDefined(res['value']);
-        done();
-      });
+    it('Fetch the messages', function (done) {
+        return getClient().api("/me/messages").get((err, res) => {
+            assert.isTrue(err === null);
+            assert.isDefined(res['@odata.context']);
+            assert.isDefined(res['@odata.nextLink']);
+            assert.isDefined(res['value']);
+            done();
+        });
     });
 
     /* 
         Following test assumes that number of messages exceed the default number for @odata.nextLink to 
         exist
     */
-    it('Fetch the messages with $top', function(done) {
-        return getClient().api("https://graph.microsoft.com/v1.0/me/messages?$top=5").get((err, res) => {
+    it('Fetch the messages with $top', function (done) {
+        return getClient().api("/me/messages?$top=5").get((err, res) => {
             assert.isTrue(err === null);
             assert.isDefined(res['@odata.context']);
             assert.isDefined(res['@odata.nextLink']);
@@ -48,13 +48,13 @@ describe('Fetch messages', function() {
             assert.isTrue(res.value.length == 5);
             done();
         });
-      });
-      
-      /* 
-        Following test assumes that number of messages exceed the default number for @odata.nextLink to exist
-      */
-      it('Fetch the messages with $select', function(done) {
-        return getClient().api("https://graph.microsoft.com/v1.0/me/messages?$select=createdDateTime").get((err, res) => {
+    });
+
+    /* 
+      Following test assumes that number of messages exceed the default number for @odata.nextLink to exist
+    */
+    it('Fetch the messages with $select', function (done) {
+        return getClient().api("/me/messages?$select=createdDateTime").get((err, res) => {
             assert.isTrue(err === null);
             assert.isDefined(res['@odata.context']);
             assert.isDefined(res['@odata.nextLink']);
@@ -62,100 +62,100 @@ describe('Fetch messages', function() {
             assert.isDefined(res.value[0]['createdDateTime']);
             done();
         });
-      });
+    });
 });
 
-describe('GET/PATCH mailBoxSettings', function() {
-    this.timeout(10*1000);
-    it('GET mailBoxSettings', function(done) {
-      return getClient().api("https://graph.microsoft.com/v1.0/me/mailboxSettings").get((err, res) => {
-        assert.isDefined(res['@odata.context']);
-        assert.isDefined(res['archiveFolder']);
-        assert.isDefined(res['timeZone']);
-        assert.isDefined(res['automaticRepliesSetting']);
-        assert.isDefined(res['language']);
-        assert.isDefined(res['workingHours']);
-        done();
-      });
+describe('GET/PATCH mailBoxSettings', function () {
+    this.timeout(10 * 1000);
+    it('GET mailBoxSettings', function (done) {
+        return getClient().api("/me/mailboxSettings").get((err, res) => {
+            assert.isDefined(res['@odata.context']);
+            assert.isDefined(res['archiveFolder']);
+            assert.isDefined(res['timeZone']);
+            assert.isDefined(res['automaticRepliesSetting']);
+            assert.isDefined(res['language']);
+            assert.isDefined(res['workingHours']);
+            done();
+        });
     });
 
-    it('PATCH mailBoxSettings', function(done) {
-        return getClient().api("https://graph.microsoft.com/v1.0/me/mailboxSettings").patch({"timeZone": "India Standard Time"}, (err, res) => {
+    it('PATCH mailBoxSettings', function (done) {
+        return getClient().api("/me/mailboxSettings").patch({ "timeZone": "India Standard Time" }, (err, res) => {
             assert.isDefined(res['@odata.context']);
             assert.isDefined(res['timeZone']);
             assert.isTrue(res['timeZone'] == 'India Standard Time');
             done();
         });
-      });
-});
-
-describe('Fetch inbox folder', function() {
-    this.timeout(10*1000);
-    it('GET me/mailfolders/inbox', function(done) {
-      return getClient().api("https://graph.microsoft.com/v1.0/me/mailfolders/inbox").get((err, res) => {
-        assert.isTrue(err === null);
-        assert.isDefined(res['@odata.context']);
-        assert.isDefined(res['id']);
-        assert.isDefined(res['displayName']);
-        assert.isDefined(res['parentFolderId']);
-        assert.isDefined(res['childFolderCount']);
-        assert.isDefined(res['unreadItemCount']);
-        assert.isDefined(res['totalItemCount']);
-        done();
-      });
     });
 });
 
-describe('Fetch users and groups', function() {
-    this.timeout(10*1000);
-    it('GET users/{id}', function(done) {
-      return getClient().api("https://graph.microsoft.com/v1.0/users").get((err, res) => {
-        assert.isTrue(err === null);
-        assert.isDefined(res);
-        assert.isDefined(res['value']);
-        const id = res['value'][0]['id'];
-        return getClient().api("https://graph.microsoft.com/v1.0/users/" + id).get((err, res) => {
+describe('Fetch inbox folder', function () {
+    this.timeout(10 * 1000);
+    it('GET me/mailfolders/inbox', function (done) {
+        return getClient().api("/me/mailfolders/inbox").get((err, res) => {
             assert.isTrue(err === null);
-            assert.isDefined(res);
-            assert.isTrue(res['id'] == id);
+            assert.isDefined(res['@odata.context']);
+            assert.isDefined(res['id']);
+            assert.isDefined(res['displayName']);
+            assert.isDefined(res['parentFolderId']);
+            assert.isDefined(res['childFolderCount']);
+            assert.isDefined(res['unreadItemCount']);
+            assert.isDefined(res['totalItemCount']);
             done();
         });
-      });
     });
+});
 
-    /* 
-        Following test assumes that a group has been made in the tenant.
-    */
-    it('GET groups/{id}', function(done) {
-        return getClient().api("https://graph.microsoft.com/v1.0/groups").get((err, res) => {
+describe('Fetch users and groups', function () {
+    this.timeout(10 * 1000);
+    it('GET users/{id}', function (done) {
+        return getClient().api("/users").get((err, res) => {
             assert.isTrue(err === null);
             assert.isDefined(res);
+            assert.isDefined(res['value']);
             const id = res['value'][0]['id'];
-            return getClient().api("https://graph.microsoft.com/v1.0/groups/" + id).get((err, res) => {
+            return getClient().api("/users/" + id).get((err, res) => {
                 assert.isTrue(err === null);
                 assert.isDefined(res);
                 assert.isTrue(res['id'] == id);
                 done();
             });
         });
-      });
-});
-
-describe('Test for actions and functions', function() {
-    this.timeout(10*1000);
-    it('GET me/findrooms', function(done) {
-      return getClient().api("https://graph.microsoft.com/beta/me/findRooms").get((err, res) => {
-        assert.isTrue(err === null);
-        assert.isDefined(res['@odata.context']);
-        assert.isDefined(res['value']);
-        done();
-      });
     });
 
-    it('POST me/getMailTips', function(done) {
-        return getClient().api("https://graph.microsoft.com/beta/me/getMailTips").post({
+    /* 
+        Following test assumes that a group has been made in the tenant.
+    */
+    it('GET groups/{id}', function (done) {
+        return getClient().api("/groups").get((err, res) => {
+            assert.isTrue(err === null);
+            assert.isDefined(res);
+            const id = res['value'][0]['id'];
+            return getClient().api("/groups/" + id).get((err, res) => {
+                assert.isTrue(err === null);
+                assert.isDefined(res);
+                assert.isTrue(res['id'] == id);
+                done();
+            });
+        });
+    });
+});
+
+describe('Test for actions and functions', function () {
+    this.timeout(10 * 1000);
+    it('GET me/findrooms', function (done) {
+        return getClient().api("/me/findRooms").version("beta").get((err, res) => {
+            assert.isTrue(err === null);
+            assert.isDefined(res['@odata.context']);
+            assert.isDefined(res['value']);
+            done();
+        });
+    });
+
+    it('POST me/getMailTips', function (done) {
+        return getClient().api("/me/getMailTips").version("beta").post({
             "EmailAddresses": [
-                "danas@contoso.onmicrosoft.com", 
+                "danas@contoso.onmicrosoft.com",
                 "fannyd@contoso.onmicrosoft.com"
             ],
             "MailTipsOptions": "automaticReplies, mailboxFullStatus"
@@ -166,22 +166,22 @@ describe('Test for actions and functions', function() {
             assert.isUndefined(res['error']);
             done();
         });
-      });
+    });
 });
 
-describe('Test for GET and PUT binary data', function() {
-    this.timeout(10*1000);
-    it('PUT me/photo', function(done) {
+describe('Test for GET and PUT binary data', function () {
+    this.timeout(10 * 1000);
+    it('PUT me/photo', function (done) {
         const fs = require("fs");
         var nb = fs.readFileSync('sample.png');
-        return getClient().api("https://graph.microsoft.com/v1.0/me/photo/$value").put(nb, (err, res) => {
+        return getClient().api("/me/photo/$value").put(nb, (err, res) => {
             assert.isTrue(err === null);
             done();
         });
     });
 
-    it('GET me/photo', function(done) {
-        return getClient().api("https://graph.microsoft.com/v1.0/me/photo/$value").get((err, res) => {
+    it('GET me/photo', function (done) {
+        return getClient().api("/me/photo/$value").get((err, res) => {
             assert.isTrue(err === null);
             done();
         });
