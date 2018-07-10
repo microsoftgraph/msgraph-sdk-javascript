@@ -3,7 +3,7 @@
     "@microsoft/microsoft-graph-types": "^1.0.0",
     "@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
     "@microsoft/microsoft-graph-client": "^0.4.1",
-    "@types/chai": "^3.5.1",
-    "chai": "^3.5.0"
+    "@types/chai": "^4.1.4",
+    "chai": "^4.1.2"
   }
 }
