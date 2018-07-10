@@ -6,15 +6,15 @@ import { getClient, randomString } from "./test-helper"
 
 declare const describe, it;
 
-describe('Delta Query', function() {
-  this.timeout(10*1000);
+describe('Delta Query', function () {
+  this.timeout(10 * 1000);
   let today = new Date();
   let tomorrow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000);
   let nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-  let deltaLink:string;
+  let deltaLink: string;
 
-  let mockEvent:Event = {
+  let mockEvent: Event = {
     "originalStartTimeZone": tomorrow.toISOString(),
     "originalEndTimeZone": tomorrow.toISOString(),
     "reminderMinutesBeforeStart": 99,
@@ -23,14 +23,13 @@ describe('Delta Query', function() {
   }
 
 
-  it('Gets the delta link for the initial calendar view list', function() {
+  it('Gets the delta link for the initial calendar view list', function () {
     return getClient()
       .api("/me/calendarview/delta")
       .query({
-        "startdatetime" : today.toISOString(),
+        "startdatetime": today.toISOString(),
         "enddatetime": nextWeek.toISOString()
       })
-      .version("beta")
       .get()
       .then((res) => {
         return getClient()
@@ -42,18 +41,18 @@ describe('Delta Query', function() {
       });
   });
 
-  it('Creates a calendar event to see changes in the delta response', function() {
+  it('Creates a calendar event to see changes in the delta response', function () {
     return getClient()
       .api('/me/events')
       .post(mockEvent);
   });
 
-  it('Uses delta token to see changed calendar view', function() {
+  it('Uses delta token to see changed calendar view', function () {
     return getClient()
       .api(deltaLink)
       .get()
       .then((res) => {
-        let events:Event[] = res.value;
+        let events: Event[] = res.value;
         for (let event of events) {
           if (event.subject == mockEvent.subject) {
             return Promise.resolve();
