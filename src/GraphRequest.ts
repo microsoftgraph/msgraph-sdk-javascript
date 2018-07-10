@@ -226,7 +226,7 @@ export class GraphRequest {
                 {
                     method: RequestMethod.POST,
                     body: GraphHelper.serializeContent(content),
-                    headers: new Headers({ 'Content-Type': 'application/json' })
+                    headers: new Headers((content.constructor !== undefined && content.constructor.name === "FormData") ? {} : { 'Content-Type': 'application/json' })
                 }),
             callback
         );
