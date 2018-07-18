@@ -3,5 +3,5 @@ export declare enum RequestMethod {
     PATCH = "PATCH",
     POST = "POST",
     PUT = "PUT",
-    DELETE = "DELETE",
+    DELETE = "DELETE"
 }

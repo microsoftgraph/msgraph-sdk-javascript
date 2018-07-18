@@ -14,7 +14,7 @@ export declare class GraphRequest {
         [key: string]: string | number;
     }): this;
     parsePath(rawPath: string): void;
-    private urlJoin(urlSegments);
+    private urlJoin;
     buildFullUrl(): string;
     version(v: string): GraphRequest;
     select(properties: string | string[]): GraphRequest;
@@ -26,7 +26,7 @@ export declare class GraphRequest {
     skipToken(token: string): GraphRequest;
     count(count: boolean): GraphRequest;
     responseType(responseType: string): GraphRequest;
-    private addCsvQueryParamater(propertyName, propertyValue, additionalProperties);
+    private addCsvQueryParamater;
     delete(callback?: GraphRequestCallback): Promise<any>;
     patch(content: any, callback?: GraphRequestCallback): Promise<any>;
     post(content: any, callback?: GraphRequestCallback): Promise<any>;
@@ -35,15 +35,15 @@ export declare class GraphRequest {
     update(content: any, callback?: GraphRequestCallback): Promise<any>;
     del(callback?: GraphRequestCallback): Promise<any>;
     get(callback?: GraphRequestCallback): Promise<any>;
-    private routeResponseToPromise(request);
-    private routeResponseToCallback(request, callback);
-    private sendRequestAndRouteResponse(request, callback?);
+    private routeResponseToPromise;
+    private routeResponseToCallback;
+    private sendRequestAndRouteResponse;
     getStream(callback: GraphRequestCallback): void;
     putStream(stream: any, callback: Function): void;
-    private configureRequest(request, accessToken);
+    private configureRequest;
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
     }): GraphRequest;
-    private createQueryString();
-    private convertResponseType(response);
+    private createQueryString;
+    private convertResponseType;
 }

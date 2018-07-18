@@ -1,9 +1,11 @@
 {
   "devDependencies": {
+    "@microsoft/microsoft-graph-client": "^0.4.1",
     "@microsoft/microsoft-graph-types": "^1.0.0",
     "@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
-    "@microsoft/microsoft-graph-client": "^0.4.1",
     "@types/chai": "^4.1.4",
-    "chai": "^4.1.2"
+    "@types/form-data": "^2.2.1",
+    "chai": "^4.1.2",
+    "form-data": "^2.3.2"
   }
 }
