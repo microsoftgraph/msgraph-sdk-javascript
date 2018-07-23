@@ -29,6 +29,11 @@ export interface URLComponents {
     otherURLQueryParams:{ [key: string] : string|number; }
 }
 
+export interface DefaultRequestHeaders {
+    Authorization: string
+    SdkVersion: string
+}
+
 export interface GraphRequestCallback {
     (error: GraphError, response: any, rawResponse?: any): void
 }

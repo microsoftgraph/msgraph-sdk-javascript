@@ -1,7 +1,7 @@
 import { Promise } from 'es6-promise'
 import 'isomorphic-fetch';
 
-import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION } from "./common"
+import { Options, URLComponents, GraphError, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
 import { GraphHelper } from './GraphHelper';
@@ -269,8 +269,6 @@ export class GraphRequest {
         );
     }
 
-
-    // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and return a promise
     private routeResponseToPromise(request: Request) {
         return new Promise((resolve, reject) => {
             this.routeResponseToCallback(request, (err, body) => {
@@ -283,19 +281,26 @@ export class GraphRequest {
         });
     }
 
-    // Given the built SuperAgentRequest, get an auth token from the authProvider, make the request and invoke the callback
+    // Given the Request object, make the request and invoke callback
+    private handleFetch(request: Request | string, callback: GraphRequestCallback, options?: any) {
+        ((request.constructor.name === "Request") ? fetch(request) : fetch(request, options)).then((response) => {
+            this.convertResponseType(response).then((responseValue) => {
+                ResponseHandler.init(response, undefined, responseValue, callback);
+            }).catch((error) => {
+                ResponseHandler.init(response, error, undefined, callback)
+            });
+        }).catch((error) => {
+            ResponseHandler.init(undefined, error, undefined, callback)
+        });
+    }
+
+    // Given the Request object, get an auth token from the authProvider, make the fetch call
     private routeResponseToCallback(request: Request, callback: GraphRequestCallback) {
-        this.config.authProvider((err, accessToken) => {
+        let self = this;
+        self.config.authProvider((err, accessToken) => {
             if (err == null && accessToken != null) {
-                fetch(this.configureRequest(request, accessToken)).then((response) => {
-                    this.convertResponseType(response).then((responseValue) => {
-                        ResponseHandler.init(response, undefined, responseValue, callback);
-                    }).catch((error) => {
-                        ResponseHandler.init(response, error, undefined, callback)
-                    });
-                }).catch((error) => {
-                    ResponseHandler.init(undefined, error, undefined, callback)
-                });
+                request = self.configureRequest(request, accessToken);
+                self.handleFetch(request, callback);
             } else {
                 callback(err, null, null);
             }
@@ -316,48 +321,55 @@ export class GraphRequest {
     }
 
     getStream(callback: GraphRequestCallback) {
-        this.config.authProvider((err, accessToken) => {
+        let self = this;
+        self.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
-                let url = this.buildFullUrl();
-                callback(null, this.configureRequest(
-                    new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
-                    accessToken));
+                let url = self.buildFullUrl();
+                let options = {
+                    method: RequestMethod.GET,
+                    headers: self.getDefaultRequestHeaders(accessToken)
+                };
+                self.responseType("stream");
+                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
+                self.handleFetch(url, callback, options);
             } else {
                 callback(err, null);
             }
         });
     }
 
-    putStream(stream: any, callback: Function) {
-        this.config.authProvider((err, accessToken) => {
+    putStream(stream: any, callback: GraphRequestCallback) {
+        let self = this;
+        self.config.authProvider((err, accessToken) => {
             if (err === null && accessToken !== null) {
-                let url = this.buildFullUrl();
-                let req: Request = this.configureRequest(
-                    new Request(
-                        url,
-                        {
-                            method: RequestMethod.PUT,
-                            headers: new Headers({ 'Content-Type': 'application/octet-stream' })
-                        }),
-                    accessToken
-                );
-                stream
-                    .pipe(req)
-                    .on('error', function (err) {
-                        callback(err, null)
-                    })
-                    .on('end', function () {
-                        callback(null)
-                    });
+                let url = self.buildFullUrl();
+                let options = {
+                    method: RequestMethod.PUT,
+                    headers: {
+                        'Content-Type': 'application/octet-stream',
+                    },
+                    body: stream
+                }
+                let defaultHeaders = self.getDefaultRequestHeaders(accessToken);
+                Object.keys(defaultHeaders).forEach((key) => options.headers[key] = defaultHeaders[key] as string);
+                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
+                self.handleFetch(url, callback, options);
             }
         });
     }
 
-    private configureRequest(request: Request, accessToken: string): Request {
-        request.headers.append('Authorization', 'Bearer ' + accessToken);
-        request.headers.append('SdkVersion', "graph-js-" + PACKAGE_VERSION);
+    private getDefaultRequestHeaders(accessToken: string): DefaultRequestHeaders {
+        return {
+            Authorization: `Bearer ${accessToken}`,
+            SdkVersion: `graph-js-${PACKAGE_VERSION}`
+        }
+    }
 
-        Object.keys(this._headers).forEach((key) => request.headers.set(key, this._headers[key] as string));
+    private configureRequest(request: Request, accessToken: string): Request {
+        let self = this,
+            defaultHeaders = self.getDefaultRequestHeaders(accessToken);
+        Object.keys(defaultHeaders).forEach((key) => request.headers.set(key, defaultHeaders[key] as string));
+        Object.keys(self._headers).forEach((key) => request.headers.set(key, self._headers[key] as string));
         return request;
     }
 
@@ -423,6 +435,9 @@ export class GraphRequest {
                 break;
             case "text":
                 responseValue = response.text();
+                break;
+            case "stream":
+                responseValue = Promise.resolve(response.body);
                 break;
             default:
                 responseValue = response.json();
