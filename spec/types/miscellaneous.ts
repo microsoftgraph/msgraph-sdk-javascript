@@ -15,6 +15,7 @@
 
 import { assert } from 'chai'
 import { getClient, randomString } from "./test-helper"
+import * as fs from "fs";
 
 
 declare const describe, it;
@@ -185,6 +186,31 @@ describe('Test for GET and PUT binary data', function () {
             assert.isTrue(err === null);
             done();
         });
+    });
+});
+
+describe("Test for PUT and GET streams", function () {
+    this.timeout(10 * 1000);
+    beforeEach((done) => {
+        setTimeout(function () {
+            done();
+        }, 1000);
+    });
+    const imageFileName = `stream-image-${randomString()}.png`;
+    it("Uploading drive item as a stream", (done)  => {
+        let stream = fs.createReadStream('./sample.png');
+        return getClient().api(`/me/drive/root/children/${imageFileName}/content`).putStream(stream, (err) => {
+            assert.isTrue(err === null);
+            done();
+        });
+    });
+
+    it("GET drive item as a stream", (done) => {
+        return getClient().api(`/me/drive/root:${imageFileName}:/content`).getStream((err, stream) => {
+            let writeStream = fs.createWriteStream(`./${imageFileName}`);
+            stream.pipe(writeStream).on('error', assert.fail);
+            done();
+        })
     });
 });
 
