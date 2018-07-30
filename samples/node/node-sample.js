@@ -7,6 +7,8 @@ const MicrosoftGraph = require("../../lib/src/index.js").Client;
 
 const secrets = require("./secrets");
 
+const fs = require("fs");
+
 const client = MicrosoftGraph.init({
     defaultVersion: 'v1.0',
     debugLogging: true,

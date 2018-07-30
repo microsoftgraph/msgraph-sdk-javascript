@@ -36,10 +36,12 @@ export declare class GraphRequest {
     del(callback?: GraphRequestCallback): Promise<any>;
     get(callback?: GraphRequestCallback): Promise<any>;
     private routeResponseToPromise;
+    private handleFetch;
     private routeResponseToCallback;
     private sendRequestAndRouteResponse;
     getStream(callback: GraphRequestCallback): void;
-    putStream(stream: any, callback: Function): void;
+    putStream(stream: any, callback: GraphRequestCallback): void;
+    private getDefaultRequestHeaders;
     private configureRequest;
     query(queryDictionaryOrString: string | {
         [key: string]: string | number;
