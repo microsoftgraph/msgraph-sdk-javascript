@@ -368,7 +368,7 @@ export class GraphRequest {
     private configureRequest(request: Request, accessToken: string): Request {
         let self = this,
             defaultHeaders = self.getDefaultRequestHeaders(accessToken);
-        Object.keys(defaultHeaders).forEach((key) => request.headers.set(key, defaultHeaders[key] as string));
+        Object.keys(defaultHeaders).forEach((key) => request.headers.append(key, defaultHeaders[key] as string));
         Object.keys(self._headers).forEach((key) => request.headers.set(key, self._headers[key] as string));
         return request;
     }
