@@ -19,6 +19,7 @@
   ],
   "include": [
       "./src/index.ts",
+      "./src/LargeFileUploadTask.ts",
       "./spec/core"
   ]
 }
