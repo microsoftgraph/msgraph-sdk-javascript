@@ -20,7 +20,8 @@
   "scripts": {
     "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
     "test": "mocha lib/spec/core",
-    "test:types": "tsc --p spec/types && mocha spec/types"
+    "test:types": "tsc --p spec && mocha spec/types",
+    "test:tasks": "tsc --p spec && mocha spec/tasks"
   },
   "dependencies": {
     "es6-promise": "^4.1.0",

@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 
-import { getClient, randomString } from "./test-helper"
+import { getClient, randomString } from "../test-helper"
 import { Person } from '@microsoft/microsoft-graph-types-beta'
 
 declare const describe, it;
