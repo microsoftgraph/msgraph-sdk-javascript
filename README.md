@@ -23,6 +23,11 @@ Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
 
+If your application has polyfills for **Fetch-API** and **ES6-Promise**, then you can just include [lib/graph-js-sdk-core.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-core.js) in your page.
+```html
+<script type="text/javascript" src="graph-js-sdk-core.js"></script>
+```
+
 ## Usage
 ### Initialize client with access token provider
 This client library only handles authentication in the most basic way possible. The application is responsible for refreshing tokens and returning an immediately valid access token in the authentication provider.

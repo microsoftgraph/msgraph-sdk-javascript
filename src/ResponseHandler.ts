@@ -1,4 +1,3 @@
-import {GraphRequest} from "./GraphRequest"
 import {GraphRequestCallback, GraphError} from "./common"
 
 export class ResponseHandler {
