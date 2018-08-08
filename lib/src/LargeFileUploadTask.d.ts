@@ -3,6 +3,7 @@ import { Client } from "./index";
 import { Range } from "./Range";
 interface LargeFileUploadTaskOptions {
     sessionRequestUrl: string;
+    fileName?: string;
     rangeSize?: number;
     maxTries?: number;
 }
@@ -13,10 +14,6 @@ interface LargeFileUploadSession {
 interface UploadStatusResponse {
     expirationDateTime: string;
     nextExpectedRanges: string[];
-}
-interface NodeFile {
-    name?: string;
-    buffer: Buffer;
 }
 interface FileObject {
     content: File | ArrayBuffer;
@@ -30,7 +27,7 @@ export declare class LargeFileUploadTask {
     uploadSession: LargeFileUploadSession;
     nextRange: Range;
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions);
-    static create(client: Client, file: Blob | File | NodeFile, options: LargeFileUploadTaskOptions): Promise<any>;
+    static create(client: Client, file: Blob | File | Buffer, options: LargeFileUploadTaskOptions): Promise<any>;
     static createUploadSession(client: Client, requestUrl: string, requestPayload: any): Promise<any>;
     static getRandomFileName(): string;
     parseRange(ranges: string[]): Range;

@@ -125,7 +125,7 @@ describe('GetNextRange', () => {
         done();
     });
 
-    it('Should return next range as default(empty) range,this is for the upload task completed', (done) => {
+    it('Should return next range as default(empty) range, this is for the upload task completed', (done) => {
         let statusResponse = {
             expirationDateTime: "2018-08-06T09:05:45.195Z",
             nextExpectedRanges: []
@@ -191,7 +191,7 @@ describe('Uploading Slice', () => {
         rangeSize: 327680
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
-    it('Should return an exceptoion as trying to upload a slice after the session has expired', (done) => {
+    it('Should return an exception as trying to upload a slice after the session has expired', (done) => {
         let nextRange = uploadTask.getNextRange();
         let slice = uploadTask.sliceFile(nextRange);
         uploadTask.uploadSlice(slice, nextRange, size)
