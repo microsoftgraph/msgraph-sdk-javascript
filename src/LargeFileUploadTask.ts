@@ -7,17 +7,23 @@ import { Range } from "./Range";
 import { getValidRangeSize } from "./LargeFileUploadUtil";
 
 /**
- * User Options to create the upload task
+ * @interface
+ * Signature to define options when creating an upload task
+ * @property {string} sessionRequestUrl - The default values for parties
+ * @property {string} fileName - Specifies the file name of the file to upload
+ * @property {number} [rangeSize = LargeFileUploadUtil.DEFAULT_FILE_SIZE] - Specifies the range chunk size
  */
 interface LargeFileUploadTaskOptions {
     sessionRequestUrl: string;
-    fileName?: string;
+    fileName: string;
     rangeSize?: number;
-    maxTries?: number;
 };
 
 /**
- * Signature for upload session resulting from the session creation in the server
+ * @interface
+ * Signature to represent upload session resulting from the session creation in the server
+ * @property {string} url - The URL to which the file upload is made
+ * @property {Date} expiry - The expiration of the time of the upload session
  */
 interface LargeFileUploadSession {
     url: string;
@@ -25,7 +31,10 @@ interface LargeFileUploadSession {
 }
 
 /**
- * Signature for the response results in the status enquiry request
+ * @interface
+ * Signature to represent the resulting response in the status enquiry request
+ * @property {string} expirationDateTime - The expiration of the time of the upload session
+ * @property {string[]} nextExpectedRanges - The ranges expected in next consecutive request in the upload
  */
 interface UploadStatusResponse {
     expirationDateTime: string;
@@ -33,10 +42,14 @@ interface UploadStatusResponse {
 }
 
 /**
- * Holds the details of file required
+ * @interface
+ * Signature to define the properties and content of the file in upload task
+ * @property {ArrayBuffer | File} content - The actual file content
+ * @property {string} name - Specifies the file name with extension
+ * @property {number} size - Specifies size of the file
  */
 interface FileObject {
-    content: File | ArrayBuffer;
+    content: ArrayBuffer | File;
     name: string;
     size: number;
 }
@@ -61,11 +74,11 @@ export class LargeFileUploadTask {
     nextRange: Range
 
     /**
-     * Contructs a LargeFileUploadTask
-     * @param client - The GraphClient instance
-     * @param file - The FileObject holding file needs to be uploaded
-     * @param uploadSession - The upload session to which the upload has to be done
-     * @param options - The upload task option
+     * Constructs a LargeFileUploadTask
+     * @param {Client} client - The GraphClient instance
+     * @param {FileObject} file - The FileObject holding file needs to be uploaded
+     * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
+     * @param {LargeFileUploadTaskOptions} options - The upload task option
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         let self = this;
@@ -80,36 +93,31 @@ export class LargeFileUploadTask {
     /**
      * @static
      * @async
-     * Creates a LargeFilUploadTask
-     * @param client - The GraphClient instance
-     * @param file - File representated as Blob, File or NodeFile object
-     * @param options - The options for upload task
+     * Creates a LargeFileUploadTask
+     * @param {Client} client - The GraphClient instance
+     * @param {Blob | Buffer | File} file - File represented as Blob, File or Buffer
+     * @param {LargeFileUploadTaskOptions} options - The options for upload task
      * @return The promise that will be resolves to LargeFileUploadTask instance
      */
-    static async create(client: Client, file: Blob | File | Buffer, options: LargeFileUploadTaskOptions): Promise<any> {
-        let self = LargeFileUploadTask,
-            _fileObject: FileObject = <FileObject>{};
-        console.log(file.constructor.name);
-        debugger;
+    static async create(client: Client, file: Blob | Buffer | File, options: LargeFileUploadTaskOptions): Promise<any> {
+        let _fileObject: FileObject = <FileObject>{};
         switch(file.constructor.name) {
             case "Blob":
-                _fileObject.name = (options.fileName !== undefined) ? options.fileName : self.getRandomFileName();
                 _fileObject.content = new File([<Blob>file], _fileObject.name);
                 _fileObject.size = _fileObject.content.size;
                 break;
             case "File":
                 let _file = <File>file;
                 _fileObject.content = _file;
-                _fileObject.name = _fileObject.name = (options.fileName !== undefined) ? options.fileName : _file.name;
                 _fileObject.size = _file.size;
                 break;
             case "Buffer":
                 let b = <Buffer>file;
-                _fileObject.name = _fileObject.name = (options.fileName !== undefined) ? options.fileName : self.getRandomFileName();
                 _fileObject.size = b.byteLength - b.byteOffset;
                 _fileObject.content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
                 break;
         }
+        _fileObject.name = options.fileName;
         let payload = {
             item: {
                 "@microsoft.graph.conflictBehavior": "rename",
@@ -128,9 +136,9 @@ export class LargeFileUploadTask {
      * @static
      * @async
      * Makes request to the server to create an upload session
-     * @param client - The GraphClient instance
-     * @param requestUrl - The URL to create the upload session
-     * @param requestPayload - The payload to be sent with the request
+     * @param {Client} client - The GraphClient instance
+     * @param {string} requestUrl - The URL to create the upload session
+     * @param {any} requestPayload - The payload to be sent with the request
      * @return The promise that resolves to LargeFileUploadSession
      */
     static async createUploadSession(client: Client, requestUrl: string, requestPayload: any): Promise<any> {
@@ -146,17 +154,8 @@ export class LargeFileUploadTask {
     }
 
     /**
-     * @static
-     * Get the random filename for the blob object
-     * @return The random filename
-     */
-    static getRandomFileName(): string {
-        return `Upload_${new Date().toDateString().replace(/ /g, "_")}`;
-    }
-
-    /**
-     * To parse the given range string to the Range instance
-     * @param ranges - The ranges value
+     * Parses given range string to the Range instance
+     * @param {string[]} ranges - The ranges value
      * @return The range instance
      */
     parseRange(ranges: string[]): Range {
@@ -174,8 +173,8 @@ export class LargeFileUploadTask {
     }
 
     /**
-     * To update the exipiration date and the next range
-     * @param response - The response of the upload status
+     * Updates the expiration date and the next range
+     * @param {UploadStatusResponse} response - The response of the upload status
      */
     updateTaskStatus(response: UploadStatusResponse): void {
         let self = this;
@@ -184,7 +183,7 @@ export class LargeFileUploadTask {
     }
 
     /**
-     * Get next range that needs to be uploaded
+     * Gets next range that needs to be uploaded
      * @return - The range instance
      */
     getNextRange(): Range {
@@ -201,9 +200,9 @@ export class LargeFileUploadTask {
     }
 
     /**
-     * Slice the file content to the given range
-     * @param range - The range value
-     * @return The sliced arraybuffer or blob
+     * Slices the file content to the given range
+     * @param {Range} range - The range value
+     * @return The sliced ArrayBuffer or Blob
      */
     sliceFile(range: Range): ArrayBuffer | Blob {
         let blob = this.file.content.slice(range.minValue, range.maxValue + 1);
@@ -212,7 +211,7 @@ export class LargeFileUploadTask {
 
     /**
      * @async
-     * Upload the file to the server by slicing it in a sequential order
+     * Uploads file to the server in a sequential order by slicing the file
      * @return The promise resolves to uploaded response
      */
     async upload(): Promise<any> {
@@ -227,7 +226,7 @@ export class LargeFileUploadTask {
                 }
                 let fileSlice = self.sliceFile(nextRange),
                     response = await self.uploadSlice(fileSlice, nextRange, self.file.size);
-                // Upon completion of upload process incaseof onedrive, driveItem is returned, which contains id
+                // Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
                 if (response.id !== undefined) {
                     return response;
                 } else {
@@ -241,10 +240,10 @@ export class LargeFileUploadTask {
 
     /**
      * @async
-     * Upload the particular slice to the server
-     * @param fileSlice - The file slice
-     * @param range - The range value
-     * @param totalSize - The size of the complete file
+     * Uploads given slice to the server
+     * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
+     * @param {Range} range - The range value
+     * @param {number} totalSize - The total size of a complete file
      */
     async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
         let self = this;
@@ -268,7 +267,7 @@ export class LargeFileUploadTask {
 
     /**
      * @async
-     * Deletes the upload session in the server
+     * Deletes upload session in the server
      * @return The promise resolves to cancelled response
      */
     async cancel (): Promise<any> {
@@ -284,7 +283,7 @@ export class LargeFileUploadTask {
 
     /**
      * @async
-     * Get the status for the upload session
+     * Gets status for the upload session
      * @return The promise resolves to the status enquiry response
      */
     async getStatus(): Promise<any> {
@@ -302,7 +301,7 @@ export class LargeFileUploadTask {
 
     /**
      * @async
-     * Resume the upload session and continue uploading the file from the place where it left
+     * Resumes upload session and continue uploading the file from the last sent range
      * @return The promise resolves to the uploaded response
      */
     async resume(): Promise<any> {
@@ -316,8 +315,8 @@ export class LargeFileUploadTask {
     }
     
     /**
-     * Commit the upload session to end uploading
-     * @param requestUrl - The URL to commit the upload session
+     * Commits upload session to end uploading
+     * @param {string} requestUrl - The URL to commit the upload session
      * @return The promise resolves to committed response
      */
     async commit(requestUrl: string): Promise<any> {

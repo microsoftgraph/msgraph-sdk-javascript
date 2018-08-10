@@ -16,7 +16,8 @@ describe('Parsing Range', () => {
         expiry: new Date()
     };
     let options = {
-        sessionRequestUrl: "dummy session request url"
+        sessionRequestUrl: "dummy session request url",
+        fileName: name
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
     it('Should return default range for given undefined range', (done) => {
@@ -62,7 +63,8 @@ describe('Update Task Status', () => {
         expiry: new Date()
     };
     let options = {
-        sessionRequestUrl: "dummy session request url"
+        sessionRequestUrl: "dummy session request url",
+        fileName: name
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
     it('Should update status with expiration date and next expected ranges as given', (done) => {
@@ -102,6 +104,7 @@ describe('GetNextRange', () => {
     };
     let options = {
         sessionRequestUrl: "dummy session request url",
+        fileName: name,
         rangeSize: 327680
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -153,6 +156,7 @@ describe('Upload File', () => {
     };
     let options = {
         sessionRequestUrl: "dummy session request url",
+        fileName: name,
         rangeSize: 327680
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -167,7 +171,8 @@ describe('Upload File', () => {
             throw new Error("Upload is working for upload completed task");
         })
         .catch((err) => {
-            assert.equal(err.message, "Invalid session: Uploading completed");
+            assert.equal(err.name, "Invalid Session");
+            assert.equal(err.message, "Task with which you are trying to upload is already completed, Please check for your uploaded file");
             done();
         });
     });
@@ -188,6 +193,7 @@ describe('Uploading Slice', () => {
     };
     let options = {
         sessionRequestUrl: "dummy session request url",
+        fileName: name,
         rangeSize: 327680
     };
     let uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -199,7 +205,8 @@ describe('Uploading Slice', () => {
             throw new Error("UploadSlice is working for invalid upload session");
         })
         .catch((err) => {
-            assert.equal(err.message, "Upload Session Expired");
+            assert.equal(err.name, "Invalid Session");
+            assert.equal(err.message, "Task with which you are uploading is no longer valid, Please create new task to upload");
             done();
         });
     });

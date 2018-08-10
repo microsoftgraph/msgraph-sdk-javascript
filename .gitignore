@@ -6,6 +6,8 @@ tmp
 node_modules
 typings
 src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
 coverage
 **/*.tgz
 samples/node/secrets.json
