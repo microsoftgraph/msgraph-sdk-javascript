@@ -29,3 +29,4 @@ export class Client {
 export * from "./GraphRequest";
 export * from "./common";
 export * from "./ResponseHandler";
+export * from "./ResponseType";

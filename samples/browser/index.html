@@ -26,7 +26,7 @@
 		// Example of downloading the user's profile photo and displaying it in an img tag
 		client
 			.api('/me/photo/$value')
-			.responseType('blob')
+			.responseType(MicrosoftGraph.ResponseType.BLOB)
 			.get((err, res, rawResponse) => {
 				if (err) throw err;
 

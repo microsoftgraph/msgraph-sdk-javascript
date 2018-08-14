@@ -241,7 +241,19 @@ You can pass in additional request headers, either individually or in a dictiona
 ````
 
 ### .responseType()
-To set a custom response type, use the `.responseType(string)` method.  To see an example, check the [browser sample](samples/browser/index.html) that downloads an image and displays it in an `<img>` element.
+To set a custom response type, use the `.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.
+````js
+client
+    .api(`/me/drive/root/children/${fileName}/content`)
+    .responseType(MicrosoftGraph.ResponseType.BLOB)
+    .get()
+    .then((res) => {
+        console.log("Downloaded..!!");
+    })
+    .catch((err) => {
+        throw err;
+    });
+````
 
 ## Running node samples
 You can run and debug the node samples found under [./samples/node/node-sample.js](./samples/node/node-sample.js) by running the *Run node samples* configuration from the **Debug** (Ctrl + Shift + D) menu in Visual Studio Code. Alternately, you can run the node samples from the CLI by entering `node ./samples/node/node-sample.js` (assuming you are at the root of this repo). You'll need to rename the *secrets.example.json* file to *secrets.json* and add a valid access token to it. You can get an access token by doing the following:
