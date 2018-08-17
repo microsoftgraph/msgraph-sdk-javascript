@@ -1,5 +1,15 @@
 ## Changelog
 
+### 1.2.0
+Updates
+
+* Two output js files, one with polyfills for Fetch-API and ES6-Promises ([lib/graph-js-sdk-web.js](./lib/graph-js-sdk-web.js)) and one without ([lib/graph-js-sdk-core.js](./lib/graph-js-sdk-core.js))
+[Refer [README.md](https://github.com/microsoftgraph/msgraph-sdk-javascript#browser) for usage]
+* Enum for ResponseType, which lists down the available ResponseType options in autocomplete
+
+Bug Fix
+* Cannot access the property "request-id" of undefined in GraphError handling
+
 ### 1.1.0
 New Features
 * Support for Multipart POST request
