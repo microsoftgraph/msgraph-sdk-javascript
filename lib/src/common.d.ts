@@ -1,7 +1,7 @@
 export declare let oDataQueryNames: string[];
 export declare const DEFAULT_VERSION = "v1.0";
 export declare const GRAPH_BASE_URL = "https://graph.microsoft.com/";
-export declare const PACKAGE_VERSION = "1.1.0";
+export declare const PACKAGE_VERSION = "1.2.0";
 export interface AuthProviderCallback {
     (error: any, accessToken: string): void;
 }
