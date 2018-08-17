@@ -18,7 +18,14 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 ### Browser
 
-Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-web.js) in your page.
+The library comes with two varieties of options, you can pick one based on your use case
+
+1. If your application has polyfills for **Fetch-API** and **ES6-Promise**, then can just include [lib/graph-js-sdk-core.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-core.js) in your page.
+```html
+<script type="text/javascript" src="graph-js-sdk-core.js"></script>
+```
+
+2. If your application does not have polyfills for **Fetch-API** and **ES6-Promise**, then you have to include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-web.js) in your page.
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
