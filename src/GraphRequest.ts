@@ -4,6 +4,7 @@ import 'isomorphic-fetch';
 import { Options, URLComponents, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
+import { ResponseType } from "./ResponseType";
 import { GraphHelper } from './GraphHelper';
 
 export class GraphRequest {
@@ -329,7 +330,7 @@ export class GraphRequest {
                     method: RequestMethod.GET,
                     headers: self.getDefaultRequestHeaders(accessToken)
                 };
-                self.responseType("stream");
+                self.responseType(ResponseType.STREAM);
                 Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
                 self.handleFetch(url, callback, options);
             } else {
@@ -420,24 +421,24 @@ export class GraphRequest {
             this._responseType = '';
         }
         switch (this._responseType.toLowerCase()) {
-            case "arraybuffer":
+            case ResponseType.ARRAYBUFFER:
                 responseValue = response.arrayBuffer();
                 break;
-            case "blob":
+            case ResponseType.BLOB:
                 responseValue = response.blob();
                 break;
-            case "document":
+            case ResponseType.DOCUMENT:
                 // XMLHTTPRequest only :(
                 responseValue = response.json();
                 break;
-            case "json":
+            case ResponseType.JSON:
                 responseValue = response.json();
                 break;
-            case "text":
-                responseValue = response.text();
-                break;
-            case "stream":
+            case ResponseType.STREAM:
                 responseValue = Promise.resolve(response.body);
+                break;
+            case ResponseType.TEXT:
+                responseValue = response.text();
                 break;
             default:
                 responseValue = response.json();

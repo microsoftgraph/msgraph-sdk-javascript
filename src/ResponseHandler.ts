@@ -60,8 +60,8 @@ export class ResponseHandler {
             statusCode,
             code: errObj.code,
             message: errObj.message,
-            requestId: errObj.innerError["request-id"],
-            date: new Date(errObj.innerError.date),
+            requestId: (errObj.innerError !== undefined) ? errObj.innerError["request-id"] : "",
+            date: (errObj.innerError !== undefined) ? new Date(errObj.innerError.date): new Date(),
             body: errObj
         };
     }
