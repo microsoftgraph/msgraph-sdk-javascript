@@ -150,6 +150,11 @@ export class GraphRequest {
         return this;
     }
 
+    search(searchStr:string):GraphRequest {
+        this.urlComponents.oDataQueryParams["$search"] = searchStr;
+        return this;
+    }
+
     top(n:number):GraphRequest {
         this.urlComponents.oDataQueryParams["$top"] = n;
         return this;
