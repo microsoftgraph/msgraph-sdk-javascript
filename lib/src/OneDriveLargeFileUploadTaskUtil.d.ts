@@ -1,5 +1,5 @@
 /**
- * @module LargeFileUploadUtil
+ * @module OneDriveLargeFileUploadTaskUtil
  */
 /**
  * Get the valid rangeSize for a file slicing (validity is based on the constrains mentioned in here {@link https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession#upload-bytes-to-the-upload-session})
