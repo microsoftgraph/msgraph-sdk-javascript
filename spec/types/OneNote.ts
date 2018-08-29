@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { getClient, randomString } from "../test-helper"
-import { Notebook, OnenoteSection, OnenotePage } from '@microsoft/microsoft-graph-types-beta'
+import { Notebook, OnenoteSection, OnenotePage } from '@microsoft/microsoft-graph-types'
 import * as fs from "fs";
 import * as FormData from "form-data";
 
@@ -9,11 +9,11 @@ declare const describe, it;
 
 describe('OneNote', function () {
     this.timeout(20 * 1000);
-    let notebook: Notebook = {
+    let notebook = <Notebook>{
         displayName: "Sample notebook - " + randomString()
     };
 
-    let section: OnenoteSection = {
+    let section = <OnenoteSection>{
         displayName: "Sample section - " + randomString()
     }
 

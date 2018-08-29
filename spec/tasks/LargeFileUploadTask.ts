@@ -2,6 +2,8 @@ import { assert } from "chai";
 import { getClient } from "../test-helper";
 import { LargeFileUploadTask } from "../../lib/src/LargeFileUploadTask";
 
+declare const describe, it;
+
 describe('Parsing Range', () => {
     let name = "sample_image.jpg",
         arrayBuffer = new ArrayBuffer(80000),

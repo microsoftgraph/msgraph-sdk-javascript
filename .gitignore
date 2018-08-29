@@ -19,8 +19,6 @@ samples/typescript/graph-typings.d.ts
 samples/typescript/sample.js.map
 src/index.d.ts
 
-spec/secrets.ts
-
 spec/**/*.js
 spec/**/*.d.ts
 spec/**/*.js.map
