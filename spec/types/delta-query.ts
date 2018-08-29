@@ -2,7 +2,7 @@ import { assert } from 'chai'
 
 import { Event } from '@microsoft/microsoft-graph-types'
 
-import { getClient, randomString } from "./test-helper"
+import { getClient, randomString } from "../test-helper"
 
 declare const describe, it;
 

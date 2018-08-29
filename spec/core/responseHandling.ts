@@ -6,6 +6,8 @@ import * as mocha from 'mocha'
 
 import * as assert from 'assert';
 
+declare const describe, it;
+
 const _200_RES_BODY: any = { a: 1 }; 
 const _200_RES_INIT: ResponseInit = { status: 200 };
 const _200_RES: Response =

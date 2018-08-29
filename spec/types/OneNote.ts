@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
-import { getClient, randomString } from "./test-helper"
-import { Notebook, OnenoteSection, OnenotePage } from '@microsoft/microsoft-graph-types-beta'
+import { getClient, randomString } from "../test-helper"
+import { Notebook, OnenoteSection, OnenotePage } from '@microsoft/microsoft-graph-types'
 import * as fs from "fs";
 import * as FormData from "form-data";
 
@@ -9,11 +9,11 @@ declare const describe, it;
 
 describe('OneNote', function () {
     this.timeout(20 * 1000);
-    let notebook: Notebook = {
+    let notebook = <Notebook>{
         displayName: "Sample notebook - " + randomString()
     };
 
-    let section: OnenoteSection = {
+    let section = <OnenoteSection>{
         displayName: "Sample section - " + randomString()
     }
 
@@ -63,7 +63,7 @@ describe('OneNote', function () {
     });
     it("Create a OneNote page with html page content", () => {
         let formData = new FormData();
-        formData.append('Presentation', fs.createReadStream('./spec/types/onenotepage.html'));
+        formData.append('Presentation', fs.createReadStream('./spec/sample_files/onenotepage.html'));
         return getClient()
             .api(`/me/onenote/sections/${section.id}/pages`)
             .post(formData)
@@ -79,7 +79,7 @@ describe('OneNote', function () {
 
     it("create a OneNote page with html page content and file attachment", () => {
         let formData = new FormData();
-        formData.append('Presentation', fs.createReadStream('./spec/types/onenotepage_fileattachment.html'));
+        formData.append('Presentation', fs.createReadStream('./spec/sample_files/onenotepage_fileattachment.html'));
         formData.append("fileBlock1", fs.createReadStream("./sample.png"));
         return getClient()
             .api(`/me/onenote/sections/${section.id}/pages`)
