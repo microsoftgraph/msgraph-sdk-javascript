@@ -4,7 +4,7 @@
     "noEmitOnError": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "target": "es5",
     "lib": ["es6", "dom"],
@@ -15,10 +15,12 @@
       "node_modules",
       "lib",
       "samples",
+      "spec/tasks",
       "spec/types"
   ],
   "include": [
       "./src/index.ts",
+      "./src/LargeFileUploadTask.ts",
       "./spec/core"
   ]
 }

@@ -1,5 +1,5 @@
 import { AccessToken } from "./secrets"
-import { Client } from "../../lib/src/index"
+import { Client } from "../lib/src/index"
 
 export function getClient(): Client {
     return Client.init({

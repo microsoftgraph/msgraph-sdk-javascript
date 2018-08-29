@@ -4,6 +4,8 @@ import { Client as GraphClient } from "../../src/index"
 
 const client = GraphClient.init();
 
+declare const describe, it;
+
 let cases = [];
 
 cases.push({
