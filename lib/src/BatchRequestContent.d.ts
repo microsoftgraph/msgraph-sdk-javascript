@@ -46,7 +46,7 @@ export declare class BatchRequestContent {
      * @static
      * @async
      * Converts Request Object instance to a JSON
-     * @param {request} request - The Request Object
+     * @param {Request} request - The Request Object
      * @return A promise that resolves to JSON representation of a request
      */
     static getJSONFromRequest(request: Request): Promise<any>;
@@ -72,7 +72,7 @@ export declare class BatchRequestContent {
      */
     addRequest(request: any): Promise<any>;
     /**
-     * Removes request from the batch payload and its corresponding dependents
+     * Removes request from the batch payload and its dependencies from all dependents
      * @param {string} requestId - Request id that needs to be removed
      * @return The boolean indicating removed status
      */

@@ -1,5 +1,4 @@
 import { assert } from "chai";
-import { randomString } from "../test-helper";
 import { BatchResponseContent } from "../../lib/src/BatchResponseContent";
 
 declare const describe, it;

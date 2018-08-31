@@ -85,7 +85,7 @@ export class BatchRequestContent {
      * @static
      * @async
      * Converts Request Object instance to a JSON
-     * @param {request} request - The Request Object
+     * @param {Request} request - The Request Object
      * @return A promise that resolves to JSON representation of a request
      */
     static async getJSONFromRequest(request: Request): Promise<any> {
