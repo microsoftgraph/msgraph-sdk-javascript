@@ -18,7 +18,14 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 ### Browser
 
-Include [lib/graph-js-sdk-web.js](https://github.com/microsoftgraph/msgraph-sdk-javascript/raw/master/lib/graph-js-sdk-web.js) in your page.
+The library comes with two varieties of options, you can pick one based on your use case
+
+1. If your application has polyfills for **Fetch-API** and **ES6-Promise**, then can just include [lib/graph-js-sdk-core.js](./lib/graph-js-sdk-core.js) in your page.
+```html
+<script type="text/javascript" src="graph-js-sdk-core.js"></script>
+```
+
+2. If your application does not have polyfills for **Fetch-API** and **ES6-Promise**, then you have to include [lib/graph-js-sdk-web.js](./lib/graph-js-sdk-web.js) in your page.
 ```html
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
 ```
@@ -151,7 +158,7 @@ let fs = require('fs'); // requires filesystem module
 let stream = fs.createReadStream('./logo.png'); //path to local file
 client
     .api('/me/drive/root/children/logo.png/content') // path to the destination in OneDrive
-    .put(stream, (err) => {
+    .putStream(stream, (err) => {
         console.log(err);
     });
 ````
@@ -241,7 +248,29 @@ You can pass in additional request headers, either individually or in a dictiona
 ````
 
 ### .responseType()
-To set a custom response type, use the `.responseType(string)` method.  To see an example, check the [browser sample](samples/browser/index.html) that downloads an image and displays it in an `<img>` element.
+To set a custom response type, use the `.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.
+````js
+client
+    .api(`/me/drive/root/children/${fileName}/content`)
+    .responseType(MicrosoftGraph.ResponseType.BLOB)
+    .get()
+    .then((res) => {
+        console.log("Downloaded..!!");
+    })
+    .catch((err) => {
+        throw err;
+    });
+````
+
+## Running node samples
+You can run and debug the node samples found under [./samples/node/node-sample.js](./samples/node/node-sample.js) by running the *Run node samples* configuration from the **Debug** (Ctrl + Shift + D) menu in Visual Studio Code. Alternately, you can run the node samples from the CLI by entering `node ./samples/node/node-sample.js` (assuming you are at the root of this repo). You'll need to rename the *secrets.example.json* file to *secrets.json* and add a valid access token to it. You can get an access token by doing the following:
+1. Go to [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
+2. Login with the account you want to use to run the node samples.
+3. Open the F12 dev tools.
+4. Type `tokenPlease()` into the console to get an access token.
+5. Copy the access token and put it into the *secrets.json* file and save the file.
+
+We suggest that you become acquainted with these samples as they show some of the main use scenarios for this client library.
 
 ## Additional information
 ### Options in `MicrosoftGraph.Client.init()`
@@ -287,7 +316,7 @@ These steps are not required to use this library.
 
 ```npm pack``` bundles the npm module.
 
-```npm test``` runs tests of the core library (URL parsing, mock responses, etc)
+```npm test``` runs tests of the core library (URL parsing, mock responses, etc). You can also set breakpoints and run this from within Visual Studio Code by selecting the *Run core test* configuration from the Debug view.
 
 ```npm run test:types``` to run tests against the Graph API for users, groups, Excel, OneNote, etc.
 
@@ -303,28 +332,6 @@ We'd love to get your feedback about the Microsoft Graph JavaScript client libra
 
 ## Contributing
 Please see the [contributing guidelines](CONTRIBUTING.md).
-## Changelog
-
-#### 1.0.0
-* Added tests for new Graph functionality - Delta query, Extensibility, OneNote, and more.
-
-#### 0.4.0
-* Add support for ES5. Make sure to use `graph-js-sdk-web.js` for web apps
-* Removed iterator helper method.
-
-#### 0.3.1
-* Support for Node.js versions 4 and 5
-
-#### 0.3.0
-* Migrated away from typings in client library core and TypeScript sample
-
-#### 0.2.2
-* Updated SuperAgent to version ``` 3.3.0 ```
-
-#### 0.2.0
-* **Breaking change for existing apps** - Initialize the client library with `MicrosoftGraph.Client.init({...})`. See the updated usage section below for code samples.
-* Added response handling tests to simulate Graph calls
-* Added type declarations file for core client library, which adds intellisense for chained methods.
 
 
 ## Additional resources
@@ -339,3 +346,6 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Third Party Notices
+See [Third Party Notices](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/THIRD%20PARTY%20NOTICES) for information on the packages that are included in the [package.json](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/package.json)

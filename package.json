@@ -1,6 +1,7 @@
 {
   "name": "@microsoft/microsoft-graph-client",
-  "version": "1.0.0",
+  "//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in common.ts. If you change it here, also change it there.",
+  "version": "1.2.0",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
   "typings": "lib/src/index",
@@ -9,20 +10,27 @@
   ],
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
-    "@types/superagent": "^2.0.36",
-    "@types/mocha": "^2.2.34",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^9.4.0",
     "browserify": "^13.1.0",
-    "mocha": "^3.2.0",
-    "typescript": "^2.2.1"
+    "mocha": "^5.2.0",
+    "typescript": "^2.2.1",
+    "uglify-js": "^3.4.5"
   },
   "scripts": {
-    "build": "tsc && node node-browserify.js > lib/graph-js-sdk-web.js",
+    "compile": "tsc",
+    "rollup-core": "node core-browserify.js > lib/graph-js-sdk-core.js && uglifyjs lib/graph-js-sdk-core.js --output lib/graph-js-sdk-core.js",
+    "rollup-with-vendor": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
+    "build-core": "npm run compile && npm run rollup-core",
+    "build-with-vendor": "npm run compile && npm run rollup-with-vendor",
+    "build": "npm run compile && npm run rollup-core && npm run rollup-with-vendor",
     "test": "mocha lib/spec/core",
-    "test:types": "tsc --p spec/types && mocha spec/types"
+    "test:types": "tsc -p spec && mocha spec/types",
+    "test:tasks": "tsc -p spec && mocha spec/tasks"
   },
   "dependencies": {
-    "superagent": "^3.5.2",
-    "es6-promise": "^4.1.0"
+    "es6-promise": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1"
   },
   "repository": {
     "type": "git",

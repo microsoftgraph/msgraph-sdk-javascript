@@ -7,6 +7,8 @@ const MicrosoftGraph = require("../../lib/src/index.js").Client;
 
 const secrets = require("./secrets");
 
+const fs = require("fs");
+
 const client = MicrosoftGraph.init({
     defaultVersion: 'v1.0',
     debugLogging: true,
@@ -14,6 +16,8 @@ const client = MicrosoftGraph.init({
         done(null, secrets.accessToken);
     }
 });
+
+/*
 
 // Get the name of the authenticated user with callbacks
 client
@@ -27,7 +31,8 @@ client
         console.log(res.displayName);
     });
 
-/*
+
+
 // Get the name of the authenticated user with promises
 client
     .api('/me')
@@ -39,11 +44,14 @@ client
         console.log(err);
     });
 
+    */
+
 // Update the authenticated users birthday.
 client
     .api('/me')
+    .header("content-type", "application/json")
     .update(
-        {"birthday": "1908-12-22T00:00:00Z"},
+        { "birthday": "1908-12-22T00:00:00Z" },
         (err, res) => {
             if (err) {
                 console.log(err);
@@ -52,6 +60,11 @@ client
             console.log("Updated my birthday");
         }
     );
+
+
+
+
+/*
 
 
 // GET /users
@@ -74,12 +87,13 @@ client
     .select("displayName")
     .get((err, res) => {
         if (err) {
-            console.log(err)
+            console.
+                console.log("%c" + err, 'color: #bada55')
             return;
         }
-        const topContacts = res.value.map((u) => {return u.displayName});
+        const topContacts = res.value.map((u) => { return u.displayName });
         console.log("Your top contacts are", topContacts.join(", "));
-    });    
+    });
 
 
 // Use promises instead of callbacks
@@ -92,7 +106,7 @@ client
         console.log(res.displayName);
     })
     .catch(console.error);
-    
+
 // Find my top 5 contacts on the beta endpoint
 // .select() can be called multiple times
 client
@@ -115,7 +129,7 @@ const mail = {
     subject: "MicrosoftGraph JavaScript SDK Samples",
     toRecipients: [{
         emailAddress: {
-            address: "example@example.com"
+            address: "mmainer@microsoft.com"
         }
     }],
     body: {
@@ -127,7 +141,7 @@ const mail = {
 client
     .api('/users/me/sendMail')
     .post(
-        {message: mail},
+        { message: mail },
         (err, res) => {
             if (err)
                 console.log(err);
@@ -145,30 +159,33 @@ client
             return;
         }
         var upcomingEventNames = []
-        for (var i=0; i<res.value.length; i++) {
+        for (var i = 0; i < res.value.length; i++) {
             upcomingEventNames.push(res.value[i].subject);
         }
         console.log("My calendar events include", upcomingEventNames.join(", "))
     })
 
+*/
 
 // URL substitution example
-let userIds = [secrets.userId1,
-               secrets.userId2];
+// let userIds = [secrets.userId1,
+// secrets.userId2];
 
-for (let i=0; i<userIds.length; i++) {
-    let fetchUser = client
-        .api(`/me/people/${userIds[i]}`)
-        .version('beta')
-        .select('displayName')
-        .get((err, res) => {
-            if (err) {
-                console.log(err)
-                return;
-            }
-            console.log(res.displayName)
-        })
-}
+// for (let i = 0; i < userIds.length; i++) {
+//     let fetchUser = client
+//         .api(`/me/people/${userIds[i]}`)
+//         .version('beta')
+//         .select('displayName')
+//         .get((err, res) => {
+//             if (err) {
+//                 console.log(err)
+//                 return;
+//             }
+//             console.log(res.displayName)
+//         })
+// }
+
+/*
 
 // Find my top 5 contacts
 client
@@ -201,8 +218,8 @@ client
     .api('/me')
     .select("displayName")
     .header('foo1', 'bar1')
-    .headers({'foo2': 'bar2'}) //.headers() for object, .header() for 2 params
-    .headers({'foo3': 'bar3', 'foo4': 'bar4'})
+    .headers({ 'foo2': 'bar2' }) //.headers() for object, .header() for 2 params
+    .headers({ 'foo3': 'bar3', 'foo4': 'bar4' })
     .get((err, res) => {
         if (err) {
             console.log(err)
@@ -221,6 +238,9 @@ client
         console.log(res)
     })
 
+*/
+
+/*
 
 // Download a file from OneDrive
 let fs = require('fs'); // requires filesystem module

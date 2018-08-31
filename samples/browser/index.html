@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Browser test</title>
 	<script type="text/javascript" src="../../lib/graph-js-sdk-web.js"></script>
@@ -7,7 +8,7 @@
 	<script type="text/javascript">
 		var client = MicrosoftGraph.Client.init({
 			debugLogging: true,
-			authProvider: function(done) {
+			authProvider: function (done) {
 				done(null, SECRETS.ACCESS_TOKEN);
 			}
 		});
@@ -57,20 +58,23 @@
 		}
 	</script>
 </head>
-<body>
-<h2>Please check the Node.js sample for more examples on calling the Graph.</h2>
 
-<p>
-By loading this page, we called /me endpoint on the Microsoft Graph.  Open your browser's' JavaScript console to see the result!
-</p>
-<br>
-<p>Your user photo from /me/photo/$value:</p>
-<img id="profileImg" />
-<p>
-Also, you can update your profile picture:
-<input type="file" onchange="updateProfilePicture()"><br>
-</p>
-<br>
+<body>
+	<h2>Please check the Node.js sample for more examples on calling the Graph.</h2>
+
+	<p>
+		By loading this page, we called /me endpoint on the Microsoft Graph. Open your browser's' JavaScript console to see the result!
+	</p>
+	<br>
+	<p>Your user photo from /me/photo/$value:</p>
+	<img id="profileImg" />
+	<p>
+		Also, you can update your profile picture:
+		<input type="file" onchange="updateProfilePicture()">
+		<br>
+	</p>
+	<br>
 
 </body>
+
 </html>

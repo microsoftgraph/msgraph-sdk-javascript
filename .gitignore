@@ -1,10 +1,13 @@
-.vscode/
+/.vscode/*
+!/.vscode/launch.json
 .DS_Store
 .tmp
 tmp
 node_modules
 typings
 src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
 coverage
 **/*.tgz
 samples/node/secrets.json
@@ -16,7 +19,6 @@ samples/typescript/graph-typings.d.ts
 samples/typescript/sample.js.map
 src/index.d.ts
 
-spec/types/secrets*
-spec/types/*.js
-spec/types/*.d.ts
-spec/types/*.js.map
+spec/**/*.js
+spec/**/*.d.ts
+spec/**/*.js.map

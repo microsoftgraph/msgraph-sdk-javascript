@@ -1,7 +1,7 @@
 import { AccessToken } from "./secrets"
-import { Client } from "@microsoft/microsoft-graph-client"
+import { Client } from "../lib/src/index"
 
-export function getClient():Client {
+export function getClient(): Client {
     return Client.init({
         authProvider: (done) => {
             done(null, AccessToken);
@@ -9,7 +9,6 @@ export function getClient():Client {
     });
 }
 
-
-export function randomString () {
+export function randomString() {
     return Math.random().toString(36).substring(7);
 }

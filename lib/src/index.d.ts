@@ -5,3 +5,8 @@ export declare class Client {
     static init(clientOptions?: Options): Client;
     api(path: string): GraphRequest;
 }
+export * from "./GraphRequest";
+export * from "./common";
+export * from "./ResponseHandler";
+export * from "./OneDriveLargeFileUploadTask";
+export * from "./ResponseType";

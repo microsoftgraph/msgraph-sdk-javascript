@@ -1,5 +1,3 @@
-import * as request from 'superagent';
-
 import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./common"
 import {GraphRequest} from "./GraphRequest"
 
@@ -27,3 +25,9 @@ export class Client {
     }
 
 }
+
+export * from "./GraphRequest";
+export * from "./common";
+export * from "./ResponseHandler";
+export * from "./OneDriveLargeFileUploadTask";
+export * from "./ResponseType";

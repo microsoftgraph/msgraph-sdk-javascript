@@ -1,6 +1,7 @@
 export declare let oDataQueryNames: string[];
 export declare const DEFAULT_VERSION = "v1.0";
 export declare const GRAPH_BASE_URL = "https://graph.microsoft.com/";
+export declare const PACKAGE_VERSION = "1.2.0";
 export interface AuthProviderCallback {
     (error: any, accessToken: string): void;
 }
@@ -20,6 +21,10 @@ export interface URLComponents {
     otherURLQueryParams: {
         [key: string]: string | number;
     };
+}
+export interface DefaultRequestHeaders {
+    Authorization: string;
+    SdkVersion: string;
 }
 export interface GraphRequestCallback {
     (error: GraphError, response: any, rawResponse?: any): void;
