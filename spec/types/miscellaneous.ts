@@ -14,9 +14,8 @@
 */
 
 import { assert } from 'chai'
-import { getClient, randomString } from "./test-helper"
+import { getClient, randomString } from "../test-helper"
 import * as fs from "fs";
-
 
 declare const describe, it;
 

@@ -25,7 +25,8 @@
     "build-with-vendor": "npm run compile && npm run rollup-with-vendor",
     "build": "npm run compile && npm run rollup-core && npm run rollup-with-vendor",
     "test": "mocha lib/spec/core",
-    "test:types": "tsc --p spec/types && mocha spec/types"
+    "test:types": "tsc -p spec && mocha spec/types",
+    "test:tasks": "tsc -p spec && mocha spec/tasks"
   },
   "dependencies": {
     "es6-promise": "^4.1.0",

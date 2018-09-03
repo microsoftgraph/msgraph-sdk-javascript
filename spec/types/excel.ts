@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import * as fs from 'fs';
 
-import { getClient, randomString } from "./test-helper"
+import { getClient, randomString } from "../test-helper"
 import { WorkbookWorksheet, WorkbookRange } from '@microsoft/microsoft-graph-types'
 
 declare const describe, it;
@@ -17,7 +17,7 @@ describe('Excel', function () {
     });
     it('Uploads an Excel file to OneDrive', function () {
 
-        let file = fs.readFileSync('./spec/types/empty-spreadsheet.xlsx');
+        let file = fs.readFileSync('./spec/sample_files/empty-spreadsheet.xlsx');
         return getClient()
             .api(`/me/drive/root/children/${ExcelFilename}/content`)
             .put(file);
