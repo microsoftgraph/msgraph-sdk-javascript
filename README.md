@@ -247,7 +247,7 @@ You can pass in additional request headers, either individually or in a dictiona
 
 ````
 
-## .option() and .options()
+### .option() and .options()
 You can pass in additional request options, either individually or in a dictionay. Options can be [node specific](https://github.com/bitinn/node-fetch#options) or [from fetch standard](https://fetch.spec.whatwg.org/#requestinit)
 ```js
 .option("someOptionName", "someOptionValue")
