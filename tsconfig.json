@@ -8,7 +8,7 @@
     "sourceMap": true,
     "downlevelIteration": true,
     "target": "es5",
-    "lib": ["es6", "dom", "dom.iterable"],
+    "lib": ["es7", "dom", "dom.iterable"],
     "declaration": true,
     "outDir": "lib/"
   },

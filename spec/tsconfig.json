@@ -4,10 +4,11 @@
     "noEmitOnError": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "downlevelIteration": true,
-    "target": "es6",
+    "target": "es5",
+    "lib": ["es7", "dom", "dom.iterable"],
     "declaration": true
   }
 }

@@ -12,11 +12,11 @@ interface KeyValuePairObject {
 
 /**
  * @interface
- * Signature representing Batch response payload
+ * Signature representing Batch response body
  * @property {KeyValuePairObject[]} responses - An array of key value pair representing response object for every request
  * @property {string} @nextLink - The nextLink value to get next set of responses in case of asynchronous batch requests
  */
-interface BatchResponsePayload {
+interface BatchResponseBody {
     responses: KeyValuePairObject[],
     "@nextLink"?: string
 }
@@ -39,9 +39,9 @@ export class BatchResponseContent {
 
     /**
      * Creates the BatchResponseContent instance
-     * @param {BatchResponsePayload} response - The response body returned for batch request from server
+     * @param {BatchResponseBody} response - The response body returned for batch request from server
      */
-    constructor(response: BatchResponsePayload) {
+    constructor(response: BatchResponseBody) {
         let self = this;
         self.responses = new Map();
         self.update(response);
@@ -49,9 +49,9 @@ export class BatchResponseContent {
 
     /**
      * Updates the Batch response content instance with given responses.
-     * @param {BatchResponsePayload} response - The response json representing batch response message
+     * @param {BatchResponseBody} response - The response json representing batch response message
      */
-    update(response: BatchResponsePayload) {
+    update(response: BatchResponseBody) {
         let self = this;
         self.nextLink = response["@nextLink"];
         let responses = response.responses;
