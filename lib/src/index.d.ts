@@ -10,3 +10,5 @@ export * from "./common";
 export * from "./ResponseHandler";
 export * from "./OneDriveLargeFileUploadTask";
 export * from "./ResponseType";
+export * from "./BatchRequestContent";
+export * from "./BatchResponseContent";
