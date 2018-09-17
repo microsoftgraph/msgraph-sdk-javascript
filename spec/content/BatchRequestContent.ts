@@ -4,14 +4,6 @@ import { BatchRequestContent, BatchRequestStep } from "../../lib/src/BatchReques
 
 declare const describe, it;
 
-let fileName = "test.pdf";
-let oneDriveFileRequest = new Request(`/me/drive/root:/${fileName}:/content`, {
-    method: "GET",
-    headers: {
-        dummy: "dummyHeader"
-    }
-});
-
 let folderName = randomString();
 let folderDetails = {
     "name": folderName,
@@ -292,7 +284,7 @@ describe('addDependency', function() {
     });
 });
 
-describe('content', function(done) {
+describe('content', function() {
     it('Should return error for empty requests', async () => {
         let batchReq = new BatchRequestContent();
         try {
@@ -300,6 +292,18 @@ describe('content', function(done) {
             throw new Error("Something wrong with the empty requests validation");
         } catch (error) {
             assert.equal(error.name, "Empty Payload");
+        }
+    });
+
+    it('Should return json content', async () => {
+        let req = getCreateFolderRequestCopy();
+        let batchReq = new BatchRequestContent([req]);
+        try {
+            let content = await batchReq.content();
+            assert.isDefined(content.requests[0].body);
+            assert.equal(typeof content.requests[0].body, "object");
+        } catch (error) {
+            throw error;
         }
     });
 });

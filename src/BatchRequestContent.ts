@@ -292,9 +292,9 @@ export class BatchRequestContent {
         requestData.url = "/" + request.url.split(/.*?\/\/.*?\//)[1];
         requestData.method = request.method;
         let headers = {};
-        for (const pair of request.headers.entries()) {
-            headers[pair[0]] = pair[1];
-        }
+        request.headers.forEach((value, key) => {
+            headers[key] = value;
+        });
         if (Object.keys(headers).length) {
             requestData.headers = headers;
         }
