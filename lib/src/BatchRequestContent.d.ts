@@ -75,7 +75,7 @@ export declare class BatchRequestContent {
      * Serialize content from BatchRequestContent instance
      * @return The body content to make batch request
      */
-    content(): Promise<BatchRequestBody>;
+    getContent(): Promise<BatchRequestBody>;
     /**
      * @private
      * @static

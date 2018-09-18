@@ -285,11 +285,11 @@ describe('addDependency', function() {
     });
 });
 
-describe('content', function() {
+describe('getContent', function() {
     it('Should return error for empty requests', async () => {
         let batchReq = new BatchRequestContent();
         try {
-            let content = await batchReq.content();
+            let content = await batchReq.getContent();
             throw new Error("Something wrong with the empty requests validation");
         } catch (error) {
             assert.equal(error.name, "Empty Payload");
@@ -300,7 +300,7 @@ describe('content', function() {
         let req = getCreateFolderRequestCopy();
         let batchReq = new BatchRequestContent([req]);
         try {
-            let content = await batchReq.content();
+            let content = await batchReq.getContent();
             assert.isDefined(content.requests[0].body);
             assert.equal(typeof content.requests[0].body, "object");
         } catch (error) {
@@ -326,7 +326,7 @@ describe('content', function() {
             };
             let batchReq = new BatchRequestContent([uploadOneDriveFile]);
             try {
-                let content = await batchReq.content();
+                let content = await batchReq.getContent();
                 assert.isDefined(content.requests[0].body);
             } catch (error) {
                 throw error;
@@ -345,7 +345,7 @@ describe('content', function() {
             request: createFolderReqWithoutHeader
         }]);
         try {
-            let content = await batchReq.content();
+            let content = await batchReq.getContent();
             throw new Error("Something wrong with the header checking");
         } catch (error) {
             assert.equal(error.name, "Invalid Content-type header");

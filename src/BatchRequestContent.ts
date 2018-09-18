@@ -166,7 +166,7 @@ export class BatchRequestContent {
      * Serialize content from BatchRequestContent instance
      * @return The body content to make batch request
      */
-    async content(): Promise<BatchRequestBody> {
+    async getContent(): Promise<BatchRequestBody> {
         let self = this,
             requestBody = <BatchRequestBody>{},
             requests = [],
