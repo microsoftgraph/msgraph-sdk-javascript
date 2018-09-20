@@ -329,7 +329,7 @@ export class BatchRequestContent {
             requestData.body = await BatchRequestContent.getRequestBody(request);
         }
         /**
-         * Check any other property needs to be used from the Request object and add them
+         * TODO: Check any other property needs to be used from the Request object and add them
          */
         return requestData;
     }
@@ -360,6 +360,15 @@ export class BatchRequestContent {
                     body = await new Promise(resolve => {
                         reader.addEventListener("load", function () {
                             let dataURL = <string>reader.result,
+                                /**
+                                 * Some valid dataURL schemes:
+                                 *  1. data:text/vnd-example+xyz;foo=bar;base64,R0lGODdh
+                                 *  2. data:text/plain;charset=UTF-8;page=21,the%20data:1234,5678
+                                 *  3. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                 *  4. data:image/png,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                 *  5. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                 * @see Syntax {@link https://en.wikipedia.org/wiki/Data_URI_scheme} for more
+                                 */
                                 regex = new RegExp("^\s*data:(.+?\/.+?(;.+?\=.+?)*)?(;base64)?,(.*)\s*$"),
                                 segments = regex.exec(dataURL);
                             resolve(segments[4]);
