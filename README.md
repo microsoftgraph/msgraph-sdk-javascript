@@ -247,6 +247,14 @@ You can pass in additional request headers, either individually or in a dictiona
 
 ````
 
+### .option() and .options()
+You can pass in additional request options, either individually or in a dictionay. Options can be [node specific](https://github.com/bitinn/node-fetch#options) or [from fetch standard](https://fetch.spec.whatwg.org/#requestinit)
+```js
+.option("someOptionName", "someOptionValue")
+// or
+.options({"someOptionName":"someOptionValue"})
+```
+
 ### .responseType()
 To set a custom response type, use the `.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.
 ````js

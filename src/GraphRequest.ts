@@ -1,7 +1,7 @@
 import { Promise } from 'es6-promise'
 import 'isomorphic-fetch';
 
-import { Options, URLComponents, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders } from "./common"
+import { Options, URLComponents, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders, FetchOptions } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
 import { ResponseType } from "./ResponseType";
@@ -10,34 +10,53 @@ import { GraphHelper } from './GraphHelper';
 export class GraphRequest {
     config: Options;
     urlComponents: URLComponents;
-    _headers: { [key: string]: string | number; } // other headers to pass through to superagent
+    _options: FetchOptions;
+    _headers: {
+        [key: string]: string;
+    };
     _responseType: string;
 
 
     constructor(config: Options, path: string) {
-        this.config = config;
-        this._headers = {};
-
-        this.urlComponents = {
-            host: this.config.baseUrl,
-            version: this.config.defaultVersion,
+        let self = this;
+        self.config = config;
+        self._options = {};
+        self._headers = {};
+        self.urlComponents = {
+            host: self.config.baseUrl,
+            version: self.config.defaultVersion,
             oDataQueryParams: {},
             otherURLQueryParams: {}
         };
-
-        this.parsePath(path);
+        self.parsePath(path);
     }
 
     public header(headerKey: string, headerValue: string) {
-        this._headers[headerKey] = headerValue;
-        return this;
+        let self = this;
+        self._headers[headerKey] = headerValue;
+        return self;
     }
 
     public headers(headers: { [key: string]: string | number }) {
+        let self = this;
         for (let key in headers) {
-            this._headers[key] = headers[key];
+            self._headers[key] = <string>headers[key];
         }
-        return this;
+        return self;
+    }
+
+    public option(key: string, value: any) {
+        let self = this;
+        self._options[key] = value;
+        return self;
+    }
+
+    public options(options: { [key: string]: any}) {
+        let self = this;
+        for (let key in options) {
+            self._options[key] = options[key];
+        }
+        return self;
     }
 
     public parsePath(rawPath: string) {
@@ -130,17 +149,17 @@ export class GraphRequest {
      * 
      */
     select(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$select", properties, arguments);
+        this.addCsvQueryParameter("$select", properties, arguments);
         return this;
     }
 
     expand(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$expand", properties, arguments);
+        this.addCsvQueryParameter("$expand", properties, arguments);
         return this;
     }
 
     orderby(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$orderby", properties, arguments);
+        this.addCsvQueryParameter("$orderby", properties, arguments);
         return this;
     }
 
@@ -176,7 +195,7 @@ export class GraphRequest {
     }
 
     // helper for $select, $expand and $orderby (must be comma separated)
-    private addCsvQueryParamater(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments) {
+    private addCsvQueryParameter(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments) {
         // if there are already $propertyName value there, append a ","
         this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
 
@@ -198,81 +217,133 @@ export class GraphRequest {
 
 
     delete(callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.DELETE, headers: new Headers() }),
-            callback
-        );
+        let self = this,
+            url = self.buildFullUrl(),
+            options: FetchOptions = {
+                method: RequestMethod.DELETE
+            }
+        return self.sendRequestAndRouteResponse(url, options, callback);
     }
 
-    patch(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.PATCH,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers({ 'Content-Type': 'application/json' })
-                }),
-            callback
-        );
-    }
-
-    post(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.POST,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers((content.constructor !== undefined && content.constructor.name === "FormData") ? {} : { 'Content-Type': 'application/json' })
-                }),
-            callback
-        );
-    }
-
-    put(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.PUT,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers({ 'Content-Type': 'application/octet-stream' })
-                }),
-            callback
-        );
-    }
-
-    // request aliases
-    // alias for post
-    create(content: any, callback?: GraphRequestCallback): Promise<any> {
-        return this.post(content, callback);
-    }
-
-    // alias for patch
-    update(content: any, callback?: GraphRequestCallback): Promise<any> {
-        return this.patch(content, callback);
-    }
-
+    /**
+     * Alias for delete call
+     */
     del(callback?: GraphRequestCallback): Promise<any> {
         return this.delete(callback);
     }
 
-    get(callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
-            callback
-        );
+    patch(content: any, callback?: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options: FetchOptions = {
+                method: RequestMethod.PATCH,
+                body: GraphHelper.serializeContent(content),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+        return self.sendRequestAndRouteResponse(url, options, callback);
     }
 
-    private routeResponseToPromise(request: Request) {
+    post(content: any, callback?: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options: FetchOptions = {
+                method: RequestMethod.POST,
+                body: GraphHelper.serializeContent(content),
+                headers: (content.constructor !== undefined && content.constructor.name === "FormData") ? {} : {
+                    "Content-Type": "application/json"
+                }
+            };
+        return self.sendRequestAndRouteResponse(url, options, callback);
+    }
+
+    /**
+     * Alias for Post call
+     */
+    create(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return this.post(content, callback);
+    }
+
+    put(content: any, callback?: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options: FetchOptions = {
+                method: RequestMethod.PUT,
+                body: GraphHelper.serializeContent(content),
+                headers: { 
+                    "Content-Type": "application/octet-stream"
+                }
+            };
+        return self.sendRequestAndRouteResponse(url, options, callback);
+    }
+
+    /**
+     * Alias for update call
+     */
+    update(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return this.patch(content, callback);
+    }
+
+    get(callback?: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options: FetchOptions = {
+                method: RequestMethod.GET
+            };
+        return self.sendRequestAndRouteResponse(url, options, callback);
+    }
+
+    getStream(callback: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options = {
+                method: RequestMethod.GET
+            };
+        self.responseType(ResponseType.STREAM);
+        return self.sendRequestAndRouteResponse(url, options, callback);
+    }
+
+    putStream(stream: any, callback: GraphRequestCallback): Promise<any> {
+        let self = this,
+            url = self.buildFullUrl(),
+            options = {
+                method: RequestMethod.PUT,
+                headers: {
+                    "Content-Type": "application/octet-stream",
+                },
+                body: stream
+            };
+        return self.sendRequestAndRouteResponse(url, options, callback);
+    }
+
+    /**
+     * @private
+     * Sends request and routes response to the callback or resolves to promise
+     * @param {RequestInfo} request - The Request object or url string value 
+     * @param {FetchOptions} options - The options for the fetch api request 
+     * @param {GraphRequestCallback} callback - The callback that needs to be called on response
+     * @return The promise in case if the callback param is empty
+     */
+    private sendRequestAndRouteResponse(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
+        // return a promise when Promises are supported and no callback was provided
+        if (callback == null && typeof Promise !== "undefined") {
+            return this.routeResponseToPromise(request, options);
+        } else {
+            this.routeResponseToCallback(request, options, callback);
+        }
+    }
+
+    /**
+     * @private
+     * Gets the Promise that will resolve or reject with fetch api request
+     * @param {RequestInfo} request - The Request object or url string value
+     * @param {FetchOptions} options - The options for the fetch api request
+     * @return The Promise that resolves with Response
+     */
+    private routeResponseToPromise(request: RequestInfo, options: FetchOptions): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.routeResponseToCallback(request, (err, body) => {
+            this.routeResponseToCallback(request, options, (err, body) => {
                 if (err != null) {
                     reject(err);
                 } else {
@@ -282,96 +353,52 @@ export class GraphRequest {
         });
     }
 
-    // Given the Request object, make the request and invoke callback
-    private handleFetch(request: Request | string, callback: GraphRequestCallback, options?: any) {
-        ((request.constructor.name === "Request") ? fetch(request) : fetch(request, options)).then((response) => {
-            this.convertResponseType(response).then((responseValue) => {
-                ResponseHandler.init(response, undefined, responseValue, callback);
-            }).catch((error) => {
-                ResponseHandler.init(response, error, undefined, callback)
-            });
-        }).catch((error) => {
-            ResponseHandler.init(undefined, error, undefined, callback)
-        });
-    }
-
-    // Given the Request object, get an auth token from the authProvider, make the fetch call
-    private routeResponseToCallback(request: Request, callback: GraphRequestCallback) {
+    /**
+     * @private
+     * Makes request to the service by getting auth token from the auth provider
+     * @param {RequestInfo} request - The Request object or url string value
+     * @param {FetchOptions} options - The options for the fetch api request
+     * @param {GraphRequestCallback} callback - The callback function
+     */
+    private routeResponseToCallback(request: RequestInfo, options: FetchOptions, callback: GraphRequestCallback = function () { }) {
         let self = this;
         self.config.authProvider((err, accessToken) => {
             if (err == null && accessToken != null) {
-                request = self.configureRequest(request, accessToken);
-                self.handleFetch(request, callback);
+                options = self.configureRequestOptions(options, accessToken);
+                fetch(request, options).then((response) => {
+                    this.convertResponseType(response).then((responseValue) => {
+                        ResponseHandler.init(response, undefined, responseValue, callback);
+                    }).catch((error) => {
+                        ResponseHandler.init(response, error, undefined, callback)
+                    });
+                }).catch((error) => {
+                    ResponseHandler.init(undefined, error, undefined, callback)
+                });
             } else {
                 callback(err, null, null);
             }
         });
     }
 
-    /*
-     * Help method that's called from the final actions( .get(), .post(), etc.) that after making the request either invokes
-     * routeResponseToCallback() or routeResponseToPromise()
+    /**
+     * @private
+     * Customizes the fetch options with the Auth token, SDKVersion header and customization applied via init, .header, .headers, .option, .options etc
+     * @param {FetchOptions} options - The options for the fetch api request
+     * @param {string} accessToken - The access token value
+     * @return The fetch options with customization
      */
-    private sendRequestAndRouteResponse(request: Request, callback?: GraphRequestCallback): Promise<any> {
-        // return a promise when Promises are supported and no callback was provided
-        if (callback == null && typeof Promise !== "undefined") {
-            return this.routeResponseToPromise(request);
-        } else {
-            this.routeResponseToCallback(request, callback || function () { });
-        }
-    }
-
-    getStream(callback: GraphRequestCallback) {
-        let self = this;
-        self.config.authProvider((err, accessToken) => {
-            if (err === null && accessToken !== null) {
-                let url = self.buildFullUrl();
-                let options = {
-                    method: RequestMethod.GET,
-                    headers: self.getDefaultRequestHeaders(accessToken)
-                };
-                self.responseType(ResponseType.STREAM);
-                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
-                self.handleFetch(url, callback, options);
-            } else {
-                callback(err, null);
-            }
-        });
-    }
-
-    putStream(stream: any, callback: GraphRequestCallback) {
-        let self = this;
-        self.config.authProvider((err, accessToken) => {
-            if (err === null && accessToken !== null) {
-                let url = self.buildFullUrl();
-                let options = {
-                    method: RequestMethod.PUT,
-                    headers: {
-                        'Content-Type': 'application/octet-stream',
-                    },
-                    body: stream
-                }
-                let defaultHeaders = self.getDefaultRequestHeaders(accessToken);
-                Object.keys(defaultHeaders).forEach((key) => options.headers[key] = defaultHeaders[key] as string);
-                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
-                self.handleFetch(url, callback, options);
-            }
-        });
-    }
-
-    private getDefaultRequestHeaders(accessToken: string): DefaultRequestHeaders {
-        return {
-            Authorization: `Bearer ${accessToken}`,
-            SdkVersion: `graph-js-${PACKAGE_VERSION}`
-        }
-    }
-
-    private configureRequest(request: Request, accessToken: string): Request {
+    private configureRequestOptions(options: FetchOptions, accessToken: string): FetchOptions {
         let self = this,
-            defaultHeaders = self.getDefaultRequestHeaders(accessToken);
-        Object.keys(defaultHeaders).forEach((key) => request.headers.set(key, defaultHeaders[key] as string));
-        Object.keys(self._headers).forEach((key) => request.headers.set(key, self._headers[key] as string));
-        return request;
+            defaultHeaders = {
+                Authorization: `Bearer ${accessToken}`,
+                SdkVersion: `graph-js-${PACKAGE_VERSION}`
+            };
+        let configuredOptions: FetchOptions = {
+            headers: {}
+        };
+        Object.assign(configuredOptions, self.config.fetchOptions, self._options, options);
+        Object.assign(configuredOptions.headers, defaultHeaders, self._headers, options.headers);
+        return configuredOptions;
     }
 
     // append query strings to the url, accepts either a string like $select=displayName or a dictionary {"$select": "displayName"}
