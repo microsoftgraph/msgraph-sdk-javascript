@@ -8,5 +8,7 @@ export declare class Client {
 export * from "./GraphRequest";
 export * from "./common";
 export * from "./ResponseHandler";
-export * from "./OneDriveLargeFileUploadTask";
+export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./ResponseType";
+export * from "./content/BatchRequestContent";
+export * from "./content/BatchResponseContent";

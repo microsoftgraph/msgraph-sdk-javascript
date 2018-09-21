@@ -1,8 +1,8 @@
 /**
  * @module LargeFileUploadTask
  */
-import { Client } from "./index";
-import { Range } from "./Range";
+import { Client } from "../index";
+import { Range } from "../Range";
 /**
  * @interface
  * Signature to represent the resulting response in the status enquiry request

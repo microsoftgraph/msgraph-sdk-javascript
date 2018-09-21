@@ -2,7 +2,7 @@
  * @module OneDriveLargeFileUploadTask
  */
 
-import { Client } from "./index";
+import { Client } from "../index";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
