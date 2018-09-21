@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { randomString } from "../test-helper";
-import { BatchRequestContent, BatchRequestStep } from "../../lib/src/BatchRequestContent";
+import { BatchRequestContent, BatchRequestStep } from "../../lib/src/content/BatchRequestContent";
 import * as fs from "fs";
 
 declare const describe, it;

@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { BatchResponseContent } from "../../lib/src/BatchResponseContent";
+import { BatchResponseContent } from "../../lib/src/content/BatchResponseContent";
 
 declare const describe, it;
 

@@ -1,7 +1,7 @@
 /**
  * @module BatchRequestContent
  */
-import { RequestMethod } from './RequestMethod';
+import { RequestMethod } from '../RequestMethod';
 
 /**
  * @interface
