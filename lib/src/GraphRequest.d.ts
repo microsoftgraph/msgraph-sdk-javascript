@@ -31,7 +31,7 @@ export declare class GraphRequest {
     skipToken(token: string): GraphRequest;
     count(count: boolean): GraphRequest;
     responseType(responseType: string): GraphRequest;
-    private addCsvQueryParamater;
+    private addCsvQueryParameter;
     delete(callback?: GraphRequestCallback): Promise<any>;
     /**
      * Alias for delete call
