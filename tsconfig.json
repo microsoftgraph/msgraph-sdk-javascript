@@ -20,9 +20,6 @@
   ],
   "include": [
       "./src/index.ts",
-      "./src/LargeFileUploadTask.ts",
-      "./src/BatchRequestContent.ts",
-      "./src/BatchResponseContent.ts",
       "./spec/core"
   ]
 }
