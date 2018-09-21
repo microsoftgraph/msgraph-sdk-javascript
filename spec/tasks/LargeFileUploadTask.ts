@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { getClient } from "../test-helper";
-import { LargeFileUploadTask } from "../../lib/src/LargeFileUploadTask";
+import { LargeFileUploadTask } from "../../lib/src/tasks/LargeFileUploadTask";
 
 declare const describe, it;
 

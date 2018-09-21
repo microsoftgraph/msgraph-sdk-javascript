@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import * as OneDriveLargeFileUploadTaskUtil from "../../lib/src/OneDriveLargeFileUploadTaskUtil";
+import * as OneDriveLargeFileUploadTaskUtil from "../../lib/src/tasks/OneDriveLargeFileUploadTaskUtil";
 
 declare const describe, it;
 

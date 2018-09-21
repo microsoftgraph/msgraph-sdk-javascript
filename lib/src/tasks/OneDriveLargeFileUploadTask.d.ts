@@ -2,7 +2,7 @@
  * @module OneDriveLargeFileUploadTask
  */
 /// <reference types="node" />
-import { Client } from "./index";
+import { Client } from "../index";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 /**
  * @interface

@@ -2,8 +2,8 @@
  * @module LargeFileUploadTask
  */
 
-import { Client } from "./index";
-import { Range } from "./Range";
+import { Client } from "../index";
+import { Range } from "../Range";
 
 /**
  * @interface
