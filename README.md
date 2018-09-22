@@ -270,6 +270,10 @@ client
     });
 ````
 
+## Usage Resources
+1. [Large File Upload Task](/docs/tasks/LargeFileUploadTask.md)
+2. [Batching](/docs/content/Batching.md)
+
 ## Running node samples
 You can run and debug the node samples found under [./samples/node/node-sample.js](./samples/node/node-sample.js) by running the *Run node samples* configuration from the **Debug** (Ctrl + Shift + D) menu in Visual Studio Code. Alternately, you can run the node samples from the CLI by entering `node ./samples/node/node-sample.js` (assuming you are at the root of this repo). You'll need to rename the *secrets.example.json* file to *secrets.json* and add a valid access token to it. You can get an access token by doing the following:
 1. Go to [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
