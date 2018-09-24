@@ -63,7 +63,7 @@ const serialBatching = async function(elem) {
 
 ```
 
-**GET of POST contents from and to different workloads - Making parallel requests**
+**GET and POST contents from and to different workloads - Making parallel requests**
 
 ```typescript
 const parallelBatching = async function() {
