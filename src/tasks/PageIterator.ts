@@ -74,7 +74,7 @@ export class PageIterator {
      */
     iterationHelper(): boolean {
         let self = this;
-        if (self.collection.length === 0) {
+        if (self.collection === undefined || self.collection.length === 0) {
             return false;
         }
         let advance = true;
