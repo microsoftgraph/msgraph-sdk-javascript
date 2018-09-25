@@ -22,7 +22,7 @@ oDataQueryNames = oDataQueryNames.concat(oDataQueryNames.map((s) => "$" + s));
  * @callback - The anonymous callback function
  */
 export interface AuthProviderCallback {
-    (error: any, accessToken: string): void
+    (error: any, accessToken: string | null): void
 }
 
 /**

@@ -7,14 +7,14 @@ export declare const GRAPH_BASE_URL = "https://graph.microsoft.com/";
  * @NOTE: This should be kept up to date with the version used in package.json.
  * If you are changing this please ensure you are also changing it in package.json.
  */
-export declare const PACKAGE_VERSION = "1.2.0";
+export declare const PACKAGE_VERSION = "1.3.0";
 /**
  * @interface
  * Signature that defines callback for an authentication provider
  * @callback - The anonymous callback function
  */
 export interface AuthProviderCallback {
-    (error: any, accessToken: string): void;
+    (error: any, accessToken: string | null): void;
 }
 /**
  * @interface {@link https://github.com/bitinn/node-fetch/#options}
