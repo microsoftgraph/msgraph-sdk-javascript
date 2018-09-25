@@ -69,32 +69,24 @@ describe("Constructor", function () {
     });
 });
 
-describe("iterationHelper", function() {
-    it("Should iterate over complete collection", () => {
-        truthyCallbackCounter = 10;
-        let pageIterator = new PageIterator(client, getPageCollection(), truthyCallbackWithCounter);
-        assert.isTrue(pageIterator.iterationHelper());
-        assert.equal(truthyCallbackCounter, 0);
-    });
-
-    it("Should break in the middle of the iteration, this is done by returning red flag from the callback", () => {
-        halfWayCallbackCounter = 5;
-        let pageIterator = new PageIterator(client, getPageCollection(), halfWayCallback);
-        assert.isFalse(pageIterator.iterationHelper());
-        assert.equal(halfWayCallbackCounter, 0);
-    });
-
-    it("Should return false for iterating over empty collection", () => {
-        let pageIterator = new PageIterator(client, getEmptyPageCollection(), truthyCallback);
-        assert.isFalse(pageIterator.iterationHelper());
-    });
-});
-
 describe("iterate", function() {
     it("Should iterate over a complete collection without nextLink", async () => {
-        let pageIterator = new PageIterator(client, getPageCollection(), truthyCallback);
+        truthyCallbackCounter = 10;
+        let pageIterator = new PageIterator(client, getPageCollection(), truthyCallbackWithCounter);
         try {
             await pageIterator.iterate();
+            assert.equal(truthyCallbackCounter, 0);
+        } catch (error) {
+            throw error;
+        }
+    });
+
+    it("Should not iterate over an empty collection", async () => {
+        let pageIterator = new PageIterator(client, getEmptyPageCollection(), truthyCallback);
+        halfWayCallbackCounter = 1;
+        try {
+            await pageIterator.iterate();
+            assert.equal(halfWayCallbackCounter, 1);
         } catch (error) {
             throw error;
         }

@@ -52,10 +52,11 @@ export declare class PageIterator {
      */
     constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback);
     /**
+     * @private
      * Iterates over a collection by enqueuing entries one by one and kicking the callback with the enqueued entry
      * @return A boolean indicating the continue flag to process next page
      */
-    iterationHelper(): boolean;
+    private iterationHelper;
     /**
      * @private
      * @async
@@ -72,7 +73,7 @@ export declare class PageIterator {
     iterate(): Promise<any>;
     /**
      * @async
-     * This internally calls the iterate method, Its juts for more readability.
+     * This internally calls the iterate method, It's just for more readability.
      * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy
      */
     resume(): Promise<any>;

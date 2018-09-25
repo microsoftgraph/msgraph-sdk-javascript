@@ -69,10 +69,11 @@ export class PageIterator {
     }
     
     /**
+     * @private
      * Iterates over a collection by enqueuing entries one by one and kicking the callback with the enqueued entry
      * @return A boolean indicating the continue flag to process next page
      */
-    iterationHelper(): boolean {
+    private iterationHelper(): boolean {
         let self = this;
         if (self.collection === undefined || self.collection.length === 0) {
             return false;
@@ -127,7 +128,7 @@ export class PageIterator {
 
     /**
      * @async
-     * This internally calls the iterate method, Its juts for more readability.
+     * This internally calls the iterate method, It's just for more readability.
      * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy
      */
     async resume(): Promise<any> {
