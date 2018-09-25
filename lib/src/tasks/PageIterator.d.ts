@@ -11,6 +11,7 @@ import { Client } from "../index";
 export interface PageCollection {
     value: any[];
     "@odata.nextLink"?: string;
+    "@odata.deltaLink"?: string;
     [Key: string]: any;
 }
 /**
@@ -41,6 +42,11 @@ export declare class PageIterator {
     private nextLink;
     /**
      * @private
+     * Member variable referring to deltaLink of the request
+     */
+    private deltaLink;
+    /**
+     * @private
      * Holding callback for Iteration.
      */
     private callback;
@@ -64,6 +70,7 @@ export declare class PageIterator {
      * @return A promise that resolves to a response data with next page collection
      */
     private fetchAndUpdateNextPageData;
+    getDeltaLink(): string | undefined;
     /**
      * @async
      * Iterates over the collection and kicks callback for each item on iteration. Fetches next set of data through nextLink and iterates over again

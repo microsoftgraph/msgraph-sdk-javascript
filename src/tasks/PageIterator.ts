@@ -13,6 +13,7 @@ import { Client } from "../index";
 export interface PageCollection {
     value: any[];
     "@odata.nextLink"?: string;
+    "@odata.deltaLink"?: string;
     [Key: string]: any;
 }
 
@@ -49,6 +50,12 @@ export class PageIterator {
 
     /**
      * @private
+     * Member variable referring to deltaLink of the request
+     */
+    private deltaLink: string | undefined;
+
+    /**
+     * @private
      * Holding callback for Iteration.
      */
 
@@ -65,6 +72,7 @@ export class PageIterator {
         self.client = client;
         self.collection = pageCollection.value;
         self.nextLink = pageCollection["@odata.nextLink"];
+        self.deltaLink = pageCollection["@odata.deltaLink"];
         self.callback = callback;
     }
     
@@ -95,12 +103,17 @@ export class PageIterator {
     private async fetchAndUpdateNextPageData(): Promise<any> {
         try {
             let self = this,
-                response = await self.client.api(self.nextLink).get();
+                response: PageCollection = await self.client.api(self.nextLink).get();
             self.collection = response.value;
             self.nextLink = response["@odata.nextLink"];
+            self.deltaLink = response["@odata.deltaLink"];
         } catch (error) {
             throw error;
         }
+    }
+
+    getDeltaLink(): string | undefined {
+        return this.deltaLink;
     }
 
     /**
