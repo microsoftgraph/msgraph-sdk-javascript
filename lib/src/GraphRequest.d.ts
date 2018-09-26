@@ -89,5 +89,6 @@ export declare class GraphRequest {
         [key: string]: string | number;
     }): GraphRequest;
     private createQueryString;
+    private parseDocumentResponse;
     private convertResponseType;
 }
