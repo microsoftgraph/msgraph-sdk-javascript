@@ -112,6 +112,10 @@ export class PageIterator {
         }
     }
 
+    /**
+     * Getter to get the deltaLink in the current response
+     * @return A deltaLink which is being used to make delta requests in future
+     */
     getDeltaLink(): string | undefined {
         return this.deltaLink;
     }
