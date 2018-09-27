@@ -164,7 +164,7 @@ export class GraphRequest {
     }
 
     search(searchStr: string): GraphRequest {
-        this.addCsvQueryParameter("$search", `"${searchStr}"`, arguments);
+        this.urlComponents.oDataQueryParams["$search"] = `"${searchStr}"`;
         return this;
     }
 

@@ -222,6 +222,18 @@ client
     })
 ````
 
+
+### $search
+Pass a search query string to `.search()` for searching in collections. Calling search multiple times will override previous search query. Refer graph [documentation](https://developer.microsoft.com/en-us/graph/docs/concepts/query_parameters#search-parameter) for more.
+```js
+client
+    .api("/me/messages")
+    .search("from:admin")
+    .get((err, res) => {
+        console.log(res);
+    });
+```
+
 ## Other API methods
 
 ### .version()
