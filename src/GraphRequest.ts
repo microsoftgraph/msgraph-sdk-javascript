@@ -447,17 +447,21 @@ export class GraphRequest {
     }
 
     private parseDocumentResponse(response, type): Promise<any> {
-        return new Promise((resolve, reject) => {
-            response.text().then((xmlString) => {
-                try {
-                    let parser = new DOMParser(),
-                        xmlDoc = parser.parseFromString(xmlString, type);
-                    resolve(xmlDoc);
-                } catch (error) {
-                    reject(error);
-                }
+        if (typeof DOMParser !== "undefined") {
+            return new Promise((resolve, reject) => {
+                response.text().then((xmlString) => {
+                    try {
+                        let parser = new DOMParser(),
+                            xmlDoc = parser.parseFromString(xmlString, type);
+                        resolve(xmlDoc);
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
             });
-        });
+        } else {
+            return Promise.resolve(response.body);
+        }
     }
 
     private convertResponseType(response: Response): Promise<any> {
