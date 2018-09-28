@@ -478,7 +478,7 @@ export class GraphRequest {
                 responseValue = response.blob();
                 break;
             case ResponseType.DOCUMENT:
-                responseValue = self.parseDocumentResponse(response, "text/html");
+                responseValue = self.parseDocumentResponse(response, "text/xml");
                 break;
             case ResponseType.JSON:
                 responseValue = response.json();
