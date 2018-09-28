@@ -1,6 +1,3 @@
-import { Promise } from 'es6-promise'
-import 'isomorphic-fetch';
-
 import { Options, URLComponents, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders, FetchOptions } from "./common"
 import { ResponseHandler } from "./ResponseHandler"
 import { RequestMethod } from './RequestMethod';
