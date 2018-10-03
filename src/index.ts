@@ -28,8 +28,11 @@ export class Client {
 
 export * from "./GraphRequest";
 export * from "./common";
-export * from "./ResponseHandler";
-export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./ResponseType";
+export * from "./ResponseHandler";
+
+export * from "./tasks/OneDriveLargeFileUploadTask";
+export * from "./tasks/PageIterator";
+
 export * from "./content/BatchRequestContent";
 export * from "./content/BatchResponseContent";
