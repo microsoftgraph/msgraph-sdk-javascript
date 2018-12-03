@@ -1,11 +1,9 @@
-import { AccessToken } from "./secrets"
-import { Client } from "../lib/src/index"
+import { Client } from "../lib/src/index";
+import { HardCodedAuthenticationProvider } from "./HardCodedAuthenticationProvider";
 
 export function getClient(): Client {
     return Client.init({
-        authProvider: (done) => {
-            done(null, AccessToken);
-        }
+        authProvider: new HardCodedAuthenticationProvider()
     });
 }
 

@@ -1,4 +1,11 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
  * @module PageIterator
  */
 
@@ -26,6 +33,7 @@ export interface PageIteratorCallback {
 }
 
 /**
+ * @class
  * Class for PageIterator
  */
 export class PageIterator {
@@ -62,10 +70,12 @@ export class PageIterator {
     private callback: PageIteratorCallback;
 
     /**
+     * @constructor
      * Creates new instance for PageIterator
      * @param {Client} client - The graph client instance
      * @param {PageCollection} pageCollection - The page collection object
      * @param {PageIteratorCallback} callBack - The callback function
+     * @return An instance of a PageIterator
      */
     constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback) {
         let self = this;
@@ -75,7 +85,7 @@ export class PageIterator {
         self.deltaLink = pageCollection["@odata.deltaLink"];
         self.callback = callback;
     }
-    
+
     /**
      * @private
      * Iterates over a collection by enqueuing entries one by one and kicking the callback with the enqueued entry
@@ -113,23 +123,25 @@ export class PageIterator {
     }
 
     /**
+     * @public
      * Getter to get the deltaLink in the current response
      * @return A deltaLink which is being used to make delta requests in future
      */
-    getDeltaLink(): string | undefined {
+    public getDeltaLink(): string | undefined {
         return this.deltaLink;
     }
 
     /**
+     * @public
      * @async
      * Iterates over the collection and kicks callback for each item on iteration. Fetches next set of data through nextLink and iterates over again
      * This happens until the nextLink is drained out or the user responds with a red flag to continue from callback
      * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy.
      */
-    async iterate(): Promise<any> {
+    public async iterate(): Promise<any> {
         try {
             let self = this,
-            advance = self.iterationHelper();
+                advance = self.iterationHelper();
             while (advance) {
                 if (self.nextLink !== undefined) {
                     await self.fetchAndUpdateNextPageData();
@@ -144,11 +156,12 @@ export class PageIterator {
     }
 
     /**
+     * @public
      * @async
      * This internally calls the iterate method, It's just for more readability.
      * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy
      */
-    async resume(): Promise<any> {
+    public async resume(): Promise<any> {
         try {
             return this.iterate();
         } catch (error) {

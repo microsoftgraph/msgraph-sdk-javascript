@@ -1,7 +1,13 @@
 /**
- * @module OneDriveLargeFileUploadTask
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
  */
 /// <reference types="node" />
+/**
+ * @module OneDriveLargeFileUploadTask
+ */
 import { Client } from "../index";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 /**
@@ -17,22 +23,28 @@ interface OneDriveLargeFileUploadOptions {
     rangeSize?: number;
 }
 /**
+ * @class
  * Class representing OneDriveLargeFileUploadTask
  */
 export declare class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
     /**
+     * @private
+     * @static
      * Default path for the file being uploaded
      */
-    static DEFAULT_UPLOAD_PATH: string;
+    private static DEFAULT_UPLOAD_PATH;
     /**
+     * @constructor
      * Constructs a OneDriveLargeFileUploadTask
      * @param {Client} client - The GraphClient instance
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
+     * @return An instance of OneDriveLargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions);
     /**
+     * @public
      * @static
      * @async
      * Creates a OneDriveLargeFileUploadTask
@@ -43,6 +55,7 @@ export declare class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      */
     static create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<any>;
     /**
+     * @public
      * @static
      * Constructs the create session url for Onedrive
      * @param {string} fileName - The name of the file
@@ -51,6 +64,7 @@ export declare class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      */
     static constructCreateSessionUrl(fileName: string, path?: string): string;
     /**
+     * @public
      * @static
      * @async
      * Makes request to the server to create an upload session
@@ -61,6 +75,7 @@ export declare class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      */
     static createUploadSession(client: Client, requestUrl: string, fileName: string): Promise<any>;
     /**
+     * @public
      * Commits upload session to end uploading
      * @param {string} requestUrl - The URL to commit the upload session
      * @return The promise resolves to committed response

@@ -1,4 +1,11 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
  * @module LargeFileUploadTask
  */
 
@@ -50,35 +57,55 @@ export interface FileObject {
 }
 
 /**
+ * @class
  * Class representing LargeFileUploadTask
  */
 export class LargeFileUploadTask {
-    /** The GraphClient instance */
-    client: Client
 
-    /** The object holding file details */
-    file: FileObject
-
-    /** The object holding options for the task  */
-    options: LargeFileUploadTaskOptions
-
-    /** The object for upload session */
-    uploadSession: LargeFileUploadSession
-
-    /** The next range needs to be uploaded */
-    nextRange: Range
+    /** 
+     * @protected
+     * The GraphClient instance
+     */
+    protected client: Client
 
     /**
+     * @protected
+     * The object holding file details 
+     */
+    protected file: FileObject
+
+    /**
+     * @protected
+     * The object holding options for the task
+     */
+    protected options: LargeFileUploadTaskOptions
+
+    /**
+     * @protected
+     * The object for upload session
+     */
+    protected uploadSession: LargeFileUploadSession
+
+    /**
+     * @protected
+     * The next range needs to be uploaded
+     */
+    protected nextRange: Range
+
+    /**
+     * @private
     * Default value for the rangeSize
     */
     private DEFAULT_FILE_SIZE: number = 5 * 1024 * 1024;
 
     /**
+     * @constructor
      * Constructs a LargeFileUploadTask
      * @param {Client} client - The GraphClient instance
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
+     * @return An instance of LargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         let self = this;
@@ -93,11 +120,12 @@ export class LargeFileUploadTask {
     }
 
     /**
+     * @public
      * Parses given range string to the Range instance
      * @param {string[]} ranges - The ranges value
      * @return The range instance
      */
-    parseRange (ranges: string[]): Range {
+    public parseRange(ranges: string[]): Range {
         let rangeStr = ranges[0];
         if (typeof rangeStr === "undefined" || rangeStr === "") {
             return new Range();
@@ -112,20 +140,23 @@ export class LargeFileUploadTask {
     }
 
     /**
+     * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
+     * @return nothing
      */
-    updateTaskStatus(response: UploadStatusResponse): void {
+    public updateTaskStatus(response: UploadStatusResponse): void {
         let self = this;
         self.uploadSession.expiry = new Date(response.expirationDateTime);
         self.nextRange = self.parseRange(response.nextExpectedRanges);
     }
 
     /**
+     * @public
      * Gets next range that needs to be uploaded
      * @return The range instance
      */
-    getNextRange(): Range {
+    public getNextRange(): Range {
         let self = this;
         if (self.nextRange.minValue === -1) {
             return self.nextRange;
@@ -139,21 +170,23 @@ export class LargeFileUploadTask {
     }
 
     /**
+     * @public
      * Slices the file content to the given range
      * @param {Range} range - The range value
      * @return The sliced ArrayBuffer or Blob
      */
-    sliceFile(range: Range): ArrayBuffer | Blob {
+    public sliceFile(range: Range): ArrayBuffer | Blob {
         let blob = this.file.content.slice(range.minValue, range.maxValue + 1);
         return blob;
     }
 
     /**
+     * @public
      * @async
      * Uploads file to the server in a sequential order by slicing the file
      * @return The promise resolves to uploaded response
      */
-    async upload(): Promise<any> {
+    public async upload(): Promise<any> {
         let self = this;
         try {
             while (true) {
@@ -172,19 +205,20 @@ export class LargeFileUploadTask {
                     self.updateTaskStatus(response);
                 }
             }
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
     }
 
     /**
+     * @public
      * @async
      * Uploads given slice to the server
      * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
      * @param {Range} range - The range value
      * @param {number} totalSize - The total size of a complete file
      */
-    async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
+    public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
         let self = this;
         try {
             return await self.client
@@ -194,17 +228,18 @@ export class LargeFileUploadTask {
                     "Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`
                 })
                 .put(fileSlice);
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
     }
 
     /**
+     * @public
      * @async
      * Deletes upload session in the server
      * @return The promise resolves to cancelled response
      */
-    async cancel (): Promise<any> {
+    public async cancel(): Promise<any> {
         let self = this;
         try {
             return await self.client
@@ -216,16 +251,17 @@ export class LargeFileUploadTask {
     }
 
     /**
+     * @public
      * @async
      * Gets status for the upload session
      * @return The promise resolves to the status enquiry response
      */
-    async getStatus(): Promise<any> {
+    public async getStatus(): Promise<any> {
         let self = this;
         try {
             let response = await self.client
-                            .api(self.uploadSession.url)
-                            .get();
+                .api(self.uploadSession.url)
+                .get();
             self.updateTaskStatus(response);
             return response;
         } catch (err) {
@@ -234,11 +270,12 @@ export class LargeFileUploadTask {
     }
 
     /**
+     * @public
      * @async
      * Resumes upload session and continue uploading the file from the last sent range
      * @return The promise resolves to the uploaded response
      */
-    async resume(): Promise<any> {
+    public async resume(): Promise<any> {
         let self = this;
         try {
             await self.getStatus();

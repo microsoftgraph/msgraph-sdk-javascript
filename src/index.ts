@@ -1,38 +1,73 @@
-import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./common"
-import {GraphRequest} from "./GraphRequest"
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
+ * @module Client
+ */
+
+import { Options } from "./Common";
+import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
+import { GraphRequest } from "./GraphRequest";
+import { HTTPClientFactory } from "./HTTPClientFactory";
+import { HTTPClient } from "./HTTPClient";
 
 export class Client {
-    // specify client defaults
-    config:Options = {
+
+    /**
+     * @private
+     * A member which stores the Client instance options
+     */
+    private config: Options = {
+        baseUrl: GRAPH_BASE_URL,
         debugLogging: false,
-        defaultVersion: DEFAULT_VERSION,
-        baseUrl: GRAPH_BASE_URL
+        defaultVersion: GRAPH_API_VERSION
     };
 
-    static init(clientOptions?:Options) {
-        var graphClient = new Client();
-        for (let key in clientOptions) {
-            graphClient.config[key] = clientOptions[key];
-        }
-        return graphClient;
-    }
-
-    /*
-     * Entry point for calling api
+    /**
+     * @private
+     * A member which holds the HTTPClient instance
      */
-    api(path:string) {
-        return new GraphRequest(this.config, path);
+    private httpClient: HTTPClient;
+
+    /**
+     * @public
+     * @static
+     * To create a client instance with options and initializes the default middleware chain
+     * @param {Options} options - The options for client instance
+     * @return The Client instance
+     */
+    public static init(options: Options): Client {
+        const client = new Client();
+        for (const key in options) {
+            client.config[key] = options[key];
+        }
+        let httpClient: HTTPClient;
+        if (options.authProvider !== undefined) {
+            httpClient = HTTPClientFactory.createWithAuthenticationProvider(options.authProvider);
+        } else if (options.middleware !== undefined) {
+            httpClient = new HTTPClient(options.middleware);
+        } else {
+            let error = new Error();
+            error.name = "InvalidMiddlewareChain";
+            error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain";
+            throw error;
+        }
+        client.httpClient = httpClient;
+        return client;
     }
 
+    /**
+     * @public
+     * Entry point to make requests
+     * @param {string} path - The path string value
+     * @return The graph request instance
+     */
+    public api(path: string): GraphRequest {
+        let self = this;
+        return new GraphRequest(self.httpClient, self.config, path);
+    }
 }
-
-export * from "./GraphRequest";
-export * from "./common";
-export * from "./ResponseType";
-export * from "./ResponseHandler";
-
-export * from "./tasks/OneDriveLargeFileUploadTask";
-export * from "./tasks/PageIterator";
-
-export * from "./content/BatchRequestContent";
-export * from "./content/BatchResponseContent";

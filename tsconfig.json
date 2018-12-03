@@ -7,9 +7,9 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "lib": ["es7", "dom"],
+    "lib": ["dom", "es7"],
     "declaration": true,
-    "outDir": "lib/"
+    "outDir": "lib"
   },
   "exclude": [
       "node_modules",
@@ -20,6 +20,10 @@
   ],
   "include": [
       "./src/index.ts",
+      "./src/content/BatchRequestContent.ts",
+      "./src/content/BatchResponseContent.ts",
+      "./src/tasks/OneDriveLargeFileUploadTask.ts",
+      "./src/tasks/PageIterator.ts",
       "./spec/core"
-  ]
+    ]
 }

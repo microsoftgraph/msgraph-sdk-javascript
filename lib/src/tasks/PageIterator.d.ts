@@ -1,4 +1,10 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+/**
  * @module PageIterator
  */
 import { Client } from "../index";
@@ -22,6 +28,7 @@ export interface PageIteratorCallback {
     (any: any): boolean;
 }
 /**
+ * @class
  * Class for PageIterator
  */
 export declare class PageIterator {
@@ -51,10 +58,12 @@ export declare class PageIterator {
      */
     private callback;
     /**
+     * @constructor
      * Creates new instance for PageIterator
      * @param {Client} client - The graph client instance
      * @param {PageCollection} pageCollection - The page collection object
      * @param {PageIteratorCallback} callBack - The callback function
+     * @return An instance of a PageIterator
      */
     constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback);
     /**
@@ -71,11 +80,13 @@ export declare class PageIterator {
      */
     private fetchAndUpdateNextPageData;
     /**
+     * @public
      * Getter to get the deltaLink in the current response
      * @return A deltaLink which is being used to make delta requests in future
      */
     getDeltaLink(): string | undefined;
     /**
+     * @public
      * @async
      * Iterates over the collection and kicks callback for each item on iteration. Fetches next set of data through nextLink and iterates over again
      * This happens until the nextLink is drained out or the user responds with a red flag to continue from callback
@@ -83,6 +94,7 @@ export declare class PageIterator {
      */
     iterate(): Promise<any>;
     /**
+     * @public
      * @async
      * This internally calls the iterate method, It's just for more readability.
      * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy

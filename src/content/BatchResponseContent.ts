@@ -1,4 +1,11 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
  * @module BatchResponseContent
  */
 
@@ -14,7 +21,7 @@ interface KeyValuePairObject {
  * @interface
  * Signature representing Batch response body
  * @property {KeyValuePairObject[]} responses - An array of key value pair representing response object for every request
- * @property {string} @nextLink - The nextLink value to get next set of responses in case of asynchronous batch requests
+ * @property {string} [@nextLink] - The nextLink value to get next set of responses in case of asynchronous batch requests
  */
 interface BatchResponseBody {
     responses: KeyValuePairObject[],
@@ -23,9 +30,11 @@ interface BatchResponseBody {
 
 
 /**
+ * @class
  * Class that handles BatchResponseContent
  */
 export class BatchResponseContent {
+
     /**
      * To hold the responses
      */
@@ -38,8 +47,10 @@ export class BatchResponseContent {
 
 
     /**
+     * @constructor
      * Creates the BatchResponseContent instance
      * @param {BatchResponseBody} response - The response body returned for batch request from server
+     * @return An instance of a BatchResponseContent
      */
     constructor(response: BatchResponseBody) {
         let self = this;
@@ -48,10 +59,12 @@ export class BatchResponseContent {
     }
 
     /**
+     * @public
      * Updates the Batch response content instance with given responses.
      * @param {BatchResponseBody} response - The response json representing batch response message
+     * @return nothing
      */
-    update(response: BatchResponseBody) {
+    public update(response: BatchResponseBody): void {
         let self = this;
         self.nextLink = response["@nextLink"];
         let responses = response.responses;
@@ -61,6 +74,7 @@ export class BatchResponseContent {
     }
 
     /**
+     * @private
      * Creates native Response object from the json representation of it.
      * @param {KeyValuePairObject} responseJSON - The response json value
      * @return The Response Object instance
@@ -69,7 +83,7 @@ export class BatchResponseContent {
         let body = responseJSON.body,
             options: KeyValuePairObject = {};
         options.status = responseJSON.status;
-        if(responseJSON.statusText !== undefined) {
+        if (responseJSON.statusText !== undefined) {
             options.statusText = responseJSON.statusText;
         }
         options.headers = responseJSON.headers;
@@ -77,27 +91,30 @@ export class BatchResponseContent {
     }
 
     /**
+     * @public
      * To get the response of a request for a given request id
      * @param {string} requestId - The request id value
      * @return The Response object instance for the particular request
      */
-    getResponseById(requestId: string): Response {
+    public getResponseById(requestId: string): Response {
         return this.responses.get(requestId);
     }
 
     /**
+     * @public
      * To get all the responses of the batch request
      * @return The Map of id and Response objects
      */
-    getResponses(): Map<string, Response> {
+    public getResponses(): Map<string, Response> {
         return this.responses;
     }
 
     /**
+     * @public
      * To get the iterator for the responses
      * @return The Iterable generator for the response objects
      */
-    *getResponsesIterator(): IterableIterator<[string, Response]> {
+    public *getResponsesIterator(): IterableIterator<[string, Response]> {
         let self = this,
             iterator = self.responses.entries(),
             cur = iterator.next();

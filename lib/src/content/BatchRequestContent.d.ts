@@ -1,4 +1,10 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+/**
  * @interface
  * Signature representing BatchRequestStep data
  * @property {string} id - Unique identity for the request, Should not be an empty string
@@ -40,6 +46,7 @@ export interface BatchRequestBody {
     requests: BatchRequestData[];
 }
 /**
+ * @class
  * Class for handling BatchRequestContent
  */
 export declare class BatchRequestContent {
@@ -54,23 +61,28 @@ export declare class BatchRequestContent {
      */
     requests: Map<string, BatchRequestStep>;
     /**
+     * @constructor
      * Constructs a BatchRequestContent instance
      * @param {BatchRequestStep[]} [requests] - Array of requests value
+     * @return An instance of a BatchRequestContent
      */
     constructor(requests?: BatchRequestStep[]);
     /**
+     * @public
      * Adds a request to the batch request content
      * @param {BatchRequestStep} request - The request value
      * @return The id of the added request
      */
     addRequest(request: BatchRequestStep): string;
     /**
+     * @public
      * Removes request from the batch payload and its dependencies from all dependents
      * @param {string} requestId - The id of a request that needs to be removed
      * @return The boolean indicating removed status
      */
     removeRequest(requestId: string): boolean;
     /**
+     * @public
      * @async
      * Serialize content from BatchRequestContent instance
      * @return The body content to make batch request
@@ -91,7 +103,7 @@ export declare class BatchRequestContent {
      *
      * @return The boolean indicating the validation status
      */
-    static validateDependencies(requests: Map<string, BatchRequestStep>): boolean;
+    private static validateDependencies;
     /**
      * @private
      * @static
@@ -111,13 +123,15 @@ export declare class BatchRequestContent {
      */
     private static getRequestBody;
     /**
+     * @public
      * Adds a dependency for a given dependent request
-     *
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified the preceding request will be considered as a dependency
+     * @return nothing
      */
     addDependency(dependentId: string, dependencyId?: string): void;
     /**
+     * @public
      * Removes a dependency for a given dependent request id
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified will remove all the dependencies of that request
