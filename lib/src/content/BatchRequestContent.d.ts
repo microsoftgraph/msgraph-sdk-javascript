@@ -64,28 +64,28 @@ export declare class BatchRequestContent {
      * @constructor
      * Constructs a BatchRequestContent instance
      * @param {BatchRequestStep[]} [requests] - Array of requests value
-     * @return An instance of a BatchRequestContent
+     * @returns An instance of a BatchRequestContent
      */
     constructor(requests?: BatchRequestStep[]);
     /**
      * @public
      * Adds a request to the batch request content
      * @param {BatchRequestStep} request - The request value
-     * @return The id of the added request
+     * @returns The id of the added request
      */
     addRequest(request: BatchRequestStep): string;
     /**
      * @public
      * Removes request from the batch payload and its dependencies from all dependents
      * @param {string} requestId - The id of a request that needs to be removed
-     * @return The boolean indicating removed status
+     * @returns The boolean indicating removed status
      */
     removeRequest(requestId: string): boolean;
     /**
      * @public
      * @async
      * Serialize content from BatchRequestContent instance
-     * @return The body content to make batch request
+     * @returns The body content to make batch request
      */
     getContent(): Promise<BatchRequestBody>;
     /**
@@ -101,7 +101,7 @@ export declare class BatchRequestContent {
      * As JSON batching matures, these limitations will be removed.
      * @see {@link https://developer.microsoft.com/en-us/graph/docs/concepts/known_issues#json-batching}
      *
-     * @return The boolean indicating the validation status
+     * @returns The boolean indicating the validation status
      */
     private static validateDependencies;
     /**
@@ -110,7 +110,7 @@ export declare class BatchRequestContent {
      * @async
      * Converts Request Object instance to a JSON
      * @param {IsomorphicRequest} request - The IsomorphicRequest Object instance
-     * @return A promise that resolves to JSON representation of a request
+     * @returns A promise that resolves to JSON representation of a request
      */
     private static getRequestData;
     /**
@@ -119,7 +119,7 @@ export declare class BatchRequestContent {
      * @async
      * Gets the body of a Request object instance
      * @param {IsomorphicRequest} request - The IsomorphicRequest object instance
-     * @return The Promise that resolves to a body value of a Request
+     * @returns The Promise that resolves to a body value of a Request
      */
     private static getRequestBody;
     /**
@@ -127,7 +127,7 @@ export declare class BatchRequestContent {
      * Adds a dependency for a given dependent request
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified the preceding request will be considered as a dependency
-     * @return nothing
+     * @returns nothing
      */
     addDependency(dependentId: string, dependencyId?: string): void;
     /**
@@ -135,7 +135,7 @@ export declare class BatchRequestContent {
      * Removes a dependency for a given dependent request id
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified will remove all the dependencies of that request
-     * @return The boolean indicating removed status
+     * @returns The boolean indicating removed status
      */
     removeDependency(dependentId: string, dependencyId?: string): boolean;
 }

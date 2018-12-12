@@ -91,41 +91,41 @@ export declare class LargeFileUploadTask {
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
-     * @return An instance of LargeFileUploadTask
+     * @returns An instance of LargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions);
     /**
      * @public
      * Parses given range string to the Range instance
      * @param {string[]} ranges - The ranges value
-     * @return The range instance
+     * @returns The range instance
      */
     parseRange(ranges: string[]): Range;
     /**
      * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
-     * @return nothing
+     * @returns nothing
      */
     updateTaskStatus(response: UploadStatusResponse): void;
     /**
      * @public
      * Gets next range that needs to be uploaded
-     * @return The range instance
+     * @returns The range instance
      */
     getNextRange(): Range;
     /**
      * @public
      * Slices the file content to the given range
      * @param {Range} range - The range value
-     * @return The sliced ArrayBuffer or Blob
+     * @returns The sliced ArrayBuffer or Blob
      */
     sliceFile(range: Range): ArrayBuffer | Blob;
     /**
      * @public
      * @async
      * Uploads file to the server in a sequential order by slicing the file
-     * @return The promise resolves to uploaded response
+     * @returns The promise resolves to uploaded response
      */
     upload(): Promise<any>;
     /**
@@ -141,21 +141,21 @@ export declare class LargeFileUploadTask {
      * @public
      * @async
      * Deletes upload session in the server
-     * @return The promise resolves to cancelled response
+     * @returns The promise resolves to cancelled response
      */
     cancel(): Promise<any>;
     /**
      * @public
      * @async
      * Gets status for the upload session
-     * @return The promise resolves to the status enquiry response
+     * @returns The promise resolves to the status enquiry response
      */
     getStatus(): Promise<any>;
     /**
      * @public
      * @async
      * Resumes upload session and continue uploading the file from the last sent range
-     * @return The promise resolves to the uploaded response
+     * @returns The promise resolves to the uploaded response
      */
     resume(): Promise<any>;
 }

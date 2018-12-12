@@ -32,7 +32,7 @@ export class Range {
      * Creates a range for given min and max values
      * @param {number} [minVal = -1] - The minimum value.
      * @param {number} [maxVal = -1] - The maximum value.
-     * @return An instance of a Range
+     * @returns An instance of a Range
      */
     constructor(minVal: number = -1, maxVal: number = -1) {
         let self = this;

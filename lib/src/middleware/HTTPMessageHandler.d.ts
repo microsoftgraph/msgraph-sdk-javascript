@@ -9,7 +9,6 @@
  */
 import { Middleware } from "../IMiddleware";
 import { Context } from "../IContext";
-import 'isomorphic-fetch';
 /**
  * @interface
  * Signature to represent the Graph error object
@@ -48,7 +47,7 @@ export declare class HTTPMessageHandler implements Middleware {
      * @constructor
      * Creates an instance of GraphResponse
      * @param {Response} response - The response object
-     * @return An instance of GraphResponse
+     * @returns An instance of GraphResponse
      */
     constructor();
     /**
@@ -56,7 +55,7 @@ export declare class HTTPMessageHandler implements Middleware {
      * To parse Document response
      * @param {Response} response - The response object
      * @param {ResponseType} type - The type to which the document needs to be parsed
-     * @return A promise that resolves to a document content
+     * @returns A promise that resolves to a document content
      */
     private parseDocumentResponse;
     /**
@@ -64,26 +63,26 @@ export declare class HTTPMessageHandler implements Middleware {
      * @async
      * @param {Response} response - The response object
      * @param {ResponseType} type - The type to which the response needs to be converted
-     * @return A promise that resolves to the converted response content
+     * @returns A promise that resolves to the converted response content
      */
     private convertResponse;
     /**
      * @private
      * @param {number} [statusCode = -1] - The status code of the response
-     * @return The GraphError object
+     * @returns The GraphError object
      */
     private defaultError;
     /**
      * @private
      * @param {Error} error - The error object
-     * @return The GraphError object
+     * @returns The GraphError object
      */
     private buildError;
     /**
      * @private
      * @param {any} response - The error data object
      * @param {number} statusCode - The status code of the response
-     * @return The GraphError object
+     * @returns The GraphError object
      *
      * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
      * {
@@ -103,7 +102,7 @@ export declare class HTTPMessageHandler implements Middleware {
      * @async
      * To execute the current middleware
      * @param {Context} context - The request context object
-     * @return A promise that resolves to nothing
+     * @returns A promise that resolves to nothing
      */
     execute(context: Context): Promise<void>;
 }

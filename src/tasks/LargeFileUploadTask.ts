@@ -105,7 +105,7 @@ export class LargeFileUploadTask {
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
-     * @return An instance of LargeFileUploadTask
+     * @returns An instance of LargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         let self = this;
@@ -123,7 +123,7 @@ export class LargeFileUploadTask {
      * @public
      * Parses given range string to the Range instance
      * @param {string[]} ranges - The ranges value
-     * @return The range instance
+     * @returns The range instance
      */
     public parseRange(ranges: string[]): Range {
         let rangeStr = ranges[0];
@@ -143,7 +143,7 @@ export class LargeFileUploadTask {
      * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
-     * @return nothing
+     * @returns nothing
      */
     public updateTaskStatus(response: UploadStatusResponse): void {
         let self = this;
@@ -154,7 +154,7 @@ export class LargeFileUploadTask {
     /**
      * @public
      * Gets next range that needs to be uploaded
-     * @return The range instance
+     * @returns The range instance
      */
     public getNextRange(): Range {
         let self = this;
@@ -173,7 +173,7 @@ export class LargeFileUploadTask {
      * @public
      * Slices the file content to the given range
      * @param {Range} range - The range value
-     * @return The sliced ArrayBuffer or Blob
+     * @returns The sliced ArrayBuffer or Blob
      */
     public sliceFile(range: Range): ArrayBuffer | Blob {
         let blob = this.file.content.slice(range.minValue, range.maxValue + 1);
@@ -184,7 +184,7 @@ export class LargeFileUploadTask {
      * @public
      * @async
      * Uploads file to the server in a sequential order by slicing the file
-     * @return The promise resolves to uploaded response
+     * @returns The promise resolves to uploaded response
      */
     public async upload(): Promise<any> {
         let self = this;
@@ -237,7 +237,7 @@ export class LargeFileUploadTask {
      * @public
      * @async
      * Deletes upload session in the server
-     * @return The promise resolves to cancelled response
+     * @returns The promise resolves to cancelled response
      */
     public async cancel(): Promise<any> {
         let self = this;
@@ -254,7 +254,7 @@ export class LargeFileUploadTask {
      * @public
      * @async
      * Gets status for the upload session
-     * @return The promise resolves to the status enquiry response
+     * @returns The promise resolves to the status enquiry response
      */
     public async getStatus(): Promise<any> {
         let self = this;
@@ -273,7 +273,7 @@ export class LargeFileUploadTask {
      * @public
      * @async
      * Resumes upload session and continue uploading the file from the last sent range
-     * @return The promise resolves to the uploaded response
+     * @returns The promise resolves to the uploaded response
      */
     public async resume(): Promise<any> {
         let self = this;

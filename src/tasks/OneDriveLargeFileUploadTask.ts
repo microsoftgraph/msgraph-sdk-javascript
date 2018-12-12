@@ -46,7 +46,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
-     * @return An instance of OneDriveLargeFileUploadTask
+     * @returns An instance of OneDriveLargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         super(client, file, uploadSession, options);
@@ -60,7 +60,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * @param {Client} client - The GraphClient instance
      * @param {Blob | Buffer | File} file - File represented as Blob, Buffer or File
      * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
-     * @return The promise that will be resolves to OneDriveLargeFileUploadTask instance
+     * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
      */
     public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<any> {
         let fileObj: FileObject = <FileObject>{};
@@ -97,7 +97,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * Constructs the create session url for Onedrive
      * @param {string} fileName - The name of the file
      * @param {path} [path = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH] - The path for the upload
-     * @return The constructed create session url
+     * @returns The constructed create session url
      */
     public static constructCreateSessionUrl(fileName: string, path: string = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH): string {
         fileName = fileName.trim();
@@ -122,7 +122,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * @param {Client} client - The GraphClient instance
      * @param {string} requestUrl - The URL to create the upload session
      * @param {string} fileName - The name of a file to upload, (with extension)
-     * @return The promise that resolves to LargeFileUploadSession
+     * @returns The promise that resolves to LargeFileUploadSession
      */
     public static async createUploadSession(client: Client, requestUrl: string, fileName: string): Promise<any> {
         let payload = {
@@ -147,7 +147,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * @public
      * Commits upload session to end uploading
      * @param {string} requestUrl - The URL to commit the upload session
-     * @return The promise resolves to committed response
+     * @returns The promise resolves to committed response
      */
     public async commit(requestUrl: string): Promise<any> {
         let self = this;

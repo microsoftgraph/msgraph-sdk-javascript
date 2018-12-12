@@ -12,7 +12,7 @@
 import { Middleware } from "../IMiddleware";
 import { Context } from "../IContext";
 import { ResponseType } from "../ResponseType";
-import 'isomorphic-fetch';
+import { FetchOptions } from "../IFetchRequest";
 
 /**
  * @enum
@@ -70,7 +70,7 @@ export class HTTPMessageHandler implements Middleware {
      * @constructor
      * Creates an instance of GraphResponse
      * @param {Response} response - The response object
-     * @return An instance of GraphResponse
+     * @returns An instance of GraphResponse
      */
     constructor() {
         if (HTTPMessageHandler.DocumentTypes === undefined) {
@@ -83,7 +83,7 @@ export class HTTPMessageHandler implements Middleware {
      * To parse Document response
      * @param {Response} response - The response object
      * @param {ResponseType} type - The type to which the document needs to be parsed 
-     * @return A promise that resolves to a document content
+     * @returns A promise that resolves to a document content
      */
     private parseDocumentResponse(response, type): Promise<any> {
         if (typeof DOMParser !== "undefined") {
@@ -108,7 +108,7 @@ export class HTTPMessageHandler implements Middleware {
      * @async
      * @param {Response} response - The response object
      * @param {ResponseType} type - The type to which the response needs to be converted
-     * @return A promise that resolves to the converted response content
+     * @returns A promise that resolves to the converted response content
      */
     private async convertResponse(response: Response, type?: ResponseType): Promise<any> {
         if (response.status === 204) { //NO CONTENT
@@ -166,7 +166,7 @@ export class HTTPMessageHandler implements Middleware {
     /**
      * @private
      * @param {number} [statusCode = -1] - The status code of the response
-     * @return The GraphError object 
+     * @returns The GraphError object 
      */
     private defaultError(statusCode: number = -1): GraphError {
         return {
@@ -182,7 +182,7 @@ export class HTTPMessageHandler implements Middleware {
     /**
      * @private
      * @param {Error} error - The error object
-     * @return The GraphError object
+     * @returns The GraphError object
      */
     private buildError(error: Error): GraphError {
         const gError: GraphError = this.defaultError();
@@ -199,7 +199,7 @@ export class HTTPMessageHandler implements Middleware {
      * @private
      * @param {any} response - The error data object
      * @param {number} statusCode - The status code of the response
-     * @return The GraphError object 
+     * @returns The GraphError object 
      * 
      * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
      * {
@@ -229,18 +229,19 @@ export class HTTPMessageHandler implements Middleware {
      * @async
      * To execute the current middleware
      * @param {Context} context - The request context object
-     * @return A promise that resolves to nothing
+     * @returns A promise that resolves to nothing
      */
     public async execute(context: Context): Promise<void> {
         try {
             let self = this,
-                optionsHeaders: HeadersInit = Object.assign({}, context.options.headers);
+                optionsHeaders: HeadersInit = Object.assign({}, context.options.headers),
+                options: FetchOptions = Object.assign({}, context.options);
             if (context.middlewareOptions !== undefined && context.middlewareOptions.requestOptions !== undefined) {
                 let middlewareOptionsHeaders: HeadersInit = Object.assign({}, context.middlewareOptions.requestOptions.headers);
-                Object.assign(context.options, context.middlewareOptions.requestOptions);
-                Object.assign(context.options.headers, optionsHeaders, middlewareOptionsHeaders);
+                Object.assign(options, context.middlewareOptions.requestOptions);
+                Object.assign(options.headers, optionsHeaders, middlewareOptionsHeaders);
             }
-            let rawResponse = await fetch(context.request, context.options);
+            let rawResponse = await fetch(context.request, options);
             context.rawResponse = rawResponse;
             let responseType: ResponseType;
             if (context.middlewareOptions !== undefined) {

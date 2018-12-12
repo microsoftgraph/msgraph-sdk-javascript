@@ -46,7 +46,7 @@ export class AuthenticationHandler implements Middleware {
      * @async
      * To execute the current middleware
      * @param {context} context - The context object of the request
-     * @return A Promise that resolves to nothing
+     * @returns A Promise that resolves to nothing
      */
     public async execute(context: Context): Promise<void> {
         try {
@@ -81,7 +81,7 @@ export class AuthenticationHandler implements Middleware {
      * @public
      * To set the next middleware in the chain
      * @param {Middleware} next - The middleware instance
-     * @return nothing
+     * @returns nothing
      */
     public setNext(next: Middleware): void {
         this.nextMiddleware = next;

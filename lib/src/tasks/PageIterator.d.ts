@@ -63,26 +63,26 @@ export declare class PageIterator {
      * @param {Client} client - The graph client instance
      * @param {PageCollection} pageCollection - The page collection object
      * @param {PageIteratorCallback} callBack - The callback function
-     * @return An instance of a PageIterator
+     * @returns An instance of a PageIterator
      */
     constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback);
     /**
      * @private
      * Iterates over a collection by enqueuing entries one by one and kicking the callback with the enqueued entry
-     * @return A boolean indicating the continue flag to process next page
+     * @returns A boolean indicating the continue flag to process next page
      */
     private iterationHelper;
     /**
      * @private
      * @async
      * Helper to make a get request to fetch next page with nextLink url and update the page iterator instance with the returned response
-     * @return A promise that resolves to a response data with next page collection
+     * @returns A promise that resolves to a response data with next page collection
      */
     private fetchAndUpdateNextPageData;
     /**
      * @public
      * Getter to get the deltaLink in the current response
-     * @return A deltaLink which is being used to make delta requests in future
+     * @returns A deltaLink which is being used to make delta requests in future
      */
     getDeltaLink(): string | undefined;
     /**
@@ -90,14 +90,14 @@ export declare class PageIterator {
      * @async
      * Iterates over the collection and kicks callback for each item on iteration. Fetches next set of data through nextLink and iterates over again
      * This happens until the nextLink is drained out or the user responds with a red flag to continue from callback
-     * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy.
+     * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy.
      */
     iterate(): Promise<any>;
     /**
      * @public
      * @async
      * This internally calls the iterate method, It's just for more readability.
-     * @return A Promise that resolves to nothing on completion and throws error incase of any discrepancy
+     * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy
      */
     resume(): Promise<any>;
 }

@@ -9,9 +9,9 @@ import { assert } from "chai";
 import { Options } from "../../src/Common";
 import { CustomHTTPHandler } from "../CustomHTTPHandler";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
-import { Client } from "../../src/index";
+import { Client } from "../../src/Client";
 
-describe("index.ts", function () {
+describe("Client.ts", function () {
     describe("init", function () {
 
         const dummyAuthProvider = new DummyAuthenticationProvider(),

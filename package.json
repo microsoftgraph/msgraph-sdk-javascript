@@ -14,17 +14,15 @@
     "@types/node": "^10.12.10",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
+    "isomorphic-fetch": "^2.2.1",
     "mocha": "^5.2.0",
     "typescript": "^3.1.6",
-    "uglify-js": "^3.4.9"
+    "uglify-es": "^3.3.9"
   },
   "scripts": {
     "compile": "tsc",
-    "rollup-core": "node core-browserify.js > lib/graph-js-sdk-core.js && uglifyjs lib/graph-js-sdk-core.js --output lib/graph-js-sdk-core.js",
-    "rollup-with-vendor": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
-    "build-core": "npm run compile && npm run rollup-core",
-    "build-with-vendor": "npm run compile && npm run rollup-with-vendor",
-    "build": "npm run compile && npm run rollup-core && npm run rollup-with-vendor",
+    "browserify": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
+    "build": "npm run compile && npm run browserify",
     "test": "mocha lib/spec/core",
     "test:core": "tsc -p spec && mocha spec/core",
     "test:types": "tsc -p spec && mocha spec/types",
@@ -33,8 +31,7 @@
     "test:middleware": "tsc -p spec && mocha spec/middleware"
   },
   "dependencies": {
-    "es6-promise": "^4.2.5",
-    "isomorphic-fetch": "^2.2.1"
+    "msal": "^0.2.3"
   },
   "repository": {
     "type": "git",

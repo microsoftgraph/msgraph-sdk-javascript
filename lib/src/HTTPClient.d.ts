@@ -30,7 +30,7 @@ export declare class HTTPClient {
      * @param {RequestInfo} request - The request url string or the Request instance
      * @param {FetchOptions} options - The options of a request
      * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
-     * @return A promise that resolves to the response
+     * @returns A promise that resolves to the response
      */
     sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<any>;
 }

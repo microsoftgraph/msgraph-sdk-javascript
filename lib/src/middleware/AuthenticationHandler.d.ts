@@ -37,14 +37,14 @@ export declare class AuthenticationHandler implements Middleware {
      * @async
      * To execute the current middleware
      * @param {context} context - The context object of the request
-     * @return A Promise that resolves to nothing
+     * @returns A Promise that resolves to nothing
      */
     execute(context: Context): Promise<void>;
     /**
      * @public
      * To set the next middleware in the chain
      * @param {Middleware} next - The middleware instance
-     * @return nothing
+     * @returns nothing
      */
     setNext(next: Middleware): void;
 }
