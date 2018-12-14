@@ -223,7 +223,7 @@ client
 ````
 
 ### $search
-Pass a searh string to `.search()` for searching message and person collections.
+Pass a search string to `.search()` for searching message and person collections.
 ````js
 client
     .api("/users")
