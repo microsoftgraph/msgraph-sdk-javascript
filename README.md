@@ -222,6 +222,17 @@ client
     })
 ````
 
+### $search
+Pass a searh string to `.search()` for searching message and person collections.
+````js
+client
+    .api("/users")
+    .search("Irene McGowen")
+    .get((err, res) => {
+        console.log(res)
+    })
+````
+
 ## Other API methods
 
 ### .version()
