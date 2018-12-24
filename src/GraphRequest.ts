@@ -13,6 +13,7 @@ import { PACKAGE_VERSION } from "./Constants";
 import { oDataQueryNames, urlJoin, serializeContent } from "./GraphRequestUtil";
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
+import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { FetchOptions } from "./IFetchOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
@@ -477,9 +478,10 @@ export class GraphRequest {
      * Adds the custom headers and options to the request and makes the HTTPClient send request call
      * @param {RequestInfo} request - The request url string or the Request object value
      * @param {FetchOptions} options - The options to make a request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the response content
      */
-    private async send(request: RequestInfo, options: FetchOptions): Promise<any> {
+    private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             requestOptions = self.getRequestOptions();
         if (self.config.middlewareOptions !== undefined) {
@@ -493,9 +495,17 @@ export class GraphRequest {
         try {
             let context = await self.httpClient.sendRequest(request, options, middlewareOptions);
             self._rawResponse = context.rawResponse;
-            return context.response;
+            if (typeof callback !== "undefined") {
+                callback(null, context.response, context.rawResponse);
+            } else {
+                return context.response;
+            }
         } catch (error) {
-            throw error;
+            if (typeof callback !== "undefined") {
+                callback(error, null);
+            } else {
+                throw error;
+            }
         }
     }
 
@@ -503,16 +513,17 @@ export class GraphRequest {
      * @public
      * @async
      * Makes a http request with GET method
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the get response
      */
-    public async get(): Promise<any> {
+    public async get(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
                 method: RequestMethod.GET
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -524,9 +535,10 @@ export class GraphRequest {
      * @async
      * Makes a http request with POST method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the post response
      */
-    public async post(content: any): Promise<any> {
+    public async post(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -537,7 +549,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -549,10 +561,11 @@ export class GraphRequest {
      * @async
      * Alias for Post request call
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the post response
      */
-    public async create(content: any): Promise<any> {
-        return await this.post(content);
+    public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return await this.post(content, callback);
     }
 
     /**
@@ -560,9 +573,10 @@ export class GraphRequest {
      * @async
      * Makes http request with PUT method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the put response
      */
-    public async put(content: any): Promise<any> {
+    public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -573,7 +587,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = self.send(url, options);
+            let response = self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -585,9 +599,10 @@ export class GraphRequest {
      * @async
      * Makes http request with PATCH method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the patch response
      */
-    public async patch(content: any): Promise<any> {
+    public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -598,7 +613,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -610,26 +625,28 @@ export class GraphRequest {
      * @async
      * Alias for PATCH request
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the patch response
      */
-    public async update(content: any): Promise<any> {
-        return await this.patch(content);
+    public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return await this.patch(content, callback);
     }
 
     /**
      * @public
      * @async
      * Makes http request with DELETE method
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the delete response
      */
-    public async delete(): Promise<any> {
+    public async delete(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
                 method: RequestMethod.DELETE
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error
@@ -640,19 +657,21 @@ export class GraphRequest {
      * @public
      * @async
      * Alias for delete request call
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the delete response
      */
-    public async del(): Promise<any> {
-        return await this.delete();
+    public async del(callback?: GraphRequestCallback): Promise<any> {
+        return await this.delete(callback);
     }
 
     /**
      * @public
      * @async
      * Makes a http request with GET method to read response as a stream.
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the getStream response
      */
-    public async getStream(): Promise<any> {
+    public async getStream(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options = {
@@ -660,7 +679,7 @@ export class GraphRequest {
             };
         self.responseType(ResponseType.STREAM);
         try {
-            let stream = await self.send(url, options);
+            let stream = await self.send(url, options, callback);
             return stream;
         } catch (error) {
             throw error;
@@ -672,9 +691,10 @@ export class GraphRequest {
      * @async
      * Makes a http request with GET method to read response as a stream.
      * @param {any} stream - The stream instance
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the putStream response
      */
-    public async putStream(stream: any): Promise<any> {
+    public async putStream(stream: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options = {
@@ -685,7 +705,7 @@ export class GraphRequest {
                 body: stream
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;

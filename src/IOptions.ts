@@ -12,7 +12,7 @@ import { FetchOptions } from "./IFetchOptions";
  * Signature that defines callback for an authentication provider
  * @callback - The anonymous callback function which takes two params
  */
-export interface AuthProviderCallback {
+interface AuthProviderCallback {
 	(error: any, accessToken: string | null): void;
 }
 

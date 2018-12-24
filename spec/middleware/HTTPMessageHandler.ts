@@ -7,8 +7,9 @@
 
 import { assert } from "chai";
 import fetchMock = require("fetch-mock");
-import { HTTPMessageHandler, GraphError } from "../../src/middleware/HTTPMessageHandler";
+import { HTTPMessageHandler } from "../../src/middleware/HTTPMessageHandler";
 import { Context } from "../../src/IContext";
+import { GraphError } from "../../src/IGraphError";
 import "isomorphic-fetch";
 import { ResponseType } from "../../src/ResponseType";
 

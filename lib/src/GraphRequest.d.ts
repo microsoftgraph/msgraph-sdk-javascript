@@ -6,6 +6,7 @@
  */
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
+import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { ResponseType } from "./ResponseType";
 /**
  * @interface
@@ -236,6 +237,7 @@ export declare class GraphRequest {
      * Adds the custom headers and options to the request and makes the HTTPClient send request call
      * @param {RequestInfo} request - The request url string or the Request object value
      * @param {FetchOptions} options - The options to make a request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the response content
      */
     private send;
@@ -243,78 +245,88 @@ export declare class GraphRequest {
      * @public
      * @async
      * Makes a http request with GET method
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the get response
      */
-    get(): Promise<any>;
+    get(callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes a http request with POST method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the post response
      */
-    post(content: any): Promise<any>;
+    post(content: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Alias for Post request call
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the post response
      */
-    create(content: any): Promise<any>;
+    create(content: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes http request with PUT method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the put response
      */
-    put(content: any): Promise<any>;
+    put(content: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes http request with PATCH method
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the patch response
      */
-    patch(content: any): Promise<any>;
+    patch(content: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Alias for PATCH request
      * @param {any} content - The content that needs to be sent with the request
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the patch response
      */
-    update(content: any): Promise<any>;
+    update(content: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes http request with DELETE method
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the delete response
      */
-    delete(): Promise<any>;
+    delete(callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Alias for delete request call
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the delete response
      */
-    del(): Promise<any>;
+    del(callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes a http request with GET method to read response as a stream.
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the getStream response
      */
-    getStream(): Promise<any>;
+    getStream(callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * @async
      * Makes a http request with GET method to read response as a stream.
      * @param {any} stream - The stream instance
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
      * @returns A promise that resolves to the putStream response
      */
-    putStream(stream: any): Promise<any>;
+    putStream(stream: any, callback?: GraphRequestCallback): Promise<any>;
     /**
      * @public
      * To get the raw response for a request
