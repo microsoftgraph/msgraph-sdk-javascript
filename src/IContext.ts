@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { FetchOptions } from "./IFetchRequest";
+import { FetchOptions } from "./IFetchOptions";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**

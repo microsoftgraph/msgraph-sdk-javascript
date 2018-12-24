@@ -9,11 +9,13 @@
  * @module Client
  */
 
-import { Options } from "./Common";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
+import { DefaultAuthenticationProvider } from "./DefaultAuthenticationProvider";
 import { GraphRequest } from "./GraphRequest";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { HTTPClient } from "./HTTPClient";
+import { ClientOptions } from "./IClientOptions";
+import { Options } from "./IOptions";
 
 export class Client {
 
@@ -21,7 +23,7 @@ export class Client {
      * @private
      * A member which stores the Client instance options
      */
-    private config: Options = {
+    private config: ClientOptions = {
         baseUrl: GRAPH_BASE_URL,
         debugLogging: false,
         defaultVersion: GRAPH_API_VERSION
@@ -34,6 +36,30 @@ export class Client {
     private httpClient: HTTPClient;
 
     /**
+     * @constructor
+     * Creates an instance of Client
+     * @param {ClientOptions} clientOptions - The options to instantiate the client object 
+     */
+    constructor(clientOptions: ClientOptions) {
+        let self = this;
+        for (const key in clientOptions) {
+            self.config[key] = clientOptions[key];
+        }
+        let httpClient: HTTPClient;
+        if (clientOptions.authProvider !== undefined) {
+            httpClient = HTTPClientFactory.createWithAuthenticationProvider(clientOptions.authProvider);
+        } else if (clientOptions.middleware !== undefined) {
+            httpClient = new HTTPClient(clientOptions.middleware);
+        } else {
+            let error = new Error();
+            error.name = "InvalidMiddlewareChain";
+            error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain";
+            throw error;
+        }
+        self.httpClient = httpClient;
+    }
+
+    /**
      * @public
      * @static
      * To create a client instance with options and initializes the default middleware chain
@@ -41,23 +67,20 @@ export class Client {
      * @returns The Client instance
      */
     public static init(options: Options): Client {
-        const client = new Client();
-        for (const key in options) {
-            client.config[key] = options[key];
+        let clientOptions: ClientOptions = {},
+            httpClient: HTTPClient;
+        for (const i in options) {
+            if (i === "authProvider") {
+                clientOptions[i] = new DefaultAuthenticationProvider(options[i]);
+            } else if (i === "fetchOptions") {
+                clientOptions.middlewareOptions = {
+                    requestOptions: options.fetchOptions
+                };
+            } else {
+                clientOptions[i] = options[i];
+            }
         }
-        let httpClient: HTTPClient;
-        if (options.authProvider !== undefined) {
-            httpClient = HTTPClientFactory.createWithAuthenticationProvider(options.authProvider);
-        } else if (options.middleware !== undefined) {
-            httpClient = new HTTPClient(options.middleware);
-        } else {
-            let error = new Error();
-            error.name = "InvalidMiddlewareChain";
-            error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain";
-            throw error;
-        }
-        client.httpClient = httpClient;
-        return client;
+        return new Client(clientOptions);
     }
 
     /**

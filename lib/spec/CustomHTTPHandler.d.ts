@@ -4,8 +4,8 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-import { Middleware } from "../src/IMiddleware";
 import { Context } from "../src/IContext";
+import { Middleware } from "../src/IMiddleware";
 export declare class CustomHTTPHandler implements Middleware {
     execute(context: Context): Promise<void>;
 }

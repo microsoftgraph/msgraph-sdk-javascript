@@ -7,7 +7,7 @@
 
 export * from "./Client";
 export * from "./GraphRequest";
-export * from "./Common";
+export * from "./IOptions";
 export * from "./ResponseType";
 export * from "./MSALAuthenticationProvider";
 

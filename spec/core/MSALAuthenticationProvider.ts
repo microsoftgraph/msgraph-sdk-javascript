@@ -6,9 +6,9 @@
  */
 
 import { assert } from "chai";
-import { UserAgentApplication } from "msal";
 import { MSALAuthenticationProvider } from "../../src/MSALAuthenticationProvider";
-const Window = require("window");
+import * as Msal from "msal";
+import * as Window from "window";
 
 describe("MSALAuthenticationProvider.ts", () => {
     let clientId = "dummy_client_id";
@@ -16,6 +16,7 @@ describe("MSALAuthenticationProvider.ts", () => {
     before(() => {
         globalWindow = global["window"];
         global["window"] = new Window();
+        global["Msal"] = Msal;
         try {
             let authProvider = new MSALAuthenticationProvider(clientId, []);
         } catch(error) {

@@ -9,11 +9,11 @@
  * @module GraphRequest
  */
 
-import { Options } from "./Common";
 import { PACKAGE_VERSION } from "./Constants";
 import { oDataQueryNames, urlJoin, serializeContent } from "./GraphRequestUtil";
 import { HTTPClient } from "./HTTPClient";
-import { FetchOptions } from "./IFetchRequest";
+import { ClientOptions } from "./IClientOptions";
+import { FetchOptions } from "./IFetchOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 
@@ -61,7 +61,7 @@ export class GraphRequest {
      * @private
      * A member variable to hold client options
      */
-    private config: Options;
+    private config: ClientOptions;
 
     /**
      * @private
@@ -98,10 +98,10 @@ export class GraphRequest {
     /**
      * Creates an instance of GraphRequest
      * @param {HTTPClient} httpClient - The HTTPClient instance 
-     * @param {Options} config - The options for making request
+     * @param {ClientOptions} config - The options for making request
      * @param {string} path - A path string 
      */
-    constructor(httpClient: HTTPClient, config: Options, path: string) {
+    constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
         let self = this;
         self.httpClient = httpClient;
         self.config = config;
@@ -318,8 +318,8 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for filter OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add query string for filter OData Query param
+     * @param {string} filterStr - The filter query string
      * @returns The same GraphRequest instance that is being called with
      */
     public filter(filterStr: string): GraphRequest {
@@ -330,8 +330,20 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for top OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add criterion for search OData Query param
+     * @param {string} searchStr - The search criterion string
+     * @returns The same GraphRequest instance that is being called with
+     */
+    public search(searchStr: string): GraphRequest {
+        let self = this;
+        self.urlComponents.oDataQueryParams["$search"] = searchStr;
+        return self;
+    }
+
+    /**
+     * @public
+     * To add number for top OData Query param
+     * @param {number} n - The number value
      * @returns The same GraphRequest instance that is being called with
      */
     public top(n: number): GraphRequest {
@@ -342,8 +354,8 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for skip OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add number for skip OData Query param
+     * @param {number} n - The number value
      * @returns The same GraphRequest instance that is being called with
      */
     public skip(n: number): GraphRequest {
@@ -354,8 +366,8 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for skipToken OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add token string for skipToken OData Query param
+     * @param {string} token - The token value
      * @returns The same GraphRequest instance that is being called with
      */
     public skipToken(token: string): GraphRequest {
@@ -366,13 +378,13 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for count OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add boolean for count OData Query param
+     * @param {boolean} isCount - The count boolean
      * @returns The same GraphRequest instance that is being called with
      */
-    public count(count: boolean): GraphRequest {
+    public count(isCount: boolean): GraphRequest {
         let self = this;
-        self.urlComponents.oDataQueryParams["$count"] = count.toString();
+        self.urlComponents.oDataQueryParams["$count"] = isCount.toString();
         return self;
     }
 

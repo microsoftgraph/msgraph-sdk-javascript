@@ -10,7 +10,7 @@
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 /**
  * @class
- * Class representing AuthenticationHandler
+ * Class representing MSALAuthenticationProvider
  * @extends AuthenticationProvider
  */
 export declare class MSALAuthenticationProvider implements AuthenticationProvider {

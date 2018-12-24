@@ -6,8 +6,8 @@
  */
 
 import { assert } from "chai";
+import { LargeFileUploadTask } from "../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../test-helper";
-import { LargeFileUploadTask } from "../../lib/src/tasks/LargeFileUploadTask";
 
 describe("LargeFileUploadTask.ts", function () {
     describe('Parsing Range', () => {

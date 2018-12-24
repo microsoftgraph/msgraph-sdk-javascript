@@ -4,11 +4,8 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-/**
- * @module GraphRequest
- */
-import { Options } from "./Common";
 import { HTTPClient } from "./HTTPClient";
+import { ClientOptions } from "./IClientOptions";
 import { ResponseType } from "./ResponseType";
 /**
  * @interface
@@ -79,10 +76,10 @@ export declare class GraphRequest {
     /**
      * Creates an instance of GraphRequest
      * @param {HTTPClient} httpClient - The HTTPClient instance
-     * @param {Options} config - The options for making request
+     * @param {ClientOptions} config - The options for making request
      * @param {string} path - A path string
      */
-    constructor(httpClient: HTTPClient, config: Options, path: string);
+    constructor(httpClient: HTTPClient, config: ClientOptions, path: string);
     /**
      * @private
      * Parses the path string and creates URLComponents out of it
@@ -168,39 +165,46 @@ export declare class GraphRequest {
     orderby(properties: string | string[]): GraphRequest;
     /**
      * @public
-     * To add properties for filter OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add query string for filter OData Query param
+     * @param {string} filterStr - The filter query string
      * @returns The same GraphRequest instance that is being called with
      */
     filter(filterStr: string): GraphRequest;
     /**
      * @public
-     * To add properties for top OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add criterion for search OData Query param
+     * @param {string} searchStr - The search criterion string
+     * @returns The same GraphRequest instance that is being called with
+     */
+    search(searchStr: string): GraphRequest;
+    /**
+     * @public
+     * To add number for top OData Query param
+     * @param {number} n - The number value
      * @returns The same GraphRequest instance that is being called with
      */
     top(n: number): GraphRequest;
     /**
      * @public
-     * To add properties for skip OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add number for skip OData Query param
+     * @param {number} n - The number value
      * @returns The same GraphRequest instance that is being called with
      */
     skip(n: number): GraphRequest;
     /**
      * @public
-     * To add properties for skipToken OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add token string for skipToken OData Query param
+     * @param {string} token - The token value
      * @returns The same GraphRequest instance that is being called with
      */
     skipToken(token: string): GraphRequest;
     /**
      * @public
-     * To add properties for count OData Query param
-     * @param {string|string[]} properties - The Properties value
+     * To add boolean for count OData Query param
+     * @param {boolean} isCount - The count boolean
      * @returns The same GraphRequest instance that is being called with
      */
-    count(count: boolean): GraphRequest;
+    count(isCount: boolean): GraphRequest;
     /**
      * @public
      * Appends query string to the urlComponent

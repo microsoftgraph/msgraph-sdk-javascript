@@ -12,7 +12,7 @@
 import { Middleware } from "../IMiddleware";
 import { Context } from "../IContext";
 import { ResponseType } from "../ResponseType";
-import { FetchOptions } from "../IFetchRequest";
+import { FetchOptions } from "../IFetchOptions";
 
 /**
  * @enum

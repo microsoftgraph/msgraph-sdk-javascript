@@ -10,7 +10,7 @@
  */
 
 import { Context } from "./IContext";
-import { FetchOptions } from "./IFetchRequest";
+import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 

@@ -6,10 +6,10 @@
  */
 
 import { assert } from "chai";
-import { Client as GraphClient } from "../../src/index";
 import { DummyAuthenticationProvider } from '../DummyAuthenticationProvider';
+import { Client } from "../../src/index";
 
-const client = GraphClient.init({
+const client = new Client({
     authProvider: new DummyAuthenticationProvider()
 });
 

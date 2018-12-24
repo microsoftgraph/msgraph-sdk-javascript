@@ -4,7 +4,7 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-import { FetchOptions } from "./IFetchRequest";
+import { FetchOptions } from "./IFetchOptions";
 /**
  * @interface
  * Signature representing the middleware options

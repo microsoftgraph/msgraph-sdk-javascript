@@ -6,11 +6,11 @@
  */
 
 import { assert } from "chai";
+import fetchMock = require("fetch-mock");
 import { HTTPMessageHandler, GraphError } from "../../src/middleware/HTTPMessageHandler";
 import { Context } from "../../src/IContext";
-import { ResponseType } from "../../src/ResponseType";
 import "isomorphic-fetch";
-import fetchMock = require("fetch-mock");
+import { ResponseType } from "../../src/ResponseType";
 
 describe("HTTPMessageHandler.ts", () => {
 

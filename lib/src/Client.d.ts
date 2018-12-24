@@ -4,11 +4,9 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-/**
- * @module Client
- */
-import { Options } from "./Common";
 import { GraphRequest } from "./GraphRequest";
+import { ClientOptions } from "./IClientOptions";
+import { Options } from "./IOptions";
 export declare class Client {
     /**
      * @private
@@ -20,6 +18,12 @@ export declare class Client {
      * A member which holds the HTTPClient instance
      */
     private httpClient;
+    /**
+     * @constructor
+     * Creates an instance of Client
+     * @param {ClientOptions} clientOptions - The options to instantiate the client object
+     */
+    constructor(clientOptions: ClientOptions);
     /**
      * @public
      * @static

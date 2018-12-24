@@ -6,9 +6,9 @@
  */
 
 import { assert } from "chai";
-import { Event } from "@microsoft/microsoft-graph-types";
-import { getClient, randomString } from "../test-helper";
 import "isomorphic-fetch";
+import { getClient, randomString } from "../test-helper";
+import { Event } from "@microsoft/microsoft-graph-types";
 
 const client = getClient();
 

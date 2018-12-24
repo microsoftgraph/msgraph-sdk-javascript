@@ -6,7 +6,7 @@
  */
 
 import { assert } from "chai";
-import * as OneDriveLargeFileUploadTaskUtil from "../../lib/src/tasks/OneDriveLargeFileUploadTaskUtil";
+import * as OneDriveLargeFileUploadTaskUtil from "../../src/tasks/OneDriveLargeFileUploadTaskUtil";
 
 describe("OneDriveLargeFileUploadTaskUtil", function () {
     describe('getValidRangeSize', () => {
