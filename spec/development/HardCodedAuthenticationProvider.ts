@@ -5,15 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
-import { Client } from "../src/index";
+import {AuthenticationProvider} from "../../src/IAuthenticationProvider";
+import {AccessToken} from "./secrets";
 
-export function getClient(): Client {
-    return new Client({
-        authProvider: new DummyAuthenticationProvider()
-    });
-}
-
-export function randomString() {
-    return Math.random().toString(36).substring(7);
+export class HardCodedAuthenticationProvider implements AuthenticationProvider {
+    public async getAccessToken() {
+        return Promise.resolve(AccessToken);
+    }
 }

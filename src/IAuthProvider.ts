@@ -5,15 +5,13 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
-import { Client } from "../src/index";
+import { AuthProviderCallback } from "./IAuthProviderCallback";
 
-export function getClient(): Client {
-    return new Client({
-        authProvider: new DummyAuthenticationProvider()
-    });
-}
-
-export function randomString() {
-    return Math.random().toString(36).substring(7);
+/**
+ * @interface
+ * Signature that holds authProvider
+ * @callback - The anonymous callback function which takes a single param
+ */
+export interface AuthProvider {
+    (done: AuthProviderCallback): void;
 }

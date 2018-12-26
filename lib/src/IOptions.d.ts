@@ -4,23 +4,8 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
+import { AuthProvider } from "./IAuthProvider";
 import { FetchOptions } from "./IFetchOptions";
-/**
- * @interface
- * Signature that defines callback for an authentication provider
- * @callback - The anonymous callback function which takes two params
- */
-interface AuthProviderCallback {
-    (error: any, accessToken: string | null): void;
-}
-/**
- * @interface
- * Signature that holds authProvider
- * @callback - The anonymous callback function which takes a single param
- */
-export interface AuthProvider {
-    (done: AuthProviderCallback): void;
-}
 /**
  * @interface
  * Options for initializing the Graph Client
@@ -37,4 +22,3 @@ export interface Options {
     defaultVersion?: string;
     fetchOptions?: FetchOptions;
 }
-export {};

@@ -9,8 +9,9 @@ import { assert } from "chai";
 import { Client } from "../../src/Client";
 import { CustomHTTPHandler } from "../CustomHTTPHandler";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
+import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
-import { Options, AuthProvider } from "../../src/IOptions";
+import { Options } from "../../src/IOptions";
 
 describe("Client.ts", function () {
     describe("constructor", function () {

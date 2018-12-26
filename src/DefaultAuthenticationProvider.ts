@@ -10,7 +10,7 @@
  */
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
-import { AuthProvider } from "./IOptions";
+import { AuthProvider } from "./IAuthProvider";
 
 /**
  * @class

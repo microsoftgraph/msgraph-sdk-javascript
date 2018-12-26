@@ -4,16 +4,12 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
-import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
-import { Client } from "../src/index";
-
-export function getClient(): Client {
-    return new Client({
-        authProvider: new DummyAuthenticationProvider()
-    });
-}
-
-export function randomString() {
-    return Math.random().toString(36).substring(7);
+import { AuthProviderCallback } from "./IAuthProviderCallback";
+/**
+ * @interface
+ * Signature that holds authProvider
+ * @callback - The anonymous callback function which takes a single param
+ */
+export interface AuthProvider {
+    (done: AuthProviderCallback): void;
 }

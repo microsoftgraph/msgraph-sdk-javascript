@@ -15,15 +15,10 @@
       "node_modules",
       "lib",
       "samples",
-      "spec/tasks",
-      "spec/types"
+      "spec/development"
   ],
   "include": [
-      "./src/index.ts",
-      "./src/content/BatchRequestContent.ts",
-      "./src/content/BatchResponseContent.ts",
-      "./src/tasks/OneDriveLargeFileUploadTask.ts",
-      "./src/tasks/PageIterator.ts",
-      "./spec/core"
+      "./src/**/*.ts",
+      "./spec/**/*.ts"
     ]
 }

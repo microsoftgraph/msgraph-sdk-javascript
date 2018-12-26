@@ -10,12 +10,18 @@
   ],
   "types": "./lib/src/index.d.ts",
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/fetch-mock": "^6.0.4",
     "@types/mocha": "^5.2.5",
+    "@types/isomorphic-fetch": "0.0.34",
     "@types/node": "^10.12.10",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
+    "es6-promise": "^4.2.5",
+    "fetch-mock": "^7.2.5",
     "isomorphic-fetch": "^2.2.1",
     "mocha": "^5.2.0",
+    "msal": "^0.2.3",
     "typescript": "^3.1.6",
     "uglify-es": "^3.3.9",
     "window": "^4.2.5"
@@ -24,15 +30,12 @@
     "compile": "tsc",
     "browserify": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
     "build": "npm run compile && npm run browserify",
-    "test": "mocha lib/spec/core",
-    "test:core": "tsc -p spec && mocha spec/core",
-    "test:types": "tsc -p spec && mocha spec/types",
-    "test:tasks": "tsc -p spec && mocha spec/tasks",
+    "test": "mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
     "test:content": "tsc -p spec && mocha spec/content",
-    "test:middleware": "tsc -p spec && mocha spec/middleware"
-  },
-  "dependencies": {
-    "msal": "^0.2.3"
+    "test:core": "tsc -p spec && mocha spec/core",
+    "test:middleware": "tsc -p spec && mocha spec/middleware",
+    "test:tasks": "tsc -p spec && mocha spec/tasks",
+    "test:workload": "tsc -p spec && mocha spec/development/workload"
   },
   "repository": {
     "type": "git",
