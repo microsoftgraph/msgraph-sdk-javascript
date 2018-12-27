@@ -6,12 +6,9 @@
  */
 
 import { assert } from "chai";
-import { DummyAuthenticationProvider } from '../DummyAuthenticationProvider';
-import { Client } from "../../src/index";
+import { getClient } from "../test-helper";
 
-const client = new Client({
-    authProvider: new DummyAuthenticationProvider()
-});
+const client = getClient();
 
 let cases = [];
 

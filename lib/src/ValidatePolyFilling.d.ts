@@ -4,8 +4,10 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
- /**
-  * Adds exports in index.js to the MicrosoftGraph property in window object
-  */
-window.MicrosoftGraph = require("./lib/src/index.js");
+/**
+ * @constant
+ * @function
+ * Validates availability of Promise and fetch in global context
+ * @returns The true in case the Promise and fetch available, otherwise throws error
+ */
+export declare const validatePolyFilling: () => Boolean;

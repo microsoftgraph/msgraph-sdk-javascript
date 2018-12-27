@@ -12,10 +12,16 @@ import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
 import { Options } from "../../src/IOptions";
+import * as PolyFill from "../../src/PolyFill";
 
 describe("Client.ts", function () {
     describe("constructor", function () {
-
+        /**
+         * PolyFill fetch and promise before initializing client, otherwise error will be thrown
+         */
+        before(() => {
+            PolyFill.init();
+        });
         const dummyAuthProvider = new DummyAuthenticationProvider(),
             customHTTPHandler = new CustomHTTPHandler();
 

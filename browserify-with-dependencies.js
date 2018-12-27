@@ -5,7 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
- /**
-  * Adds exports in index.js to the MicrosoftGraph property in window object
-  */
-window.MicrosoftGraph = require("./lib/src/index.js");
+/**
+ * Initializes browserify, adds wrapper files and outputs the browserified file
+ */
+const Browserify = require("browserify");
+const browserify = Browserify();
+browserify.add("./browser-wrapper.js");
+browserify.add("./browser-wrapper-dependency.js");
+browserify.bundle().pipe(process.stdout);

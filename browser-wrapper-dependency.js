@@ -5,7 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
- /**
-  * Adds exports in index.js to the MicrosoftGraph property in window object
-  */
-window.MicrosoftGraph = require("./lib/src/index.js");
+/**
+ * Initializes PolyFilling
+ */
+const PolyFill = require("./lib/src/PolyFill");
+PolyFill.init();

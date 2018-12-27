@@ -5,16 +5,16 @@
  * -------------------------------------------------------------------------------------------
  */
 /**
- * @module DefaultAuthenticationProvider
+ * @module CustomAuthenticationProvider
  */
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 /**
  * @class
- * Class representing DefaultAuthenticationProvider
+ * Class representing CustomAuthenticationProvider
  * @extends AuthenticationProvider
  */
-export declare class DefaultAuthenticationProvider implements AuthenticationProvider {
+export declare class CustomAuthenticationProvider implements AuthenticationProvider {
     /**
      * @private
      * A member to hold authProvider callback
@@ -22,9 +22,9 @@ export declare class DefaultAuthenticationProvider implements AuthenticationProv
     private provider;
     /**
      * @constructor
-     * Creates an instance of DefaultAuthenticationProvider
+     * Creates an instance of CustomAuthenticationProvider
      * @param {AuthProviderCallback} provider - An authProvider function
-     * @returns An instance of DefaultAuthenticationProvider
+     * @returns An instance of CustomAuthenticationProvider
      */
     constructor(provider: AuthProvider);
     /**

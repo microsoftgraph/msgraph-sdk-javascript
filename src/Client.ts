@@ -10,12 +10,13 @@
  */
 
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
-import { DefaultAuthenticationProvider } from "./DefaultAuthenticationProvider";
+import { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
 import { GraphRequest } from "./GraphRequest";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
 import { Options } from "./IOptions";
+import { validatePolyFilling } from "./ValidatePolyFilling";
 
 export class Client {
 
@@ -41,6 +42,11 @@ export class Client {
      * @param {ClientOptions} clientOptions - The options to instantiate the client object 
      */
     constructor(clientOptions: ClientOptions) {
+        try {
+            validatePolyFilling();
+        } catch (error) {
+            throw error;
+        }
         let self = this;
         for (const key in clientOptions) {
             self.config[key] = clientOptions[key];
@@ -67,11 +73,10 @@ export class Client {
      * @returns The Client instance
      */
     public static init(options: Options): Client {
-        let clientOptions: ClientOptions = {},
-            httpClient: HTTPClient;
+        let clientOptions: ClientOptions = {};
         for (const i in options) {
             if (i === "authProvider") {
-                clientOptions[i] = new DefaultAuthenticationProvider(options[i]);
+                clientOptions[i] = new CustomAuthenticationProvider(options[i]);
             } else if (i === "fetchOptions") {
                 clientOptions.middlewareOptions = {
                     requestOptions: options.fetchOptions
