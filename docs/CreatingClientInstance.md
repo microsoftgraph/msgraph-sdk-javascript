@@ -1,0 +1,64 @@
+# Creating Client Instance
+
+Initialization of the Client can be done in one of below two ways
+
+## 1. Create With ClientOptions [Recommended]
+
+In order to instantiate a Client object, one has to pass in the `authProvider` or `middleware` chain in [ClientOptions](../src/IClientOptions.ts).
+
+### 1. Default Middleware chain
+
+Pass an instance of a class which implementing [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface as `authProvider` in [ClientOptions](../src/IClientOptions.ts), which will instantiate the Client with default set of middleware chain.
+
+Library is shipped with one such authentication provider named [MSALAuthenticationProvider](../src/MSALAuthenticationProvider.ts). This MSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use MSALAuthenticationProvider.
+
+```typescript
+// Instantiating Client with MSALAuthenticationProvider
+let clientOptions: ClientOptions = {
+    authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>)
+};
+const client = new Client(clientOptions);
+```
+
+Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts). Refer [implementing custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
+
+```typescript
+let clientOptions: ClientOptions = {
+    // MyCustomAuthenticationProvider is the user's own authentication provider implementing AuthenticationProvider interface
+    authProvider: new MyCustomAuthenticationProvider()
+};
+const client = new Client(clientOptions);
+```
+
+### 2. Custom Middleware chain
+
+Want to have complete control over the request and the response objects, one can provide his own chain of middleware.
+Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts). Refer [implementing custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
+
+```typescript
+let clientOptions: ClientOptions = {
+    // MyFirstMiddleware is the first middleware in my custom middleware chain
+    middleware: new MyFirstMiddleware()
+};
+const client = new Client(clientOptions);
+```
+
+## 2. Init With Options
+
+Pass an [authProvider function](../src/IAuthProvider.ts) in [Options](../src/IOptions.ts) while initializing the Client. In this case, user have to provide his own implementation for getting and refreshing accessToken. A callback will be passed into this authProvider function, accessToken or error needs to be passed in to that callback.
+
+```typescript
+// Some callback function
+const authProvider: AuthProvider = (callback: AuthProviderCallback) => {
+
+    // Your logic for getting and refreshing accessToken
+
+    // Error should be passed in case of error while authenticating
+    // accessToken should be passed upon successful authentication
+    callback(error, accessToken);
+};
+let options: Options = {
+    authProvider
+};
+const client = Client.init(options);
+```
