@@ -127,7 +127,7 @@ export declare class BatchRequestContent {
      * Adds a dependency for a given dependent request
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified the preceding request will be considered as a dependency
-     * @returns nothing
+     * @returns Nothing
      */
     addDependency(dependentId: string, dependencyId?: string): void;
     /**

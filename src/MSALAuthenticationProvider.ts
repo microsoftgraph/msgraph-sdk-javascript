@@ -97,7 +97,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
      * @public
      * To add the scopes to the existing set of scopes
      * @param {string[]} scopes - The array of graph scope values
-     * @returns nothing
+     * @returns Nothing
      */
     public addScopes(scopes: string[]): void {
         if (scopes.length === 0) {
@@ -113,7 +113,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
     /**
      * @public
      * To clear the graph scopes
-     * @returns nothing
+     * @returns Nothing
      */
     public clearScopes(): void {
         this.scopes = [];

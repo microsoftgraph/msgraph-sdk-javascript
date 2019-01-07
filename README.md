@@ -66,7 +66,7 @@ const options = {
 const client = MicrosoftGraph.Client.init(options);
 ```
 
-For more information, refer: [default options](docs/DefaultOptions.md), [custom middleware chain](docs/CustomMiddlewareChain.md)
+For more information on initializing client, refer [this](./docs/CreatingClientInstance.md).
 
 ### 4. Make requests to the graph
 
@@ -108,6 +108,16 @@ try {
 ```
 
 For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions](docs/Actions.md), [Query Params](docs/QueryParameters.md), [API Methods](docs/APIMethods.md) and [more](docs/).
+
+## Documentation
+
+* [Batching](docs/content/Batching.md)
+* [Large File Upload Task](docs/tasks/LargeFileUploadTask.md)
+* [Page Iterator](docs/tasks/PageIterator.md)
+* [Actions](docs/Actions.md)
+* [Query Parameters](docs/QueryParameters.md)
+* [Other APIs](docs/OtherAPIs.md)
+* [Getting Raw Response](docs/GettingRawResponse.md)
 
 ## Questions and comments
 

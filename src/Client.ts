@@ -77,10 +77,6 @@ export class Client {
         for (const i in options) {
             if (i === "authProvider") {
                 clientOptions[i] = new CustomAuthenticationProvider(options[i]);
-            } else if (i === "fetchOptions") {
-                clientOptions.middlewareOptions = {
-                    requestOptions: options.fetchOptions
-                };
             } else {
                 clientOptions[i] = options[i];
             }

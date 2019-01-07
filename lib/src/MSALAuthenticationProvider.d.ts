@@ -49,13 +49,13 @@ export declare class MSALAuthenticationProvider implements AuthenticationProvide
      * @public
      * To add the scopes to the existing set of scopes
      * @param {string[]} scopes - The array of graph scope values
-     * @returns nothing
+     * @returns Nothing
      */
     addScopes(scopes: string[]): void;
     /**
      * @public
      * To clear the graph scopes
-     * @returns nothing
+     * @returns Nothing
      */
     clearScopes(): void;
 }

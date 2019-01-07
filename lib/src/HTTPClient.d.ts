@@ -4,6 +4,10 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
+/**
+ * @module HTTPClient
+ */
+import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
@@ -32,5 +36,5 @@ export declare class HTTPClient {
      * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
      * @returns A promise that resolves to the response
      */
-    sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<any>;
+    sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<Context>;
 }

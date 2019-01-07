@@ -143,7 +143,7 @@ export class LargeFileUploadTask {
      * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
-     * @returns nothing
+     * @returns Nothing
      */
     public updateTaskStatus(response: UploadStatusResponse): void {
         let self = this;

@@ -62,7 +62,7 @@ export class BatchResponseContent {
      * @public
      * Updates the Batch response content instance with given responses.
      * @param {BatchResponseBody} response - The response json representing batch response message
-     * @returns nothing
+     * @returns Nothing
      */
     public update(response: BatchResponseBody): void {
         let self = this;

@@ -10,7 +10,10 @@
  */
 
 import { PACKAGE_VERSION } from "./Constants";
+import { GraphErrorHandler } from "./GraphErrorHandler";
+import { GraphError } from "./GraphError";
 import { oDataQueryNames, urlJoin, serializeContent } from "./GraphRequestUtil";
+import { GraphResponseHandler } from "./GraphResponseHandler";
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
@@ -60,6 +63,18 @@ export class GraphRequest {
 
     /**
      * @private
+     * A member variable holding the GraphResponseHandler for the corresponding GraphRequest
+     */
+    private graphResponseHandler: GraphResponseHandler;
+
+    /**
+     * @private
+     * A member holding the GraphErrorHandler for the corresponding GraphRequest
+     */
+    private graphErrorHandler: GraphErrorHandler;
+
+    /**
+     * @private
      * A member variable to hold client options
      */
     private config: ClientOptions;
@@ -88,13 +103,7 @@ export class GraphRequest {
      * @private
      * A member to hold custom response type for a request
      */
-    private _responseType: string;
-
-    /**
-     * @private
-     * A member to hold the rawResponse for a request
-     */
-    private _rawResponse: Response;
+    private _responseType: ResponseType;
 
     /**
      * Creates an instance of GraphRequest
@@ -121,7 +130,7 @@ export class GraphRequest {
      * @private
      * Parses the path string and creates URLComponents out of it
      * @param {string} path - The request path string
-     * @returns nothing
+     * @returns Nothing
      */
     private parsePath = (path: string): void => {
         let self = this;
@@ -256,7 +265,7 @@ export class GraphRequest {
      * @param {string} propertyName - The name of a property
      * @param {string|string[]} propertyValue - The vale of a property
      * @param {IArguments} additionalProperties - The additional properties
-     * @returns nothing
+     * @returns Nothing
      */
     private addCsvQueryParameter(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments): void {
         // If there are already $propertyName value there, append a ","
@@ -453,23 +462,30 @@ export class GraphRequest {
 
     /**
      * @private
-     * Adds the custom headers and options for the request
-     * @returns The options of a request 
+     * Updates the custom headers and options for a request
+     * @param {FetchOptions} options - The request options object
+     * @returns Nothing 
      */
-    private getRequestOptions(): FetchOptions {
+    private updateRequestOptions(options: FetchOptions): void {
         let self = this,
             defaultHeaders = {
                 SdkVersion: `graph-js-${PACKAGE_VERSION}`
             },
-            customizedOptions: FetchOptions = {
-                headers: {}
-            };
-        if (self.config.middlewareOptions !== undefined) {
-            Object.assign(customizedOptions, self.config.middlewareOptions.requestOptions);
+            optionsHeaders: HeadersInit = Object.assign({}, options.headers);
+        if (self.config.fetchOptions !== undefined) {
+            let fetchOptions: FetchOptions = Object.assign({}, self.config.fetchOptions);
+            Object.assign(options, fetchOptions);
+            if (typeof self.config.fetchOptions.headers !== undefined) {
+                options.headers = Object.assign({}, self.config.fetchOptions.headers);
+            }
         }
-        Object.assign(customizedOptions, self._options);
-        Object.assign(customizedOptions.headers, defaultHeaders, self._headers);
-        return customizedOptions;
+        Object.assign(options, self._options);
+        Object.assign(optionsHeaders, defaultHeaders);
+        if(options.headers !== undefined) {
+            Object.assign(optionsHeaders, options.headers);
+        }
+        Object.assign(optionsHeaders, self._headers);
+        options.headers = optionsHeaders;
     }
 
     /**
@@ -483,29 +499,23 @@ export class GraphRequest {
      */
     private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
-            requestOptions = self.getRequestOptions();
-        if (self.config.middlewareOptions !== undefined) {
-            if (self.config.middlewareOptions.requestOptions !== undefined) {
-                requestOptions.headers = Object.assign({}, self.config.middlewareOptions.requestOptions.headers, requestOptions.headers);
-            }
-            requestOptions = Object.assign({}, self.config.middlewareOptions.requestOptions, requestOptions);
-        }
-        let middlewareOptions = Object.assign({}, self.config.middlewareOptions, { requestOptions });
-        middlewareOptions.responseType = self._responseType;
+            middlewareOptions = Object.assign({}, self.config.middlewareOptions);
+        self.updateRequestOptions(options);
         try {
-            let context = await self.httpClient.sendRequest(request, options, middlewareOptions);
-            self._rawResponse = context.rawResponse;
-            if (typeof callback !== "undefined") {
-                callback(null, context.response, context.rawResponse);
-            } else {
-                return context.response;
-            }
+            let context = await self.httpClient.sendRequest(request, options, middlewareOptions),
+                rawResponse = context.response;
+            self.graphResponseHandler = new GraphResponseHandler(rawResponse, self._responseType, callback);
+            let response: any = await self.graphResponseHandler.getResponse();
+            return response;
         } catch (error) {
-            if (typeof callback !== "undefined") {
-                callback(error, null);
-            } else {
-                throw error;
+            let rawResponse = this.getRawResponse(),
+                statusCode: number;
+            if (typeof rawResponse !== "undefined") {
+                statusCode = rawResponse.status;
             }
+            self.graphErrorHandler = new GraphErrorHandler(error, statusCode, callback);
+            let gError: GraphError = self.graphErrorHandler.getError();
+            throw gError;
         }
     }
 
@@ -587,7 +597,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = self.send(url, options, callback);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -718,6 +728,6 @@ export class GraphRequest {
      * @returns The raw response instance
      */
     public getRawResponse(): Response {
-        return this._rawResponse;
+        return this.graphResponseHandler.getRawResponse();
     }
 }

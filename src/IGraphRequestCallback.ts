@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import {GraphError} from "./IGraphError";
+import { GraphError } from "./GraphError";
 /**
  * @interface
  * Signature to define the GraphRequest callback

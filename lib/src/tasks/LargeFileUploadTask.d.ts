@@ -105,7 +105,7 @@ export declare class LargeFileUploadTask {
      * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
-     * @returns nothing
+     * @returns Nothing
      */
     updateTaskStatus(response: UploadStatusResponse): void;
     /**

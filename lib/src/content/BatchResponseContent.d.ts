@@ -48,7 +48,7 @@ export declare class BatchResponseContent {
      * @public
      * Updates the Batch response content instance with given responses.
      * @param {BatchResponseBody} response - The response json representing batch response message
-     * @returns nothing
+     * @returns Nothing
      */
     update(response: BatchResponseBody): void;
     /**

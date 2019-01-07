@@ -15,12 +15,12 @@ Library is shipped with one such authentication provider named [MSALAuthenticati
 ```typescript
 // Instantiating Client with MSALAuthenticationProvider
 let clientOptions: ClientOptions = {
-    authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>)
+    authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
 };
 const client = new Client(clientOptions);
 ```
 
-Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts). Refer [implementing custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
+Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
 let clientOptions: ClientOptions = {
@@ -30,10 +30,12 @@ let clientOptions: ClientOptions = {
 const client = new Client(clientOptions);
 ```
 
+Refer, [custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
+
 ### 2. Custom Middleware chain
 
 Want to have complete control over the request and the response objects, one can provide his own chain of middleware.
-Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts). Refer [implementing custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
+Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
 let clientOptions: ClientOptions = {
@@ -42,6 +44,8 @@ let clientOptions: ClientOptions = {
 };
 const client = new Client(clientOptions);
 ```
+
+Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
 
 ## 2. Init With Options
 

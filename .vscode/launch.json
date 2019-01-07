@@ -24,6 +24,18 @@
             "cwd": "${workspaceRoot}",
             "outFiles": [],
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run workload tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "${workspaceRoot}/spec/development/workload/*.js"
+            ],
+            "cwd": "${workspaceRoot}",
+            "outFiles": [],
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }

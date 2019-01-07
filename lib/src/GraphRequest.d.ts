@@ -46,6 +46,16 @@ export declare class GraphRequest {
     private httpClient;
     /**
      * @private
+     * A member variable holding the GraphResponseHandler for the corresponding GraphRequest
+     */
+    private graphResponseHandler;
+    /**
+     * @private
+     * A member holding the GraphErrorHandler for the corresponding GraphRequest
+     */
+    private graphErrorHandler;
+    /**
+     * @private
      * A member variable to hold client options
      */
     private config;
@@ -70,11 +80,6 @@ export declare class GraphRequest {
      */
     private _responseType;
     /**
-     * @private
-     * A member to hold the rawResponse for a request
-     */
-    private _rawResponse;
-    /**
      * Creates an instance of GraphRequest
      * @param {HTTPClient} httpClient - The HTTPClient instance
      * @param {ClientOptions} config - The options for making request
@@ -85,7 +90,7 @@ export declare class GraphRequest {
      * @private
      * Parses the path string and creates URLComponents out of it
      * @param {string} path - The request path string
-     * @returns nothing
+     * @returns Nothing
      */
     private parsePath;
     /**
@@ -140,7 +145,7 @@ export declare class GraphRequest {
      * @param {string} propertyName - The name of a property
      * @param {string|string[]} propertyValue - The vale of a property
      * @param {IArguments} additionalProperties - The additional properties
-     * @returns nothing
+     * @returns Nothing
      */
     private addCsvQueryParameter;
     /**
@@ -227,10 +232,11 @@ export declare class GraphRequest {
     private createQueryString;
     /**
      * @private
-     * Adds the custom headers and options for the request
-     * @returns The options of a request
+     * Updates the custom headers and options for a request
+     * @param {FetchOptions} options - The request options object
+     * @returns Nothing
      */
-    private getRequestOptions;
+    private updateRequestOptions;
     /**
      * @private
      * @async

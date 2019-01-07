@@ -5,15 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { FetchOptions } from "./IFetchOptions";
-
 /**
  * @interface
  * Signature representing the middleware options
- * @property {FetchOptions} [fetchOptions] - The options for fetch request
  * @property {[key: string]: any} - The key value pair for request options
  */
 export interface MiddlewareOptions {
-    requestOptions?: FetchOptions,
     [key: string]: any
 }

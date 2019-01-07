@@ -44,13 +44,17 @@ export class HTTPClient {
      * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
      * @returns A promise that resolves to the response
      */
-    public async sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<any> {
-        let context: Context = {
-            request,
-            options,
-            middlewareOptions
-        };
-        await this.middleware.execute(context);
-        return context;
+    public async sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<Context> {
+        try {
+            let context: Context = {
+                request,
+                options,
+                middlewareOptions
+            };
+            await this.middleware.execute(context);
+            return context;
+        } catch (error) {
+            throw error;
+        }
     }
 }

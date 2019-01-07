@@ -11,7 +11,7 @@ import * as es6Promise from "es6-promise";
  * @constant
  * @function
  * PolyFills Promise and fetch after checking for its availability in native
- * @returns nothing
+ * @returns Nothing
  */
 export const init = (): void => {
     if (typeof Promise === "undefined") {

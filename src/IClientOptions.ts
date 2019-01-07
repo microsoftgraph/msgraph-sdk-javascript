@@ -6,6 +6,7 @@
  */
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
+import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
@@ -16,6 +17,7 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
 * @property {string} [baseUrl] - Base url that needs to be appended to every request
 * @property {boolean} [debugLogging] - The boolean to enable/disable debug logging
 * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
+* @property {FetchOptions} [fetchOptions] - The options for fetch request
 * @property {Function} [middleware] - The first middleware of the middleware chain
 * @property {MiddlewareOptions} [middlewareOptions] - The options for middleware
 */
@@ -24,6 +26,7 @@ export interface ClientOptions {
     baseUrl?: string;
     debugLogging?: boolean;
     defaultVersion?: string;
+    fetchOptions?: FetchOptions;
     middleware?: Middleware;
     middlewareOptions?: MiddlewareOptions;
 }

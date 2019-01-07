@@ -8,6 +8,6 @@
  * @constant
  * @function
  * PolyFills Promise and fetch after checking for its availability in native
- * @returns nothing
+ * @returns Nothing
  */
 export declare const init: () => void;
