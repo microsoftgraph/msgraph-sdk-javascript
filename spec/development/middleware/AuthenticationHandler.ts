@@ -5,12 +5,12 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { AuthenticationHandler } from "../../src/middleware/AuthenticationHandler";
+import { AuthenticationHandler } from "../../../src/middleware/AuthenticationHandler";
 import { assert } from "chai";
-import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
+import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
 import fetchMock = require("fetch-mock");
-import { HTTPMessageHandler } from "../../src/middleware/HTTPMessageHandler";
-import { Context } from "../../src/IContext";
+import { HTTPMessageHandler } from "../../../src/middleware/HTTPMessageHandler";
+import { Context } from "../../../src/IContext";
 
 const dummyAuthProvider = new DummyAuthenticationProvider(),
     authHandler = new AuthenticationHandler(dummyAuthProvider),
