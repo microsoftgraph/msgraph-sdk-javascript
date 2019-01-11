@@ -172,7 +172,7 @@ export class GraphRequest {
                 let queryParams = queryParam.split("="),
                     key = queryParams[0],
                     value = queryParams[1];
-                if (oDataQueryNames.indexOf(key)) {
+                if (oDataQueryNames.indexOf(key) !== -1) {
                     self.urlComponents.oDataQueryParams[key] = value;
                 } else {
                     self.urlComponents.otherURLQueryParams[key] = value;
