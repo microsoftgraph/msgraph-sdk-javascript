@@ -6,7 +6,7 @@
  */
 
 import { assert } from "chai";
-import { OneDriveLargeFileUploadTask } from "../../lib/src/tasks/OneDriveLargeFileUploadTask";
+import { OneDriveLargeFileUploadTask } from "../../src/tasks/OneDriveLargeFileUploadTask";
 
 describe("OneDriveLargeFileUploadTask.ts", function () {
     describe('constructCreateSessionUrl', () => {

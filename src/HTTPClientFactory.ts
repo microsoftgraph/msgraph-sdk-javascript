@@ -26,7 +26,7 @@ export class HTTPClientFactory {
      * @static
      * Creates HTTPClient with default middleware chain
      * @param {AuthenticationProvider} authProvider - The authentication provider instance
-     * @return A HTTPClient instance
+     * @returns A HTTPClient instance
      */
     public static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient {
         let authenticationHandler = new AuthenticationHandler(authProvider);
@@ -40,7 +40,7 @@ export class HTTPClientFactory {
      * @static
      * Creates a middleware chain with the given one
      * @param {Middleware} middleware - The first middleware of the middleware chain
-     * @return A HTTPClient instance 
+     * @returns A HTTPClient instance 
      */
     static createWithMiddleware(middleware: Middleware): HTTPClient {
         return new HTTPClient(middleware);

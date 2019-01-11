@@ -6,12 +6,9 @@
  */
 
 import { assert } from "chai";
-import { Client as GraphClient } from "../../src/index";
-import { DummyAuthenticationProvider } from '../DummyAuthenticationProvider';
+import { getClient } from "../test-helper";
 
-const client = GraphClient.init({
-    authProvider: new DummyAuthenticationProvider()
-});
+const client = getClient();
 
 let cases = [];
 

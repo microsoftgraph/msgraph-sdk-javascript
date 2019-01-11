@@ -6,9 +6,9 @@
  */
 
 import { assert } from "chai";
-import { Client } from "../../lib/src/index";
+import { Client } from "../../src/index";
+import { PageIterator, PageIteratorCallback } from "../../src/tasks/PageIterator";
 import { getClient } from "../test-helper";
-import { PageIterator, PageIteratorCallback } from "../../lib/src/tasks/PageIterator";
 
 let client: Client = getClient();
 

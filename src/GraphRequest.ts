@@ -9,11 +9,15 @@
  * @module GraphRequest
  */
 
-import { Options } from "./Common";
 import { PACKAGE_VERSION } from "./Constants";
+import { GraphErrorHandler } from "./GraphErrorHandler";
+import { GraphError } from "./GraphError";
 import { oDataQueryNames, urlJoin, serializeContent } from "./GraphRequestUtil";
+import { GraphResponseHandler } from "./GraphResponseHandler";
 import { HTTPClient } from "./HTTPClient";
-import { FetchOptions } from "./IFetchRequest";
+import { ClientOptions } from "./IClientOptions";
+import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { FetchOptions } from "./IFetchOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 
@@ -59,9 +63,21 @@ export class GraphRequest {
 
     /**
      * @private
+     * A member variable holding the GraphResponseHandler for the corresponding GraphRequest
+     */
+    private graphResponseHandler: GraphResponseHandler;
+
+    /**
+     * @private
+     * A member holding the GraphErrorHandler for the corresponding GraphRequest
+     */
+    private graphErrorHandler: GraphErrorHandler;
+
+    /**
+     * @private
      * A member variable to hold client options
      */
-    private config: Options;
+    private config: ClientOptions;
 
     /**
      * @private
@@ -87,21 +103,15 @@ export class GraphRequest {
      * @private
      * A member to hold custom response type for a request
      */
-    private _responseType: string;
-
-    /**
-     * @private
-     * A member to hold the rawResponse for a request
-     */
-    private _rawResponse: Response;
+    private _responseType: ResponseType;
 
     /**
      * Creates an instance of GraphRequest
      * @param {HTTPClient} httpClient - The HTTPClient instance 
-     * @param {Options} config - The options for making request
+     * @param {ClientOptions} config - The options for making request
      * @param {string} path - A path string 
      */
-    constructor(httpClient: HTTPClient, config: Options, path: string) {
+    constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
         let self = this;
         self.httpClient = httpClient;
         self.config = config;
@@ -120,7 +130,7 @@ export class GraphRequest {
      * @private
      * Parses the path string and creates URLComponents out of it
      * @param {string} path - The request path string
-     * @return nothing
+     * @returns Nothing
      */
     private parsePath = (path: string): void => {
         let self = this;
@@ -176,7 +186,7 @@ export class GraphRequest {
      * Sets the custom header for a request
      * @param {string} headerKey - A header key
      * @param {string} headerValue - A header value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public header(headerKey: string, headerValue: string): GraphRequest {
         let self = this;
@@ -188,7 +198,7 @@ export class GraphRequest {
      * @public
      * Sets the custom headers for a request
      * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
         let self = this;
@@ -203,7 +213,7 @@ export class GraphRequest {
      * Sets the option for making a request
      * @param {string} key - The key value
      * @param {any} value - The value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public option(key: string, value: any): GraphRequest {
         let self = this;
@@ -215,7 +225,7 @@ export class GraphRequest {
      * @public
      * Sets the options for making a request
      * @param {{ [key: string]: any }} options - The options key value pair
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public options(options: { [key: string]: any }): GraphRequest {
         let self = this;
@@ -229,7 +239,7 @@ export class GraphRequest {
      * @public
      * Sets the api endpoint version for a request
      * @param {string} version - The version value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public version(version: string): GraphRequest {
         let self = this;
@@ -241,7 +251,7 @@ export class GraphRequest {
      * @public
      * Sets the api endpoint version for a request
      * @param {ResponseType} responseType - The response type value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public responseType(responseType: ResponseType): GraphRequest {
         let self = this;
@@ -255,7 +265,7 @@ export class GraphRequest {
      * @param {string} propertyName - The name of a property
      * @param {string|string[]} propertyValue - The vale of a property
      * @param {IArguments} additionalProperties - The additional properties
-     * @return nothing
+     * @returns Nothing
      */
     private addCsvQueryParameter(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments): void {
         // If there are already $propertyName value there, append a ","
@@ -278,7 +288,7 @@ export class GraphRequest {
      * @public
      * To add properties for select OData Query param
      * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     /*
     * Accepts .select("displayName,birthday")
@@ -296,7 +306,7 @@ export class GraphRequest {
      * @public
      * To add properties for expand OData Query param
      * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public expand(properties: string | string[]): GraphRequest {
         let self = this;
@@ -308,7 +318,7 @@ export class GraphRequest {
      * @public
      * To add properties for orderby OData Query param
      * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public orderby(properties: string | string[]): GraphRequest {
         let self = this;
@@ -318,9 +328,9 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for filter OData Query param
-     * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * To add query string for filter OData Query param
+     * @param {string} filterStr - The filter query string
+     * @returns The same GraphRequest instance that is being called with
      */
     public filter(filterStr: string): GraphRequest {
         let self = this;
@@ -330,9 +340,21 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for top OData Query param
-     * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * To add criterion for search OData Query param
+     * @param {string} searchStr - The search criterion string
+     * @returns The same GraphRequest instance that is being called with
+     */
+    public search(searchStr: string): GraphRequest {
+        let self = this;
+        self.urlComponents.oDataQueryParams["$search"] = searchStr;
+        return self;
+    }
+
+    /**
+     * @public
+     * To add number for top OData Query param
+     * @param {number} n - The number value
+     * @returns The same GraphRequest instance that is being called with
      */
     public top(n: number): GraphRequest {
         let self = this;
@@ -342,9 +364,9 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for skip OData Query param
-     * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * To add number for skip OData Query param
+     * @param {number} n - The number value
+     * @returns The same GraphRequest instance that is being called with
      */
     public skip(n: number): GraphRequest {
         let self = this;
@@ -354,9 +376,9 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for skipToken OData Query param
-     * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * To add token string for skipToken OData Query param
+     * @param {string} token - The token value
+     * @returns The same GraphRequest instance that is being called with
      */
     public skipToken(token: string): GraphRequest {
         let self = this;
@@ -366,13 +388,13 @@ export class GraphRequest {
 
     /**
      * @public
-     * To add properties for count OData Query param
-     * @param {string|string[]} properties - The Properties value
-     * @return The same GraphRequest instance that is being called with
+     * To add boolean for count OData Query param
+     * @param {boolean} isCount - The count boolean
+     * @returns The same GraphRequest instance that is being called with
      */
-    public count(count: boolean): GraphRequest {
+    public count(isCount: boolean): GraphRequest {
         let self = this;
-        self.urlComponents.oDataQueryParams["$count"] = count.toString();
+        self.urlComponents.oDataQueryParams["$count"] = isCount.toString();
         return self;
     }
 
@@ -380,7 +402,7 @@ export class GraphRequest {
      * @public
      * Appends query string to the urlComponent
      * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query value
-     * @return The same GraphRequest instance that is being called with
+     * @returns The same GraphRequest instance that is being called with
      */
     public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
         let self = this,
@@ -401,7 +423,7 @@ export class GraphRequest {
     /**
      * @private
      * Builds the full url from the URLComponents to make a request
-     * @return The URL string that is qualified to make a request to graph endpoint
+     * @returns The URL string that is qualified to make a request to graph endpoint
      */
     private buildFullUrl(): string {
         let self = this;
@@ -419,7 +441,7 @@ export class GraphRequest {
     /**
      * @private
      * Builds the query string from the URLComponents
-     * @return The Constructed query string
+     * @returns The Constructed query string
      */
     private createQueryString(): string {
         // Combining query params from oDataQueryParams and otherURLQueryParams
@@ -440,23 +462,30 @@ export class GraphRequest {
 
     /**
      * @private
-     * Adds the custom headers and options for the request
-     * @return The options of a request 
+     * Updates the custom headers and options for a request
+     * @param {FetchOptions} options - The request options object
+     * @returns Nothing 
      */
-    private getRequestOptions(): FetchOptions {
+    private updateRequestOptions(options: FetchOptions): void {
         let self = this,
             defaultHeaders = {
                 SdkVersion: `graph-js-${PACKAGE_VERSION}`
             },
-            customizedOptions: FetchOptions = {
-                headers: {}
-            };
-        if (self.config.middlewareOptions !== undefined) {
-            Object.assign(customizedOptions, self.config.middlewareOptions.requestOptions);
+            optionsHeaders: HeadersInit = Object.assign({}, options.headers);
+        if (self.config.fetchOptions !== undefined) {
+            let fetchOptions: FetchOptions = Object.assign({}, self.config.fetchOptions);
+            Object.assign(options, fetchOptions);
+            if (typeof self.config.fetchOptions.headers !== undefined) {
+                options.headers = Object.assign({}, self.config.fetchOptions.headers);
+            }
         }
-        Object.assign(customizedOptions, self._options);
-        Object.assign(customizedOptions.headers, defaultHeaders, self._headers);
-        return customizedOptions;
+        Object.assign(options, self._options);
+        Object.assign(optionsHeaders, defaultHeaders);
+        if(options.headers !== undefined) {
+            Object.assign(optionsHeaders, options.headers);
+        }
+        Object.assign(optionsHeaders, self._headers);
+        options.headers = optionsHeaders;
     }
 
     /**
@@ -465,25 +494,28 @@ export class GraphRequest {
      * Adds the custom headers and options to the request and makes the HTTPClient send request call
      * @param {RequestInfo} request - The request url string or the Request object value
      * @param {FetchOptions} options - The options to make a request
-     * @return A promise that resolves to the response content
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the response content
      */
-    private async send(request: RequestInfo, options: FetchOptions): Promise<any> {
+    private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
-            requestOptions = self.getRequestOptions();
-        if (self.config.middlewareOptions !== undefined) {
-            if (self.config.middlewareOptions.requestOptions !== undefined) {
-                requestOptions.headers = Object.assign({}, self.config.middlewareOptions.requestOptions.headers, requestOptions.headers);
-            }
-            requestOptions = Object.assign({}, self.config.middlewareOptions.requestOptions, requestOptions);
-        }
-        let middlewareOptions = Object.assign({}, self.config.middlewareOptions, { requestOptions });
-        middlewareOptions.responseType = self._responseType;
+            middlewareOptions = Object.assign({}, self.config.middlewareOptions);
+        self.updateRequestOptions(options);
         try {
-            let context = await self.httpClient.sendRequest(request, options, middlewareOptions);
-            self._rawResponse = context.rawResponse;
-            return context.response;
+            let context = await self.httpClient.sendRequest(request, options, middlewareOptions),
+                rawResponse = context.response;
+            self.graphResponseHandler = new GraphResponseHandler(rawResponse, self._responseType, callback);
+            let response: any = await self.graphResponseHandler.getResponse();
+            return response;
         } catch (error) {
-            throw error;
+            let rawResponse = this.getRawResponse(),
+                statusCode: number;
+            if (typeof rawResponse !== "undefined") {
+                statusCode = rawResponse.status;
+            }
+            self.graphErrorHandler = new GraphErrorHandler(error, statusCode, callback);
+            let gError: GraphError = self.graphErrorHandler.getError();
+            throw gError;
         }
     }
 
@@ -491,16 +523,17 @@ export class GraphRequest {
      * @public
      * @async
      * Makes a http request with GET method
-     * @return A promise that resolves to the get response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the get response
      */
-    public async get(): Promise<any> {
+    public async get(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
                 method: RequestMethod.GET
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -512,9 +545,10 @@ export class GraphRequest {
      * @async
      * Makes a http request with POST method
      * @param {any} content - The content that needs to be sent with the request
-     * @return A promise that resolves to the post response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the post response
      */
-    public async post(content: any): Promise<any> {
+    public async post(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -525,7 +559,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -537,10 +571,11 @@ export class GraphRequest {
      * @async
      * Alias for Post request call
      * @param {any} content - The content that needs to be sent with the request
-     * @return A promise that resolves to the post response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the post response
      */
-    public async create(content: any): Promise<any> {
-        return await this.post(content);
+    public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return await this.post(content, callback);
     }
 
     /**
@@ -548,9 +583,10 @@ export class GraphRequest {
      * @async
      * Makes http request with PUT method
      * @param {any} content - The content that needs to be sent with the request
-     * @return A promise that resolves to the put response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the put response
      */
-    public async put(content: any): Promise<any> {
+    public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -561,7 +597,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -573,9 +609,10 @@ export class GraphRequest {
      * @async
      * Makes http request with PATCH method
      * @param {any} content - The content that needs to be sent with the request
-     * @return A promise that resolves to the patch response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the patch response
      */
-    public async patch(content: any): Promise<any> {
+    public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
@@ -586,7 +623,7 @@ export class GraphRequest {
                 }
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -598,26 +635,28 @@ export class GraphRequest {
      * @async
      * Alias for PATCH request
      * @param {any} content - The content that needs to be sent with the request
-     * @return A promise that resolves to the patch response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the patch response
      */
-    public async update(content: any): Promise<any> {
-        return await this.patch(content);
+    public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
+        return await this.patch(content, callback);
     }
 
     /**
      * @public
      * @async
      * Makes http request with DELETE method
-     * @return A promise that resolves to the delete response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the delete response
      */
-    public async delete(): Promise<any> {
+    public async delete(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options: FetchOptions = {
                 method: RequestMethod.DELETE
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error
@@ -628,19 +667,21 @@ export class GraphRequest {
      * @public
      * @async
      * Alias for delete request call
-     * @return A promise that resolves to the delete response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the delete response
      */
-    public async del(): Promise<any> {
-        return await this.delete();
+    public async del(callback?: GraphRequestCallback): Promise<any> {
+        return await this.delete(callback);
     }
 
     /**
      * @public
      * @async
      * Makes a http request with GET method to read response as a stream.
-     * @return A promise that resolves to the getStream response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the getStream response
      */
-    public async getStream(): Promise<any> {
+    public async getStream(callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options = {
@@ -648,7 +689,7 @@ export class GraphRequest {
             };
         self.responseType(ResponseType.STREAM);
         try {
-            let stream = await self.send(url, options);
+            let stream = await self.send(url, options, callback);
             return stream;
         } catch (error) {
             throw error;
@@ -660,9 +701,10 @@ export class GraphRequest {
      * @async
      * Makes a http request with GET method to read response as a stream.
      * @param {any} stream - The stream instance
-     * @return A promise that resolves to the putStream response
+     * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+     * @returns A promise that resolves to the putStream response
      */
-    public async putStream(stream: any): Promise<any> {
+    public async putStream(stream: any, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             url = self.buildFullUrl(),
             options = {
@@ -673,7 +715,7 @@ export class GraphRequest {
                 body: stream
             };
         try {
-            let response = await self.send(url, options);
+            let response = await self.send(url, options, callback);
             return response;
         } catch (error) {
             throw error;
@@ -683,9 +725,9 @@ export class GraphRequest {
     /**
      * @public
      * To get the raw response for a request
-     * @return The raw response instance
+     * @returns The raw response instance
      */
     public getRawResponse(): Response {
-        return this._rawResponse;
+        return this.graphResponseHandler.getRawResponse();
     }
 }

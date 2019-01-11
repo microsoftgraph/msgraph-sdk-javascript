@@ -11,13 +11,13 @@ export declare const oDataQueryNames: string[];
 /**
  * To construct the URL by appending the segments with "/"
  * @param {string[]} urlSegments - The array of strings
- * @return The constructed URL string
+ * @returns The constructed URL string
  */
 export declare const urlJoin: (urlSegments: string[]) => string;
 /**
  * Serializes the content
  * @param {any} content - The content value that needs to be serialized
- * @return The serialized content
+ * @returns The serialized content
  *
  * Note:
  * This conversion is required due to the following reasons:

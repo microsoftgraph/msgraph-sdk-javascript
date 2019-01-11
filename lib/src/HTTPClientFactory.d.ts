@@ -17,7 +17,7 @@ export declare class HTTPClientFactory {
      * @static
      * Creates HTTPClient with default middleware chain
      * @param {AuthenticationProvider} authProvider - The authentication provider instance
-     * @return A HTTPClient instance
+     * @returns A HTTPClient instance
      */
     static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient;
     /**
@@ -25,7 +25,7 @@ export declare class HTTPClientFactory {
      * @static
      * Creates a middleware chain with the given one
      * @param {Middleware} middleware - The first middleware of the middleware chain
-     * @return A HTTPClient instance
+     * @returns A HTTPClient instance
      */
     static createWithMiddleware(middleware: Middleware): HTTPClient;
 }

@@ -4,7 +4,11 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-import { FetchOptions } from "./IFetchRequest";
+/**
+ * @module HTTPClient
+ */
+import { Context } from "./IContext";
+import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 /**
@@ -30,7 +34,7 @@ export declare class HTTPClient {
      * @param {RequestInfo} request - The request url string or the Request instance
      * @param {FetchOptions} options - The options of a request
      * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
-     * @return A promise that resolves to the response
+     * @returns A promise that resolves to the Context
      */
-    sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<any>;
+    sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<Context>;
 }

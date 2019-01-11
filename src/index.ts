@@ -5,69 +5,25 @@
  * -------------------------------------------------------------------------------------------
  */
 
-/**
- * @module Client
- */
+export * from "./content/BatchRequestContent";
+export * from "./content/BatchResponseContent";
 
-import { Options } from "./Common";
-import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
-import { GraphRequest } from "./GraphRequest";
-import { HTTPClientFactory } from "./HTTPClientFactory";
-import { HTTPClient } from "./HTTPClient";
+export * from "./middleware/AuthenticationHandler";
+export * from "./middleware/HTTPMessageHandler";
 
-export class Client {
+export * from "./tasks/OneDriveLargeFileUploadTask";
+export * from "./tasks/PageIterator";
 
-    /**
-     * @private
-     * A member which stores the Client instance options
-     */
-    private config: Options = {
-        baseUrl: GRAPH_BASE_URL,
-        debugLogging: false,
-        defaultVersion: GRAPH_API_VERSION
-    };
-
-    /**
-     * @private
-     * A member which holds the HTTPClient instance
-     */
-    private httpClient: HTTPClient;
-
-    /**
-     * @public
-     * @static
-     * To create a client instance with options and initializes the default middleware chain
-     * @param {Options} options - The options for client instance
-     * @return The Client instance
-     */
-    public static init(options: Options): Client {
-        const client = new Client();
-        for (const key in options) {
-            client.config[key] = options[key];
-        }
-        let httpClient: HTTPClient;
-        if (options.authProvider !== undefined) {
-            httpClient = HTTPClientFactory.createWithAuthenticationProvider(options.authProvider);
-        } else if (options.middleware !== undefined) {
-            httpClient = new HTTPClient(options.middleware);
-        } else {
-            let error = new Error();
-            error.name = "InvalidMiddlewareChain";
-            error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain";
-            throw error;
-        }
-        client.httpClient = httpClient;
-        return client;
-    }
-
-    /**
-     * @public
-     * Entry point to make requests
-     * @param {string} path - The path string value
-     * @return The graph request instance
-     */
-    public api(path: string): GraphRequest {
-        let self = this;
-        return new GraphRequest(self.httpClient, self.config, path);
-    }
-}
+export * from "./Client";
+export * from "./GraphError";
+export * from "./GraphRequest";
+export * from "./IAuthenticationProvider";
+export * from "./IAuthProvider";
+export * from "./IAuthProviderCallback";
+export * from "./IClientOptions";
+export * from "./IContext";
+export * from "./IFetchOptions";
+export * from "./IGraphRequestCallback";
+export * from "./IMiddleware";
+export * from "./IOptions";
+export * from "./ResponseType";

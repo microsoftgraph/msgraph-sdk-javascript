@@ -8,8 +8,8 @@
 import { assert } from "chai";
 import { CustomHTTPHandler } from "../CustomHTTPHandler";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
-import { HTTPClientFactory } from "../../src/HTTPClientFactory";
 import { HTTPClient } from "../../src/HTTPClient";
+import { HTTPClientFactory } from "../../src/HTTPClientFactory";
 
 describe("HTTPClientFactory.ts", function () {
     describe("createWithAuthenticationProvider", () => {

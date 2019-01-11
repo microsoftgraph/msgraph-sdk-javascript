@@ -12,6 +12,8 @@
     "es6-promise": "^4.2.5",
     "fetch-mock": "^7.2.5",
     "form-data": "^2.3.3",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "msal": "^0.2.3",
+    "window": "^4.2.5"
   }
 }

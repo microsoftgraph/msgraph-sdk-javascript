@@ -5,11 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { BatchRequestContent, BatchRequestStep } from "../../src/content/BatchRequestContent";
 import { assert } from "chai";
-import { randomString } from "../test-helper";
-import { BatchRequestContent, BatchRequestStep } from "../../lib/src/content/BatchRequestContent";
 import * as fs from "fs";
 import "isomorphic-fetch";
+import { randomString } from "../test-helper";
 
 let folderName = randomString();
 let folderDetails = {

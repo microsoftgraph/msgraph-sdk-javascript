@@ -5,8 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { BatchResponseContent } from "../../src/content/BatchResponseContent";
 import { assert } from "chai";
-import { BatchResponseContent } from "../../lib/src/content/BatchResponseContent";
 
 let redirect = {
     "id": "1",

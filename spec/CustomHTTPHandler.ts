@@ -5,8 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Middleware } from "../src/IMiddleware";
 import { Context } from "../src/IContext";
+import { Middleware } from "../src/IMiddleware";
 
 export class CustomHTTPHandler implements Middleware {
     public async execute(context: Context) {

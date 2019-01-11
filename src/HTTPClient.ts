@@ -10,7 +10,7 @@
  */
 
 import { Context } from "./IContext";
-import { FetchOptions } from "./IFetchRequest";
+import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
@@ -42,15 +42,19 @@ export class HTTPClient {
      * @param {RequestInfo} request - The request url string or the Request instance 
      * @param {FetchOptions} options - The options of a request
      * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
-     * @return A promise that resolves to the response
+     * @returns A promise that resolves to the Context
      */
-    public async sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<any> {
-        let context: Context = {
-            request,
-            options,
-            middlewareOptions
-        };
-        await this.middleware.execute(context);
-        return context;
+    public async sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<Context> {
+        try {
+            let context: Context = {
+                request,
+                options,
+                middlewareOptions
+            };
+            await this.middleware.execute(context);
+            return context;
+        } catch (error) {
+            throw error;
+        }
     }
 }

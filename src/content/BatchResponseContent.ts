@@ -50,7 +50,7 @@ export class BatchResponseContent {
      * @constructor
      * Creates the BatchResponseContent instance
      * @param {BatchResponseBody} response - The response body returned for batch request from server
-     * @return An instance of a BatchResponseContent
+     * @returns An instance of a BatchResponseContent
      */
     constructor(response: BatchResponseBody) {
         let self = this;
@@ -62,7 +62,7 @@ export class BatchResponseContent {
      * @public
      * Updates the Batch response content instance with given responses.
      * @param {BatchResponseBody} response - The response json representing batch response message
-     * @return nothing
+     * @returns Nothing
      */
     public update(response: BatchResponseBody): void {
         let self = this;
@@ -77,7 +77,7 @@ export class BatchResponseContent {
      * @private
      * Creates native Response object from the json representation of it.
      * @param {KeyValuePairObject} responseJSON - The response json value
-     * @return The Response Object instance
+     * @returns The Response Object instance
      */
     private createResponseObject(responseJSON: KeyValuePairObject): Response {
         let body = responseJSON.body,
@@ -94,7 +94,7 @@ export class BatchResponseContent {
      * @public
      * To get the response of a request for a given request id
      * @param {string} requestId - The request id value
-     * @return The Response object instance for the particular request
+     * @returns The Response object instance for the particular request
      */
     public getResponseById(requestId: string): Response {
         return this.responses.get(requestId);
@@ -103,7 +103,7 @@ export class BatchResponseContent {
     /**
      * @public
      * To get all the responses of the batch request
-     * @return The Map of id and Response objects
+     * @returns The Map of id and Response objects
      */
     public getResponses(): Map<string, Response> {
         return this.responses;
@@ -112,7 +112,7 @@ export class BatchResponseContent {
     /**
      * @public
      * To get the iterator for the responses
-     * @return The Iterable generator for the response objects
+     * @returns The Iterable generator for the response objects
      */
     public *getResponsesIterator(): IterableIterator<[string, Response]> {
         let self = this,
