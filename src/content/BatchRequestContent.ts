@@ -425,7 +425,7 @@ export class BatchRequestContent {
             if (dependent.dependsOn === undefined) {
                 dependent.dependsOn = [];
             }
-            if (dependent.dependsOn.includes(dependencyId)) {
+            if (dependent.dependsOn.indexOf(dependencyId) !== -1) {
                 let error = new Error(`Dependency ${dependencyId} is already added for the request ${dependentId}`);
                 error.name = "Duplicate Dependency";
                 throw error;
@@ -444,7 +444,7 @@ export class BatchRequestContent {
                 if (cur.value[1].dependsOn === undefined) {
                     cur.value[1].dependsOn = [];
                 }
-                if (cur.value[1].dependsOn.includes(dependencyId)) {
+                if (cur.value[1].dependsOn.indexOf(dependencyId) !== -1) {
                     let error = new Error(`Dependency ${dependencyId} is already added for the request ${dependentId}`);
                     error.name = "Duplicate Dependency";
                     throw error;
