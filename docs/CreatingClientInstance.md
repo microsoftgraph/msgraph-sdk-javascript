@@ -47,7 +47,7 @@ const client = new Client(clientOptions);
 
 Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
 
-## 2. Init With Options
+## 2. Create With Options
 
 Pass an [authProvider function](../src/IAuthProvider.ts) in [Options](../src/IOptions.ts) while initializing the Client. In this case, user have to provide his own implementation for getting and refreshing accessToken. A callback will be passed into this authProvider function, accessToken or error needs to be passed in to that callback.
 

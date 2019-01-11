@@ -9,8 +9,13 @@
  * @module MSALAuthenticationProvider
  */
 
-import { AuthenticationProvider } from "./IAuthenticationProvider";
-import { UserAgentApplication } from "msal";
+import { AuthenticationProvider } from "../IAuthenticationProvider";
+
+/**
+ * @constant
+ * A declaration of a Msal library
+ */
+declare const Msal: any;
 
 /**
  * @class
@@ -35,7 +40,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
      * @private
      * A member holding an instance of UserAgentApplication returned from MSAL
      */
-    private userAgentApplication: UserAgentApplication;
+    private userAgentApplication: any;
 
     /**
      * @constructor
@@ -52,7 +57,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
         let self = this;
         self.clientId = clientId;
         self.scopes = scopes;
-        self.userAgentApplication = new UserAgentApplication(self.clientId, undefined, callback, options);
+        self.userAgentApplication = new Msal.UserAgentApplication(self.clientId, undefined, callback, options);
     }
 
     /**

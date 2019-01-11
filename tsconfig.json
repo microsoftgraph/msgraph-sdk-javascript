@@ -4,6 +4,7 @@
     "noEmitOnError": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
+    "importHelpers": true,
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",

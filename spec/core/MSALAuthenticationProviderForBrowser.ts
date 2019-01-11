@@ -6,7 +6,8 @@
  */
 
 import { assert } from "chai";
-import { MSALAuthenticationProvider } from "../../src/MSALAuthenticationProvider";
+import { MSALAuthenticationProvider } from "../../src/browser/MSALAuthenticationProvider";
+import * as Msal from "msal";
 import * as Window from "window";
 
 describe("MSALAuthenticationProvider.ts", () => {
@@ -15,10 +16,11 @@ describe("MSALAuthenticationProvider.ts", () => {
     before(() => {
         globalWindow = global["window"];
         global["window"] = new Window();
+        global["Msal"] = Msal;
         try {
             let authProvider = new MSALAuthenticationProvider(clientId, []);
-        } catch (error) {
-
+        } catch(error) {
+            
         }
     });
 

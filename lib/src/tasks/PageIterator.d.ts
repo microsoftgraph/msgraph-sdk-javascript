@@ -90,14 +90,14 @@ export declare class PageIterator {
      * @async
      * Iterates over the collection and kicks callback for each item on iteration. Fetches next set of data through nextLink and iterates over again
      * This happens until the nextLink is drained out or the user responds with a red flag to continue from callback
-     * @returns A Promise that resolves to Nothing on completion and throws error incase of any discrepancy.
+     * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy.
      */
     iterate(): Promise<any>;
     /**
      * @public
      * @async
      * This internally calls the iterate method, It's just for more readability.
-     * @returns A Promise that resolves to Nothing on completion and throws error incase of any discrepancy
+     * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy
      */
     resume(): Promise<any>;
 }

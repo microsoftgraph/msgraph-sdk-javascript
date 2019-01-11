@@ -26,5 +26,4 @@ export * from "./IFetchOptions";
 export * from "./IGraphRequestCallback";
 export * from "./IMiddleware";
 export * from "./IOptions";
-export * from "./MSALAuthenticationProvider";
 export * from "./ResponseType";
