@@ -93,7 +93,7 @@ Pass first middleware in the chain for initializing the client.
 let clientOptions: ClientOptions = {
     middleware: authenticationHandler
 };
-const client = new Client(clientOptions);
+const client = Client.initWithMiddleware(clientOptions);
 ```
 
 ## Passing Options for Middleware

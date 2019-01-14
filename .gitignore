@@ -14,11 +14,8 @@ src/**/*.js.map
 src/**/*.d.ts
 
 samples/node/secrets.json
-samples/browser/secrets.js
-samples/typescript/sample.js
-samples/typescript/sample.d.ts
-samples/typescript/graph-typings.d.ts
-samples/typescript/sample.js.map
+samples/browser/src/secrets.js
+samples/browser/src/graph-js-sdk-core.js
 
 spec/**/*.js
 spec/**/*.d.ts

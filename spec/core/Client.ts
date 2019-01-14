@@ -29,7 +29,7 @@ describe("Client.ts", function () {
             let options: ClientOptions = {
                 authProvider: dummyAuthProvider
             };
-            let client: Client = new Client(options);
+            let client: Client = Client.initWithMiddleware(options);
             assert.isTrue(client instanceof Client);
             assert.isDefined(client["httpClient"]);
         });
@@ -38,7 +38,7 @@ describe("Client.ts", function () {
             let options: ClientOptions = {
                 middleware: customHTTPHandler
             };
-            let client: Client = new Client(options);
+            let client: Client = Client.initWithMiddleware(options);
             assert.isTrue(client instanceof Client);
             assert.isDefined(client["httpClient"]);
         });
@@ -46,7 +46,7 @@ describe("Client.ts", function () {
         it("Should throw error in case of neither auth provider nor custom middleware is passed", () => {
             try {
                 let options: ClientOptions = {};
-                new Client(options);
+                Client.initWithMiddleware(options);
                 throw new Error("Something wrong with the client initialization check");
             } catch (error) {
                 assert.equal(error.name, "InvalidMiddlewareChain");

@@ -34,6 +34,14 @@ export declare class Client {
     static init(options: Options): Client;
     /**
      * @public
+     * @static
+     * To create a client instance with the Client Options
+     * @param {ClientOptions} options - The options object for initializing the client
+     * @returns The Client instance
+     */
+    static initWithMiddleware(options: ClientOptions): Client;
+    /**
+     * @public
      * Entry point to make requests
      * @param {string} path - The path string value
      * @returns The graph request instance

@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Run node samples",
-            "program": "${workspaceRoot}/samples/node/node-sample.js",
+            "program": "${workspaceRoot}/samples/node/main.js",
             "cwd": "${workspaceRoot}",
             "outFiles": [],
             "internalConsoleOptions": "openOnSessionStart"

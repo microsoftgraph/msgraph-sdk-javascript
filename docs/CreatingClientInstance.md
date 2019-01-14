@@ -17,7 +17,7 @@ Library is shipped with one such authentication provider named [MSALAuthenticati
 let clientOptions: ClientOptions = {
     authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
 };
-const client = new Client(clientOptions);
+const client = Client.initWithMiddleware(clientOptions);
 ```
 
 Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts).
@@ -27,7 +27,7 @@ let clientOptions: ClientOptions = {
     // MyCustomAuthenticationProvider is the user's own authentication provider implementing AuthenticationProvider interface
     authProvider: new MyCustomAuthenticationProvider()
 };
-const client = new Client(clientOptions);
+const client = Client.initWithMiddleware(clientOptions);
 ```
 
 Refer, [custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
@@ -42,7 +42,7 @@ let clientOptions: ClientOptions = {
     // MyFirstMiddleware is the first middleware in my custom middleware chain
     middleware: new MyFirstMiddleware()
 };
-const client = new Client(clientOptions);
+const client = Client.initWithMiddleware(clientOptions);
 ```
 
 Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.

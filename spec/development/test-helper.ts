@@ -14,7 +14,7 @@ export function getClient(): Client {
      * PolyFill fetch and promise before initializing client, otherwise error will be thrown
      */
     PolyFill.init();
-    return new Client({
+    return Client.initWithMiddleware({
         authProvider: new HardCodedAuthenticationProvider()
     });
 }

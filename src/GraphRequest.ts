@@ -728,6 +728,8 @@ export class GraphRequest {
      * @returns The raw response instance
      */
     public getRawResponse(): Response {
-        return this.graphResponseHandler.getRawResponse();
+        if (this.graphResponseHandler instanceof GraphResponseHandler) {
+            return this.graphResponseHandler.getRawResponse();
+        }
     }
 }

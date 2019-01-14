@@ -81,7 +81,18 @@ export class Client {
                 clientOptions[i] = options[i];
             }
         }
-        return new Client(clientOptions);
+        return Client.initWithMiddleware(clientOptions);
+    }
+
+    /**
+     * @public
+     * @static
+     * To create a client instance with the Client Options
+     * @param {ClientOptions} options - The options object for initializing the client
+     * @returns The Client instance 
+     */
+    public static initWithMiddleware(options: ClientOptions): Client {
+        return new Client(options);
     }
 
     /**
