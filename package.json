@@ -30,7 +30,7 @@
     "test:content": "tsc -p spec && mocha spec/content"
   },
   "dependencies": {
-    "es6-promise": "^4.1.0",
+    "es6-promise": "^4.2.5",
     "isomorphic-fetch": "^2.2.1"
   },
   "repository": {
