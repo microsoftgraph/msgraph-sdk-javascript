@@ -25,6 +25,7 @@ export declare class GraphRequest {
     select(properties: string | string[]): GraphRequest;
     expand(properties: string | string[]): GraphRequest;
     orderby(properties: string | string[]): GraphRequest;
+    search(searchStr: string): GraphRequest;
     filter(filterStr: string): GraphRequest;
     top(n: number): GraphRequest;
     skip(n: number): GraphRequest;
