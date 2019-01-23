@@ -168,12 +168,6 @@ export class GraphRequest {
         return this;
     }
 
-    search(searchStr: string): GraphRequest {
-        this.urlComponents.oDataQueryParams["$search"] = searchStr;
-        return this;
-    }
-
-
     filter(filterStr: string): GraphRequest {
         this.urlComponents.oDataQueryParams["$filter"] = filterStr;
         return this;
