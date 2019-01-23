@@ -163,6 +163,10 @@ export class GraphRequest {
         return this;
     }
 
+    search(searchStr: string): GraphRequest {
+        this.urlComponents.oDataQueryParams["$search"] = `"${searchStr}"`;
+        return this;
+    }
 
     search(searchStr: string): GraphRequest {
         this.urlComponents.oDataQueryParams["$search"] = searchStr;
@@ -448,12 +452,31 @@ export class GraphRequest {
         return "";
     }
 
-    private convertResponseType(response: Response): Promise<any> {
-        let responseValue: any;
-        if (!this._responseType) {
-            this._responseType = '';
+    private parseDocumentResponse(response, type): Promise<any> {
+        if (typeof DOMParser !== "undefined") {
+            return new Promise((resolve, reject) => {
+                response.text().then((xmlString) => {
+                    try {
+                        let parser = new DOMParser(),
+                            xmlDoc = parser.parseFromString(xmlString, type);
+                        resolve(xmlDoc);
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+        } else {
+            return Promise.resolve(response.body);
         }
-        switch (this._responseType.toLowerCase()) {
+    }
+
+    private convertResponseType(response: Response): Promise<any> {
+        let self = this,
+            responseValue: any;
+        if (!self._responseType) {
+            self._responseType = '';
+        }
+        switch (self._responseType.toLowerCase()) {
             case ResponseType.ARRAYBUFFER:
                 responseValue = response.arrayBuffer();
                 break;
@@ -461,8 +484,7 @@ export class GraphRequest {
                 responseValue = response.blob();
                 break;
             case ResponseType.DOCUMENT:
-                // XMLHTTPRequest only :(
-                responseValue = response.json();
+                responseValue = self.parseDocumentResponse(response, "text/xml");
                 break;
             case ResponseType.JSON:
                 responseValue = response.json();
@@ -474,7 +496,29 @@ export class GraphRequest {
                 responseValue = response.text();
                 break;
             default:
-                responseValue = response.json();
+                let contentType = response.headers.get("Content-type");
+                if (contentType !== null) {
+                    let mimeType = contentType.split(";")[0],
+                        documentContentTypes = ["text/html", "text/xml", "application/xml", "application/xhtml+xml"];
+                    if (documentContentTypes.includes(mimeType)) {
+                        responseValue = self.parseDocumentResponse(response, mimeType);
+                    } else {
+                        responseValue = response.json();
+                    }
+                } else {
+                    /**
+                     * RFC specification {@link https://tools.ietf.org/html/rfc7231#section-3.1.1.5} says:
+                     *  A sender that generates a message containing a payload body SHOULD
+                     *  generate a Content-Type header field in that message unless the
+                     *  intended media type of the enclosed representation is unknown to the
+                     *  sender.  If a Content-Type header field is not present, the recipient
+                     *  MAY either assume a media type of "application/octet-stream"
+                     *  ([RFC2046], Section 4.5.1) or examine the data to determine its type.
+                     * 
+                     *  So assuming it as a stream type so returning the body.
+                     */
+                    responseValue = Promise.resolve(response.body);
+                }
                 break;
         }
         return responseValue;

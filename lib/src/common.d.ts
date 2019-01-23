@@ -14,7 +14,7 @@ export declare const PACKAGE_VERSION = "1.3.0";
  * @callback - The anonymous callback function
  */
 export interface AuthProviderCallback {
-    (error: any, accessToken: string): void;
+    (error: any, accessToken: string | null): void;
 }
 /**
  * @interface {@link https://github.com/bitinn/node-fetch/#options}
