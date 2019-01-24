@@ -6,7 +6,7 @@ Initialization of the Client can be done in one of below two ways
 
 In order to instantiate a Client object, one has to pass in the `authProvider` or `middleware` chain in [ClientOptions](../src/IClientOptions.ts).
 
-### 1. Default Middleware chain
+### Option A. Default Middleware chain
 
 Pass an instance of a class which implementing [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface as `authProvider` in [ClientOptions](../src/IClientOptions.ts), which will instantiate the Client with default set of middleware chain.
 
@@ -32,7 +32,7 @@ const client = Client.initWithMiddleware(clientOptions);
 
 Refer, [custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
 
-### 2. Custom Middleware chain
+### Option B. Custom Middleware chain
 
 Want to have complete control over the request and the response objects, one can provide his own chain of middleware.
 Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).

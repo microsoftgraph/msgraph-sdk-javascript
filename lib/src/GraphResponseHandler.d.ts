@@ -22,53 +22,32 @@ export declare class GraphResponseHandler {
     private static DocumentTypes;
     /**
      * @private
-     * A member holding the raw response
-     */
-    private rawResponse;
-    /**
-     * @private
-     * A member holding the response type
-     */
-    private responseType;
-    /**
-     * @private
-     * A member holding the graph request callback
-     */
-    private callback;
-    /**
-     * @constructor
-     * Creates an instance of GraphResponseHandler
-     * @param {Response} rawResponse - The response object
-     * @param {ResponseType} [responseType] - The response type value
-     * @param {GraphRequestCallback} [callback] - The graph request callback function
-     * @returns An instance of GraphResponseHandler
-     */
-    constructor(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback);
-    /**
-     * @private
+     * @static
      * To parse Document response
+     * @param {Response} rawResponse - The response object
      * @param {DocumentType} type - The type to which the document needs to be parsed
      * @returns A promise that resolves to a document content
      */
-    private parseDocumentResponse;
+    private static parseDocumentResponse;
     /**
      * @private
+     * @static
      * @async
      * To convert the native Response to response content
+     * @param {Response} rawResponse - The response object
+     * @param {ResponseType} [responseType] - The response type value
      * @returns A promise that resolves to the converted response content
      */
-    private convertResponse;
+    private static convertResponse;
     /**
      * @public
+     * @static
      * @async
      * To get the parsed response
+     * @param {Response} rawResponse - The response object
+     * @param {ResponseType} [responseType] - The response type value
+     * @param {GraphRequestCallback} [callback] - The graph request callback function
      * @returns The parsed response
      */
-    getResponse(): Promise<any>;
-    /**
-     * @public
-     * To get the raw response
-     * @return The raw response
-     */
-    getRawResponse(): Response;
+    static getResponse(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback): Promise<any>;
 }

@@ -71,7 +71,7 @@ export class AuthenticationHandler implements Middleware {
                     }
                 }
             }
-            await this.nextMiddleware.execute(context);
+            return await this.nextMiddleware.execute(context);
         } catch (error) {
             throw error;
         }

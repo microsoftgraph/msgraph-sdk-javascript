@@ -1,6 +1,4 @@
-Contribute to this documentation
-
-Thank you for your interest in our documentation!
+# Contributing
 
 * [Ways to contribute](#ways-to-contribute)
 * [Contribute using GitHub](#contribute-using-github)
@@ -101,10 +99,10 @@ To make the contribution process as seamless as possible, follow these steps.
 
 #### To create a new branch
 
-1.	Open Git Bash.
-2.	At the Git Bash command prompt, type `git pull upstream master:<new branch name>`. This creates a new branch locally that is copied from the latest MicrosoftGraph master branch.
-3.	At the Git Bash command prompt, type `git push origin <new branch name>`. This alerts GitHub to the new branch. You should now see the new branch in your fork of the repository on GitHub.
-4.	At the Git Bash command prompt, type `git checkout <new branch name>` to switch to your new branch.
+1.Open Git Bash.
+2.At the Git Bash command prompt, type `git pull upstream master:<new branch name>`. This creates a new branch locally that is copied from the latest MicrosoftGraph master branch.
+3.At the Git Bash command prompt, type `git push origin <new branch name>`. This alerts GitHub to the new branch. You should now see the new branch in your fork of the repository on GitHub.
+4.At the Git Bash command prompt, type `git checkout <new branch name>` to switch to your new branch.
 
 #### Add new content or edit existing content
 
@@ -117,7 +115,7 @@ The files in `C:\Users\<yourusername>\<repo name>` are a working copy of the new
     git add .
     git commit -v -a -m "<Describe the changes made in this commit>"
 
-The `add` command adds your changes to a staging area in preparation for committing them to the repository. The period after the `add` command specifies that you want to stage all of the files that you added or modified, checking subfolders recursively. (If you don't want to commit all of the changes, you can add specific files. You can also undo a commit. For help, type `git add -help` or `git status`.)
+The `add` command adds your changes to a staging area in preparation for committing them to the repository. The period after the `add` command specifies that you want to stage all of the files that you added or modified, checking sub folders recursively. (If you don't want to commit all of the changes, you can add specific files. You can also undo a commit. For help, type `git add -help` or `git status`.)
 
 The `commit` command applies the staged changes to the repository. The switch `-m` means you are providing the commit comment in the command line. The -v and -a switches can be omitted. The -v switch is for verbose output from the command, and -a does what you already did with the add command.
 
@@ -129,13 +127,13 @@ When you're finished with your work and are ready to have it merged into the mai
 
 #### To submit a pull request to the main repository
 
-1.	In the Git Bash command prompt, type `git push origin <new branch name>`. In your local repository, `origin` refers to your GitHub repository that you cloned the local repository from. This command pushes the current state of your new branch, including all commits made in the previous steps, to your GitHub fork.
-2.	On the GitHub site, navigate in your fork to the new branch.
-3.	Choose the **Pull Request** button at the top of the page.
-4.	Verify the Base branch is `microsoftgraph/<repo name>@master` and the Head branch is `<your username>/<repo name>@<branch name>`.
-5.	Choose the **Update Commit Range** button.
-6.	Add a title to your pull request, and describe all the changes you're making.
-7.	Submit the pull request.
+1.In the Git Bash command prompt, type `git push origin <new branch name>`. In your local repository, `origin` refers to your GitHub repository that you cloned the local repository from. This command pushes the current state of your new branch, including all commits made in the previous steps, to your GitHub fork.
+2.On the GitHub site, navigate in your fork to the new branch.
+3.Choose the **Pull Request** button at the top of the page.
+4.Verify the Base branch is `microsoftgraph/<repo name>@master` and the Head branch is `<your username>/<repo name>@<branch name>`.
+5.Choose the **Update Commit Range** button.
+6.Add a title to your pull request, and describe all the changes you're making.
+7.Submit the pull request.
 
 One of the site administrators will process your pull request. Your pull request will surface on the microsoftgraph/<repo name> site under Issues. When the pull request is accepted, the issue will be resolved.
 

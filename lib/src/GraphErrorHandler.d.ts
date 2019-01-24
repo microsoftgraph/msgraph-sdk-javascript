@@ -16,37 +16,19 @@ import { GraphRequestCallback } from "./IGraphRequestCallback";
 export declare class GraphErrorHandler {
     /**
      * @private
-     * A member holding the error object
-     */
-    private error;
-    /**
-     * @private
-     * A member holding the status code of the response
-     */
-    private statusCode;
-    /**
-     * @private
-     * A member holding the graph request callback
-     */
-    private callback;
-    /**
-     * @constructor
-     * Creates an instance of GraphErrorHandler
-     * @param {any} [error = null] - The error returned by graph service or some native error
-     * @param {number} [statusCode = -1] - The status code of the response
-     * @param {GraphRequestCallback} [callback] - The graph request callback function
-     * @returns An instance of GraphErrorHandler
-     */
-    constructor(error?: any, statusCode?: number, callback?: GraphRequestCallback);
-    /**
-     * @private
+     * @static
      * Populates the GraphError instance with Error instance values
+     * @param {Error} error - The error returned by graph service or some native error
+     * @param {number} [statusCode] - The status code of the response
      * @returns The GraphError instance
      */
-    private constructError;
+    private static constructError;
     /**
      * @private
+     * @static
      * Populates the GraphError instance from the Error returned by graph service
+     * @param {any} error - The error returned by graph service or some native error
+     * @param {number} statusCode - The status code of the response
      * @returns The GraphError instance
      *
      * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
@@ -61,11 +43,15 @@ export declare class GraphErrorHandler {
      *      }
      *  }
      */
-    private constructErrorFromResponse;
+    private static constructErrorFromResponse;
     /**
      * @public
+     * @static
      * To get the GraphError object
+     * @param {any} [error = null] - The error returned by graph service or some native error
+     * @param {number} [statusCode = -1] - The status code of the response
+     * @param {GraphRequestCallback} [callback] - The graph request callback function
      * @returns The GraphError instance
      */
-    getError(): GraphError;
+    static getError(error?: any, statusCode?: number, callback?: GraphRequestCallback): GraphError;
 }

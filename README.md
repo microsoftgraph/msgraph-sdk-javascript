@@ -17,9 +17,27 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 npm install @microsoft/microsoft-graph-client
 ```
 
+import `@microsoft/microsoft-graph-client` into your module.
+
+```typescript
+import { Client } from "@microsoft/microsoft-graph-client";
+```
+
+In case your environment have support for or have polyfill for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], import `./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index` into your module which doesn't have polyfills for these.
+
+```typescript
+import {Client} from "./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index";
+```
+
 ### Via Script Tag
 
-Include [lib/graph-js-sdk-web.js](./lib/graph-js-sdk-web.js) in your page.
+Include [lib/graph-js-sdk-core.js](./lib/graph-js-sdk-core.js) in your page.
+
+```HTML
+<script type="text/javascript" src="graph-js-sdk-core.js"></script>
+```
+
+In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you can polyfill them and include as above or you can use [lib/graph-js-sdk-web.js](./lib/graph-js-sdk-web.js) which includes polyfills.
 
 ```HTML
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
@@ -33,7 +51,7 @@ Register your application to use Microsoft Graph API using one of the following
 supported authentication portals:
 
 * [Microsoft Application Registration Portal](https://apps.dev.microsoft.com):
-  Register a new application that works with Microsoft Account and/or
+  Register a new application that works with Microsoft Accounts and/or
   organizational accounts using the unified V2 Authentication Endpoint.
 * [Microsoft Azure Active Directory](https://manage.windowsazure.com): Register
   a new application in your tenant's Active Directory to support work or school
@@ -42,9 +60,37 @@ supported authentication portals:
 ### 2. Authenticate for the Microsoft Graph service
 
 The Microsoft Graph JavaScript Client Library has an adapter implementation ([MSALAuthenticationProvider](src/MSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user have to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
-Creating an instance of MSALAuthenticationProvider,
+
+> **Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
+
+#### Creating an instance of MSALAuthenticationProvider in browser environment
+
+Refer devDependencies in [package.json](./package.json) for the compatible msal version and update that version in below.
+
+```html
+<script src="https://secure.aadcdn.microsoftonline-p.com/lib/<version>/js/msal.min.js"></script>
+```
 
 ```typescript
+const clientID = 'your_client_id'; // Client Id of the registered application
+const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+const options = { // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
+    redirectUri: "Your redirect URI"
+};
+const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, scopes, options);
+```
+
+#### Creating an instance of MSALAuthenticationProvider in node environment
+
+Refer devDependencies in [package.json](./package.json) for the compatible msal version and update that version in below.
+
+```cmd
+npm install msal@<version>
+```
+
+```typescript
+import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
+
 const clientID = 'your_client_id'; // Client Id of the registered application
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 const options = { // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
@@ -53,26 +99,40 @@ const options = { // An Optional options for initializing the MSAL @see https://
 const authProvider = new MSALAuthenticationProvider(clientId, scopes, options);
 ```
 
-User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface.
+User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
 ### 3. Initialize a Microsoft Graph Client object with an authentication provider
 
-An instance of the **Client** class handles requests to Microsoft Graph API and processing the responses. To create a new instance of this class, you need to provide an instance of [`IAuthenticationProvider`](src/IAuthenticationProvider.ts) which needs to be passed as a value for `authProvider` key in [`Options`](src/IOptions.ts) to a static initializer method `Client.init`.
+An instance of the **Client** class handles requests to Microsoft Graph API and processing the responses. To create a new instance of this class, you need to provide an instance of [`IAuthenticationProvider`](src/IAuthenticationProvider.ts) which needs to be passed as a value for `authProvider` key in [`ClientOptions`](src/IClientOptions.ts) to a static initializer method `Client.initWithMiddleware`.
+
+#### For browser environment
 
 ```typescript
 const options = {
     authProvider // An instance created from previous step
 };
-const client = MicrosoftGraph.Client.init(options);
+const Client = MicrosoftGraph.Client;
+const client = Client.initWithMiddleware(options);
 ```
 
-For more information on initializing client, refer [this](./docs/CreatingClientInstance.md).
+#### For node environment
+
+```typescript
+import { Client } from "@microsoft/microsoft-graph-client";
+
+const options = {
+    authProvider // An instance created from previous step
+};
+const client = Client.initWithMiddleware(options);
+```
+
+For more information on initializing client, refer [this document](./docs/CreatingClientInstance.md).
 
 ### 4. Make requests to the graph
 
-Once you have authentication setup and an instance of Client, you can begin to make calls to the service. All requests should be start with `client.api(path)` and end with an action.
+Once you have authentication setup and an instance of Client, you can begin to make calls to the service. All requests should be start with `client.api(path)` and end with an [action](./docs/Actions.md).
 
-Getting user details,
+Getting user details
 
 ```typescript
 try {
@@ -143,4 +203,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Third Party Notices
 
-See [Third Party Notices](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/THIRD%20PARTY%20NOTICES) for information on the packages that are included in the [package.json](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/master/package.json)
+See [Third Party Notices](./THIRD%20PARTY%20NOTICES) for information on the packages that are included in the [package.json](./package.json)

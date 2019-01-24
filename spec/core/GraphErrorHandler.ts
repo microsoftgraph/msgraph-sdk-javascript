@@ -7,22 +7,13 @@
 
 import { assert } from "chai";
 import { GraphErrorHandler } from "../../src/GraphErrorHandler";
-import { GraphRequest } from "../../src";
 
 describe("GraphErrorHandler.ts", () => {
-    describe("constructor", () => {
-        let gErrorHandler = new GraphErrorHandler(null);
-        assert.equal(gErrorHandler["error"], null);
-        assert.equal(gErrorHandler["statusCode"], -1);
-        assert.isUndefined(gErrorHandler["callback"]);
-    });
-
     describe("constructError", () => {
         it("Should return custom error without code", () => {
             let message = "test",
                 error = new Error(message),
-                gErrorHandler = new GraphErrorHandler(error),
-                gError = gErrorHandler["constructError"]();
+                gError = GraphErrorHandler["constructError"](error);
             assert.equal(gError.message, message);
         });
 
@@ -31,8 +22,7 @@ describe("GraphErrorHandler.ts", () => {
                 name = "test_name",
                 error = new Error(message);
             error.name = name;
-            let gErrorHandler = new GraphErrorHandler(error),
-                gError = gErrorHandler["constructError"]();
+            let gError = GraphErrorHandler["constructError"](error);
             assert.equal(gError.message, message);
             assert.equal(gError.code, name);
         });
@@ -48,8 +38,7 @@ describe("GraphErrorHandler.ts", () => {
             }
 
         it("Should construct error for error response without innerError property", () => {
-            let gErrorHandler = new GraphErrorHandler(error, statusCode),
-                gError = gErrorHandler["constructErrorFromResponse"]();
+            let gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
             assert.equal(gError.statusCode, statusCode);
             assert.equal(gError.requestId, null);
         });
@@ -58,8 +47,7 @@ describe("GraphErrorHandler.ts", () => {
             error.error.innerError = {
                 "request-id": "some random id"
             };
-            let gErrorHandler = new GraphErrorHandler(error, statusCode),
-                gError = gErrorHandler["constructErrorFromResponse"]();
+            let gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
             assert.equal(gError.statusCode, statusCode);
             assert.equal(gError.requestId, "some random id");
         });
@@ -71,8 +59,7 @@ describe("GraphErrorHandler.ts", () => {
                 "request-id": requestId,
                 date
             }
-            let gErrorHandler = new GraphErrorHandler(error, statusCode),
-                gError = gErrorHandler["constructErrorFromResponse"]();
+            let gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
             assert.equal(gError.statusCode, statusCode);
             assert.equal(gError.requestId, "some random id");
             assert.equal(gError.date.toUTCString(), date.toUTCString());
@@ -82,16 +69,15 @@ describe("GraphErrorHandler.ts", () => {
     describe("getError", () => {
         it("Should construct error from response", () => {
             let errorResponse = {
-                error: {
-                    code: "500",
-                    message: "Internal Server Error",
-                    innerError: {
-                        "request-id": "some random id"
+                    error: {
+                        code: "500",
+                        message: "Internal Server Error",
+                        innerError: {
+                            "request-id": "some random id"
+                        }
                     }
-                }
-            },
-                gErrorHandler = new GraphErrorHandler(errorResponse),
-                gError = gErrorHandler.getError();
+                },
+                gError = GraphErrorHandler.getError(errorResponse);
             assert.equal(gError.requestId, "some random id");
             assert.equal(gError.code, "500");
             assert.equal(gError.message, "Internal Server Error");
@@ -100,16 +86,14 @@ describe("GraphErrorHandler.ts", () => {
         it("Should construct error from error object", () => {
             let error = new Error("Some Error");
             error.name = "InvalidError";
-            let gErrorHandler = new GraphErrorHandler(error),
-                gError = gErrorHandler.getError();
+            let gError = GraphErrorHandler.getError(error);
             assert.equal(gError.requestId, null);
             assert.equal(gError.message, "Some Error");
             assert.equal(gError.code, "InvalidError");
         });
 
         it("Should construct some default error", () => {
-            let gErrorHandler = new GraphErrorHandler(),
-                gError = gErrorHandler.getError();
+            let gError = GraphErrorHandler.getError();
             assert.equal(gError.statusCode, -1);
             assert.equal(gError.code, null);
             assert.equal(gError.message, null);

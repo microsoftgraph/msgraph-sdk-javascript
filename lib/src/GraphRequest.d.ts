@@ -46,11 +46,6 @@ export declare class GraphRequest {
     private httpClient;
     /**
      * @private
-     * A member variable holding the GraphResponseHandler for the corresponding GraphRequest
-     */
-    private graphResponseHandler;
-    /**
-     * @private
      * A member holding the GraphErrorHandler for the corresponding GraphRequest
      */
     private graphErrorHandler;
@@ -333,11 +328,5 @@ export declare class GraphRequest {
      * @returns A promise that resolves to the putStream response
      */
     putStream(stream: any, callback?: GraphRequestCallback): Promise<any>;
-    /**
-     * @public
-     * To get the raw response for a request
-     * @returns The raw response instance
-     */
-    getRawResponse(): Response;
 }
 export {};

@@ -15,7 +15,7 @@ import { Options } from "../../src/IOptions";
 import * as PolyFill from "../../src/PolyFill";
 
 describe("Client.ts", function () {
-    describe("constructor", function () {
+    describe("initWithMiddleware", function () {
         /**
          * PolyFill fetch and promise before initializing client, otherwise error will be thrown
          */

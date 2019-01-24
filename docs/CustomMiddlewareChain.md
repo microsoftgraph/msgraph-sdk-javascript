@@ -8,11 +8,9 @@ As name suggests it comes in middle of something and that is request and respons
 
 ### Implement Middlewares
 
-Create own set of middlewares by implementing [Middleware](../src/IMiddleware.ts) interface. Here two middlewares are created one for handling Logging and another for handling http request and response.
+Create a custom middleware pipeline by implementing the [Middleware](../src/IMiddleware.ts) interface. The following examples demonstrate how to create a custom logging middleware and how to create a custom http request a response handler.
 
 First middleware is passed with the context object containing request, and other middleware specific options. One has to explicitly make call to execute method of the next middleware with context object once the current middleware work is over.
-
-NOTE: Http message handler should set the response object in the context object.
 
 ```typescript
 // MyLoggingHandler.ts
@@ -32,7 +30,7 @@ export class MyLoggingHandler implements Middleware {
                 url = context.request.url;
             }
             console.log(url);
-            await this.nextMiddleware.execute(context);
+            return await this.nextMiddleware.execute(context);
         } catch(error) {
             throw error;
         }
@@ -43,6 +41,8 @@ export class MyLoggingHandler implements Middleware {
     }
 }
 ```
+
+> **Note:** Http message handler should set the response object in the context object.
 
 ```typescript
 // MyHttpMessageHandler.ts
@@ -55,6 +55,7 @@ export class MyHttpMessageHandler implements Middleware {
             let response = await fetch(context.request, context.options);
             // Set the response back in the context
             context.response = response;
+            return;
         } catch (error) {
             throw error;
         }

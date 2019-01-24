@@ -93,7 +93,7 @@ export class PageIterator {
      */
     private iterationHelper(): boolean {
         let self = this;
-        if (self.collection === undefined || self.collection.length === 0) {
+        if (self.collection === undefined) {
             return false;
         }
         let advance = true;

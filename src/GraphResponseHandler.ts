@@ -39,55 +39,20 @@ export class GraphResponseHandler {
      * @static
      * A member holding array of document types
      */
-    private static DocumentTypes: string[];
+    private static DocumentTypes: string[] = ["text/html", "text/xml", "application/xml", "application/xhtml+xml"];
 
     /**
      * @private
-     * A member holding the raw response
-     */
-    private rawResponse: Response;
-
-    /**
-     * @private
-     * A member holding the response type
-     */
-    private responseType: ResponseType;
-
-    /**
-     * @private
-     * A member holding the graph request callback
-     */
-    private callback: GraphRequestCallback;
-
-    /**
-     * @constructor
-     * Creates an instance of GraphResponseHandler
-     * @param {Response} rawResponse - The response object
-     * @param {ResponseType} [responseType] - The response type value
-     * @param {GraphRequestCallback} [callback] - The graph request callback function
-     * @returns An instance of GraphResponseHandler
-     */
-    constructor(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback) {
-        let self = this;
-        self.rawResponse = rawResponse;
-        self.responseType = responseType;
-        self.callback = callback;
-        if (GraphResponseHandler.DocumentTypes === undefined) {
-            GraphResponseHandler.DocumentTypes = Object.keys(DocumentType).map(k => DocumentType[k as any]);
-        }
-    }
-
-    /**
-     * @private
+     * @static
      * To parse Document response
+     * @param {Response} rawResponse - The response object
      * @param {DocumentType} type - The type to which the document needs to be parsed
      * @returns A promise that resolves to a document content
      */
-    private parseDocumentResponse(type: DocumentType): Promise<any> {
-        let response = this.rawResponse;
+    private static parseDocumentResponse(rawResponse: Response, type: DocumentType): Promise<any> {
         if (typeof DOMParser !== "undefined") {
             return new Promise((resolve, reject) => {
-                response.text().then((xmlString) => {
+                rawResponse.text().then((xmlString) => {
                     try {
                         let parser = new DOMParser(),
                             xmlDoc = parser.parseFromString(xmlString, type);
@@ -98,51 +63,54 @@ export class GraphResponseHandler {
                 });
             });
         } else {
-            return Promise.resolve(response.body);
+            return Promise.resolve(rawResponse.body);
         }
     }
 
     /**
      * @private
+     * @static
      * @async
      * To convert the native Response to response content
+     * @param {Response} rawResponse - The response object
+     * @param {ResponseType} [responseType] - The response type value
      * @returns A promise that resolves to the converted response content
      */
-    private async convertResponse(): Promise<any> {
-        let self = this,
-            response = self.rawResponse,
-            type = self.responseType;
-        if (response.status === 204) { //NO CONTENT
+    private static async convertResponse(rawResponse: Response, responseType?: ResponseType): Promise<any> {
+        if(responseType === ResponseType.RAW) {
+            return Promise.resolve(rawResponse);
+        }
+        if (rawResponse.status === 204) { //NO CONTENT
             return Promise.resolve();
         }
         let responseValue: any;
-        switch (type) {
+        switch (responseType) {
             case ResponseType.ARRAYBUFFER:
-                responseValue = await response.arrayBuffer();
+                responseValue = await rawResponse.arrayBuffer();
                 break;
             case ResponseType.BLOB:
-                responseValue = await response.blob();
+                responseValue = await rawResponse.blob();
                 break;
             case ResponseType.DOCUMENT:
-                responseValue = await self.parseDocumentResponse(DocumentType.TEXT_XML);
+                responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
                 break;
             case ResponseType.JSON:
-                responseValue = await response.json();
+                responseValue = await rawResponse.json();
                 break;
             case ResponseType.STREAM:
-                responseValue = await Promise.resolve(response.body);
+                responseValue = await Promise.resolve(rawResponse.body);
                 break;
             case ResponseType.TEXT:
-                responseValue = await response.text();
+                responseValue = await rawResponse.text();
                 break;
             default:
-                let contentType = response.headers.get("Content-type");
+                let contentType = rawResponse.headers.get("Content-type");
                 if (contentType !== null) {
                     let mimeType = contentType.split(";")[0];
                     if (GraphResponseHandler.DocumentTypes.includes(mimeType)) {
-                        responseValue = await self.parseDocumentResponse(mimeType as DocumentType);
+                        responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
                     } else {
-                        responseValue = await response.json();
+                        responseValue = await rawResponse.json();
                     }
                 } else {
                     /**
@@ -156,7 +124,7 @@ export class GraphResponseHandler {
                      * 
                      *  So assuming it as a stream type so returning the body.
                      */
-                    responseValue = Promise.resolve(response.body);
+                    responseValue = Promise.resolve(rawResponse.body);
                 }
                 break;
         }
@@ -165,18 +133,20 @@ export class GraphResponseHandler {
 
     /**
      * @public
+     * @static
      * @async
      * To get the parsed response
+     * @param {Response} rawResponse - The response object
+     * @param {ResponseType} [responseType] - The response type value
+     * @param {GraphRequestCallback} [callback] - The graph request callback function
      * @returns The parsed response
      */
-    public async getResponse(): Promise<any> {
+    public static async getResponse(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback): Promise<any> {
         try {
-            let self = this,
-                rawResponse = self.rawResponse,
-                response = await self.convertResponse();
+            let response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
             if (rawResponse.ok) { // Status Code 2XX
-                if (typeof self.callback === "function") {
-                    self.callback(null, response, rawResponse);
+                if (typeof callback === "function") {
+                    callback(null, response, rawResponse);
                 } else {
                     return response;
                 }
@@ -186,14 +156,5 @@ export class GraphResponseHandler {
         } catch (error) {
             throw error;
         }
-    }
-
-    /**
-     * @public
-     * To get the raw response
-     * @return The raw response
-     */
-    public getRawResponse(): Response {
-        return this.rawResponse;
     }
 }

@@ -16,6 +16,7 @@ import { oDataQueryNames, urlJoin, serializeContent } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
+import { Context } from "./IContext";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { FetchOptions } from "./IFetchOptions";
 import { RequestMethod } from "./RequestMethod";
@@ -60,18 +61,6 @@ export class GraphRequest {
      * A member variable to hold HTTPClient instance
      */
     private httpClient: HTTPClient;
-
-    /**
-     * @private
-     * A member variable holding the GraphResponseHandler for the corresponding GraphRequest
-     */
-    private graphResponseHandler: GraphResponseHandler;
-
-    /**
-     * @private
-     * A member holding the GraphErrorHandler for the corresponding GraphRequest
-     */
-    private graphErrorHandler: GraphErrorHandler;
 
     /**
      * @private
@@ -481,7 +470,7 @@ export class GraphRequest {
         }
         Object.assign(options, self._options);
         Object.assign(optionsHeaders, defaultHeaders);
-        if(options.headers !== undefined) {
+        if (options.headers !== undefined) {
             Object.assign(optionsHeaders, options.headers);
         }
         Object.assign(optionsHeaders, self._headers);
@@ -499,22 +488,20 @@ export class GraphRequest {
      */
     private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
+            rawResponse: Response,
             middlewareOptions = Object.assign({}, self.config.middlewareOptions);
         self.updateRequestOptions(options);
         try {
-            let context = await self.httpClient.sendRequest(request, options, middlewareOptions),
-                rawResponse = context.response;
-            self.graphResponseHandler = new GraphResponseHandler(rawResponse, self._responseType, callback);
-            let response: any = await self.graphResponseHandler.getResponse();
+            let context: Context = await self.httpClient.sendRequest(request, options, middlewareOptions);
+            rawResponse = context.response;
+            let response: any = await GraphResponseHandler.getResponse(rawResponse, self._responseType, callback);
             return response;
         } catch (error) {
-            let rawResponse = this.getRawResponse(),
-                statusCode: number;
+            let statusCode: number;
             if (typeof rawResponse !== "undefined") {
                 statusCode = rawResponse.status;
             }
-            self.graphErrorHandler = new GraphErrorHandler(error, statusCode, callback);
-            let gError: GraphError = self.graphErrorHandler.getError();
+            let gError: GraphError = GraphErrorHandler.getError(error, statusCode, callback);
             throw gError;
         }
     }
@@ -719,17 +706,6 @@ export class GraphRequest {
             return response;
         } catch (error) {
             throw error;
-        }
-    }
-
-    /**
-     * @public
-     * To get the raw response for a request
-     * @returns The raw response instance
-     */
-    public getRawResponse(): Response {
-        if (this.graphResponseHandler instanceof GraphResponseHandler) {
-            return this.graphResponseHandler.getRawResponse();
         }
     }
 }

@@ -110,6 +110,18 @@ describe("PageIterator.ts", function () {
         });
     });
 
+    describe("iterationHelper", () => {
+        it("Should return true for empty collection with next link", () => {
+            const pageIterator = new PageIterator(client, getEmptyPageCollectionWithNext(), truthyCallback);
+            try {
+                let advance = pageIterator["iterationHelper"]();
+                assert.isTrue(advance);
+            } catch(error) {
+                throw error;
+            }
+        });
+    });
+
     describe("resume", function () {
         it("Should start from the place where it left the iteration", async () => {
             let pageIterator = new PageIterator(client, getPageCollection(), halfWayCallback);

@@ -1,4 +1,3 @@
-
 /**
  * -------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
@@ -22,46 +21,14 @@ export class GraphErrorHandler {
 
     /**
      * @private
-     * A member holding the error object
-     */
-    private error: any;
-
-    /**
-     * @private
-     * A member holding the status code of the response
-     */
-    private statusCode: number;
-
-    /**
-     * @private
-     * A member holding the graph request callback
-     */
-    private callback: GraphRequestCallback;
-
-    /**
-     * @constructor
-     * Creates an instance of GraphErrorHandler
-     * @param {any} [error = null] - The error returned by graph service or some native error
-     * @param {number} [statusCode = -1] - The status code of the response
-     * @param {GraphRequestCallback} [callback] - The graph request callback function
-     * @returns An instance of GraphErrorHandler
-     */
-    constructor(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback) {
-        let self = this;
-        self.error = error;
-        self.statusCode = statusCode;
-        self.callback = callback;
-    }
-
-    /**
-     * @private
+     * @static
      * Populates the GraphError instance with Error instance values
+     * @param {Error} error - The error returned by graph service or some native error
+     * @param {number} [statusCode] - The status code of the response
      * @returns The GraphError instance
      */
-    private constructError(): GraphError {
-        let self = this,
-            error = self.error,
-            gError = new GraphError(self.statusCode);
+    private static constructError(error: Error, statusCode?: number): GraphError {
+        let gError = new GraphError(statusCode);
         if (error.name !== undefined) {
             gError.code = error.name;
         }
@@ -73,7 +40,10 @@ export class GraphErrorHandler {
 
     /**
      * @private
+     * @static
      * Populates the GraphError instance from the Error returned by graph service
+     * @param {any} error - The error returned by graph service or some native error
+     * @param {number} statusCode - The status code of the response
      * @returns The GraphError instance
      * 
      * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
@@ -88,10 +58,9 @@ export class GraphErrorHandler {
      *      }
      *  }
      */
-    private constructErrorFromResponse(): GraphError {
-        let self = this,
-            error = self.error.error,
-            gError = new GraphError(self.statusCode);
+    private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
+        error = error.error;
+        let gError = new GraphError(statusCode);
         gError.code = error.code;
         gError.message = error.message;
         if (error.innerError !== undefined) {
@@ -108,22 +77,24 @@ export class GraphErrorHandler {
 
     /**
      * @public
+     * @static
      * To get the GraphError object
+     * @param {any} [error = null] - The error returned by graph service or some native error
+     * @param {number} [statusCode = -1] - The status code of the response
+     * @param {GraphRequestCallback} [callback] - The graph request callback function
      * @returns The GraphError instance
      */
-    public getError(): GraphError {
-        let self = this,
-            error = self.error,
-            gError: GraphError;
+    public static getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): GraphError {
+        let gError: GraphError;
         if (error && error.error) {
-            gError = self.constructErrorFromResponse();
+            gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
         } else if (error instanceof Error) {
-            gError = self.constructError();
+            gError = GraphErrorHandler.constructError(error, statusCode);
         } else {
-            gError = new GraphError(self.statusCode);
+            gError = new GraphError(statusCode);
         }
-        if (typeof self.callback === "function") {
-            self.callback(gError, null);
+        if (typeof callback === "function") {
+            callback(gError, null);
         } else {
             return gError;
         }

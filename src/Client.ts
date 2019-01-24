@@ -37,11 +37,12 @@ export class Client {
     private httpClient: HTTPClient;
 
     /**
+     * @private
      * @constructor
      * Creates an instance of Client
      * @param {ClientOptions} clientOptions - The options to instantiate the client object 
      */
-    constructor(clientOptions: ClientOptions) {
+    private constructor(clientOptions: ClientOptions) {
         try {
             validatePolyFilling();
         } catch (error) {

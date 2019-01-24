@@ -19,10 +19,16 @@
     z-index: 1;
 }
 
+.main {
+    width: 100%;
+    float: left;
+}
+
 .grid {
     text-align: center;
-    width: 250px;
+    width: 13.99999%;
     height: 250px;
+    min-width: 250px;
     float: left;
 }
 
@@ -47,11 +53,12 @@
 }
 
 .outputParent {
-    position: relative;
+    float: left;
+    width: 79%;
+    height: 270px;
+    min-width: 250px;
     margin: 10px;
     border: grey;
-    width: 720px;
-    height: 220px;
     float: right;
     background: white;
     box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;

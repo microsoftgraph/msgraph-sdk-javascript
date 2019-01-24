@@ -11,6 +11,6 @@ import { Context } from "./IContext";
  * @property {Function} [setNext] - A method to set the next middleware in the chain
  */
 export interface Middleware {
-    execute: (context: Context) => Promise<any>;
+    execute: (context: Context) => Promise<void>;
     setNext?: (middleware: Middleware) => void;
 }

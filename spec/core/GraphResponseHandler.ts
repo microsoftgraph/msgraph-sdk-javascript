@@ -10,7 +10,7 @@ import { GraphResponseHandler } from "../../src/GraphResponseHandler";
 import { ResponseType } from "../../src/ResponseType";
 
 describe("GraphResponseHandler.ts", () => {
-    let htmlString = `<!DOCTYPE html>
+    const htmlString = `<!DOCTYPE html>
                         <html lang="en">
                             <head>
                                 <meta charset="UTF-8">
@@ -33,22 +33,10 @@ describe("GraphResponseHandler.ts", () => {
             statusText: "Internal Server Error"
         };
 
-    describe("constructor", () => {
-        it("Should initialize the DocumentTypes", () => {
-            let response = new Response("test"),
-                gResponse = new GraphResponseHandler(response);
-            assert.isDefined(gResponse["rawResponse"]);
-            assert.isUndefined(gResponse["responseType"]);
-            assert.isUndefined(gResponse["callback"]);
-            assert.isTrue(GraphResponseHandler["DocumentTypes"].length > 0);
-        });
-    });
-
     describe("parseDocumentResponse", () => {
         it("Should return the html string", async () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response),
-                dom = await gResponse["parseDocumentResponse"](GraphResponseHandler["DocumentTypes"]["TEXT_HTML"]);
+            const response = new Response(htmlString, status200);
+            const dom = await GraphResponseHandler["parseDocumentResponse"](response, GraphResponseHandler["DocumentTypes"]["TEXT_HTML"]);
             assert.isDefined(dom);
             assert.equal(typeof dom, "string");
         });
@@ -56,25 +44,29 @@ describe("GraphResponseHandler.ts", () => {
 
     describe("convertResponse", () => {
         it("Should return empty response for the NO CONTENT (204 response)", async () => {
-            let response = new Response(undefined, status204),
-                gResponse = new GraphResponseHandler(response),
-                responseValue = await gResponse["convertResponse"]();
+            const response = new Response(undefined, status204);
+            const responseValue = await GraphResponseHandler["convertResponse"](response);
             assert.isUndefined(responseValue);
         });
 
         it("Should return response value as text", async () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response, ResponseType.TEXT),
-                responseValue = await gResponse["convertResponse"]();
+            const response = new Response(htmlString, status200);
+            const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.TEXT);
             assert.isDefined(responseValue);
             assert.equal(typeof responseValue, "string");
             assert.equal(responseValue, htmlString);
         });
 
+        it("Should return a raw response", async () => {
+            const response = new Response(htmlString, status200);
+            const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.RAW);
+            assert.isDefined(responseValue);
+            assert.isTrue(responseValue instanceof Response);
+        });
+
         it("Should return response value as text for text/html return type", async () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response, ResponseType.DOCUMENT),
-                responseValue = await gResponse["convertResponse"]();
+            const response = new Response(htmlString, status200);
+            const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.DOCUMENT);
             assert.isDefined(responseValue);
             assert.equal(typeof responseValue, "string");
             assert.equal(responseValue, htmlString);
@@ -82,17 +74,15 @@ describe("GraphResponseHandler.ts", () => {
 
         it("Should return response value as json", async () => {
             let json = { test: "test" },
-                response = new Response(JSON.stringify(json), status200),
-                gResponse = new GraphResponseHandler(response, ResponseType.JSON),
-                responseValue = await gResponse["convertResponse"]();
+                response = new Response(JSON.stringify(json), status200);
+            const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.JSON);
             assert.isDefined(responseValue);
             assert.equal(responseValue.test, "test");
         });
 
         it("Should return response value as text for default response type", async () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response),
-                responseValue = await gResponse["convertResponse"]();
+            let response = new Response(htmlString, status200);
+            let responseValue = await GraphResponseHandler["convertResponse"](response);
             assert.isDefined(responseValue);
             assert.equal(typeof responseValue, "string");
             assert.equal(responseValue, htmlString);
@@ -101,32 +91,20 @@ describe("GraphResponseHandler.ts", () => {
 
     describe("getResponse", () => {
         it("Should return valid 200 OK response", async () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response, ResponseType.TEXT),
-                responseValue = await gResponse.getResponse();
+            const response = new Response(htmlString, status200);
+            const responseValue = await GraphResponseHandler.getResponse(response, ResponseType.TEXT);
             assert.isDefined(responseValue);
         });
 
         it("Should throw error for NOT OK response", async () => {
             try {
-                let response = new Response("NOT OK", status500),
-                    gResponse = new GraphResponseHandler(response),
-                    responseValue = await gResponse.getResponse();
+                const response = new Response("NOT OK", status500);
+                const responseValue = await GraphResponseHandler.getResponse(response, ResponseType.TEXT);
                 throw new Error("Something wrong with validating OK response");
             } catch (error) {
                 assert.isDefined(error);
                 assert.equal(error, "NOT OK");
             }
-        });
-    });
-
-    describe("getRawResponse", () => {
-        it("Should return raw response", () => {
-            let response = new Response(htmlString, status200),
-                gResponse = new GraphResponseHandler(response),
-                rawResponse = gResponse.getRawResponse();
-            assert.isDefined(rawResponse);
-            assert.isTrue(rawResponse instanceof Response);
         });
     });
 });

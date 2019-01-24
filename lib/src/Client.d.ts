@@ -19,11 +19,12 @@ export declare class Client {
      */
     private httpClient;
     /**
+     * @private
      * @constructor
      * Creates an instance of Client
      * @param {ClientOptions} clientOptions - The options to instantiate the client object
      */
-    constructor(clientOptions: ClientOptions);
+    private constructor();
     /**
      * @public
      * @static

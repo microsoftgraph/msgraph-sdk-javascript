@@ -5,6 +5,12 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { init } from "./PolyFill";
+/**
+ * Polyfilling Promise and fetch if not present
+ */
+init();
+
 export * from "./content/BatchRequestContent";
 export * from "./content/BatchResponseContent";
 
