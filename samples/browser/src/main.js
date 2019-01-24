@@ -2,7 +2,7 @@ window.addEventListener('load', () => {
     init();
 }, false);
 
-const clientId = "ea39515f-b063-404d-9d40-95e0102ee0ed"; //"<YOUR_CLIENT_ID>";
+const clientId = "<YOUR_CLIENT_ID>";
 
 let client, scopes;
 const init = async () => {

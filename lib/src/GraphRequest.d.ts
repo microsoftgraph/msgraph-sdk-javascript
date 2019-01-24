@@ -46,11 +46,6 @@ export declare class GraphRequest {
     private httpClient;
     /**
      * @private
-     * A member holding the GraphErrorHandler for the corresponding GraphRequest
-     */
-    private graphErrorHandler;
-    /**
-     * @private
      * A member variable to hold client options
      */
     private config;
