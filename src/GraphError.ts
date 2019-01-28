@@ -29,19 +29,19 @@ export class GraphError {
      * @public
      * A member holding code i.e name of the error
      */
-    public code: string;
+    public code: string | null;
 
     /**
      * @public
      * A member holding error message
      */
-    public message: string;
+    public message: string | null;
 
     /**
      * @public
      * A member holding request-id i.e identifier of the request
      */
-    public requestId: string;
+    public requestId: string | null;
 
     /**
      * @public

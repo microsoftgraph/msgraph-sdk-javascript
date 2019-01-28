@@ -94,12 +94,12 @@ export class Client {
      * @public
      * @static
      * To create a client instance with the Client Options
-     * @param {ClientOptions} options - The options object for initializing the client
+     * @param {ClientOptions} clientOptions - The options object for initializing the client
      * @returns The Client instance 
      */
-    public static initWithMiddleware(options: ClientOptions): Client {
+    public static initWithMiddleware(clientOptions: ClientOptions): Client {
         try {
-            return new Client(options);
+            return new Client(clientOptions);
         } catch (error) {
             throw error;
         }

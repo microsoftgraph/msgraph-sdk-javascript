@@ -37,10 +37,10 @@ export declare class Client {
      * @public
      * @static
      * To create a client instance with the Client Options
-     * @param {ClientOptions} options - The options object for initializing the client
+     * @param {ClientOptions} clientOptions - The options object for initializing the client
      * @returns The Client instance
      */
-    static initWithMiddleware(options: ClientOptions): Client;
+    static initWithMiddleware(clientOptions: ClientOptions): Client;
     /**
      * @public
      * Entry point to make requests

@@ -130,17 +130,21 @@ export class GraphRequest {
 
             // Find where the host ends
             let endOfHostStrPos = path.indexOf("/");
-            // Parse out the host
-            self.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
-            // Strip the host from path
-            path = path.substring(endOfHostStrPos + 1, path.length);
+            if(endOfHostStrPos !== -1) {
+                // Parse out the host
+                self.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
+                // Strip the host from path
+                path = path.substring(endOfHostStrPos + 1, path.length);
+            }
 
             // Remove the following version
             let endOfVersionStrPos = path.indexOf("/");
-            // Parse out the version
-            self.urlComponents.version = path.substring(0, endOfVersionStrPos);
-            // Strip version from path
-            path = path.substring(endOfVersionStrPos + 1, path.length);
+            if(endOfVersionStrPos !== -1) {
+                // Parse out the version
+                self.urlComponents.version = path.substring(0, endOfVersionStrPos);
+                // Strip version from path
+                path = path.substring(endOfVersionStrPos + 1, path.length);
+            }
         }
 
         // Strip out any leading "/"

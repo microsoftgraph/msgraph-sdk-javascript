@@ -24,17 +24,17 @@ export declare class GraphError {
      * @public
      * A member holding code i.e name of the error
      */
-    code: string;
+    code: string | null;
     /**
      * @public
      * A member holding error message
      */
-    message: string;
+    message: string | null;
     /**
      * @public
      * A member holding request-id i.e identifier of the request
      */
-    requestId: string;
+    requestId: string | null;
     /**
      * @public
      * A member holding processed date and time of the request
