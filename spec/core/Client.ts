@@ -25,6 +25,19 @@ describe("Client.ts", function () {
         const dummyAuthProvider = new DummyAuthenticationProvider(),
             customHTTPHandler = new CustomHTTPHandler();
 
+        it("Should throw an error in case if both auth provider and custom middleware is passed", () => {
+            try {
+                const options: ClientOptions = {
+                    authProvider: dummyAuthProvider,
+                    middleware: customHTTPHandler
+                };
+                const client: Client = Client.initWithMiddleware(options);
+                throw new Error("Something wrong with the ambiguity check");
+            } catch(error) {
+                assert.equal(error.name, "AmbiguityInInitialization");
+            }
+        });
+
         it("Should return client instance for an authentication provider", () => {
             let options: ClientOptions = {
                 authProvider: dummyAuthProvider

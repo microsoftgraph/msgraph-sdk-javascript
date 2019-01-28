@@ -53,7 +53,12 @@ export class Client {
             self.config[key] = clientOptions[key];
         }
         let httpClient: HTTPClient;
-        if (clientOptions.authProvider !== undefined) {
+        if(clientOptions.authProvider !== undefined && clientOptions.middleware !== undefined) {
+            const error = new Error();
+            error.name = "AmbiguityInInitialization";
+            error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain not both";
+            throw error;
+        } else if (clientOptions.authProvider !== undefined) {
             httpClient = HTTPClientFactory.createWithAuthenticationProvider(clientOptions.authProvider);
         } else if (clientOptions.middleware !== undefined) {
             httpClient = new HTTPClient(clientOptions.middleware);
@@ -93,7 +98,11 @@ export class Client {
      * @returns The Client instance 
      */
     public static initWithMiddleware(options: ClientOptions): Client {
-        return new Client(options);
+        try {
+            return new Client(options);
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**

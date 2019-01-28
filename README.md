@@ -59,7 +59,7 @@ supported authentication portals:
 
 ### 2. Authenticate for the Microsoft Graph service
 
-The Microsoft Graph JavaScript Client Library has an adapter implementation ([MSALAuthenticationProvider](src/MSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user have to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
+The Microsoft Graph JavaScript Client Library has an adapter implementation ([MSALAuthenticationProvider](src/MSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
 
 > **Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
