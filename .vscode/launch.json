@@ -22,6 +22,7 @@
                 "${workspaceRoot}/lib/spec/core/*.js"
             ],
             "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Run Build",
             "outFiles": [],
             "internalConsoleOptions": "openOnSessionStart"
         },

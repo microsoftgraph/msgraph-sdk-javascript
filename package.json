@@ -39,7 +39,8 @@
     "test:tasks": "tsc -p spec && mocha spec/tasks",
     "test:development": "tsc -p spec && mocha spec/development/middleware && mocha spec/development/workload",
     "test:middleware": "tsc -p spec && mocha spec/development/middleware",
-    "test:workload": "tsc -p spec && mocha spec/development/workload"
+    "test:workload": "tsc -p spec && mocha spec/development/workload",
+    "prepack": "npm install && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
