@@ -1,7 +1,12 @@
-import { assert } from "chai";
-import { BatchResponseContent } from "../../lib/src/content/BatchResponseContent";
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
 
-declare const describe, it;
+import { BatchResponseContent } from "../../src/content/BatchResponseContent";
+import { assert } from "chai";
 
 let redirect = {
     "id": "1",
@@ -34,86 +39,88 @@ let okWithoutBody = {
     "body": null
 };
 
-describe('update', function() {
-    this.timeout(20 * 1000);
-
-    it('Should update instance with nextLink responses', (done) => {
-        let responses = [redirect, forbidden];
-        let batchRes = new BatchResponseContent({
-            responses,
-            "@nextLink": "dummy nextlink"
-        });
-        batchRes.update({
-            responses: [okWithoutBody, okWithBody]
-        })
-        assert.isDefined(batchRes.getResponseById("2"));
-        assert.isDefined(batchRes.getResponseById("4"));
-        done();
-    });
-});
-
-describe('createResponseObject', function() {
-    this.timeout(20 * 1000);
+describe("BatchResponseContent.ts", function () {
+    describe('update', function () {
+        this.timeout(20 * 1000);
     
-    it('Should create batch response content instance for 302, 402, 202, 204 responses', (done) => {
-        let batchRes = new BatchResponseContent({
-            responses: [redirect, forbidden, okWithBody, okWithoutBody]
+        it('Should update instance with nextLink responses', (done) => {
+            let responses = [redirect, forbidden];
+            let batchRes = new BatchResponseContent({
+                responses,
+                "@nextLink": "dummy nextlink"
+            });
+            batchRes.update({
+                responses: [okWithoutBody, okWithBody]
+            })
+            assert.isDefined(batchRes.getResponseById("2"));
+            assert.isDefined(batchRes.getResponseById("4"));
+            done();
         });
-        assert.isDefined(batchRes.getResponseById("1"));
-        assert.isDefined(batchRes.getResponseById("2"));
-        assert.isDefined(batchRes.getResponseById("3"));
-        assert.isDefined(batchRes.getResponseById("4"));
-        done();
     });
-});
-
-describe('getResponseById', function() {
-    this.timeout(20 * 1000);
-
-    it('Should return response object for given id', (done) => {
-        let batchRes = new BatchResponseContent({
-            responses: [redirect]
+    
+    describe('createResponseObject', function () {
+        this.timeout(20 * 1000);
+    
+        it('Should create batch response content instance for 302, 402, 202, 204 responses', (done) => {
+            let batchRes = new BatchResponseContent({
+                responses: [redirect, forbidden, okWithBody, okWithoutBody]
+            });
+            assert.isDefined(batchRes.getResponseById("1"));
+            assert.isDefined(batchRes.getResponseById("2"));
+            assert.isDefined(batchRes.getResponseById("3"));
+            assert.isDefined(batchRes.getResponseById("4"));
+            done();
         });
-        assert.isDefined(batchRes.getResponseById("1"));
-        done();
     });
-
-    it('Should return undefined for given id for which the response is not present', (done) => {
-        let batchRes = new BatchResponseContent({
-            responses: [redirect]
+    
+    describe('getResponseById', function () {
+        this.timeout(20 * 1000);
+    
+        it('Should return response object for given id', (done) => {
+            let batchRes = new BatchResponseContent({
+                responses: [redirect]
+            });
+            assert.isDefined(batchRes.getResponseById("1"));
+            done();
         });
-        assert.isUndefined(batchRes.getResponseById("100"));
-        done();
+    
+        it('Should return undefined for given id for which the response is not present', (done) => {
+            let batchRes = new BatchResponseContent({
+                responses: [redirect]
+            });
+            assert.isUndefined(batchRes.getResponseById("100"));
+            done();
+        });
     });
-});
-
-describe('getResponses', function() {
-    this.timeout(20 * 1000);
-
-    it('Should return responses map', (done) => {
-        let batchRes = new BatchResponseContent({
-            responses: [redirect]
+    
+    describe('getResponses', function () {
+        this.timeout(20 * 1000);
+    
+        it('Should return responses map', (done) => {
+            let batchRes = new BatchResponseContent({
+                responses: [redirect]
+            });
+            assert.isDefined(batchRes.getResponses());
+            done();
         });
-        assert.isDefined(batchRes.getResponses());
-        done();
     });
-});
-
-describe('getResponsesIterator', function() {
-    this.timeout(20 * 1000);
-
-    it('Should return iterator', (done) => {
-        let batchRes = new BatchResponseContent({
-            responses: [redirect, forbidden, okWithBody, okWithoutBody]
+    
+    describe('getResponsesIterator', function () {
+        this.timeout(20 * 1000);
+    
+        it('Should return iterator', (done) => {
+            let batchRes = new BatchResponseContent({
+                responses: [redirect, forbidden, okWithBody, okWithoutBody]
+            });
+            let count = 0;
+            let iterator = batchRes.getResponsesIterator();
+            let data = iterator.next();
+            while (!data.done) {
+                data = iterator.next();
+                count++;
+            }
+            assert.equal(count, 4);
+            done();
         });
-        let count = 0;
-        let iterator = batchRes.getResponsesIterator();
-        let data = iterator.next();
-        while (!data.done) {
-            data = iterator.next();
-            count++;
-        }
-        assert.equal(count, 4);
-        done();
     });
 });

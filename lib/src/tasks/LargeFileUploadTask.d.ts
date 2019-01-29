@@ -1,4 +1,10 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+/**
  * @module LargeFileUploadTask
  */
 import { Client } from "../index";
@@ -44,60 +50,86 @@ export interface FileObject {
     size: number;
 }
 /**
+ * @class
  * Class representing LargeFileUploadTask
  */
 export declare class LargeFileUploadTask {
-    /** The GraphClient instance */
-    client: Client;
-    /** The object holding file details */
-    file: FileObject;
-    /** The object holding options for the task  */
-    options: LargeFileUploadTaskOptions;
-    /** The object for upload session */
-    uploadSession: LargeFileUploadSession;
-    /** The next range needs to be uploaded */
-    nextRange: Range;
     /**
+     * @protected
+     * The GraphClient instance
+     */
+    protected client: Client;
+    /**
+     * @protected
+     * The object holding file details
+     */
+    protected file: FileObject;
+    /**
+     * @protected
+     * The object holding options for the task
+     */
+    protected options: LargeFileUploadTaskOptions;
+    /**
+     * @protected
+     * The object for upload session
+     */
+    protected uploadSession: LargeFileUploadSession;
+    /**
+     * @protected
+     * The next range needs to be uploaded
+     */
+    protected nextRange: Range;
+    /**
+     * @private
     * Default value for the rangeSize
     */
     private DEFAULT_FILE_SIZE;
     /**
+     * @constructor
      * Constructs a LargeFileUploadTask
      * @param {Client} client - The GraphClient instance
      * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
      * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
      * @param {LargeFileUploadTaskOptions} options - The upload task options
+     * @returns An instance of LargeFileUploadTask
      */
     constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions);
     /**
+     * @public
      * Parses given range string to the Range instance
      * @param {string[]} ranges - The ranges value
-     * @return The range instance
+     * @returns The range instance
      */
     parseRange(ranges: string[]): Range;
     /**
+     * @public
      * Updates the expiration date and the next range
      * @param {UploadStatusResponse} response - The response of the upload status
+     * @returns Nothing
      */
     updateTaskStatus(response: UploadStatusResponse): void;
     /**
+     * @public
      * Gets next range that needs to be uploaded
-     * @return The range instance
+     * @returns The range instance
      */
     getNextRange(): Range;
     /**
+     * @public
      * Slices the file content to the given range
      * @param {Range} range - The range value
-     * @return The sliced ArrayBuffer or Blob
+     * @returns The sliced ArrayBuffer or Blob
      */
     sliceFile(range: Range): ArrayBuffer | Blob;
     /**
+     * @public
      * @async
      * Uploads file to the server in a sequential order by slicing the file
-     * @return The promise resolves to uploaded response
+     * @returns The promise resolves to uploaded response
      */
     upload(): Promise<any>;
     /**
+     * @public
      * @async
      * Uploads given slice to the server
      * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
@@ -106,21 +138,24 @@ export declare class LargeFileUploadTask {
      */
     uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any>;
     /**
+     * @public
      * @async
      * Deletes upload session in the server
-     * @return The promise resolves to cancelled response
+     * @returns The promise resolves to cancelled response
      */
     cancel(): Promise<any>;
     /**
+     * @public
      * @async
      * Gets status for the upload session
-     * @return The promise resolves to the status enquiry response
+     * @returns The promise resolves to the status enquiry response
      */
     getStatus(): Promise<any>;
     /**
+     * @public
      * @async
      * Resumes upload session and continue uploading the file from the last sent range
-     * @return The promise resolves to the uploaded response
+     * @returns The promise resolves to the uploaded response
      */
     resume(): Promise<any>;
 }

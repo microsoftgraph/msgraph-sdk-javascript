@@ -1,38 +1,35 @@
-import {Options, DEFAULT_VERSION, GRAPH_BASE_URL} from "./common"
-import {GraphRequest} from "./GraphRequest"
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
 
-export class Client {
-    // specify client defaults
-    config:Options = {
-        debugLogging: false,
-        defaultVersion: DEFAULT_VERSION,
-        baseUrl: GRAPH_BASE_URL
-    };
+import { init } from "./PolyFill";
+/**
+ * Polyfilling Promise and fetch if not present
+ */
+init();
 
-    static init(clientOptions?:Options) {
-        var graphClient = new Client();
-        for (let key in clientOptions) {
-            graphClient.config[key] = clientOptions[key];
-        }
-        return graphClient;
-    }
+export * from "./content/BatchRequestContent";
+export * from "./content/BatchResponseContent";
 
-    /*
-     * Entry point for calling api
-     */
-    api(path:string) {
-        return new GraphRequest(this.config, path);
-    }
-
-}
-
-export * from "./GraphRequest";
-export * from "./common";
-export * from "./ResponseType";
-export * from "./ResponseHandler";
+export * from "./middleware/AuthenticationHandler";
+export * from "./middleware/HTTPMessageHandler";
 
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";
 
-export * from "./content/BatchRequestContent";
-export * from "./content/BatchResponseContent";
+export * from "./Client";
+export * from "./GraphError";
+export * from "./GraphRequest";
+export * from "./IAuthenticationProvider";
+export * from "./IAuthProvider";
+export * from "./IAuthProviderCallback";
+export * from "./IClientOptions";
+export * from "./IContext";
+export * from "./IFetchOptions";
+export * from "./IGraphRequestCallback";
+export * from "./IMiddleware";
+export * from "./IOptions";
+export * from "./ResponseType";

@@ -1,13 +1,17 @@
 # [Batching](https://developer.microsoft.com/en-us/graph/docs/concepts/json_batching)
+
 Batching is a way of combining multiple requests to resources in same/different workloads in a single HTTP request. This can be achieved by making a post call with those requests as a JSON payload to $batch endpoint.
 
-### BatchRequestContent
+## BatchRequestContent
+
 A component which eases the way of creating batch request payload. This class handles all the batch specific payload construction and stuffs, we just need to worry about individual requests.
 
-### BatchResponseContent
+## BatchResponseContent
+
 A Component to simplify the processing of batch responses by providing functionalities like getResponses, getResponseById, getResponsesIterator
 
-**Update the profile photo and download the uploaded photo with batching - Making serial requests**
+### Update the profile photo and download the uploaded photo with batching - Making serial requests
+
 ```typescript
 // elem here is the input HTML element of type file
 const serialBatching = async function(elem) {
@@ -29,7 +33,7 @@ const serialBatching = async function(elem) {
         let downloadProfilePhotoRequest = new Request("/me/photo/$value", {
             method: "GET"
         });
-        
+
         let downloadId = "2";
         let downloadProfilePhotoStep: BatchRequestStep = {
             id: downloadId,
@@ -38,22 +42,22 @@ const serialBatching = async function(elem) {
             // This download request waits until the upload request completes
             dependsOn: ["1"]
         };
-        
+
         //Create instance by passing a batch request step
         let batchRequestContent = new MicrosoftGraph.BatchRequestContent([uploadProfilePhotoStep, downloadProfilePhotoStep]);
-        
+
         //Extracting content from the instance
         let content = await batchRequestContent.getContent();
-        
+
         //Making call to $batch end point with the extracted content
         let response = await client.api("/$batch").post(content);
-        
+
          //Create instance with response from the batch request
         let batchResponseContent = new MicrosoftGraph.BatchResponseContent(response);
-        
+
         //Getting response by id
         console.log(batchResponse.getResponseById(downloadId));
-        
+
         //Getting all the responses
         console.log(batchResponseContent.getResponses());
     } catch (error) {
@@ -63,7 +67,7 @@ const serialBatching = async function(elem) {
 
 ```
 
-**GET and POST contents from and to different workloads - Making parallel requests**
+### GET and POST contents from and to different workloads - Making parallel requests
 
 ```typescript
 const parallelBatching = async function() {
@@ -147,7 +151,7 @@ const parallelBatching = async function() {
 };
 ```
 
-**Create a folder in OneDrive and upload multiple files - Making batch request with all other request depend on one request**
+### Create a folder in OneDrive and upload multiple files - Making batch request with all other request depend on one request
 
 ```typescript
 // elem here is the input HTML element of type file
@@ -167,7 +171,7 @@ const sameBatching = async function (elem) {
             },
             body: JSON.stringify(folderDetails)
         });
-        
+
         let createFolderStep: BatchRequestStep = {
             id: "1",
             request: createFolder
@@ -202,7 +206,7 @@ const sameBatching = async function (elem) {
         };
 
         let batchRequestContent = new MicrosoftGraph.BatchRequestContent([createFolderStep, uploadFileStep1, uploadFileStep2]);
-        
+
         let content = await batchRequestContent.getContent();
 
         let response = await client.api("/$batch").post(content);
@@ -214,6 +218,6 @@ const sameBatching = async function (elem) {
 };
 ```
 
-### Constraints
-Refer these [#1](https://developer.microsoft.com/en-us/graph/docs/concepts/json_batching), [#2](https://developer.microsoft.com/en-us/graph/docs/concepts/known_issues#json-batching) documents for current constraints in the batching
+## Constraints
 
+Refer, [JSON Batching](https://developer.microsoft.com/en-us/graph/docs/concepts/json_batching), [Known Issues](https://developer.microsoft.com/en-us/graph/docs/concepts/known_issues#json-batching) documents for current constraints in the batching

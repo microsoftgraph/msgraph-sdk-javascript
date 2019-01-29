@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/microsoft-graph-client",
-  "//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in common.ts. If you change it here, also change it there.",
+  "//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in Constants.ts. If you change it here, also change it there.",
   "version": "1.4.0",
   "description": "Microsoft Graph Client Library",
   "main": "lib/src/index.js",
@@ -9,29 +9,37 @@
     "lib/"
   ],
   "types": "./lib/src/index.d.ts",
+  "dependencies": {
+    "es6-promise": "^4.2.5",
+    "isomorphic-fetch": "^2.2.1",
+    "tslib": "^1.9.3"
+  },
   "devDependencies": {
-    "@types/mocha": "^5.2.4",
-    "@types/node": "^9.4.0",
-    "browserify": "^13.1.0",
+    "@types/fetch-mock": "^7.2.2",
+    "@types/isomorphic-fetch": "0.0.34",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.10",
+    "browserify": "^16.2.3",
+    "chai": "^4.2.0",
+    "fetch-mock": "^7.2.5",
+    "msal": "^0.2.4",
     "mocha": "^5.2.0",
-    "typescript": "^2.2.1",
-    "uglify-js": "^3.4.5"
+    "typescript": "^3.1.6",
+    "uglify-es": "^3.3.9",
+    "window": "^4.2.5"
   },
   "scripts": {
     "compile": "tsc",
-    "rollup-core": "node core-browserify.js > lib/graph-js-sdk-core.js && uglifyjs lib/graph-js-sdk-core.js --output lib/graph-js-sdk-core.js",
-    "rollup-with-vendor": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
-    "build-core": "npm run compile && npm run rollup-core",
-    "build-with-vendor": "npm run compile && npm run rollup-with-vendor",
-    "build": "npm run compile && npm run rollup-core && npm run rollup-with-vendor",
-    "test": "mocha lib/spec/core",
-    "test:types": "tsc -p spec && mocha spec/types",
+    "web:js": "node browserify-with-dependencies.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
+    "core:js": "node browserify.js > lib/graph-js-sdk-core.js && uglifyjs ./lib/graph-js-sdk-core.js --output ./lib/graph-js-sdk-core.js",
+    "build": "npm run compile && npm run web:js && npm run core:js",
+    "test": "mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/tasks",
+    "test:content": "tsc -p spec && mocha spec/content",
+    "test:core": "tsc -p spec && mocha spec/core",
     "test:tasks": "tsc -p spec && mocha spec/tasks",
-    "test:content": "tsc -p spec && mocha spec/content"
-  },
-  "dependencies": {
-    "es6-promise": "^4.1.0",
-    "isomorphic-fetch": "^2.2.1"
+    "test:development": "tsc -p spec && mocha spec/development/middleware && mocha spec/development/workload",
+    "test:middleware": "tsc -p spec && mocha spec/development/middleware",
+    "test:workload": "tsc -p spec && mocha spec/development/workload"
   },
   "repository": {
     "type": "git",

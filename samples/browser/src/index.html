@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Sample For Browser</title>
+	<script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.2.4/js/msal.js"></script>
+	<script type="text/javascript" src="./graph-js-sdk-core.js"></script>
+	<script type="text/javascript" src="./request.js"></script>
+	<script type="text/javascript" src="./ui.js"></script>
+	<script type="text/javascript" src="./main.js"></script>
+	<link rel="stylesheet" type="text/css" href="./main.css" />
+</head>
+
+<body style="background: #f3f3f3;">
+	<div class="fileUploadParent">
+		<img id="profileImg" width="100px" src="" alt="profileImg" />
+		<input id="uploadProfile" type="file" class="fileUpload" onchange="request.updateProfilePicture()" />
+		<div class="imageInput">
+			<img width="20px" src="./upload-user.svg" />
+		</div>
+	</div>
+	<div display="inline-block">
+		<h2>
+			<span>Hello </span>
+			<span id="displayName" style="display: inline-block; vertical-align: middle;"></span>
+			<span> !</span>
+		</h2>
+	</div>
+	<div class="main">
+		<div id="requests" class="grid">
+			<div id="1" cell="1" class="cell">
+				<span cell="1" class="cellText">Get My Details</span>
+			</div>
+			<div id="2" cell="2" class="cell">
+				<span cell="2" class="cellText">Get My Drive Files</span>
+			</div>
+			<div id="3" cell="3" class="cell">
+				<span cell="3" class="cellText">Get My Mails</span>
+			</div>
+			<div id="4" cell="4" class="cell">
+				<span cell="4" class="cellText">Upload Large File To OneDrive</span>
+				<input id="largeFileUpload" class="largeFileUpload" type="file" onchange="request.uploadLargeFile()" />
+			</div>
+		</div>
+		<div class="outputParent">
+			<div style="margin: 10px; font-weight: bold">Result</div>
+			<div id="output" width="80%" style="margin: 10px;"></div>
+		</div>
+	</div>
+
+</body>
+
+</html>

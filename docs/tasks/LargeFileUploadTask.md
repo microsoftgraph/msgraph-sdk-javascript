@@ -2,16 +2,9 @@
 
 This task simplifies the implementation of onedrive's [resumable upload](https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession).
 
-## Bootstrap code
+## Creating the client instance
 
-```javascript
-const client = MicrosoftGraph.Client.init({
-    debugLogging: true,
-    authProvider: function (done) {
-        done(null, <AUTH TOKEN>);
-    }
-});
-```
+Refer [this documentation](../CreatingClientInstance.md) for initializing the client.
 
 ## Uploading from browser
 
@@ -23,28 +16,10 @@ HTML to select the file for uploading.
 
 Get files from the input element and start uploading.
 
-```javascript
-function fileUpload(elem) {
-    let file = elem.files[0];
-    // Method is from creating session and start uploading
-    // client is from the bootstrap code
-    largeFileUpload(client, file, file.name)
-    .then((response) => {
-        console.log(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-```
-
-**With `async`/`await` syntactic sugar in ECMAScript 2017**
-
-```javascript
+```typescript
 async function fileUpload(elem) {
     let file = elem.files[0];
     try {
-        // Method is from creating session and start uploading
-        // client is from the bootstrap code
         let response = await largeFilUpload(client, file, file.name);
     } catch (error) {
         console.error(error);
@@ -54,15 +29,13 @@ async function fileUpload(elem) {
 
 ## Uploading from NodeJS
 
-```javascript
+```typescript
 function uploadFile() {
     fs.readFile(<PATH_OF_THE_FILE>, {}, function (err, file) {
         if(err) {
             throw err;
         }
         let fileName = <NAME_OF_THE_FILE>;
-        // Method is from creating session and start uploading
-        // client is from the bootstrap code
         largeFileUpload(client, file, fileName)
         .then((response) => {
             console.log(response);
@@ -76,33 +49,7 @@ function uploadFile() {
 
 ## Creating session and start uploading
 
-```javascript
-function largeFileUpload(client, file, fileName) {
-    let options =  {
-        path: "/Documents",
-        fileName: fileName,
-        rangeSize: (1024 * 1024)
-    };
-
-    MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options)
-    .then((uploadTask) => {
-        uploadTask.upload()
-        .then((res) => {
-            console.log(res);
-            console.log("File Uploaded Successfully.!!");
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }).catch((err) => {
-        console.log(err);
-    });
-}
-```
-
-**With `async`/`await` syntactic sugar in ECMAScript 2017**
-
-```javascript
+```typescript
 async function uploadFile(client, file) {
     try {
         let options = {
@@ -123,7 +70,8 @@ async function uploadFile(client, file) {
 ## We can just resume the broken upload
 
 _Lets consider some break down happens in the middle of uploading, with the uploadTask object in hand you can resume easily._
-```javascript
+
+```typescript
 uploadTask.resume();
 ```
 
@@ -131,10 +79,8 @@ uploadTask.resume();
 
 _You can create the upload task, and play with it by using **sliceFile** and **uploadSlice** methods_
 
-```javascript
+```typescript
 let range = uploadTask.getNextRange();
 let slicedFile = uploadTask.sliceFile(range);
 uploadTask.uploadSlice(slicedFile, range, uploadTask.file.size);
 ```
-
-

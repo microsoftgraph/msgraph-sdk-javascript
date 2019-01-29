@@ -1,11 +1,14 @@
-import * as assert from 'assert';
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
 
-import {Client as GraphClient} from "../../src/index"
+import { assert } from "chai";
+import { getClient } from "../test-helper";
 
-const client = GraphClient.init();
-
-declare const describe, it;
-
+const client = getClient();
 
 let testCases = {
     "/me": "https://graph.microsoft.com/v1.0/me",
@@ -26,11 +29,13 @@ let testCases = {
     "https://graph.microsoft.com/beta/me?select=displayName": "https://graph.microsoft.com/beta/me?select=displayName"
 }
 
-describe('#parsePath()', function() {
-    for (let path in testCases) {
-        it('should correctly parse ' + path, function() {        
-            var request = client.api(path);
-            assert.equal(request.buildFullUrl(), testCases[path]);
-        });
-    }
+describe("urlParsing.ts", function () {
+    describe('parsePath', function () {
+        for (let path in testCases) {
+            it('should correctly parse ' + path, () => {
+                var request = client.api(path);
+                assert.equal(request["buildFullUrl"](), testCases[path]);
+            });
+        }
+    });
 });

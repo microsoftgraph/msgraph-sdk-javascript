@@ -1,4 +1,11 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
  * @module BatchRequestContent
  */
 import { RequestMethod } from '../RequestMethod';
@@ -70,9 +77,11 @@ export interface BatchRequestBody {
 }
 
 /**
+ * @class
  * Class for handling BatchRequestContent
  */
 export class BatchRequestContent {
+
     /**
      * @private
      * @static
@@ -86,8 +95,10 @@ export class BatchRequestContent {
     requests: Map<string, BatchRequestStep>;
 
     /**
+     * @constructor
      * Constructs a BatchRequestContent instance
      * @param {BatchRequestStep[]} [requests] - Array of requests value
+     * @returns An instance of a BatchRequestContent
      */
     constructor(requests?: BatchRequestStep[]) {
         let self = this;
@@ -106,11 +117,12 @@ export class BatchRequestContent {
     }
 
     /**
+     * @public
      * Adds a request to the batch request content
      * @param {BatchRequestStep} request - The request value
-     * @return The id of the added request
+     * @returns The id of the added request
      */
-    addRequest(request: BatchRequestStep): string {
+    public addRequest(request: BatchRequestStep): string {
         let self = this,
             limit = BatchRequestContent.requestLimit;
         if (request.id === "") {
@@ -133,11 +145,12 @@ export class BatchRequestContent {
     }
 
     /**
+     * @public
      * Removes request from the batch payload and its dependencies from all dependents 
      * @param {string} requestId - The id of a request that needs to be removed
-     * @return The boolean indicating removed status 
+     * @returns The boolean indicating removed status 
      */
-    removeRequest(requestId: string): boolean {
+    public removeRequest(requestId: string): boolean {
         let self = this,
             deleteStatus = self.requests.delete(requestId),
             iterator = self.requests.entries(),
@@ -162,11 +175,12 @@ export class BatchRequestContent {
     }
 
     /**
+     * @public
      * @async
      * Serialize content from BatchRequestContent instance
-     * @return The body content to make batch request
+     * @returns The body content to make batch request
      */
-    async getContent(): Promise<BatchRequestBody> {
+    public async getContent(): Promise<BatchRequestBody> {
         let self = this,
             requestBody = <BatchRequestBody>{},
             requests = [],
@@ -187,7 +201,7 @@ export class BatchRequestContent {
         }
         while (!cur.done) {
             let requestStep = cur.value[1],
-                batchRequestData = <BatchRequestData> await BatchRequestContent.getRequestData(<IsomorphicRequest>requestStep.request);
+                batchRequestData = <BatchRequestData>await BatchRequestContent.getRequestData(<IsomorphicRequest>requestStep.request);
             /**
              * @see {@link https://developer.microsoft.com/en-us/graph/docs/concepts/json_batching#request-format}
              */
@@ -220,10 +234,10 @@ export class BatchRequestContent {
      * As JSON batching matures, these limitations will be removed.
      * @see {@link https://developer.microsoft.com/en-us/graph/docs/concepts/known_issues#json-batching}
      * 
-     * @return The boolean indicating the validation status
+     * @returns The boolean indicating the validation status
      */
 
-    static validateDependencies(requests: Map<string, BatchRequestStep>): boolean {
+    private static validateDependencies(requests: Map<string, BatchRequestStep>): boolean {
         const isParallel = (requests: Map<string, BatchRequestStep>): boolean => {
             let iterator = requests.entries(),
                 cur = iterator.next();
@@ -246,7 +260,7 @@ export class BatchRequestContent {
             let prev = cur;
             cur = iterator.next();
             while (!cur.done) {
-                let curReq:BatchRequestStep = cur.value[1];
+                let curReq: BatchRequestStep = cur.value[1];
                 if (curReq.dependsOn === undefined || curReq.dependsOn.length !== 1 || curReq.dependsOn[0] !== prev.value[1].id) {
                     return false;
                 }
@@ -306,7 +320,7 @@ export class BatchRequestContent {
      * @async
      * Converts Request Object instance to a JSON
      * @param {IsomorphicRequest} request - The IsomorphicRequest Object instance
-     * @return A promise that resolves to JSON representation of a request
+     * @returns A promise that resolves to JSON representation of a request
      */
     private static async getRequestData(request: IsomorphicRequest): Promise<RequestData> {
         let requestData = <RequestData>{};
@@ -340,7 +354,7 @@ export class BatchRequestContent {
      * @async
      * Gets the body of a Request object instance
      * @param {IsomorphicRequest} request - The IsomorphicRequest object instance
-     * @return The Promise that resolves to a body value of a Request
+     * @returns The Promise that resolves to a body value of a Request
      */
     private static async getRequestBody(request: IsomorphicRequest): Promise<any> {
         let bodyParsed: boolean = false,
@@ -388,12 +402,13 @@ export class BatchRequestContent {
     }
 
     /**
+     * @public
      * Adds a dependency for a given dependent request
-     *
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified the preceding request will be considered as a dependency
+     * @returns Nothing
      */
-    addDependency(dependentId: string, dependencyId?: string) {
+    public addDependency(dependentId: string, dependencyId?: string): void {
         let self = this;
         if (!self.requests.has(dependentId)) {
             let error = new Error(`Dependent ${dependentId} does not exists, Please check the id`);
@@ -410,7 +425,7 @@ export class BatchRequestContent {
             if (dependent.dependsOn === undefined) {
                 dependent.dependsOn = [];
             }
-            if (dependent.dependsOn.includes(dependencyId)) {
+            if (dependent.dependsOn.indexOf(dependencyId) !== -1) {
                 let error = new Error(`Dependency ${dependencyId} is already added for the request ${dependentId}`);
                 error.name = "Duplicate Dependency";
                 throw error;
@@ -429,7 +444,7 @@ export class BatchRequestContent {
                 if (cur.value[1].dependsOn === undefined) {
                     cur.value[1].dependsOn = [];
                 }
-                if (cur.value[1].dependsOn.includes(dependencyId)) {
+                if (cur.value[1].dependsOn.indexOf(dependencyId) !== -1) {
                     let error = new Error(`Dependency ${dependencyId} is already added for the request ${dependentId}`);
                     error.name = "Duplicate Dependency";
                     throw error;
@@ -444,12 +459,13 @@ export class BatchRequestContent {
     }
 
     /**
+     * @public
      * Removes a dependency for a given dependent request id
      * @param {string} dependentId - The id of the dependent request
      * @param {string} [dependencyId] - The id of the dependency request, if not specified will remove all the dependencies of that request
-     * @return The boolean indicating removed status
+     * @returns The boolean indicating removed status
      */
-    removeDependency(dependentId: string, dependencyId?: string): boolean {
+    public removeDependency(dependentId: string, dependencyId?: string): boolean {
         let request = this.requests.get(dependentId);
         if (typeof request === "undefined" || request.dependsOn === undefined || request.dependsOn.length === 0) {
             return false;
