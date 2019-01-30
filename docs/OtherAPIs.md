@@ -74,6 +74,21 @@ try {
 }
 ```
 
+## MIDDLEWAREOPTION
+
+You can pass in the middleware options for a request through `.middlewareOption()`. This takes array of strongly typed middleware options, these middleware options should be an implementation of MiddlewareOption interface
+
+```typescript
+try {
+    let res = await client.api("/me/messages").middlewareOption([
+        new RetryHandlerOption(5000)
+    ]).get();
+    console.log(res);
+} catch (error) {
+    throw error;
+}
+```
+
 ## RESPONSETYPE
 
 To set a custom response type, use the`.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.

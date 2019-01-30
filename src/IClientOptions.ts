@@ -7,8 +7,7 @@
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { FetchOptions } from "./IFetchOptions";
-import { Middleware } from "./IMiddleware";
-import { MiddlewareOptions } from "./IMiddlewareOptions";
+import { Middleware } from "./middleware/IMiddleware";
 
 /**
 * @interface
@@ -19,7 +18,6 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
 * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
 * @property {FetchOptions} [fetchOptions] - The options for fetch request
 * @property {Function} [middleware] - The first middleware of the middleware chain
-* @property {MiddlewareOptions} [middlewareOptions] - The options for middleware
 */
 export interface ClientOptions {
     authProvider?: AuthenticationProvider;
@@ -28,5 +26,4 @@ export interface ClientOptions {
     defaultVersion?: string;
     fetchOptions?: FetchOptions;
     middleware?: Middleware;
-    middlewareOptions?: MiddlewareOptions;
 }

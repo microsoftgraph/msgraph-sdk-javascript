@@ -70,6 +70,7 @@ export class PageIterator {
     private callback: PageIteratorCallback;
 
     /**
+     * @public
      * @constructor
      * Creates new instance for PageIterator
      * @param {Client} client - The graph client instance
@@ -77,7 +78,7 @@ export class PageIterator {
      * @param {PageIteratorCallback} callBack - The callback function
      * @returns An instance of a PageIterator
      */
-    constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback) {
+    public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback) {
         let self = this;
         self.client = client;
         self.collection = pageCollection.value;

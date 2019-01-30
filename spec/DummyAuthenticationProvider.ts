@@ -5,11 +5,27 @@
  * -------------------------------------------------------------------------------------------
  */
 
+/**
+ * @module DummyAuthenticationProvider
+ */
+
 import { AuthenticationProvider } from "../src/IAuthenticationProvider";
 
+/**
+ * @class
+ * @implements AuthenticationProvider
+ * Class representing DummyAuthenticationProvider
+ */
 export class DummyAuthenticationProvider implements AuthenticationProvider {
+
+    /**
+     * @public
+     * @async
+     * To get the access token
+     * @returns The promise that resolves to an access token
+     */
     public async getAccessToken(): Promise<any> {
-        let token = "DUMMY_TOKEN";
+        const token = "DUMMY_TOKEN";
         return Promise.resolve(token);
     }
 }

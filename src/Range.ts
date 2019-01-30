@@ -28,13 +28,14 @@ export class Range {
     public maxValue: number
 
     /**
+     * @public
      * @constructor
      * Creates a range for given min and max values
      * @param {number} [minVal = -1] - The minimum value.
      * @param {number} [maxVal = -1] - The maximum value.
      * @returns An instance of a Range
      */
-    constructor(minVal: number = -1, maxVal: number = -1) {
+    public constructor(minVal: number = -1, maxVal: number = -1) {
         let self = this;
         self.minValue = minVal;
         self.maxValue = maxVal;

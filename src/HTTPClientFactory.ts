@@ -13,7 +13,7 @@ import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 import { HTTPClient } from "./HTTPClient";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
-import { Middleware } from "./IMiddleware";
+import { Middleware } from "./middleware/IMiddleware";
 
 /**
  * @class
@@ -29,8 +29,8 @@ export class HTTPClientFactory {
      * @returns A HTTPClient instance
      */
     public static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient {
-        let authenticationHandler = new AuthenticationHandler(authProvider);
-        let httpMessageHandler = new HTTPMessageHandler();
+        const authenticationHandler = new AuthenticationHandler(authProvider);
+        const httpMessageHandler = new HTTPMessageHandler();
         authenticationHandler.setNext(httpMessageHandler);
         return HTTPClientFactory.createWithMiddleware(authenticationHandler);
     }

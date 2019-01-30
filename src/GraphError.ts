@@ -56,12 +56,13 @@ export class GraphError {
     public body: any;
 
     /**
+     * @public
      * @constructor
      * Creates an instance of GraphError
      * @param {number} [statusCode = -1] - The status code of the error
      * @returns An instance of GraphError
      */
-    constructor(statusCode: number = -1) {
+    public constructor(statusCode: number = -1) {
         let self = this;
         self.statusCode = statusCode;
         self.code = null;

@@ -26,12 +26,13 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
     private provider: AuthProvider;
 
     /**
+     * @public
      * @constructor
      * Creates an instance of CustomAuthenticationProvider
      * @param {AuthProviderCallback} provider - An authProvider function
      * @returns An instance of CustomAuthenticationProvider
      */
-    constructor(provider: AuthProvider) {
+    public constructor(provider: AuthProvider) {
         this.provider = provider;
     }
 

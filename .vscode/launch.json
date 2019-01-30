@@ -35,6 +35,20 @@
                 "${workspaceRoot}/spec/development/workload/*.js"
             ],
             "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Run Build",
+            "outFiles": [],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run middleware tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "${workspaceRoot}/spec/middleware/*.js"
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Run Build",
             "outFiles": [],
             "internalConsoleOptions": "openOnSessionStart"
         }

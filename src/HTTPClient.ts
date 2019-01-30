@@ -10,9 +10,7 @@
  */
 
 import { Context } from "./IContext";
-import { FetchOptions } from "./IFetchOptions";
-import { Middleware } from "./IMiddleware";
-import { MiddlewareOptions } from "./IMiddlewareOptions";
+import { Middleware } from "./middleware/IMiddleware";
 
 /**
  * @class
@@ -27,11 +25,12 @@ export class HTTPClient {
     private middleware: Middleware;
 
     /**
+     * @public
      * @constructor
      * Creates an instance of a HTTPClient
      * @param {Middleware} middleware - The first middleware of the middleware chain
      */
-    constructor(middleware: Middleware) {
+    public constructor(middleware: Middleware) {
         this.middleware = middleware;
     }
 
@@ -39,18 +38,17 @@ export class HTTPClient {
      * @public
      * @async
      * To send the request through the middleware chain
-     * @param {RequestInfo} request - The request url string or the Request instance 
-     * @param {FetchOptions} options - The options of a request
-     * @param {MiddlewareOptions} middlewareOptions - The options of a middleware chain
+     * @param {Context} context - The context of a request 
      * @returns A promise that resolves to the Context
      */
-    public async sendRequest(request: RequestInfo, options: FetchOptions, middlewareOptions: MiddlewareOptions): Promise<Context> {
+    public async sendRequest(context: Context): Promise<Context> {
         try {
-            let context: Context = {
-                request,
-                options,
-                middlewareOptions
-            };
+            if (!(context.request instanceof Request) && context.options === undefined) {
+                const error = new Error();
+                error.name = "InvalidRequestOptions";
+                error.message = "Unable to execute the middleware, Please provide valid options for a request";
+                throw error;
+            }
             await this.middleware.execute(context);
             return context;
         } catch (error) {

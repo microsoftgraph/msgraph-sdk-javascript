@@ -6,6 +6,10 @@
  */
 
 /**
+ * @module GraphRequestUtil
+ */
+
+/**
  * To hold list of OData query params
  */
 export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$top", "$skip", "$skipToken", "$count"];

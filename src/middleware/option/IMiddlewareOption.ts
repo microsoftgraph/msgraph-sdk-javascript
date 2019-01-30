@@ -5,11 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Context } from "../src/IContext";
-import { Middleware } from "../src/IMiddleware";
+/**
+ * @interface
+ * Signature representing the middleware options
+ */
 
-export class CustomHTTPHandler implements Middleware {
-    public async execute(context: Context) {
-        
-    }
+export interface MiddlewareOption {
+
 }

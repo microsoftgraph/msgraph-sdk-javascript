@@ -99,6 +99,7 @@ export class LargeFileUploadTask {
     private DEFAULT_FILE_SIZE: number = 5 * 1024 * 1024;
 
     /**
+     * @public
      * @constructor
      * Constructs a LargeFileUploadTask
      * @param {Client} client - The GraphClient instance
@@ -107,7 +108,7 @@ export class LargeFileUploadTask {
      * @param {LargeFileUploadTaskOptions} options - The upload task options
      * @returns An instance of LargeFileUploadTask
      */
-    constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+    public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         let self = this;
         self.client = client;
         self.file = file;

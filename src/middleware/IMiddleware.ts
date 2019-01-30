@@ -5,11 +5,14 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { Context } from "../IContext";
+
 /**
  * @interface
- * Signature representing the middleware options
- * @property {[key: string]: any} - The key value pair for request options
+ * @property {Function} execute - The method to execute the middleware
+ * @property {Function} [setNext] - A method to set the next middleware in the chain
  */
-export interface MiddlewareOptions {
-    [key: string]: any
+export interface Middleware {
+    execute: (context: Context) => Promise<void>;
+    setNext?: (middleware: Middleware) => void;
 }

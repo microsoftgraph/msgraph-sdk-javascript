@@ -6,6 +6,10 @@
  */
 
 /**
+ * @module Constants
+ */
+
+/**
  * @constant
  * A Default API endpoint version for a request
  */
