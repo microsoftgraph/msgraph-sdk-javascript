@@ -7,17 +7,7 @@ Thanks for submitting a pull request! Please provide enough information so that 
 
 <!-- Summary of the PR -->
 
-## Types of changes
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] My code follows the code style of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the documentation accordingly.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
+## Motivation
 
 Explain the **motivation** for making this change. What existing problem does the pull request solve?
 
@@ -33,3 +23,17 @@ Demonstrate the code is solid. Example: The exact commands you ran and their out
 
 <!-- Put `closes #XXXX` in your comment to auto-close the issue that your PR fixes (if such). -->
 Fixes #
+
+## Types of changes
+<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+
+## Checklist
+- [ ] I have read the **CONTRIBUTING** document.
+- [ ] My code follows the code style of this project.
+- [ ] My change requires a change to the documentation.
+- [ ] I have updated the documentation accordingly.
+- [ ] I have added tests to cover my changes.
+- [ ] All new and existing tests passed.
