@@ -31,13 +31,13 @@ import {Client} from "./node_modules/@microsoft/microsoft-graph-client/lib/src/c
 
 ### Via Script Tag
 
-Include [lib/graph-js-sdk-core.js](./lib/graph-js-sdk-core.js) in your page.
+Include `lib/graph-js-sdk-core.js` in your page.
 
 ```HTML
 <script type="text/javascript" src="graph-js-sdk-core.js"></script>
 ```
 
-In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you can polyfill them and include as above or you can use [lib/graph-js-sdk-web.js](./lib/graph-js-sdk-web.js) which includes polyfills.
+In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you can polyfill them and include as above or you can use `lib/graph-js-sdk-web.js` which includes polyfills.
 
 ```HTML
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
