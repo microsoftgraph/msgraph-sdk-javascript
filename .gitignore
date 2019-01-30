@@ -1,5 +1,7 @@
 /.vscode/*
 !/.vscode/launch.json
+!/.vscode/tasks.json
+
 .DS_Store
 .tmp
 tmp
@@ -8,6 +10,8 @@ typings
 coverage
 **/*.tgz
 npm-debug.log
+
+lib
 
 src/**/*.js
 src/**/*.js.map
