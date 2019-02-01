@@ -21,6 +21,6 @@ export interface Options {
 	authProvider: AuthProvider;
 	baseUrl?: string;
 	debugLogging?: boolean;
-	defaultVersion?: string,
+	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 }

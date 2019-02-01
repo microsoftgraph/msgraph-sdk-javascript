@@ -5,20 +5,23 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { HardCodedAuthenticationProvider } from "./HardCodedAuthenticationProvider";
 import { Client } from "../../src/index";
 import * as PolyFill from "../../src/PolyFill";
 
+import { HardCodedAuthenticationProvider } from "./HardCodedAuthenticationProvider";
+
 export function getClient(): Client {
-    /**
-     * PolyFill fetch and promise before initializing client, otherwise error will be thrown
-     */
-    PolyFill.init();
-    return Client.initWithMiddleware({
-        authProvider: new HardCodedAuthenticationProvider()
-    });
+	/**
+	 * PolyFill fetch and promise before initializing client, otherwise error will be thrown
+	 */
+	PolyFill.init();
+	return Client.initWithMiddleware({
+		authProvider: new HardCodedAuthenticationProvider(),
+	});
 }
 
 export function randomString() {
-    return Math.random().toString(36).substring(7);
+	return Math.random()
+		.toString(36)
+		.substring(7);
 }

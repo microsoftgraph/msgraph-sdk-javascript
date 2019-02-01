@@ -18,15 +18,14 @@ import { Middleware } from "../src/middleware/IMiddleware";
  * Class representing DummyHTTPMessageHandler
  */
 export class DummyHTTPMessageHandler implements Middleware {
-
-    /**
-     * @public
-     * @async
-     * To execute the current middleware
-     * @param {Context} context - The request context object
-     * @returns A promise that resolves to nothing
-     */
-    public async execute(context: Context) {
-        return;
-    }
+	/**
+	 * @public
+	 * @async
+	 * To execute the current middleware
+	 * @param {Context} context - The request context object
+	 * @returns A promise that resolves to nothing
+	 */
+	public async execute(context: Context) {
+		return;
+	}
 }

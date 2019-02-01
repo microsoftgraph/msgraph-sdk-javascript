@@ -5,47 +5,56 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { Person } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
+
 import { getClient } from "../test-helper";
-import { Person } from '@microsoft/microsoft-graph-types';
 
 const client = getClient();
 
-describe('Social and Insights', function () {
+describe("Social and Insights", function() {
 	this.timeout(10 * 1000);
-	it('Fetch a list of people', async () => {
+	it("Fetch a list of people", async () => {
 		try {
-			let res = await client.api("/me/people").get();
+			const res = await client.api("/me/people").get();
 			const person = res.value[0] as Person;
 			assert.isDefined(person.displayName);
 			assert.isDefined(person.surname);
 			assert.isDefined(person.id);
-
-			assert.isUndefined(person['invalidPropertyName']);
+			assert.isUndefined(person["random fake property that should be null"]);
 		} catch (error) {
 			throw error;
 		}
 	});
 
-	it('Searches the people list', async () => {
+	it("Searches the people list", async () => {
 		try {
-			await client.api("/me/people").query("$search=j").get();
+			await client
+				.api("/me/people")
+				.query("$search=j")
+				.get();
 		} catch (error) {
 			throw error;
 		}
 	});
 
-	it('Searches the people list with a topic', async () => {
+	it("Searches the people list with a topic", async () => {
 		try {
-			await client.api("/me/people").query(`$search="topic: planning"`).get();
+			await client
+				.api("/me/people")
+				.query(`$search="topic: planning"`)
+				.get();
 		} catch (error) {
 			throw error;
 		}
 	});
 
-	it('Finds items trending around me', async () => {
+	it("Finds items trending around me", async () => {
 		try {
-			await client.api("/me/insights/trending").version("beta").get();
+			await client
+				.api("/me/insights/trending")
+				.version("beta")
+				.get();
 		} catch (error) {
 			throw error;
 		}

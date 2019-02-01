@@ -1,7 +1,6 @@
 # Microsoft Graph JavaScript Client Library
 
-[![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
-[![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master&style=flat-square)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript)
+[![npm version badge](https://img.shields.io/npm/v/@microsoft/microsoft-graph-client.svg?maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client) [![Travis](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript.svg?branch=master)](https://travis-ci.org/microsoftgraph/msgraph-sdk-javascript) [![Licence](https://img.shields.io/github/license/microsoftgraph/msgraph-sdk-javascript.svg)](https://github.com/microsoftgraph/msgraph-sdk-javascript) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/microsoftgraph/msgraph-sdk-javascript) [![Downloads](https://img.shields.io/npm/dm/@microsoft/microsoft-graph-client.svg??maxAge=86400)](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)
 
 The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that can be used server-side and in the browser.
 
@@ -26,7 +25,7 @@ import { Client } from "@microsoft/microsoft-graph-client";
 In case your environment have support for or have polyfill for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], import `./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index` into your module which doesn't have polyfills for these.
 
 ```typescript
-import {Client} from "./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index";
+import { Client } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index";
 ```
 
 ### Via Script Tag
@@ -47,15 +46,10 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 
 ### 1. Register your application
 
-Register your application to use Microsoft Graph API using one of the following
-supported authentication portals:
+Register your application to use Microsoft Graph API using one of the following supported authentication portals:
 
-* [Microsoft Application Registration Portal](https://apps.dev.microsoft.com):
-  Register a new application that works with Microsoft Accounts and/or
-  organizational accounts using the unified V2 Authentication Endpoint.
-* [Microsoft Azure Active Directory](https://manage.windowsazure.com): Register
-  a new application in your tenant's Active Directory to support work or school
-  users for your tenant or multiple tenants.
+-   [Microsoft Application Registration Portal](https://apps.dev.microsoft.com): Register a new application that works with Microsoft Accounts and/or organizational accounts using the unified V2 Authentication Endpoint.
+-   [Microsoft Azure Active Directory](https://manage.windowsazure.com): Register a new application in your tenant's Active Directory to support work or school users for your tenant or multiple tenants.
 
 ### 2. Authenticate for the Microsoft Graph service
 
@@ -72,10 +66,11 @@ Refer devDependencies in [package.json](./package.json) for the compatible msal 
 ```
 
 ```typescript
-const clientID = 'your_client_id'; // Client Id of the registered application
+const clientID = "your_client_id"; // Client Id of the registered application
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
-const options = { // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-    redirectUri: "Your redirect URI"
+const options = {
+	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
+	redirectUri: "Your redirect URI",
 };
 const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, scopes, options);
 ```
@@ -91,10 +86,11 @@ npm install msal@<version>
 ```typescript
 import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
 
-const clientID = 'your_client_id'; // Client Id of the registered application
+const clientID = "your_client_id"; // Client Id of the registered application
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
-const options = { // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-    redirectUri: "Your redirect URI"
+const options = {
+	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
+	redirectUri: "Your redirect URI",
 };
 const authProvider = new MSALAuthenticationProvider(clientId, scopes, options);
 ```
@@ -109,7 +105,7 @@ An instance of the **Client** class handles requests to Microsoft Graph API and 
 
 ```typescript
 const options = {
-    authProvider // An instance created from previous step
+	authProvider, // An instance created from previous step
 };
 const Client = MicrosoftGraph.Client;
 const client = Client.initWithMiddleware(options);
@@ -121,7 +117,7 @@ const client = Client.initWithMiddleware(options);
 import { Client } from "@microsoft/microsoft-graph-client";
 
 const options = {
-    authProvider // An instance created from previous step
+	authProvider, // An instance created from previous step
 };
 const client = Client.initWithMiddleware(options);
 ```
@@ -136,10 +132,10 @@ Getting user details
 
 ```typescript
 try {
-    let userDetails = await client.api("/me").get();
-    console.log(userDetails);
-} catch(error) {
-    throw error;
+	let userDetails = await client.api("/me").get();
+	console.log(userDetails);
+} catch (error) {
+	throw error;
 }
 ```
 
@@ -148,22 +144,24 @@ Sending an email to the recipients
 ```typescript
 // Construct email object
 const mail = {
-    subject: "Microsoft Graph JavaScript Sample",
-    toRecipients: [{
-        emailAddress: {
-            address: "example@example.com"
-        }
-    }],
-    body: {
-        content: "<h1>MicrosoftGraph JavaScript Sample</h1>Check out https://github.com/microsoftgraph/msgraph-sdk-javascript",
-        contentType: "html"
-    }
+	subject: "Microsoft Graph JavaScript Sample",
+	toRecipients: [
+		{
+			emailAddress: {
+				address: "example@example.com",
+			},
+		},
+	],
+	body: {
+		content: "<h1>MicrosoftGraph JavaScript Sample</h1>Check out https://github.com/microsoftgraph/msgraph-sdk-javascript",
+		contentType: "html",
+	},
 };
 try {
-    let response = await client.api("/me/sendMail").post({message: mail});
-    console.log(response);
-} catch(error) {
-    throw error;
+	let response = await client.api("/me/sendMail").post({ message: mail });
+	console.log(response);
+} catch (error) {
+	throw error;
 }
 ```
 
@@ -171,13 +169,13 @@ For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions
 
 ## Documentation
 
-* [Batching](docs/content/Batching.md)
-* [Large File Upload Task](docs/tasks/LargeFileUploadTask.md)
-* [Page Iterator](docs/tasks/PageIterator.md)
-* [Actions](docs/Actions.md)
-* [Query Parameters](docs/QueryParameters.md)
-* [Other APIs](docs/OtherAPIs.md)
-* [Getting Raw Response](docs/GettingRawResponse.md)
+-   [Batching](docs/content/Batching.md)
+-   [Large File Upload Task](docs/tasks/LargeFileUploadTask.md)
+-   [Page Iterator](docs/tasks/PageIterator.md)
+-   [Actions](docs/Actions.md)
+-   [Query Parameters](docs/QueryParameters.md)
+-   [Other APIs](docs/OtherAPIs.md)
+-   [Getting Raw Response](docs/GettingRawResponse.md)
 
 ## Questions and comments
 
@@ -189,11 +187,11 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 
 ## Additional resources
 
-* [Microsoft Graph website](https://graph.microsoft.io)
-* [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
-* [Angular.js sample using the JavaScript client library](https://github.com/microsoftgraph/angular-connect-sample)
-* [Node.js sample using the JavaScript client library](https://github.com/microsoftgraph/nodejs-connect-sample)
-* [Office Dev Center](http://dev.office.com/)
+-   [Microsoft Graph website](https://graph.microsoft.io)
+-   [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
+-   [Angular.js sample using the JavaScript client library](https://github.com/microsoftgraph/angular-connect-sample)
+-   [Node.js sample using the JavaScript client library](https://github.com/microsoftgraph/nodejs-connect-sample)
+-   [Office Dev Center](http://dev.office.com/)
 
 ## Third Party Notices
 
@@ -205,7 +203,7 @@ If you find a security issue with our libraries or services please report it to 
 
 ## License
 
-Copyright (c) Microsoft Corporation.  All rights reserved. Licensed under the MIT License (the "[License](./LICENSE)");
+Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License (the "[License](./LICENSE)");
 
 ## We Value and Adhere to the Microsoft Open Source Code of Conduct
 

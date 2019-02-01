@@ -15,9 +15,9 @@
  * @property {string} DELETE - The delete request type
  */
 export enum RequestMethod {
-	GET = 'GET',
-	PATCH = 'PATCH',
-	POST = 'POST',
-	PUT = 'PUT',
-	DELETE = 'DELETE'
+	GET = "GET",
+	PATCH = "PATCH",
+	POST = "POST",
+	PUT = "PUT",
+	DELETE = "DELETE",
 }

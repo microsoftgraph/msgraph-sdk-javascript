@@ -1,14 +1,14 @@
 {
-  "name": "Node-Sample",
-  "version": "1.0.0",
-  "description": "You can get an access token by doing the following:",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
-  }
+	"name": "Node-Sample",
+	"version": "1.0.0",
+	"description": "You can get an access token by doing the following:",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"isomorphic-fetch": "^2.2.1"
+	}
 }

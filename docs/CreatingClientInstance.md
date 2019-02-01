@@ -24,8 +24,8 @@ Want to use own preferred authentication library, for which one has to implement
 
 ```typescript
 let clientOptions: ClientOptions = {
-    // MyCustomAuthenticationProvider is the user's own authentication provider implementing AuthenticationProvider interface
-    authProvider: new MyCustomAuthenticationProvider()
+	// MyCustomAuthenticationProvider is the user's own authentication provider implementing AuthenticationProvider interface
+	authProvider: new MyCustomAuthenticationProvider(),
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
@@ -34,13 +34,12 @@ Refer, [custom authentication provider](./CustomAuthenticationProvider.md) for m
 
 ### Option B. Custom Middleware chain
 
-Want to have complete control over the request and the response objects, one can provide his own chain of middleware.
-Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
+Want to have complete control over the request and the response objects, one can provide his own chain of middleware. Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
 let clientOptions: ClientOptions = {
-    // MyFirstMiddleware is the first middleware in my custom middleware chain
-    middleware: new MyFirstMiddleware()
+	// MyFirstMiddleware is the first middleware in my custom middleware chain
+	middleware: new MyFirstMiddleware(),
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
@@ -54,15 +53,14 @@ Pass an [authProvider function](../src/IAuthProvider.ts) in [Options](../src/IOp
 ```typescript
 // Some callback function
 const authProvider: AuthProvider = (callback: AuthProviderCallback) => {
+	// Your logic for getting and refreshing accessToken
 
-    // Your logic for getting and refreshing accessToken
-
-    // Error should be passed in case of error while authenticating
-    // accessToken should be passed upon successful authentication
-    callback(error, accessToken);
+	// Error should be passed in case of error while authenticating
+	// accessToken should be passed upon successful authentication
+	callback(error, accessToken);
 };
 let options: Options = {
-    authProvider
+	authProvider,
 };
 const client = Client.init(options);
 ```

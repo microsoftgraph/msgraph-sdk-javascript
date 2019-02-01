@@ -5,12 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
-
 /**
  * @interface
  * A signature representing Authentication provider
  * @property {Function} getAccessTokenWithCompletion - The function to get the access token from the authentication provider
  */
 export interface AuthenticationProvider {
-    getAccessToken: () => Promise<any>;
+	getAccessToken: () => Promise<any>;
 }

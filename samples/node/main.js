@@ -12,23 +12,24 @@ const secrets = require("./secrets");
 const fs = require("fs");
 
 const client = MicrosoftGraph.Client.init({
-    defaultVersion: 'v1.0',
-    debugLogging: true,
-    authProvider: (done) => {
-        done(null, secrets.accessToken);
-    }
+	defaultVersion: "v1.0",
+	debugLogging: true,
+	authProvider: (done) => {
+		done(null, secrets.accessToken);
+	},
 });
 
 // Get the name of the authenticated user with promises
 client
-    .api('/me')
-    .select("displayName")
-    .get()
-    .then((res) => {
-        console.log(res);
-    }).catch((err) => {
-        console.log(err);
-    });
+	.api("/me")
+	.select("displayName")
+	.get()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 /*
 

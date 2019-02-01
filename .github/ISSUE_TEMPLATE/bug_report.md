@@ -1,22 +1,23 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
-### Prerequisites
+# Bug Report
 
-* [ ] Can you reproduce the problem?
-* [ ] Are you running the latest version?
-* [ ] Are you reporting to the correct repository?
-* [ ] Did you perform a cursory search?
+## Prerequisites
+
+-   [ ] Can you reproduce the problem?
+-   [ ] Are you running the latest version?
+-   [ ] Are you reporting to the correct repository?
+-   [ ] Did you perform a cursory search?
 
 For more information, see the `CONTRIBUTING` guide.
 
-### Description
+## Description
 
 [Description of the bug or feature]
 
@@ -24,7 +25,7 @@ For more information, see the `CONTRIBUTING` guide.
 
 **Screenshots:** [If applicable, add screenshots to help explain your problem]
 
-### Steps to Reproduce
+## Steps to Reproduce
 
 1. [First Step]
 2. [Second Step]
@@ -34,6 +35,6 @@ For more information, see the `CONTRIBUTING` guide.
 
 **Actual behavior:** [What actually happened]
 
-### Additional context
+## Additional context
 
 Add any other context about the problem here..

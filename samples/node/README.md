@@ -1,4 +1,4 @@
-# Node Sample Using Javascript Client Library 
+# Node Sample Using Javascript Client Library
 
 ## Update Access Token
 

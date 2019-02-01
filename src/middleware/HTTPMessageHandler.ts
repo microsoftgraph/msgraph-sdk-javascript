@@ -10,6 +10,7 @@
  */
 
 import { Context } from "../IContext";
+
 import { Middleware } from "./IMiddleware";
 
 /**
@@ -18,20 +19,19 @@ import { Middleware } from "./IMiddleware";
  * @implements Middleware
  */
 export class HTTPMessageHandler implements Middleware {
-
-    /**
-     * @public
-     * @async
-     * To execute the current middleware
-     * @param {Context} context - The request context object
-     * @returns A promise that resolves to nothing
-     */
-    public async execute(context: Context): Promise<void> {
-        try {
-            context.response = await fetch(context.request, context.options);
-            return;
-        } catch (error) {
-            throw error;
-        }
-    }
+	/**
+	 * @public
+	 * @async
+	 * To execute the current middleware
+	 * @param {Context} context - The request context object
+	 * @returns A promise that resolves to nothing
+	 */
+	public async execute(context: Context): Promise<void> {
+		try {
+			context.response = await fetch(context.request, context.options);
+			return;
+		} catch (error) {
+			throw error;
+		}
+	}
 }

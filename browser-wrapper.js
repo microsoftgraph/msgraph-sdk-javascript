@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
- /**
-  * Adds exports in index.js to the MicrosoftGraph property in window object
-  */
+/**
+ * Adds exports in index.js to the MicrosoftGraph property in window object
+ */
 window.MicrosoftGraph = require("./lib/src/browser/index.js");

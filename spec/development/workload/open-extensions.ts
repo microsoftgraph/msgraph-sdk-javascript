@@ -5,34 +5,33 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { OpenTypeExtension } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
-import { getClient, randomString } from "../test-helper";
-import { OpenTypeExtension } from '@microsoft/microsoft-graph-types';
 
-declare const describe, it;
+import { getClient, randomString } from "../test-helper";
+
 const client = getClient();
 
 interface ColorOpenExtension extends OpenTypeExtension {
-	color: string
+	color: string;
 }
 
-let extension = <ColorOpenExtension>{
+let extension: ColorOpenExtension = {
 	extensionName: `com.javascript.extension-${randomString()}`,
-	color: randomString()
-}
+	color: randomString(),
+};
 
-describe('Open Extensions', function () {
-
+describe("Open Extensions", function() {
 	this.timeout(10 * 1000);
 
-	it('Use open extensions to add a field to users', async () => {
+	it("Use open extensions to add a field to users", async () => {
 		try {
-			let response = await client.api("/me/extensions").post(extension);
+			const response = await client.api("/me/extensions").post(extension);
 			const createdExtension = response as ColorOpenExtension;
 			assert.isDefined(createdExtension.id);
 			assert.equal(createdExtension.color, extension.color);
 			assert.equal(createdExtension.extensionName, extension.extensionName);
-			assert.isUndefined(createdExtension['invalidPropertyName']);
+			assert.isUndefined(createdExtension["random fake property that should be null"]);
 			// save this createdExtension for later tests (id)
 			extension = createdExtension;
 		} catch (error) {
@@ -40,7 +39,7 @@ describe('Open Extensions', function () {
 		}
 	});
 
-	it('Deletes the created open extension', async () => {
+	it("Deletes the created open extension", async () => {
 		try {
 			await client.api(`/me/extensions/${extension.id}`).delete();
 		} catch (error) {

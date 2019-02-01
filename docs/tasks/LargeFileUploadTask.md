@@ -18,12 +18,12 @@ Get files from the input element and start uploading.
 
 ```typescript
 async function fileUpload(elem) {
-    let file = elem.files[0];
-    try {
-        let response = await largeFilUpload(client, file, file.name);
-    } catch (error) {
-        console.error(error);
-    }
+	let file = elem.files[0];
+	try {
+		let response = await largeFilUpload(client, file, file.name);
+	} catch (error) {
+		console.error(error);
+	}
 }
 ```
 
@@ -51,19 +51,19 @@ function uploadFile() {
 
 ```typescript
 async function uploadFile(client, file) {
-    try {
-        let options = {
-            path: "/Documents",
-            fileName: file.name,
-            rangeSize: (1024 * 1024)
-        };
-        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
-        const response = await uploadTask.upload();
-        console.log(response);
-        console.log("File Uploaded Successfully.!!");
-    } catch (err) {
-        console.log(err);
-    }
+	try {
+		let options = {
+			path: "/Documents",
+			fileName: file.name,
+			rangeSize: 1024 * 1024,
+		};
+		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+		const response = await uploadTask.upload();
+		console.log(response);
+		console.log("File Uploaded Successfully.!!");
+	} catch (err) {
+		console.log(err);
+	}
 }
 ```
 

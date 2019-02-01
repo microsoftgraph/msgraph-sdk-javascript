@@ -6,32 +6,32 @@
  */
 
 import { assert } from "chai";
+
 import { Range } from "../../src/Range";
 
-describe("Range.ts", function () {
-    describe("Constructor", function () {
+describe("Range.ts", () => {
+	describe("Constructor", () => {
+		const defaultValue = -1;
 
-        let defaultValue = -1;
+		it("Should create a Range instance with given min and max values", () => {
+			const min = 1;
+			const max = 10;
+			const range = new Range(min, max);
+			assert.equal(range.minValue, min);
+			assert.equal(range.maxValue, max);
+		});
 
-        it("Should create a Range instance with given min and max values", () => {
-            let min = 1,
-                max = 10,
-                range = new Range(min, max);
-            assert.equal(range.minValue, min);
-            assert.equal(range.maxValue, max);
-        });
+		it("Should create a range instance with default values", () => {
+			const range = new Range();
+			assert.equal(range.minValue, defaultValue);
+			assert.equal(range.maxValue, defaultValue);
+		});
 
-        it("Should create a range instance with default values", () => {
-            let range = new Range();
-            assert.equal(range.minValue, defaultValue);
-            assert.equal(range.maxValue, defaultValue);
-        });
-
-        it("Should create a range instance with default max value", () => {
-            let min = 1,
-                range = new Range(min);
-            assert.equal(range.minValue, min);
-            assert.equal(range.maxValue, defaultValue);
-        });
-    });
+		it("Should create a range instance with default max value", () => {
+			const min = 1;
+			const range = new Range(min);
+			assert.equal(range.minValue, min);
+			assert.equal(range.maxValue, defaultValue);
+		});
+	});
 });

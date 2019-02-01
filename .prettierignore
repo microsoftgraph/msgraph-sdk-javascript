@@ -1,0 +1,9 @@
+lib/
+
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+
+spec/**/*.js
+spec/**/*.js.map
+spec/**/*.d.ts

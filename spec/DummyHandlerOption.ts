@@ -18,21 +18,20 @@ import { MiddlewareOption } from "../src/middleware/option/IMiddlewareOption";
  */
 
 export class DummyHandlerOption implements MiddlewareOption {
+	/**
+	 * @public
+	 * A member holding a dummy string
+	 */
+	public dummyString: string;
 
-    /**
-     * @public
-     * A member holding a dummy string
-     */
-    public dummyString: string;
-
-    /**
-     * @public
-     * @async
-     * To create an instance of DummyHandlerOption
-     * @param {string} dummyString - The dummy string
-     * @returns An instance of DummyHandlerOption
-     */
-    public constructor(dummyString: string = "dummy") {
-        this.dummyString = dummyString;
-    }
+	/**
+	 * @public
+	 * @async
+	 * To create an instance of DummyHandlerOption
+	 * @param {string} dummyString - The dummy string
+	 * @returns An instance of DummyHandlerOption
+	 */
+	public constructor(dummyString: string = "dummy") {
+		this.dummyString = dummyString;
+	}
 }
