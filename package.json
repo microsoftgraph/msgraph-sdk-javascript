@@ -27,15 +27,14 @@
 		"tslint": "^5.12.1",
 		"tslint-config-prettier": "^1.17.0",
 		"typescript": "^3.1.6",
-		"uglify-es": "^3.3.9",
-		"window": "^4.2.5"
+		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
 		"compile": "tsc",
 		"web:js": "node browserify-with-dependencies.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
 		"core:js": "node browserify.js > lib/graph-js-sdk-core.js && uglifyjs ./lib/graph-js-sdk-core.js --output ./lib/graph-js-sdk-core.js",
 		"build": "npm run compile && npm run web:js && npm run core:js",
-		"test": "mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"test": "npm run build && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
 		"test:content": "tsc -p spec && mocha spec/content",
 		"test:core": "tsc -p spec && mocha spec/core",
 		"test:middleware": "tsc -p spec && mocha spec/middleware",
