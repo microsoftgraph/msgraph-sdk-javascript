@@ -74,13 +74,13 @@ try {
 }
 ```
 
-## MIDDLEWAREOPTION
+## MIDDLEWAREOPTIONS
 
-You can override the client middleware behavior by setting per request middleware options. Use the `.middlewareOption()` request builder method to add custom middleware behavior for a specific request. The `middlewareOption()` method takes an array of strongly typed middleware options. These middleware options are an implementation of the [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface.
+You can override the client middleware behavior by setting per request middleware options. Use the `.middlewareOptions()` request builder method to add custom middleware behavior for a specific request. The `middlewareOptions()` method takes an array of strongly typed middleware options. These middleware options are an implementation of the [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface.
 
 ```typescript
 try {
-    let res = await client.api("/me/messages").middlewareOption([
+    let res = await client.api("/me/messages").middlewareOptions([
         new RetryHandlerOption(5000)
     ]).get();
     console.log(res);
