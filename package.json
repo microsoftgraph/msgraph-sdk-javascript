@@ -21,6 +21,7 @@
 		"browserify": "^16.2.3",
 		"chai": "^4.2.0",
 		"husky": "^1.3.1",
+		"lint-staged": "^8.1.3",
 		"mocha": "^5.2.0",
 		"msal": "^0.2.4",
 		"prettier": "^1.16.2",
@@ -34,7 +35,7 @@
 		"web:js": "node browserify-with-dependencies.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
 		"core:js": "node browserify.js > lib/graph-js-sdk-core.js && uglifyjs ./lib/graph-js-sdk-core.js --output ./lib/graph-js-sdk-core.js",
 		"build": "npm run compile && npm run web:js && npm run core:js",
-		"test": "npm run build && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"test": "npm run compile && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
 		"test:content": "tsc -p spec && mocha spec/content",
 		"test:core": "tsc -p spec && mocha spec/core",
 		"test:middleware": "tsc -p spec && mocha spec/middleware",
@@ -47,8 +48,9 @@
 		"format:js": "prettier --write \"**/*.js\"",
 		"format:json": "prettier --write \"**/*.json\"",
 		"format:md": "prettier --write \"**/*.md\"",
+		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
-		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:ts",
+		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
 		"prepack": "npm install && npm run build && npm run test"
 	},
 	"repository": {

@@ -4,9 +4,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Run Build",
+			"label": "Run Compile",
 			"type": "npm",
-			"script": "build",
+			"script": "compile",
 			"group": "build"
 		}
 	]

@@ -20,7 +20,7 @@
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/core/*.js"],
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "Run Build",
+			"preLaunchTask": "Run Compile",
 			"outFiles": [],
 			"internalConsoleOptions": "openOnSessionStart"
 		},
@@ -31,7 +31,7 @@
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/spec/development/workload/*.js"],
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "Run Build",
+			"preLaunchTask": "Run Compile",
 			"outFiles": [],
 			"internalConsoleOptions": "openOnSessionStart"
 		},
@@ -42,7 +42,7 @@
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/middleware/*.js"],
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "Run Build",
+			"preLaunchTask": "Run Compile",
 			"outFiles": [],
 			"internalConsoleOptions": "openOnSessionStart"
 		},
@@ -53,7 +53,7 @@
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/content/*.js"],
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "Run Build",
+			"preLaunchTask": "Run Compile",
 			"outFiles": [],
 			"internalConsoleOptions": "openOnSessionStart"
 		}
