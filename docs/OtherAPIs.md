@@ -76,7 +76,7 @@ try {
 
 ## MIDDLEWAREOPTION
 
-You can pass in the middleware options for a request through `.middlewareOption()`. This takes array of strongly typed middleware options, these middleware options should be an implementation of MiddlewareOption interface
+You can override the client middleware behavior by setting per request middleware options. Use the `.middlewareOption()` request builder method to add custom middleware behavior for a specific request. The `middlewareOption()` method takes an array of strongly typed middleware options. These middleware options are an implementation of the [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface.
 
 ```typescript
 try {
