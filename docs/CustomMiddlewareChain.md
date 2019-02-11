@@ -8,7 +8,7 @@ As name suggests it comes in middle of something and that is request and respons
 
 ### Implement Middlewares
 
-Create a custom middleware pipeline by implementing the [Middleware](../src/IMiddleware.ts) interface. The following examples demonstrate how to create a custom logging middleware and how to create a custom http request a response handler.
+Create a custom middleware pipeline by implementing the [Middleware](../src/middleware/IMiddleware.ts) interface. The following examples demonstrate how to create a custom logging middleware and how to create a custom http request a response handler.
 
 First middleware is passed with the context object containing request, and other middleware specific options. One has to explicitly make call to execute method of the next middleware with context object once the current middleware work is over.
 
@@ -146,4 +146,4 @@ export class MyLoggingHandler implements Middleware {
 }
 ```
 
-Refer [MiddlewareOptions](../src/IMiddlewareOptions.ts) interface to know its structure.
+Refer [MiddlewareOptions](../src/middleware/option/IMiddlewareOption.ts) interface to know its structure.

@@ -47,12 +47,13 @@ export class BatchResponseContent {
 
 
     /**
+     * @public
      * @constructor
      * Creates the BatchResponseContent instance
      * @param {BatchResponseBody} response - The response body returned for batch request from server
      * @returns An instance of a BatchResponseContent
      */
-    constructor(response: BatchResponseBody) {
+    public constructor(response: BatchResponseBody) {
         let self = this;
         self.responses = new Map();
         self.update(response);

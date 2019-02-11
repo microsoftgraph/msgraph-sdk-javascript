@@ -40,6 +40,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
     private static DEFAULT_UPLOAD_PATH: string = "/";
 
     /**
+     * @public
      * @constructor
      * Constructs a OneDriveLargeFileUploadTask
      * @param {Client} client - The GraphClient instance
@@ -48,7 +49,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
      * @param {LargeFileUploadTaskOptions} options - The upload task options
      * @returns An instance of OneDriveLargeFileUploadTask
      */
-    constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+    public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
         super(client, file, uploadSession, options);
     }
 

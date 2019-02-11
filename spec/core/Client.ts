@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 import { Client } from "../../src/Client";
-import { CustomHTTPHandler } from "../CustomHTTPHandler";
+import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
@@ -23,17 +23,17 @@ describe("Client.ts", function () {
             PolyFill.init();
         });
         const dummyAuthProvider = new DummyAuthenticationProvider(),
-            customHTTPHandler = new CustomHTTPHandler();
+            dummyHTTPHandler = new DummyHTTPMessageHandler();
 
         it("Should throw an error in case if both auth provider and custom middleware is passed", () => {
             try {
                 const options: ClientOptions = {
                     authProvider: dummyAuthProvider,
-                    middleware: customHTTPHandler
+                    middleware: dummyHTTPHandler
                 };
                 const client: Client = Client.initWithMiddleware(options);
                 throw new Error("Something wrong with the ambiguity check");
-            } catch(error) {
+            } catch (error) {
                 assert.equal(error.name, "AmbiguityInInitialization");
             }
         });
@@ -49,7 +49,7 @@ describe("Client.ts", function () {
 
         it("Should return client instance for a custom middleware chain", () => {
             let options: ClientOptions = {
-                middleware: customHTTPHandler
+                middleware: dummyHTTPHandler
             };
             let client: Client = Client.initWithMiddleware(options);
             assert.isTrue(client instanceof Client);

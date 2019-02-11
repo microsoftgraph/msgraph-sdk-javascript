@@ -6,18 +6,18 @@
  */
 
 /**
- * @module HTTPMessageHandler
+ * @module DummyHTTPMessageHandler
  */
 
-import { Context } from "../IContext";
-import { Middleware } from "./IMiddleware";
+import { Context } from "../src/IContext";
+import { Middleware } from "../src/middleware/IMiddleware";
 
 /**
  * @class
- * Class for HTTPMessageHandler
  * @implements Middleware
+ * Class representing DummyHTTPMessageHandler
  */
-export class HTTPMessageHandler implements Middleware {
+export class DummyHTTPMessageHandler implements Middleware {
 
     /**
      * @public
@@ -26,12 +26,7 @@ export class HTTPMessageHandler implements Middleware {
      * @param {Context} context - The request context object
      * @returns A promise that resolves to nothing
      */
-    public async execute(context: Context): Promise<void> {
-        try {
-            context.response = await fetch(context.request, context.options);
-            return;
-        } catch (error) {
-            throw error;
-        }
+    public async execute(context: Context) {
+        return;
     }
 }

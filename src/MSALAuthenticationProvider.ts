@@ -38,6 +38,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
     private userAgentApplication: UserAgentApplication;
 
     /**
+     * @public
      * @constructor
      * Creates an instance of MSALAuthenticationProvider
      * @param {string} clientId - The clientId value of an application
@@ -45,7 +46,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
      * @param {any} [options] - An options object for MSAL initialization
      * @returns An instance of MSALAuthenticationProvider
      */
-    constructor(clientId: string, scopes: string[], options?: any) {
+    public constructor(clientId: string, scopes: string[], options?: any) {
         const callback = (errorDesc, token, error, tokenType) => {
 
         };

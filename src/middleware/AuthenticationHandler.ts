@@ -9,16 +9,23 @@
  * @module AuthenticationHandler
  */
 
-import { Middleware } from "../IMiddleware";
+import { Middleware } from "./IMiddleware";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { Context } from "../IContext";
+import { setRequestHeader } from "./MiddlewareUtil";
 
 /**
  * @class
  * Class representing AuthenticationHandler
- * @extends Middleware
+ * @implements Middleware
  */
 export class AuthenticationHandler implements Middleware {
+
+    /**
+     * @private
+     * A member representing the authorization header name
+     */
+    private static AUTHORIZATION_HEADER: string = "Authorization";
 
     /**
      * @private
@@ -33,11 +40,12 @@ export class AuthenticationHandler implements Middleware {
     private nextMiddleware: Middleware;
 
     /**
+     * @public
      * @constructor
      * Creates an instance of AuthenticationHandler
      * @param {AuthenticationProvider} authProvider - The authentication provider for the authentication handler
      */
-    constructor(authProvider: AuthenticationProvider) {
+    public constructor(authProvider: AuthenticationProvider) {
         this.authProvider = authProvider;
     }
 
@@ -46,31 +54,13 @@ export class AuthenticationHandler implements Middleware {
      * @async
      * To execute the current middleware
      * @param {context} context - The context object of the request
-     * @returns A Promise that resolves to Nothing
+     * @returns A Promise that resolves to nothing
      */
     public async execute(context: Context): Promise<void> {
         try {
-            let token = await this.authProvider.getAccessToken();
-            let bearerKey = `Bearer ${token}`;
-            if (context.request.constructor.name === "Request") {
-                (<Request>context.request).headers.set("Authorization", bearerKey);
-            } else {
-                let options = context.options;
-                if (options.headers === undefined) {
-                    options.headers = {
-                        "Authorization": bearerKey
-                    };
-                } else {
-                    let headerType = options.headers.constructor.name;
-                    if (headerType === "Headers") {
-                        (<Headers>options.headers).set("Authorization", bearerKey);
-                    } else if (headerType === "Array") {
-                        (<string[][]>options.headers).push(["Authorization", bearerKey]);
-                    } else {
-                        Object.assign(options.headers, { Authorization: bearerKey });
-                    }
-                }
-            }
+            const token = await this.authProvider.getAccessToken();
+            const bearerKey = `Bearer ${token}`;
+            setRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
             return await this.nextMiddleware.execute(context);
         } catch (error) {
             throw error;

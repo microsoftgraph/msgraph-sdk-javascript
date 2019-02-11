@@ -19,6 +19,8 @@ import { ClientOptions } from "./IClientOptions";
 import { Context } from "./IContext";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { FetchOptions } from "./IFetchOptions";
+import { MiddlewareOption } from "./middleware/option/IMiddlewareOption";
+import { MiddlewareControl } from "./middleware/MiddlewareControl";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 
@@ -90,17 +92,25 @@ export class GraphRequest {
 
     /**
      * @private
+     * A member to hold the array of middleware options for a request
+     */
+    private _middlewareOptions: MiddlewareOption[];
+
+    /**
+     * @private
      * A member to hold custom response type for a request
      */
     private _responseType: ResponseType;
 
     /**
+     * @public
+     * @constructor
      * Creates an instance of GraphRequest
      * @param {HTTPClient} httpClient - The HTTPClient instance 
      * @param {ClientOptions} config - The options for making request
      * @param {string} path - A path string 
      */
-    constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
+    public constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
         let self = this;
         self.httpClient = httpClient;
         self.config = config;
@@ -110,8 +120,9 @@ export class GraphRequest {
             oDataQueryParams: {},
             otherURLQueryParams: {}
         };
-        self._options = {};
         self._headers = {};
+        self._options = {};
+        self._middlewareOptions = [];
         self.parsePath(path);
     }
 
@@ -130,7 +141,7 @@ export class GraphRequest {
 
             // Find where the host ends
             let endOfHostStrPos = path.indexOf("/");
-            if(endOfHostStrPos !== -1) {
+            if (endOfHostStrPos !== -1) {
                 // Parse out the host
                 self.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
                 // Strip the host from path
@@ -139,7 +150,7 @@ export class GraphRequest {
 
             // Remove the following version
             let endOfVersionStrPos = path.indexOf("/");
-            if(endOfVersionStrPos !== -1) {
+            if (endOfVersionStrPos !== -1) {
                 // Parse out the version
                 self.urlComponents.version = path.substring(0, endOfVersionStrPos);
                 // Strip version from path
@@ -225,6 +236,18 @@ export class GraphRequest {
         for (let key in options) {
             self._options[key] = options[key];
         }
+        return self;
+    }
+
+    /**
+     * @public
+     * Sets the middleware options for a request
+     * @param {MiddlewareOption[]} options - The array of middleware options
+     * @returns The same GraphRequest instance that is being called with
+     */
+    public middlewareOptions(options: MiddlewareOption[]): GraphRequest {
+        let self = this;
+        self._middlewareOptions = options;
         return self;
     }
 
@@ -493,11 +516,15 @@ export class GraphRequest {
     private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
         let self = this,
             rawResponse: Response,
-            middlewareOptions = Object.assign({}, self.config.middlewareOptions);
+            middlewareControl = new MiddlewareControl(self._middlewareOptions);
         self.updateRequestOptions(options);
         try {
-            let context: Context = await self.httpClient.sendRequest(request, options, middlewareOptions);
-            rawResponse = context.response;
+            let context: Context = await self.httpClient.sendRequest({
+                request,
+                options,
+                middlewareControl
+            }),
+                rawResponse = context.response;
             let response: any = await GraphResponseHandler.getResponse(rawResponse, self._responseType, callback);
             return response;
         } catch (error) {
@@ -582,10 +609,7 @@ export class GraphRequest {
             url = self.buildFullUrl(),
             options: FetchOptions = {
                 method: RequestMethod.PUT,
-                body: serializeContent(content),
-                headers: {
-                    "Content-Type": "application/octet-stream"
-                }
+                body: serializeContent(content)
             };
         try {
             let response = await self.send(url, options, callback);

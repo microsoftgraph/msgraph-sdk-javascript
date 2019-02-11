@@ -6,18 +6,19 @@
  */
 
 import { FetchOptions } from "./IFetchOptions";
-import { MiddlewareOptions } from "./IMiddlewareOptions";
+import { MiddlewareControl } from "./middleware/MiddlewareControl";
 
 /**
  * @interface
  * @property {RequestInfo} request - The request url string or the Request instance
  * @property {FetchOptions} [options] - The options for the request
  * @property {Response} [response] - The response content
- * @property {MiddlewareOptions} [middlewareOptions] - The options for the middleware chain
+ * @property {MiddlewareControl} [middlewareControl] - The options for the middleware chain
  */
+
 export interface Context {
     request: RequestInfo;
     options?: FetchOptions;
     response?: Response;
-    middlewareOptions?: MiddlewareOptions;
+    middlewareControl?: MiddlewareControl;
 }

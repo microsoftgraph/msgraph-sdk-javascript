@@ -74,6 +74,21 @@ try {
 }
 ```
 
+## MIDDLEWAREOPTIONS
+
+You can override the client middleware behavior by setting per request middleware options. Use the `.middlewareOptions()` request builder method to add custom middleware behavior for a specific request. The `middlewareOptions()` method takes an array of strongly typed middleware options. These middleware options are an implementation of the [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface.
+
+```typescript
+try {
+    let res = await client.api("/me/messages").middlewareOptions([
+        new RetryHandlerOption(5000)
+    ]).get();
+    console.log(res);
+} catch (error) {
+    throw error;
+}
+```
+
 ## RESPONSETYPE
 
 To set a custom response type, use the`.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.

@@ -95,12 +95,13 @@ export class BatchRequestContent {
     requests: Map<string, BatchRequestStep>;
 
     /**
+     * @public
      * @constructor
      * Constructs a BatchRequestContent instance
      * @param {BatchRequestStep[]} [requests] - Array of requests value
      * @returns An instance of a BatchRequestContent
      */
-    constructor(requests?: BatchRequestStep[]) {
+    public constructor(requests?: BatchRequestStep[]) {
         let self = this;
         self.requests = new Map();
         if (typeof requests !== "undefined") {

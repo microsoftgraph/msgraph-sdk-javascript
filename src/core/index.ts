@@ -10,6 +10,9 @@ export * from "../content/BatchResponseContent";
 
 export * from "../middleware/AuthenticationHandler";
 export * from "../middleware/HTTPMessageHandler";
+export * from "../middleware/IMiddleware";
+
+export * from "../middleware/option/IMiddlewareOption";
 
 export * from "../tasks/OneDriveLargeFileUploadTask";
 export * from "../tasks/PageIterator";
@@ -24,6 +27,5 @@ export * from "../IClientOptions";
 export * from "../IContext";
 export * from "../IFetchOptions";
 export * from "../IGraphRequestCallback";
-export * from "../IMiddleware";
 export * from "../IOptions";
 export * from "../ResponseType";

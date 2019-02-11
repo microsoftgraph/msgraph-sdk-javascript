@@ -6,7 +6,7 @@
  */
 
 import { assert } from "chai";
-import { CustomHTTPHandler } from "../CustomHTTPHandler";
+import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { HTTPClient } from "../../src/HTTPClient";
 import { HTTPClientFactory } from "../../src/HTTPClientFactory";
@@ -15,7 +15,7 @@ describe("HTTPClientFactory.ts", function () {
     describe("createWithAuthenticationProvider", () => {
 
         const dummyAuthProvider = new DummyAuthenticationProvider(),
-            customHTTPHandler = new CustomHTTPHandler();
+            dummyHTTPHandler = new DummyHTTPMessageHandler();
 
         it("Should create an HTTPClient instance with default middleware chain", () => {
             let client: HTTPClient = HTTPClientFactory.createWithAuthenticationProvider(dummyAuthProvider);
@@ -24,7 +24,7 @@ describe("HTTPClientFactory.ts", function () {
         });
 
         it("Should create an HTTPClient with given middleware chain", () => {
-            let client: HTTPClient = HTTPClientFactory.createWithMiddleware(customHTTPHandler);
+            let client: HTTPClient = HTTPClientFactory.createWithMiddleware(dummyHTTPHandler);
             assert.isTrue(client instanceof HTTPClient);
             assert.isDefined(client["middleware"]);
         });
