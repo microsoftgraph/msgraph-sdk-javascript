@@ -17,11 +17,11 @@
  */
 
 export enum ResponseType {
-    ARRAYBUFFER = "arraybuffer",
-    BLOB = "blob",
-    DOCUMENT = "document",
-    JSON = "json",
-    RAW = "raw",
-    STREAM = "stream",
-    TEXT = "text"
+	ARRAYBUFFER = "arraybuffer",
+	BLOB = "blob",
+	DOCUMENT = "document",
+	JSON = "json",
+	RAW = "raw",
+	STREAM = "stream",
+	TEXT = "text",
 }

@@ -16,35 +16,34 @@ import { MiddlewareOption } from "./option/IMiddlewareOption";
  * Class representing MiddlewareControl
  */
 export class MiddlewareControl {
+	/**
+	 * @private
+	 * A member holding map of MiddlewareOption
+	 */
+	private middlewareOptions: Map<string, MiddlewareOption>;
 
-    /**
-     * @private
-     * A member holding map of MiddlewareOption
-     */
-    private middlewareOptions: Map<string, MiddlewareOption>;
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of MiddlewareControl
+	 * @param {MiddlewareOption[]} middlewareOptions - The array of middlewareOptions
+	 * @returns The instance of MiddlewareControl
+	 */
+	public constructor(middlewareOptions: MiddlewareOption[]) {
+		this.middlewareOptions = new Map<string, MiddlewareOption>();
+		for (const option of middlewareOptions) {
+			const name = option.constructor.name;
+			this.middlewareOptions.set(name, option);
+		}
+	}
 
-    /**
-     * @public
-     * @constructor
-     * Creates an instance of MiddlewareControl
-     * @param {MiddlewareOption[]} middlewareOptions - The array of middlewareOptions
-     * @returns The instance of MiddlewareControl
-     */
-    public constructor(middlewareOptions: MiddlewareOption[]) {
-        this.middlewareOptions = new Map<string, MiddlewareOption>();
-        for (let option of middlewareOptions) {
-            let name = option.constructor.name;
-            this.middlewareOptions.set(name, option);
-        }
-    }
-
-    /**
-     * @public
-     * To get the middleware option using the class name of the option
-     * @param {string} name - The class name of the strongly types option class
-     * @returns The middleware option
-     */
-    public getMiddlewareOption(name: string): MiddlewareOption {
-        return this.middlewareOptions.get(name);
-    }
+	/**
+	 * @public
+	 * To get the middleware option using the class name of the option
+	 * @param {string} name - The class name of the strongly types option class
+	 * @returns The middleware option
+	 */
+	public getMiddlewareOption(name: string): MiddlewareOption {
+		return this.middlewareOptions.get(name);
+	}
 }

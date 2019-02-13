@@ -19,8 +19,8 @@ import { Range } from "../Range";
  * @property {string[]} nextExpectedRanges - The ranges expected in next consecutive request in the upload
  */
 interface UploadStatusResponse {
-    expirationDateTime: string;
-    nextExpectedRanges: string[];
+	expirationDateTime: string;
+	nextExpectedRanges: string[];
 }
 
 /**
@@ -29,8 +29,8 @@ interface UploadStatusResponse {
  * @property {number} [rangeSize = LargeFileUploadTask.DEFAULT_FILE_SIZE] - Specifies the range chunk size
  */
 export interface LargeFileUploadTaskOptions {
-    rangeSize?: number;
-};
+	rangeSize?: number;
+}
 
 /**
  * @interface
@@ -39,8 +39,8 @@ export interface LargeFileUploadTaskOptions {
  * @property {Date} expiry - The expiration of the time of the upload session
  */
 export interface LargeFileUploadSession {
-    url: string;
-    expiry: Date;
+	url: string;
+	expiry: Date;
 }
 
 /**
@@ -51,9 +51,9 @@ export interface LargeFileUploadSession {
  * @property {number} size - Specifies size of the file
  */
 export interface FileObject {
-    content: ArrayBuffer | File;
-    name: string;
-    size: number;
+	content: ArrayBuffer | File;
+	name: string;
+	size: number;
 }
 
 /**
@@ -61,228 +61,215 @@ export interface FileObject {
  * Class representing LargeFileUploadTask
  */
 export class LargeFileUploadTask {
+	/**
+	 * @private
+	 * Default value for the rangeSize
+	 */
+	private DEFAULT_FILE_SIZE: number = 5 * 1024 * 1024;
 
-    /** 
-     * @protected
-     * The GraphClient instance
-     */
-    protected client: Client
+	/**
+	 * @protected
+	 * The GraphClient instance
+	 */
+	protected client: Client;
 
-    /**
-     * @protected
-     * The object holding file details 
-     */
-    protected file: FileObject
+	/**
+	 * @protected
+	 * The object holding file details
+	 */
+	protected file: FileObject;
 
-    /**
-     * @protected
-     * The object holding options for the task
-     */
-    protected options: LargeFileUploadTaskOptions
+	/**
+	 * @protected
+	 * The object holding options for the task
+	 */
+	protected options: LargeFileUploadTaskOptions;
 
-    /**
-     * @protected
-     * The object for upload session
-     */
-    protected uploadSession: LargeFileUploadSession
+	/**
+	 * @protected
+	 * The object for upload session
+	 */
+	protected uploadSession: LargeFileUploadSession;
 
-    /**
-     * @protected
-     * The next range needs to be uploaded
-     */
-    protected nextRange: Range
+	/**
+	 * @protected
+	 * The next range needs to be uploaded
+	 */
+	protected nextRange: Range;
 
-    /**
-     * @private
-    * Default value for the rangeSize
-    */
-    private DEFAULT_FILE_SIZE: number = 5 * 1024 * 1024;
+	/**
+	 * @public
+	 * @constructor
+	 * Constructs a LargeFileUploadTask
+	 * @param {Client} client - The GraphClient instance
+	 * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
+	 * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
+	 * @param {LargeFileUploadTaskOptions} options - The upload task options
+	 * @returns An instance of LargeFileUploadTask
+	 */
+	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+		this.client = client;
+		this.file = file;
+		if (options.rangeSize === undefined) {
+			options.rangeSize = this.DEFAULT_FILE_SIZE;
+		}
+		this.options = options;
+		this.uploadSession = uploadSession;
+		this.nextRange = new Range(0, this.options.rangeSize - 1);
+	}
 
-    /**
-     * @public
-     * @constructor
-     * Constructs a LargeFileUploadTask
-     * @param {Client} client - The GraphClient instance
-     * @param {FileObject} file - The FileObject holding details of a file that needs to be uploaded
-     * @param {LargeFileUploadSession} uploadSession - The upload session to which the upload has to be done
-     * @param {LargeFileUploadTaskOptions} options - The upload task options
-     * @returns An instance of LargeFileUploadTask
-     */
-    public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
-        let self = this;
-        self.client = client;
-        self.file = file;
-        if (options.rangeSize === undefined) {
-            options.rangeSize = self.DEFAULT_FILE_SIZE;
-        }
-        self.options = options;
-        self.uploadSession = uploadSession;
-        self.nextRange = new Range(0, self.options.rangeSize - 1);
-    }
+	/**
+	 * @public
+	 * Parses given range string to the Range instance
+	 * @param {string[]} ranges - The ranges value
+	 * @returns The range instance
+	 */
+	public parseRange(ranges: string[]): Range {
+		const rangeStr = ranges[0];
+		if (typeof rangeStr === "undefined" || rangeStr === "") {
+			return new Range();
+		}
+		const firstRange = rangeStr.split("-");
+		const minVal = parseInt(firstRange[0], 10);
+		let maxVal = parseInt(firstRange[1], 10);
+		if (Number.isNaN(maxVal)) {
+			maxVal = this.file.size - 1;
+		}
+		return new Range(minVal, maxVal);
+	}
 
-    /**
-     * @public
-     * Parses given range string to the Range instance
-     * @param {string[]} ranges - The ranges value
-     * @returns The range instance
-     */
-    public parseRange(ranges: string[]): Range {
-        let rangeStr = ranges[0];
-        if (typeof rangeStr === "undefined" || rangeStr === "") {
-            return new Range();
-        }
-        let firstRange = rangeStr.split("-"),
-            minVal = parseInt(firstRange[0]),
-            maxVal = parseInt(firstRange[1]);
-        if (Number.isNaN(maxVal)) {
-            maxVal = this.file.size - 1;
-        }
-        return new Range(minVal, maxVal);
-    }
+	/**
+	 * @public
+	 * Updates the expiration date and the next range
+	 * @param {UploadStatusResponse} response - The response of the upload status
+	 * @returns Nothing
+	 */
+	public updateTaskStatus(response: UploadStatusResponse): void {
+		this.uploadSession.expiry = new Date(response.expirationDateTime);
+		this.nextRange = this.parseRange(response.nextExpectedRanges);
+	}
 
-    /**
-     * @public
-     * Updates the expiration date and the next range
-     * @param {UploadStatusResponse} response - The response of the upload status
-     * @returns Nothing
-     */
-    public updateTaskStatus(response: UploadStatusResponse): void {
-        let self = this;
-        self.uploadSession.expiry = new Date(response.expirationDateTime);
-        self.nextRange = self.parseRange(response.nextExpectedRanges);
-    }
+	/**
+	 * @public
+	 * Gets next range that needs to be uploaded
+	 * @returns The range instance
+	 */
+	public getNextRange(): Range {
+		if (this.nextRange.minValue === -1) {
+			return this.nextRange;
+		}
+		const minVal = this.nextRange.minValue;
+		let maxValue = minVal + this.options.rangeSize - 1;
+		if (maxValue >= this.file.size) {
+			maxValue = this.file.size - 1;
+		}
+		return new Range(minVal, maxValue);
+	}
 
-    /**
-     * @public
-     * Gets next range that needs to be uploaded
-     * @returns The range instance
-     */
-    public getNextRange(): Range {
-        let self = this;
-        if (self.nextRange.minValue === -1) {
-            return self.nextRange;
-        }
-        let minVal = self.nextRange.minValue,
-            maxValue = minVal + self.options.rangeSize - 1;
-        if (maxValue >= self.file.size) {
-            maxValue = self.file.size - 1;
-        }
-        return new Range(minVal, maxValue);
-    }
+	/**
+	 * @public
+	 * Slices the file content to the given range
+	 * @param {Range} range - The range value
+	 * @returns The sliced ArrayBuffer or Blob
+	 */
+	public sliceFile(range: Range): ArrayBuffer | Blob {
+		const blob = this.file.content.slice(range.minValue, range.maxValue + 1);
+		return blob;
+	}
 
-    /**
-     * @public
-     * Slices the file content to the given range
-     * @param {Range} range - The range value
-     * @returns The sliced ArrayBuffer or Blob
-     */
-    public sliceFile(range: Range): ArrayBuffer | Blob {
-        let blob = this.file.content.slice(range.minValue, range.maxValue + 1);
-        return blob;
-    }
+	/**
+	 * @public
+	 * @async
+	 * Uploads file to the server in a sequential order by slicing the file
+	 * @returns The promise resolves to uploaded response
+	 */
+	public async upload(): Promise<any> {
+		try {
+			while (true) {
+				const nextRange = this.getNextRange();
+				if (nextRange.maxValue === -1) {
+					const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
+					err.name = "Invalid Session";
+					throw err;
+				}
+				const fileSlice = this.sliceFile(nextRange);
+				const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
+				// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
+				if (response.id !== undefined) {
+					return response;
+				} else {
+					this.updateTaskStatus(response);
+				}
+			}
+		} catch (err) {
+			throw err;
+		}
+	}
 
-    /**
-     * @public
-     * @async
-     * Uploads file to the server in a sequential order by slicing the file
-     * @returns The promise resolves to uploaded response
-     */
-    public async upload(): Promise<any> {
-        let self = this;
-        try {
-            while (true) {
-                let nextRange = self.getNextRange();
-                if (nextRange.maxValue === -1) {
-                    let err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
-                    err.name = "Invalid Session";
-                    throw err;
-                }
-                let fileSlice = self.sliceFile(nextRange),
-                    response = await self.uploadSlice(fileSlice, nextRange, self.file.size);
-                // Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
-                if (response.id !== undefined) {
-                    return response;
-                } else {
-                    self.updateTaskStatus(response);
-                }
-            }
-        } catch (err) {
-            throw err;
-        }
-    }
+	/**
+	 * @public
+	 * @async
+	 * Uploads given slice to the server
+	 * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
+	 * @param {Range} range - The range value
+	 * @param {number} totalSize - The total size of a complete file
+	 */
+	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
+		try {
+			return await this.client
+				.api(this.uploadSession.url)
+				.headers({
+					"Content-Length": `${range.maxValue - range.minValue + 1}`,
+					"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
+				})
+				.put(fileSlice);
+		} catch (err) {
+			throw err;
+		}
+	}
 
-    /**
-     * @public
-     * @async
-     * Uploads given slice to the server
-     * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
-     * @param {Range} range - The range value
-     * @param {number} totalSize - The total size of a complete file
-     */
-    public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
-        let self = this;
-        try {
-            return await self.client
-                .api(self.uploadSession.url)
-                .headers({
-                    "Content-Length": `${range.maxValue - range.minValue + 1}`,
-                    "Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`
-                })
-                .put(fileSlice);
-        } catch (err) {
-            throw err;
-        }
-    }
+	/**
+	 * @public
+	 * @async
+	 * Deletes upload session in the server
+	 * @returns The promise resolves to cancelled response
+	 */
+	public async cancel(): Promise<any> {
+		try {
+			return await this.client.api(this.uploadSession.url).delete();
+		} catch (err) {
+			throw err;
+		}
+	}
 
-    /**
-     * @public
-     * @async
-     * Deletes upload session in the server
-     * @returns The promise resolves to cancelled response
-     */
-    public async cancel(): Promise<any> {
-        let self = this;
-        try {
-            return await self.client
-                .api(self.uploadSession.url)
-                .delete();
-        } catch (err) {
-            throw err;
-        }
-    }
+	/**
+	 * @public
+	 * @async
+	 * Gets status for the upload session
+	 * @returns The promise resolves to the status enquiry response
+	 */
+	public async getStatus(): Promise<any> {
+		try {
+			const response = await this.client.api(this.uploadSession.url).get();
+			this.updateTaskStatus(response);
+			return response;
+		} catch (err) {
+			throw err;
+		}
+	}
 
-    /**
-     * @public
-     * @async
-     * Gets status for the upload session
-     * @returns The promise resolves to the status enquiry response
-     */
-    public async getStatus(): Promise<any> {
-        let self = this;
-        try {
-            let response = await self.client
-                .api(self.uploadSession.url)
-                .get();
-            self.updateTaskStatus(response);
-            return response;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * @public
-     * @async
-     * Resumes upload session and continue uploading the file from the last sent range
-     * @returns The promise resolves to the uploaded response
-     */
-    public async resume(): Promise<any> {
-        let self = this;
-        try {
-            await self.getStatus();
-            return await self.upload();
-        } catch (err) {
-            throw err;
-        }
-    }
+	/**
+	 * @public
+	 * @async
+	 * Resumes upload session and continue uploading the file from the last sent range
+	 * @returns The promise resolves to the uploaded response
+	 */
+	public async resume(): Promise<any> {
+		try {
+			await this.getStatus();
+			return await this.upload();
+		} catch (err) {
+			throw err;
+		}
+	}
 }

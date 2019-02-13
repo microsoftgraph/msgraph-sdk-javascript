@@ -10,6 +10,5 @@
  * Signature representing the middleware options
  */
 
-export interface MiddlewareOption {
-
-}
+/* tslint:disable: no-empty-interface */
+export interface MiddlewareOption {}

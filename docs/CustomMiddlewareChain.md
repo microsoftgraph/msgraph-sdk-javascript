@@ -18,27 +18,26 @@ import { Middleware } from "@microsoft/microsoft-graph-client";
 import { Context } from "@microsoft/microsoft-graph-client";
 
 export class MyLoggingHandler implements Middleware {
+	private nextMiddleware: Middleware;
 
-    private nextMiddleware: Middleware;
+	public async execute(context: Context): Promise<void> {
+		try {
+			let url: string;
+			if (typeof context.request === "string") {
+				url = context.request;
+			} else {
+				url = context.request.url;
+			}
+			console.log(url);
+			return await this.nextMiddleware.execute(context);
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    public async execute(context: Context): Promise<void> {
-        try {
-            let url: string;
-            if (typeof context.request === "string") {
-                url = context.request;
-            } else {
-                url = context.request.url;
-            }
-            console.log(url);
-            return await this.nextMiddleware.execute(context);
-        } catch(error) {
-            throw error;
-        }
-    }
-
-    public setNext(next: Middleware): void {
-        this.nextMiddleware = next;
-    }
+	public setNext(next: Middleware): void {
+		this.nextMiddleware = next;
+	}
 }
 ```
 
@@ -49,17 +48,17 @@ export class MyLoggingHandler implements Middleware {
 import { Middleware } from "@microsoft/microsoft-graph-client";
 
 export class MyHttpMessageHandler implements Middleware {
-    public async execute(context: Context): Promise<void> {
-        try {
-            // For more information about context object refer "Context" section below
-            let response = await fetch(context.request, context.options);
-            // Set the response back in the context
-            context.response = response;
-            return;
-        } catch (error) {
-            throw error;
-        }
-    }
+	public async execute(context: Context): Promise<void> {
+		try {
+			// For more information about context object refer "Context" section below
+			let response = await fetch(context.request, context.options);
+			// Set the response back in the context
+			context.response = response;
+			return;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 ```
 
@@ -92,7 +91,7 @@ Pass first middleware in the chain for initializing the client.
 
 ```typescript
 let clientOptions: ClientOptions = {
-    middleware: authenticationHandler
+	middleware: authenticationHandler,
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
@@ -103,11 +102,11 @@ One can pass any middleware specific options or data while initializing the clie
 
 ```typescript
 let clientOptions: ClientOptions = {
-    middleware: authenticationHandler,
-    middlewareOptions: {
-        loggingPrefix: "MSGraph-Client-Library"
-    }
-}
+	middleware: authenticationHandler,
+	middlewareOptions: {
+		loggingPrefix: "MSGraph-Client-Library",
+	},
+};
 ```
 
 The above middlewareOptions object will be available in the context object that is being passed to the execute method of a middleware.
@@ -118,32 +117,31 @@ import { Middleware } from "@microsoft/microsoft-graph-client";
 import { Context } from "@microsoft/microsoft-graph-client";
 
 export class MyLoggingHandler implements Middleware {
+	private nextMiddleware: Middleware;
 
-    private nextMiddleware: Middleware;
+	public async execute(context: Context): Promise<void> {
+		try {
+			let url: string;
+			if (typeof context.request === "string") {
+				url = context.request;
+			} else {
+				url = context.request.url;
+			}
+			if (context.middlewareOptions !== undefined && context.middlewareOptions.loggingPrefix !== undefined) {
+				console.log(`${context.middlewareOptions.loggingPrefix}: ${url}`);
+			} else {
+				console.log(url);
+			}
+			await this.nextMiddleware.execute(context);
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    public async execute(context: Context): Promise<void> {
-        try {
-            let url: string;
-            if (typeof context.request === "string") {
-                url = context.request;
-            } else {
-                url = context.request.url;
-            }
-            if (context.middlewareOptions !== undefined && context.middlewareOptions.loggingPrefix !== undefined) {
-                console.log(`${context.middlewareOptions.loggingPrefix}: ${url}`);
-            } else {
-                console.log(url);
-            }
-            await this.nextMiddleware.execute(context);
-        } catch(error) {
-            throw error;
-        }
-    }
-
-    public setNext(next: Middleware): void {
-        this.nextMiddleware = next;
-    }
+	public setNext(next: Middleware): void {
+		this.nextMiddleware = next;
+	}
 }
 ```
 
-Refer [MiddlewareOptions](../src/middleware/option/IMiddlewareOption.ts) interface to know its structure.
+Refer [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface to know its structure.

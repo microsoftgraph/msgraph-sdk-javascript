@@ -10,6 +10,7 @@
  */
 
 import { AuthenticationProvider } from "../../src/IAuthenticationProvider";
+
 import { AccessToken } from "./secrets";
 
 /**
@@ -18,14 +19,13 @@ import { AccessToken } from "./secrets";
  * Class representing HardCodedAuthenticationProvider
  */
 export class HardCodedAuthenticationProvider implements AuthenticationProvider {
-
-    /**
-     * @public
-     * @async
-     * To get the access token
-     * @returns The promise that resolves to an access token
-     */
-    public async getAccessToken(): Promise<any> {
-        return Promise.resolve(AccessToken);
-    }
+	/**
+	 * @public
+	 * @async
+	 * To get the access token
+	 * @returns The promise that resolves to an access token
+	 */
+	public async getAccessToken(): Promise<any> {
+		return Promise.resolve(AccessToken);
+	}
 }

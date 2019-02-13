@@ -18,39 +18,38 @@ import { AuthProvider } from "./IAuthProvider";
  * @extends AuthenticationProvider
  */
 export class CustomAuthenticationProvider implements AuthenticationProvider {
+	/**
+	 * @private
+	 * A member to hold authProvider callback
+	 */
+	private provider: AuthProvider;
 
-    /**
-     * @private
-     * A member to hold authProvider callback
-     */
-    private provider: AuthProvider;
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of CustomAuthenticationProvider
+	 * @param {AuthProviderCallback} provider - An authProvider function
+	 * @returns An instance of CustomAuthenticationProvider
+	 */
+	public constructor(provider: AuthProvider) {
+		this.provider = provider;
+	}
 
-    /**
-     * @public
-     * @constructor
-     * Creates an instance of CustomAuthenticationProvider
-     * @param {AuthProviderCallback} provider - An authProvider function
-     * @returns An instance of CustomAuthenticationProvider
-     */
-    public constructor(provider: AuthProvider) {
-        this.provider = provider;
-    }
-
-    /**
-     * @public
-     * @async
-     * To get the access token
-     * @returns The promise that resolves to an access token
-     */
-    public async getAccessToken(): Promise<any> {
-        return new Promise((resolve: Function, reject: Function) => {
-            this.provider((error: any, accessToken: string | null) => {
-                if (accessToken) {
-                    resolve(accessToken);
-                } else {
-                    reject(error);
-                }
-            });
-        });
-    }
+	/**
+	 * @public
+	 * @async
+	 * To get the access token
+	 * @returns The promise that resolves to an access token
+	 */
+	public async getAccessToken(): Promise<any> {
+		return new Promise((resolve: (accessToken: string) => void, reject: (error: any) => void) => {
+			this.provider((error: any, accessToken: string | null) => {
+				if (accessToken) {
+					resolve(accessToken);
+				} else {
+					reject(error);
+				}
+			});
+		});
+	}
 }

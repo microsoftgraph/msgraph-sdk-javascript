@@ -18,57 +18,55 @@
  */
 
 export class GraphError {
+	/**
+	 * @public
+	 * A member holding status code of the error
+	 */
+	public statusCode: number;
 
-    /**
-     * @public
-     * A member holding status code of the error
-     */
-    public statusCode: number;
+	/**
+	 * @public
+	 * A member holding code i.e name of the error
+	 */
+	public code: string | null;
 
-    /**
-     * @public
-     * A member holding code i.e name of the error
-     */
-    public code: string | null;
+	/**
+	 * @public
+	 * A member holding error message
+	 */
+	public message: string | null;
 
-    /**
-     * @public
-     * A member holding error message
-     */
-    public message: string | null;
+	/**
+	 * @public
+	 * A member holding request-id i.e identifier of the request
+	 */
+	public requestId: string | null;
 
-    /**
-     * @public
-     * A member holding request-id i.e identifier of the request
-     */
-    public requestId: string | null;
+	/**
+	 * @public
+	 * A member holding processed date and time of the request
+	 */
+	public date: Date;
 
-    /**
-     * @public
-     * A member holding processed date and time of the request
-     */
-    public date: Date;
+	/**
+	 * @public
+	 * A member holding original error response by the graph service
+	 */
+	public body: any;
 
-    /**
-     * @public
-     * A member holding original error response by the graph service
-     */
-    public body: any;
-
-    /**
-     * @public
-     * @constructor
-     * Creates an instance of GraphError
-     * @param {number} [statusCode = -1] - The status code of the error
-     * @returns An instance of GraphError
-     */
-    public constructor(statusCode: number = -1) {
-        let self = this;
-        self.statusCode = statusCode;
-        self.code = null;
-        self.message = null;
-        self.requestId = null;
-        self.date = new Date();
-        self.body = null;
-    }
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of GraphError
+	 * @param {number} [statusCode = -1] - The status code of the error
+	 * @returns An instance of GraphError
+	 */
+	public constructor(statusCode: number = -1) {
+		this.statusCode = statusCode;
+		this.code = null;
+		this.message = null;
+		this.requestId = null;
+		this.date = new Date();
+		this.body = null;
+	}
 }

@@ -6,10 +6,13 @@ Passing in a version through `.version()` has the highest priority. It overrides
 
 ```typescript
 try {
-    let res = await client.api("/me/ownedDevices").version("beta").get();
-    console.log(res);
+	let res = await client
+		.api("/me/ownedDevices")
+		.version("beta")
+		.get();
+	console.log(res);
 } catch (error) {
-    throw error;
+	throw error;
 }
 ```
 
@@ -19,12 +22,21 @@ You can pass in any URL query parameters through `.query()` as a dictionary or s
 
 ```typescript
 try {
-    // Below three statements are same
-    let res1 = await client.api("/me").query({ "$select": "displayName" }).get();
-    let res2 = await client.api("/me").query("$select=displayName").get();
-    let res3 = await client.api("/me").select("displayName").get();
+	// Below three statements are same
+	let res1 = await client
+		.api("/me")
+		.query({ $select: "displayName" })
+		.get();
+	let res2 = await client
+		.api("/me")
+		.query("$select=displayName")
+		.get();
+	let res3 = await client
+		.api("/me")
+		.select("displayName")
+		.get();
 } catch (error) {
-    throw error;
+	throw error;
 }
 ```
 
@@ -32,29 +44,37 @@ try {
 
 You can pass in additional request headers through `.header()` or `.headers()` either individually or in a dictionary.
 
-````typescript
+```typescript
 try {
-    let messageBody = {
-        message: {
-            subject: "Meet for lunch?",
-            body: {
-            contentType: "Text",
-            content: "The new cafeteria is open."
-            },
-            toRecipients: [{
-                emailAddress: {
-                    address: "garthf@contoso.com"
-                }
-            }]
-        }
-    };
-    // Below two statements are same
-    let res1 = await client.api("/me/sendMail").header("content-type", "application/json").post(messageBody);
-    let res2 = await client.api("/me/sendMail").headers({"content-type": "application/json"}).post(messageBody);
+	let messageBody = {
+		message: {
+			subject: "Meet for lunch?",
+			body: {
+				contentType: "Text",
+				content: "The new cafeteria is open.",
+			},
+			toRecipients: [
+				{
+					emailAddress: {
+						address: "garthf@contoso.com",
+					},
+				},
+			],
+		},
+	};
+	// Below two statements are same
+	let res1 = await client
+		.api("/me/sendMail")
+		.header("content-type", "application/json")
+		.post(messageBody);
+	let res2 = await client
+		.api("/me/sendMail")
+		.headers({ "content-type": "application/json" })
+		.post(messageBody);
 } catch (error) {
-    throw error;
+	throw error;
 }
-````
+```
 
 ## OPTION AND OPTIONS
 
@@ -80,12 +100,13 @@ You can override the client middleware behavior by setting per request middlewar
 
 ```typescript
 try {
-    let res = await client.api("/me/messages").middlewareOptions([
-        new RetryHandlerOption(5000)
-    ]).get();
-    console.log(res);
+	let res = await client
+		.api("/me/messages")
+		.middlewareOptions([new RetryHandlerOption(5000)])
+		.get();
+	console.log(res);
 } catch (error) {
-    throw error;
+	throw error;
 }
 ```
 
@@ -93,11 +114,14 @@ try {
 
 To set a custom response type, use the`.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.
 
-````typescript
+```typescript
 try {
-    let res = await client.api(`/me/drive/root/children/${fileName}/content`).responseType(MicrosoftGraph.ResponseType.BLOB).get();
-    console.log(res);
+	let res = await client
+		.api(`/me/drive/root/children/${fileName}/content`)
+		.responseType(MicrosoftGraph.ResponseType.BLOB)
+		.get();
+	console.log(res);
 } catch (error) {
-    throw error;
+	throw error;
 }
-````
+```

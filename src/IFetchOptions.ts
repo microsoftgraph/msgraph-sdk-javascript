@@ -15,11 +15,11 @@
  * @property {any} [agent] - HTTP(S).Agent instance, allows custom proxy, certificate, lookup, family etc.
  */
 export interface NodeFetchInit {
-    follow?: number;
-    timeout?: number;
-    compress?: boolean;
-    size?: number;
-    agent?: any;
+	follow?: number;
+	timeout?: number;
+	compress?: boolean;
+	size?: number;
+	agent?: any;
 }
 
 /**
@@ -28,6 +28,4 @@ export interface NodeFetchInit {
  * @extends RequestInit @see {@link https://fetch.spec.whatwg.org/#requestinit}
  * @extends NodeFetchInit
  */
-export interface FetchOptions extends RequestInit, NodeFetchInit {
-
-}
+export interface FetchOptions extends RequestInit, NodeFetchInit {}

@@ -6,27 +6,28 @@
  */
 
 import { assert } from "chai";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
-import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
+
 import { HTTPClient } from "../../src/HTTPClient";
 import { HTTPClientFactory } from "../../src/HTTPClientFactory";
+import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
+import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
-describe("HTTPClientFactory.ts", function () {
-    describe("createWithAuthenticationProvider", () => {
+describe("HTTPClientFactory.ts", () => {
+	/* tslint:disable: no-string-literal*/
+	describe("createWithAuthenticationProvider", () => {
+		const dummyAuthProvider = new DummyAuthenticationProvider();
+		const dummyHTTPHandler = new DummyHTTPMessageHandler();
+		it("Should create an HTTPClient instance with default middleware chain", () => {
+			const client: HTTPClient = HTTPClientFactory.createWithAuthenticationProvider(dummyAuthProvider);
+			assert.isTrue(client instanceof HTTPClient);
+			assert.isDefined(client["middleware"]);
+		});
 
-        const dummyAuthProvider = new DummyAuthenticationProvider(),
-            dummyHTTPHandler = new DummyHTTPMessageHandler();
-
-        it("Should create an HTTPClient instance with default middleware chain", () => {
-            let client: HTTPClient = HTTPClientFactory.createWithAuthenticationProvider(dummyAuthProvider);
-            assert.isTrue(client instanceof HTTPClient);
-            assert.isDefined(client["middleware"]);
-        });
-
-        it("Should create an HTTPClient with given middleware chain", () => {
-            let client: HTTPClient = HTTPClientFactory.createWithMiddleware(dummyHTTPHandler);
-            assert.isTrue(client instanceof HTTPClient);
-            assert.isDefined(client["middleware"]);
-        });
-    });
+		it("Should create an HTTPClient with given middleware chain", () => {
+			const client: HTTPClient = HTTPClientFactory.createWithMiddleware(dummyHTTPHandler);
+			assert.isTrue(client instanceof HTTPClient);
+			assert.isDefined(client["middleware"]);
+		});
+	});
+	/* tslint:enable: no-string-literal*/
 });

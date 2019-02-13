@@ -14,10 +14,10 @@ import * as es6Promise from "es6-promise";
  * @returns Nothing
  */
 export const init = (): void => {
-    if (typeof Promise === "undefined") {
-        es6Promise.polyfill();
-    }
-    if (typeof fetch === "undefined") {
-        require("isomorphic-fetch");
-    }
-}
+	if (typeof Promise === "undefined") {
+		es6Promise.polyfill();
+	}
+	if (typeof fetch === "undefined") {
+		require("isomorphic-fetch");
+	}
+};

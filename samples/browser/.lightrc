@@ -1,12 +1,9 @@
 {
-  "port": 8080,
-  "serve": "./src",
-  "bind": "localhost",
-  "watchexps": [
-    "./src/**.js",
-    "./src/**.html"
-  ],
-  "noReload": false,
-  "open": true,
-  "http2": false
+	"port": 8080,
+	"serve": "./src",
+	"bind": "localhost",
+	"watchexps": ["./src/**.js", "./src/**.html"],
+	"noReload": false,
+	"open": true,
+	"http2": false
 }

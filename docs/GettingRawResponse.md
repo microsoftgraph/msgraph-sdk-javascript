@@ -11,6 +11,10 @@ Refer [this documentation](../CreatingClientInstance.md) for initializing the cl
 To get the raw response set the responseType of a request to ResponseType.RAW.
 
 ```typescript
-const rawResponse = client.api("/me").select("displayName").responseType(ResponseType.RAW).get();
+const rawResponse = client
+	.api("/me")
+	.select("displayName")
+	.responseType(ResponseType.RAW)
+	.get();
 console.log(rawResponse);
 ```

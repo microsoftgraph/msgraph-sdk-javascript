@@ -20,18 +20,19 @@ export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$t
  * @returns The constructed URL string
  */
 export const urlJoin = (urlSegments: string[]): string => {
-    const removePostSlash = (s) => s.replace(/\/+$/, ''),
-        removePreSlash = (s) => s.replace(/^\/+/, ''),
-        joiner = (pre, cur) => [removePostSlash(pre), removePreSlash(cur)].join('/'),
-        parts = Array.prototype.slice.call(urlSegments);
-    return parts.reduce(joiner);
-}
+	const removePostSlash = (s) => s.replace(/\/+$/, "");
+	const removePreSlash = (s) => s.replace(/^\/+/, "");
+	const joiner = (pre, cur) => [removePostSlash(pre), removePreSlash(cur)].join("/");
+	const parts = Array.prototype.slice.call(urlSegments);
+	return parts.reduce(joiner);
+};
 
-/** 
+/* tslint:disable: max-line-length */
+/**
  * Serializes the content
  * @param {any} content - The content value that needs to be serialized
  * @returns The serialized content
- * 
+ *
  * Note:
  * This conversion is required due to the following reasons:
  * Body parameter of Request method of isomorphic-fetch only accepts Blob, ArrayBuffer, FormData, TypedArrays string.
@@ -41,24 +42,21 @@ export const urlJoin = (urlSegments: string[]): string => {
  */
 
 export const serializeContent = (content: any): any => {
-    let className: string = content.constructor.name;
-    if (className === 'Buffer'
-        || className === 'Blob'
-        || className === 'File'
-        || className === 'FormData'
-        || typeof content === 'string') {
-        return content;
-    }
-    if (className === 'ArrayBuffer') {
-        content = Buffer.from(content);
-    } else if (className === 'Int8Array' || className === 'Int16Array' || className === 'Int32Array' || className === 'Uint8Array' || className === 'Uint16Array' || className === 'Uint32Array' || className === 'Uint8ClampedArray' || className === 'Float32Array' || className === 'Float64Array' || className === 'DataView') {
-        content = Buffer.from(content.buffer);
-    } else {
-        try {
-            content = JSON.stringify(content);
-        } catch (error) {
-            throw new Error("Unable to stringify the content");
-        }
-    }
-    return content;
-}
+	const className: string = content.constructor.name;
+	if (className === "Buffer" || className === "Blob" || className === "File" || className === "FormData" || typeof content === "string") {
+		return content;
+	}
+	if (className === "ArrayBuffer") {
+		content = Buffer.from(content);
+	} else if (className === "Int8Array" || className === "Int16Array" || className === "Int32Array" || className === "Uint8Array" || className === "Uint16Array" || className === "Uint32Array" || className === "Uint8ClampedArray" || className === "Float32Array" || className === "Float64Array" || className === "DataView") {
+		content = Buffer.from(content.buffer);
+	} else {
+		try {
+			content = JSON.stringify(content);
+		} catch (error) {
+			throw new Error("Unable to stringify the content");
+		}
+	}
+	return content;
+};
+/* tslint:enable: max-line-length */
