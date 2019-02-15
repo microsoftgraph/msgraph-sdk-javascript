@@ -13,7 +13,7 @@ import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 describe("HTTPClientFactory.ts", () => {
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("createWithAuthenticationProvider", () => {
 		const dummyAuthProvider = new DummyAuthenticationProvider();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
@@ -29,5 +29,5 @@ describe("HTTPClientFactory.ts", () => {
 			assert.isDefined(client["middleware"]);
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 });

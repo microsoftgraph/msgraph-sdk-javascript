@@ -33,7 +33,7 @@ describe("GraphResponseHandler.ts", () => {
 		status: 500,
 		statusText: "Internal Server Error",
 	};
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("parseDocumentResponse", () => {
 		it("Should return the html string", async () => {
 			const response = new Response(htmlString, status200);
@@ -89,7 +89,7 @@ describe("GraphResponseHandler.ts", () => {
 			assert.equal(responseValue, htmlString);
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 
 	describe("getResponse", () => {
 		it("Should return valid 200 OK response", async () => {

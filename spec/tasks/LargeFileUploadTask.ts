@@ -54,7 +54,7 @@ describe("LargeFileUploadTask.ts", () => {
 			done();
 		});
 	});
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("Update Task Status", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
@@ -91,7 +91,7 @@ describe("LargeFileUploadTask.ts", () => {
 			done();
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 
 	describe("GetNextRange", () => {
 		const name = "sample_image.jpg";

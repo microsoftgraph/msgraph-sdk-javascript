@@ -100,7 +100,7 @@ cases.push({
 });
 
 describe("urlGeneration.ts", () => {
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("buildFullUrl", () => {
 		for (const testCase of cases) {
 			it("should correctly build " + testCase.url, () => {
@@ -108,5 +108,5 @@ describe("urlGeneration.ts", () => {
 			});
 		}
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 });

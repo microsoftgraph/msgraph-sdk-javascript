@@ -11,4 +11,7 @@
 const Browserify = require("browserify");
 const browserify = Browserify();
 browserify.add("./browser-wrapper.js");
+browserify.add("./browser-wrapper-dependency.js");
+browserify.exclude("isomorphic-fetch");
+browserify.exclude("es6-promise");
 browserify.bundle().pipe(process.stdout);

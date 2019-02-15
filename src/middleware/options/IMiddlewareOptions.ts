@@ -11,4 +11,4 @@
  */
 
 /* tslint:disable: no-empty-interface */
-export interface MiddlewareOption {}
+export interface MiddlewareOptions {}

@@ -27,7 +27,6 @@ export const urlJoin = (urlSegments: string[]): string => {
 	return parts.reduce(joiner);
 };
 
-/* tslint:disable: max-line-length */
 /**
  * Serializes the content
  * @param {any} content - The content value that needs to be serialized
@@ -59,4 +58,3 @@ export const serializeContent = (content: any): any => {
 	}
 	return content;
 };
-/* tslint:enable: max-line-length */

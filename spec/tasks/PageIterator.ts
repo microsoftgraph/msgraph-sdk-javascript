@@ -111,7 +111,7 @@ describe("PageIterator.ts", () => {
 		});
 	});
 
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("iterationHelper", () => {
 		it("Should return true for empty collection with next link", () => {
 			const pageIterator = new PageIterator(client, getEmptyPageCollectionWithNext(), truthyCallback);
@@ -123,7 +123,7 @@ describe("PageIterator.ts", () => {
 			}
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 
 	describe("resume", () => {
 		it("Should start from the place where it left the iteration", async () => {

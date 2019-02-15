@@ -20,7 +20,7 @@ import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { MiddlewareControl } from "./middleware/MiddlewareControl";
-import { MiddlewareOption } from "./middleware/option/IMiddlewareOption";
+import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 
@@ -94,7 +94,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-	private _middlewareOptions: MiddlewareOption[];
+	private _middlewareOptions: MiddlewareOptions[];
 
 	/**
 	 * @private
@@ -364,10 +364,10 @@ export class GraphRequest {
 	/**
 	 * @public
 	 * Sets the middleware options for a request
-	 * @param {MiddlewareOption[]} options - The array of middleware options
+	 * @param {MiddlewareOptions[]} options - The array of middleware options
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public middlewareOptions(options: MiddlewareOption[]): GraphRequest {
+	public middlewareOptions(options: MiddlewareOptions[]): GraphRequest {
 		this._middlewareOptions = options;
 		return this;
 	}

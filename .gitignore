@@ -11,7 +11,8 @@ coverage
 **/*.tgz
 npm-debug.log
 
-lib
+/lib/*
+!/lib/.npmignore
 
 src/**/*.js
 src/**/*.js.map
@@ -20,6 +21,7 @@ src/**/*.d.ts
 samples/node/secrets.json
 samples/browser/src/secrets.js
 samples/browser/src/graph-js-sdk-core.js
+samples/browser/src/graph-js-sdk-web.js
 
 spec/**/*.js
 spec/**/*.d.ts

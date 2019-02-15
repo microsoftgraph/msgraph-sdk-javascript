@@ -10,7 +10,7 @@ import { assert } from "chai";
 import { GraphErrorHandler } from "../../src/GraphErrorHandler";
 
 describe("GraphErrorHandler.ts", () => {
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("constructError", () => {
 		it("Should return custom error without code", () => {
 			const message = "test";
@@ -67,7 +67,7 @@ describe("GraphErrorHandler.ts", () => {
 			assert.equal(gError.date.toUTCString(), date.toUTCString());
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 
 	describe("getError", () => {
 		it("Should construct error from response", () => {

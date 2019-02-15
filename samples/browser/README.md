@@ -14,12 +14,14 @@ Register the application as mentioned in the [Getting Started](../../README.md#1
 
 4. Install the application by `npm install`.
 
-5. Update your `clientId` in [main.js](./src/main.js) file.
+5. Rename the [secrets.sample.js](./src/secrets.sample.js) file as **secrets.js**.
 
-6. Run `npm start` to build and start the application.
+6. Update your `clientId` in **secret.js** file.
 
-7. Navigate to `http://localhost:8080` in your web browser.
+7. Run `npm start` to build and start the application.
 
-8. Sign in with your account.
+8. Navigate to `http://localhost:8080` in your web browser.
 
-9. Click on the Options to view the result.
+9. Sign in with your account.
+
+10. Click on the Options to view the result.

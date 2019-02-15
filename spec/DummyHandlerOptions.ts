@@ -6,18 +6,18 @@
  */
 
 /**
- * @module DummyHandlerOption
+ * @module DummyHandlerOptions
  */
 
-import { MiddlewareOption } from "../src/middleware/option/IMiddlewareOption";
+import { MiddlewareOptions } from "../src/middleware/options/IMiddlewareOptions";
 
 /**
  * @class
- * @implements MiddlewareOption
- * Class for DummyHandlerOption
+ * @implements MiddlewareOptions
+ * Class for DummyHandlerOptions
  */
 
-export class DummyHandlerOption implements MiddlewareOption {
+export class DummyHandlerOptions implements MiddlewareOptions {
 	/**
 	 * @public
 	 * A member holding a dummy string
@@ -27,9 +27,9 @@ export class DummyHandlerOption implements MiddlewareOption {
 	/**
 	 * @public
 	 * @async
-	 * To create an instance of DummyHandlerOption
+	 * To create an instance of DummyHandlerOptions
 	 * @param {string} dummyString - The dummy string
-	 * @returns An instance of DummyHandlerOption
+	 * @returns An instance of DummyHandlerOptions
 	 */
 	public constructor(dummyString: string = "dummy") {
 		this.dummyString = dummyString;

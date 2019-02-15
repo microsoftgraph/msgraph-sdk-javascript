@@ -6,13 +6,11 @@ window.addEventListener(
 	false,
 );
 
-const clientId = "<YOUR_CLIENT_ID>";
-
 let client, scopes;
 const init = async () => {
-	scopes = ["user.read", "profile", "User.ReadWrite", "User.Readwrite.All", "User.Invite.All", "contacts.read", "Notes.ReadWrite", "Notes.Read", "Notes.Create", "Files.Read", "Files.Read.All", "Files.ReadWrite", "Files.ReadWrite.All"];
+	scopes = ["user.read", "profile", "User.ReadWrite", "User.Readwrite.All", "User.Invite.All", "contacts.read", "Notes.ReadWrite", "Notes.Read", "Notes.Create", "Files.Read", "Files.Read.All", "Files.ReadWrite", "Files.ReadWrite.All", "Mail.Read", "Mail.ReadWrite", "Mail.Send"];
 
-	let msalProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, scopes, {
+	let msalProvider = new MicrosoftGraph.MSALAuthenticationProvider(Secrets.clientId, scopes, {
 		redirectUri: "http://localhost:8080",
 	});
 	client = new MicrosoftGraph.Client({

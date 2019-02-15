@@ -9,7 +9,7 @@
  * @module MiddlewareControl
  */
 
-import { MiddlewareOption } from "./option/IMiddlewareOption";
+import { MiddlewareOptions } from "./options/IMiddlewareOptions";
 
 /**
  * @class
@@ -18,19 +18,19 @@ import { MiddlewareOption } from "./option/IMiddlewareOption";
 export class MiddlewareControl {
 	/**
 	 * @private
-	 * A member holding map of MiddlewareOption
+	 * A member holding map of MiddlewareOptions
 	 */
-	private middlewareOptions: Map<string, MiddlewareOption>;
+	private middlewareOptions: Map<string, MiddlewareOptions>;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of MiddlewareControl
-	 * @param {MiddlewareOption[]} middlewareOptions - The array of middlewareOptions
+	 * @param {MiddlewareOptions[]} middlewareOptions - The array of middlewareOptions
 	 * @returns The instance of MiddlewareControl
 	 */
-	public constructor(middlewareOptions: MiddlewareOption[]) {
-		this.middlewareOptions = new Map<string, MiddlewareOption>();
+	public constructor(middlewareOptions: MiddlewareOptions[]) {
+		this.middlewareOptions = new Map<string, MiddlewareOptions>();
 		for (const option of middlewareOptions) {
 			const name = option.constructor.name;
 			this.middlewareOptions.set(name, option);
@@ -43,7 +43,7 @@ export class MiddlewareControl {
 	 * @param {string} name - The class name of the strongly types option class
 	 * @returns The middleware option
 	 */
-	public getMiddlewareOption(name: string): MiddlewareOption {
+	public getMiddlewareOptions(name: string): MiddlewareOptions {
 		return this.middlewareOptions.get(name);
 	}
 }
