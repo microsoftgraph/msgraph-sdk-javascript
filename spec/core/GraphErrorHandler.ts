@@ -30,6 +30,29 @@ describe("GraphErrorHandler.ts", () => {
 		});
 	});
 
+	describe("constructErrorFromRawResponse", async () => {
+		it("Should parse error from raw response", async () => {
+			const body = "unauthorized";
+			const statusCode = 401;
+			const errorResponse = new Response(body, {
+				status: statusCode,
+			});
+			const gError = await GraphErrorHandler["constructErrorFromRawResponse"](errorResponse, statusCode);
+			assert.equal(gError.statusCode, statusCode);
+			assert.equal(gError.body, body);
+		});
+
+		it("Should parse error without body", async () => {
+			const statusCode = 401;
+			const errorResponse = new Response(undefined, {
+				status: statusCode,
+			});
+			const gError = await GraphErrorHandler["constructErrorFromRawResponse"](errorResponse, statusCode);
+			assert.equal(gError.statusCode, statusCode);
+			assert.isNull(gError.body);
+		});
+	});
+
 	describe("constructErrorFromResponse", () => {
 		const statusCode = 400;
 		const error: any = {
@@ -69,8 +92,8 @@ describe("GraphErrorHandler.ts", () => {
 	});
 	/* tslint:enable: no-string-literal */
 
-	describe("getError", () => {
-		it("Should construct error from response", () => {
+	describe("getError", async () => {
+		it("Should construct error from response", async () => {
 			const errorResponse = {
 				error: {
 					code: "500",
@@ -80,23 +103,23 @@ describe("GraphErrorHandler.ts", () => {
 					},
 				},
 			};
-			const gError = GraphErrorHandler.getError(errorResponse);
+			const gError = await GraphErrorHandler.getError(errorResponse);
 			assert.equal(gError.requestId, "some random id");
 			assert.equal(gError.code, "500");
 			assert.equal(gError.message, "Internal Server Error");
 		});
 
-		it("Should construct error from error object", () => {
+		it("Should construct error from error object", async () => {
 			const error = new Error("Some Error");
 			error.name = "InvalidError";
-			const gError = GraphErrorHandler.getError(error);
+			const gError = await GraphErrorHandler.getError(error);
 			assert.equal(gError.requestId, null);
 			assert.equal(gError.message, "Some Error");
 			assert.equal(gError.code, "InvalidError");
 		});
 
-		it("Should construct some default error", () => {
-			const gError = GraphErrorHandler.getError();
+		it("Should construct some default error", async () => {
+			const gError = await GraphErrorHandler.getError();
 			assert.equal(gError.statusCode, -1);
 			assert.equal(gError.code, null);
 			assert.equal(gError.message, null);

@@ -302,7 +302,7 @@ export class GraphRequest {
 			if (typeof rawResponse !== "undefined") {
 				statusCode = rawResponse.status;
 			}
-			const gError: GraphError = GraphErrorHandler.getError(error, statusCode, callback);
+			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
 			throw gError;
 		}
 	}
