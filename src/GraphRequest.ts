@@ -599,6 +599,9 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
+			headers: {
+				"Content-Type": "application/octet-stream",
+			},
 		};
 		try {
 			const response = await this.send(url, options, callback);
