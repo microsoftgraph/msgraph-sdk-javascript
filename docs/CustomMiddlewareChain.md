@@ -144,4 +144,4 @@ export class MyLoggingHandler implements Middleware {
 }
 ```
 
-Refer [MiddlewareOption](../src/middleware/option/IMiddlewareOption.ts) interface to know its structure.
+Refer [MiddlewareOptions](../src/middleware/option/IMiddlewareOptions.ts) interface to know its structure.

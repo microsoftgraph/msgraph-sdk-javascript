@@ -13,11 +13,11 @@ import { assert } from "chai";
 import "isomorphic-fetch";
 
 import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
-import { DummyHandlerOption } from "../DummyHandlerOption";
+import { DummyHandlerOptions } from "../DummyHandlerOptions";
 
 describe("MiddlewareControl.ts", () => {
-	const dummyHandlerOption = new DummyHandlerOption();
-	/* tslint:disable: no-string-literal*/
+	const dummyHandlerOption = new DummyHandlerOptions();
+	/* tslint:disable: no-string-literal */
 	describe("constructor", () => {
 		it("Should populate its middleware options map", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
@@ -31,20 +31,20 @@ describe("MiddlewareControl.ts", () => {
 			assert.equal(middlewareControl["middlewareOptions"].size, 0);
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 
 	describe("getMiddlewareOption", () => {
 		it("Should return the middleware option for a given class name", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
-			const retryOption: DummyHandlerOption = middlewareControl.getMiddlewareOption(dummyHandlerOption.constructor.name) as DummyHandlerOption;
-			assert.isDefined(retryOption);
-			assert.equal(dummyHandlerOption, retryOption);
+			const retryOptions: DummyHandlerOptions = middlewareControl.getMiddlewareOptions(dummyHandlerOption.constructor.name) as DummyHandlerOptions;
+			assert.isDefined(retryOptions);
+			assert.equal(dummyHandlerOption, retryOptions);
 		});
 
 		it("Should return undefined for unknown class name", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
-			const retryOption = middlewareControl.getMiddlewareOption("NotAvailableHandlerOption");
-			assert.isUndefined(retryOption);
+			const retryOptions = middlewareControl.getMiddlewareOptions("NotAvailableHandlerOption");
+			assert.isUndefined(retryOptions);
 		});
 	});
 });

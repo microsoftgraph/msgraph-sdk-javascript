@@ -18,7 +18,7 @@ export * from "./middleware/AuthenticationHandler";
 export * from "./middleware/HTTPMessageHandler";
 export * from "./middleware/IMiddleware";
 
-export * from "./middleware/option/IMiddlewareOption";
+export * from "./middleware/options/IMiddlewareOptions";
 
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";

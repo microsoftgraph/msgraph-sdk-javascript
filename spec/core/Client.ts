@@ -16,7 +16,7 @@ import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 describe("Client.ts", () => {
-	/* tslint:disable: no-string-literal*/
+	/* tslint:disable: no-string-literal */
 	describe("initWithMiddleware", () => {
 		/**
 		 * PolyFill fetch and promise before initializing client, otherwise error will be thrown
@@ -81,5 +81,5 @@ describe("Client.ts", () => {
 			assert.isDefined(client["httpClient"]);
 		});
 	});
-	/* tslint:enable: no-string-literal*/
+	/* tslint:enable: no-string-literal */
 });

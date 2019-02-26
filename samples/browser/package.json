@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "./src/main.js",
 	"scripts": {
-		"copy": "copyfiles -f ../../lib/graph-js-sdk-core.js ./src",
+		"copy": "copyfiles -f ../../lib/graph-js-sdk-web.js ./src",
 		"start": "npm run copy && light-server --config .lightrc"
 	},
 	"author": "",

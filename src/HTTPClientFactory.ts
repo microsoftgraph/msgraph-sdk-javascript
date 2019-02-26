@@ -14,6 +14,8 @@ import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 import { Middleware } from "./middleware/IMiddleware";
+import { RetryHandlerOptions } from "./middleware/options/RetryHandlerOptions";
+import { RetryHandler } from "./middleware/RetryHandler";
 
 /**
  * @class
@@ -29,8 +31,10 @@ export class HTTPClientFactory {
 	 */
 	public static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient {
 		const authenticationHandler = new AuthenticationHandler(authProvider);
+		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const httpMessageHandler = new HTTPMessageHandler();
-		authenticationHandler.setNext(httpMessageHandler);
+		authenticationHandler.setNext(retryHandler);
+		retryHandler.setNext(httpMessageHandler);
 		return HTTPClientFactory.createWithMiddleware(authenticationHandler);
 	}
 
