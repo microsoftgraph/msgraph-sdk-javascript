@@ -23,7 +23,7 @@ export class DummyAuthenticationProvider implements AuthenticationProvider {
 	 * To get the access token
 	 * @returns The promise that resolves to an access token
 	 */
-	public async getAccessToken(): Promise<any> {
+	public async getAccessToken(): Promise<string> {
 		const token = "DUMMY_TOKEN";
 		return Promise.resolve(token);
 	}

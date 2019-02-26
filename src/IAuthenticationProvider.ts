@@ -5,11 +5,18 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
+
 /**
  * @interface
  * A signature representing Authentication provider
- * @property {Function} getAccessTokenWithCompletion - The function to get the access token from the authentication provider
+ * @property {Function} getAccessToken - The function to get the access token from the authentication provider
  */
 export interface AuthenticationProvider {
-	getAccessToken: () => Promise<any>;
+	/**
+	 * To get access token from the authentication provider
+	 * @param {AuthenticationProviderOptions} [authenticationProviderOptions] - The authentication provider options instance
+	 * @returns A promise that resolves to an access token
+	 */
+	getAccessToken: (authenticationProviderOptions?: AuthenticationProviderOptions) => Promise<string>;
 }

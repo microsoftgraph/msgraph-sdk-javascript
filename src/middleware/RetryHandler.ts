@@ -199,16 +199,18 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @async
 	 * To execute the current middleware
-	 * @param {context} context - The context object of the request
+	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
 			const retryAttempts: number = 0;
-			const options: RetryHandlerOptions = Object.assign(new RetryHandlerOptions(), this.options);
+			let options: RetryHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				const requestOptions = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name);
-				Object.assign(options, requestOptions);
+				options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+			}
+			if (typeof options === "undefined") {
+				options = Object.assign(new RetryHandlerOptions(), this.options);
 			}
 			return await this.executeWithRetry(context, retryAttempts, options);
 		} catch (error) {

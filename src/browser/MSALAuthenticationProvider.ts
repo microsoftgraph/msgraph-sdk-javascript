@@ -10,6 +10,8 @@
  */
 
 import { AuthenticationProvider } from "../IAuthenticationProvider";
+import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
+import { MSALAuthenticationProviderOptions } from "../MSALAuthenticationProviderOptions";
 
 /**
  * @constant
@@ -63,26 +65,35 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 	 * @public
 	 * @async
 	 * To get the access token
+	 * @param {AuthenticationProviderOptions} authenticationProviderOptions - The authentication provider options object
 	 * @returns The promise that resolves to an access token
 	 */
-	public async getAccessToken(): Promise<any> {
-		if (this.scopes.length === 0) {
+	public async getAccessToken(authenticationProviderOptions?: AuthenticationProviderOptions): Promise<string> {
+		const options = authenticationProviderOptions as MSALAuthenticationProviderOptions;
+		let scopes: string[];
+		if (typeof options !== "undefined") {
+			scopes = options.scopes;
+		}
+		if (typeof scopes === "undefined" || scopes.length === 0) {
+			scopes = this.scopes;
+		}
+		if (scopes.length === 0) {
 			const error = new Error();
 			error.name = "EmptyScopes";
 			error.message = "Scopes cannot be empty, Please provide a scope";
 			throw error;
 		}
 		try {
-			const accessToken: string = await this.userAgentApplication.acquireTokenSilent(this.scopes);
+			const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
 			return accessToken;
 		} catch (errorMsg) {
 			try {
-				const idToken: string = await this.userAgentApplication.loginPopup(this.scopes);
+				const idToken: string = await this.userAgentApplication.loginPopup(scopes);
 				try {
-					const accessToken: string = await this.userAgentApplication.acquireTokenSilent(this.scopes);
+					const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
 					return accessToken;
 				} catch (error) {
-					const accessToken: string = await this.userAgentApplication.acquireTokenPopup(this.scopes);
+					const accessToken: string = await this.userAgentApplication.acquireTokenPopup(scopes);
 					return accessToken;
 				}
 			} catch (errorMsg) {
