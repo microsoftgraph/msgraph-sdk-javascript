@@ -7,7 +7,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Run node samples",
+			"name": "Run Node samples",
 			"program": "${workspaceRoot}/samples/node/main.js",
 			"cwd": "${workspaceRoot}",
 			"outFiles": [],
@@ -16,7 +16,18 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Run core tests",
+			"name": "Run Content tests",
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"args": ["${workspaceRoot}/lib/spec/content/*.js"],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": "Run Compile",
+			"outFiles": [],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Run Core tests",
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/core/*.js"],
 			"cwd": "${workspaceRoot}",
@@ -27,18 +38,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Run workload tests",
-			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-			"args": ["${workspaceRoot}/spec/development/workload/*.js"],
-			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "Run Compile",
-			"outFiles": [],
-			"internalConsoleOptions": "openOnSessionStart"
-		},
-		{
-			"type": "node",
-			"request": "launch",
-			"name": "Run middleware tests",
+			"name": "Run Middleware tests",
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/middleware/*.js"],
 			"cwd": "${workspaceRoot}",
@@ -49,9 +49,20 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Run Content tests",
+			"name": "Run Tasks tests",
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-			"args": ["${workspaceRoot}/lib/spec/content/*.js"],
+			"args": ["${workspaceRoot}/lib/spec/tasks/*.js"],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": "Run Compile",
+			"outFiles": [],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Run Workload tests",
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"args": ["${workspaceRoot}/spec/development/workload/*.js"],
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": "Run Compile",
 			"outFiles": [],
