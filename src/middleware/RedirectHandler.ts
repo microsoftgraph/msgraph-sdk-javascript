@@ -1,0 +1,225 @@
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
+ * @module RedirectHandler
+ */
+
+import { Context } from "../IContext";
+import { RequestMethod } from "../RequestMethod";
+
+import { Middleware } from "./IMiddleware";
+import { MiddlewareControl } from "./MiddlewareControl";
+import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
+import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
+
+/**
+ * @class
+ * Class
+ * @implements Middleware
+ * Class representing RedirectHandler
+ */
+export class RedirectHandler implements Middleware {
+	/**
+	 * @private
+	 * @static
+	 * A member holding the array of redirect status codes
+	 */
+	private static REDIRECT_STATUS_CODES: number[] = [
+		301, // Moved Permanently
+		302, // Found
+		303, // See Other
+		307, // Temporary Permanently
+		308, // Moved Permanently
+	];
+
+	/**
+	 * @private
+	 * @static
+	 * A member holding SeeOther status code
+	 */
+	private static STATUS_CODE_SEE_OTHER: number = 303;
+
+	/**
+	 * @private
+	 * @static
+	 * A member holding the name of the location header
+	 */
+	private static LOCATION_HEADER: string = "Location";
+
+	/**
+	 * @private
+	 * @static
+	 * A member representing the authorization header name
+	 */
+	private static AUTHORIZATION_HEADER: string = "Authorization";
+
+	/**
+	 * @private
+	 * A member holding options to customize the handler behavior
+	 */
+	private options: RedirectHandlerOptions;
+
+	/**
+	 * @private
+	 * A member to hold next middleware in the middleware chain
+	 */
+	private nextMiddleware: Middleware;
+
+	/**
+	 * @public
+	 * @constructor
+	 * To create an instance of RedirectHandler
+	 * @param {RedirectHandlerOptions} [options = new RedirectHandlerOptions()] - The redirect handler options instance
+	 * @returns An instance of RedirectHandler
+	 */
+
+	public constructor(options: RedirectHandlerOptions = new RedirectHandlerOptions()) {
+		this.options = options;
+	}
+
+	/**
+	 * @private
+	 * To check whether the response has the redirect status code or not
+	 * @param {Response} response - The response object
+	 * @returns A boolean representing whether the response contains the redirect status code or not
+	 */
+	private isRedirect(response: Response): boolean {
+		return RedirectHandler.REDIRECT_STATUS_CODES.indexOf(response.status) !== -1;
+	}
+
+	/**
+	 * @private
+	 * To check whether the response has location header or not
+	 * @param {Response} response - The response object
+	 * @returns A boolean representing the whether the response has location header or not
+	 */
+	private hasLocationHeader(response: Response): boolean {
+		return response.headers.has(RedirectHandler.LOCATION_HEADER);
+	}
+
+	/**
+	 * @private
+	 * To get the redirect url from location header in response object
+	 * @param {Response} response - The response object
+	 * @returns A redirect url from location header
+	 */
+	private getLocationHeader(response: Response): string {
+		return response.headers.get(RedirectHandler.LOCATION_HEADER);
+	}
+
+	/**
+	 * @private
+	 * To check whether the given url is a relative url or not
+	 * @param {string} url - The url string value
+	 * @returns A boolean representing whether the given url is a relative url or not
+	 */
+	private isRelativeURL(url: string): boolean {
+		return url.indexOf("://") === -1;
+	}
+
+	/**
+	 * @private
+	 * To check whether the authorization header in the request should be dropped for consequent redirected requests
+	 * @param {string} requestUrl - The request url value
+	 * @param {string} redirectUrl - The redirect url value
+	 * @returns A boolean representing whether the authorization header in the request should be dropped for consequent redirected requests
+	 */
+	private shouldDropAuthorizationHeader(requestUrl: string, redirectUrl: string): boolean {
+		const schemeHostRegex: RegExp = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
+		const requestMatches: string[] = schemeHostRegex.exec(requestUrl);
+		let requestAuthority: string;
+		let redirectAuthority: string;
+		if (requestMatches !== null) {
+			requestAuthority = requestMatches[0];
+		}
+		const redirectMatches: string[] = schemeHostRegex.exec(redirectUrl);
+		if (redirectMatches !== null) {
+			redirectAuthority = requestMatches[0];
+		}
+		return typeof redirectAuthority !== "undefined" && requestAuthority !== redirectAuthority;
+	}
+
+	/**
+	 * @private
+	 * To update a request url with the redirect url
+	 * @param {Context} context - The context object value
+	 * @param {string} redirectUrl - The redirect url value
+	 * @returns Nothing
+	 */
+	private updateRequestUrl(context: Context, redirectUrl: string): void {
+		context.request = context.request instanceof Request ? cloneRequestWithNewUrl(context.request as Request, redirectUrl) : redirectUrl;
+	}
+
+	/**
+	 * @public
+	 * @async
+	 * To execute the next middleware and to handle in case of redirect response returned by the server
+	 * @param {Context} context - The context object
+	 * @param {number} redirectCount - The redirect count value
+	 * @param {RedirectHandlerOptions} options - The redirect handler options instance
+	 * @returns A promise that resolves to nothing
+	 */
+	public async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
+		try {
+			await this.nextMiddleware.execute(context);
+			const response = context.response;
+			if (redirectCount < options.maxRetries && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
+				++redirectCount;
+				if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
+					context.options.method = RequestMethod.GET;
+					delete context.options.body;
+				} else {
+					const redirectUrl: string = this.getLocationHeader(response);
+					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
+						setRequestHeader(context.request, context.options, RedirectHandler.AUTHORIZATION_HEADER, undefined);
+					}
+					this.updateRequestUrl(context, redirectUrl);
+				}
+				await this.executeWithRedirect(context, redirectCount, options);
+			} else {
+				return;
+			}
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * @public
+	 * @async
+	 * To execute the current middleware
+	 * @param {Context} context - The context object of the request
+	 * @returns A Promise that resolves to nothing
+	 */
+	public async execute(context: Context): Promise<void> {
+		try {
+			const redirectCount: number = 0;
+			let options: RedirectHandlerOptions;
+			if (context.middlewareControl instanceof MiddlewareControl) {
+				options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RedirectHandlerOptions;
+			}
+			if (typeof options === "undefined") {
+				options = Object.assign(new RedirectHandlerOptions(), this.options);
+			}
+			context.options.redirect = "manual";
+			return await this.executeWithRedirect(context, redirectCount, options);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * @public
+	 * To set the next middleware in the chain
+	 * @param {Middleware} next - The middleware instance
+	 * @returns Nothing
+	 */
+	public setNext(next: Middleware): void {
+		this.nextMiddleware = next;
+	}
+}

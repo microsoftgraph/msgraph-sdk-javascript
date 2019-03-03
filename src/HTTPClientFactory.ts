@@ -14,9 +14,19 @@ import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 import { Middleware } from "./middleware/IMiddleware";
+import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOptions";
 import { RetryHandlerOptions } from "./middleware/options/RetryHandlerOptions";
+import { RedirectHandler } from "./middleware/RedirectHandler";
 import { RetryHandler } from "./middleware/RetryHandler";
 
+/**
+ * @private
+ * To check whether the environment is node or not
+ * @returns A boolean representing the environment is node or not
+ */
+const isNodeEnvironment = (): boolean => {
+	return typeof exports !== "undefined" && this.exports !== exports;
+};
 /**
  * @class
  * Class representing HTTPClientFactory
@@ -34,7 +44,13 @@ export class HTTPClientFactory {
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const httpMessageHandler = new HTTPMessageHandler();
 		authenticationHandler.setNext(retryHandler);
-		retryHandler.setNext(httpMessageHandler);
+		if (isNodeEnvironment()) {
+			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
+			retryHandler.setNext(redirectHandler);
+			redirectHandler.setNext(httpMessageHandler);
+		} else {
+			retryHandler.setNext(httpMessageHandler);
+		}
 		return HTTPClientFactory.createWithMiddleware(authenticationHandler);
 	}
 

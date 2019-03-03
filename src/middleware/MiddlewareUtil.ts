@@ -52,3 +52,8 @@ export const setRequestHeader = (request: RequestInfo, options: FetchOptions | u
 		}
 	}
 };
+
+export const cloneRequestWithNewUrl = (requestOptions: Request, url: string): Request => {
+	const options: FetchOptions = { ...requestOptions };
+	return new Request(url, options);
+};

@@ -20,8 +20,8 @@ import { RetryHandlerOptions } from "./options/RetryHandlerOptions";
 
 /**
  * @class
- * Class for RetryHandler
  * @implements Middleware
+ * Class for RetryHandler
  */
 export class RetryHandler implements Middleware {
 	/**
@@ -79,7 +79,7 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * To create an instance of RetryHandler
-	 * @param {RetryHandlerOptions} options - The retry handler options value
+	 * @param {RetryHandlerOptions} [options = new RetryHandlerOptions()] - The retry handler options value
 	 * @returns An instance of RetryHandler
 	 */
 	public constructor(options: RetryHandlerOptions = new RetryHandlerOptions()) {
@@ -181,7 +181,7 @@ export class RetryHandler implements Middleware {
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
 		try {
 			await this.nextMiddleware.execute(context);
-			if (options.maxRetries === retryAttempts && this.isRetry(context.response) && this.isBuffered(context.request, context.options, context.response) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
+			if (options.maxRetries < retryAttempts && this.isRetry(context.response) && this.isBuffered(context.request, context.options, context.response) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
 				++retryAttempts;
 				setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
 				const delay = this.getDelay(context.response, retryAttempts, options.delay);

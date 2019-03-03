@@ -15,8 +15,8 @@ import { Middleware } from "./IMiddleware";
 
 /**
  * @class
- * Class for HTTPMessageHandler
  * @implements Middleware
+ * Class for HTTPMessageHandler
  */
 export class HTTPMessageHandler implements Middleware {
 	/**
