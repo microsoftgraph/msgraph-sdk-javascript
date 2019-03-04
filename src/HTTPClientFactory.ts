@@ -25,8 +25,9 @@ import { RetryHandler } from "./middleware/RetryHandler";
  * @returns A boolean representing the environment is node or not
  */
 const isNodeEnvironment = (): boolean => {
-	return typeof exports !== "undefined" && this.exports !== exports;
+	return new Function("try {return this === global;}catch(e){return false;}")(); // tslint:disable-line: function-constructor
 };
+
 /**
  * @class
  * Class representing HTTPClientFactory
