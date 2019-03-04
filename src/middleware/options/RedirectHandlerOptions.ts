@@ -39,9 +39,9 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 
 	/**
 	 * @public
-	 * A member holding max retries value
+	 * A member holding max redirects value
 	 */
-	public maxRetries: number;
+	public maxRedirects: number;
 
 	/**
 	 * @public
@@ -69,7 +69,7 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 			error.name = "MaxLimitExceeded";
 			throw error;
 		}
-		this.maxRetries = maxRedirects;
+		this.maxRedirects = maxRedirects;
 		this.shouldRedirect = shouldRedirect;
 	}
 }

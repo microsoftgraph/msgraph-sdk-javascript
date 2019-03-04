@@ -60,6 +60,13 @@ export class RedirectHandler implements Middleware {
 
 	/**
 	 * @private
+	 * @static
+	 * A member holding the manual redirect value
+	 */
+	private static MANUAL_REDIRECT: RequestRedirect = "manual";
+
+	/**
+	 * @private
 	 * A member holding options to customize the handler behavior
 	 */
 	private options: RedirectHandlerOptions;
@@ -139,24 +146,42 @@ export class RedirectHandler implements Middleware {
 		}
 		const redirectMatches: string[] = schemeHostRegex.exec(redirectUrl);
 		if (redirectMatches !== null) {
-			redirectAuthority = requestMatches[0];
+			redirectAuthority = redirectMatches[0];
 		}
-		return typeof redirectAuthority !== "undefined" && requestAuthority !== redirectAuthority;
+		return typeof requestAuthority !== "undefined" && typeof redirectAuthority !== "undefined" && requestAuthority !== redirectAuthority;
 	}
 
 	/**
 	 * @private
+	 * @async
 	 * To update a request url with the redirect url
-	 * @param {Context} context - The context object value
 	 * @param {string} redirectUrl - The redirect url value
+	 * @param {Context} context - The context object value
 	 * @returns Nothing
 	 */
-	private updateRequestUrl(context: Context, redirectUrl: string): void {
-		context.request = context.request instanceof Request ? cloneRequestWithNewUrl(context.request as Request, redirectUrl) : redirectUrl;
+	private async updateRequestUrl(redirectUrl: string, context: Context): Promise<void> {
+		context.request = context.request instanceof Request ? await cloneRequestWithNewUrl(redirectUrl, context.request as Request) : redirectUrl;
 	}
 
 	/**
-	 * @public
+	 * @private
+	 * To get the options for execution of the middleware
+	 * @param {Context} context - The context object
+	 * @returns A options for middleware execution
+	 */
+	private getOptions(context: Context): RedirectHandlerOptions {
+		let options: RedirectHandlerOptions;
+		if (context.middlewareControl instanceof MiddlewareControl) {
+			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RedirectHandlerOptions;
+		}
+		if (typeof options === "undefined") {
+			options = Object.assign(new RedirectHandlerOptions(), this.options);
+		}
+		return options;
+	}
+
+	/**
+	 * @private
 	 * @async
 	 * To execute the next middleware and to handle in case of redirect response returned by the server
 	 * @param {Context} context - The context object
@@ -164,11 +189,11 @@ export class RedirectHandler implements Middleware {
 	 * @param {RedirectHandlerOptions} options - The redirect handler options instance
 	 * @returns A promise that resolves to nothing
 	 */
-	public async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
+	private async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
 		try {
 			await this.nextMiddleware.execute(context);
 			const response = context.response;
-			if (redirectCount < options.maxRetries && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
+			if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
 				++redirectCount;
 				if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
 					context.options.method = RequestMethod.GET;
@@ -178,7 +203,7 @@ export class RedirectHandler implements Middleware {
 					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
 						setRequestHeader(context.request, context.options, RedirectHandler.AUTHORIZATION_HEADER, undefined);
 					}
-					this.updateRequestUrl(context, redirectUrl);
+					await this.updateRequestUrl(redirectUrl, context);
 				}
 				await this.executeWithRedirect(context, redirectCount, options);
 			} else {
@@ -199,14 +224,8 @@ export class RedirectHandler implements Middleware {
 	public async execute(context: Context): Promise<void> {
 		try {
 			const redirectCount: number = 0;
-			let options: RedirectHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RedirectHandlerOptions;
-			}
-			if (typeof options === "undefined") {
-				options = Object.assign(new RedirectHandlerOptions(), this.options);
-			}
-			context.options.redirect = "manual";
+			const options = this.getOptions(context);
+			context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
 			return await this.executeWithRedirect(context, redirectCount, options);
 		} catch (error) {
 			throw error;
