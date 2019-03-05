@@ -19,6 +19,33 @@ import { Middleware } from "../src/middleware/IMiddleware";
  */
 export class DummyHTTPMessageHandler implements Middleware {
 	/**
+	 * @private
+	 * A member holding the array of response objects
+	 */
+	private responses: Response[];
+
+	/**
+	 * @public
+	 * @constructor
+	 * To create an instance of DummyHTTPMessageHandler
+	 * @param {Response[]} [responses = []] - The array of response objects
+	 * @returns An instance of DummyHTTPMessageHandler
+	 */
+	public constructor(responses: Response[] = []) {
+		this.responses = responses;
+	}
+
+	/**
+	 * @public
+	 * To set the array of responses
+	 * @param {Response[]} response - The array of responses
+	 * @returns Nothing
+	 */
+	public setResponses(responses: Response[]): void {
+		this.responses = responses;
+	}
+
+	/**
 	 * @public
 	 * @async
 	 * To execute the current middleware
@@ -26,6 +53,7 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 * @returns A promise that resolves to nothing
 	 */
 	public async execute(context: Context) {
+		context.response = this.responses.shift();
 		return;
 	}
 }

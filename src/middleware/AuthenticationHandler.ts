@@ -20,8 +20,8 @@ import { AuthenticationHandlerOptions } from "./options/AuthenticationHandlerOpt
 
 /**
  * @class
- * Class representing AuthenticationHandler
  * @implements Middleware
+ * Class representing AuthenticationHandler
  */
 export class AuthenticationHandler implements Middleware {
 	/**

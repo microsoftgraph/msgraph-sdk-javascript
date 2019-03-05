@@ -20,8 +20,8 @@ import { RetryHandlerOptions } from "./options/RetryHandlerOptions";
 
 /**
  * @class
- * Class for RetryHandler
  * @implements Middleware
+ * Class for RetryHandler
  */
 export class RetryHandler implements Middleware {
 	/**
@@ -79,7 +79,7 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * To create an instance of RetryHandler
-	 * @param {RetryHandlerOptions} options - The retry handler options value
+	 * @param {RetryHandlerOptions} [options = new RetryHandlerOptions()] - The retry handler options value
 	 * @returns An instance of RetryHandler
 	 */
 	public constructor(options: RetryHandlerOptions = new RetryHandlerOptions()) {
@@ -102,22 +102,18 @@ export class RetryHandler implements Middleware {
 	 * To check whether the payload is buffered or not
 	 * @param {RequestInfo} request - The url string or the request object value
 	 * @param {FetchOptions} options - The options of a request
-	 * @param {Response} response - The response object
 	 * @returns Whether the payload is buffered or not
 	 */
-	private isBuffered(request: RequestInfo, options: FetchOptions | undefined, response: Response): boolean {
+	private isBuffered(request: RequestInfo, options: FetchOptions | undefined): boolean {
 		const method = request instanceof Request ? (request as Request).method : options.method;
 		const isPutPatchOrPost: boolean = method === RequestMethod.PUT || method === RequestMethod.PATCH || method === RequestMethod.POST;
 		if (isPutPatchOrPost) {
 			const isStream = getRequestHeader(request, options, "Content-Type") === "application/octet-stream";
-			if (!isStream) {
-				const isTransferEncoding: boolean = response.headers !== undefined && response.headers.get(RetryHandler.TRANSFER_ENCODING_HEADER) === RetryHandler.TRANSFER_ENCODING_CHUNKED;
-				if (isTransferEncoding) {
-					return true;
-				}
+			if (isStream) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -169,6 +165,17 @@ export class RetryHandler implements Middleware {
 		return new Promise((resolve) => setTimeout(resolve, delayMilliseconds));
 	}
 
+	private getOptions(context: Context): RetryHandlerOptions {
+		let options: RetryHandlerOptions;
+		if (context.middlewareControl instanceof MiddlewareControl) {
+			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+		}
+		if (typeof options === "undefined") {
+			options = Object.assign(new RetryHandlerOptions(), this.options);
+		}
+		return options;
+	}
+
 	/**
 	 * @private
 	 * @async
@@ -181,7 +188,7 @@ export class RetryHandler implements Middleware {
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
 		try {
 			await this.nextMiddleware.execute(context);
-			if (options.maxRetries === retryAttempts && this.isRetry(context.response) && this.isBuffered(context.request, context.options, context.response) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
+			if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
 				++retryAttempts;
 				setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
 				const delay = this.getDelay(context.response, retryAttempts, options.delay);
@@ -205,13 +212,7 @@ export class RetryHandler implements Middleware {
 	public async execute(context: Context): Promise<void> {
 		try {
 			const retryAttempts: number = 0;
-			let options: RetryHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
-			}
-			if (typeof options === "undefined") {
-				options = Object.assign(new RetryHandlerOptions(), this.options);
-			}
+			const options: RetryHandlerOptions = this.getOptions(context);
 			return await this.executeWithRetry(context, retryAttempts, options);
 		} catch (error) {
 			throw error;
