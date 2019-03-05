@@ -66,7 +66,7 @@ const options = {
 	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 	redirectUri: "Your redirect URI",
 };
-const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, scopes, options);
+const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, graphScopes, options);
 ```
 
 #### Creating an instance of MSALAuthenticationProvider in node environment
@@ -80,7 +80,7 @@ npm install msal@<version>
 ```typescript
 import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
 
-const clientID = "your_client_id"; // Client Id of the registered application
+const clientId = "your_client_id"; // Client Id of the registered application
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 const options = {
 	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
