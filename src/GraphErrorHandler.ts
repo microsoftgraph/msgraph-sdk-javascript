@@ -40,10 +40,30 @@ export class GraphErrorHandler {
 	/**
 	 * @private
 	 * @static
+	 * @async
+	 * To construct error from the raw response
+	 * @param {Response} error - The error response
+	 * @param {number} statusCode - The status code of the response
+	 * @returns A promise that resolves to GraphError instance
+	 */
+	private static async constructErrorFromRawResponse(error: Response, statusCode: number): Promise<GraphError> {
+		const gError = new GraphError(statusCode);
+		try {
+			gError.body = await error.text();
+		} catch (error) {
+			// tslint:disable-line: no-empty
+		}
+		return gError;
+	}
+
+	/**
+	 * @private
+	 * @static
+	 * @async
 	 * Populates the GraphError instance from the Error returned by graph service
 	 * @param {any} error - The error returned by graph service or some native error
 	 * @param {number} statusCode - The status code of the response
-	 * @returns The GraphError instance
+	 * @returns A promise that resolves to GraphError instance
 	 *
 	 * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
 	 * {
@@ -77,15 +97,18 @@ export class GraphErrorHandler {
 	/**
 	 * @public
 	 * @static
+	 * @async
 	 * To get the GraphError object
 	 * @param {any} [error = null] - The error returned by graph service or some native error
 	 * @param {number} [statusCode = -1] - The status code of the response
 	 * @param {GraphRequestCallback} [callback] - The graph request callback function
-	 * @returns The GraphError instance
+	 * @returns A promise that resolves to GraphError instance
 	 */
-	public static getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): GraphError {
+	public static async getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): Promise<GraphError> {
 		let gError: GraphError;
-		if (error && error.error) {
+		if (error instanceof Response) {
+			gError = await GraphErrorHandler.constructErrorFromRawResponse(error, statusCode);
+		} else if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
 		} else if (error instanceof Error) {
 			gError = GraphErrorHandler.constructError(error, statusCode);

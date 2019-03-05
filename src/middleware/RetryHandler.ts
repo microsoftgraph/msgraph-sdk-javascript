@@ -129,6 +129,7 @@ export class RetryHandler implements Middleware {
 	 * @returns A delay for a retry
 	 */
 	private getDelay(response: Response, retryAttempts: number, delay: number): number {
+		const getRandomness = () => Number(Math.random().toFixed(3));
 		const retryAfter = response.headers !== undefined ? response.headers.get(RetryHandler.RETRY_AFTER_HEADER) : null;
 		let newDelay: number;
 		if (retryAfter !== null) {
@@ -140,9 +141,10 @@ export class RetryHandler implements Middleware {
 			}
 			// tslint:enable: prefer-conditional-expression
 		} else {
-			newDelay = this.getExponentialBackOffTime(retryAttempts) * delay;
+			// Adding randomness to avoid retrying at a same
+			newDelay = retryAttempts >= 2 ? this.getExponentialBackOffTime(retryAttempts) + delay + getRandomness() : delay + getRandomness();
 		}
-		return Math.min(newDelay, this.options.getMaxDelay());
+		return Math.min(newDelay, this.options.getMaxDelay() + getRandomness());
 	}
 
 	/**
@@ -152,8 +154,7 @@ export class RetryHandler implements Middleware {
 	 * @returns An exponential back off value
 	 */
 	private getExponentialBackOffTime(attempts: number): number {
-		const randomness = Number(Math.random().toFixed(3));
-		return Math.round((1 / 2) * (2 ** attempts - 1)) + randomness;
+		return Math.round((1 / 2) * (2 ** attempts - 1));
 	}
 
 	/**
@@ -198,16 +199,18 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @async
 	 * To execute the current middleware
-	 * @param {context} context - The context object of the request
+	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
 			const retryAttempts: number = 0;
-			const options: RetryHandlerOptions = Object.assign(new RetryHandlerOptions(), this.options);
+			let options: RetryHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				const requestOptions = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name);
-				Object.assign(options, requestOptions);
+				options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+			}
+			if (typeof options === "undefined") {
+				options = Object.assign(new RetryHandlerOptions(), this.options);
 			}
 			return await this.executeWithRetry(context, retryAttempts, options);
 		} catch (error) {

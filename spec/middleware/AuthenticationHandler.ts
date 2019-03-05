@@ -18,7 +18,7 @@ describe("AuthenticationHandler.ts", async () => {
 	describe("Constructor", () => {
 		it("Should return an AuthenticationHandler for given AuthenticationProvider", () => {
 			assert.isTrue(authHandler instanceof AuthenticationHandler);
-			assert.equal(authHandler["authProvider"], dummyAuthProvider);
+			assert.equal(authHandler["authenticationProvider"], dummyAuthProvider);
 		});
 	});
 	/* tslint:enable: no-string-literal */

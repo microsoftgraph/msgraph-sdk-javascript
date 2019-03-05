@@ -49,20 +49,24 @@ export class GraphResponseHandler {
 	 * @returns A promise that resolves to a document content
 	 */
 	private static parseDocumentResponse(rawResponse: Response, type: DocumentType): Promise<any> {
-		if (typeof DOMParser !== "undefined") {
-			return new Promise((resolve, reject) => {
-				rawResponse.text().then((xmlString) => {
-					try {
-						const parser = new DOMParser();
-						const xmlDoc = parser.parseFromString(xmlString, type);
-						resolve(xmlDoc);
-					} catch (error) {
-						reject(error);
-					}
+		try {
+			if (typeof DOMParser !== "undefined") {
+				return new Promise((resolve, reject) => {
+					rawResponse.text().then((xmlString) => {
+						try {
+							const parser = new DOMParser();
+							const xmlDoc = parser.parseFromString(xmlString, type);
+							resolve(xmlDoc);
+						} catch (error) {
+							reject(error);
+						}
+					});
 				});
-			});
-		} else {
-			return Promise.resolve(rawResponse.body);
+			} else {
+				return Promise.resolve(rawResponse.body);
+			}
+		} catch (error) {
+			throw error;
 		}
 	}
 
@@ -76,10 +80,8 @@ export class GraphResponseHandler {
 	 * @returns A promise that resolves to the converted response content
 	 */
 	private static async convertResponse(rawResponse: Response, responseType?: ResponseType): Promise<any> {
-		if (responseType === ResponseType.RAW) {
-			return Promise.resolve(rawResponse);
-		}
-		if (rawResponse.status === 204) {
+		const clonedRawResponse: Response = rawResponse.clone();
+		if (clonedRawResponse.status === 204) {
 			// NO CONTENT
 			return Promise.resolve();
 		}
@@ -87,28 +89,28 @@ export class GraphResponseHandler {
 		try {
 			switch (responseType) {
 				case ResponseType.ARRAYBUFFER:
-					responseValue = await rawResponse.arrayBuffer();
+					responseValue = await clonedRawResponse.arrayBuffer();
 					break;
 				case ResponseType.BLOB:
-					responseValue = await rawResponse.blob();
+					responseValue = await clonedRawResponse.blob();
 					break;
 				case ResponseType.DOCUMENT:
-					responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
+					responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, DocumentType.TEXT_XML);
 					break;
 				case ResponseType.JSON:
-					responseValue = await rawResponse.json();
+					responseValue = await clonedRawResponse.json();
 					break;
 				case ResponseType.STREAM:
-					responseValue = await Promise.resolve(rawResponse.body);
+					responseValue = await Promise.resolve(clonedRawResponse.body);
 					break;
 				case ResponseType.TEXT:
-					responseValue = await rawResponse.text();
+					responseValue = await clonedRawResponse.text();
 					break;
 				default:
-					const contentType = rawResponse.headers.get("Content-type");
+					const contentType = clonedRawResponse.headers.get("Content-type");
 					if (contentType !== null) {
 						const mimeType = contentType.split(";")[0];
-						responseValue = GraphResponseHandler.DocumentTypes.includes(mimeType) ? await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType) : await rawResponse.json();
+						responseValue = GraphResponseHandler.DocumentTypes.includes(mimeType) ? await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType) : await clonedRawResponse.json();
 					} else {
 						/**
 						 * RFC specification {@link https://tools.ietf.org/html/rfc7231#section-3.1.1.5} says:
@@ -121,16 +123,12 @@ export class GraphResponseHandler {
 						 *
 						 *  So assuming it as a stream type so returning the body.
 						 */
-						responseValue = Promise.resolve(rawResponse.body);
+						responseValue = Promise.resolve(clonedRawResponse.body);
 					}
 					break;
 			}
 		} catch (error) {
-			if (typeof responseType !== "undefined" && responseType !== ResponseType.JSON) {
-				responseValue = await rawResponse.json();
-			} else {
-				throw error;
-			}
+			throw error;
 		}
 		return responseValue;
 	}
@@ -147,20 +145,24 @@ export class GraphResponseHandler {
 	 */
 	public static async getResponse(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback): Promise<any> {
 		try {
-			const response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
-			if (rawResponse.ok) {
-				// Status Code 2XX
-				if (typeof callback === "function") {
-					callback(null, response, rawResponse);
-				} else {
-					return response;
-				}
+			if (responseType === ResponseType.RAW) {
+				return Promise.resolve(rawResponse);
 			} else {
-				// NOT OK Response
-				throw response;
+				const response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
+				if (rawResponse.ok) {
+					// Status Code 2XX
+					if (typeof callback === "function") {
+						callback(null, response, rawResponse);
+					} else {
+						return response;
+					}
+				} else {
+					// NOT OK Response
+					throw response;
+				}
 			}
 		} catch (error) {
-			throw error;
+			throw rawResponse.ok ? error : rawResponse;
 		}
 	}
 }

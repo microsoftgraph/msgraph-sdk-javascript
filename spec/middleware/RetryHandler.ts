@@ -166,24 +166,34 @@ describe("RetryHandler.ts", function() {
 			assert.isDefined(delay);
 		});
 
+		it("Should return delay without exponential backoff", () => {
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 1, 10);
+			assert.isAbove(delay, 10);
+			assert.isBelow(delay, 11);
+		});
+
+		it("Should return delay with exponential backoff", () => {
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 2, 10);
+			assert.isAbove(delay, 12);
+			assert.isBelow(delay, 13);
+		});
+
 		it("Should return max delay for if the calculated delay is more", () => {
-			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 0, 1);
-			assert.isAbove(delay, 0);
-			assert.isBelow(delay, 1);
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 10, 100);
+			assert.isAbove(delay, 180);
+			assert.isBelow(delay, 181);
 		});
 	});
 
 	describe("getExponentialBackOffTime", () => {
 		it("Should return 0 delay for 0th attempt i.e for a fresh request", () => {
 			const time = retryHandler["getExponentialBackOffTime"](0);
-			assert.isAbove(time, 0);
-			assert.isBelow(time, 1);
+			assert.equal(time, 0);
 		});
 
 		it("Should return attempt time", () => {
 			const time = retryHandler["getExponentialBackOffTime"](1);
-			assert.isAbove(time, 1);
-			assert.isBelow(time, 2);
+			assert.equal(time, 1);
 		});
 	});
 

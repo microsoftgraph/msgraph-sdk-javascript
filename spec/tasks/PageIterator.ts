@@ -47,12 +47,6 @@ const truthyCallback: PageIteratorCallback = (data) => {
 	return true;
 };
 
-let truthyCallbackCounter = 5;
-const truthyCallbackWithCounter: PageIteratorCallback = (data) => {
-	truthyCallbackCounter--;
-	return true;
-};
-
 let halfWayCallbackCounter = 5;
 const halfWayCallback: PageIteratorCallback = (data) => {
 	halfWayCallbackCounter--;
@@ -78,11 +72,10 @@ describe("PageIterator.ts", () => {
 
 	describe("iterate", () => {
 		it("Should iterate over a complete collection without nextLink", async () => {
-			truthyCallbackCounter = 10;
-			const pageIterator = new PageIterator(client, getPageCollection(), truthyCallbackWithCounter);
+			const pageIterator = new PageIterator(client, getPageCollection(), truthyCallback);
 			try {
 				await pageIterator.iterate();
-				assert.equal(truthyCallbackCounter, 0);
+				assert.isTrue(pageIterator.isComplete());
 			} catch (error) {
 				throw error;
 			}
@@ -104,7 +97,7 @@ describe("PageIterator.ts", () => {
 			halfWayCallbackCounter = 5;
 			try {
 				await pageIterator.iterate();
-				assert.equal(halfWayCallbackCounter, 0);
+				assert.isFalse(pageIterator.isComplete());
 			} catch (error) {
 				throw error;
 			}
@@ -123,7 +116,6 @@ describe("PageIterator.ts", () => {
 			}
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("resume", () => {
 		it("Should start from the place where it left the iteration", async () => {
@@ -131,13 +123,36 @@ describe("PageIterator.ts", () => {
 			halfWayCallbackCounter = 5;
 			try {
 				await pageIterator.iterate();
-				assert.equal(halfWayCallbackCounter, 0);
-				halfWayCallbackCounter = 5;
+				assert.isFalse(pageIterator.isComplete());
 				await pageIterator.resume();
-				assert.equal(halfWayCallbackCounter, 0);
+				assert.isTrue(pageIterator.isComplete());
 			} catch (error) {
 				throw error;
 			}
 		});
 	});
+
+	describe("isComplete", () => {
+		it("Should return false for incomplete iteration", async () => {
+			const pageIterator = new PageIterator(client, getPageCollection(), halfWayCallback);
+			halfWayCallbackCounter = 5;
+			try {
+				await pageIterator.iterate();
+				assert.isFalse(pageIterator.isComplete());
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it("Should return true for complete iteration", async () => {
+			const pageIterator = new PageIterator(client, getPageCollection(), truthyCallback);
+			try {
+				await pageIterator.iterate();
+				assert.isTrue(pageIterator.isComplete());
+			} catch (error) {
+				throw error;
+			}
+		});
+	});
+	/* tslint:enable: no-string-literal */
 });
