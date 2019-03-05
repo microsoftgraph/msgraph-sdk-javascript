@@ -8,9 +8,9 @@
 import { assert } from "chai";
 
 import { FetchOptions } from "../../src/IFetchOptions";
-import { getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
+import { cloneRequestWithNewUrl, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
 
-describe("MiddlewareUtil.ts", () => {
+describe("MiddlewareUtil.ts", async () => {
 	describe("setRequestHeader", () => {
 		const key: string = "Content-Type";
 		const value: string = "application/json";

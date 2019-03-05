@@ -20,8 +20,8 @@ import { RetryHandlerOptions } from "./options/RetryHandlerOptions";
 
 /**
  * @class
- * Class for RetryHandler
  * @implements Middleware
+ * Class for RetryHandler
  */
 export class RetryHandler implements Middleware {
 	/**
@@ -79,7 +79,7 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * To create an instance of RetryHandler
-	 * @param {RetryHandlerOptions} options - The retry handler options value
+	 * @param {RetryHandlerOptions} [options = new RetryHandlerOptions()] - The retry handler options value
 	 * @returns An instance of RetryHandler
 	 */
 	public constructor(options: RetryHandlerOptions = new RetryHandlerOptions()) {
@@ -102,22 +102,18 @@ export class RetryHandler implements Middleware {
 	 * To check whether the payload is buffered or not
 	 * @param {RequestInfo} request - The url string or the request object value
 	 * @param {FetchOptions} options - The options of a request
-	 * @param {Response} response - The response object
 	 * @returns Whether the payload is buffered or not
 	 */
-	private isBuffered(request: RequestInfo, options: FetchOptions | undefined, response: Response): boolean {
+	private isBuffered(request: RequestInfo, options: FetchOptions | undefined): boolean {
 		const method = request instanceof Request ? (request as Request).method : options.method;
 		const isPutPatchOrPost: boolean = method === RequestMethod.PUT || method === RequestMethod.PATCH || method === RequestMethod.POST;
 		if (isPutPatchOrPost) {
 			const isStream = getRequestHeader(request, options, "Content-Type") === "application/octet-stream";
-			if (!isStream) {
-				const isTransferEncoding: boolean = response.headers !== undefined && response.headers.get(RetryHandler.TRANSFER_ENCODING_HEADER) === RetryHandler.TRANSFER_ENCODING_CHUNKED;
-				if (isTransferEncoding) {
-					return true;
-				}
+			if (isStream) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -129,6 +125,7 @@ export class RetryHandler implements Middleware {
 	 * @returns A delay for a retry
 	 */
 	private getDelay(response: Response, retryAttempts: number, delay: number): number {
+		const getRandomness = () => Number(Math.random().toFixed(3));
 		const retryAfter = response.headers !== undefined ? response.headers.get(RetryHandler.RETRY_AFTER_HEADER) : null;
 		let newDelay: number;
 		if (retryAfter !== null) {
@@ -140,9 +137,10 @@ export class RetryHandler implements Middleware {
 			}
 			// tslint:enable: prefer-conditional-expression
 		} else {
-			newDelay = this.getExponentialBackOffTime(retryAttempts) * delay;
+			// Adding randomness to avoid retrying at a same
+			newDelay = retryAttempts >= 2 ? this.getExponentialBackOffTime(retryAttempts) + delay + getRandomness() : delay + getRandomness();
 		}
-		return Math.min(newDelay, this.options.getMaxDelay());
+		return Math.min(newDelay, this.options.getMaxDelay() + getRandomness());
 	}
 
 	/**
@@ -152,8 +150,7 @@ export class RetryHandler implements Middleware {
 	 * @returns An exponential back off value
 	 */
 	private getExponentialBackOffTime(attempts: number): number {
-		const randomness = Number(Math.random().toFixed(3));
-		return Math.round((1 / 2) * (2 ** attempts - 1)) + randomness;
+		return Math.round((1 / 2) * (2 ** attempts - 1));
 	}
 
 	/**
@@ -168,6 +165,17 @@ export class RetryHandler implements Middleware {
 		return new Promise((resolve) => setTimeout(resolve, delayMilliseconds));
 	}
 
+	private getOptions(context: Context): RetryHandlerOptions {
+		let options: RetryHandlerOptions;
+		if (context.middlewareControl instanceof MiddlewareControl) {
+			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+		}
+		if (typeof options === "undefined") {
+			options = Object.assign(new RetryHandlerOptions(), this.options);
+		}
+		return options;
+	}
+
 	/**
 	 * @private
 	 * @async
@@ -180,7 +188,7 @@ export class RetryHandler implements Middleware {
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
 		try {
 			await this.nextMiddleware.execute(context);
-			if (options.maxRetries === retryAttempts && this.isRetry(context.response) && this.isBuffered(context.request, context.options, context.response) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
+			if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
 				++retryAttempts;
 				setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
 				const delay = this.getDelay(context.response, retryAttempts, options.delay);
@@ -198,17 +206,13 @@ export class RetryHandler implements Middleware {
 	 * @public
 	 * @async
 	 * To execute the current middleware
-	 * @param {context} context - The context object of the request
+	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
 			const retryAttempts: number = 0;
-			const options: RetryHandlerOptions = Object.assign(new RetryHandlerOptions(), this.options);
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				const requestOptions = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name);
-				Object.assign(options, requestOptions);
-			}
+			const options: RetryHandlerOptions = this.getOptions(context);
 			return await this.executeWithRetry(context, retryAttempts, options);
 		} catch (error) {
 			throw error;

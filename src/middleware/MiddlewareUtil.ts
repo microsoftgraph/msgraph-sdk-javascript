@@ -11,6 +11,14 @@
 
 import { FetchOptions } from "../IFetchOptions";
 
+/**
+ * @constant
+ * To get the request header from the request
+ * @param {RequestInfo} request - The request object or the url string
+ * @param {FetchOptions|undefined} options - The request options object
+ * @param {string} key - The header key string
+ * @returns A header value for the given key from the request
+ */
 export const getRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string): string | null => {
 	let value: string = null;
 	if (request instanceof Request) {
@@ -33,6 +41,15 @@ export const getRequestHeader = (request: RequestInfo, options: FetchOptions | u
 	return value;
 };
 
+/**
+ * @constant
+ * To set the header value to the given request
+ * @param {RequestInfo} request - The request object or the url string
+ * @param {FetchOptions|undefined} options - The request options object
+ * @param {string} key - The header key string
+ * @param {string } value - The header value string
+ * @returns Nothing
+ */
 export const setRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string, value: string): void => {
 	if (request instanceof Request) {
 		(request as Request).headers.set(key, value);
@@ -51,4 +68,17 @@ export const setRequestHeader = (request: RequestInfo, options: FetchOptions | u
 			}
 		}
 	}
+};
+
+/**
+ * @constant
+ * To clone the request with the new url
+ * @param {string} url - The new url string
+ * @param {Request} request - The request object
+ * @returns A promise that resolves to request object
+ */
+export const cloneRequestWithNewUrl = async (newUrl: string, request: Request): Promise<Request> => {
+	const body = request.headers.get("Content-Type") ? await request.blob() : await Promise.resolve(undefined);
+	const { method, headers, referrer, referrerPolicy, mode, credentials, cache, redirect, integrity, keepalive, signal } = request;
+	return new Request(newUrl, { method, headers, body, referrer, referrerPolicy, mode, credentials, cache, redirect, integrity, keepalive, signal });
 };

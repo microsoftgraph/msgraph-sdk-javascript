@@ -17,8 +17,11 @@ export * from "./content/BatchResponseContent";
 export * from "./middleware/AuthenticationHandler";
 export * from "./middleware/HTTPMessageHandler";
 export * from "./middleware/IMiddleware";
+export * from "./middleware/RetryHandler";
 
+export * from "./middleware/options/AuthenticationHandlerOptions";
 export * from "./middleware/options/IMiddlewareOptions";
+export * from "./middleware/options/RetryHandlerOptions";
 
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";
@@ -26,8 +29,9 @@ export * from "./tasks/PageIterator";
 export * from "./Client";
 export * from "./GraphError";
 export * from "./GraphRequest";
-export * from "./IAuthenticationProvider";
 export * from "./IAuthProvider";
+export * from "./IAuthenticationProvider";
+export * from "./IAuthenticationProviderOptions";
 export * from "./IAuthProviderCallback";
 export * from "./IClientOptions";
 export * from "./IContext";

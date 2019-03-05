@@ -302,7 +302,7 @@ export class GraphRequest {
 			if (typeof rawResponse !== "undefined") {
 				statusCode = rawResponse.status;
 			}
-			const gError: GraphError = GraphErrorHandler.getError(error, statusCode, callback);
+			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
 			throw gError;
 		}
 	}
@@ -599,6 +599,9 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
+			headers: {
+				"Content-Type": "application/octet-stream",
+			},
 		};
 		try {
 			const response = await this.send(url, options, callback);

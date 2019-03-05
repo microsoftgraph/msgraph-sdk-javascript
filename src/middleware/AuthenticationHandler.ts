@@ -10,15 +10,18 @@
  */
 
 import { AuthenticationProvider } from "../IAuthenticationProvider";
+import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
 import { Context } from "../IContext";
 
 import { Middleware } from "./IMiddleware";
+import { MiddlewareControl } from "./MiddlewareControl";
 import { setRequestHeader } from "./MiddlewareUtil";
+import { AuthenticationHandlerOptions } from "./options/AuthenticationHandlerOptions";
 
 /**
  * @class
- * Class representing AuthenticationHandler
  * @implements Middleware
+ * Class representing AuthenticationHandler
  */
 export class AuthenticationHandler implements Middleware {
 	/**
@@ -31,7 +34,7 @@ export class AuthenticationHandler implements Middleware {
 	 * @private
 	 * A member to hold an AuthenticationProvider instance
 	 */
-	private authProvider: AuthenticationProvider;
+	private authenticationProvider: AuthenticationProvider;
 
 	/**
 	 * @private
@@ -43,23 +46,36 @@ export class AuthenticationHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * Creates an instance of AuthenticationHandler
-	 * @param {AuthenticationProvider} authProvider - The authentication provider for the authentication handler
+	 * @param {AuthenticationProvider} authenticationProvider - The authentication provider for the authentication handler
 	 */
-	public constructor(authProvider: AuthenticationProvider) {
-		this.authProvider = authProvider;
+	public constructor(authenticationProvider: AuthenticationProvider) {
+		this.authenticationProvider = authenticationProvider;
 	}
 
 	/**
 	 * @public
 	 * @async
 	 * To execute the current middleware
-	 * @param {context} context - The context object of the request
+	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			const token = await this.authProvider.getAccessToken();
-			const bearerKey = `Bearer ${token}`;
+			let options: AuthenticationHandlerOptions;
+			if (context.middlewareControl instanceof MiddlewareControl) {
+				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions.name) as AuthenticationHandlerOptions;
+			}
+			let authenticationProvider: AuthenticationProvider;
+			let authenticationProviderOptions: AuthenticationProviderOptions;
+			if (typeof options !== "undefined") {
+				authenticationProvider = options.authenticationProvider;
+				authenticationProviderOptions = options.authenticationProviderOptions;
+			}
+			if (typeof authenticationProvider === "undefined") {
+				authenticationProvider = this.authenticationProvider;
+			}
+			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
+			const bearerKey: string = `Bearer ${token}`;
 			setRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {

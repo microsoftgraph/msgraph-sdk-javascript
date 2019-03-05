@@ -8,8 +8,10 @@
 import { assert } from "chai";
 import "isomorphic-fetch";
 
+import { Context } from "../../src/IContext";
 import { FetchOptions } from "../../src/IFetchOptions";
-import { RetryHandlerOptions } from "../../src/middleware/options/RetryHandlerOptions";
+import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
+import { RetryHandlerOptions, ShouldRetry } from "../../src/middleware/options/RetryHandlerOptions";
 import { RetryHandler } from "../../src/middleware/RetryHandler";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
@@ -76,28 +78,19 @@ describe("RetryHandler.ts", function() {
 
 	describe("isBuffered", () => {
 		const url = "dummy_url";
-		const transferEncodingChunkedResponse = new Response("test", {
-			headers: {
-				"Transfer-Encoding": "chunked",
-			},
-		});
-		const transferEncodingNonChunkedResponse = new Response("test", {
-			headers: {
-				"Transfer-Encoding": "compress",
-			},
-		});
-		const nonTransferEncodingResponse = new Response("test", {
-			headers: {
-				dummy: "dummy",
-			},
-		});
-		const nonTransferEncodingResponseWithoutHeaders = new Response("test");
-		it("Should fail for non post, patch, put requests", () => {
+		it("Should succeed for non post, patch, put requests", () => {
 			const options: FetchOptions = {
 				method: "GET",
 			};
-			const isBuffered = retryHandler["isBuffered"](url, options, nonTransferEncodingResponse);
-			assert.isFalse(isBuffered);
+			assert.isTrue(retryHandler["isBuffered"](url, options));
+		});
+
+		it("Should succeed for post request with non stream request", () => {
+			const options: FetchOptions = {
+				method: "POST",
+				body: "test",
+			};
+			assert.isTrue(retryHandler["isBuffered"](url, options));
 		});
 
 		it("Should fail for stream request", () => {
@@ -107,51 +100,7 @@ describe("RetryHandler.ts", function() {
 					"Content-Type": "application/octet-stream",
 				},
 			};
-			const isBuffered = retryHandler["isBuffered"](url, options, nonTransferEncodingResponse);
-			assert.isFalse(isBuffered);
-		});
-
-		it("Should fail for response without headers", () => {
-			const options: FetchOptions = {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			};
-			const isBuffered = retryHandler["isBuffered"](url, options, nonTransferEncodingResponseWithoutHeaders);
-			assert.isFalse(isBuffered);
-		});
-
-		it("Should fail for transfer encoding with non chunked response", () => {
-			const options: FetchOptions = {
-				method: "PUT",
-			};
-			const isBuffered = retryHandler["isBuffered"](url, options, transferEncodingNonChunkedResponse);
-			assert.isFalse(isBuffered);
-		});
-
-		it("Should succeed for put method with non streaming chunked response", () => {
-			const options: FetchOptions = {
-				method: "PUT",
-			};
-			const isBuffered = retryHandler["isBuffered"](url, options, transferEncodingChunkedResponse);
-			assert.isTrue(isBuffered);
-		});
-
-		it("Should succeed for post method with non streaming chunked response", () => {
-			const options: FetchOptions = {
-				method: "POST",
-			};
-			const isBuffered = retryHandler["isBuffered"](url, options, transferEncodingChunkedResponse);
-			assert.isTrue(isBuffered);
-		});
-
-		it("Should succeed for patch method with non streaming chunked response", () => {
-			const options: FetchOptions = {
-				method: "PATCH",
-			};
-			const isBuffered = retryHandler["isBuffered"](url, options, transferEncodingChunkedResponse);
-			assert.isTrue(isBuffered);
+			assert.isFalse(retryHandler["isBuffered"](url, options));
 		});
 	});
 
@@ -166,24 +115,34 @@ describe("RetryHandler.ts", function() {
 			assert.isDefined(delay);
 		});
 
+		it("Should return delay without exponential backoff", () => {
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 1, 10);
+			assert.isAbove(delay, 10);
+			assert.isBelow(delay, 11);
+		});
+
+		it("Should return delay with exponential backoff", () => {
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 2, 10);
+			assert.isAbove(delay, 12);
+			assert.isBelow(delay, 13);
+		});
+
 		it("Should return max delay for if the calculated delay is more", () => {
-			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 0, 1);
-			assert.isAbove(delay, 0);
-			assert.isBelow(delay, 1);
+			const delay = retryHandler["getDelay"](gatewayTimeoutResponse, 10, 100);
+			assert.isAbove(delay, 180);
+			assert.isBelow(delay, 181);
 		});
 	});
 
 	describe("getExponentialBackOffTime", () => {
 		it("Should return 0 delay for 0th attempt i.e for a fresh request", () => {
 			const time = retryHandler["getExponentialBackOffTime"](0);
-			assert.isAbove(time, 0);
-			assert.isBelow(time, 1);
+			assert.equal(time, 0);
 		});
 
 		it("Should return attempt time", () => {
 			const time = retryHandler["getExponentialBackOffTime"](1);
-			assert.isAbove(time, 1);
-			assert.isBelow(time, 2);
+			assert.equal(time, 1);
 		});
 	});
 
@@ -197,28 +156,83 @@ describe("RetryHandler.ts", function() {
 		});
 	});
 
-	describe("executeWithRetry", async () => {
-		const handler = new RetryHandler(new RetryHandlerOptions());
-		const retryOptionWithFalsyShouldRetry = new RetryHandlerOptions(undefined, undefined, () => false);
-		const retryHandlerWithFalsyShouldRetry = new RetryHandler(retryOptionWithFalsyShouldRetry);
-		const httpHandler = new DummyHTTPMessageHandler();
-		handler.setNext(httpHandler);
-		retryHandlerWithFalsyShouldRetry.setNext(httpHandler);
-		const contextWithRetry = {
-			request: new Request("test", {
-				method: "GET",
-			}),
-			response: tooManyRequestsResponseWithRetyAfterDate,
-		};
+	describe("getOptions", () => {
+		it("Should return the options in the context object", () => {
+			const delay = 10;
+			const maxRetries = 8;
+			const shouldRetry: ShouldRetry = () => false;
+			const options = new RetryHandlerOptions(delay, maxRetries, shouldRetry);
+			const cxt: Context = {
+				request: "url",
+				middlewareControl: new MiddlewareControl([options]),
+			};
+			const o = retryHandler["getOptions"](cxt);
+			assert.equal(o.delay, delay);
+			assert.equal(o.maxRetries, maxRetries);
+			assert.equal(o.shouldRetry, shouldRetry);
+		});
 
-		it("Should not do retry for falsy should retry", async () => {
-			try {
-				const delay = retryHandlerWithFalsyShouldRetry["options"].delay;
-				await retryHandlerWithFalsyShouldRetry["executeWithRetry"](contextWithRetry, 1, retryOptionWithFalsyShouldRetry);
-				assert.equal(retryHandlerOptions.delay, delay);
-			} catch (error) {
-				throw error;
-			}
+		it("Should return the default set of options in the middleware", () => {
+			const cxt: Context = {
+				request: "url",
+			};
+			const o = retryHandler["getOptions"](cxt);
+			assert.equal(o.delay, retryHandler["options"].delay);
+			assert.equal(o.maxRetries, retryHandler["options"].maxRetries);
+			assert.equal(o.shouldRetry, retryHandler["options"].shouldRetry);
+		});
+	});
+
+	describe("executeWithRetry", async () => {
+		const options = new RetryHandlerOptions();
+		const handler = new RetryHandler(options);
+		const dummyHTTPHandler = new DummyHTTPMessageHandler();
+		handler.setNext(dummyHTTPHandler);
+		const cxt: Context = {
+			request: "url",
+			options: {
+				method: "GET",
+			},
+		};
+		it("Should return non retried response incase of maxRetries busted out", async () => {
+			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
+			await handler["executeWithRetry"](cxt, RetryHandlerOptions["MAX_MAX_RETRIES"], options);
+			assert.equal(cxt.response.status, 429);
+		});
+
+		it("Should return succeeded response for non retry response", async () => {
+			dummyHTTPHandler.setResponses([new Response("ok", { status: 200 })]);
+			await handler["executeWithRetry"](cxt, 0, options);
+			assert.equal(cxt.response.status, 200);
+		});
+
+		it("Should return non retried response for streaming request", async () => {
+			const c: Context = {
+				request: "url",
+				options: {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/octet-stream",
+					},
+				},
+			};
+			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
+			await handler["executeWithRetry"](c, 0, options);
+			assert.equal(c.response.status, 429);
+		});
+
+		it("Should successfully retry and return ok response", async () => {
+			const opts = new RetryHandlerOptions(1);
+			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
+			await handler["executeWithRetry"](cxt, 0, options);
+			assert.equal(cxt.response.status, 200);
+		});
+
+		it("Should fail by exceeding max retries", async () => {
+			const opts = new RetryHandlerOptions(1, 2);
+			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response(null, { status: 429 }), new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
+			await handler["executeWithRetry"](cxt, 0, opts);
+			assert.equal(cxt.response.status, 429);
 		});
 	});
 	/* tslint:enable: no-string-literal */

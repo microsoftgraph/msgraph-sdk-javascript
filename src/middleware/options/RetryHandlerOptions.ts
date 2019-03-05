@@ -17,7 +17,6 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  * @type
  * A type declaration for shouldRetry callback
  */
-
 export type ShouldRetry = (delay: number, attempt: number, request: RequestInfo, options: FetchOptions | undefined, response: Response) => boolean;
 
 /**
@@ -83,9 +82,9 @@ export class RetryHandlerOptions implements MiddlewareOptions {
 	 * @public
 	 * @constructor
 	 * To create an instance of RetryHandlerOptions
-	 * @param {number} delay - The delay value in seconds
-	 * @param {number} maxRetries - The maxRetries value
-	 * @param {ShouldRetry} shouldRetry - The shouldRetry callback function
+	 * @param {number} [delay = RetryHandlerOptions.DEFAULT_DELAY] - The delay value in seconds
+	 * @param {number} [maxRetries = RetryHandlerOptions.DEFAULT_MAX_RETRIES] - The maxRetries value
+	 * @param {ShouldRetry} [shouldRetry = RetryHandlerOptions.DEFAULT_SHOULD_RETRY] - The shouldRetry callback function
 	 * @returns An instance of RetryHandlerOptions
 	 */
 	public constructor(delay: number = RetryHandlerOptions.DEFAULT_DELAY, maxRetries: number = RetryHandlerOptions.DEFAULT_MAX_RETRIES, shouldRetry: ShouldRetry = RetryHandlerOptions.DEFAULT_SHOULD_RETRY) {

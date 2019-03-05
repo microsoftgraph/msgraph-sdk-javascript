@@ -47,8 +47,10 @@ async function customSize() {
 		pageIterator.iterate();
 
 		// Resuming will do start from where it left off and iterate for next 1000 entities.
-		// Resume is likely to be called in any user interaction requiring to load more data.
-		pageIterator.resume();
+		// Check and resume is likely to be called in any user interaction requiring to load more data.
+		if (!pageIterator.isComplete()) {
+			pageIterator.resume();
+		}
 	} catch (e) {
 		throw e;
 	}

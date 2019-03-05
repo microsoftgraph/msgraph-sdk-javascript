@@ -22,24 +22,18 @@ import `@microsoft/microsoft-graph-client` into your module.
 import { Client } from "@microsoft/microsoft-graph-client";
 ```
 
-In case your environment have support for or have polyfill for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], import `./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index` into your module which doesn't have polyfills for these.
-
-```typescript
-import { Client } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/core/index";
-```
-
 ### Via Script Tag
 
-Include `lib/graph-js-sdk-core.js` in your page.
-
-```HTML
-<script type="text/javascript" src="graph-js-sdk-core.js"></script>
-```
-
-In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] and [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you can polyfill them and include as above or you can use `lib/graph-js-sdk-web.js` which includes polyfills.
+Include `lib/graph-js-sdk-web.js` in your page.
 
 ```HTML
 <script type="text/javascript" src="graph-js-sdk-web.js"></script>
+```
+
+Incase if your application ships with [es6-promise](https://www.npmjs.com/package/es6-promise) and [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) just use `lib/graph-js-sdk-core.js`
+
+```HTML
+<script type="text/javascript" src="graph-js-sdk-core.js"></script>
 ```
 
 ## Getting started

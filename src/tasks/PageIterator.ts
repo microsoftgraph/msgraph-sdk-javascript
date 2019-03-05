@@ -67,6 +67,12 @@ export class PageIterator {
 	private callback: PageIteratorCallback;
 
 	/**
+	 * @private
+	 * Member holding a complete/incomplete status of an iterator
+	 */
+	private complete: boolean;
+
+	/**
 	 * @public
 	 * @constructor
 	 * Creates new instance for PageIterator
@@ -81,6 +87,7 @@ export class PageIterator {
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
 		this.callback = callback;
+		this.complete = false;
 	}
 
 	/**
@@ -144,6 +151,9 @@ export class PageIterator {
 					advance = false;
 				}
 			}
+			if (this.nextLink === undefined && this.collection.length === 0) {
+				this.complete = true;
+			}
 		} catch (error) {
 			throw error;
 		}
@@ -152,7 +162,8 @@ export class PageIterator {
 	/**
 	 * @public
 	 * @async
-	 * This internally calls the iterate method, It's just for more readability.
+	 * To resume the iteration
+	 * Note: This internally calls the iterate method, It's just for more readability.
 	 * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy
 	 */
 	public async resume(): Promise<any> {
@@ -161,5 +172,14 @@ export class PageIterator {
 		} catch (error) {
 			throw error;
 		}
+	}
+
+	/**
+	 * @public
+	 * To get the completeness status of the iterator
+	 * @returns Boolean indicating the completeness
+	 */
+	public isComplete(): boolean {
+		return this.complete;
 	}
 }
