@@ -6,7 +6,7 @@ Using preferred choice of Authentication library for authenticating with Microso
 
 ### Implement AuthenticationProvider
 
-Create own implementation of Authentication provider which implements [AuthenticationProvider](../src/iAuthenticationProvider.ts) interface.
+Create own implementation of Authentication provider which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface.
 
 ```typescript
 // MyAuthenticationProvider.ts
