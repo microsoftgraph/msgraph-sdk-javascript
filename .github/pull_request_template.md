@@ -2,6 +2,8 @@ A similar PR may already be submitted! Please search among the [Pull request](ht
 
 Thanks for submitting a pull request! Please provide enough information so that others can review your pull request.
 
+**NOTE: PR's will be accepted only in case of appropriate information is provided below**
+
 ## Summary
 
 <!-- Summary of the PR -->
@@ -12,7 +14,7 @@ Explain the **motivation** for making this change. What existing problem does th
 
 <!-- Example: When "Adding a function to do X", explain why it is necessary to have a way to do X. -->
 
-## Test plan (required)
+## Test plan
 
 Demonstrate the code is solid. Example: The exact commands you ran and their output.
 
