@@ -38,10 +38,10 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 	private scopes: string[];
 
 	/**
-	 * @private
+	 * @public
 	 * A member holding an instance of UserAgentApplication returned from MSAL
 	 */
-	private userAgentApplication: any;
+	public userAgentApplication: any;
 
 	/**
 	 * @public
