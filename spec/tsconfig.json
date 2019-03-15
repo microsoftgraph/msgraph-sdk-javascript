@@ -1,12 +1,15 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "noEmitOnError": true,
-    "noImplicitAny": false,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "sourceMap": true,
-    "target": "es6",
-    "declaration": true
-  }
+	"compilerOptions": {
+		"module": "commonjs",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"noEmitOnError": true,
+		"noImplicitAny": false,
+		"moduleResolution": "node",
+		"removeComments": true,
+		"sourceMap": true,
+		"target": "es6",
+		"lib": ["es7", "dom"],
+		"declaration": true
+	}
 }

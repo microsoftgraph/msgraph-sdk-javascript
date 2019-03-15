@@ -1,24 +1,41 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
  * @module Range
  */
 
- /**
+/**
+ * @class
  * Class representing Range
  */
 export class Range {
-    /** The minimum value of the range */
-    minValue: number
-    /** The maximum value of the range */
-    maxValue: number
+	/**
+	 * @public
+	 * The minimum value of the range
+	 */
+	public minValue: number;
 
-    /**
-     * Creates a range for given min and max values
-     * @param {number} [minVal = -1] - The minimum value.
-     * @param {number} [maxVal = -1] - The maximum value.
-     */
-    constructor(minVal: number = -1, maxVal: number = -1) {
-        let self = this;
-        self.minValue = minVal;
-        self.maxValue = maxVal;
-    }
+	/**
+	 * @public
+	 * The maximum value of the range
+	 */
+	public maxValue: number;
+
+	/**
+	 * @public
+	 * @constructor
+	 * Creates a range for given min and max values
+	 * @param {number} [minVal = -1] - The minimum value.
+	 * @param {number} [maxVal = -1] - The maximum value.
+	 * @returns An instance of a Range
+	 */
+	public constructor(minVal: number = -1, maxVal: number = -1) {
+		this.minValue = minVal;
+		this.maxValue = maxVal;
+	}
 }

@@ -1,449 +1,735 @@
-import { Promise } from 'es6-promise'
-import 'isomorphic-fetch';
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
 
-import { Options, URLComponents, oDataQueryNames, GraphRequestCallback, PACKAGE_VERSION, DefaultRequestHeaders } from "./common"
-import { ResponseHandler } from "./ResponseHandler"
-import { RequestMethod } from './RequestMethod';
+/**
+ * @module GraphRequest
+ */
+
+import { PACKAGE_VERSION } from "./Constants";
+import { GraphError } from "./GraphError";
+import { GraphErrorHandler } from "./GraphErrorHandler";
+import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
+import { GraphResponseHandler } from "./GraphResponseHandler";
+import { HTTPClient } from "./HTTPClient";
+import { ClientOptions } from "./IClientOptions";
+import { Context } from "./IContext";
+import { FetchOptions } from "./IFetchOptions";
+import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { MiddlewareControl } from "./middleware/MiddlewareControl";
+import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
+import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
-import { GraphHelper } from './GraphHelper';
 
+/**
+ * @interface
+ * Signature to representing key value pairs
+ * @property {[key: string] : string | number} - The Key value pair
+ */
+interface KeyValuePairObjectStringNumber {
+	[key: string]: string | number;
+}
+
+/**
+ * @interface
+ * Signature to define URL components
+ * @template http://graph.microsoft.com/VERSION/PATH?QUERYSTRING&OTHER_QUERY_PARAMS
+ *
+ * @property {string} host - The host to which the request needs to be made
+ * @property {string} version - Version of the graph endpoint
+ * @property {string} [path] - The path of the resource request
+ * @property {KeyValuePairObjectStringNumber} oDataQueryParams - The oData Query Params
+ * @property {KeyValuePairObjectStringNumber} otherURLQueryParams - The other query params for a request
+ */
+export interface URLComponents {
+	host: string;
+	version: string;
+	path?: string;
+	oDataQueryParams: KeyValuePairObjectStringNumber;
+	otherURLQueryParams: KeyValuePairObjectStringNumber;
+}
+
+/**
+ * @class
+ * A Class representing GraphRequest
+ */
 export class GraphRequest {
-    config: Options;
-    urlComponents: URLComponents;
-    _headers: { [key: string]: string | number; } // other headers to pass through to superagent
-    _responseType: string;
+	/**
+	 * @private
+	 * A member variable to hold HTTPClient instance
+	 */
+	private httpClient: HTTPClient;
 
+	/**
+	 * @private
+	 * A member variable to hold client options
+	 */
+	private config: ClientOptions;
 
-    constructor(config: Options, path: string) {
-        this.config = config;
-        this._headers = {};
+	/**
+	 * @private
+	 * A member to hold URL Components data
+	 */
+	private urlComponents: URLComponents;
 
-        this.urlComponents = {
-            host: this.config.baseUrl,
-            version: this.config.defaultVersion,
-            oDataQueryParams: {},
-            otherURLQueryParams: {}
-        };
+	/* tslint:disable: variable-name */
+	/**
+	 * @private
+	 * A member to hold custom header options for a request
+	 */
+	private _headers: {
+		[key: string]: string;
+	};
 
-        this.parsePath(path);
-    }
+	/**
+	 * @private
+	 * A member to hold custom options for a request
+	 */
+	private _options: FetchOptions;
 
-    public header(headerKey: string, headerValue: string) {
-        this._headers[headerKey] = headerValue;
-        return this;
-    }
+	/**
+	 * @private
+	 * A member to hold the array of middleware options for a request
+	 */
+	private _middlewareOptions: MiddlewareOptions[];
 
-    public headers(headers: { [key: string]: string | number }) {
-        for (let key in headers) {
-            this._headers[key] = headers[key];
-        }
-        return this;
-    }
+	/**
+	 * @private
+	 * A member to hold custom response type for a request
+	 */
+	private _responseType: ResponseType;
+	/* tslint:enable: variable-name */
 
-    public parsePath(rawPath: string) {
-        // break rawPath into this.urlComponents
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of GraphRequest
+	 * @param {HTTPClient} httpClient - The HTTPClient instance
+	 * @param {ClientOptions} config - The options for making request
+	 * @param {string} path - A path string
+	 */
+	public constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
+		this.httpClient = httpClient;
+		this.config = config;
+		this.urlComponents = {
+			host: this.config.baseUrl,
+			version: this.config.defaultVersion,
+			oDataQueryParams: {},
+			otherURLQueryParams: {},
+		};
+		this._headers = {};
+		this._options = {};
+		this._middlewareOptions = [];
+		this.parsePath(path);
+	}
 
-        // strip out the base url if they passed it in
-        if (rawPath.indexOf("https://") != -1) {
-            rawPath = rawPath.replace("https://", "");
+	/**
+	 * @private
+	 * Parses the path string and creates URLComponents out of it
+	 * @param {string} path - The request path string
+	 * @returns Nothing
+	 */
+	private parsePath = (path: string): void => {
+		// Strips out the base of the url if they passed in
+		if (path.indexOf("https://") !== -1) {
+			path = path.replace("https://", "");
 
-            // find where the host ends
-            let endOfHostStrPos = rawPath.indexOf("/");
-            this.urlComponents.host = "https://" + rawPath.substring(0, endOfHostStrPos); // parse out the host
-            // strip the host from rawPath
-            rawPath = rawPath.substring(endOfHostStrPos + 1, rawPath.length);
+			// Find where the host ends
+			const endOfHostStrPos = path.indexOf("/");
+			if (endOfHostStrPos !== -1) {
+				// Parse out the host
+				this.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
+				// Strip the host from path
+				path = path.substring(endOfHostStrPos + 1, path.length);
+			}
 
-            // then remove the following version
-            let endOfVersionStrPos = rawPath.indexOf("/");
-            // parse out the version
-            this.urlComponents.version = rawPath.substring(0, endOfVersionStrPos);
-            // strip version from rawPath
-            rawPath = rawPath.substring(endOfVersionStrPos + 1, rawPath.length);
-        }
+			// Remove the following version
+			const endOfVersionStrPos = path.indexOf("/");
+			if (endOfVersionStrPos !== -1) {
+				// Parse out the version
+				this.urlComponents.version = path.substring(0, endOfVersionStrPos);
+				// Strip version from path
+				path = path.substring(endOfVersionStrPos + 1, path.length);
+			}
+		}
 
-        // strip out any leading "/"
-        if (rawPath.charAt(0) == "/") {
-            rawPath = rawPath.substr(1);
-        }
+		// Strip out any leading "/"
+		if (path.charAt(0) === "/") {
+			path = path.substr(1);
+		}
 
-        let queryStrPos = rawPath.indexOf("?");
-        // let afterPath = 
-        if (queryStrPos == -1) {
-            // no query string
-            this.urlComponents.path = rawPath;
-        } else {
-            this.urlComponents.path = rawPath.substr(0, queryStrPos);
+		const queryStrPos = path.indexOf("?");
+		if (queryStrPos === -1) {
+			// No query string
+			this.urlComponents.path = path;
+		} else {
+			this.urlComponents.path = path.substr(0, queryStrPos);
 
-            // capture query string into
-            // this.urlComponents.oDataQueryParams
-            // and
-            // this.urlComponents.otherURLQueryParams
+			// Capture query string into oDataQueryParams and otherURLQueryParams
+			const queryParams = path.substring(queryStrPos + 1, path.length).split("&");
+			for (const queryParam of queryParams) {
+				const qParams = queryParam.split("=");
+				const key = qParams[0];
+				const value = qParams[1];
+				if (oDataQueryNames.indexOf(key) !== -1) {
+					this.urlComponents.oDataQueryParams[key] = value;
+				} else {
+					this.urlComponents.otherURLQueryParams[key] = value;
+				}
+			}
+		}
+	};
 
-            let queryParams = rawPath.substring(queryStrPos + 1, rawPath.length).split("&");
-            for (let queryParam of queryParams) {
-                //queryParam:  a=b
-                let queryParams = queryParam.split("=");
-                let key = queryParams[0];
-                let value = queryParams[1];
+	/**
+	 * @private
+	 * Adds the query parameter as comma separated values
+	 * @param {string} propertyName - The name of a property
+	 * @param {string|string[]} propertyValue - The vale of a property
+	 * @param {IArguments} additionalProperties - The additional properties
+	 * @returns Nothing
+	 */
+	private addCsvQueryParameter(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments): void {
+		// If there are already $propertyName value there, append a ","
+		this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
 
-                if (oDataQueryNames.indexOf(key)) {
-                    this.urlComponents.oDataQueryParams[key] = value;
-                } else {
-                    this.urlComponents.otherURLQueryParams[key] = value;
-                }
-            }
-        }
-    }
+		let allValues: string[] = [];
 
+		if (additionalProperties.length > 1 && typeof propertyValue === "string") {
+			allValues = Array.prototype.slice.call(additionalProperties);
+		} else if (typeof propertyValue === "string") {
+			allValues.push(propertyValue);
+		} else {
+			allValues = allValues.concat(propertyValue);
+		}
 
-    private urlJoin(urlSegments: string[]): String {
-        const tr = (s) => s.replace(/\/+$/, '');
-        const tl = (s) => s.replace(/^\/+/, '');
-        const joiner = (pre, cur) => [tr(pre), tl(cur)].join('/');
-        const parts = Array.prototype.slice.call(urlSegments);
+		this.urlComponents.oDataQueryParams[propertyName] += allValues.join(",");
+	}
 
-        return parts.reduce(joiner);
-    }
+	/**
+	 * @private
+	 * Builds the full url from the URLComponents to make a request
+	 * @returns The URL string that is qualified to make a request to graph endpoint
+	 */
+	private buildFullUrl(): string {
+		const url = urlJoin([this.urlComponents.host, this.urlComponents.version, this.urlComponents.path]) + this.createQueryString();
 
-    public buildFullUrl(): string {
-        let url = this.urlJoin([this.urlComponents.host,
-        this.urlComponents.version,
-        this.urlComponents.path])
-            + this.createQueryString();
+		if (this.config.debugLogging) {
+			console.log(url); // tslint:disable-line: no-console
+		}
+		return url;
+	}
 
-        if (this.config.debugLogging) {
-            console.log(url)
-        }
+	/**
+	 * @private
+	 * Builds the query string from the URLComponents
+	 * @returns The Constructed query string
+	 */
+	private createQueryString(): string {
+		// Combining query params from oDataQueryParams and otherURLQueryParams
+		const urlComponents = this.urlComponents;
+		const query: string[] = [];
+		if (Object.keys(urlComponents.oDataQueryParams).length !== 0) {
+			for (const property in urlComponents.oDataQueryParams) {
+				if (urlComponents.oDataQueryParams.hasOwnProperty(property)) {
+					query.push(property + "=" + urlComponents.oDataQueryParams[property]);
+				}
+			}
+		}
+		if (Object.keys(urlComponents.otherURLQueryParams).length !== 0) {
+			for (const property in urlComponents.otherURLQueryParams) {
+				if (urlComponents.otherURLQueryParams.hasOwnProperty(property)) {
+					query.push(property + "=" + urlComponents.otherURLQueryParams[property]);
+				}
+			}
+		}
+		return query.length > 0 ? "?" + query.join("&") : "";
+	}
 
-        return url;
-    }
+	/**
+	 * @private
+	 * Updates the custom headers and options for a request
+	 * @param {FetchOptions} options - The request options object
+	 * @returns Nothing
+	 */
+	private updateRequestOptions(options: FetchOptions): void {
+		const defaultHeaders = {
+			SdkVersion: `graph-js-${PACKAGE_VERSION}`,
+		};
+		const optionsHeaders: HeadersInit = { ...options.headers };
+		if (this.config.fetchOptions !== undefined) {
+			const fetchOptions: FetchOptions = { ...this.config.fetchOptions };
+			Object.assign(options, fetchOptions);
+			if (typeof this.config.fetchOptions.headers !== undefined) {
+				options.headers = { ...this.config.fetchOptions.headers };
+			}
+		}
+		Object.assign(options, this._options);
+		Object.assign(optionsHeaders, defaultHeaders);
+		if (options.headers !== undefined) {
+			Object.assign(optionsHeaders, options.headers);
+		}
+		Object.assign(optionsHeaders, this._headers);
+		options.headers = optionsHeaders;
+	}
 
-    version(v: string): GraphRequest {
-        this.urlComponents.version = v;
-        return this;
-    }
+	/**
+	 * @private
+	 * @async
+	 * Adds the custom headers and options to the request and makes the HTTPClient send request call
+	 * @param {RequestInfo} request - The request url string or the Request object value
+	 * @param {FetchOptions} options - The options to make a request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the response content
+	 */
+	private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
+		let rawResponse: Response;
+		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
+		this.updateRequestOptions(options);
+		try {
+			const context: Context = await this.httpClient.sendRequest({
+				request,
+				options,
+				middlewareControl,
+			});
+			rawResponse = context.response;
+			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
+			return response;
+		} catch (error) {
+			let statusCode: number;
+			if (typeof rawResponse !== "undefined") {
+				statusCode = rawResponse.status;
+			}
+			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
+			throw gError;
+		}
+	}
 
-    /*
-     * Accepts .select("displayName,birthday")
-     *     and .select(["displayName", "birthday"])
-     *     and .select("displayName", "birthday")
-     * 
-     */
-    select(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$select", properties, arguments);
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the custom header for a request
+	 * @param {string} headerKey - A header key
+	 * @param {string} headerValue - A header value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public header(headerKey: string, headerValue: string): GraphRequest {
+		this._headers[headerKey] = headerValue;
+		return this;
+	}
 
-    expand(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$expand", properties, arguments);
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the custom headers for a request
+	 * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
+		for (const key in headers) {
+			if (headers.hasOwnProperty(key)) {
+				this._headers[key] = headers[key] as string;
+			}
+		}
+		return this;
+	}
 
-    orderby(properties: string | string[]): GraphRequest {
-        this.addCsvQueryParamater("$orderby", properties, arguments);
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the option for making a request
+	 * @param {string} key - The key value
+	 * @param {any} value - The value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public option(key: string, value: any): GraphRequest {
+		this._options[key] = value;
+		return this;
+	}
 
+	/**
+	 * @public
+	 * Sets the options for making a request
+	 * @param {{ [key: string]: any }} options - The options key value pair
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public options(options: { [key: string]: any }): GraphRequest {
+		for (const key in options) {
+			if (options.hasOwnProperty(key)) {
+				this._options[key] = options[key];
+			}
+		}
+		return this;
+	}
 
-    filter(filterStr: string): GraphRequest {
-        this.urlComponents.oDataQueryParams["$filter"] = filterStr;
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the middleware options for a request
+	 * @param {MiddlewareOptions[]} options - The array of middleware options
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public middlewareOptions(options: MiddlewareOptions[]): GraphRequest {
+		this._middlewareOptions = options;
+		return this;
+	}
 
-    top(n: number): GraphRequest {
-        this.urlComponents.oDataQueryParams["$top"] = n;
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the api endpoint version for a request
+	 * @param {string} version - The version value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public version(version: string): GraphRequest {
+		this.urlComponents.version = version;
+		return this;
+	}
 
-    skip(n: number): GraphRequest {
-        this.urlComponents.oDataQueryParams["$skip"] = n;
-        return this;
-    }
+	/**
+	 * @public
+	 * Sets the api endpoint version for a request
+	 * @param {ResponseType} responseType - The response type value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public responseType(responseType: ResponseType): GraphRequest {
+		this._responseType = responseType;
+		return this;
+	}
 
-    skipToken(token: string): GraphRequest {
-        this.urlComponents.oDataQueryParams["$skipToken"] = token;
-        return this;
-    }
+	/**
+	 * @public
+	 * To add properties for select OData Query param
+	 * @param {string|string[]} properties - The Properties value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	/*
+	 * Accepts .select("displayName,birthday")
+	 *     and .select(["displayName", "birthday"])
+	 *     and .select("displayName", "birthday")
+	 *
+	 */
+	public select(properties: string | string[]): GraphRequest {
+		this.addCsvQueryParameter("$select", properties, arguments);
+		return this;
+	}
 
-    count(count: boolean): GraphRequest {
-        this.urlComponents.oDataQueryParams["$count"] = count.toString();
-        return this;
-    }
+	/**
+	 * @public
+	 * To add properties for expand OData Query param
+	 * @param {string|string[]} properties - The Properties value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public expand(properties: string | string[]): GraphRequest {
+		this.addCsvQueryParameter("$expand", properties, arguments);
+		return this;
+	}
 
-    responseType(responseType: string): GraphRequest {
-        this._responseType = responseType;
-        return this;
-    }
+	/**
+	 * @public
+	 * To add properties for orderby OData Query param
+	 * @param {string|string[]} properties - The Properties value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public orderby(properties: string | string[]): GraphRequest {
+		this.addCsvQueryParameter("$orderby", properties, arguments);
+		return this;
+	}
 
-    // helper for $select, $expand and $orderby (must be comma separated)
-    private addCsvQueryParamater(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments) {
-        // if there are already $propertyName value there, append a ","
-        this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
+	/**
+	 * @public
+	 * To add query string for filter OData Query param
+	 * @param {string} filterStr - The filter query string
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public filter(filterStr: string): GraphRequest {
+		this.urlComponents.oDataQueryParams.$filter = filterStr;
+		return this;
+	}
 
-        let allValues: string[] = [];
+	/**
+	 * @public
+	 * To add criterion for search OData Query param
+	 * @param {string} searchStr - The search criterion string
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public search(searchStr: string): GraphRequest {
+		this.urlComponents.oDataQueryParams.$search = searchStr;
+		return this;
+	}
 
-        if (typeof propertyValue === "string") {
-            allValues.push(propertyValue);
-        } else { // propertyValue passed in as array
-            allValues = allValues.concat(propertyValue);
-        }
+	/**
+	 * @public
+	 * To add number for top OData Query param
+	 * @param {number} n - The number value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public top(n: number): GraphRequest {
+		this.urlComponents.oDataQueryParams.$top = n;
+		return this;
+	}
 
-        // merge in additionalProperties
-        if (additionalProperties.length > 1 && typeof propertyValue === "string") {
-            allValues = Array.prototype.slice.call(additionalProperties);
-        }
+	/**
+	 * @public
+	 * To add number for skip OData Query param
+	 * @param {number} n - The number value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public skip(n: number): GraphRequest {
+		this.urlComponents.oDataQueryParams.$skip = n;
+		return this;
+	}
 
-        this.urlComponents.oDataQueryParams[propertyName] += allValues.join(",");
-    }
+	/**
+	 * @public
+	 * To add token string for skipToken OData Query param
+	 * @param {string} token - The token value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public skipToken(token: string): GraphRequest {
+		this.urlComponents.oDataQueryParams.$skipToken = token;
+		return this;
+	}
 
+	/**
+	 * @public
+	 * To add boolean for count OData Query param
+	 * @param {boolean} isCount - The count boolean
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public count(isCount: boolean): GraphRequest {
+		this.urlComponents.oDataQueryParams.$count = isCount.toString();
+		return this;
+	}
 
-    delete(callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.DELETE, headers: new Headers() }),
-            callback
-        );
-    }
+	/**
+	 * @public
+	 * Appends query string to the urlComponent
+	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query value
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
+		const otherURLQueryParams = this.urlComponents.otherURLQueryParams;
+		if (typeof queryDictionaryOrString === "string") {
+			const querySplit = queryDictionaryOrString.split("=");
+			const queryKey = querySplit[0];
+			const queryValue = querySplit[1];
+			otherURLQueryParams[queryKey] = queryValue;
+		} else {
+			for (const key in queryDictionaryOrString) {
+				if (queryDictionaryOrString.hasOwnProperty(key)) {
+					otherURLQueryParams[key] = queryDictionaryOrString[key];
+				}
+			}
+		}
+		return this;
+	}
 
-    patch(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.PATCH,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers({ 'Content-Type': 'application/json' })
-                }),
-            callback
-        );
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes a http request with GET method
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the get response
+	 */
+	public async get(callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options: FetchOptions = {
+			method: RequestMethod.GET,
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    post(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.POST,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers((content.constructor !== undefined && content.constructor.name === "FormData") ? {} : { 'Content-Type': 'application/json' })
-                }),
-            callback
-        );
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes a http request with POST method
+	 * @param {any} content - The content that needs to be sent with the request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the post response
+	 */
+	public async post(content: any, callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options: FetchOptions = {
+			method: RequestMethod.POST,
+			body: serializeContent(content),
+			headers:
+				content.constructor !== undefined && content.constructor.name === "FormData"
+					? {}
+					: {
+							"Content-Type": "application/json",
+					  },
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    put(content: any, callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(
-                url,
-                {
-                    method: RequestMethod.PUT,
-                    body: GraphHelper.serializeContent(content),
-                    headers: new Headers({ 'Content-Type': 'application/octet-stream' })
-                }),
-            callback
-        );
-    }
+	/**
+	 * @public
+	 * @async
+	 * Alias for Post request call
+	 * @param {any} content - The content that needs to be sent with the request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the post response
+	 */
+	public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
+		try {
+			return await this.post(content, callback);
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    // request aliases
-    // alias for post
-    create(content: any, callback?: GraphRequestCallback): Promise<any> {
-        return this.post(content, callback);
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes http request with PUT method
+	 * @param {any} content - The content that needs to be sent with the request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the put response
+	 */
+	public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options: FetchOptions = {
+			method: RequestMethod.PUT,
+			body: serializeContent(content),
+			headers: {
+				"Content-Type": "application/octet-stream",
+			},
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    // alias for patch
-    update(content: any, callback?: GraphRequestCallback): Promise<any> {
-        return this.patch(content, callback);
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes http request with PATCH method
+	 * @param {any} content - The content that needs to be sent with the request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the patch response
+	 */
+	public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options: FetchOptions = {
+			method: RequestMethod.PATCH,
+			body: serializeContent(content),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    del(callback?: GraphRequestCallback): Promise<any> {
-        return this.delete(callback);
-    }
+	/**
+	 * @public
+	 * @async
+	 * Alias for PATCH request
+	 * @param {any} content - The content that needs to be sent with the request
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the patch response
+	 */
+	public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
+		try {
+			return await this.patch(content, callback);
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    get(callback?: GraphRequestCallback): Promise<any> {
-        let url = this.buildFullUrl();
-        return this.sendRequestAndRouteResponse(
-            new Request(url, { method: RequestMethod.GET, headers: new Headers() }),
-            callback
-        );
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes http request with DELETE method
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the delete response
+	 */
+	public async delete(callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options: FetchOptions = {
+			method: RequestMethod.DELETE,
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    private routeResponseToPromise(request: Request) {
-        return new Promise((resolve, reject) => {
-            this.routeResponseToCallback(request, (err, body) => {
-                if (err != null) {
-                    reject(err);
-                } else {
-                    resolve(body);
-                }
-            });
-        });
-    }
+	/**
+	 * @public
+	 * @async
+	 * Alias for delete request call
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the delete response
+	 */
+	public async del(callback?: GraphRequestCallback): Promise<any> {
+		try {
+			return await this.delete(callback);
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    // Given the Request object, make the request and invoke callback
-    private handleFetch(request: Request | string, callback: GraphRequestCallback, options?: any) {
-        ((request.constructor.name === "Request") ? fetch(request) : fetch(request, options)).then((response) => {
-            this.convertResponseType(response).then((responseValue) => {
-                ResponseHandler.init(response, undefined, responseValue, callback);
-            }).catch((error) => {
-                ResponseHandler.init(response, error, undefined, callback)
-            });
-        }).catch((error) => {
-            ResponseHandler.init(undefined, error, undefined, callback)
-        });
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes a http request with GET method to read response as a stream.
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the getStream response
+	 */
+	public async getStream(callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options = {
+			method: RequestMethod.GET,
+		};
+		this.responseType(ResponseType.STREAM);
+		try {
+			const stream = await this.send(url, options, callback);
+			return stream;
+		} catch (error) {
+			throw error;
+		}
+	}
 
-    // Given the Request object, get an auth token from the authProvider, make the fetch call
-    private routeResponseToCallback(request: Request, callback: GraphRequestCallback) {
-        let self = this;
-        self.config.authProvider((err, accessToken) => {
-            if (err == null && accessToken != null) {
-                request = self.configureRequest(request, accessToken);
-                self.handleFetch(request, callback);
-            } else {
-                callback(err, null, null);
-            }
-        });
-    }
-
-    /*
-     * Help method that's called from the final actions( .get(), .post(), etc.) that after making the request either invokes
-     * routeResponseToCallback() or routeResponseToPromise()
-     */
-    private sendRequestAndRouteResponse(request: Request, callback?: GraphRequestCallback): Promise<any> {
-        // return a promise when Promises are supported and no callback was provided
-        if (callback == null && typeof Promise !== "undefined") {
-            return this.routeResponseToPromise(request);
-        } else {
-            this.routeResponseToCallback(request, callback || function () { });
-        }
-    }
-
-    getStream(callback: GraphRequestCallback) {
-        let self = this;
-        self.config.authProvider((err, accessToken) => {
-            if (err === null && accessToken !== null) {
-                let url = self.buildFullUrl();
-                let options = {
-                    method: RequestMethod.GET,
-                    headers: self.getDefaultRequestHeaders(accessToken)
-                };
-                self.responseType(ResponseType.STREAM);
-                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
-                self.handleFetch(url, callback, options);
-            } else {
-                callback(err, null);
-            }
-        });
-    }
-
-    putStream(stream: any, callback: GraphRequestCallback) {
-        let self = this;
-        self.config.authProvider((err, accessToken) => {
-            if (err === null && accessToken !== null) {
-                let url = self.buildFullUrl();
-                let options = {
-                    method: RequestMethod.PUT,
-                    headers: {
-                        'Content-Type': 'application/octet-stream',
-                    },
-                    body: stream
-                }
-                let defaultHeaders = self.getDefaultRequestHeaders(accessToken);
-                Object.keys(defaultHeaders).forEach((key) => options.headers[key] = defaultHeaders[key] as string);
-                Object.keys(self._headers).forEach((key) => options.headers[key] = self._headers[key] as string);
-                self.handleFetch(url, callback, options);
-            }
-        });
-    }
-
-    private getDefaultRequestHeaders(accessToken: string): DefaultRequestHeaders {
-        return {
-            Authorization: `Bearer ${accessToken}`,
-            SdkVersion: `graph-js-${PACKAGE_VERSION}`
-        }
-    }
-
-    private configureRequest(request: Request, accessToken: string): Request {
-        let self = this,
-            defaultHeaders = self.getDefaultRequestHeaders(accessToken);
-        Object.keys(defaultHeaders).forEach((key) => request.headers.set(key, defaultHeaders[key] as string));
-        Object.keys(self._headers).forEach((key) => request.headers.set(key, self._headers[key] as string));
-        return request;
-    }
-
-    // append query strings to the url, accepts either a string like $select=displayName or a dictionary {"$select": "displayName"}
-    query(queryDictionaryOrString: string | { [key: string]: string | number; }): GraphRequest {
-        if (typeof queryDictionaryOrString === "string") { // is string
-            let queryStr = queryDictionaryOrString;
-            let queryKey = queryStr.split("=")[0];
-            let queryValue = queryStr.split("=")[1];
-
-            this.urlComponents.otherURLQueryParams[queryKey] = queryValue;
-        } else { // is dictionary
-            for (let key in queryDictionaryOrString) {
-                this.urlComponents.otherURLQueryParams[key] = queryDictionaryOrString[key];
-            }
-        }
-        return this;
-    }
-
-    // ex: ?$select=displayName&$filter=startsWith(displayName, 'A')
-    // does not include starting ?
-    private createQueryString(): string {
-        // need to combine first this.urlComponents.oDataQueryParams and this.urlComponents.otherURLQueryParams
-        let q: string[] = [];
-
-        if (Object.keys(this.urlComponents.oDataQueryParams).length != 0) {
-            for (let property in this.urlComponents.oDataQueryParams) {
-                q.push(property + "=" + this.urlComponents.oDataQueryParams[property]);
-            }
-        }
-
-        if (Object.keys(this.urlComponents.otherURLQueryParams).length != 0) {
-            for (let property in this.urlComponents.otherURLQueryParams) {
-                q.push(property + "=" + this.urlComponents.otherURLQueryParams[property]);
-            }
-        }
-
-        if (q.length > 0) {
-            return "?" + q.join("&");
-        }
-
-        return "";
-    }
-
-    private convertResponseType(response: Response): Promise<any> {
-        let responseValue: any;
-        if (!this._responseType) {
-            this._responseType = '';
-        }
-        switch (this._responseType.toLowerCase()) {
-            case ResponseType.ARRAYBUFFER:
-                responseValue = response.arrayBuffer();
-                break;
-            case ResponseType.BLOB:
-                responseValue = response.blob();
-                break;
-            case ResponseType.DOCUMENT:
-                // XMLHTTPRequest only :(
-                responseValue = response.json();
-                break;
-            case ResponseType.JSON:
-                responseValue = response.json();
-                break;
-            case ResponseType.STREAM:
-                responseValue = Promise.resolve(response.body);
-                break;
-            case ResponseType.TEXT:
-                responseValue = response.text();
-                break;
-            default:
-                responseValue = response.json();
-                break;
-        }
-        return responseValue;
-    }
+	/**
+	 * @public
+	 * @async
+	 * Makes a http request with GET method to read response as a stream.
+	 * @param {any} stream - The stream instance
+	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
+	 * @returns A promise that resolves to the putStream response
+	 */
+	public async putStream(stream: any, callback?: GraphRequestCallback): Promise<any> {
+		const url = this.buildFullUrl();
+		const options = {
+			method: RequestMethod.PUT,
+			headers: {
+				"Content-Type": "application/octet-stream",
+			},
+			body: stream,
+		};
+		try {
+			const response = await this.send(url, options, callback);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
 }

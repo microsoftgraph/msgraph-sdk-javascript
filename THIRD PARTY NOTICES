@@ -1,9 +1,11 @@
 This file is based on or incorporates material from the projects listed below (Third Party OSS). The original copyright notice and the license under which Microsoft received such Third Party OSS, are set forth below. Such licenses and notices are provided for informational purposes only. Microsoft licenses the Third Party OSS to you under the licensing terms for the Microsoft product or service. Microsoft 
 reserves all other rights not expressly granted under this agreement, whether by implication, estoppel or otherwise.  
 
-superagent - 3.5.2
+tslib
 
-es6-promise - 4.1.0
+isomorphic-fetch
+
+es6-promise
  
 Provided for Informational Purposes Only 
   

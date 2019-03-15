@@ -1,0 +1,72 @@
+.fileUploadParent {
+	position: relative;
+}
+
+.fileUpload {
+	position: absolute;
+	text-align: right;
+	opacity: 0;
+	z-index: 2;
+	top: 80px;
+	left: 80px;
+	width: 20px;
+}
+
+.imageInput {
+	position: absolute;
+	top: 80px;
+	left: 80px;
+	z-index: 1;
+}
+
+.main {
+	width: 100%;
+	float: left;
+}
+
+.grid {
+	text-align: center;
+	width: 13.99999%;
+	height: 250px;
+	min-width: 250px;
+	float: left;
+}
+
+.cell {
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+	margin: 10px;
+	background-color: #f4f4f4;
+	width: 100px;
+	height: 100px;
+	float: left;
+	position: relative;
+	cursor: pointer;
+}
+
+.cellText {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-shadow: rgba(0, 0, 0, 0.19);
+}
+
+.outputParent {
+	float: left;
+	width: 79%;
+	height: 270px;
+	min-width: 250px;
+	margin: 10px;
+	border: grey;
+	float: right;
+	background: white;
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+	overflow: scroll;
+}
+
+.largeFileUpload {
+	width: 100px;
+	height: 100px;
+	opacity: 0;
+}

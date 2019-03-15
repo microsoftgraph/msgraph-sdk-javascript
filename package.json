@@ -1,39 +1,60 @@
 {
-  "name": "@microsoft/microsoft-graph-client",
-  "//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in common.ts. If you change it here, also change it there.",
-  "version": "1.2.0",
-  "description": "Microsoft Graph Client Library",
-  "main": "lib/src/index.js",
-  "typings": "lib/src/index",
-  "files": [
-    "lib/"
-  ],
-  "types": "./lib/src/index.d.ts",
-  "devDependencies": {
-    "@types/mocha": "^5.2.4",
-    "@types/node": "^9.4.0",
-    "browserify": "^13.1.0",
-    "mocha": "^5.2.0",
-    "typescript": "^2.2.1",
-    "uglify-js": "^3.4.5"
-  },
-  "scripts": {
-    "compile": "tsc",
-    "rollup-core": "node core-browserify.js > lib/graph-js-sdk-core.js && uglifyjs lib/graph-js-sdk-core.js --output lib/graph-js-sdk-core.js",
-    "rollup-with-vendor": "node node-browserify.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
-    "build-core": "npm run compile && npm run rollup-core",
-    "build-with-vendor": "npm run compile && npm run rollup-with-vendor",
-    "build": "npm run compile && npm run rollup-core && npm run rollup-with-vendor",
-    "test": "mocha lib/spec/core",
-    "test:types": "tsc -p spec && mocha spec/types",
-    "test:tasks": "tsc -p spec && mocha spec/tasks"
-  },
-  "dependencies": {
-    "es6-promise": "^4.1.0",
-    "isomorphic-fetch": "^2.2.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
-  }
+	"name": "@microsoft/microsoft-graph-client",
+	"//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in Constants.ts. If you change it here, also change it there.",
+	"version": "1.5.2",
+	"description": "Microsoft Graph Client Library",
+	"main": "lib/src/index.js",
+	"typings": "lib/src/index",
+	"files": [
+		"lib/"
+	],
+	"types": "./lib/src/index.d.ts",
+	"dependencies": {
+		"es6-promise": "^4.2.6",
+		"isomorphic-fetch": "^2.2.1",
+		"tslib": "^1.9.3"
+	},
+	"devDependencies": {
+		"@types/isomorphic-fetch": "0.0.35",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^11.9.5",
+		"browserify": "^16.2.3",
+		"chai": "^4.2.0",
+		"husky": "^1.3.1",
+		"lint-staged": "^8.1.4",
+		"mocha": "^6.0.2",
+		"msal": "^0.2.4",
+		"prettier": "^1.16.4",
+		"tslint": "^5.13.0",
+		"tslint-config-prettier": "^1.18.0",
+		"typescript": "^3.3.3333",
+		"uglify-es": "^3.3.9"
+	},
+	"scripts": {
+		"compile": "tsc",
+		"web:js": "node browserify-with-dependencies.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
+		"core:js": "node browserify.js > lib/graph-js-sdk-core.js && uglifyjs ./lib/graph-js-sdk-core.js --output ./lib/graph-js-sdk-core.js",
+		"build": "npm run compile && npm run web:js && npm run core:js",
+		"test": "npm run compile && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"test:content": "tsc -p spec && mocha spec/content",
+		"test:core": "tsc -p spec && mocha spec/core",
+		"test:middleware": "tsc -p spec && mocha spec/middleware",
+		"test:tasks": "tsc -p spec && mocha spec/tasks",
+		"test:development": "tsc -p spec && mocha spec/development/workload",
+		"test:workload": "tsc -p spec && mocha spec/development/workload",
+		"lint": "tslint --project ./tsconfig.json -c tslint.json",
+		"format:css": "prettier --write \"**/*.css\"",
+		"format:html": "prettier --write \"**/*.html\"",
+		"format:js": "prettier --write \"**/*.js\"",
+		"format:json": "prettier --write \"**/*.json\"",
+		"format:md": "prettier --write \"**/*.md\"",
+		"format:rc": "prettier --write --parser json \"**/.*rc\"",
+		"format:ts": "prettier --write \"**/*.ts\"",
+		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
+		"prepack": "npm install && npm run build && npm run test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	}
 }
