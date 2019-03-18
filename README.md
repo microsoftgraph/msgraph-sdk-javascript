@@ -68,6 +68,7 @@ const options = {
 };
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#initialization-of-msal
 const userAgentApplication = new Msal.UserAgentApplication(clientId, undefined, callback, options);
 const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(userAgentApplication, graphScopes);
 ```
