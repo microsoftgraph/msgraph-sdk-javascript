@@ -27,38 +27,31 @@ declare const Msal: any;
 export class MSALAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @private
-	 * A member holding the clientId of an application
-	 */
-	private clientId: string;
-
-	/**
-	 * @private
 	 * A member holding the list of graph scopes
 	 */
 	private scopes: string[];
 
 	/**
-	 * @private
+	 * @public
 	 * A member holding an instance of UserAgentApplication returned from MSAL
 	 */
-	private userAgentApplication: any;
+	public userAgentApplication: any;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of MSALAuthenticationProvider
-	 * @param {string} clientId - The clientId value of an application
+	 * @param {string | any} clientIdOrUserAgentApplication - The clientId value of an application or an instance of UserAgentApplication
 	 * @param {string[]} scopes - An array of graph scopes
 	 * @param {any} [options] - An options object for MSAL initialization
 	 * @returns An instance of MSALAuthenticationProvider
 	 */
-	public constructor(clientId: string, scopes: string[], options?: any) {
+	public constructor(clientIdOrUserAgentApplication: string | any, scopes: string[], options?: any) {
 		const callback = (errorDesc, token, error, tokenType) => {
 			// tslint:disable-line: no-empty
 		};
-		this.clientId = clientId;
 		this.scopes = scopes;
-		this.userAgentApplication = new Msal.UserAgentApplication(this.clientId, undefined, callback, options);
+		this.userAgentApplication = typeof clientIdOrUserAgentApplication === "string" ? new Msal.UserAgentApplication(clientIdOrUserAgentApplication, undefined, callback, options) : clientIdOrUserAgentApplication;
 	}
 
 	/**

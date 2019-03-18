@@ -23,36 +23,29 @@ import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderO
 export class MSALAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @private
-	 * A member holding the clientId of an application
-	 */
-	private clientId: string;
-
-	/**
-	 * @private
 	 * A member holding the list of graph scopes
 	 */
 	private scopes: string[];
 
 	/**
-	 * @private
+	 * @public
 	 * A member holding an instance of UserAgentApplication returned from MSAL
 	 */
-	private userAgentApplication: UserAgentApplication;
+	public userAgentApplication: UserAgentApplication;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of MSALAuthenticationProvider
-	 * @param {string} clientId - The clientId value of an application
+	 * @param {string | UserAgentApplication} clientIdOrUserAgentApplication - The clientId value of an application or an instance of UserAgentApplication
 	 * @param {string[]} scopes - An array of graph scopes
 	 * @param {any} [options] - An options object for MSAL initialization
 	 * @returns An instance of MSALAuthenticationProvider
 	 */
-	public constructor(clientId: string, scopes: string[], options?: any) {
+	public constructor(clientIdOrUserAgentApplication: string | UserAgentApplication, scopes: string[], options?: any) {
 		const callback = (errorDesc, token, error, tokenType) => {}; // tslint:disable-line: no-empty
-		this.clientId = clientId;
 		this.scopes = scopes;
-		this.userAgentApplication = new UserAgentApplication(this.clientId, undefined, callback, options);
+		this.userAgentApplication = typeof clientIdOrUserAgentApplication === "string" ? new UserAgentApplication(clientIdOrUserAgentApplication, undefined, callback, options) : clientIdOrUserAgentApplication;
 	}
 
 	/**

@@ -78,15 +78,21 @@ npm install msal@<version>
 ```
 
 ```typescript
+import { UserAgentApplication } from "msal";
+
 import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
 
 const clientId = "your_client_id"; // Client Id of the registered application
-const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+const callback = (errorDesc, token, error, tokenType) => {};
+// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const options = {
-	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 	redirectUri: "Your redirect URI",
 };
-const authProvider = new MSALAuthenticationProvider(clientId, scopes, options);
+const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#initialization-of-msal
+const userAgentApplication = new UserAgentApplication(clientId, undefined, callback, options);
+const authProvider = new MSALAuthenticationProvider(userAgentApplication, scopes);
 ```
 
 User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
