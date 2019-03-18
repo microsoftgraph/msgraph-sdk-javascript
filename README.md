@@ -60,13 +60,16 @@ Refer devDependencies in [package.json](./package.json) for the compatible msal 
 ```
 
 ```typescript
-const clientID = "your_client_id"; // Client Id of the registered application
-const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+const clientId = "your_client_id"; // Client Id of the registered application
+const callback = (errorDesc, token, error, tokenType) => {};
+// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const options = {
-	// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 	redirectUri: "Your redirect URI",
 };
-const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(clientId, graphScopes, options);
+const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+
+const userAgentApplication = new Msal.UserAgentApplication(clientId, undefined, callback, options);
+const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(userAgentApplication, graphScopes);
 ```
 
 #### Creating an instance of MSALAuthenticationProvider in node environment
