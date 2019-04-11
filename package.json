@@ -4,6 +4,7 @@
 	"version": "1.5.2",
 	"description": "Microsoft Graph Client Library",
 	"main": "lib/src/index.js",
+	"module": "lib/es/index.js",
 	"typings": "lib/src/index",
 	"files": [
 		"lib/"
@@ -31,11 +32,13 @@
 		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
-		"compile": "tsc",
 		"web:js": "node browserify-with-dependencies.js > lib/graph-js-sdk-web.js && uglifyjs ./lib/graph-js-sdk-web.js --output ./lib/graph-js-sdk-web.js",
 		"core:js": "node browserify.js > lib/graph-js-sdk-core.js && uglifyjs ./lib/graph-js-sdk-core.js --output ./lib/graph-js-sdk-core.js",
-		"build": "npm run compile && npm run web:js && npm run core:js",
-		"test": "npm run compile && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"es:js": "node browserify-es.js > lib/graph-es-sdk.js && uglifyjs ./lib/graph-es-sdk.js --output ./lib/graph-es-sdk.js",
+		"build:es": "tsc --p tsconfig-es.json && npm run es:js",
+		"build:js": "tsc && npm run web:js && npm run core:js",
+		"build": "npm run build:js && npm run build:es",
+		"test": "tsc && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
 		"test:content": "tsc -p spec && mocha spec/content",
 		"test:core": "tsc -p spec && mocha spec/core",
 		"test:middleware": "tsc -p spec && mocha spec/middleware",

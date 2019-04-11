@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"noEmitOnError": true,
+		"noImplicitAny": false,
+		"moduleResolution": "node",
+		"importHelpers": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"target": "esnext",
+		"lib": ["dom", "esnext"],
+		"declaration": true,
+		"outDir": "lib/es"
+	},
+	"exclude": ["node_modules", "lib", "samples", "spec/**"],
+	"include": ["./src/**/*.ts"]
+}
