@@ -1,4 +1,4 @@
-# Large File Upload Task - Uploading large files to OneDrive.
+# Large File Upload Task - Uploading large files to OneDrive
 
 This task simplifies the implementation of onedrive's [resumable upload](https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession).
 
