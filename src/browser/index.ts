@@ -17,6 +17,7 @@ export * from "../middleware/options/AuthenticationHandlerOptions";
 export * from "../middleware/options/IMiddlewareOptions";
 export * from "../middleware/options/RetryHandlerOptions";
 
+export * from "../tasks/LargeFileUploadTask";
 export * from "../tasks/OneDriveLargeFileUploadTask";
 export * from "../tasks/PageIterator";
 
