@@ -40,6 +40,29 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	private static DEFAULT_UPLOAD_PATH: string = "/";
 
 	/**
+	 * @private
+	 * @static
+	 * Constructs the create session url for Onedrive
+	 * @param {string} fileName - The name of the file
+	 * @param {path} [path = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH] - The path for the upload
+	 * @returns The constructed create session url
+	 */
+	private static constructCreateSessionUrl(fileName: string, path: string = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH): string {
+		fileName = fileName.trim();
+		path = path.trim();
+		if (path === "") {
+			path = "/";
+		}
+		if (path[0] !== "/") {
+			path = `/${path}`;
+		}
+		if (path[path.length - 1] !== "/") {
+			path = `${path}/`;
+		}
+		return encodeURI(`/me/drive/root:${path}${fileName}:/createUploadSession`);
+	}
+
+	/**
 	 * @public
 	 * @static
 	 * @async
@@ -88,29 +111,6 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	/**
 	 * @public
 	 * @static
-	 * Constructs the create session url for Onedrive
-	 * @param {string} fileName - The name of the file
-	 * @param {path} [path = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH] - The path for the upload
-	 * @returns The constructed create session url
-	 */
-	public static constructCreateSessionUrl(fileName: string, path: string = OneDriveLargeFileUploadTask.DEFAULT_UPLOAD_PATH): string {
-		fileName = fileName.trim();
-		path = path.trim();
-		if (path === "") {
-			path = "/";
-		}
-		if (path[0] !== "/") {
-			path = `/${path}`;
-		}
-		if (path[path.length - 1] !== "/") {
-			path = `${path}/`;
-		}
-		return encodeURI(`/me/drive/root:${path}${fileName}:/createUploadSession`);
-	}
-
-	/**
-	 * @public
-	 * @static
 	 * @async
 	 * Makes request to the server to create an upload session
 	 * @param {Client} client - The GraphClient instance
@@ -126,12 +126,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 			},
 		};
 		try {
-			const session = await client.api(requestUrl).post(payload);
-			const largeFileUploadSession: LargeFileUploadSession = {
-				url: session.uploadUrl,
-				expiry: new Date(session.expirationDateTime),
-			};
-			return largeFileUploadSession;
+			return super.createUploadSession(client, requestUrl, payload);
 		} catch (err) {
 			throw err;
 		}

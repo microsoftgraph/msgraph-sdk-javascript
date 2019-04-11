@@ -15,7 +15,7 @@ import { Range } from "../Range";
 /**
  * @interface
  * Signature to represent the resulting response in the status enquiry request
- * @property {string} expirationDateTime - The expiration of the time of the upload session
+ * @property {string} expirationDateTime - The expiration time of the upload session
  * @property {string[]} nextExpectedRanges - The ranges expected in next consecutive request in the upload
  */
 interface UploadStatusResponse {
@@ -99,6 +99,28 @@ export class LargeFileUploadTask {
 
 	/**
 	 * @public
+	 * @static
+	 * @async
+	 * Makes request to the server to create an upload session
+	 * @param {Client} client - The GraphClient instance
+	 * @param {any} payload - The payload that needs to be sent
+	 * @returns The promise that resolves to LargeFileUploadSession
+	 */
+	public static async createUploadSession(client: Client, requestUrl: string, payload: any): Promise<any> {
+		try {
+			const session = await client.api(requestUrl).post(payload);
+			const largeFileUploadSession: LargeFileUploadSession = {
+				url: session.uploadUrl,
+				expiry: new Date(session.expirationDateTime),
+			};
+			return largeFileUploadSession;
+		} catch (err) {
+			throw err;
+		}
+	}
+
+	/**
+	 * @public
 	 * @constructor
 	 * Constructs a LargeFileUploadTask
 	 * @param {Client} client - The GraphClient instance
@@ -119,12 +141,12 @@ export class LargeFileUploadTask {
 	}
 
 	/**
-	 * @public
+	 * @private
 	 * Parses given range string to the Range instance
 	 * @param {string[]} ranges - The ranges value
 	 * @returns The range instance
 	 */
-	public parseRange(ranges: string[]): Range {
+	private parseRange(ranges: string[]): Range {
 		const rangeStr = ranges[0];
 		if (typeof rangeStr === "undefined" || rangeStr === "") {
 			return new Range();
@@ -139,12 +161,12 @@ export class LargeFileUploadTask {
 	}
 
 	/**
-	 * @public
+	 * @private
 	 * Updates the expiration date and the next range
 	 * @param {UploadStatusResponse} response - The response of the upload status
 	 * @returns Nothing
 	 */
-	public updateTaskStatus(response: UploadStatusResponse): void {
+	private updateTaskStatus(response: UploadStatusResponse): void {
 		this.uploadSession.expiry = new Date(response.expirationDateTime);
 		this.nextRange = this.parseRange(response.nextExpectedRanges);
 	}
