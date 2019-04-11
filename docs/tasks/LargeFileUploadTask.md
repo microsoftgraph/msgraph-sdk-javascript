@@ -39,7 +39,7 @@ async function largeFileUpload(client, file) {
 		const response = await uploadTask.upload();
 		return response;
 	} catch (err) {
-		console.log(err);
+		throw err;
 	}
 }
 ```
@@ -59,7 +59,7 @@ function uploadFile() {
 				console.log("File Uploaded Successfully.!!");
 			})
 			.catch((error) => {
-				console.error(error);
+				throw err;
 			});
 	});
 }
@@ -96,4 +96,36 @@ _You can create the upload task, and play with it by using **sliceFile** and **u
 let range = uploadTask.getNextRange();
 let slicedFile = uploadTask.sliceFile(range);
 uploadTask.uploadSlice(slicedFile, range, uploadTask.file.size);
+```
+
+## Uploading with custom options
+
+_You can pass in the customized options using LargeFileUploadTask_
+
+```typescript
+async function largeFileUpload(client, file) {
+	const filename = file.name;
+	const driveId = "<YOUR_DRIVE_ID>";
+	const path = "LOCATION_TO_STORE_FILE";
+	try {
+		const requestUrl = `/drives/${driveId}/root:${path}/${fileName}:/createUploadSession`;
+		const payload = {
+			item: {
+				"@microsoft.graph.conflictBehavior": "fail",
+				name: fileName,
+			},
+		};
+		const fileObject = {
+			size: file.size,
+			content: file,
+			name: fileName,
+		};
+		const uploadSession = await LargeFileUploadTask.createUploadSession(client, requestUrl, payload);
+		const uploadTask = await new LargeFileUploadTask(client, fileObject, uploadSession);
+		const response = await uploadTask.upload();
+		return response;
+	} catch (err) {
+		throw err;
+	}
+}
 ```

@@ -129,7 +129,7 @@ export class LargeFileUploadTask {
 	 * @param {LargeFileUploadTaskOptions} options - The upload task options
 	 * @returns An instance of LargeFileUploadTask
 	 */
-	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
 		this.client = client;
 		this.file = file;
 		if (options.rangeSize === undefined) {
