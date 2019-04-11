@@ -7,7 +7,7 @@
 
 import { init } from "./PolyFill";
 /**
- * Polyfilling Promise and fetch if not present
+ * Polyfilling Promise and fetch
  */
 init();
 
