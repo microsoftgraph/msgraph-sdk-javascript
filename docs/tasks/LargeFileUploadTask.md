@@ -20,9 +20,25 @@ Get files from the input element and start uploading.
 async function fileUpload(elem) {
 	let file = elem.files[0];
 	try {
-		let response = await largeFilUpload(client, file, file.name);
+		let response = await largeFileUpload(client, file, file.name);
 	} catch (error) {
 		console.error(error);
+	}
+}
+
+async function largeFileUpload(client, file) {
+	try {
+		let options = {
+			path: "/Documents",
+			fileName: file.name,
+			rangeSize: 1024 * 1024,
+		};
+		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+		const response = await uploadTask.upload();
+		console.log(response);
+		console.log("File Uploaded Successfully.!!");
+	} catch (err) {
+		console.log(err);
 	}
 }
 ```
@@ -45,19 +61,15 @@ function uploadFile() {
         });
     });
 }
-```
 
-## Creating session and start uploading
-
-```typescript
-async function uploadFile(client, file) {
+function largeFileUpload(client, file, filename) {
 	try {
 		let options = {
 			path: "/Documents",
-			fileName: file.name,
+			fileName,
 			rangeSize: 1024 * 1024,
 		};
-		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+		const uploadTask = await OneDriveLargeFileUploadTask.create(client, file, options);
 		const response = await uploadTask.upload();
 		console.log(response);
 		console.log("File Uploaded Successfully.!!");
