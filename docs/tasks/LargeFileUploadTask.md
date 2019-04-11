@@ -1,6 +1,6 @@
 # Large File Upload Task - Uploading large files to OneDrive
 
-This task simplifies the implementation of onedrive's [resumable upload](https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession).
+This task simplifies the implementation of OneDrive's [resumable upload](https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession).
 
 ## Creating the client instance
 
@@ -21,6 +21,8 @@ async function fileUpload(elem) {
 	let file = elem.files[0];
 	try {
 		let response = await largeFileUpload(client, file, file.name);
+		console.log(response);
+		console.log("File Uploaded Successfully.!!");
 	} catch (error) {
 		console.error(error);
 	}
@@ -35,8 +37,7 @@ async function largeFileUpload(client, file) {
 		};
 		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
 		const response = await uploadTask.upload();
-		console.log(response);
-		console.log("File Uploaded Successfully.!!");
+		return response;
 	} catch (err) {
 		console.log(err);
 	}
@@ -47,22 +48,23 @@ async function largeFileUpload(client, file) {
 
 ```typescript
 function uploadFile() {
-    fs.readFile(<PATH_OF_THE_FILE>, {}, function (err, file) {
-        if(err) {
-            throw err;
-        }
-        let fileName = <NAME_OF_THE_FILE>;
-        largeFileUpload(client, file, fileName)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    });
+	fs.readFile("<PATH_OF_THE_FILE>", {}, function(err, file) {
+		if (err) {
+			throw err;
+		}
+		let fileName = "<NAME_OF_THE_FILE_WITH_EXTN>";
+		oneDriveLargeFileUpload(client, file, fileName)
+			.then((response) => {
+				console.log(response);
+				console.log("File Uploaded Successfully.!!");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	});
 }
 
-function largeFileUpload(client, file, filename) {
+async function oneDriveLargeFileUpload(client, file, fileName) {
 	try {
 		let options = {
 			path: "/Documents",
@@ -71,8 +73,7 @@ function largeFileUpload(client, file, filename) {
 		};
 		const uploadTask = await OneDriveLargeFileUploadTask.create(client, file, options);
 		const response = await uploadTask.upload();
-		console.log(response);
-		console.log("File Uploaded Successfully.!!");
+		return response;
 	} catch (err) {
 		console.log(err);
 	}
