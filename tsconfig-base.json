@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"noEmitOnError": true,
+		"noImplicitAny": false,
+		"moduleResolution": "node",
+		"removeComments": false,
+		"sourceMap": true,
+		"declaration": true
+	}
+}

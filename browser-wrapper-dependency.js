@@ -8,5 +8,4 @@
 /**
  * Initializes PolyFilling
  */
-const PolyFill = require("./lib/src/PolyFill");
-PolyFill.init();
+require("./lib/src/PolyFill");

@@ -1,15 +1,9 @@
 {
+	"extends": "./tsconfig-base.json",
 	"compilerOptions": {
-		"module": "commonjs",
-		"noEmitOnError": true,
-		"noImplicitAny": false,
-		"moduleResolution": "node",
-		"importHelpers": true,
-		"removeComments": false,
-		"sourceMap": true,
+		"module": "ESNext",
 		"target": "esnext",
 		"lib": ["dom", "esnext"],
-		"declaration": true,
 		"outDir": "lib/es"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/**"],

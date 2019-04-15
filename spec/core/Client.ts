@@ -11,19 +11,13 @@ import { Client } from "../../src/Client";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
 import { Options } from "../../src/IOptions";
-import * as PolyFill from "../../src/PolyFill";
+import "../../src/PolyFill";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 describe("Client.ts", () => {
 	/* tslint:disable: no-string-literal */
 	describe("initWithMiddleware", () => {
-		/**
-		 * PolyFill fetch and promise before initializing client, otherwise error will be thrown
-		 */
-		before(() => {
-			PolyFill.init();
-		});
 		const dummyAuthProvider = new DummyAuthenticationProvider();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 
