@@ -13,10 +13,7 @@ let request = {
 
 	getProfilePicture: async () => {
 		try {
-			let response = await client
-				.api("/me/photo/$value")
-				.responseType(MicrosoftGraph.ResponseType.BLOB)
-				.get();
+			let response = await client.api("/me/photo/$value").get();
 			return response;
 		} catch (error) {
 			console.error(error);
