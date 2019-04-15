@@ -106,11 +106,11 @@ export class GraphErrorHandler {
 	 */
 	public static async getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): Promise<GraphError> {
 		let gError: GraphError;
-		if (error instanceof Response) {
+		if (error && (error.constructor.name === "Response" || error.constructor.name === "Body")) {
 			gError = await GraphErrorHandler.constructErrorFromRawResponse(error, statusCode);
 		} else if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
-		} else if (error instanceof Error) {
+		} else if (error && error.constructor.name === "Error") {
 			gError = GraphErrorHandler.constructError(error, statusCode);
 		} else {
 			gError = new GraphError(statusCode);
