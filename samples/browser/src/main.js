@@ -23,11 +23,11 @@ const init = async () => {
 
 	bindEvents();
 
-	let displayName = await request.getDisplayName();
-	ui.setDisplayName(displayName);
+	// let displayName = await request.getDisplayName();
+	// ui.setDisplayName(displayName);
 
-	let profileImg = await request.getProfilePicture();
-	ui.setProfilePicture(profileImg);
+	// let profileImg = await request.getProfilePicture();
+	// ui.setProfilePicture(profileImg);
 };
 
 const bindEvents = () => {
