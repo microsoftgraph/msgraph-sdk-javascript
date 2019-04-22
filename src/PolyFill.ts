@@ -5,13 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-/**
- * @constant
- * @function
- * PolyFills Promise and fetch after checking for its availability in native
- * @returns Nothing
- */
-export const init = (): void => {
-	require("es6-promise").polyfill();
-	require("isomorphic-fetch");
-};
+import * as es6Promise from "es6-promise";
+import "isomorphic-fetch";
+
+es6Promise.polyfill();
