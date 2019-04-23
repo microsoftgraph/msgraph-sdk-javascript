@@ -23,12 +23,32 @@ import { TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
  * Class for TelemetryHandler
  */
 export class TelemetryHandler implements Middleware {
+	/**
+	 * @private
+	 * @static
+	 * A member holding the name of the client request id header
+	 */
 	private static CLIENT_REQUEST_ID_HEADER = "client-request-id";
 
+	/**
+	 * @private
+	 * @static
+	 * A member holding the name of the sdk version header
+	 */
 	private static SDK_VERSION_HEADER = "SdkVersion";
 
+	/**
+	 * @private
+	 * @static
+	 * A member holding the language prefix for the sdk version header value
+	 */
 	private static PRODUCT_NAME = "graph-js";
 
+	/**
+	 * @private
+	 * @static
+	 * A member holding the key for the feature usage metrics
+	 */
 	private static FEATURE_USAGE_STRING = "featureUsage";
 
 	/**

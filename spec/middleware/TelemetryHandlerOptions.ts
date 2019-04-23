@@ -54,22 +54,22 @@ describe("TelemetryHandlerOptions.ts", () => {
 	describe("setFeatureUsage", () => {
 		it("Should set a given flags", () => {
 			const telemetryOptions = new TelemetryHandlerOptions();
-			telemetryOptions.setFeatureUsage(FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			telemetryOptions.setFeatureUsage(FeatureUsageFlag.RETRY_HANDLER_ENABLED);
+			telemetryOptions["setFeatureUsage"](FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+			telemetryOptions["setFeatureUsage"](FeatureUsageFlag.RETRY_HANDLER_ENABLED);
 			assert.equal(telemetryOptions["featureUsage"] & FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 			assert.equal(telemetryOptions["featureUsage"] & FeatureUsageFlag.RETRY_HANDLER_ENABLED, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
 			assert.equal(telemetryOptions["featureUsage"] & FeatureUsageFlag.REDIRECT_HANDLER_ENABLED, FeatureUsageFlag.NONE);
 		});
 	});
-	/* tslint:enable: no-string-literal no-bitwise*/
 
 	describe("getFeatureUsage", () => {
 		it("Should return the feature usage in hexadecimal string", () => {
 			const telemetryOptions = new TelemetryHandlerOptions();
-			telemetryOptions.setFeatureUsage(FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			telemetryOptions.setFeatureUsage(FeatureUsageFlag.RETRY_HANDLER_ENABLED);
+			telemetryOptions["setFeatureUsage"](FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+			telemetryOptions["setFeatureUsage"](FeatureUsageFlag.RETRY_HANDLER_ENABLED);
 			const usageFlag = telemetryOptions.getFeatureUsage();
 			assert.equal(usageFlag, "6");
 		});
 	});
+	/* tslint:enable: no-string-literal no-bitwise*/
 });

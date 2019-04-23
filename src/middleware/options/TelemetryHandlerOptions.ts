@@ -14,6 +14,13 @@ import { MiddlewareControl } from "../MiddlewareControl";
 
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
+/**
+ * @enum
+ * @property {number} NONE - The hexadecimal flag value for nothing enabled
+ * @property {number} REDIRECT_HANDLER_ENABLED - The hexadecimal flag value for redirect handler enabled
+ * @property {number} RETRY_HANDLER_ENABLED - The hexadecimal flag value for retry handler enabled
+ * @property {number} AUTHENTICATION_HANDLER_ENABLED - The hexadecimal flag value for the authentication handler enabled
+ */
 export enum FeatureUsageFlag {
 	NONE = 0x0,
 	REDIRECT_HANDLER_ENABLED = 0x1,
@@ -28,8 +35,20 @@ export enum FeatureUsageFlag {
  */
 
 export class TelemetryHandlerOptions implements MiddlewareOptions {
+	/**
+	 * @private
+	 * A member to hold the OR of feature usage flags
+	 */
 	private featureUsage: FeatureUsageFlag = FeatureUsageFlag.NONE;
 
+	/**
+	 * @public
+	 * @static
+	 * To update the feature usage in the context object
+	 * @param {Context} context - The request context object containing middleware options
+	 * @param {FeatureUsageFlag} flag - The flag value
+	 * @returns nothing
+	 */
 	public static updateFeatureUsageFlag(context: Context, flag: FeatureUsageFlag): void {
 		let options: TelemetryHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
@@ -44,12 +63,23 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 		options.setFeatureUsage(flag);
 	}
 
-	public setFeatureUsage(flag: FeatureUsageFlag): void {
+	/**
+	 * @private
+	 * To set the feature usage flag
+	 * @param {FeatureUsageFlag} flag - The flag value
+	 * @returns nothing
+	 */
+	private setFeatureUsage(flag: FeatureUsageFlag): void {
 		/* tslint:disable: no-bitwise */
 		this.featureUsage = this.featureUsage | flag;
 		/* tslint:enable: no-bitwise */
 	}
 
+	/**
+	 * @public
+	 * To get the feature usage
+	 * @returns A feature usage flag as hexadecimal string
+	 */
 	public getFeatureUsage(): string {
 		return this.featureUsage.toString(16);
 	}

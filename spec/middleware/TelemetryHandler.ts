@@ -83,7 +83,7 @@ describe("TelemetryHandler.ts", () => {
 		it("Should set sdk version header with feature flag", async () => {
 			try {
 				const telemetryOptions = new TelemetryHandlerOptions();
-				telemetryOptions.setFeatureUsage(FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+				telemetryOptions["setFeatureUsage"](FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 				const context: Context = {
 					request: "url",
 					options: {
