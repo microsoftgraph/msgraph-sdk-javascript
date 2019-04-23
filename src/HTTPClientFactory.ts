@@ -18,6 +18,7 @@ import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOpti
 import { RetryHandlerOptions } from "./middleware/options/RetryHandlerOptions";
 import { RedirectHandler } from "./middleware/RedirectHandler";
 import { RetryHandler } from "./middleware/RetryHandler";
+import { TelemetryHandler } from "./middleware/TelemetryHandler";
 
 /**
  * @private
@@ -43,15 +44,18 @@ export class HTTPClientFactory {
 	public static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient {
 		const authenticationHandler = new AuthenticationHandler(authProvider);
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
+		const telemetryHandler = new TelemetryHandler();
 		const httpMessageHandler = new HTTPMessageHandler();
+
 		authenticationHandler.setNext(retryHandler);
 		if (isNodeEnvironment()) {
 			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
 			retryHandler.setNext(redirectHandler);
-			redirectHandler.setNext(httpMessageHandler);
+			redirectHandler.setNext(telemetryHandler);
 		} else {
-			retryHandler.setNext(httpMessageHandler);
+			retryHandler.setNext(telemetryHandler);
 		}
+		telemetryHandler.setNext(httpMessageHandler);
 		return HTTPClientFactory.createWithMiddleware(authenticationHandler);
 	}
 

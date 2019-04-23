@@ -8,7 +8,7 @@
 import { assert } from "chai";
 
 import { FetchOptions } from "../../src/IFetchOptions";
-import { cloneRequestWithNewUrl, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
+import { generateUUID, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
 
 describe("MiddlewareUtil.ts", async () => {
 	describe("setRequestHeader", () => {
@@ -115,6 +115,13 @@ describe("MiddlewareUtil.ts", async () => {
 			};
 			const headerValue: string = getRequestHeader(url, options, key);
 			assert.equal(headerValue, value);
+		});
+	});
+
+	describe("generateUUID", () => {
+		it("Should return the unique uuid", () => {
+			const uuid = generateUUID();
+			assert.equal(uuid.length, 36);
 		});
 	});
 });

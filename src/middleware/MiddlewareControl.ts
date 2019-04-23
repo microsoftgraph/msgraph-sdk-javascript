@@ -26,10 +26,10 @@ export class MiddlewareControl {
 	 * @public
 	 * @constructor
 	 * Creates an instance of MiddlewareControl
-	 * @param {MiddlewareOptions[]} middlewareOptions - The array of middlewareOptions
+	 * @param {MiddlewareOptions[]} [middlewareOptions = []] - The array of middlewareOptions
 	 * @returns The instance of MiddlewareControl
 	 */
-	public constructor(middlewareOptions: MiddlewareOptions[]) {
+	public constructor(middlewareOptions: MiddlewareOptions[] = []) {
 		this.middlewareOptions = new Map<string, MiddlewareOptions>();
 		for (const option of middlewareOptions) {
 			const name = option.constructor.name;
@@ -45,5 +45,9 @@ export class MiddlewareControl {
 	 */
 	public getMiddlewareOptions(name: string): MiddlewareOptions {
 		return this.middlewareOptions.get(name);
+	}
+
+	public setMiddlewareOptions(name: string, option: MiddlewareOptions): void {
+		this.middlewareOptions.set(name, option);
 	}
 }

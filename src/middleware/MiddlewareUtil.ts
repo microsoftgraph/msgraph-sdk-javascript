@@ -13,6 +13,22 @@ import { FetchOptions } from "../IFetchOptions";
 
 /**
  * @constant
+ * To generate the UUID
+ * @returns The UUID string
+ */
+export const generateUUID = (): string => {
+	let uuid: string = "";
+	for (let j = 0; j < 32; j++) {
+		if (j === 8 || j === 12 || j === 16 || j === 20) {
+			uuid += "-";
+		}
+		uuid += Math.floor(Math.random() * 16).toString(16);
+	}
+	return uuid;
+};
+
+/**
+ * @constant
  * To get the request header from the request
  * @param {RequestInfo} request - The request object or the url string
  * @param {FetchOptions|undefined} options - The request options object

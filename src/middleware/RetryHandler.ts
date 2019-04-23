@@ -17,6 +17,7 @@ import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
 import { RetryHandlerOptions } from "./options/RetryHandlerOptions";
+import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 /**
  * @class
@@ -48,20 +49,6 @@ export class RetryHandler implements Middleware {
 	 * A member holding the name of retry after header
 	 */
 	private static RETRY_AFTER_HEADER: string = "Retry-After";
-
-	/**
-	 * @private
-	 * @static
-	 * A member holding the name of transfer encoding header
-	 */
-	private static TRANSFER_ENCODING_HEADER: string = "Transfer-Encoding";
-
-	/**
-	 * @private
-	 * @static
-	 * A member holding the value of transfer encoding chunked
-	 */
-	private static TRANSFER_ENCODING_CHUNKED: string = "chunked";
 
 	/**
 	 * @private
@@ -213,6 +200,7 @@ export class RetryHandler implements Middleware {
 		try {
 			const retryAttempts: number = 0;
 			const options: RetryHandlerOptions = this.getOptions(context);
+			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
 			return await this.executeWithRetry(context, retryAttempts, options);
 		} catch (error) {
 			throw error;
