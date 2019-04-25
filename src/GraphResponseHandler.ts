@@ -20,11 +20,34 @@ import { ResponseType } from "./ResponseType";
  * @property {string} APPLICATION_XML - The application/xml content type
  * @property {string} APPLICATION_XHTML - The application/xhml+xml content type
  */
-enum DocumentType {
+export enum DocumentType {
 	TEXT_HTML = "text/html",
 	TEXT_XML = "text/xml",
 	APPLICATION_XML = "application/xml",
 	APPLICATION_XHTML = "application/xhtml+xml",
+}
+
+/**
+ * @enum
+ * Enum for Content types
+ * @property {string} TEXT_PLAIN - The text/plain content type
+ * @property {string} APPLICATION_JSON - The application/json content type
+ */
+
+enum ContentType {
+	TEXT_PLAIN = "text/plain",
+	APPLICATION_JSON = "application/json",
+}
+
+/**
+ * @enum
+ * Enum for Content type regex
+ * @property {string} DOCUMENT - The regex to match document content types
+ * @property {string} IMAGE - The regex to match image content types
+ */
+enum ContentTypeRegexStr {
+	DOCUMENT = "^(text\\/(html|xml))|(application\\/(xml|xhtml\\+xml))$",
+	IMAGE = "^image\\/.+",
 }
 
 /**
@@ -33,13 +56,6 @@ enum DocumentType {
  */
 
 export class GraphResponseHandler {
-	/**
-	 * @private
-	 * @static
-	 * A member holding array of document types
-	 */
-	private static DocumentTypes: string[] = ["text/html", "text/xml", "application/xml", "application/xhtml+xml"];
-
 	/**
 	 * @private
 	 * @static
@@ -110,7 +126,17 @@ export class GraphResponseHandler {
 					const contentType = clonedRawResponse.headers.get("Content-type");
 					if (contentType !== null) {
 						const mimeType = contentType.split(";")[0];
-						responseValue = GraphResponseHandler.DocumentTypes.includes(mimeType) ? await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType) : await clonedRawResponse.json();
+						if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
+							responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType);
+						} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
+							responseValue = clonedRawResponse.blob();
+						} else if (mimeType === ContentType.TEXT_PLAIN) {
+							responseValue = await clonedRawResponse.text();
+						} else if (mimeType === ContentType.APPLICATION_JSON) {
+							responseValue = await clonedRawResponse.json();
+						} else {
+							responseValue = Promise.resolve(clonedRawResponse.body);
+						}
 					} else {
 						/**
 						 * RFC specification {@link https://tools.ietf.org/html/rfc7231#section-3.1.1.5} says:
