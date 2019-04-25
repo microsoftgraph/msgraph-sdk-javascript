@@ -22,6 +22,7 @@ samples/node/secrets.json
 samples/browser/src/secrets.js
 samples/browser/src/graph-js-sdk-core.js
 samples/browser/src/graph-js-sdk-web.js
+samples/browser/src/graph-es-sdk.js
 
 spec/**/*.js
 spec/**/*.d.ts
