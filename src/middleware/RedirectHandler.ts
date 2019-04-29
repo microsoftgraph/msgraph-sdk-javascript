@@ -16,6 +16,7 @@ import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
 import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
+import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 /**
  * @class
@@ -226,6 +227,7 @@ export class RedirectHandler implements Middleware {
 			const redirectCount: number = 0;
 			const options = this.getOptions(context);
 			context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
+			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);
 			return await this.executeWithRedirect(context, redirectCount, options);
 		} catch (error) {
 			throw error;
