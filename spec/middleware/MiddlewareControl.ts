@@ -25,8 +25,8 @@ describe("MiddlewareControl.ts", () => {
 			assert.equal(middlewareControl["middlewareOptions"].size, 1);
 		});
 
-		it("Should create empty middleware options map for empty middleware options array", () => {
-			const middlewareControl = new MiddlewareControl([]);
+		it("Should create empty middleware options map  by default", () => {
+			const middlewareControl = new MiddlewareControl();
 			assert.isDefined(middlewareControl["middlewareOptions"]);
 			assert.equal(middlewareControl["middlewareOptions"].size, 0);
 		});

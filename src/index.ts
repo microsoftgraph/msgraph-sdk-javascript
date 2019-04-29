@@ -5,11 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { init } from "./PolyFill";
-/**
- * Polyfilling Promise and fetch if not present
- */
-init();
+import "./PolyFill";
 
 export * from "./content/BatchRequestContent";
 export * from "./content/BatchResponseContent";
@@ -18,10 +14,14 @@ export * from "./middleware/AuthenticationHandler";
 export * from "./middleware/HTTPMessageHandler";
 export * from "./middleware/IMiddleware";
 export * from "./middleware/RetryHandler";
+export * from "./middleware/RedirectHandler";
+export * from "./middleware/TelemetryHandler";
 
 export * from "./middleware/options/AuthenticationHandlerOptions";
 export * from "./middleware/options/IMiddlewareOptions";
 export * from "./middleware/options/RetryHandlerOptions";
+export * from "./middleware/options/RedirectHandlerOptions";
+export * from "./middleware/options/TelemetryHandlerOptions";
 
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";

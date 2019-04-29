@@ -5,8 +5,8 @@
 	"tasks": [
 		{
 			"label": "Run Compile",
-			"type": "npm",
-			"script": "compile",
+			"type": "typescript",
+			"tsconfig": "tsconfig-cjs.json",
 			"group": "build"
 		}
 	]

@@ -6,15 +6,11 @@
  */
 
 import { Client } from "../src/index";
-import * as PolyFill from "../src/PolyFill";
+import "../src/PolyFill";
 
 import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
 
 export function getClient(): Client {
-	/**
-	 * PolyFill fetch and promise before initializing client, otherwise error will be thrown
-	 */
-	PolyFill.init();
 	return Client.initWithMiddleware({
 		authProvider: new DummyAuthenticationProvider(),
 	});
