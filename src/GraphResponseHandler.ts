@@ -102,39 +102,44 @@ export class GraphResponseHandler {
 			return Promise.resolve();
 		}
 		let responseValue: any;
+		let responsePromise: Promise<any>;
+		let shouldConsumeResponse = true;
 		try {
 			switch (responseType) {
 				case ResponseType.ARRAYBUFFER:
-					responseValue = await clonedRawResponse.arrayBuffer();
+					responsePromise = clonedRawResponse.arrayBuffer();
 					break;
 				case ResponseType.BLOB:
-					responseValue = await clonedRawResponse.blob();
+					responsePromise = clonedRawResponse.blob();
 					break;
 				case ResponseType.DOCUMENT:
-					responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, DocumentType.TEXT_XML);
+					responsePromise = GraphResponseHandler.parseDocumentResponse(clonedRawResponse, DocumentType.TEXT_XML);
 					break;
 				case ResponseType.JSON:
-					responseValue = await clonedRawResponse.json();
+					responsePromise = clonedRawResponse.json();
 					break;
 				case ResponseType.STREAM:
-					responseValue = await Promise.resolve(clonedRawResponse.body);
+					shouldConsumeResponse = false;
+					responsePromise = Promise.resolve(clonedRawResponse.body);
 					break;
 				case ResponseType.TEXT:
-					responseValue = await clonedRawResponse.text();
+					responsePromise = clonedRawResponse.text();
 					break;
 				default:
 					const contentType = clonedRawResponse.headers.get("Content-type");
 					if (contentType !== null) {
 						const mimeType = contentType.split(";")[0];
 						if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
-							responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType);
+							responsePromise = GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType);
 						} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
+							shouldConsumeResponse = false;
 							responseValue = clonedRawResponse.blob();
 						} else if (mimeType === ContentType.TEXT_PLAIN) {
-							responseValue = await clonedRawResponse.text();
+							responsePromise = clonedRawResponse.text();
 						} else if (mimeType === ContentType.APPLICATION_JSON) {
-							responseValue = await clonedRawResponse.json();
+							responsePromise = clonedRawResponse.json();
 						} else {
+							shouldConsumeResponse = false;
 							responseValue = Promise.resolve(clonedRawResponse.body);
 						}
 					} else {
@@ -149,14 +154,42 @@ export class GraphResponseHandler {
 						 *
 						 *  So assuming it as a stream type so returning the body.
 						 */
+						shouldConsumeResponse = false;
 						responseValue = Promise.resolve(clonedRawResponse.body);
 					}
 					break;
 			}
+			if (shouldConsumeResponse) {
+				GraphResponseHandler.consumeResponse(rawResponse);
+			}
+			if (responsePromise && !responseValue) {
+				responseValue = await responsePromise;
+			}
 		} catch (error) {
 			throw error;
+		} finally {
+			if (shouldConsumeResponse) {
+				GraphResponseHandler.consumeResponse(clonedRawResponse);
+			}
 		}
 		return responseValue;
+	}
+
+	/**
+	 * @private
+	 * @static
+	 * Consume the response, so that we don't hit the highWaterMark in Node.js
+	 * @param {Response} rawResponse - The response object
+	 */
+	private static consumeResponse(rawResponse: Response): void {
+		if (rawResponse.bodyUsed) {
+			return;
+		}
+
+		const body = rawResponse.body;
+		if (typeof (body as any).resume === "function") {
+			((body as unknown) as NodeJS.ReadableStream).resume();
+		}
 	}
 
 	/**
@@ -188,7 +221,10 @@ export class GraphResponseHandler {
 				}
 			}
 		} catch (error) {
-			throw rawResponse.ok ? error : rawResponse;
+			if (rawResponse.ok) {
+				throw error;
+			}
+			throw rawResponse;
 		}
 	}
 }
