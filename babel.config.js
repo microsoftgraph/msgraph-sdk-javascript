@@ -5,7 +5,7 @@ module.exports = function(api) {
 			"@babel/preset-env",
 			{
 				targets: {
-					edge: 12,
+					ie: 11,
 				},
 			},
 		],

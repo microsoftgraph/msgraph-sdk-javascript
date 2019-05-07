@@ -16,24 +16,32 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 npm install @microsoft/microsoft-graph-client
 ```
 
-import `@microsoft/microsoft-graph-client` into your module.
+import `@microsoft/microsoft-graph-client` into your module and also you will need polyfill for fetch like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
 
 ```typescript
+import "isomorphic-fetch";
 import { Client } from "@microsoft/microsoft-graph-client";
 ```
 
+You will also need Promise polyfill like [es6-promise](https://github.com/stefanpenner/es6-promise) for [older Node.js](https://node.green/#ES2015-built-ins-Promise).
+
 ### Via Script Tag
 
-Include `lib/graph-js-sdk-web.js` in your page.
+Include [graph-js-sdk.js](https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js) in your HTML page.
 
 ```HTML
-<script type="text/javascript" src="graph-js-sdk-web.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js"></script>
 ```
 
-Incase if your application ships with [es6-promise](https://www.npmjs.com/package/es6-promise) and [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) just use `lib/graph-js-sdk-core.js`
+In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] or [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you need to use polyfills like [github/fetch](https://github.com/github/fetch) for fetch and [es6-promise](https://github.com/stefanpenner/es6-promise) for promise.
 
 ```HTML
-<script type="text/javascript" src="graph-js-sdk-core.js"></script>
+<!-- polyfilling promise -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
+
+<!-- polyfilling fetch -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/whatwg-fetch/dist/fetch.umd.min.js"></script>
 ```
 
 ## Getting started
