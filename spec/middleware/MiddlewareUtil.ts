@@ -6,6 +6,7 @@
  */
 
 import { assert } from "chai";
+import { NFHeaders } from "node-fetch";
 
 import { FetchOptions } from "../../src/IFetchOptions";
 import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
@@ -178,7 +179,7 @@ describe("MiddlewareUtil.ts", async () => {
 			appendRequestHeader(request, undefined, key, value);
 			assert.equal(request.headers.get(key), value);
 		});
-		/* 
+
 		it("Should append header in request object", () => {
 			const request: Request = new Request(url, {
 				method: "test",
@@ -188,7 +189,9 @@ describe("MiddlewareUtil.ts", async () => {
 				},
 			});
 			appendRequestHeader(request, undefined, key, value);
-			assert.equal(request.headers.get(key), `${firstValue}, ${value}`);
+			const values = (request.headers as NFHeaders).getAll(key);
+			assert.equal(values[0], firstValue);
+			assert.equal(values[1], value);
 		});
 
 		it("Should append header in request object even if the value is duplicate", () => {
@@ -200,16 +203,18 @@ describe("MiddlewareUtil.ts", async () => {
 				},
 			});
 			appendRequestHeader(request, undefined, key, value);
-			assert.equal(request.headers.get(key), `${value}, ${value}`);
+			const values = (request.headers as NFHeaders).getAll(key);
+			assert.equal(values[0], value);
+			assert.equal(values[1], value);
 		});
-*/
+
 		it("Should set header for empty headers", () => {
 			const options: FetchOptions = {
 				method: "test",
 			};
 			appendRequestHeader(url, options, key, value);
 			assert.isDefined(options.headers);
-			assert.equal((options.headers as Headers).get(key), value);
+			assert.equal((options.headers as NFHeaders).get(key), value);
 		});
 
 		it("Should set header in headers object if header is not present", () => {
@@ -256,7 +261,7 @@ describe("MiddlewareUtil.ts", async () => {
 			assert.isDefined(options.headers);
 			assert.equal((options.headers as Headers).get(key), value);
 		});
-		/*
+
 		it("Should append header in Headers instance", () => {
 			const options: FetchOptions = {
 				method: "test",
@@ -264,7 +269,9 @@ describe("MiddlewareUtil.ts", async () => {
 			};
 			appendRequestHeader(url, options, key, value);
 			assert.isDefined(options.headers);
-			assert.equal((options.headers as Headers).get(key), `${firstValue}, ${value}`);
+			const values = (options.headers as NFHeaders).getAll(key);
+			assert.equal(values[0], firstValue);
+			assert.equal(values[1], value);
 		});
 
 		it("Should append header in Headers instance even if the value is duplicate", () => {
@@ -274,9 +281,11 @@ describe("MiddlewareUtil.ts", async () => {
 			};
 			appendRequestHeader(url, options, key, value);
 			assert.isDefined(options.headers);
-			assert.equal((options.headers as Headers).get(key), `${value}, ${value}`);
+			const values = (options.headers as NFHeaders).getAll(key);
+			assert.equal(values[0], value);
+			assert.equal(values[1], value);
 		});
-*/
+
 		it("Should set header in array of headers if the header is not present", () => {
 			const options: FetchOptions = {
 				method: "test",
@@ -286,7 +295,7 @@ describe("MiddlewareUtil.ts", async () => {
 			assert.isDefined(options.headers);
 			assert.equal(options.headers[1][1], value);
 		});
-		/*
+
 		it("Should append header in array of headers", () => {
 			const options: FetchOptions = {
 				method: "test",
@@ -294,9 +303,11 @@ describe("MiddlewareUtil.ts", async () => {
 			};
 			appendRequestHeader(url, options, key, value);
 			assert.isDefined(options.headers);
-			assert.equal((options.headers as string[][]).length, 1);
+			assert.equal((options.headers as string[][]).length, 2);
 			assert.equal(options.headers[0][0], key);
-			assert.equal(options.headers[0][1], `${firstValue}, ${value}`);
+			assert.equal(options.headers[0][1], firstValue);
+			assert.equal(options.headers[1][0], key);
+			assert.equal(options.headers[1][1], value);
 		});
 
 		it("Should append header in array of headers even if the value is duplicate", () => {
@@ -306,10 +317,12 @@ describe("MiddlewareUtil.ts", async () => {
 			};
 			appendRequestHeader(url, options, key, value);
 			assert.isDefined(options.headers);
-			assert.equal((options.headers as string[][]).length, 1);
+			assert.equal((options.headers as string[][]).length, 2);
 			assert.equal(options.headers[0][0], key);
-			assert.equal(options.headers[0][1], `${value}, ${value}`);
-		});*/
+			assert.equal(options.headers[0][1], value);
+			assert.equal(options.headers[1][0], key);
+			assert.equal(options.headers[1][1], value);
+		});
 	});
 
 	describe("generateUUID", () => {

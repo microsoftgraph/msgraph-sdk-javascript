@@ -1,17 +1,18 @@
 {
 	"devDependencies": {
-		"@microsoft/microsoft-graph-client": "^1.4.0",
-		"@microsoft/microsoft-graph-types": "^1.7.0",
+		"@microsoft/microsoft-graph-client": "^1.6.0",
+		"@microsoft/microsoft-graph-types": "^1.8.0",
 		"@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
 		"@types/chai": "^4.1.7",
 		"@types/form-data": "^2.2.1",
 		"@types/isomorphic-fetch": "0.0.35",
 		"@types/mocha": "^5.2.6",
-		"@types/node": "^11.9.5",
+		"@types/node": "^12.0.0",
 		"chai": "^4.2.0",
 		"es6-promise": "^4.2.6",
 		"form-data": "^2.3.3",
 		"isomorphic-fetch": "^2.2.1",
-		"msal": "^0.2.4"
+		"msal": "^0.2.4",
+		"node-fetch": "^2.5.0"
 	}
 }
