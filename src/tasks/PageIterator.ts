@@ -14,7 +14,8 @@ import { Client } from "../index";
 /**
  * Signature representing PageCollection
  * @property {any[]} value - The collection value
- * @property {string} [@odata.nextLink] - The nextLine value
+ * @property {string} [@odata.nextLink] - The nextLink value
+ * @property {string} [@odata.deltaLink] - The deltaLink value
  * @property {any} Additional - Any number of additional properties (This is to accept the any additional data returned by in the response to the nextLink request)
  */
 export interface PageCollection {

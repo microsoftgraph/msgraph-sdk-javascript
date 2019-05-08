@@ -14,7 +14,7 @@ import { Context } from "../IContext";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { generateUUID, getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
+import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
 import { TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 /**
@@ -80,7 +80,7 @@ export class TelemetryHandler implements Middleware {
 				const featureUsage: string = options.getFeatureUsage();
 				sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
 			}
-			setRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
+			appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
 			throw error;
