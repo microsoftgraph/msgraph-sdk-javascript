@@ -9,7 +9,6 @@
  * @module GraphRequest
  */
 
-import { PACKAGE_VERSION } from "./Constants";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
@@ -255,9 +254,6 @@ export class GraphRequest {
 	 * @returns Nothing
 	 */
 	private updateRequestOptions(options: FetchOptions): void {
-		const defaultHeaders = {
-			SdkVersion: `graph-js-${PACKAGE_VERSION}`,
-		};
 		const optionsHeaders: HeadersInit = { ...options.headers };
 		if (this.config.fetchOptions !== undefined) {
 			const fetchOptions: FetchOptions = { ...this.config.fetchOptions };
@@ -267,7 +263,6 @@ export class GraphRequest {
 			}
 		}
 		Object.assign(options, this._options);
-		Object.assign(optionsHeaders, defaultHeaders);
 		if (options.headers !== undefined) {
 			Object.assign(optionsHeaders, options.headers);
 		}

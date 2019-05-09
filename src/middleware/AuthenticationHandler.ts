@@ -17,6 +17,7 @@ import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { setRequestHeader } from "./MiddlewareUtil";
 import { AuthenticationHandlerOptions } from "./options/AuthenticationHandlerOptions";
+import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 /**
  * @class
@@ -77,6 +78,7 @@ export class AuthenticationHandler implements Middleware {
 			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
 			const bearerKey: string = `Bearer ${token}`;
 			setRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
 			throw error;
