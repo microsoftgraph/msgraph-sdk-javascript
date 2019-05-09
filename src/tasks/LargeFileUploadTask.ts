@@ -14,6 +14,15 @@ import { Range } from "../Range";
 
 /**
  * @interface
+ * Signature to representing key value pairs
+ * @property {[key: string] : string | number} - The Key value pair
+ */
+interface KeyValuePairObjectStringNumber {
+	[key: string]: string | number;
+}
+
+/**
+ * @interface
  * Signature to represent the resulting response in the status enquiry request
  * @property {string} expirationDateTime - The expiration time of the upload session
  * @property {string[]} nextExpectedRanges - The ranges expected in next consecutive request in the upload
@@ -104,11 +113,15 @@ export class LargeFileUploadTask {
 	 * Makes request to the server to create an upload session
 	 * @param {Client} client - The GraphClient instance
 	 * @param {any} payload - The payload that needs to be sent
+	 * @param {KeyValuePairObjectStringNumber} headers - The headers that needs to be sent
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, payload: any): Promise<any> {
+	public static async createUploadSession(client: Client, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<any> {
 		try {
-			const session = await client.api(requestUrl).post(payload);
+			const session = await client
+				.api(requestUrl)
+				.headers(headers)
+				.post(payload);
 			const largeFileUploadSession: LargeFileUploadSession = {
 				url: session.uploadUrl,
 				expiry: new Date(session.expirationDateTime),
