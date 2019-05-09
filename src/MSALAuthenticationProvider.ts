@@ -9,7 +9,7 @@
  * @module MSALAuthenticationProvider
  */
 
-import { UserAgentApplication } from "msal";
+import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, UserAgentApplication } from "msal";
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
@@ -29,21 +29,21 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 
 	/**
 	 * @private
-	 * A member holding an instance of UserAgentApplication
+	 * A member holding an instance of MSAL UserAgentApplication
 	 */
-	private userAgentApplication: UserAgentApplication;
+	private msalInstance: UserAgentApplication;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of MSALAuthenticationProvider
-	 * @param {UserAgentApplication} userAgentApplication - An instance of UserAgentApplication
+	 * @param {UserAgentApplication} msalInstance - An instance of MSAL UserAgentApplication
 	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of MSALAuthenticationProvider
 	 */
-	public constructor(userAgentApplication: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
+	public constructor(msalInstance: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
 		this.options = options;
-		this.userAgentApplication = userAgentApplication;
+		this.msalInstance = msalInstance;
 	}
 
 	/**
@@ -68,21 +68,33 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 			error.message = "Scopes cannot be empty, Please provide a scopes";
 			throw error;
 		}
-		try {
-			const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
-			return accessToken;
-		} catch (errorMsg) {
+		if (this.msalInstance.getAccount()) {
+			const tokenRequest: AuthenticationParameters = {
+				scopes,
+			};
 			try {
-				const idToken: string = await this.userAgentApplication.loginPopup(scopes);
-				try {
-					const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
-					return accessToken;
-				} catch (error) {
-					const accessToken: string = await this.userAgentApplication.acquireTokenPopup(scopes);
-					return accessToken;
+				const authResponse: AuthResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				return authResponse.accessToken;
+			} catch (error) {
+				if (error instanceof InteractionRequiredAuthError) {
+					try {
+						const authResponse: AuthResponse = await this.msalInstance.acquireTokenPopup(tokenRequest);
+						return authResponse.accessToken;
+					} catch (error) {
+						throw error;
+					}
 				}
-			} catch (errorMsg) {
-				throw new Error(errorMsg);
+			}
+		} else {
+			try {
+				const tokenRequest: AuthenticationParameters = {
+					scopes,
+				};
+				await this.msalInstance.loginPopup(tokenRequest);
+				const authResponse: AuthResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				return authResponse.accessToken;
+			} catch (error) {
+				throw error;
 			}
 		}
 	}

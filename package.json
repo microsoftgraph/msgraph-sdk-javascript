@@ -26,7 +26,7 @@
 		"husky": "^2.2.0",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.1.4",
-		"msal": "^0.2.4",
+		"msal": "^1.0.0",
 		"prettier": "^1.17.0",
 		"rollup": "^1.10.1",
 		"rollup-plugin-babel": "^4.3.2",

@@ -33,21 +33,21 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 
 	/**
 	 * @private
-	 * A member holding an instance of UserAgentApplication
+	 * A member holding an instance of MSAL
 	 */
-	private userAgentApplication: any;
+	private msalInstance: any;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of MSALAuthenticationProvider
-	 * @param {any} userAgentApplication - An instance of UserAgentApplication
+	 * @param {any} msalInstance - An instance of MSAL UserAgentApplication
 	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of MSALAuthenticationProvider
 	 */
-	public constructor(userAgentApplication: any, options: MSALAuthenticationProviderOptions) {
+	public constructor(msalInstance: any, options: MSALAuthenticationProviderOptions) {
 		this.options = options;
-		this.userAgentApplication = userAgentApplication;
+		this.msalInstance = msalInstance;
 	}
 
 	/**
@@ -72,21 +72,34 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 			error.message = "Scopes cannot be empty, Please provide a scopes";
 			throw error;
 		}
-		try {
-			const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
-			return accessToken;
-		} catch (errorMsg) {
+
+		if (this.msalInstance.getAccount()) {
+			const tokenRequest = {
+				scopes,
+			};
 			try {
-				const idToken: string = await this.userAgentApplication.loginPopup(scopes);
-				try {
-					const accessToken: string = await this.userAgentApplication.acquireTokenSilent(scopes);
-					return accessToken;
-				} catch (error) {
-					const accessToken: string = await this.userAgentApplication.acquireTokenPopup(scopes);
-					return accessToken;
+				const authResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				return authResponse.accessToken;
+			} catch (error) {
+				if (error.name === "InteractionRequiredAuthError") {
+					try {
+						const authResponse = await this.msalInstance.acquireTokenPopup(tokenRequest);
+						return authResponse.accessToken;
+					} catch (error) {
+						throw error;
+					}
 				}
-			} catch (errorMsg) {
-				throw new Error(errorMsg);
+			}
+		} else {
+			try {
+				const tokenRequest = {
+					scopes,
+				};
+				await this.msalInstance.loginPopup(tokenRequest);
+				const authResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				return authResponse.accessToken;
+			} catch (error) {
+				throw error;
 			}
 		}
 	}

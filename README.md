@@ -57,7 +57,7 @@ Register your application to use Microsoft Graph API using one of the following 
 
 The Microsoft Graph JavaScript Client Library has an adapter implementation ([MSALAuthenticationProvider](src/MSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
 
-> **Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
+> **Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
 #### Creating an instance of MSALAuthenticationProvider in browser environment
 
@@ -68,17 +68,21 @@ Refer devDependencies in [package.json](./package.json) for the compatible msal 
 ```
 
 ```typescript
-const clientId = "your_client_id"; // Client Id of the registered application
-const callback = (errorDesc, token, error, tokenType) => {};
-// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-const options = {
-	redirectUri: "Your redirect URI",
+
+// Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
+const msalConfig = {
+	auth: {
+		clientId: "your_client_id"; // Client Id of the registered application
+		redirectUri: "your_redirect_uri",
+	},
 };
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 
-// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#initialization-of-msal
-const userAgentApplication = new Msal.UserAgentApplication(clientId, undefined, callback, options);
-const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(userAgentApplication, graphScopes);
+// Important Note: This library implements loginRedirect and acquireTokenPopup flow, remember this while initializing the msal
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
+const msalInstance = new Msal.UserAgentApplication(msalConfig);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
+const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(msalInstance, options);
 ```
 
 #### Creating an instance of MSALAuthenticationProvider in node environment
@@ -94,17 +98,20 @@ import { UserAgentApplication } from "msal";
 
 import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
 
-const clientId = "your_client_id"; // Client Id of the registered application
-const callback = (errorDesc, token, error, tokenType) => {};
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-const options = {
-	redirectUri: "Your redirect URI",
+const msalConfig = {
+	auth: {
+		clientId: "your_client_id"; // Client Id of the registered application
+		redirectUri: "your_redirect_uri",
+	},
 };
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 
-// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#initialization-of-msal
-const userAgentApplication = new UserAgentApplication(clientId, undefined, callback, options);
-const authProvider = new MSALAuthenticationProvider(userAgentApplication, scopes);
+// Important Note: This library implements loginRedirect and acquireTokenPopup flow, remember this while initializing the msal
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
+const msalInstance = new UserAgentApplication(msalConfig);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
+const authProvider = new MSALAuthenticationProvider(msalInstance, options);
 ```
 
 User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
