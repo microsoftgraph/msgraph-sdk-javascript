@@ -30,29 +30,6 @@ describe("GraphErrorHandler.ts", () => {
 		});
 	});
 
-	describe("constructErrorFromRawResponse", async () => {
-		it("Should parse error from raw response", async () => {
-			const body = "unauthorized";
-			const statusCode = 401;
-			const errorResponse = new Response(body, {
-				status: statusCode,
-			});
-			const gError = await GraphErrorHandler["constructErrorFromRawResponse"](errorResponse, statusCode);
-			assert.equal(gError.statusCode, statusCode);
-			assert.equal(gError.body, body);
-		});
-
-		it("Should parse error without body", async () => {
-			const statusCode = 401;
-			const errorResponse = new Response(undefined, {
-				status: statusCode,
-			});
-			const gError = await GraphErrorHandler["constructErrorFromRawResponse"](errorResponse, statusCode);
-			assert.equal(gError.statusCode, statusCode);
-			assert.isNull(gError.body);
-		});
-	});
-
 	describe("constructErrorFromResponse", () => {
 		const statusCode = 400;
 		const error: any = {

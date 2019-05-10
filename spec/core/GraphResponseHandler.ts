@@ -158,17 +158,5 @@ describe("GraphResponseHandler.ts", () => {
 			const responseValue = await GraphResponseHandler.getResponse(response, ResponseType.TEXT);
 			assert.isDefined(responseValue);
 		});
-
-		it("Should parse from raw response for NOT OK response", async () => {
-			try {
-				const response = new Response("NOT OK", status500);
-				const responseValue = await GraphResponseHandler.getResponse(response, ResponseType.TEXT);
-				throw new Error("Something wrong with validating OK response");
-			} catch (error) {
-				assert.isDefined(error);
-				assert.isTrue(error instanceof Response);
-				assert.equal(error.status, 500);
-			}
-		});
 	});
 });

@@ -188,7 +188,7 @@ export class GraphResponseHandler {
 				}
 			}
 		} catch (error) {
-			throw rawResponse.ok ? error : rawResponse;
+			throw error;
 		}
 	}
 }
