@@ -106,7 +106,7 @@ _You can pass in the customized options using LargeFileUploadTask_
 async function largeFileUpload(client, file) {
 	const filename = file.name;
 	const driveId = "<YOUR_DRIVE_ID>";
-	const path = "LOCATION_TO_STORE_FILE";
+	const path = "<LOCATION_TO_STORE_FILE>";
 	try {
 		const requestUrl = `/drives/${driveId}/root:${path}/${fileName}:/createUploadSession`;
 		const payload = {
