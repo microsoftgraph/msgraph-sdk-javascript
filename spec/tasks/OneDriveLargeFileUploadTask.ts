@@ -16,32 +16,34 @@ describe("OneDriveLargeFileUploadTask.ts", () => {
 		const specialFileName = "test file.png";
 		const encodedFileName = "test%20file.png";
 
+		/* tslint:disable: no-string-literal */
 		it("Should trim the extra spaces in the filename", () => {
-			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(spaceFileName));
+			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](spaceFileName));
 		});
 
 		it("Should encode space in the filename", () => {
-			assert.equal(`/me/drive/root:/${encodedFileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(specialFileName));
+			assert.equal(`/me/drive/root:/${encodedFileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](specialFileName));
 		});
 
 		it("Should return url with default root value", () => {
-			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(fileName));
+			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName));
 		});
 
 		it("Should return url with default root value for an empty path string", () => {
-			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(fileName, ""));
+			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, ""));
 		});
 
 		it("Should add / in front of the path", () => {
-			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(fileName, "Documents/"));
+			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, "Documents/"));
 		});
 
 		it("Should add / in back of the path", () => {
-			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(fileName, "/Documents"));
+			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, "/Documents"));
 		});
 
 		it("Should trim the extra spaces in the path", () => {
-			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask.constructCreateSessionUrl(fileName, " /Documents/ "));
+			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, " /Documents/ "));
 		});
+		/* tslint:enable: no-string-literal */
 	});
 });

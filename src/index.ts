@@ -23,6 +23,7 @@ export * from "./middleware/options/RetryHandlerOptions";
 export * from "./middleware/options/RedirectHandlerOptions";
 export * from "./middleware/options/TelemetryHandlerOptions";
 
+export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";
 
