@@ -43,7 +43,7 @@ Getting user details by passing `callback`,
 ```typescript
 client
     .api('/me')
-    .get((err, res) => {
+    .get((err, res, rawResponse) => {
         console.log(res);
     });
 ```
