@@ -14,6 +14,7 @@ You can get an access token by doing the following:
 ## Run Sample
 
 1. Run `npm install` to install the application.
-2. Run samples in one of two ways
+2. Run `npm run build` to build the library files.
+3. Run samples in one of two ways
     1. Run and debug the node samples found under ./samples/node/main.js by running the Run node samples configuration from the Debug menu in Visual Studio Code.
-    2. Run the node samples from the CLI by entering node ./samples/node/main.js (assuming you are at the root of this repository).
+    2. Run the node samples from the CLI by entering `node ./samples/node/main.js` (assuming you are at the root of this repository).

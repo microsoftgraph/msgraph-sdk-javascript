@@ -11,6 +11,7 @@ import { LargeFileUploadTask } from "../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../test-helper";
 
 describe("LargeFileUploadTask.ts", () => {
+	/* tslint:disable: no-string-literal */
 	describe("Parsing Range", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
@@ -27,34 +28,33 @@ describe("LargeFileUploadTask.ts", () => {
 		const options = {};
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 		it("Should return default range for given undefined range", (done) => {
-			const range = uploadTask.parseRange([]);
+			const range = uploadTask["parseRange"]([]);
 			assert.equal(range.minValue, -1);
 			assert.equal(range.maxValue, -1);
 			done();
 		});
 
 		it("Should return default range for given empty range", (done) => {
-			const range = uploadTask.parseRange([""]);
+			const range = uploadTask["parseRange"]([""]);
 			assert.equal(range.minValue, -1);
 			assert.equal(range.maxValue, -1);
 			done();
 		});
 
 		it("Should return valid range for given range with from and to values", (done) => {
-			const range = uploadTask.parseRange(["100-200"]);
+			const range = uploadTask["parseRange"](["100-200"]);
 			assert.equal(range.minValue, 100);
 			assert.equal(range.maxValue, 200);
 			done();
 		});
 
 		it("Should return valid range for given range without to value", (done) => {
-			const range = uploadTask.parseRange(["0-"]);
+			const range = uploadTask["parseRange"](["0-"]);
 			assert.equal(range.minValue, 0);
 			assert.equal(range.maxValue, 99999);
 			done();
 		});
 	});
-	/* tslint:disable: no-string-literal */
 	describe("Update Task Status", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
@@ -75,7 +75,7 @@ describe("LargeFileUploadTask.ts", () => {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: ["100-2000"],
 			};
-			uploadTask.updateTaskStatus(statusResponse);
+			uploadTask["updateTaskStatus"](statusResponse);
 			assert.equal(uploadTask["nextRange"].minValue, 100);
 			assert.equal(uploadTask["nextRange"].maxValue, 2000);
 			done();
@@ -85,13 +85,12 @@ describe("LargeFileUploadTask.ts", () => {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: ["100-"],
 			};
-			uploadTask.updateTaskStatus(statusResponse);
+			uploadTask["updateTaskStatus"](statusResponse);
 			assert.equal(uploadTask["nextRange"].minValue, 100);
 			assert.equal(uploadTask["nextRange"].maxValue, 99999);
 			done();
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("GetNextRange", () => {
 		const name = "sample_image.jpg";
@@ -123,7 +122,7 @@ describe("LargeFileUploadTask.ts", () => {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: ["327680-"],
 			};
-			uploadTask.updateTaskStatus(statusResponse);
+			uploadTask["updateTaskStatus"](statusResponse);
 			const nextRange = uploadTask.getNextRange();
 			assert.equal(nextRange.minValue, 327680);
 			assert.equal(nextRange.maxValue, 328679);
@@ -135,7 +134,7 @@ describe("LargeFileUploadTask.ts", () => {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: [],
 			};
-			uploadTask.updateTaskStatus(statusResponse);
+			uploadTask["updateTaskStatus"](statusResponse);
 			const nextRange = uploadTask.getNextRange();
 			assert.equal(nextRange.minValue, -1);
 			assert.equal(nextRange.maxValue, -1);
@@ -165,7 +164,7 @@ describe("LargeFileUploadTask.ts", () => {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: [],
 			};
-			uploadTask.updateTaskStatus(statusResponse);
+			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
 				.then((res) => {
@@ -178,4 +177,5 @@ describe("LargeFileUploadTask.ts", () => {
 				});
 		});
 	});
+	/* tslint:enable: no-string-literal */
 });

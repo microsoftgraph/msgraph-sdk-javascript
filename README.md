@@ -184,7 +184,7 @@ try {
 }
 ```
 
-For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions](docs/Actions.md), [Query Params](docs/QueryParameters.md), [API Methods](docs/APIMethods.md) and [more](docs/).
+For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions](docs/Actions.md), [Query Params](docs/QueryParameters.md), [API Methods](docs/OtherAPIs.md) and [more](docs/).
 
 ## Documentation
 
