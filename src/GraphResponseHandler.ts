@@ -96,8 +96,7 @@ export class GraphResponseHandler {
 	 * @returns A promise that resolves to the converted response content
 	 */
 	private static async convertResponse(rawResponse: Response, responseType?: ResponseType): Promise<any> {
-		const clonedRawResponse: Response = rawResponse.clone();
-		if (clonedRawResponse.status === 204) {
+		if (rawResponse.status === 204) {
 			// NO CONTENT
 			return Promise.resolve();
 		}
@@ -105,37 +104,37 @@ export class GraphResponseHandler {
 		try {
 			switch (responseType) {
 				case ResponseType.ARRAYBUFFER:
-					responseValue = await clonedRawResponse.arrayBuffer();
+					responseValue = await rawResponse.arrayBuffer();
 					break;
 				case ResponseType.BLOB:
-					responseValue = await clonedRawResponse.blob();
+					responseValue = await rawResponse.blob();
 					break;
 				case ResponseType.DOCUMENT:
-					responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, DocumentType.TEXT_XML);
+					responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
 					break;
 				case ResponseType.JSON:
-					responseValue = await clonedRawResponse.json();
+					responseValue = await rawResponse.json();
 					break;
 				case ResponseType.STREAM:
-					responseValue = await Promise.resolve(clonedRawResponse.body);
+					responseValue = await Promise.resolve(rawResponse.body);
 					break;
 				case ResponseType.TEXT:
-					responseValue = await clonedRawResponse.text();
+					responseValue = await rawResponse.text();
 					break;
 				default:
-					const contentType = clonedRawResponse.headers.get("Content-type");
+					const contentType = rawResponse.headers.get("Content-type");
 					if (contentType !== null) {
 						const mimeType = contentType.split(";")[0];
 						if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
-							responseValue = await GraphResponseHandler.parseDocumentResponse(clonedRawResponse, mimeType as DocumentType);
+							responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
 						} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
-							responseValue = clonedRawResponse.blob();
+							responseValue = rawResponse.blob();
 						} else if (mimeType === ContentType.TEXT_PLAIN) {
-							responseValue = await clonedRawResponse.text();
+							responseValue = await rawResponse.text();
 						} else if (mimeType === ContentType.APPLICATION_JSON) {
-							responseValue = await clonedRawResponse.json();
+							responseValue = await rawResponse.json();
 						} else {
-							responseValue = Promise.resolve(clonedRawResponse.body);
+							responseValue = Promise.resolve(rawResponse.body);
 						}
 					} else {
 						/**
@@ -149,7 +148,7 @@ export class GraphResponseHandler {
 						 *
 						 *  So assuming it as a stream type so returning the body.
 						 */
-						responseValue = Promise.resolve(clonedRawResponse.body);
+						responseValue = Promise.resolve(rawResponse.body);
 					}
 					break;
 			}
@@ -178,7 +177,7 @@ export class GraphResponseHandler {
 				if (rawResponse.ok) {
 					// Status Code 2XX
 					if (typeof callback === "function") {
-						callback(null, response, rawResponse);
+						callback(null, response);
 					} else {
 						return response;
 					}

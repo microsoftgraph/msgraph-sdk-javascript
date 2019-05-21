@@ -4,11 +4,11 @@ All calls to Microsoft Graph are chained together starting with **.api()**, then
 
 ## Path supports the following formats
 
-* `me`
-* `/me`
-* `https://graph.microsoft.com/v1.0/me`
-* `https://graph.microsoft.com/beta/me`
-* `me/events?$filter=startswith(subject, "Adventure")`
+-   `me`
+-   `/me`
+-   `https://graph.microsoft.com/v1.0/me`
+-   `https://graph.microsoft.com/beta/me`
+-   `me/events?$filter=startswith(subject, "Adventure")`
 
 ## Promise based calling
 
@@ -16,10 +16,10 @@ Getting user details with `async`/`await`,
 
 ```typescript
 try {
-    let res = await client.api("/me").get();
-    console.log(res);
+	let res = await client.api("/me").get();
+	console.log(res);
 } catch (error) {
-    throw error;
+	throw error;
 }
 ```
 
@@ -27,13 +27,14 @@ Getting user details with `then`/`catch`,
 
 ```typescript
 client
-    .api('/me')
-    .get()
-    .then((res) => {
-        console.log(res);
-    }).catch((err) => {
-        console.log(err);
-    });
+	.api("/me")
+	.get()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 ```
 
 ## Callback based calling
@@ -41,9 +42,7 @@ client
 Getting user details by passing `callback`,
 
 ```typescript
-client
-    .api('/me')
-    .get((err, res, rawResponse) => {
-        console.log(res);
-    });
+client.api("/me").get((err, res) => {
+	console.log(res);
+});
 ```
