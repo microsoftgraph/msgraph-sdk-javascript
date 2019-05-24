@@ -27,6 +27,6 @@ client
 	.select("displayName")
 	.responseType(ResponseType.RAW)
 	.get((error, rawResponse) => {
-		console.log(rawResponse)
+		console.log(rawResponse);
 	});
 ```

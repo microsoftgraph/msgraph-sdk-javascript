@@ -7,12 +7,12 @@
 
 import { assert } from "chai";
 
-import { MSALAuthenticationProviderOptions } from "../../src/MSALAuthenticationProviderOptions";
+import { ImplicitMSALAuthenticationProviderOptions } from "../../src/ImplicitMSALAuthenticationProviderOptions";
 
-describe("MSALAuthenticationProviderOptions.ts", () => {
+describe("ImplicitMSALAuthenticationProviderOptions.ts", () => {
 	it("Should create an instance with all the given options", () => {
 		const scopes = ["dummy.scope"];
-		const options = new MSALAuthenticationProviderOptions(scopes);
+		const options = new ImplicitMSALAuthenticationProviderOptions(scopes);
 		assert.isDefined(options.scopes);
 		assert.equal(options.scopes, scopes);
 	});

@@ -6,26 +6,26 @@
  */
 
 /**
- * @module MSALAuthenticationProvider
+ * @module ImplicitMSALAuthenticationProvider
  */
 
 import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, UserAgentApplication } from "msal";
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
-import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderOptions";
+import { ImplicitMSALAuthenticationProviderOptions } from "./ImplicitMSALAuthenticationProviderOptions";
 
 /**
  * @class
- * Class representing MSALAuthenticationProvider
+ * Class representing ImplicitMSALAuthenticationProvider
  * @extends AuthenticationProvider
  */
-export class MSALAuthenticationProvider implements AuthenticationProvider {
+export class ImplicitMSALAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @private
-	 * A member holding an instance of MSALAuthenticationProviderOptions
+	 * A member holding an instance of ImplicitMSALAuthenticationProviderOptions
 	 */
-	private options: MSALAuthenticationProviderOptions;
+	private options: ImplicitMSALAuthenticationProviderOptions;
 
 	/**
 	 * @private
@@ -36,12 +36,12 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @public
 	 * @constructor
-	 * Creates an instance of MSALAuthenticationProvider
+	 * Creates an instance of ImplicitMSALAuthenticationProvider
 	 * @param {UserAgentApplication} msalInstance - An instance of MSAL UserAgentApplication
-	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
-	 * @returns An instance of MSALAuthenticationProvider
+	 * @param {ImplicitMSALAuthenticationProviderOptions} options - An instance of ImplicitMSALAuthenticationProviderOptions
+	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
-	public constructor(msalInstance: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
+	public constructor(msalInstance: UserAgentApplication, options: ImplicitMSALAuthenticationProviderOptions) {
 		this.options = options;
 		this.msalInstance = msalInstance;
 	}
@@ -54,7 +54,7 @@ export class MSALAuthenticationProvider implements AuthenticationProvider {
 	 * @returns The promise that resolves to an access token
 	 */
 	public async getAccessToken(authenticationProviderOptions?: AuthenticationProviderOptions): Promise<string> {
-		const options: MSALAuthenticationProviderOptions = authenticationProviderOptions as MSALAuthenticationProviderOptions;
+		const options: ImplicitMSALAuthenticationProviderOptions = authenticationProviderOptions as ImplicitMSALAuthenticationProviderOptions;
 		let scopes: string[];
 		if (typeof options !== "undefined") {
 			scopes = options.scopes;

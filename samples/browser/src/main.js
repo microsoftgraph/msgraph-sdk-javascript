@@ -17,8 +17,8 @@ const init = async () => {
 	};
 
 	var msalInstance = new Msal.UserAgentApplication(msalConfig);
-	const msalOptions = new MicrosoftGraph.MSALAuthenticationProviderOptions(scopes);
-	const msalProvider = new MicrosoftGraph.MSALAuthenticationProvider(msalInstance, msalOptions);
+	const msalOptions = new MicrosoftGraph.ImplicitMSALAuthenticationProviderOptions(scopes);
+	const msalProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalInstance, msalOptions);
 	client = MicrosoftGraph.Client.initWithMiddleware({
 		debugLogging: true,
 		authProvider: msalProvider,

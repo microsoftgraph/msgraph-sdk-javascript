@@ -55,11 +55,11 @@ Register your application to use Microsoft Graph API using one of the following 
 
 ### 2. Authenticate for the Microsoft Graph service
 
-The Microsoft Graph JavaScript Client Library has an adapter implementation ([MSALAuthenticationProvider](src/MSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
+The Microsoft Graph JavaScript Client Library has an adapter implementation ([ImplicitMSALAuthenticationProvider](src/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
 
 > **Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
-#### Creating an instance of MSALAuthenticationProvider in browser environment
+#### Creating an instance of ImplicitMSALAuthenticationProvider in browser environment
 
 Refer devDependencies in [package.json](./package.json) for the compatible msal version and update that version in below.
 
@@ -81,11 +81,11 @@ const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
 const msalInstance = new Msal.UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
-const authProvider = new MicrosoftGraph.MSALAuthenticationProvider(msalInstance, options);
+const options = new MicrosoftGraph.ImplicitMSALAuthenticationProviderOptions(graphScopes);
+const authProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalInstance, options);
 ```
 
-#### Creating an instance of MSALAuthenticationProvider in node environment
+#### Creating an instance of ImplicitMSALAuthenticationProvider in node environment
 
 Refer devDependencies in [package.json](./package.json) for the compatible msal version and update that version in below.
 
@@ -96,7 +96,7 @@ npm install msal@<version>
 ```typescript
 import { UserAgentApplication } from "msal";
 
-import { MSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProvider";
+import { ImplicitMSALAuthenticationProvider } from "./node_modules/@microsoft/microsoft-graph-client/lib/src/ImplicitMSALAuthenticationProvider";
 
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const msalConfig = {
@@ -110,8 +110,8 @@ const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
 const msalInstance = new UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
-const authProvider = new MSALAuthenticationProvider(msalInstance, options);
+const options = new MicrosoftGraph.ImplicitMSALAuthenticationProviderOptions(graphScopes);
+const authProvider = new ImplicitMSALAuthenticationProvider(msalInstance, options);
 ```
 
 User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).

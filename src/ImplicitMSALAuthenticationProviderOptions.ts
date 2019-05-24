@@ -6,7 +6,7 @@
  */
 
 /**
- * @module MSALAuthenticationProviderOptions
+ * @module ImplicitMSALAuthenticationProviderOptions
  */
 
 import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
@@ -14,9 +14,9 @@ import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions"
 /**
  * @class
  * @implements AuthenticationProviderOptions
- * Class representing MSALAuthenticationProviderOptions
+ * Class representing ImplicitMSALAuthenticationProviderOptions
  */
-export class MSALAuthenticationProviderOptions implements AuthenticationProviderOptions {
+export class ImplicitMSALAuthenticationProviderOptions implements AuthenticationProviderOptions {
 	/**
 	 * @public
 	 * A member holding array of scopes
@@ -26,9 +26,9 @@ export class MSALAuthenticationProviderOptions implements AuthenticationProvider
 	/**
 	 * @public
 	 * @constructor
-	 * To create an instance of MSALAuthenticationProviderOptions
+	 * To create an instance of ImplicitMSALAuthenticationProviderOptions
 	 * @param {string[]} scopes - An array of scopes
-	 * @returns An instance of MSALAuthenticationProviderOptions
+	 * @returns An instance of ImplicitMSALAuthenticationProviderOptions
 	 */
 	public constructor(scopes: string[]) {
 		this.scopes = scopes;

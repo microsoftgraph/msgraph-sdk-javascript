@@ -10,12 +10,12 @@ In order to instantiate a Client object, one has to pass in the `authProvider` o
 
 Pass an instance of a class which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface as `authProvider` in [ClientOptions](../src/IClientOptions.ts), which will instantiate the Client with default set of middleware chain.
 
-Library is shipped with one such authentication provider named [MSALAuthenticationProvider](../src/MSALAuthenticationProvider.ts). This MSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use MSALAuthenticationProvider.
+Library is shipped with one such authentication provider named [ImplicitMSALAuthenticationProvider](../src/ImplicitMSALAuthenticationProvider.ts). This ImplicitMSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use ImplicitMSALAuthenticationProvider.
 
 ```typescript
-// Instantiating Client with MSALAuthenticationProvider
+// Instantiating Client with ImplicitMSALAuthenticationProvider
 let clientOptions: ClientOptions = {
-    authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
+    authProvider: new ImplicitMSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
