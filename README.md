@@ -23,8 +23,6 @@ import "isomorphic-fetch";
 import { Client } from "@microsoft/microsoft-graph-client";
 ```
 
-You will also need Promise polyfill like [es6-promise](https://github.com/stefanpenner/es6-promise) for [older Node.js](https://node.green/#ES2015-built-ins-Promise).
-
 ### Via Script Tag
 
 Include [graph-js-sdk.js](https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js) in your HTML page.
