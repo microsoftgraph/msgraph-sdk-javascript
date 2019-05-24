@@ -16,14 +16,12 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 npm install @microsoft/microsoft-graph-client
 ```
 
-import `@microsoft/microsoft-graph-client` into your module and also you will need polyfill for fetch like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
+import `@microsoft/microsoft-graph-client` into your module and also you will need polyfill for fetch like [node-fetch](https://github.com/bitinn/node-fetch).
 
 ```typescript
 import "isomorphic-fetch";
 import { Client } from "@microsoft/microsoft-graph-client";
 ```
-
-You will also need Promise polyfill like [es6-promise](https://github.com/stefanpenner/es6-promise) for [older Node.js](https://node.green/#ES2015-built-ins-Promise).
 
 ### Via Script Tag
 
