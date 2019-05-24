@@ -12,8 +12,6 @@
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
 		"@babel/runtime": "^7.4.4",
-		"es6-promise": "^4.2.6",
-		"isomorphic-fetch": "^2.2.1",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -24,6 +22,7 @@
 		"@types/node": "^11.13.9",
 		"chai": "^4.2.0",
 		"husky": "^2.2.0",
+		"isomorphic-fetch": "^2.2.1",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.1.4",
 		"msal": "^1.0.0",
