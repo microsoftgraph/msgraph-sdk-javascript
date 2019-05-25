@@ -38,7 +38,6 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
 
 <!-- polyfilling fetch -->
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/whatwg-fetch/dist/fetch.umd.min.js"></script>
 ```
 
