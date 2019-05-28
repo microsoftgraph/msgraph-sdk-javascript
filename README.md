@@ -79,7 +79,7 @@ const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
 const msalInstance = new Msal.UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.ImplicitMSALAuthenticationProviderOptions(graphScopes);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
 const authProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalInstance, options);
 ```
 
@@ -108,7 +108,7 @@ const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
 const msalInstance = new UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.ImplicitMSALAuthenticationProviderOptions(graphScopes);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
 const authProvider = new ImplicitMSALAuthenticationProvider(msalInstance, options);
 ```
 

@@ -13,7 +13,7 @@ import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, U
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
-import { ImplicitMSALAuthenticationProviderOptions } from "./ImplicitMSALAuthenticationProviderOptions";
+import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderOptions";
 
 /**
  * @class
@@ -23,9 +23,9 @@ import { ImplicitMSALAuthenticationProviderOptions } from "./ImplicitMSALAuthent
 export class ImplicitMSALAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @private
-	 * A member holding an instance of ImplicitMSALAuthenticationProviderOptions
+	 * A member holding an instance of MSALAuthenticationProviderOptions
 	 */
-	private options: ImplicitMSALAuthenticationProviderOptions;
+	private options: MSALAuthenticationProviderOptions;
 
 	/**
 	 * @private
@@ -38,10 +38,10 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 	 * @constructor
 	 * Creates an instance of ImplicitMSALAuthenticationProvider
 	 * @param {UserAgentApplication} msalInstance - An instance of MSAL UserAgentApplication
-	 * @param {ImplicitMSALAuthenticationProviderOptions} options - An instance of ImplicitMSALAuthenticationProviderOptions
+	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
-	public constructor(msalInstance: UserAgentApplication, options: ImplicitMSALAuthenticationProviderOptions) {
+	public constructor(msalInstance: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
 		this.options = options;
 		this.msalInstance = msalInstance;
 	}
@@ -54,7 +54,7 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 	 * @returns The promise that resolves to an access token
 	 */
 	public async getAccessToken(authenticationProviderOptions?: AuthenticationProviderOptions): Promise<string> {
-		const options: ImplicitMSALAuthenticationProviderOptions = authenticationProviderOptions as ImplicitMSALAuthenticationProviderOptions;
+		const options: MSALAuthenticationProviderOptions = authenticationProviderOptions as MSALAuthenticationProviderOptions;
 		let scopes: string[];
 		if (typeof options !== "undefined") {
 			scopes = options.scopes;

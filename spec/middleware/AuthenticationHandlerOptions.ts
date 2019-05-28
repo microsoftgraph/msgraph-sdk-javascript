@@ -7,13 +7,13 @@
 
 import { assert } from "chai";
 
-import { ImplicitMSALAuthenticationProviderOptions } from "../../src/ImplicitMSALAuthenticationProviderOptions";
 import { AuthenticationHandlerOptions } from "../../src/middleware/options/AuthenticationHandlerOptions";
+import { MSALAuthenticationProviderOptions } from "../../src/MSALAuthenticationProviderOptions";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 
 describe("AuthenticationHandlerOptions.ts", () => {
 	const dummyAuthProvider = new DummyAuthenticationProvider();
-	const msalAuthProviderOptions = new ImplicitMSALAuthenticationProviderOptions([]);
+	const msalAuthProviderOptions = new MSALAuthenticationProviderOptions([]);
 	it("Should create an instance with all the given options", () => {
 		const options = new AuthenticationHandlerOptions(dummyAuthProvider, msalAuthProviderOptions);
 		assert.equal(options.authenticationProvider, dummyAuthProvider);
