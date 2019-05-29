@@ -39,6 +39,9 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 
 <!-- polyfilling fetch -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/whatwg-fetch/dist/fetch.umd.min.js"></script>
+
+<!-- depending on your browser you might wanna include babel polyfill -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7.4.4/dist/polyfill.min.js"></script>
 ```
 
 ## Getting started
