@@ -106,7 +106,34 @@ To make the contribution process as seamless as possible, follow these steps.
 
 You navigate to the repository on your computer by using File Explorer. The repository files are in `C:\Users\<yourusername>\<repo name>`.
 
+To install dependencies that are necessary for development run,
+
+```cmd
+npm install
+```
+
 To edit files, open them in an editor of your choice and modify them. To create a new file, use the editor of your choice and save the new file in the appropriate location in your local copy of the repository. While working, save your work frequently.
+
+*Note: Make sure to add unit tests to validate you changes.*
+
+Once you have done with your changes, You have to build and test your changes
+To build the library run,
+
+```cmd
+npm run build
+```
+
+To run tests,
+
+```cmd
+npm run test
+```
+
+To run linting,
+
+```cmd
+npm run lint
+```
 
 The files in `C:\Users\<yourusername>\<repo name>` are a working copy of the new branch that you created in your local repository. Changing anything in this folder doesn't affect the local repository until you commit a change. To commit a change to the local repository, type the following commands in GitBash:
 
