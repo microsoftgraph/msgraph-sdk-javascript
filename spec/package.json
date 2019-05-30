@@ -1,6 +1,5 @@
 {
 	"devDependencies": {
-		"@microsoft/microsoft-graph-client": "^1.6.0",
 		"@microsoft/microsoft-graph-types": "^1.8.0",
 		"@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
 		"@types/chai": "^4.1.7",

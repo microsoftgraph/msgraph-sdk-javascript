@@ -57,7 +57,7 @@ Register your application to use Microsoft Graph API using one of the following 
 
 The Microsoft Graph JavaScript Client Library has an adapter implementation ([ImplicitMSALAuthenticationProvider](src/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
 
-> **Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
+> **Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Learn how you can create a [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
 #### Creating an instance of ImplicitMSALAuthenticationProvider in browser environment
 
@@ -101,7 +101,7 @@ import { ImplicitMSALAuthenticationProvider } from "./node_modules/@microsoft/mi
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const msalConfig = {
 	auth: {
-		clientId: "your_client_id"; // Client Id of the registered application
+		clientId: "your_client_id", // Client Id of the registered application
 		redirectUri: "your_redirect_uri",
 	},
 };

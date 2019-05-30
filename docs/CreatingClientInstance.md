@@ -14,8 +14,20 @@ Library is shipped with one such authentication provider named [ImplicitMSALAuth
 
 ```typescript
 // Instantiating Client with ImplicitMSALAuthenticationProvider
+
+// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
+const msalConfig = {
+	auth: {
+		clientId: <CLIENT_ID> // Client Id of the registered application
+	},
+};
+
+// Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
+const msalInstance = new UserAgentApplication(msalConfig);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(<SCOPES>); // An array of graph scopes
 let clientOptions: ClientOptions = {
-    authProvider: new ImplicitMSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
+    authProvider: new ImplicitMSALAuthenticationProvider(msalInstance, options)
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```

@@ -9,8 +9,8 @@
  * @module TelemetryHandler
  */
 
-import { PACKAGE_VERSION } from "../Constants";
 import { Context } from "../IContext";
+import { PACKAGE_VERSION } from "../Version";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";

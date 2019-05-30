@@ -5,18 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
-/**
- * @module Constants
- */
+// THIS FILE IS AUTO GENERATED
+// ANY CHANGES WILL BE LOST DURING BUILD
 
 /**
- * @constant
- * A Default API endpoint version for a request
+ * @module Version
  */
-export const GRAPH_API_VERSION = "v1.0";
 
-/**
- * @constant
- * A Default base url for a request
- */
-export const GRAPH_BASE_URL = "https://graph.microsoft.com/";
+export const PACKAGE_VERSION = "2.0.0-Preview.1";

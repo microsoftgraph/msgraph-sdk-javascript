@@ -1,6 +1,5 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"//": "NOTE: The version here should match exactly the exported const PACKAGE_VERSION in Constants.ts. If you change it here, also change it there.",
 	"version": "2.0.0-Preview.1",
 	"description": "Microsoft Graph Client Library",
 	"main": "lib/src/index.js",
@@ -21,6 +20,7 @@
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^11.13.9",
 		"chai": "^4.2.0",
+		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^2.2.1",
 		"lint-staged": "^8.1.5",
@@ -38,9 +38,11 @@
 		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
+		"setVersion": "gulp setVersion",
 		"build:es": "tsc --p tsconfig-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
-		"build": "npm run build:cjs && npm run build:es && rollup -c",
+		"pre-build": "npm run setVersion",
+		"build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
 		"test": "npm run build:cjs && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
 		"test:content": "tsc --p spec/tsconfig.json && mocha spec/content",
 		"test:core": "tsc --p spec/tsconfig.json && mocha spec/core",
