@@ -20,7 +20,7 @@ export class MiddlewareControl {
 	 * @private
 	 * A member holding map of MiddlewareOptions
 	 */
-	private middlewareOptions: Map<string, MiddlewareOptions>;
+	private middlewareOptions: Map<Function, MiddlewareOptions>;
 
 	/**
 	 * @public
@@ -30,10 +30,10 @@ export class MiddlewareControl {
 	 * @returns The instance of MiddlewareControl
 	 */
 	public constructor(middlewareOptions: MiddlewareOptions[] = []) {
-		this.middlewareOptions = new Map<string, MiddlewareOptions>();
+		this.middlewareOptions = new Map<Function, MiddlewareOptions>();
 		for (const option of middlewareOptions) {
-			const name = option.constructor.name;
-			this.middlewareOptions.set(name, option);
+			const fn = option.constructor;
+			this.middlewareOptions.set(fn, option);
 		}
 	}
 
@@ -43,8 +43,8 @@ export class MiddlewareControl {
 	 * @param {string} name - The class name of the strongly typed option class
 	 * @returns The middleware option
 	 */
-	public getMiddlewareOptions(name: string): MiddlewareOptions {
-		return this.middlewareOptions.get(name);
+	public getMiddlewareOptions(fn: Function): MiddlewareOptions {
+		return this.middlewareOptions.get(fn);
 	}
 
 	/**
@@ -54,7 +54,7 @@ export class MiddlewareControl {
 	 * @param {MiddlewareOptions} option - The strongly typed middleware option
 	 * @returns nothing
 	 */
-	public setMiddlewareOptions(name: string, option: MiddlewareOptions): void {
-		this.middlewareOptions.set(name, option);
+	public setMiddlewareOptions(fn: Function, option: MiddlewareOptions): void {
+		this.middlewareOptions.set(fn, option);
 	}
 }

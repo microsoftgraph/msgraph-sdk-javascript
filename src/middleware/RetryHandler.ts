@@ -155,7 +155,7 @@ export class RetryHandler implements Middleware {
 	private getOptions(context: Context): RetryHandlerOptions {
 		let options: RetryHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor) as RetryHandlerOptions;
 		}
 		if (typeof options === "undefined") {
 			options = Object.assign(new RetryHandlerOptions(), this.options);
