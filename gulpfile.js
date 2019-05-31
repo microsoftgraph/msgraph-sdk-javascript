@@ -21,10 +21,11 @@ ${moduleHeader}
 export const PACKAGE_VERSION = "[VERSION]";
 `;
 
-async function setVersion() {
+function setVersion(cb) {
 	var pkg = require("./package.json");
 	var fs = require("fs");
 	fs.writeFileSync("src/Version.ts", versionFile.replace("[VERSION]", pkg.version));
+	cb();
 }
 
-exports.setVersion = series(setVersion);
+exports.setVersion = setVersion;
