@@ -29,7 +29,7 @@ let request = {
 			() => {
 				client
 					.api("/me/photo/$value")
-					.responseType(MicrosoftGraph.ResponseType.BLOB)
+					.responseType("blob")
 					.put(file)
 					.then((res) => {
 						request
