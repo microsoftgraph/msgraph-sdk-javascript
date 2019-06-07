@@ -41,9 +41,13 @@ export class MiddlewareControl {
 
 	/**
 	 * @public
-	 * To get the middleware option using the class name of the option
-	 * @param {string} name - The class name of the strongly typed option class
+	 * To get the middleware option using the class of the option
+	 * @param {Function} fn - The class of the strongly typed option class
 	 * @returns The middleware option
+	 * @example
+	 * // if you wanted to return the middleware option associated with this class (MiddlewareControl)
+	 * // call this function like this:
+	 * getMiddlewareOptions(MiddlewareControl)
 	 */
 	// tslint:disable-next-line:ban-types
 	public getMiddlewareOptions(fn: Function): MiddlewareOptions {
@@ -52,8 +56,8 @@ export class MiddlewareControl {
 
 	/**
 	 * @public
-	 * To set the middleware options using the class name of the option
-	 * @param {string} name - The class name of the strongly typed option class
+	 * To set the middleware options using the class of the option
+	 * @param {Function} fn - The class of the strongly typed option class
 	 * @param {MiddlewareOptions} option - The strongly typed middleware option
 	 * @returns nothing
 	 */
