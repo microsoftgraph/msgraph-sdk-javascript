@@ -193,8 +193,8 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 
 -   [Microsoft Graph website](https://graph.microsoft.io)
 -   [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
--   [Angular.js sample using the JavaScript client library](https://github.com/microsoftgraph/angular-connect-sample)
--   [Node.js sample using the JavaScript client library](https://github.com/microsoftgraph/nodejs-connect-sample)
+-   [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
+-   [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
 -   [Office Dev Center](http://dev.office.com/)
 
 ## Third Party Notices
