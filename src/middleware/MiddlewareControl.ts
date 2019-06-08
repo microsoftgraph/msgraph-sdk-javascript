@@ -20,7 +20,8 @@ export class MiddlewareControl {
 	 * @private
 	 * A member holding map of MiddlewareOptions
 	 */
-	private middlewareOptions: Map<string, MiddlewareOptions>;
+	// tslint:disable-next-line:ban-types
+	private middlewareOptions: Map<Function, MiddlewareOptions>;
 
 	/**
 	 * @public
@@ -30,31 +31,38 @@ export class MiddlewareControl {
 	 * @returns The instance of MiddlewareControl
 	 */
 	public constructor(middlewareOptions: MiddlewareOptions[] = []) {
-		this.middlewareOptions = new Map<string, MiddlewareOptions>();
+		// tslint:disable-next-line:ban-types
+		this.middlewareOptions = new Map<Function, MiddlewareOptions>();
 		for (const option of middlewareOptions) {
-			const name = option.constructor.name;
-			this.middlewareOptions.set(name, option);
+			const fn = option.constructor;
+			this.middlewareOptions.set(fn, option);
 		}
 	}
 
 	/**
 	 * @public
-	 * To get the middleware option using the class name of the option
-	 * @param {string} name - The class name of the strongly typed option class
+	 * To get the middleware option using the class of the option
+	 * @param {Function} fn - The class of the strongly typed option class
 	 * @returns The middleware option
+	 * @example
+	 * // if you wanted to return the middleware option associated with this class (MiddlewareControl)
+	 * // call this function like this:
+	 * getMiddlewareOptions(MiddlewareControl)
 	 */
-	public getMiddlewareOptions(name: string): MiddlewareOptions {
-		return this.middlewareOptions.get(name);
+	// tslint:disable-next-line:ban-types
+	public getMiddlewareOptions(fn: Function): MiddlewareOptions {
+		return this.middlewareOptions.get(fn);
 	}
 
 	/**
 	 * @public
-	 * To set the middleware options using the class name of the option
-	 * @param {string} name - The class name of the strongly typed option class
+	 * To set the middleware options using the class of the option
+	 * @param {Function} fn - The class of the strongly typed option class
 	 * @param {MiddlewareOptions} option - The strongly typed middleware option
 	 * @returns nothing
 	 */
-	public setMiddlewareOptions(name: string, option: MiddlewareOptions): void {
-		this.middlewareOptions.set(name, option);
+	// tslint:disable-next-line:ban-types
+	public setMiddlewareOptions(fn: Function, option: MiddlewareOptions): void {
+		this.middlewareOptions.set(fn, option);
 	}
 }

@@ -52,13 +52,13 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 	public static updateFeatureUsageFlag(context: Context, flag: FeatureUsageFlag): void {
 		let options: TelemetryHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 		} else {
 			context.middlewareControl = new MiddlewareControl();
 		}
 		if (typeof options === "undefined") {
 			options = new TelemetryHandlerOptions();
-			context.middlewareControl.setMiddlewareOptions(TelemetryHandlerOptions.name, options);
+			context.middlewareControl.setMiddlewareOptions(TelemetryHandlerOptions, options);
 		}
 		options.setFeatureUsage(flag);
 	}

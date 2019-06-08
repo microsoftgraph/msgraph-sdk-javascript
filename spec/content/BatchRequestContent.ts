@@ -48,13 +48,13 @@ describe("BatchRequestContent.ts", () => {
 		this.timeout(20 * 1000);
 		it("Should Create BatchRequestContent instance with no requests", (done) => {
 			const batchReq = new BatchRequestContent();
-			assert.equal(batchReq.constructor.name, "BatchRequestContent");
+			assert(batchReq instanceof BatchRequestContent);
 			done();
 		});
 
 		it("Should create BatchRequestContent instance with empty array", (done) => {
 			const batchReq = new BatchRequestContent([]);
-			assert.equal(batchReq.constructor.name, "BatchRequestContent");
+			assert(batchReq instanceof BatchRequestContent);
 			done();
 		});
 

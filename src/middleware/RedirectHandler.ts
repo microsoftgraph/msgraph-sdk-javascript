@@ -173,7 +173,7 @@ export class RedirectHandler implements Middleware {
 	private getOptions(context: Context): RedirectHandlerOptions {
 		let options: RedirectHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RedirectHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(RedirectHandlerOptions) as RedirectHandlerOptions;
 		}
 		if (typeof options === "undefined") {
 			options = Object.assign(new RedirectHandlerOptions(), this.options);
