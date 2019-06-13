@@ -96,7 +96,7 @@ const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#initialization-of-msal
 const userAgentApplication = new UserAgentApplication(clientId, undefined, callback, options);
-const authProvider = new MSALAuthenticationProvider(userAgentApplication, scopes);
+const authProvider = new MSALAuthenticationProvider(userAgentApplication, graphScopes);
 ```
 
 User can integrate own preferred authentication library by implementing `IAuthenticationProvider` interface. Refer implementing [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
