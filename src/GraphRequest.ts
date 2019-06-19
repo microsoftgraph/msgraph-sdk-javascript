@@ -595,7 +595,7 @@ export class GraphRequest {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
 			headers: {
-				"Content-Type": "application/octet-stream",
+				"Content-Type": "application/json",
 			},
 		};
 		try {
