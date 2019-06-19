@@ -35,19 +35,19 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 	 * @private
 	 * A member holding an instance of MSAL
 	 */
-	private msalInstance: any;
+	private msalApplication: any;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of ImplicitMSALAuthenticationProvider
-	 * @param {any} msalInstance - An instance of MSAL UserAgentApplication
+	 * @param {any} msalApplication - An instance of MSAL UserAgentApplication
 	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
-	public constructor(msalInstance: any, options: MSALAuthenticationProviderOptions) {
+	public constructor(msalApplication: any, options: MSALAuthenticationProviderOptions) {
 		this.options = options;
-		this.msalInstance = msalInstance;
+		this.msalApplication = msalApplication;
 	}
 
 	/**
@@ -73,17 +73,17 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 			throw error;
 		}
 
-		if (this.msalInstance.getAccount()) {
+		if (this.msalApplication.getAccount()) {
 			const tokenRequest = {
 				scopes,
 			};
 			try {
-				const authResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
 				return authResponse.accessToken;
 			} catch (error) {
 				if (error.name === "InteractionRequiredAuthError") {
 					try {
-						const authResponse = await this.msalInstance.acquireTokenPopup(tokenRequest);
+						const authResponse = await this.msalApplication.acquireTokenPopup(tokenRequest);
 						return authResponse.accessToken;
 					} catch (error) {
 						throw error;
@@ -95,8 +95,8 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 				const tokenRequest = {
 					scopes,
 				};
-				await this.msalInstance.loginPopup(tokenRequest);
-				const authResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				await this.msalApplication.loginPopup(tokenRequest);
+				const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
 				return authResponse.accessToken;
 			} catch (error) {
 				throw error;

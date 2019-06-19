@@ -31,19 +31,19 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 	 * @private
 	 * A member holding an instance of MSAL UserAgentApplication
 	 */
-	private msalInstance: UserAgentApplication;
+	private msalApplication: UserAgentApplication;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of ImplicitMSALAuthenticationProvider
-	 * @param {UserAgentApplication} msalInstance - An instance of MSAL UserAgentApplication
+	 * @param {UserAgentApplication} msalApplication - An instance of MSAL UserAgentApplication
 	 * @param {MSALAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
-	public constructor(msalInstance: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
+	public constructor(msalApplication: UserAgentApplication, options: MSALAuthenticationProviderOptions) {
 		this.options = options;
-		this.msalInstance = msalInstance;
+		this.msalApplication = msalApplication;
 	}
 
 	/**
@@ -68,17 +68,17 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 			error.message = "Scopes cannot be empty, Please provide a scopes";
 			throw error;
 		}
-		if (this.msalInstance.getAccount()) {
+		if (this.msalApplication.getAccount()) {
 			const tokenRequest: AuthenticationParameters = {
 				scopes,
 			};
 			try {
-				const authResponse: AuthResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				const authResponse: AuthResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
 				return authResponse.accessToken;
 			} catch (error) {
 				if (error instanceof InteractionRequiredAuthError) {
 					try {
-						const authResponse: AuthResponse = await this.msalInstance.acquireTokenPopup(tokenRequest);
+						const authResponse: AuthResponse = await this.msalApplication.acquireTokenPopup(tokenRequest);
 						return authResponse.accessToken;
 					} catch (error) {
 						throw error;
@@ -90,8 +90,8 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 				const tokenRequest: AuthenticationParameters = {
 					scopes,
 				};
-				await this.msalInstance.loginPopup(tokenRequest);
-				const authResponse: AuthResponse = await this.msalInstance.acquireTokenSilent(tokenRequest);
+				await this.msalApplication.loginPopup(tokenRequest);
+				const authResponse: AuthResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
 				return authResponse.accessToken;
 			} catch (error) {
 				throw error;

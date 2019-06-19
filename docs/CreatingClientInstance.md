@@ -24,10 +24,10 @@ const msalConfig = {
 
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
-const msalInstance = new UserAgentApplication(msalConfig);
+const msalApplication = new UserAgentApplication(msalConfig);
 const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(<SCOPES>); // An array of graph scopes
 let clientOptions: ClientOptions = {
-    authProvider: new ImplicitMSALAuthenticationProvider(msalInstance, options)
+    authProvider: new ImplicitMSALAuthenticationProvider(msalApplication, options)
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
