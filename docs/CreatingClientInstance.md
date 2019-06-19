@@ -10,12 +10,24 @@ In order to instantiate a Client object, one has to pass in the `authProvider` o
 
 Pass an instance of a class which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface as `authProvider` in [ClientOptions](../src/IClientOptions.ts), which will instantiate the Client with default set of middleware chain.
 
-Library is shipped with one such authentication provider named [MSALAuthenticationProvider](../src/MSALAuthenticationProvider.ts). This MSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use MSALAuthenticationProvider.
+Library is shipped with one such authentication provider named [ImplicitMSALAuthenticationProvider](../src/ImplicitMSALAuthenticationProvider.ts). This ImplicitMSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use ImplicitMSALAuthenticationProvider.
 
 ```typescript
-// Instantiating Client with MSALAuthenticationProvider
+// Instantiating Client with ImplicitMSALAuthenticationProvider
+
+// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
+const msalConfig = {
+	auth: {
+		clientId: <CLIENT_ID> // Client Id of the registered application
+	},
+};
+
+// Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
+// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
+const msalApplication = new UserAgentApplication(msalConfig);
+const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(<SCOPES>); // An array of graph scopes
 let clientOptions: ClientOptions = {
-    authProvider: new MSALAuthenticationProvider(<CLIENT_ID>, <SCOPES>, <OPTIONS>)
+    authProvider: new ImplicitMSALAuthenticationProvider(msalApplication, options)
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```

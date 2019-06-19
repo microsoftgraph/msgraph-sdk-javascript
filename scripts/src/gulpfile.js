@@ -13,10 +13,10 @@ function ReplaceVersionInJson () {
             .pipe(dest("../../"));
 }
 
-function ReplaceVersionInConstants () {
-    return src(["../../src/Constants.ts"])
+function ReplaceVersionInVersionFile () {
+    return src(["../../src/Version.ts"])
             .pipe(replace(/PACKAGE_VERSION ?= ?".*?"/g, `PACKAGE_VERSION = "${argv.newVersion}"`))
             .pipe(dest("../../src"));
 }
 
-exports.ReplaceVersion = series(ReplaceVersionInJson, ReplaceVersionInConstants);
+exports.ReplaceVersion = series(ReplaceVersionInJson, ReplaceVersionInVersionFile);

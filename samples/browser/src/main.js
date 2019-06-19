@@ -6,28 +6,25 @@ window.addEventListener(
 	false,
 );
 
-let client, scopes;
+let client;
 const init = async () => {
-	scopes = ["user.read", "profile", "User.ReadWrite", "User.Readwrite.All", "User.Invite.All", "contacts.read", "Notes.ReadWrite", "Notes.Read", "Notes.Create", "Files.Read", "Files.Read.All", "Files.ReadWrite", "Files.ReadWrite.All", "Mail.Read", "Mail.ReadWrite", "Mail.Send"];
-
-	const callback = (errorDesc, token, error, tokenType) => {};
-	const options = {
-		redirectUri: "http://localhost:8080",
+	const scopes = ["user.read", "profile", "User.ReadWrite", "Files.Read", "Files.Read.All", "Files.ReadWrite", "Files.ReadWrite.All", "Mail.Read", "Mail.ReadWrite", "Mail.Send"];
+	const msalConfig = {
+		auth: {
+			clientId: Secrets.clientId,
+			redirectUri: "http://localhost:8080",
+		},
 	};
-	const userAgentApplication = new Msal.UserAgentApplication(Secrets.clientId, undefined, callback, options);
-	let msalProvider = new MicrosoftGraph.MSALAuthenticationProvider(userAgentApplication, scopes);
-	client = new MicrosoftGraph.Client({
+
+	var msalApplication = new Msal.UserAgentApplication(msalConfig);
+	const msalOptions = new MicrosoftGraph.MSALAuthenticationProviderOptions(scopes);
+	const msalProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalApplication, msalOptions);
+	client = MicrosoftGraph.Client.initWithMiddleware({
 		debugLogging: true,
 		authProvider: msalProvider,
 	});
 
 	bindEvents();
-
-	// let displayName = await request.getDisplayName();
-	// ui.setDisplayName(displayName);
-
-	// let profileImg = await request.getProfilePicture();
-	// ui.setProfilePicture(profileImg);
 };
 
 const bindEvents = () => {

@@ -69,6 +69,11 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 			error.name = "MaxLimitExceeded";
 			throw error;
 		}
+		if (maxRedirects < 0) {
+			const error = new Error(`MaxRedirects should not be negative`);
+			error.name = "MinExpectationNotMet";
+			throw error;
+		}
 		this.maxRedirects = maxRedirects;
 		this.shouldRedirect = shouldRedirect;
 	}

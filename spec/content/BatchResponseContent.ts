@@ -48,7 +48,7 @@ describe("BatchResponseContent.ts", () => {
 			const responses = [redirect, forbidden];
 			const batchRes = new BatchResponseContent({
 				responses,
-				"@nextLink": "dummy nextlink",
+				"@odata.nextLink": "dummy nextlink",
 			});
 			batchRes.update({
 				responses: [okWithoutBody, okWithBody],

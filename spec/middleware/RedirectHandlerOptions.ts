@@ -32,6 +32,14 @@ describe("RedirectHandlerOptions.ts", () => {
 				assert.equal(error.name, "MaxLimitExceeded");
 			}
 		});
+		it("Should throw error for setting max redirects to negative", () => {
+			try {
+				const options = new RedirectHandlerOptions(-10);
+				throw new Error("Something wrong with the max redirects value redirection");
+			} catch (error) {
+				assert.equal(error.name, "MinExpectationNotMet");
+			}
+		});
 
 		/* tslint:disable: no-string-literal */
 		it("Should initialize instance with default options", () => {

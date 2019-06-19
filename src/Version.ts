@@ -5,11 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
+// THIS FILE IS AUTO GENERATED
+// ANY CHANGES WILL BE LOST DURING BUILD
+
 /**
- * Initializes browserify, adds wrapper files and outputs the browserified file
+ * @module Version
  */
-const Browserify = require("browserify");
-const browserify = Browserify();
-browserify.add("./browser-wrapper.js");
-browserify.add("./browser-wrapper-dependency.js");
-browserify.bundle().pipe(process.stdout);
+
+export const PACKAGE_VERSION = "2.0.0-Preview.1";

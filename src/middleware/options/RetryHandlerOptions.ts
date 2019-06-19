@@ -100,6 +100,18 @@ export class RetryHandlerOptions implements MiddlewareOptions {
 			const error = new Error(`MaxRetries should not be more than ${RetryHandlerOptions.MAX_MAX_RETRIES}`);
 			error.name = "MaxLimitExceeded";
 			throw error;
+		} else if (delay < 0 && maxRetries < 0) {
+			const error = new Error(`Delay and MaxRetries should not be negative`);
+			error.name = "MinExpectationNotMet";
+			throw error;
+		} else if (delay < 0) {
+			const error = new Error(`Delay should not be negative`);
+			error.name = "MinExpectationNotMet";
+			throw error;
+		} else if (maxRetries < 0) {
+			const error = new Error(`MaxRetries should not be negative`);
+			error.name = "MinExpectationNotMet";
+			throw error;
 		}
 		this.delay = Math.min(delay, RetryHandlerOptions.MAX_DELAY);
 		this.maxRetries = Math.min(maxRetries, RetryHandlerOptions.MAX_MAX_RETRIES);
