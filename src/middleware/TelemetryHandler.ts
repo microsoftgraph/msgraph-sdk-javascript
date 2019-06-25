@@ -74,7 +74,7 @@ export class TelemetryHandler implements Middleware {
 			let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
 			let options: TelemetryHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 			}
 			if (typeof options !== "undefined") {
 				const featureUsage: string = options.getFeatureUsage();

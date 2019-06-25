@@ -64,7 +64,7 @@ export class AuthenticationHandler implements Middleware {
 		try {
 			let options: AuthenticationHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions.name) as AuthenticationHandlerOptions;
+				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
 			}
 			let authenticationProvider: AuthenticationProvider;
 			let authenticationProviderOptions: AuthenticationProviderOptions;

@@ -36,14 +36,14 @@ describe("MiddlewareControl.ts", () => {
 	describe("getMiddlewareOption", () => {
 		it("Should return the middleware option for a given class name", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
-			const retryOptions: DummyHandlerOptions = middlewareControl.getMiddlewareOptions(dummyHandlerOption.constructor.name) as DummyHandlerOptions;
+			const retryOptions: DummyHandlerOptions = middlewareControl.getMiddlewareOptions(dummyHandlerOption.constructor as () => any) as DummyHandlerOptions;
 			assert.isDefined(retryOptions);
 			assert.equal(dummyHandlerOption, retryOptions);
 		});
 
 		it("Should return undefined for unknown class name", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
-			const retryOptions = middlewareControl.getMiddlewareOptions("NotAvailableHandlerOption");
+			const retryOptions = middlewareControl.getMiddlewareOptions(() => "NotAvailableHandlerOption");
 			assert.isUndefined(retryOptions);
 		});
 	});

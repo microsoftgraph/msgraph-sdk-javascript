@@ -61,12 +61,12 @@ describe("PageIterator.ts", () => {
 	describe("Constructor", () => {
 		it("Should create instance without nextLink", () => {
 			const pageIterator = new PageIterator(client, getPageCollection(), truthyCallback);
-			assert.equal(pageIterator.constructor.name, "PageIterator");
+			assert(pageIterator instanceof PageIterator);
 		});
 
 		it("Should create instance with nextLink", () => {
 			const pageIterator = new PageIterator(client, getPageCollectionWithNext(), truthyCallback);
-			assert.equal(pageIterator.constructor.name, "PageIterator");
+			assert(pageIterator instanceof PageIterator);
 		});
 	});
 

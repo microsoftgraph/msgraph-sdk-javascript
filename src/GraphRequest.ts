@@ -551,7 +551,7 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 			headers:
-				content.constructor !== undefined && content.constructor.name === "FormData"
+				content instanceof FormData
 					? {}
 					: {
 							"Content-Type": "application/json",
