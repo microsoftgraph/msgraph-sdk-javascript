@@ -37,10 +37,10 @@ export const generateUUID = (): string => {
  */
 export const getRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string): string | null => {
 	let value: string = null;
-	if (request instanceof Request) {
+	if (typeof Request !== "undefined" && request instanceof Request) {
 		value = (request as Request).headers.get(key);
 	} else if (typeof options !== "undefined" && options.headers !== undefined) {
-		if (options.headers instanceof Headers) {
+		if (typeof Headers !== "undefined" && options.headers instanceof Headers) {
 			value = (options.headers as Headers).get(key);
 		} else if (options.headers instanceof Array) {
 			const headers = options.headers as string[][];
@@ -67,7 +67,7 @@ export const getRequestHeader = (request: RequestInfo, options: FetchOptions | u
  * @returns Nothing
  */
 export const setRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string, value: string): void => {
-	if (request instanceof Request) {
+	if (typeof Request !== "undefined" && request instanceof Request) {
 		(request as Request).headers.set(key, value);
 	} else if (typeof options !== "undefined") {
 		if (options.headers === undefined) {
@@ -75,7 +75,7 @@ export const setRequestHeader = (request: RequestInfo, options: FetchOptions | u
 				[key]: value,
 			});
 		} else {
-			if (options.headers instanceof Headers) {
+			if (typeof Headers !== "undefined" && options.headers instanceof Headers) {
 				(options.headers as Headers).set(key, value);
 			} else if (options.headers instanceof Array) {
 				let i = 0;
@@ -107,7 +107,7 @@ export const setRequestHeader = (request: RequestInfo, options: FetchOptions | u
  * @returns Nothing
  */
 export const appendRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string, value: string): void => {
-	if (request instanceof Request) {
+	if (typeof Request !== "undefined" && request instanceof Request) {
 		(request as Request).headers.append(key, value);
 	} else if (typeof options !== "undefined") {
 		if (options.headers === undefined) {
@@ -115,7 +115,7 @@ export const appendRequestHeader = (request: RequestInfo, options: FetchOptions 
 				[key]: value,
 			});
 		} else {
-			if (options.headers instanceof Headers) {
+			if (typeof Headers !== "undefined" && options.headers instanceof Headers) {
 				(options.headers as Headers).append(key, value);
 			} else if (options.headers instanceof Array) {
 				(options.headers as string[][]).push([key, value]);

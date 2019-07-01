@@ -161,7 +161,7 @@ export class RedirectHandler implements Middleware {
 	 * @returns Nothing
 	 */
 	private async updateRequestUrl(redirectUrl: string, context: Context): Promise<void> {
-		context.request = context.request instanceof Request ? await cloneRequestWithNewUrl(redirectUrl, context.request as Request) : redirectUrl;
+		context.request = typeof context.request === "string" ? redirectUrl : await cloneRequestWithNewUrl(redirectUrl, context.request as Request);
 	}
 
 	/**

@@ -42,7 +42,7 @@ export class HTTPClient {
 	 */
 	public async sendRequest(context: Context): Promise<Context> {
 		try {
-			if (!(context.request instanceof Request) && context.options === undefined) {
+			if (typeof context.request === "string" && context.options === undefined) {
 				const error = new Error();
 				error.name = "InvalidRequestOptions";
 				error.message = "Unable to execute the middleware, Please provide valid options for a request";

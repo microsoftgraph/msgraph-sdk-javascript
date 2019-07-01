@@ -5,9 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import "isomorphic-fetch";
+import { Event } from "microsoft-graph";
 
 import { getClient, randomString } from "../test-helper";
 
