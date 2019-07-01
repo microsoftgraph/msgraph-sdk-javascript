@@ -5,9 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { WorkbookRange, WorkbookWorksheet } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import * as fs from "fs";
+import { WorkbookRange, WorkbookWorksheet } from "microsoft-graph";
 
 import { getClient, randomString } from "../test-helper";
 

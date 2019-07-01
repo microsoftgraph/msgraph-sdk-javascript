@@ -76,13 +76,13 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		const name: string = options.fileName;
 		let content;
 		let size;
-		if (file instanceof Blob) {
+		if (typeof Blob !== "undefined" && file instanceof Blob) {
 			content = new File([file as Blob], name);
 			size = content.size;
-		} else if (file instanceof File) {
+		} else if (typeof File !== "undefined" && file instanceof File) {
 			content = file as File;
 			size = content.size;
-		} else if (file instanceof Buffer) {
+		} else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
 			const b = file as Buffer;
 			size = b.byteLength - b.byteOffset;
 			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);

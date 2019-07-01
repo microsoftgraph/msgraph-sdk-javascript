@@ -11,6 +11,6 @@
 	"license": "ISC",
 	"devDependencies": {
 		"copyfiles": "^2.1.0",
-		"light-server": "^2.6.0"
+		"light-server": "^2.6.2"
 	}
 }

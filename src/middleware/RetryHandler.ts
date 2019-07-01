@@ -92,7 +92,7 @@ export class RetryHandler implements Middleware {
 	 * @returns Whether the payload is buffered or not
 	 */
 	private isBuffered(request: RequestInfo, options: FetchOptions | undefined): boolean {
-		const method = request instanceof Request ? (request as Request).method : options.method;
+		const method = typeof request === "string" ? options.method : (request as Request).method;
 		const isPutPatchOrPost: boolean = method === RequestMethod.PUT || method === RequestMethod.PATCH || method === RequestMethod.POST;
 		if (isPutPatchOrPost) {
 			const isStream = getRequestHeader(request, options, "Content-Type") === "application/octet-stream";
