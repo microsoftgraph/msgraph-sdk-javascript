@@ -72,7 +72,7 @@ Refer devDependencies in [package.json](./package.json) for the compatible msal 
 // Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
 const msalConfig = {
 	auth: {
-		clientId: "your_client_id"; // Client Id of the registered application
+		clientId: "your_client_id", // Client Id of the registered application
 		redirectUri: "your_redirect_uri",
 	},
 };
