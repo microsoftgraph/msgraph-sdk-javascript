@@ -83,6 +83,8 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 					} catch (error) {
 						throw error;
 					}
+				} else {
+					throw error;
 				}
 			}
 		} else {
