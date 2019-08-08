@@ -6,7 +6,8 @@
 	"module": "lib/es/index.js",
 	"typings": "lib/src/index",
 	"files": [
-		"lib/"
+		"lib/",
+		"src/"
 	],
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
