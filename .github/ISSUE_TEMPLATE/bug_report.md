@@ -35,6 +35,20 @@ For more information, see the `CONTRIBUTING` guide.
 
 **Actual behavior:** [What actually happened]
 
-## Additional context
+## Additional Context
 
 Add any other context about the problem here..
+
+## Usage Information
+
+SDK Version - 
+
+-   [ ] Node
+
+> Node Version - 
+
+-   [ ] Browser
+
+> Browser Name - 
+
+> Version - 
