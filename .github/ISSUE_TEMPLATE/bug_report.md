@@ -35,6 +35,20 @@ For more information, see the `CONTRIBUTING` guide.
 
 **Actual behavior:** [What actually happened]
 
-## Additional context
+## Additional Context
 
 Add any other context about the problem here..
+
+## Usage Information
+
+SDK Version - [SDK version you are using]
+
+-   [ ] Node (Check, if using Node version of SDK)
+
+> Node Version - [The version of Node you are using]
+
+-   [ ] Browser (Check, if using Browser version of SDK)
+
+> Browser Name - [The name of Browser that you are using for SDK]
+
+> Version - [The version of the browser you are using]
