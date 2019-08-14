@@ -41,14 +41,14 @@ Add any other context about the problem here..
 
 ## Usage Information
 
-SDK Version - 
+SDK Version - [SDK version you are using]
 
--   [ ] Node
+-   [ ] Node (Check, if using Node version of SDK)
 
-> Node Version - 
+> Node Version - [The version of Node you are using]
 
--   [ ] Browser
+-   [ ] Browser (Check, if using Browser version of SDK)
 
-> Browser Name - 
+> Browser Name - [The name of Browser that you are using for SDK]
 
-> Version - 
+> Version - [The version of the browser you are using]
