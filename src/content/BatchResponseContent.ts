@@ -69,6 +69,12 @@ export class BatchResponseContent {
 			options.statusText = responseJSON.statusText;
 		}
 		options.headers = responseJSON.headers;
+		if (options.headers !== undefined && options.headers["Content-Type"] !== undefined) {
+			if (options.headers["Content-Type"].split(";")[0] === "application/json") {
+				const bodyString = JSON.stringify(body);
+				return new Response(bodyString, options);
+			}
+		}
 		return new Response(body, options);
 	}
 
