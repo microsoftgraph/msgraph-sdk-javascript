@@ -12,4 +12,4 @@
  * @module Version
  */
 
-export const PACKAGE_VERSION = "2.0.0-Preview.4";
+export const PACKAGE_VERSION = "2.0.0-Preview.5";
