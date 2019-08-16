@@ -70,6 +70,7 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 		}
 		if (this.msalApplication.getAccount()) {
 			const tokenRequest: AuthenticationParameters = {
+				authority: this.msalApplication.authority,
 				scopes,
 			};
 			try {
@@ -90,6 +91,7 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 		} else {
 			try {
 				const tokenRequest: AuthenticationParameters = {
+					authority: this.msalApplication.authority,
 					scopes,
 				};
 				await this.msalApplication.loginPopup(tokenRequest);
