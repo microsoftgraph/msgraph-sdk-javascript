@@ -10,22 +10,21 @@
  */
 
 import { Context } from "../IContext";
-// import { RequestMethod } from "../RequestMethod";
+import { RequestMethod } from "../RequestMethod";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-// import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
+import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
 import { TestingHandlerOptions } from "./options/TestingHandlerOptions";
 // import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 export class TestingHandler implements Middleware {
-	/*    private options: TestingHandlerOptions;
+	/**
+	 * @private
+	 * A member holding options to customize the handler behavior
+	 */
+	private options: TestingHandlerOptions;
 
-    public constructor(options: TestingHandlerOptions = new TestingHandlerOptions()) {
-		this.options = options;
-    }
-    
-*/
 	private responseMap: Map<string, Map<string, string>> = new Map([
 		[
 			"2xx",
@@ -33,21 +32,21 @@ export class TestingHandler implements Middleware {
 				[
 					"responseHeader",
 					`{
-					"Cache-Control" : "private",
-					"Transfer-Encoding" : "chunked",
-					"Content-Type" : "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
-					"Content-Encoding" : "gzip",
-					"Vary" : "Accept-Encoding",
-					"request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"client-request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"x-ms-ags-diagnostic" : "{"ServerInfo":{"DataCenter":"South India","Slice":"SliceC","Ring":"4","ScaleUnit":"000","RoleInstance":"AGSFE_IN_0","ADSiteName":"INS"}}",
+					"Cache-Control" : "",
+					"Transfer-Encoding" : "",
+					"Content-Type" : "",
+					"Content-Encoding" : "",
+					"Vary" : "",
+					"request-id" : "",
+					"client-request-id" : "",
+					"x-ms-ags-diagnostic" : "",
 					"OData-Version" : 4.0,
 					"Duration" : 103.8879,
-					"Strict-Transport-Security" : "max-age=31536000",
-					"Date" : "Tue, 20 Aug 2019 09:08:47 GMT"
+					"Strict-Transport-Security" : "",
+					"Date" : ""
 					}`,
 				],
-				["responseBody", ""],
+				["responseBody", "{}"],
 			]),
 		],
 		[
@@ -56,22 +55,22 @@ export class TestingHandler implements Middleware {
 				[
 					"responseHeader",
 					`{
-					"Cache-Control" : "private",
-					"Transfer-Encoding" : "chunked",
-					"Content-Type" : "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
-					"Content-Encoding" : "gzip",
-					"Vary" : "Accept-Encoding",
-					"request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"client-request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"x-ms-ags-diagnostic" : "{"ServerInfo":{"DataCenter":"South India","Slice":"SliceC","Ring":"4","ScaleUnit":"000","RoleInstance":"AGSFE_IN_0","ADSiteName":"INS"}}",
+					"Cache-Control" : "",
+					"Transfer-Encoding" : "",
+					"Content-Type" : "",
+					"Content-Encoding" : "",
+					"Vary" : "",
+					"request-id" : "",
+					"client-request-id" : "",
+					"x-ms-ags-diagnostic" : "",
 					"OData-Version" : 4.0,
 					"Duration" : 103.8879,
-					"Strict-Transport-Security" : "max-age=31536000",
-					"Date" : "Tue, 20 Aug 2019 09:08:47 GMT"
-				}`,
+					"Strict-Transport-Security" : "",
+					"Date" : ""
+					}`,
 				],
 
-				["responseBody", ""],
+				["responseBody", "{}"],
 			]),
 		],
 		[
@@ -80,15 +79,15 @@ export class TestingHandler implements Middleware {
 				[
 					"responseHeader",
 					`{
-					"Cache-Control" : "private",
-					"Transfer-Encoding" : "chunked",
-					"Content-Type" : "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
-					"request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"client-request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"x-ms-ags-diagnostic" : "{"ServerInfo":{"DataCenter":"South India","Slice":"SliceC","Ring":"4","ScaleUnit":"000","RoleInstance":"AGSFE_IN_0","ADSiteName":"INS"}}",
+					"Cache-Control" : "",
+					"Transfer-Encoding" : "",
+					"Content-Type" : "",
+					"request-id" : "",
+					"client-request-id" : "",
+					"x-ms-ags-diagnostic" : "",
 					"Duration" : 103.8879,
-					"Strict-Transport-Security" : "max-age=31536000",
-					"Date" : "Tue, 20 Aug 2019 09:08:47 GMT"
+					"Strict-Transport-Security" : "",
+					"Date" : ""
 				}`,
 				],
 
@@ -113,16 +112,16 @@ export class TestingHandler implements Middleware {
 				[
 					"responseHeader",
 					`{
-					"Cache-Control" : "private",
-					"Transfer-Encoding" : "chunked",
-					"Content-Type" : "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
-					"request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"client-request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"x-ms-ags-diagnostic" : "{"ServerInfo":{"DataCenter":"South India","Slice":"SliceC","Ring":"4","ScaleUnit":"000","RoleInstance":"AGSFE_IN_0","ADSiteName":"INS"}}",
+					"Cache-Control" : "",
+					"Transfer-Encoding" : "",
+					"Content-Type" : "",
+					"request-id" : "",
+					"client-request-id" : "",
+					"x-ms-ags-diagnostic" : "",
 					"Duration" : 103.8879,
-					"Strict-Transport-Security" : "max-age=31536000",
-					"timeout" : 300,
-					"Date" : "Tue, 20 Aug 2019 09:08:47 GMT"
+					"Strict-Transport-Security" : "",
+					"timeout": 300,
+					"Date" : ""
 				}`,
 				],
 
@@ -147,15 +146,15 @@ export class TestingHandler implements Middleware {
 				[
 					"responseHeader",
 					`{
-					"Cache-Control" : "private",
-					"Transfer-Encoding" : "chunked",
-					"Content-Type" : "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
-					"request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"client-request-id" : "8f98c2b2-7454-4894-8833-f6dff52a4b56",
-					"x-ms-ags-diagnostic" : "{"ServerInfo":{"DataCenter":"South India","Slice":"SliceC","Ring":"4","ScaleUnit":"000","RoleInstance":"AGSFE_IN_0","ADSiteName":"INS"}}",
+					"Cache-Control" : "",
+					"Transfer-Encoding" : "",
+					"Content-Type" : "",
+					"request-id" : "",
+					"client-request-id" : "",
+					"x-ms-ags-diagnostic" : "",
 					"Duration" : 103.8879,
-					"Strict-Transport-Security" : "max-age=31536000",
-					"Date" : "Tue, 20 Aug 2019 09:08:47 GMT"
+					"Strict-Transport-Security" : "",
+					"Date" : ""
 				}`,
 				],
 
@@ -180,11 +179,9 @@ export class TestingHandler implements Middleware {
 
 	// private map3xx: Map<string, string> = ;
 
-	/**
-	 * @private
-	 * A member holding options to customize the handler behavior
-	 */
-	private options: TestingHandlerOptions;
+	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions()) {
+		this.options = options;
+	}
 
 	/**
 	 * @private
@@ -203,22 +200,35 @@ export class TestingHandler implements Middleware {
 		return options;
 	}
 
-	private async createResponse(): Promise<any> {
+	private async createResponse(context: Context): Promise<any> {
 		try {
-			const responseBody = "Test Response";
-			const header1 = `content-type: application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8
-                        cache-control: private
-                        client-request-id: b1ee53b1-793d-4a98-a057-ce7f3a5437e9
-                        request-id: b1ee53b1-793d-4a98-a057-ce7f3a5437e9`;
+			const statusCode: number = this.options.statusCode;
+			const statusMessage: string = this.options.statusText;
+			let statusCodeKey: string;
+			let responseBody: string;
+			let responseHeader: string;
 
-			const init = { status: 200, statusText: "ok", header: header1 };
-			const response = new Response(responseBody, init);
+			// console.log(this.options);
+			// console.log(context.request);
 
+			statusCodeKey = statusCode === 429 ? "429" : `${Math.floor(statusCode / 100)}xx`;
+			responseHeader = this.responseMap.get(statusCodeKey).get("responseHeader");
+			responseBody = this.responseMap.get(statusCodeKey).get("responseBody");
+
+			// console.log(responseHeader);
+			// console.log(JSON.parse(responseBody));
+
+			// responseBody = this.responseMap[statusCodeKey].responseBody;
+
+			const init = { url: context.request as string, status: statusCode, statusText: statusMessage, header: JSON.parse(responseHeader) };
+			const response = new Response(JSON.parse(responseBody), init);
+			// console.log(response);
 			return response;
 		} catch (error) {
 			throw error;
 		}
 	}
+
 	/**
 	 * @public
 	 * @async
@@ -230,7 +240,8 @@ export class TestingHandler implements Middleware {
 		try {
 			// write the things to be executed in testing Handler
 			// Have to create a map for the purpose of Headers and body
-			context.response = await this.createResponse();
+			this.options = this.getOptions(context);
+			context.response = await this.createResponse(context);
 			return;
 		} catch (error) {
 			throw error;
