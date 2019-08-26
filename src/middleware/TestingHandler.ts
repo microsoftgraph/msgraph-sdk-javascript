@@ -180,7 +180,9 @@ export class TestingHandler implements Middleware {
 	// private map3xx: Map<string, string> = ;
 
 	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions()) {
+		// console.log("declaring through testing Handler");
 		this.options = options;
+		// console.log("declared");
 	}
 
 	/**
@@ -208,8 +210,8 @@ export class TestingHandler implements Middleware {
 			let responseBody: string;
 			let responseHeader: string;
 
-			// console.log(this.options);
-			// console.log(context.request);
+			// console.log(statusCode, "statusCode");
+			// console.log(context.options.method);
 
 			statusCodeKey = statusCode === 429 ? "429" : `${Math.floor(statusCode / 100)}xx`;
 			responseHeader = this.responseMap.get(statusCodeKey).get("responseHeader");
@@ -241,6 +243,8 @@ export class TestingHandler implements Middleware {
 			// write the things to be executed in testing Handler
 			// Have to create a map for the purpose of Headers and body
 			this.options = this.getOptions(context);
+			// console.log(context.options.method);
+			await this.options.sendMethod(context.options.method as string);
 			context.response = await this.createResponse(context);
 			return;
 		} catch (error) {
