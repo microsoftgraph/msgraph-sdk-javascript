@@ -25,10 +25,5 @@ export class TestingHandlerOptions implements MiddlewareOptions {
 	public constructor(testingStrategy: TestingStrategy = TestingStrategy.RANDOM, statusCode?: number) {
 		this.testingStrategy = testingStrategy;
 		this.statusCode = statusCode;
-		// console.log("In testingHandlerOptions Constructor");
-		// console.log(statusCode);
-		// console.log(testingStrategy);
-
-		// console.log("Out of Constructor");
 	}
 }

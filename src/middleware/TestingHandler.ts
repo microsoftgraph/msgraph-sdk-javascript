@@ -10,14 +10,17 @@
  */
 
 import { Context } from "../IContext";
-import { RequestMethod } from "../RequestMethod";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { methodStatusCode, responseMap } from "./options/TestingHandlerData";
-// import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
+import { generateUUID } from "./MiddlewareUtil";
+import { httpStatusCode, methodStatusCode, responseMap } from "./options/TestingHandlerData";
 import { TestingHandlerOptions } from "./options/TestingHandlerOptions";
 import { TestingStrategy } from "./options/TestingStrategy";
+// import { RequestMethod } from "../RequestMethod";
+
+// import { FetchOptions } from "../../IFetchOptions";
+
 // import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 export class TestingHandler implements Middleware {
@@ -40,10 +43,34 @@ export class TestingHandler implements Middleware {
 		// console.log("declared");
 	}
 
+	private createResponseBody(statusCode: number, statusMessage: string) {
+		let responseBody;
+		if (statusCode >= 400) {
+			const codeMessage: string = httpStatusCode[statusCode];
+			const errMessage: string = statusMessage;
+			const requestID: string = generateUUID();
+			const errDate: Date = new Date();
+
+			responseBody = {
+				error: {
+					code: codeMessage,
+					message: errMessage,
+					innerError: {
+						"request-id": requestID,
+						date: errDate,
+					},
+				},
+			};
+		} else {
+			responseBody = {};
+		}
+
+		return responseBody;
+	}
 	private createResponse(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
 		try {
 			let statusCodeKey: string;
-			let responseBody: string;
+			let responseBody;
 			let responseHeader: string;
 
 			// console.log(this.apiMethod, this.apiURL);
@@ -52,15 +79,15 @@ export class TestingHandler implements Middleware {
 
 			statusCodeKey = testingHandlerOptions.statusCode === 429 ? "429" : `${Math.floor(testingHandlerOptions.statusCode / 100)}xx`;
 			responseHeader = responseMap.get(statusCodeKey).get("responseHeader");
-			responseBody = responseMap.get(statusCodeKey).get("responseBody");
+			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage);
 
 			// console.log(responseHeader);
 			// console.log(JSON.parse(responseBody));
 
 			// responseBody = this.responseMap[statusCodeKey].responseBody;
 
-			const init = { url: context.request as string, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, header: JSON.parse(responseHeader) };
-			const response = new Response(JSON.parse(responseBody), init);
+			const init = { url: context.request as string, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: JSON.parse(responseHeader) };
+			const response = new Response(responseBody, init);
 			// console.log(response);
 			return response;
 		} catch (error) {
