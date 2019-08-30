@@ -149,7 +149,28 @@ export class TestingHandler implements Middleware {
 						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(context.options.method as string);
 					} catch (error) {
 						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
-						throw new Error("error in retrieving map");
+						const pattern = new RegExp("http(s)://graph.microsoft.com/[^/]*", "g");
+						let urlMethod: string = context.request as string;
+						urlMethod = urlMethod.replace(pattern, "");
+
+						this.manualMap.forEach((value: Map<string, number>, key: string) => {
+							const regexUrl = new RegExp(key);
+							if (regexUrl.test(urlMethod)) {
+								testingHandlerOptions.statusCode = this.manualMap.get(key).get(context.options.method as string);
+							}
+							// console.log(key);
+						});
+						/*for(const tempurl in this.manualMap){
+								if(tempurl.match(urlMethod))
+								{
+									testingHandlerOptions.statusCode = this.manualMap.get(tempurl).get(context.options.method as string);
+								}
+								console.log(tempurl);
+							}*/
+
+						if (testingHandlerOptions.statusCode === undefined) {
+							throw new Error("error in retrieving map");
+						}
 					}
 				}
 			} else if (testingHandlerOptions.testingStrategy === TestingStrategy.RANDOM) {
