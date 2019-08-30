@@ -37,9 +37,13 @@ export class TestingHandler implements Middleware {
 
 	public testingStrategy: TestingStrategy;
 
-	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions()) {
+	public manualMap: Map<string, Map<string, number>>;
+
+	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions(), manualMap?: Map<string, Map<string, number>>) {
 		// console.log("declaring through testing Handler");
 		this.options = options;
+
+		this.manualMap = manualMap;
 		// console.log("declared");
 	}
 
@@ -130,13 +134,27 @@ export class TestingHandler implements Middleware {
 
 	private setStatusCode(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
 		try {
+			testingHandlerOptions.statusMessage = "Some error happened";
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
 				// this.statusCode = statusCode;
-				testingHandlerOptions.statusMessage = "Status Message here MANUAL";
+				// testingHandlerOptions.statusMessage = "Status Message here MANUAL";
 				// console.log("Inside the if condition");
+
+				if (testingHandlerOptions.statusCode === undefined) {
+					try {
+						const pattern = new RegExp("http(s)://graph.microsoft.com/[^/]*", "g");
+						let urlMethod: string = context.request as string;
+						urlMethod = urlMethod.replace(pattern, "");
+						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
+						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(context.options.method as string);
+					} catch (error) {
+						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
+						throw new Error("error in retrieving map");
+					}
+				}
 			} else if (testingHandlerOptions.testingStrategy === TestingStrategy.RANDOM) {
 				testingHandlerOptions.statusCode = this.getStatusCode(context);
-				testingHandlerOptions.statusMessage = "Status Message here RANDOM";
+				// testingHandlerOptions.statusMessage = "Status Message here RANDOM";
 			}
 			/* else {
 
