@@ -46,14 +46,33 @@ export class TestingHandler implements Middleware {
 		this.manualMap = manualMap;
 		// console.log("declared");
 	}
+	private createResponseHeader(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
+		const responseHeader: any = {};
 
-	private createResponseBody(statusCode: number, statusMessage: string) {
+		responseHeader["Cache-Control"] = "private";
+		responseHeader["Transfer-Encoding"] = "chunked";
+		responseHeader["request-id"] = requestID;
+		responseHeader["client-request-id"] = requestID;
+		responseHeader["x-ms-ags-diagnostic"] = "";
+		responseHeader.Date = requestDate;
+		responseHeader["Strict-Transport-Security"] = "";
+
+		if (statusCode === 301 || statusCode === 302 || statusCode === 303 || statusCode === 307 || statusCode === 308) {
+			responseHeader.Location = "Sample Path";
+		}
+
+		if (statusCode === 429) {
+			responseHeader.timeout = 300;
+		}
+
+		return responseHeader;
+	}
+
+	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, errDate: Date) {
 		let responseBody;
 		if (statusCode >= 400) {
 			const codeMessage: string = httpStatusCode[statusCode];
 			const errMessage: string = statusMessage;
-			const requestID: string = generateUUID();
-			const errDate: Date = new Date();
 
 			responseBody = {
 				error: {
@@ -71,26 +90,30 @@ export class TestingHandler implements Middleware {
 
 		return responseBody;
 	}
+
 	private createResponse(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
 		try {
 			let statusCodeKey: string;
 			let responseBody;
-			let responseHeader: string;
-
+			let responseHeader;
+			let requestID: string;
+			let requestDate: Date;
 			// console.log(this.apiMethod, this.apiURL);
 			// console.log(statusCode, "statusCode");
 			// console.log(context.options.method);
 
 			statusCodeKey = testingHandlerOptions.statusCode === 429 ? "429" : `${Math.floor(testingHandlerOptions.statusCode / 100)}xx`;
-			responseHeader = responseMap.get(statusCodeKey).get("responseHeader");
-			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage);
+			requestID = generateUUID();
+			requestDate = new Date();
+			responseHeader = this.createResponseHeader(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
+			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
 
 			// console.log(responseHeader);
 			// console.log(JSON.parse(responseBody));
 
 			// responseBody = this.responseMap[statusCodeKey].responseBody;
 
-			const init = { url: context.request as string, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: JSON.parse(responseHeader) };
+			const init = { url: context.request as string, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
 			const response = new Response(responseBody, init);
 			// console.log(response);
 			return response;
@@ -132,6 +155,11 @@ export class TestingHandler implements Middleware {
 		}
 	}
 
+	private getRelativeURL(pattern: RegExp, urlMethod: string): string {
+		urlMethod = urlMethod.replace(pattern, "");
+		return urlMethod;
+	}
+
 	private setStatusCode(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
 		try {
 			testingHandlerOptions.statusMessage = "Some error happened";
@@ -142,16 +170,12 @@ export class TestingHandler implements Middleware {
 
 				if (testingHandlerOptions.statusCode === undefined) {
 					try {
-						const pattern = new RegExp("http(s)://graph.microsoft.com/[^/]*", "g");
-						let urlMethod: string = context.request as string;
-						urlMethod = urlMethod.replace(pattern, "");
+						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), context.request as string);
 						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
 						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(context.options.method as string);
 					} catch (error) {
 						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
-						const pattern = new RegExp("http(s)://graph.microsoft.com/[^/]*", "g");
-						let urlMethod: string = context.request as string;
-						urlMethod = urlMethod.replace(pattern, "");
+						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), context.request as string);
 
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
 							const regexUrl = new RegExp(key);
