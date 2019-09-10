@@ -12,7 +12,7 @@
 import { FetchOptions } from "../../IFetchOptions";
 
 import { MiddlewareOptions } from "./IMiddlewareOptions";
-import { methodStatusCode, responseMap } from "./TestingHandlerData";
+import { methodStatusCode } from "./TestingHandlerData";
 import { TestingStrategy } from "./TestingStrategy";
 
 export class TestingHandlerOptions implements MiddlewareOptions {

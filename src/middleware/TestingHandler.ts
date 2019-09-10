@@ -14,7 +14,7 @@ import { Context } from "../IContext";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { generateUUID } from "./MiddlewareUtil";
-import { httpStatusCode, methodStatusCode, responseMap } from "./options/TestingHandlerData";
+import { httpStatusCode, methodStatusCode } from "./options/TestingHandlerData";
 import { TestingHandlerOptions } from "./options/TestingHandlerOptions";
 import { TestingStrategy } from "./options/TestingStrategy";
 // import { RequestMethod } from "../RequestMethod";
@@ -46,6 +46,7 @@ export class TestingHandler implements Middleware {
 		this.manualMap = manualMap;
 		// console.log("declared");
 	}
+
 	private createResponseHeader(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
 		const responseHeader: any = {};
 
@@ -58,10 +59,11 @@ export class TestingHandler implements Middleware {
 		responseHeader["Strict-Transport-Security"] = "";
 
 		if (statusCode === 301 || statusCode === 302 || statusCode === 303 || statusCode === 307 || statusCode === 308) {
-			responseHeader.Location = "Sample Path";
+			responseHeader.Location = "https://dummylocation.microsoft.com";
 		}
 
 		if (statusCode === 429) {
+			// throttling case has to have a timeout scenario
 			responseHeader.timeout = 300;
 		}
 
@@ -91,7 +93,7 @@ export class TestingHandler implements Middleware {
 		return responseBody;
 	}
 
-	private createResponse(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
+	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string): Response {
 		try {
 			let statusCodeKey: string;
 			let responseBody;
@@ -113,7 +115,7 @@ export class TestingHandler implements Middleware {
 
 			// responseBody = this.responseMap[statusCodeKey].responseBody;
 
-			const init = { url: context.request as string, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
+			const init = { url: requestURL, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
 			const response = new Response(responseBody, init);
 			// console.log(response);
 			return response;
@@ -122,7 +124,7 @@ export class TestingHandler implements Middleware {
 		}
 	}
 
-	private getStatusCode(context: Context): number {
+	private getStatusCode(requestMethod: string): number {
 		try {
 			// const fs = require("fs");
 			/* let methodStatusCode;
@@ -143,7 +145,7 @@ export class TestingHandler implements Middleware {
 			// const methodStatusCode = require('./MethodStatusCode.json');
 			// await console.log(this.methodStatusCode[this.apiMethod], "hey");
 
-			const container: number[] = methodStatusCode[context.options.method as string] as number[];
+			const container: number[] = methodStatusCode[requestMethod] as number[];
 			const containerLength: number = container.length;
 			// console.log(containerLength);
 			// console.log(container[Math.floor(Math.random() * containerLength)]);
@@ -160,7 +162,7 @@ export class TestingHandler implements Middleware {
 		return urlMethod;
 	}
 
-	private setStatusCode(context: Context, testingHandlerOptions: TestingHandlerOptions): Response {
+	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
 		try {
 			testingHandlerOptions.statusMessage = "Some error happened";
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
@@ -170,17 +172,19 @@ export class TestingHandler implements Middleware {
 
 				if (testingHandlerOptions.statusCode === undefined) {
 					try {
-						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), context.request as string);
+						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
 						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
-						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(context.options.method as string);
+						// console.log(urlMethod, "urlMethod");
+						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(requestMethod);
 					} catch (error) {
 						// console.log(this.manualMap.get(urlMethod).get(context.options.method as string));
-						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), context.request as string);
-
+						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
+						// console.log(urlMethod, "urlMethod");
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
 							const regexUrl = new RegExp(key);
+							// console.log(regexUrl, "!!!!!!");
 							if (regexUrl.test(urlMethod)) {
-								testingHandlerOptions.statusCode = this.manualMap.get(key).get(context.options.method as string);
+								testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
 							}
 							// console.log(key);
 						});
@@ -193,12 +197,13 @@ export class TestingHandler implements Middleware {
 							}*/
 
 						if (testingHandlerOptions.statusCode === undefined) {
-							throw new Error("error in retrieving map");
+							// const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
+							throw new Error("error in retrieving map or you have been redirected to " + urlMethod);
 						}
 					}
 				}
 			} else if (testingHandlerOptions.testingStrategy === TestingStrategy.RANDOM) {
-				testingHandlerOptions.statusCode = this.getStatusCode(context);
+				testingHandlerOptions.statusCode = this.getStatusCode(requestMethod);
 				// testingHandlerOptions.statusMessage = "Status Message here RANDOM";
 			}
 			/* else {
@@ -206,7 +211,7 @@ export class TestingHandler implements Middleware {
             }
             */
 			// console.log(this.statusCode, this.apiMethod);
-			return this.createResponse(context, testingHandlerOptions);
+			return this.createResponse(testingHandlerOptions, requestURL);
 		} catch (error) {
 			throw error;
 		}
@@ -243,7 +248,7 @@ export class TestingHandler implements Middleware {
 			// Have to create a map for the purpose of Headers and body
 			const testingHandlerOptions = this.getOptions(context);
 			// console.log(this.options, "hey");
-			context.response = this.setStatusCode(context, testingHandlerOptions);
+			context.response = this.setStatusCode(testingHandlerOptions, context.request as string, context.options.method as string);
 			// context.response = new Response("");
 			return;
 		} catch (error) {
