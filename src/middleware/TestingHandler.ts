@@ -44,6 +44,15 @@ export class TestingHandler implements Middleware {
 		this.manualMap = manualMap;
 	}
 
+	/**
+	 * @private
+	 * Generates responseHeader
+	 * @param {number} statusCode - the status code to be returned for the request
+	 * @param {string} statusMessage - the status message to be returned for the request
+	 * @param {string} requestID - request id
+	 * @param {Date} requestDate - date of the request
+	 * @returns response Header
+	 */
 	private createResponseHeader(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
 		// creates a responseHeader based on the status code
 		const responseHeader: any = {};
@@ -68,7 +77,16 @@ export class TestingHandler implements Middleware {
 		return responseHeader;
 	}
 
-	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, errDate: Date) {
+	/**
+	 * @private
+	 * Generates responseBody
+	 * @param {number} statusCode - the status code to be returned for the request
+	 * @param {string} statusMessage - the status message to be returned for the request
+	 * @param {string} requestID - request id
+	 * @param {Date} errDate - date of the request
+	 * @returns response body
+	 */
+	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
 		// response body gets created as empty for passed cases
 		// response body contains error field for failure scenarios
 		let responseBody;
@@ -82,7 +100,7 @@ export class TestingHandler implements Middleware {
 					message: errMessage,
 					innerError: {
 						"request-id": requestID,
-						date: errDate,
+						date: requestDate,
 					},
 				},
 			};
@@ -93,6 +111,13 @@ export class TestingHandler implements Middleware {
 		return responseBody;
 	}
 
+	/**
+	 * @private
+	 * creates a response object out of responseHeader and responseBody
+	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
+	 * @param {string} requestURL - the URL for the request
+	 * @returns Response object
+	 */
 	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string): Response {
 		try {
 			// creates a response Object out of responseHeader and responseBody
@@ -114,6 +139,12 @@ export class TestingHandler implements Middleware {
 		}
 	}
 
+	/**
+	 * @private
+	 * Fetches a random status code for the RANDOM mode from the predefined array
+	 * @param {string} requestMethod - the API method for the request
+	 * @returns the random status code
+	 */
 	private getStatusCode(requestMethod: string): number {
 		try {
 			// returns random status code for the random method from the array present
@@ -124,14 +155,28 @@ export class TestingHandler implements Middleware {
 		}
 	}
 
+	/**
+	 * @private
+	 * To fetch the relative URL out of the complete URL
+	 * @param {RegExp} pattern - the regex pattern for the URL
+	 * @param {string} urlMethod - the complete URL
+	 * @returns the relative URL
+	 */
 	private getRelativeURL(pattern: RegExp, urlMethod: string): string {
 		// just helps in getting the relative URL from the complete url, just to match the url as in manual map
 		urlMethod = urlMethod.replace(pattern, "");
 		return urlMethod;
 	}
 
+	/**
+	 * @private
+	 * To fetch the status code from the map(if needed), then returns response by calling createResponse
+	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
+	 * @param {string} requestURL - the URL for the request
+	 * @param {string} requestMethod - the API method for the request
+	 * @returns Response object
+	 */
 	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
-		// assigns statusCode if statusCode is undefined, then calls createResponse for the Response to be returned
 		try {
 			testingHandlerOptions.statusMessage = "Some error happened";
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
@@ -148,10 +193,12 @@ export class TestingHandler implements Middleware {
 							}
 						});
 
-						if (testingHandlerOptions.statusCode === undefined && requestURL === this.redirectURL) {
-							testingHandlerOptions.statusCode = 404;
-						} else {
-							throw new Error("API not available in map");
+						if (testingHandlerOptions.statusCode === undefined) {
+							if (requestURL === this.redirectURL) {
+								testingHandlerOptions.statusCode = 404;
+							} else {
+								throw new Error("API not available in map");
+							}
 						}
 					}
 				} else {
