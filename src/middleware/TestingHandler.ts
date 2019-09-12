@@ -148,8 +148,10 @@ export class TestingHandler implements Middleware {
 							}
 						});
 
-						if (testingHandlerOptions.statusCode === undefined) {
+						if (testingHandlerOptions.statusCode === undefined && requestURL === this.redirectURL) {
 							testingHandlerOptions.statusCode = 404;
+						} else {
+							throw new Error("API not available in map");
 						}
 					}
 				} else {
