@@ -56,7 +56,7 @@ const serialBatching = async function(elem) {
 		let batchResponseContent = new MicrosoftGraph.BatchResponseContent(response);
 
 		//Getting response by id
-		console.log(batchResponse.getResponseById(downloadId));
+		console.log(batchResponseContent.getResponseById(downloadId));
 
 		//Getting all the responses
 		console.log(batchResponseContent.getResponses());
