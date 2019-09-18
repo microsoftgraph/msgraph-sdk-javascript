@@ -53,12 +53,12 @@ export class TestingHandler implements Middleware {
 	 * @param {Date} requestDate - date of the request
 	 * @returns response Header
 	 */
-	private createResponseHeader(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
+	private createResponseHeaders(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
 		// creates a responseHeader based on the status code
 		const responseHeader: any = {};
 
 		responseHeader["Cache-Control"] = "private";
-		responseHeader["Transfer-Encoding"] = "chunked";
+		responseHeader["Transfer-Encoding"] = "";
 		responseHeader["request-id"] = requestID;
 		responseHeader["client-request-id"] = requestID;
 		responseHeader["x-ms-ags-diagnostic"] = "";
@@ -72,7 +72,7 @@ export class TestingHandler implements Middleware {
 
 		if (statusCode === 429) {
 			// throttling case has to have a timeout scenario
-			responseHeader.timeout = 300;
+			responseHeader["retry-after"] = 300;
 		}
 		return responseHeader;
 	}
@@ -128,7 +128,7 @@ export class TestingHandler implements Middleware {
 
 			requestID = generateUUID();
 			requestDate = new Date();
-			responseHeader = this.createResponseHeader(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
+			responseHeader = this.createResponseHeaders(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
 			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
 			const init = { url: requestURL, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
 			const response = new Response(responseBody, init);
@@ -145,7 +145,7 @@ export class TestingHandler implements Middleware {
 	 * @param {string} requestMethod - the API method for the request
 	 * @returns the random status code
 	 */
-	private getStatusCode(requestMethod: string): number {
+	private getRandomStatusCode(requestMethod: string): number {
 		try {
 			// returns random status code for the random method from the array present
 			const statusCodeArray: number[] = methodStatusCode[requestMethod] as number[];
@@ -164,8 +164,8 @@ export class TestingHandler implements Middleware {
 	 */
 	private getRelativeURL(pattern: RegExp, urlMethod: string): string {
 		// just helps in getting the relative URL from the complete url, just to match the url as in manual map
-		urlMethod = urlMethod.replace(pattern, "");
-		return urlMethod;
+		const relativeURL = urlMethod.replace(pattern, "");
+		return relativeURL;
 	}
 
 	/**
@@ -178,13 +178,18 @@ export class TestingHandler implements Middleware {
 	 */
 	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
 		try {
+			// setting some random status code
 			testingHandlerOptions.statusMessage = "Some error happened";
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
+				// inside the Manual mode
 				if (testingHandlerOptions.statusCode === undefined) {
+					// manual mode with no status code, can be a global level or request level without statusCode
 					try {
+						// chacking Manual Map for exact match
 						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
 						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(requestMethod);
 					} catch (error) {
+						// checking for regex match if exact match doesn't work
 						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
 							const regexUrl = new RegExp(key);
@@ -193,8 +198,10 @@ export class TestingHandler implements Middleware {
 							}
 						});
 
+						// Case of redirection or request url not in map
 						if (testingHandlerOptions.statusCode === undefined) {
 							if (requestURL === this.redirectURL) {
+								// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
 								testingHandlerOptions.statusCode = 404;
 							} else {
 								throw new Error("API not available in map");
@@ -202,15 +209,18 @@ export class TestingHandler implements Middleware {
 						}
 					}
 				} else {
+					// if we have got redirection
 					if (requestURL === this.redirectURL) {
 						const statusCode: number = testingHandlerOptions.statusCode;
 						if (statusCode === 301 || statusCode === 302 || statusCode === 303 || statusCode === 307 || statusCode === 308) {
+							// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
 							testingHandlerOptions.statusCode = 404;
 						}
 					}
 				}
-			} else if (testingHandlerOptions.testingStrategy === TestingStrategy.RANDOM) {
-				testingHandlerOptions.statusCode = this.getStatusCode(requestMethod);
+			} else {
+				// Handling the case of Random here
+				testingHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
 			}
 
 			return this.createResponse(testingHandlerOptions, requestURL);
@@ -233,6 +243,7 @@ export class TestingHandler implements Middleware {
 		if (typeof options === "undefined") {
 			options = Object.assign(new TestingHandlerOptions(), this.options);
 		}
+
 		return options;
 	}
 

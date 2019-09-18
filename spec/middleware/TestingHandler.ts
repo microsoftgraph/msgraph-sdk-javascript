@@ -24,29 +24,29 @@ describe("TestingHandler.ts", () => {
 		});
 	});
 
-	describe("createResponseHeader", () => {
+	describe("createResponseHeaders", () => {
 		it("Should have request-id for every random statusCode", () => {
-			const responseHeader = testingHandler["createResponseHeader"](204, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
+			const responseHeader = testingHandler["createResponseHeaders"](204, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
 			assert.isDefined(responseHeader["request-id"]);
 		});
 
 		it("Should have Location for 3xx cases", () => {
-			const responseHeader = testingHandler["createResponseHeader"](301, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
+			const responseHeader = testingHandler["createResponseHeaders"](301, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
 			assert.isDefined(responseHeader["Location"]);
 		});
 
 		it("Should have request-id for 3xx cases", () => {
-			const responseHeader = testingHandler["createResponseHeader"](301, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
+			const responseHeader = testingHandler["createResponseHeaders"](301, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
 			assert.isDefined(responseHeader["request-id"]);
 		});
 
 		it("Should have timeout for 429 case", () => {
-			const responseHeader = testingHandler["createResponseHeader"](429, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
-			assert.isDefined(responseHeader["timeout"]);
+			const responseHeader = testingHandler["createResponseHeaders"](429, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
+			assert.isDefined(responseHeader["retry-after"]);
 		});
 
 		it("Should have request-id for 5xx cases", () => {
-			const responseHeader = testingHandler["createResponseHeader"](500, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
+			const responseHeader = testingHandler["createResponseHeaders"](500, "statusMessage", "xxxxxxxxxxxxxxxx", new Date());
 			assert.isDefined(responseHeader["request-id"]);
 		});
 	});
@@ -73,25 +73,31 @@ describe("TestingHandler.ts", () => {
 		});
 	});
 
-	describe("getStatusCode", () => {
+	describe("getRandomStatusCode", () => {
 		it("Should return a status code for GET method", () => {
-			assert.isDefined(testingHandler["getStatusCode"]("GET"));
+			assert.isDefined(testingHandler["getRandomStatusCode"]("GET"));
 		});
 
 		it("Should return a status code for POST method", () => {
-			assert.isDefined(testingHandler["getStatusCode"]("POST"));
+			assert.isDefined(testingHandler["getRandomStatusCode"]("POST"));
 		});
 
 		it("Should return a status code for PUT method", () => {
-			assert.isDefined(testingHandler["getStatusCode"]("PUT"));
+			assert.isDefined(testingHandler["getRandomStatusCode"]("PUT"));
 		});
 
 		it("Should return a status code for PATCH method", () => {
-			assert.isDefined(testingHandler["getStatusCode"]("PATCH"));
+			assert.isDefined(testingHandler["getRandomStatusCode"]("PATCH"));
 		});
 
 		it("Should return a status code for DELETE method", () => {
-			assert.isDefined(testingHandler["getStatusCode"]("DELETE"));
+			assert.isDefined(testingHandler["getRandomStatusCode"]("DELETE"));
+		});
+	});
+
+	describe("getRelativeURL", () => {
+		it("Should return a relative URL for the complete URL", () => {
+			assert.equal(testingHandler["getRelativeURL"](new RegExp("http(s)://graph.microsoft.com/[^/]*/"), "https://graph.microsoft.com/v1.0/me/"), "me/");
 		});
 	});
 
@@ -138,6 +144,57 @@ describe("TestingHandler.ts", () => {
 			const o = tempTestingHandler["getOptions"](cxt);
 			assert.equal(o.testingStrategy, TestingStrategy.MANUAL);
 			assert.equal(o.statusCode, undefined);
+		});
+	});
+
+	describe("execute", () => {
+		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
+		const tempTestingHandlerDefault = new TestingHandler(new TestingHandlerOptions());
+		const tempTestingHandlerRandom = new TestingHandler(new TestingHandlerOptions(TestingStrategy.RANDOM));
+		const tempTestingHandlerManual = new TestingHandler(new TestingHandlerOptions(TestingStrategy.MANUAL), manualMap);
+
+		it("Should return response for Default Case", () => {
+			const options = new TestingHandlerOptions(TestingStrategy.RANDOM);
+			const cxt: Context = {
+				request: "/me",
+				options: {
+					method: "GET",
+				},
+				middlewareControl: new MiddlewareControl([options]),
+			};
+			assert.isDefined(tempTestingHandlerDefault["execute"](cxt));
+		});
+
+		it("Should return response for Random case", () => {
+			const cxt: Context = {
+				request: "/me",
+				options: {
+					method: "GET",
+				},
+			};
+			assert.isDefined(tempTestingHandlerRandom["execute"](cxt));
+		});
+
+		it("Should return response for Manual Global case", () => {
+			const cxt: Context = {
+				request: "/me",
+				options: {
+					method: "GET",
+				},
+			};
+			assert.isDefined(tempTestingHandlerManual["execute"](cxt));
+		});
+
+		it("Should return response for Manual Request Level case", () => {
+			const options = new TestingHandlerOptions(TestingStrategy.MANUAL, 200);
+			const cxt: Context = {
+				request: "/me",
+				options: {
+					method: "GET",
+				},
+				middlewareControl: new MiddlewareControl([options]),
+			};
+			assert.isDefined(tempTestingHandlerManual["execute"](cxt));
 		});
 	});
 });
