@@ -118,7 +118,7 @@ export class TestingHandler implements Middleware {
 	 * @param {string} requestURL - the URL for the request
 	 * @returns Response object
 	 */
-	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string): Response {
+	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
 		try {
 			// creates a response Object out of responseHeader and responseBody
 			let responseBody;
@@ -126,6 +126,7 @@ export class TestingHandler implements Middleware {
 			let requestID: string;
 			let requestDate: Date;
 
+			this.setStatusCode(testingHandlerOptions, requestURL, requestMethod);
 			requestID = generateUUID();
 			requestDate = new Date();
 			responseHeader = this.createResponseHeaders(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
@@ -176,7 +177,7 @@ export class TestingHandler implements Middleware {
 	 * @param {string} requestMethod - the API method for the request
 	 * @returns Response object
 	 */
-	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
+	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string) {
 		try {
 			// setting some random status code
 			testingHandlerOptions.statusMessage = "Some error happened";
@@ -222,8 +223,6 @@ export class TestingHandler implements Middleware {
 				// Handling the case of Random here
 				testingHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
 			}
-
-			return this.createResponse(testingHandlerOptions, requestURL);
 		} catch (error) {
 			throw error;
 		}
@@ -257,7 +256,7 @@ export class TestingHandler implements Middleware {
 	public async execute(context: Context): Promise<void> {
 		try {
 			const testingHandlerOptions = this.getOptions(context);
-			context.response = this.setStatusCode(testingHandlerOptions, context.request as string, context.options.method as string);
+			context.response = this.createResponse(testingHandlerOptions, context.request as string, context.options.method as string);
 			return;
 		} catch (error) {
 			throw error;

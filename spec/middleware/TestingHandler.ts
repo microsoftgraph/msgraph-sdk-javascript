@@ -5,7 +5,6 @@ import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
 import { TestingHandlerOptions } from "../../src/middleware/options/TestingHandlerOptions";
 import { TestingStrategy } from "../../src/middleware/options/TestingStrategy";
 import { TestingHandler } from "../../src/middleware/TestingHandler";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 const testingHandlerOptions = new TestingHandlerOptions();
 const testingHandler = new TestingHandler();
@@ -65,11 +64,11 @@ describe("TestingHandler.ts", () => {
 
 	describe("createResponse", () => {
 		it("Should return a valid response object for MANUAL case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me/"));
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me/", "GET"));
 		});
 
 		it("Should return a valid response object for RANDOM case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me/"));
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me/", "GET"));
 		});
 	});
 
@@ -103,15 +102,21 @@ describe("TestingHandler.ts", () => {
 
 	describe("setStatusCode", () => {
 		it("Should return a response for MANUAL mode", () => {
-			assert.isDefined(testingHandler["setStatusCode"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me/", "GET"));
+			const tempOptions = new TestingHandlerOptions(TestingStrategy.MANUAL, 404);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", "GET");
+			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should return a response for RANDOM mode without status Code", () => {
-			assert.isDefined(testingHandler["setStatusCode"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me/", "POST"));
+			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", "POST");
+			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should return a response for RANDOM mode without status Code", () => {
-			assert.isDefined(testingHandler["setStatusCode"](new TestingHandlerOptions(TestingStrategy.RANDOM, 404), "https://graph.microsoft.com/v1.0/me/", "POST"));
+			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM, 404);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", "POST");
+			assert.isDefined(tempOptions.statusCode);
 		});
 	});
 
