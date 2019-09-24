@@ -10,6 +10,7 @@
  */
 
 import { Context } from "../IContext";
+import { RequestMethod } from "../RequestMethod";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
@@ -18,78 +19,90 @@ import { httpStatusCode, methodStatusCode } from "./options/TestingHandlerData";
 import { TestingHandlerOptions } from "./options/TestingHandlerOptions";
 import { TestingStrategy } from "./options/TestingStrategy";
 
+/**
+ * Class representing TestingHandler
+ * @class
+ * Class
+ * @implements Middleware
+ */
 export class TestingHandler implements Middleware {
 	/**
-	 * @private
 	 * A member holding options to customize the handler behavior
+	 *
+	 * @private
 	 */
-
 	private options: TestingHandlerOptions;
 
-	public statusCode: number;
+	/**
+	 * container for the manual map that has been written by the client
+	 *
+	 * @private
+	 */
+	private manualMap: Map<string, Map<string, number>>;
 
-	public statusMessage: string;
+	/**
+	 * dummy url that we are using, randomly generated everytime
+	 *
+	 * @private
+	 */
+	private redirectURL: string;
 
-	// the mode of testing handler
-	public testingStrategy: TestingStrategy;
-
-	// container for the manual map that has been written by the client
-	public manualMap: Map<string, Map<string, number>>;
-
-	// dummy url that we are using
-	public redirectURL: string = "https://dummylocation.microsoft.com";
-
+	/**
+	 * @public
+	 * @constructor
+	 * To create an instance of Testing Handler
+	 * @param {TestingHandlerOptions} [options = new TestingHandlerOptions()] - The testing handler options instance
+	 * @param manualMap - The Map passed by user containing url-statusCode info
+	 * @returns An instance of Testing Handler
+	 */
 	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions(), manualMap?: Map<string, Map<string, number>>) {
 		this.options = options;
 		this.manualMap = manualMap;
+		this.redirectURL = "https://graph.microsoft.com/" + generateUUID();
 	}
 
 	/**
-	 * @private
 	 * Generates responseHeader
+	 * @private
 	 * @param {number} statusCode - the status code to be returned for the request
-	 * @param {string} statusMessage - the status message to be returned for the request
 	 * @param {string} requestID - request id
-	 * @param {Date} requestDate - date of the request
+	 * @param {string} requestDate - date of the request
 	 * @returns response Header
 	 */
-	private createResponseHeaders(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
-		// creates a responseHeader based on the status code
-		const responseHeader: any = {};
+	private createResponseHeaders(statusCode: number, requestID: string, requestDate: string) {
+		const responseHeader: Headers = new Headers();
 
-		responseHeader["Cache-Control"] = "private";
-		responseHeader["Transfer-Encoding"] = "";
-		responseHeader["request-id"] = requestID;
-		responseHeader["client-request-id"] = requestID;
-		responseHeader["x-ms-ags-diagnostic"] = "";
-		responseHeader.Date = requestDate;
-		responseHeader["Strict-Transport-Security"] = "";
+		responseHeader.append("Cache-Control", "private");
+		responseHeader.append("Transfer-Encoding", "");
+		responseHeader.append("request-id", requestID);
+		responseHeader.append("client-request-id", requestID);
+		responseHeader.append("x-ms-ags-diagnostic", "");
+		responseHeader.append("Date", requestDate);
+		responseHeader.append("Strict-Transport-Security", "");
 
 		if (statusCode === 301 || statusCode === 302 || statusCode === 303 || statusCode === 307 || statusCode === 308) {
 			// adding location header for only these cases as done for the redirect handler
-			responseHeader.Location = this.redirectURL;
+			responseHeader.append("Location", this.redirectURL);
 		}
 
 		if (statusCode === 429) {
 			// throttling case has to have a timeout scenario
-			responseHeader["retry-after"] = 300;
+			responseHeader.append("retry-after", "300");
 		}
 		return responseHeader;
 	}
 
 	/**
-	 * @private
 	 * Generates responseBody
+	 * @private
 	 * @param {number} statusCode - the status code to be returned for the request
 	 * @param {string} statusMessage - the status message to be returned for the request
 	 * @param {string} requestID - request id
-	 * @param {Date} errDate - date of the request
+	 * @param {string} requestDate - date of the request
 	 * @returns response body
 	 */
-	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: Date) {
-		// response body gets created as empty for passed cases
-		// response body contains error field for failure scenarios
-		let responseBody;
+	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: string) {
+		let responseBody: any;
 		if (statusCode >= 400) {
 			const codeMessage: string = httpStatusCode[statusCode];
 			const errMessage: string = statusMessage;
@@ -107,32 +120,31 @@ export class TestingHandler implements Middleware {
 		} else {
 			responseBody = {};
 		}
-
 		return responseBody;
 	}
 
 	/**
-	 * @private
 	 * creates a response object out of responseHeader and responseBody
+	 * @private
 	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
 	 * @param {string} requestURL - the URL for the request
+	 * @param {RequestMethod} requestMethod - enum for request method
 	 * @returns Response object
 	 */
-	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string): Response {
+	private createResponse(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: RequestMethod): Response {
 		try {
-			// creates a response Object out of responseHeader and responseBody
-			let responseBody;
-			let responseHeader;
+			let responseBody: any;
+			let responseHeader: Headers;
 			let requestID: string;
 			let requestDate: Date;
 
 			this.setStatusCode(testingHandlerOptions, requestURL, requestMethod);
 			requestID = generateUUID();
 			requestDate = new Date();
-			responseHeader = this.createResponseHeaders(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
-			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate);
-			const init = { url: requestURL, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
-			const response = new Response(responseBody, init);
+			responseHeader = this.createResponseHeaders(testingHandlerOptions.statusCode, requestID, requestDate.toString());
+			responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate.toString());
+			const init: any = { url: requestURL, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
+			const response: Response = new Response(responseBody, init);
 
 			return response;
 		} catch (error) {
@@ -141,14 +153,13 @@ export class TestingHandler implements Middleware {
 	}
 
 	/**
-	 * @private
 	 * Fetches a random status code for the RANDOM mode from the predefined array
+	 * @private
 	 * @param {string} requestMethod - the API method for the request
-	 * @returns the random status code
+	 * @returns a random status code from a given set of status codes
 	 */
-	private getRandomStatusCode(requestMethod: string): number {
+	private getRandomStatusCode(requestMethod: RequestMethod): number {
 		try {
-			// returns random status code for the random method from the array present
 			const statusCodeArray: number[] = methodStatusCode[requestMethod] as number[];
 			return statusCodeArray[Math.floor(Math.random() * statusCodeArray.length)];
 		} catch (error) {
@@ -157,44 +168,39 @@ export class TestingHandler implements Middleware {
 	}
 
 	/**
+	 * To fetch the relative URL out of the complete URL using a predefined regex pattern
 	 * @private
-	 * To fetch the relative URL out of the complete URL
-	 * @param {RegExp} pattern - the regex pattern for the URL
 	 * @param {string} urlMethod - the complete URL
-	 * @returns the relative URL
+	 * @returns the string as relative URL
 	 */
-	private getRelativeURL(pattern: RegExp, urlMethod: string): string {
-		// just helps in getting the relative URL from the complete url, just to match the url as in manual map
-		const relativeURL = urlMethod.replace(pattern, "");
+	private getRelativeURL(urlMethod: string): string {
+		const pattern: RegExp = /https?:\/\/graph\.microsoft\.com\/[^/]+(.+?)(\?|$)/;
+		const relativeURL: string = pattern.exec(urlMethod)[1];
 		return relativeURL;
 	}
 
 	/**
-	 * @private
 	 * To fetch the status code from the map(if needed), then returns response by calling createResponse
+	 * @private
 	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
-	 * @returns Response object
 	 */
-	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: string) {
+	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: RequestMethod): void {
 		try {
-			// setting some random status code
-			testingHandlerOptions.statusMessage = "Some error happened";
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
-				// inside the Manual mode
 				if (testingHandlerOptions.statusCode === undefined) {
 					// manual mode with no status code, can be a global level or request level without statusCode
 					try {
-						// chacking Manual Map for exact match
-						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
-						testingHandlerOptions.statusCode = this.manualMap.get(urlMethod).get(requestMethod);
+						// checking Manual Map for exact match
+						const relativeURL: string = this.getRelativeURL(requestURL);
+						testingHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
 					} catch (error) {
 						// checking for regex match if exact match doesn't work
-						const urlMethod = this.getRelativeURL(new RegExp("http(s)://graph.microsoft.com/[^/]*", "g"), requestURL);
+						const relativeURL: string = this.getRelativeURL(requestURL);
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
-							const regexUrl = new RegExp(key);
-							if (regexUrl.test(urlMethod)) {
+							const regexURL: RegExp = new RegExp(key);
+							if (regexURL.test(relativeURL)) {
 								testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
 							}
 						});
@@ -229,10 +235,10 @@ export class TestingHandler implements Middleware {
 	}
 
 	/**
-	 * @private
 	 * To get the options for execution of the middleware
+	 * @private
 	 * @param {Context} context - The context object
-	 * @returns A options for middleware execution
+	 * @returns options for middleware execution
 	 */
 	private getOptions(context: Context): TestingHandlerOptions {
 		let options: TestingHandlerOptions;
@@ -247,16 +253,16 @@ export class TestingHandler implements Middleware {
 	}
 
 	/**
+	 * To execute the current middleware
 	 * @public
 	 * @async
-	 * To execute the current middleware
 	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			const testingHandlerOptions = this.getOptions(context);
-			context.response = this.createResponse(testingHandlerOptions, context.request as string, context.options.method as string);
+			const testingHandlerOptions: TestingHandlerOptions = this.getOptions(context);
+			context.response = this.createResponse(testingHandlerOptions, context.request as string, context.options.method as RequestMethod);
 			return;
 		} catch (error) {
 			throw error;

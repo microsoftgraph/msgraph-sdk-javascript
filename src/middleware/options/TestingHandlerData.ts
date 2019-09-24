@@ -1,4 +1,18 @@
-export const methodStatusCode = {
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+/**
+ * @module TestingHandlerData
+ */
+
+/**
+ * Contains RequestMethod to corresponding array of possible status codes, used for Random mode
+ */
+export const methodStatusCode: { [key: string]: number[] } = {
 	GET: [200, 301, 307, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504],
 	POST: [200, 201, 204, 307, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504, 507],
 	PUT: [200, 201, 400, 401, 403, 404, 405, 409, 429, 500, 502, 503, 504, 507],
@@ -6,7 +20,10 @@ export const methodStatusCode = {
 	DELETE: [200, 204, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504, 507],
 };
 
-export const httpStatusCode = {
+/**
+ * Contains statusCode to statusMessage map
+ */
+export const httpStatusCode: { [key: number]: string } = {
 	100: "Continue",
 	101: "Switching Protocols",
 	102: "Processing",
