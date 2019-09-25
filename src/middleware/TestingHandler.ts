@@ -72,7 +72,7 @@ export class TestingHandler implements Middleware {
 	private createResponseHeaders(statusCode: number, requestID: string, requestDate: string) {
 		const responseHeader: Headers = new Headers();
 
-		responseHeader.append("Cache-Control", "private");
+		responseHeader.append("Cache-Control", "no-store");
 		responseHeader.append("Transfer-Encoding", "");
 		responseHeader.append("request-id", requestID);
 		responseHeader.append("client-request-id", requestID);
