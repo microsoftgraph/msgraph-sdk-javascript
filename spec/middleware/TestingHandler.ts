@@ -99,25 +99,53 @@ describe("TestingHandler.ts", () => {
 		it("Should return a relative URL for the complete URL", () => {
 			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/v1.0/me/"), "/me/");
 		});
+
+		it("Should return a relative URL for the complete URL with filter", () => {
+			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/v1.0/me/messages?filter=emailAddress eq 'jon@contoso.com'"), "/me/messages");
+		});
+
+		it("Should return a relative URL for the complete URL with ids", () => {
+			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/v1.0/me/messages/q1abcxx-xxxxxx-xxxxabc"), "/me/messages/q1abcxx-xxxxxx-xxxxabc");
+		});
+
+		it("Should return a relative URL for the complete URL in case of beta", () => {
+			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/beta/me/messages"), "/me/messages");
+		});
 	});
 
 	describe("setStatusCode", () => {
-		it("Should return a response for MANUAL mode", () => {
+		const manualMap: Map<string, Map<string, number>> = new Map([["/me/messages/.*", new Map([["GET", 500], ["PATCH", 201]])], ["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
+		const tempManualOptions: TestingHandlerOptions = new TestingHandlerOptions(TestingStrategy.MANUAL);
+		const tempManualOptionsRegex: TestingHandlerOptions = new TestingHandlerOptions(TestingStrategy.MANUAL);
+		const tempTestingHandlerManual = new TestingHandler(tempManualOptions, manualMap);
+		const tempTestingHandlerManualRegex = new TestingHandler(tempManualOptionsRegex, manualMap);
+
+		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.MANUAL, 404);
 			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
-		it("Should return a response for RANDOM mode without status Code", () => {
+		it("Should  set a statusCode for RANDOM mode without status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM);
 			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
-		it("Should return a response for RANDOM mode without status Code", () => {
+		it("Should  set a statusCode for RANDOM mode with status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM, 404);
 			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
+		});
+
+		it("Should set a statusCode for MANUAL mode with manualMap", () => {
+			tempTestingHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.PATCH);
+			assert.equal(tempManualOptions.statusCode, 201);
+		});
+
+		it("Should set a statusCode for MANUAL mode with manualMap matching regex", () => {
+			tempTestingHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx/", RequestMethod.GET);
+			assert.equal(tempManualOptionsRegex.statusCode, 500);
 		});
 	});
 
@@ -162,7 +190,7 @@ describe("TestingHandler.ts", () => {
 		it("Should return response for Default Case", () => {
 			const options = new TestingHandlerOptions(TestingStrategy.RANDOM);
 			const cxt: Context = {
-				request: "/me",
+				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
 					method: "GET",
 				},
@@ -173,7 +201,7 @@ describe("TestingHandler.ts", () => {
 
 		it("Should return response for Random case", () => {
 			const cxt: Context = {
-				request: "/me",
+				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
 					method: "GET",
 				},
@@ -183,7 +211,7 @@ describe("TestingHandler.ts", () => {
 
 		it("Should return response for Manual Global case", () => {
 			const cxt: Context = {
-				request: "/me",
+				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
 					method: "GET",
 				},
@@ -194,7 +222,7 @@ describe("TestingHandler.ts", () => {
 		it("Should return response for Manual Request Level case", () => {
 			const options = new TestingHandlerOptions(TestingStrategy.MANUAL, 200);
 			const cxt: Context = {
-				request: "/me",
+				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
 					method: "GET",
 				},

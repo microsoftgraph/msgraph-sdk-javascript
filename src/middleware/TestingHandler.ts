@@ -73,7 +73,6 @@ export class TestingHandler implements Middleware {
 		const responseHeader: Headers = new Headers();
 
 		responseHeader.append("Cache-Control", "no-store");
-		responseHeader.append("Transfer-Encoding", "");
 		responseHeader.append("request-id", requestID);
 		responseHeader.append("client-request-id", requestID);
 		responseHeader.append("x-ms-ags-diagnostic", "");
@@ -175,7 +174,10 @@ export class TestingHandler implements Middleware {
 	 */
 	private getRelativeURL(urlMethod: string): string {
 		const pattern: RegExp = /https?:\/\/graph\.microsoft\.com\/[^/]+(.+?)(\?|$)/;
-		const relativeURL: string = pattern.exec(urlMethod)[1];
+		let relativeURL: string;
+		if (pattern.exec(urlMethod) !== null) {
+			relativeURL = pattern.exec(urlMethod)[1];
+		}
 		return relativeURL;
 	}
 
@@ -191,28 +193,35 @@ export class TestingHandler implements Middleware {
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
 				if (testingHandlerOptions.statusCode === undefined) {
 					// manual mode with no status code, can be a global level or request level without statusCode
-					try {
+					const relativeURL: string = this.getRelativeURL(requestURL);
+					if (this.manualMap.get(relativeURL) !== undefined) {
 						// checking Manual Map for exact match
-						const relativeURL: string = this.getRelativeURL(requestURL);
-						testingHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
-					} catch (error) {
+						if (this.manualMap.get(relativeURL).get(requestMethod) !== undefined) {
+							testingHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
+						} else {
+							throw new Error("API not available in map");
+						}
+					} else {
 						// checking for regex match if exact match doesn't work
-						const relativeURL: string = this.getRelativeURL(requestURL);
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
 							const regexURL: RegExp = new RegExp(key);
 							if (regexURL.test(relativeURL)) {
-								testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
+								if (this.manualMap.get(key).get(requestMethod) !== undefined) {
+									testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
+								} else {
+									throw new Error("API not available in map");
+								}
 							}
 						});
+					}
 
-						// Case of redirection or request url not in map
-						if (testingHandlerOptions.statusCode === undefined) {
-							if (requestURL === this.redirectURL) {
-								// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
-								testingHandlerOptions.statusCode = 404;
-							} else {
-								throw new Error("API not available in map");
-							}
+					// Case of redirection or request url not in map
+					if (testingHandlerOptions.statusCode === undefined) {
+						if (requestURL === this.redirectURL) {
+							// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
+							testingHandlerOptions.statusCode = 404;
+						} else {
+							throw new Error("API not available in map");
 						}
 					}
 				} else {
