@@ -193,6 +193,10 @@ export class TestingHandler implements Middleware {
 			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
 				if (testingHandlerOptions.statusCode === undefined) {
 					// manual mode with no status code, can be a global level or request level without statusCode
+					if (requestURL === this.redirectURL) {
+						// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
+						testingHandlerOptions.statusCode = 404;
+					}
 					const relativeURL: string = this.getRelativeURL(requestURL);
 					if (this.manualMap.get(relativeURL) !== undefined) {
 						// checking Manual Map for exact match
@@ -204,7 +208,7 @@ export class TestingHandler implements Middleware {
 					} else {
 						// checking for regex match if exact match doesn't work
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
-							const regexURL: RegExp = new RegExp(key);
+							const regexURL: RegExp = new RegExp(key + "$");
 							if (regexURL.test(relativeURL)) {
 								if (this.manualMap.get(key).get(requestMethod) !== undefined) {
 									testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
@@ -217,12 +221,7 @@ export class TestingHandler implements Middleware {
 
 					// Case of redirection or request url not in map
 					if (testingHandlerOptions.statusCode === undefined) {
-						if (requestURL === this.redirectURL) {
-							// we send a 404 after a single redirect if it's done (chain contains redirect Handler)
-							testingHandlerOptions.statusCode = 404;
-						} else {
-							throw new Error("API not available in map");
-						}
+						throw new Error("API not available in map");
 					}
 				} else {
 					// if we have got redirection

@@ -65,11 +65,11 @@ describe("TestingHandler.ts", () => {
 
 	describe("createResponse", () => {
 		it("Should return a valid response object for MANUAL case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me/", RequestMethod.GET));
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me", RequestMethod.GET));
 		});
 
 		it("Should return a valid response object for RANDOM case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me/", RequestMethod.GET));
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me", RequestMethod.GET));
 		});
 	});
 
@@ -97,7 +97,7 @@ describe("TestingHandler.ts", () => {
 
 	describe("getRelativeURL", () => {
 		it("Should return a relative URL for the complete URL", () => {
-			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/v1.0/me/"), "/me/");
+			assert.equal(testingHandler["getRelativeURL"]("https://graph.microsoft.com/v1.0/me"), "/me");
 		});
 
 		it("Should return a relative URL for the complete URL with filter", () => {
@@ -122,29 +122,30 @@ describe("TestingHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.MANUAL, 404);
-			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.GET);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode without status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM);
-			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.POST);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode with status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM, 404);
-			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.POST);
+			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap", () => {
-			tempTestingHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me/", RequestMethod.PATCH);
+			tempTestingHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
+			// console.log(tempManualOptions.statusCode);
 			assert.equal(tempManualOptions.statusCode, 201);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap matching regex", () => {
-			tempTestingHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx/", RequestMethod.GET);
+			tempTestingHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
 			assert.equal(tempManualOptionsRegex.statusCode, 500);
 		});
 	});
