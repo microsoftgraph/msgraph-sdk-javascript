@@ -34,4 +34,13 @@ export class HTTPMessageHandler implements Middleware {
 			throw error;
 		}
 	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return undefined;
+	}
 }

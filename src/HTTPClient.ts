@@ -33,6 +33,23 @@ export class HTTPClient {
 		this.middleware = middleware;
 	}
 
+	public getMiddlewareArray(): Middleware[] {
+		const middlewareArray: Middleware[] = [];
+		let currentMiddleware = this.middleware;
+		while (currentMiddleware) {
+			middlewareArray.push(currentMiddleware);
+			currentMiddleware = currentMiddleware.getNext();
+		}
+		return middlewareArray;
+	}
+
+	public setMiddlewareArray(middlewareArray: Middleware[]) {
+		for (let num = 0; num < middlewareArray.length - 1; num += 1) {
+			middlewareArray[num].setNext(middlewareArray[num + 1]);
+		}
+		this.middleware = middlewareArray[0];
+	}
+
 	/**
 	 * @public
 	 * @async
