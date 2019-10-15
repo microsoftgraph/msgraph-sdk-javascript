@@ -38,7 +38,11 @@ export class HTTPClient {
 		let currentMiddleware = this.middleware;
 		while (currentMiddleware) {
 			middlewareArray.push(currentMiddleware);
-			currentMiddleware = currentMiddleware.getNext();
+			if (typeof currentMiddleware.getNext !== "undefined") {
+				currentMiddleware = currentMiddleware.getNext();
+			} else {
+				break;
+			}
 		}
 		return middlewareArray;
 	}
