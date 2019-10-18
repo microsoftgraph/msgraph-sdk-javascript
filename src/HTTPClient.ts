@@ -35,6 +35,37 @@ export class HTTPClient {
 
 	/**
 	 * @public
+	 * To get an array of Middleware, used in middleware chain
+	 * @returns An array of middlewares
+	 */
+	public getMiddlewareArray(): Middleware[] {
+		const middlewareArray: Middleware[] = [];
+		let currentMiddleware = this.middleware;
+		while (currentMiddleware) {
+			middlewareArray.push(currentMiddleware);
+			if (typeof currentMiddleware.getNext !== "undefined") {
+				currentMiddleware = currentMiddleware.getNext();
+			} else {
+				break;
+			}
+		}
+		return middlewareArray;
+	}
+
+	/**
+	 * @public
+	 * To set the middleware chain
+	 * @param {Middleware[]} middlewareArray - The array containing the middlewares
+	 */
+	public setMiddlewareArray(middlewareArray: Middleware[]) {
+		for (let num = 0; num < middlewareArray.length - 1; num += 1) {
+			middlewareArray[num].setNext(middlewareArray[num + 1]);
+		}
+		this.middleware = middlewareArray[0];
+	}
+
+	/**
+	 * @public
 	 * @async
 	 * To send the request through the middleware chain
 	 * @param {Context} context - The context of a request
