@@ -489,7 +489,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public count(isCount: boolean): GraphRequest {
+	public count(isCount: boolean = false): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}

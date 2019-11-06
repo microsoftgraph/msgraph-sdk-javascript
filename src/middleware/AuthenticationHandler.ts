@@ -94,4 +94,13 @@ export class AuthenticationHandler implements Middleware {
 	public setNext(next: Middleware): void {
 		this.nextMiddleware = next;
 	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return this.nextMiddleware;
+	}
 }
