@@ -41,6 +41,14 @@ export class TestingHandlerOptions implements MiddlewareOptions {
 	public statusMessage: string;
 
 	/**
+	 * The percentage of randomness/chaos in the handler
+	 *
+	 * Setting the default value as 10%
+	 * @public
+	 */
+	public chaosPercentage: number;
+
+	/**
 	 * @public
 	 * @constructor
 	 * To create an instance of Testing Handler Options
@@ -49,9 +57,13 @@ export class TestingHandlerOptions implements MiddlewareOptions {
 	 * @param {string} - The Message to be returned in the response
 	 * @returns An instance of TestingHandlerOptions
 	 */
-	public constructor(testingStrategy: TestingStrategy = TestingStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened") {
+	public constructor(testingStrategy: TestingStrategy = TestingStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number) {
 		this.testingStrategy = testingStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
+		this.chaosPercentage = chaosPercentage !== undefined ? chaosPercentage : 10;
+		if (this.chaosPercentage > 100) {
+			throw new Error("Error Pecentage can not be more than 100");
+		}
 	}
 }

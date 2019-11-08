@@ -63,13 +63,20 @@ describe("TestingHandler.ts", () => {
 		});
 	});
 
-	describe("createResponse", () => {
-		it("Should return a valid response object for MANUAL case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), "https://graph.microsoft.com/v1.0/me", RequestMethod.GET));
+	describe("createResponse", async () => {
+		const cxt: Context = {
+			request: "https://graph.microsoft.com/v1.0/me",
+			options: {
+				method: "GET",
+			},
+		};
+
+		it("Should return a valid response object for MANUAL case", async () => {
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.MANUAL, 404), cxt));
 		});
 
-		it("Should return a valid response object for RANDOM case", () => {
-			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), "https://graph.microsoft.com/v1.0/me", RequestMethod.GET));
+		it("Should return a valid response object for RANDOM case", async () => {
+			assert.isDefined(testingHandler["createResponse"](new TestingHandlerOptions(TestingStrategy.RANDOM), cxt));
 		});
 	});
 
@@ -128,8 +135,11 @@ describe("TestingHandler.ts", () => {
 
 		it("Should  set a statusCode for RANDOM mode without status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM);
-			testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
-			assert.isDefined(tempOptions.statusCode);
+			const passThrough = testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
+			console.log(tempOptions.statusCode);
+			if (passThrough === false) {
+				assert.isDefined(tempOptions.statusCode);
+			}
 		});
 
 		it("Should  set a statusCode for RANDOM mode with status Code", () => {
@@ -182,13 +192,13 @@ describe("TestingHandler.ts", () => {
 		});
 	});
 
-	describe("execute", () => {
+	describe("execute", async () => {
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
 		const tempTestingHandlerDefault = new TestingHandler(new TestingHandlerOptions());
 		const tempTestingHandlerRandom = new TestingHandler(new TestingHandlerOptions(TestingStrategy.RANDOM));
 		const tempTestingHandlerManual = new TestingHandler(new TestingHandlerOptions(TestingStrategy.MANUAL), manualMap);
 
-		it("Should return response for Default Case", () => {
+		it("Should return response for Default Case", async () => {
 			const options = new TestingHandlerOptions(TestingStrategy.RANDOM);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
@@ -200,7 +210,7 @@ describe("TestingHandler.ts", () => {
 			assert.isDefined(tempTestingHandlerDefault["execute"](cxt));
 		});
 
-		it("Should return response for Random case", () => {
+		it("Should return response for Random case", async () => {
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
@@ -210,7 +220,7 @@ describe("TestingHandler.ts", () => {
 			assert.isDefined(tempTestingHandlerRandom["execute"](cxt));
 		});
 
-		it("Should return response for Manual Global case", () => {
+		it("Should return response for Manual Global case", async () => {
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
@@ -220,7 +230,7 @@ describe("TestingHandler.ts", () => {
 			assert.isDefined(tempTestingHandlerManual["execute"](cxt));
 		});
 
-		it("Should return response for Manual Request Level case", () => {
+		it("Should return response for Manual Request Level case", async () => {
 			const options = new TestingHandlerOptions(TestingStrategy.MANUAL, 200);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
