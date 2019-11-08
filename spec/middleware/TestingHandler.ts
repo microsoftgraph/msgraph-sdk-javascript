@@ -136,7 +136,6 @@ describe("TestingHandler.ts", () => {
 		it("Should  set a statusCode for RANDOM mode without status Code", () => {
 			const tempOptions = new TestingHandlerOptions(TestingStrategy.RANDOM);
 			const passThrough = testingHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
-			console.log(tempOptions.statusCode);
 			if (passThrough === false) {
 				assert.isDefined(tempOptions.statusCode);
 			}
@@ -150,7 +149,6 @@ describe("TestingHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode with manualMap", () => {
 			tempTestingHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
-			// console.log(tempManualOptions.statusCode);
 			assert.equal(tempManualOptions.statusCode, 201);
 		});
 
