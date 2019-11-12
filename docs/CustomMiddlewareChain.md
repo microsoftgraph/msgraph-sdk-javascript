@@ -144,3 +144,40 @@ export class MyLoggingHandler implements Middleware {
 }
 ```
 Refer [MiddlewareOptions](../src/middleware/options/IMiddlewareOptions.ts) interface to know its structure.
+
+### Modifying the Current Middleware Chain
+
+```js
+// initialising client
+const client = MicrosoftGraph.Client.init({
+	defaultVersion: "v1.0",
+	debugLogging: true,
+	authProvider: (done) => {
+		done(null, secrets.accessToken);
+	},
+});
+
+// getting the current middleware chain (in this case, it's the default one)
+let arr = client.getMiddlewareChain();
+
+// Initialising the Middleware chain that we created
+const dummyRandomHandler = new dummyRandomHandler();
+
+// adding the dummy handler in the array of middlewares at 3rd position
+arr.splice(2, 0, dummyRandomHandler);
+
+// setting the new middleware chain
+client.setMiddlewareChain(arr);
+
+// calling the api
+client
+	.api("/me")
+	.select("displayName")
+	.get()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
