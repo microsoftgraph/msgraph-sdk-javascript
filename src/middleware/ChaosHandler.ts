@@ -6,7 +6,7 @@
  */
 
 /**
- * @module TestingHandler
+ * @module ChaosHandler
  */
 
 import { Context } from "../IContext";
@@ -15,23 +15,23 @@ import { RequestMethod } from "../RequestMethod";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { generateUUID } from "./MiddlewareUtil";
-import { httpStatusCode, methodStatusCode } from "./options/TestingHandlerData";
-import { TestingHandlerOptions } from "./options/TestingHandlerOptions";
-import { TestingStrategy } from "./options/TestingStrategy";
+import { httpStatusCode, methodStatusCode } from "./options/ChaosHandlerData";
+import { ChaosHandlerOptions } from "./options/ChaosHandlerOptions";
+import { ChaosStrategy } from "./options/ChaosStrategy";
 
 /**
- * Class representing TestingHandler
+ * Class representing ChaosHandler
  * @class
  * Class
  * @implements Middleware
  */
-export class TestingHandler implements Middleware {
+export class ChaosHandler implements Middleware {
 	/**
 	 * A member holding options to customize the handler behavior
 	 *
 	 * @private
 	 */
-	private options: TestingHandlerOptions;
+	private options: ChaosHandlerOptions;
 
 	/**
 	 * container for the manual map that has been written by the client
@@ -50,11 +50,11 @@ export class TestingHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * To create an instance of Testing Handler
-	 * @param {TestingHandlerOptions} [options = new TestingHandlerOptions()] - The testing handler options instance
+	 * @param {ChaosHandlerOptions} [options = new ChaosHandlerOptions()] - The testing handler options instance
 	 * @param manualMap - The Map passed by user containing url-statusCode info
 	 * @returns An instance of Testing Handler
 	 */
-	public constructor(options: TestingHandlerOptions = new TestingHandlerOptions(), manualMap?: Map<string, Map<string, number>>) {
+	public constructor(options: ChaosHandlerOptions = new ChaosHandlerOptions(), manualMap?: Map<string, Map<string, number>>) {
 		this.options = options;
 		this.manualMap = manualMap;
 	}
@@ -118,12 +118,12 @@ export class TestingHandler implements Middleware {
 	/**
 	 * creates a response or passes the request to httpMessageHandler
 	 * @private
-	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
+	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {string} requestURL - the URL for the request
 	 * @param {RequestMethod} requestMethod - enum for request method
 	 * @returns nothing
 	 */
-	private async createResponse(testingHandlerOptions: TestingHandlerOptions, context: Context): Promise<void> {
+	private async createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
 		try {
 			let responseBody: any;
 			let responseHeader: Headers;
@@ -132,13 +132,13 @@ export class TestingHandler implements Middleware {
 			const requestURL = context.request as string;
 			const requestMethod = context.options.method as RequestMethod;
 
-			const passThrough = this.setStatusCode(testingHandlerOptions, requestURL, requestMethod);
+			const passThrough = this.setStatusCode(chaosHandlerOptions, requestURL, requestMethod);
 			if (passThrough === false) {
 				requestID = generateUUID();
 				requestDate = new Date();
-				responseHeader = this.createResponseHeaders(testingHandlerOptions.statusCode, requestID, requestDate.toString());
-				responseBody = this.createResponseBody(testingHandlerOptions.statusCode, testingHandlerOptions.statusMessage, requestID, requestDate.toString());
-				const init: any = { url: requestURL, status: testingHandlerOptions.statusCode, statusText: testingHandlerOptions.statusMessage, headers: responseHeader };
+				responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
+				responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
+				const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
 				context.response = new Response(responseBody, init);
 			} else {
 				await this.nextMiddleware.execute(context);
@@ -181,20 +181,20 @@ export class TestingHandler implements Middleware {
 	/**
 	 * To fetch the status code from the map(if needed), then returns response by calling createResponse
 	 * @private
-	 * @param {TestingHandlerOptions} testingHandlerOptions - The TestingHandlerOptions object
+	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
 	 */
-	private setStatusCode(testingHandlerOptions: TestingHandlerOptions, requestURL: string, requestMethod: RequestMethod): boolean {
+	private setStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod): boolean {
 		try {
-			if (testingHandlerOptions.testingStrategy === TestingStrategy.MANUAL) {
-				if (testingHandlerOptions.statusCode === undefined) {
+			if (chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL) {
+				if (chaosHandlerOptions.statusCode === undefined) {
 					// manual mode with no status code, can be a global level or request level without statusCode
 					const relativeURL: string = this.getRelativeURL(requestURL);
 					if (this.manualMap.get(relativeURL) !== undefined) {
 						// checking Manual Map for exact match
 						if (this.manualMap.get(relativeURL).get(requestMethod) !== undefined) {
-							testingHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
+							chaosHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
 						} else {
 							// throw new Error("API not available in map");
 							return true;
@@ -205,7 +205,7 @@ export class TestingHandler implements Middleware {
 							const regexURL: RegExp = new RegExp(key + "$");
 							if (regexURL.test(relativeURL)) {
 								if (this.manualMap.get(key).get(requestMethod) !== undefined) {
-									testingHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
+									chaosHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
 								} else {
 									// throw new Error("API not available in map");
 									return true;
@@ -215,15 +215,15 @@ export class TestingHandler implements Middleware {
 					}
 
 					// Case of redirection or request url not in map
-					if (testingHandlerOptions.statusCode === undefined) {
+					if (chaosHandlerOptions.statusCode === undefined) {
 						// throw new Error("API not available in map");
 						return true;
 					}
 				}
 			} else {
 				// Handling the case of Random here
-				if (Math.floor(Math.random() * 100) < testingHandlerOptions.chaosPercentage) {
-					testingHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
+				if (Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
+					chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
 				} else {
 					return true;
 				}
@@ -240,13 +240,13 @@ export class TestingHandler implements Middleware {
 	 * @param {Context} context - The context object
 	 * @returns options for middleware execution
 	 */
-	private getOptions(context: Context): TestingHandlerOptions {
-		let options: TestingHandlerOptions;
+	private getOptions(context: Context): ChaosHandlerOptions {
+		let options: ChaosHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(TestingHandlerOptions) as TestingHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(ChaosHandlerOptions) as ChaosHandlerOptions;
 		}
 		if (typeof options === "undefined") {
-			options = Object.assign(new TestingHandlerOptions(), this.options);
+			options = Object.assign(new ChaosHandlerOptions(), this.options);
 		}
 
 		return options;
@@ -261,8 +261,8 @@ export class TestingHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			const testingHandlerOptions: TestingHandlerOptions = this.getOptions(context);
-			return this.createResponse(testingHandlerOptions, context);
+			const chaosHandlerOptions: ChaosHandlerOptions = this.getOptions(context);
+			return this.createResponse(chaosHandlerOptions, context);
 		} catch (error) {
 			throw error;
 		}

@@ -6,14 +6,14 @@
  */
 
 /**
- * @module TestingStrategy
+ * @module ChaosStrategy
  */
 
 /**
  * Strategy used for Testing Handler
  * @enum
  */
-export enum TestingStrategy {
+export enum ChaosStrategy {
 	MANUAL,
 	RANDOM,
 }

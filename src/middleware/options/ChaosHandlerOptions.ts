@@ -6,25 +6,25 @@
  */
 
 /**
- * @module TestingHandlerOptions
+ * @module ChaosHandlerOptions
  */
 
+import { ChaosStrategy } from "./ChaosStrategy";
 import { MiddlewareOptions } from "./IMiddlewareOptions";
-import { TestingStrategy } from "./TestingStrategy";
 
 /**
- * Class representing TestingHandlerOptions
+ * Class representing ChaosHandlerOptions
  * @class
  * Class
  * @implements MiddlewareOptions
  */
-export class TestingHandlerOptions implements MiddlewareOptions {
+export class ChaosHandlerOptions implements MiddlewareOptions {
 	/**
 	 * Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
 	 *
 	 * @public
 	 */
-	public testingStrategy: TestingStrategy;
+	public chaosStrategy: ChaosStrategy;
 
 	/**
 	 * Status code to be returned in the response
@@ -52,13 +52,13 @@ export class TestingHandlerOptions implements MiddlewareOptions {
 	 * @public
 	 * @constructor
 	 * To create an instance of Testing Handler Options
-	 * @param {TestingStrategy} testingStrategy - Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
+	 * @param {ChaosStrategy} ChaosStrategy - Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
 	 * @param {number?} statusCode - The Message to be returned in the response
 	 * @param {string} - The Message to be returned in the response
-	 * @returns An instance of TestingHandlerOptions
+	 * @returns An instance of ChaosHandlerOptions
 	 */
-	public constructor(testingStrategy: TestingStrategy = TestingStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number) {
-		this.testingStrategy = testingStrategy;
+	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number) {
+		this.chaosStrategy = chaosStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
 		this.chaosPercentage = chaosPercentage !== undefined ? chaosPercentage : 10;
