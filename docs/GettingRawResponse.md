@@ -4,7 +4,7 @@ Steps for getting the raw response [i.e [Response Object](https://developer.mozi
 
 ## Initialize the Client
 
-Refer [this documentation](../CreatingClientInstance.md) for initializing the client.
+Refer [this documentation](./CreatingClientInstance.md) for initializing the client.
 
 ## Getting Raw Response by setting ResponseType
 
