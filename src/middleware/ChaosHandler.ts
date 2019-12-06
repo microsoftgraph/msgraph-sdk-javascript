@@ -119,29 +119,41 @@ export class ChaosHandler implements Middleware {
 	 * creates a response or passes the request to httpMessageHandler
 	 * @private
 	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
-	 * @param {string} requestURL - the URL for the request
-	 * @param {RequestMethod} requestMethod - enum for request method
-	 * @returns nothing
+	 * @param {Context} context - Contains the context of the request
 	 */
-	private async createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
+	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
 		try {
 			let responseBody: any;
 			let responseHeader: Headers;
 			let requestID: string;
 			let requestDate: Date;
 			const requestURL = context.request as string;
-			const requestMethod = context.options.method as RequestMethod;
 
-			const passThrough = this.setStatusCode(chaosHandlerOptions, requestURL, requestMethod);
-			if (passThrough === false) {
-				requestID = generateUUID();
-				requestDate = new Date();
-				responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
-				responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
-				const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
-				context.response = new Response(responseBody, init);
-			} else {
+			requestID = generateUUID();
+			requestDate = new Date();
+			responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
+			responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
+			const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
+			context.response = new Response(responseBody, init);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * Decides whether to send the request to the graph or not
+	 * @private
+	 * @param {ChaosHandlerOptions} chaosHandlerOptions - A ChaosHandlerOptions object
+	 * @param {Context} context - Contains the context of the request
+	 * @returns nothing
+	 */
+	private async sendRequest(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
+		try {
+			this.getStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
+			if (!chaosHandlerOptions.statusCode) {
 				await this.nextMiddleware.execute(context);
+			} else {
+				this.createResponse(chaosHandlerOptions, context);
 			}
 		} catch (error) {
 			throw error;
@@ -185,7 +197,7 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
 	 */
-	private setStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod): boolean {
+	private getStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod) {
 		try {
 			if (chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL) {
 				if (chaosHandlerOptions.statusCode === undefined) {
@@ -195,10 +207,8 @@ export class ChaosHandler implements Middleware {
 						// checking Manual Map for exact match
 						if (this.manualMap.get(relativeURL).get(requestMethod) !== undefined) {
 							chaosHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
-						} else {
-							// throw new Error("API not available in map");
-							return true;
 						}
+						// else statusCode would be undefined
 					} else {
 						// checking for regex match if exact match doesn't work
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
@@ -206,29 +216,21 @@ export class ChaosHandler implements Middleware {
 							if (regexURL.test(relativeURL)) {
 								if (this.manualMap.get(key).get(requestMethod) !== undefined) {
 									chaosHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
-								} else {
-									// throw new Error("API not available in map");
-									return true;
 								}
+								// else statusCode would be undefined
 							}
 						});
 					}
 
-					// Case of redirection or request url not in map
-					if (chaosHandlerOptions.statusCode === undefined) {
-						// throw new Error("API not available in map");
-						return true;
-					}
+					// Case of redirection or request url not in map ---> statusCode would be undefined
 				}
 			} else {
 				// Handling the case of Random here
 				if (Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
 					chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
-				} else {
-					return true;
 				}
+				// else statusCode would be undefined
 			}
-			return false;
 		} catch (error) {
 			throw error;
 		}
@@ -262,7 +264,7 @@ export class ChaosHandler implements Middleware {
 	public async execute(context: Context): Promise<void> {
 		try {
 			const chaosHandlerOptions: ChaosHandlerOptions = this.getOptions(context);
-			return this.createResponse(chaosHandlerOptions, context);
+			return this.sendRequest(chaosHandlerOptions, context);
 		} catch (error) {
 			throw error;
 		}

@@ -63,7 +63,7 @@ describe("ChaosHandler.ts", () => {
 		});
 	});
 
-	describe("createResponse", async () => {
+	describe("createResponse", () => {
 		const cxt: Context = {
 			request: "https://graph.microsoft.com/v1.0/me",
 			options: {
@@ -71,12 +71,14 @@ describe("ChaosHandler.ts", () => {
 			},
 		};
 
-		it("Should return a valid response object for MANUAL case", async () => {
-			assert.isDefined(chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404), cxt));
+		it("Should return a valid response object for MANUAL case", () => {
+			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404), cxt);
+			assert.isDefined(cxt.response);
 		});
 
-		it("Should return a valid response object for RANDOM case", async () => {
-			assert.isDefined(chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.RANDOM), cxt));
+		it("Should return a valid response object for RANDOM case", () => {
+			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.RANDOM), cxt);
+			assert.isDefined(cxt.response);
 		});
 	});
 
@@ -120,7 +122,7 @@ describe("ChaosHandler.ts", () => {
 		});
 	});
 
-	describe("setStatusCode", () => {
+	describe("getStatusCode", () => {
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me/messages/.*", new Map([["GET", 500], ["PATCH", 201]])], ["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
 		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
 		const tempManualOptionsRegex: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
@@ -129,31 +131,23 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404);
-			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
+			chaosHandler["getStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
-		it("Should  set a statusCode for RANDOM mode without status Code", () => {
-			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM);
-			const passThrough = chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
-			if (passThrough === false) {
-				assert.isDefined(tempOptions.statusCode);
-			}
-		});
-
-		it("Should  set a statusCode for RANDOM mode with status Code", () => {
-			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, 404);
-			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
+		it("Should  set a statusCode for RANDOM mode", () => {
+			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, undefined, "I generated the error", 100);
+			chaosHandler["getStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap", () => {
-			tempChaosHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
+			tempChaosHandlerManual["getStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
 			assert.equal(tempManualOptions.statusCode, 201);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap matching regex", () => {
-			tempChaosHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
+			tempChaosHandlerManualRegex["getStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
 			assert.equal(tempManualOptionsRegex.statusCode, 500);
 		});
 	});
