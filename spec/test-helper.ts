@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import "isomorphic-fetch";
+
 import { Client } from "../src/index";
-import "../src/PolyFill";
 
 import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
 

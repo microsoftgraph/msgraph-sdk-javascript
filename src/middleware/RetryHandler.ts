@@ -92,7 +92,7 @@ export class RetryHandler implements Middleware {
 	 * @returns Whether the payload is buffered or not
 	 */
 	private isBuffered(request: RequestInfo, options: FetchOptions | undefined): boolean {
-		const method = request instanceof Request ? (request as Request).method : options.method;
+		const method = typeof request === "string" ? options.method : (request as Request).method;
 		const isPutPatchOrPost: boolean = method === RequestMethod.PUT || method === RequestMethod.PATCH || method === RequestMethod.POST;
 		if (isPutPatchOrPost) {
 			const isStream = getRequestHeader(request, options, "Content-Type") === "application/octet-stream";
@@ -155,7 +155,7 @@ export class RetryHandler implements Middleware {
 	private getOptions(context: Context): RetryHandlerOptions {
 		let options: RetryHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RetryHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor) as RetryHandlerOptions;
 		}
 		if (typeof options === "undefined") {
 			options = Object.assign(new RetryHandlerOptions(), this.options);
@@ -215,5 +215,14 @@ export class RetryHandler implements Middleware {
 	 */
 	public setNext(next: Middleware): void {
 		this.nextMiddleware = next;
+	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return this.nextMiddleware;
 	}
 }

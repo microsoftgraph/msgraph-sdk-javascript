@@ -15,7 +15,7 @@ import { Context } from "../IContext";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { setRequestHeader } from "./MiddlewareUtil";
+import { appendRequestHeader } from "./MiddlewareUtil";
 import { AuthenticationHandlerOptions } from "./options/AuthenticationHandlerOptions";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
@@ -64,7 +64,7 @@ export class AuthenticationHandler implements Middleware {
 		try {
 			let options: AuthenticationHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions.name) as AuthenticationHandlerOptions;
+				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
 			}
 			let authenticationProvider: AuthenticationProvider;
 			let authenticationProviderOptions: AuthenticationProviderOptions;
@@ -77,7 +77,7 @@ export class AuthenticationHandler implements Middleware {
 			}
 			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
 			const bearerKey: string = `Bearer ${token}`;
-			setRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
@@ -93,5 +93,14 @@ export class AuthenticationHandler implements Middleware {
 	 */
 	public setNext(next: Middleware): void {
 		this.nextMiddleware = next;
+	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return this.nextMiddleware;
 	}
 }

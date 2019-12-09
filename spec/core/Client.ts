@@ -6,12 +6,12 @@
  */
 
 import { assert } from "chai";
+import "isomorphic-fetch";
 
 import { Client } from "../../src/Client";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
 import { Options } from "../../src/IOptions";
-import "../../src/PolyFill";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 

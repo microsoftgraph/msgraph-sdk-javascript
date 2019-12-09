@@ -5,8 +5,6 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import "./PolyFill";
-
 export * from "./content/BatchRequestContent";
 export * from "./content/BatchResponseContent";
 

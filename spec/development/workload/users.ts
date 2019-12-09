@@ -5,9 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { User } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import "isomorphic-fetch";
+import { User } from "microsoft-graph";
 
 import { getClient, randomString } from "../test-helper";
 

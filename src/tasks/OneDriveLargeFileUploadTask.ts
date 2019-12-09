@@ -76,21 +76,18 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		const name: string = options.fileName;
 		let content;
 		let size;
-		switch (file.constructor.name) {
-			case "Blob":
-				content = new File([file as Blob], name);
-				size = content.size;
-				break;
-			case "File":
-				content = file as File;
-				size = content.size;
-				break;
-			case "Buffer":
-				const b = file as Buffer;
-				size = b.byteLength - b.byteOffset;
-				content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
-				break;
+		if (typeof Blob !== "undefined" && file instanceof Blob) {
+			content = new File([file as Blob], name);
+			size = content.size;
+		} else if (typeof File !== "undefined" && file instanceof File) {
+			content = file as File;
+			size = content.size;
+		} else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
+			const b = file as Buffer;
+			size = b.byteLength - b.byteOffset;
+			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
 		}
+
 		try {
 			const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 			const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);

@@ -50,6 +50,33 @@ describe("RetryHandlerOptions.ts", () => {
 			}
 		});
 
+		it("Should throw error for both delay and maxRetries are negative", () => {
+			try {
+				const options = new RetryHandlerOptions(-1, -100);
+				throw new Error("Something wrong with the delay and maxRetries max limit validation");
+			} catch (error) {
+				assert.equal(error.name, "MinExpectationNotMet");
+			}
+		});
+
+		it("Should throw error for delay is negative", () => {
+			try {
+				const options = new RetryHandlerOptions(-5, 2);
+				throw new Error("Something wrong with the delay max limit validation");
+			} catch (error) {
+				assert.equal(error.name, "MinExpectationNotMet");
+			}
+		});
+
+		it("Should throw error for maxRetries is negative", () => {
+			try {
+				const options = new RetryHandlerOptions(1, -10);
+				throw new Error("Something wrong with the maxRetries max limit validation");
+			} catch (error) {
+				assert.equal(error.name, "MinExpectationNotMet");
+			}
+		});
+
 		it("Should accept all the given values", () => {
 			try {
 				const delay: number = 1;

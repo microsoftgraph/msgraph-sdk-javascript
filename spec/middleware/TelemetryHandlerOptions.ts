@@ -27,7 +27,7 @@ describe("TelemetryHandlerOptions.ts", () => {
 				middlewareControl: new MiddlewareControl(),
 			};
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 			assert.equal(options["featureUsage"], FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 		});
 
@@ -37,7 +37,7 @@ describe("TelemetryHandlerOptions.ts", () => {
 				middlewareControl: new MiddlewareControl([new TelemetryHandlerOptions()]),
 			};
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 			assert.equal(options["featureUsage"], FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 		});
 
@@ -46,7 +46,7 @@ describe("TelemetryHandlerOptions.ts", () => {
 				request: "url",
 			};
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+			const options: TelemetryHandlerOptions = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 			assert.equal(options["featureUsage"], FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 		});
 	});

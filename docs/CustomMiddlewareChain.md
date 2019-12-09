@@ -68,14 +68,14 @@ Can use own middlewares and the ones shipped with the library [[Here](../src/mid
 
 Using AuthenticationHandler [one shipped with the library] and MyLoggingHandler, and MyHttpMessageHandler [custom ones] to create a middleware chain here.
 
-NOTE: Instead of MSALAuthenticationProvider, one can provide his own Authentication Handler. For more about using custom authentication provider, refer [here](./CustomAuthenticationProvider.md).
+NOTE: Instead of ImplicitMSALAuthenticationProvider, one can provide his own Authentication Handler. For more about using custom authentication provider, refer [here](./CustomAuthenticationProvider.md).
 
 ```typescript
-import { MSALAuthenticationProvider } from "@microsoft/microsoft-graph-client";
+import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client";
 import { MyLoggingHandler } from "./MyLoggingHandler";
 import { MyHttpMessageHandler } from "./MyHttpMessageHandler";
 
-let authProvider = new MSALAuthenticationProvider("<CLIENT_ID>", ["user.read"]);
+let authProvider = new ImplicitMSALAuthenticationProvider("<CLIENT_ID>", ["user.read"]);
 let authenticationHandler = new AuthenticationHandler(authProvider);
 let myLoggingHandler = new MyLoggingHandler();
 let myHttpMessageHandler = new MyHttpMessageHandler();
@@ -143,5 +143,41 @@ export class MyLoggingHandler implements Middleware {
 	}
 }
 ```
+Refer [MiddlewareOptions](../src/middleware/options/IMiddlewareOptions.ts) interface to know its structure.
 
-Refer [MiddlewareOptions](../src/middleware/option/IMiddlewareOptions.ts) interface to know its structure.
+### Modifying the Current Middleware Chain
+
+```js
+// initialising client
+const client = MicrosoftGraph.Client.init({
+	defaultVersion: "v1.0",
+	debugLogging: true,
+	authProvider: (done) => {
+		done(null, secrets.accessToken);
+	},
+});
+
+// getting the current middleware chain (in this case, it's the default one)
+let arr = client.getMiddlewareChain();
+
+// Initialising the Middleware chain that we created
+const dummyRandomHandler = new dummyRandomHandler();
+
+// adding the dummy handler in the array of middlewares at 3rd position
+arr.splice(2, 0, dummyRandomHandler);
+
+// setting the new middleware chain
+client.setMiddlewareChain(arr);
+
+// calling the api
+client
+	.api("/me")
+	.select("displayName")
+	.get()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```

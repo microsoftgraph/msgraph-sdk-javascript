@@ -489,7 +489,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public count(isCount: boolean): GraphRequest {
+	public count(isCount: boolean = false): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}
@@ -551,7 +551,7 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 			headers:
-				content.constructor !== undefined && content.constructor.name === "FormData"
+				typeof FormData !== "undefined" && content instanceof FormData
 					? {}
 					: {
 							"Content-Type": "application/json",
@@ -595,7 +595,7 @@ export class GraphRequest {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
 			headers: {
-				"Content-Type": "application/octet-stream",
+				"Content-Type": "application/json",
 			},
 		};
 		try {

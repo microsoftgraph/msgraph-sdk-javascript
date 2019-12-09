@@ -9,12 +9,12 @@
  * @module TelemetryHandler
  */
 
-import { PACKAGE_VERSION } from "../Constants";
 import { Context } from "../IContext";
+import { PACKAGE_VERSION } from "../Version";
 
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { generateUUID, getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
+import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
 import { TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
 /**
@@ -74,13 +74,13 @@ export class TelemetryHandler implements Middleware {
 			let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
 			let options: TelemetryHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions.name) as TelemetryHandlerOptions;
+				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 			}
 			if (typeof options !== "undefined") {
 				const featureUsage: string = options.getFeatureUsage();
 				sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
 			}
-			setRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
+			appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
 			throw error;
@@ -95,5 +95,14 @@ export class TelemetryHandler implements Middleware {
 	 */
 	public setNext(next: Middleware): void {
 		this.nextMiddleware = next;
+	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return this.nextMiddleware;
 	}
 }

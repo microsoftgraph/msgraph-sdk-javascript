@@ -21,11 +21,11 @@ interface KeyValuePairObject {
  * @interface
  * Signature representing Batch response body
  * @property {KeyValuePairObject[]} responses - An array of key value pair representing response object for every request
- * @property {string} [@nextLink] - The nextLink value to get next set of responses in case of asynchronous batch requests
+ * @property {string} [@odata.nextLink] - The nextLink value to get next set of responses in case of asynchronous batch requests
  */
 interface BatchResponseBody {
 	responses: KeyValuePairObject[];
-	"@nextLink"?: string;
+	"@odata.nextLink"?: string;
 }
 
 /**
@@ -69,6 +69,12 @@ export class BatchResponseContent {
 			options.statusText = responseJSON.statusText;
 		}
 		options.headers = responseJSON.headers;
+		if (options.headers !== undefined && options.headers["Content-Type"] !== undefined) {
+			if (options.headers["Content-Type"].split(";")[0] === "application/json") {
+				const bodyString = JSON.stringify(body);
+				return new Response(bodyString, options);
+			}
+		}
 		return new Response(body, options);
 	}
 
@@ -79,7 +85,7 @@ export class BatchResponseContent {
 	 * @returns Nothing
 	 */
 	public update(response: BatchResponseBody): void {
-		this.nextLink = response["@nextLink"];
+		this.nextLink = response["@odata.nextLink"];
 		const responses = response.responses;
 		for (let i = 0, l = responses.length; i < l; i++) {
 			this.responses.set(responses[i].id, this.createResponseObject(responses[i]));

@@ -89,7 +89,7 @@ export class GraphErrorHandler {
 		let gError: GraphError;
 		if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
-		} else if (error && error.constructor.name === "Error") {
+		} else if (typeof Error !== "undefined" && error instanceof Error) {
 			gError = GraphErrorHandler.constructError(error, statusCode);
 		} else {
 			gError = new GraphError(statusCode);

@@ -161,7 +161,7 @@ export class RedirectHandler implements Middleware {
 	 * @returns Nothing
 	 */
 	private async updateRequestUrl(redirectUrl: string, context: Context): Promise<void> {
-		context.request = context.request instanceof Request ? await cloneRequestWithNewUrl(redirectUrl, context.request as Request) : redirectUrl;
+		context.request = typeof context.request === "string" ? redirectUrl : await cloneRequestWithNewUrl(redirectUrl, context.request as Request);
 	}
 
 	/**
@@ -173,7 +173,7 @@ export class RedirectHandler implements Middleware {
 	private getOptions(context: Context): RedirectHandlerOptions {
 		let options: RedirectHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(this.options.constructor.name) as RedirectHandlerOptions;
+			options = context.middlewareControl.getMiddlewareOptions(RedirectHandlerOptions) as RedirectHandlerOptions;
 		}
 		if (typeof options === "undefined") {
 			options = Object.assign(new RedirectHandlerOptions(), this.options);
@@ -242,5 +242,14 @@ export class RedirectHandler implements Middleware {
 	 */
 	public setNext(next: Middleware): void {
 		this.nextMiddleware = next;
+	}
+
+	/**
+	 * @public
+	 * To get the next middleware in the chain
+	 * @returns next Middleware instance
+	 */
+	public getNext(): Middleware {
+		return this.nextMiddleware;
 	}
 }

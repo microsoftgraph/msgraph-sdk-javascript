@@ -5,10 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Notebook, OnenotePage, OnenoteSection } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import FormData from "form-data";
 import fs from "fs";
+import { Notebook, OnenotePage, OnenoteSection } from "microsoft-graph";
 
 import { getClient, randomString } from "../test-helper";
 
