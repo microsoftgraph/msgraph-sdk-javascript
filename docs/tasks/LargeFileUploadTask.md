@@ -104,7 +104,7 @@ _You can pass in the customized options using LargeFileUploadTask_
 
 ```typescript
 async function largeFileUpload(client, file) {
-	const filename = file.name;
+	const fileName = file.name;
 	const driveId = "<YOUR_DRIVE_ID>";
 	const path = "<LOCATION_TO_STORE_FILE>";
 	try {
