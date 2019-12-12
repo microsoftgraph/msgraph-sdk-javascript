@@ -4,10 +4,14 @@
 
 > Uses [Custom Middleware Chain](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/CustomMiddlewareChain.md), it's not included in default middleware chain
 
-### Modes in Testing Handler
+### Modes in Chaos Handler
 
 -   Manual mode - Setting the Response code manually. - Global/Client Level - Provide a map declared manually containing response code for the requests. - Request Level - Providing response code per request. This would be overriding the Global level response code (if any).
 -   Random mode - We get a random Response code from a set of response code defined for each method.
+
+**A request Passes through to the Graph, if there is no entry for the request**
+
+**Note - Always add ChaosHandler before HttpMessageHandler in the midllewareChain**
 
 ### Samples
 
@@ -25,16 +29,12 @@ const client = MicrosoftGraph.Client.init({
 	},
 });
 
-// Declaring the Map, containing response codes for the urls
+/*
+Create a custom MiddlewareChain passing information in this way
+
 const manualMap = new Map([["/me/messages/.*", new Map([["GET", 429], ["PATCH", 429]])], ["/me", new Map([["POST", 502]])]]);
-
-// Declaring the chaosHandler and passing the map (if using map, we have to put default strategy as MANUAL)
 const chaosHandler = new MicrosoftGraph.ChaosHandler(new MicrosoftGraph.ChaosHandlerOptions(MicrosoftGraph.ChaosStrategy.MANUAL), manualMap);
-
-// Modifying the default middleware chain to add chaos handler, just before httpMessageHandler, otherwise there can be a problem
-let arr = client.getMiddlewareChain();
-arr.splice(arr.length - 1, 0, chaosHandler);
-client.setMiddlewareChain(arr);
+*/
 
 // This request would use the Map (Manual mode)
 const mail = {
