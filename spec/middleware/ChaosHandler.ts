@@ -6,6 +6,7 @@ import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
 import { ChaosHandlerOptions } from "../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../src/middleware/options/ChaosStrategy";
 import { RequestMethod } from "../../src/RequestMethod";
+import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 const chaosHandlerOptions = new ChaosHandlerOptions();
 const chaosHandler = new ChaosHandler();
@@ -30,24 +31,9 @@ describe("ChaosHandler.ts", () => {
 			assert.isDefined(responseHeader.get("request-id"));
 		});
 
-		it("Should have Location for 3xx cases", () => {
-			const responseHeader = chaosHandler["createResponseHeaders"](301, "xxxxxxxxxxxxxxxx", new Date().toString());
-			assert.isDefined(responseHeader.get("Location"));
-		});
-
-		it("Should have request-id for 3xx cases", () => {
-			const responseHeader = chaosHandler["createResponseHeaders"](301, "xxxxxxxxxxxxxxxx", new Date().toString());
-			assert.isDefined(responseHeader.get("request-id"));
-		});
-
-		it("Should have timeout for 429 case", () => {
+		it("Should have retry-after for 429 case", () => {
 			const responseHeader = chaosHandler["createResponseHeaders"](429, "xxxxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseHeader.get("retry-after"));
-		});
-
-		it("Should have request-id for 5xx cases", () => {
-			const responseHeader = chaosHandler["createResponseHeaders"](500, "xxxxxxxxxxxxxxxx", new Date().toString());
-			assert.isDefined(responseHeader.get("request-id"));
 		});
 	});
 
@@ -58,7 +44,7 @@ describe("ChaosHandler.ts", () => {
 		});
 
 		it("Should return empty response body for success scenarios", () => {
-			const responseBody = chaosHandler["createResponseBody"](303, "Not Found", "xxxxxxxxxxxxxx", new Date().toString());
+			const responseBody = chaosHandler["createResponseBody"](200, "Not Found", "xxxxxxxxxxxxxx", new Date().toString());
 			assert.equal(Object.keys(responseBody).length, 0);
 		});
 	});
@@ -78,6 +64,33 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should return a valid response object for RANDOM case", () => {
 			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.RANDOM), cxt);
+			assert.isDefined(cxt.response);
+		});
+	});
+
+	describe("sendRequest", async () => {
+		const cxt: Context = {
+			request: "https://graph.microsoft.com/v1.0/me",
+			options: {
+				method: "GET",
+			},
+		};
+
+		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500]])]]);
+		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
+		const tempChaosHandler = new ChaosHandler(tempManualOptions, manualMap);
+
+		const dummyHTTPHandler = new DummyHTTPMessageHandler();
+		const handler = new ChaosHandler();
+		handler.setNext(dummyHTTPHandler);
+
+		it("Should return a response after creating it", async () => {
+			tempChaosHandler["sendRequest"](tempManualOptions, cxt);
+			assert.isDefined(cxt.response);
+		});
+
+		it("Should send the request to the graph", async () => {
+			handler["sendRequest"](new ChaosHandlerOptions(ChaosStrategy.RANDOM, undefined, "I generated the error", 100), cxt);
 			assert.isDefined(cxt.response);
 		});
 	});
@@ -122,7 +135,7 @@ describe("ChaosHandler.ts", () => {
 		});
 	});
 
-	describe("getStatusCode", () => {
+	describe("setStatusCode", () => {
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me/messages/.*", new Map([["GET", 500], ["PATCH", 201]])], ["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
 		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
 		const tempManualOptionsRegex: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
@@ -131,23 +144,23 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404);
-			chaosHandler["getStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
+			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, undefined, "I generated the error", 100);
-			chaosHandler["getStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
+			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap", () => {
-			tempChaosHandlerManual["getStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
+			tempChaosHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
 			assert.equal(tempManualOptions.statusCode, 201);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap matching regex", () => {
-			tempChaosHandlerManualRegex["getStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
+			tempChaosHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
 			assert.equal(tempManualOptionsRegex.statusCode, 500);
 		});
 	});
@@ -186,9 +199,13 @@ describe("ChaosHandler.ts", () => {
 
 	describe("execute", async () => {
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
+		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 		const tempChaosHandlerDefault = new ChaosHandler(new ChaosHandlerOptions());
 		const tempChaosHandlerRandom = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.RANDOM));
 		const tempChaosHandlerManual = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.MANUAL), manualMap);
+		tempChaosHandlerDefault.setNext(dummyHTTPHandler);
+		tempChaosHandlerRandom.setNext(dummyHTTPHandler);
+		tempChaosHandlerManual.setNext(dummyHTTPHandler);
 
 		it("Should return response for Default Case", async () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.RANDOM);

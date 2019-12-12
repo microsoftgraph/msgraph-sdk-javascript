@@ -116,7 +116,7 @@ export class ChaosHandler implements Middleware {
 	}
 
 	/**
-	 * creates a response or passes the request to httpMessageHandler
+	 * creates a response
 	 * @private
 	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {Context} context - Contains the context of the request
@@ -149,7 +149,7 @@ export class ChaosHandler implements Middleware {
 	 */
 	private async sendRequest(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
 		try {
-			this.getStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
+			this.setStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
 			if (!chaosHandlerOptions.statusCode) {
 				await this.nextMiddleware.execute(context);
 			} else {
@@ -197,7 +197,7 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
 	 */
-	private getStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod) {
+	private setStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod) {
 		try {
 			if (chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL) {
 				if (chaosHandlerOptions.statusCode === undefined) {
@@ -264,7 +264,7 @@ export class ChaosHandler implements Middleware {
 	public async execute(context: Context): Promise<void> {
 		try {
 			const chaosHandlerOptions: ChaosHandlerOptions = this.getOptions(context);
-			return this.sendRequest(chaosHandlerOptions, context);
+			return await this.sendRequest(chaosHandlerOptions, context);
 		} catch (error) {
 			throw error;
 		}

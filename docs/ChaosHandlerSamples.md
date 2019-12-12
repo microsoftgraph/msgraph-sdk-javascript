@@ -38,69 +38,65 @@ client.setMiddlewareChain(arr);
 
 // This request would use the Map (Manual mode)
 const mail = {
-    subject: "Testing Handler Samples",
-    toRecipients: [
-        {
-            emailAddress: {
-                address: "admin@M365x003297.OnMicrosoft.com",
-            },
-        },
-    ],
-    body: {
-        content: "<h1>Testing Handler Samples Sample</h1><br>https://github.com/microsoftgraph/msgraph-sdk-javascript",
-        contentType: "html",
-    },
+	subject: "Chaos Handler Samples",
+	toRecipients: [
+		{
+			emailAddress: {
+				address: "admin@M365x003297.OnMicrosoft.com",
+			},
+		},
+	],
+	body: {
+		content: "<h1>Testing Handler Samples Sample</h1><br>https://github.com/microsoftgraph/msgraph-sdk-javascript",
+		contentType: "html",
+	},
 };
 client
-    .api("/users/me/sendMail")
-    .post({
-        message: mail,
-    })
-    .then((res) => {
-        console.log(res, "This is for sendMail");
-    })
-    .catch((err) => {
-        console.log(err, "This is for sendMail in error case");
-    });
-   
-   
+	.api("/users/me/sendMail")
+	.post({
+		message: mail,
+	})
+	.then((res) => {
+		console.log(res, "This is for sendMail");
+	})
+	.catch((err) => {
+		console.log(err, "This is for sendMail in error case");
+	});
+
 // OverRiding to Random mode, providing the chaos percentage as 60(percentage times the error would be generated from handler)
 client
 	.api("/me")
-    .middlewareOptions([new MicrosoftGraph.ChaosHandlerOptions(MicrosoftGraph.ChaosStrategy.RANDOM, undefined, "I generated the error", 60)])
+	.middlewareOptions([new MicrosoftGraph.ChaosHandlerOptions(MicrosoftGraph.ChaosStrategy.RANDOM, undefined, "I generated the error", 60)])
 	.get()
 	.then((res) => {
 		console.log(res);
 	})
 	.catch((err) => {
 		console.log(err);
-    });
-    
-    
-// This request is passed to the graph and gets a response from the graph, as no entry for /me GET request in the Map    
+	});
+
+// This request is passed to the graph and gets a response from the graph, as no entry for /me GET request in the Map
 client
-    .api("/me")
-    .get()
-    .then((res) => {
-        console.log("Found", res, "users");
-    })
-    .catch((err) => {
-        console.log(err,"!!!!!!!!!");
-    });
- 
- 
+	.api("/me")
+	.get()
+	.then((res) => {
+		console.log("Found", res, "users");
+	})
+	.catch((err) => {
+		console.log(err, "!!!!!!!!!");
+	});
+
 // Using Manual Map with regex matching
 client
-    .api("/me/messages/hjdlfslod-fdssdkjfs-6zdkmghs-sadhsu2")
-    .header("content-type", "application/json")
-    .update({
-        birthday: "1908-12-22T00:00:00Z",
-    })
-    .then((res) => {
-        console.log("This is regex matching... Updated Bday");
-    })
-    .catch((err) => {
-        console.log(err, "matched");
-    });
-   
+	.api("/me/messages/hjdlfslod-fdssdkjfs-6zdkmghs-sadhsu2")
+	.header("content-type", "application/json")
+	.update({
+		birthday: "1908-12-22T00:00:00Z",
+	})
+	.then((res) => {
+		console.log("This is regex matching... Updated Bday");
+	})
+	.catch((err) => {
+		console.log(err, "matched");
+	});
 ```
