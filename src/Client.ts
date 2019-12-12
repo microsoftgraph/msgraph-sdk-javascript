@@ -16,7 +16,6 @@ import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
 import { Options } from "./IOptions";
-import { Middleware } from "./middleware/IMiddleware";
 import { validatePolyFilling } from "./ValidatePolyFilling";
 
 export class Client {
@@ -102,24 +101,6 @@ export class Client {
 			throw error;
 		}
 		this.httpClient = httpClient;
-	}
-
-	/**
-	 * @public
-	 * function to get the array of middlewares in use right now
-	 * @returns An array of middlewares
-	 */
-	public getMiddlewareChain() {
-		return this.httpClient.getMiddlewareArray();
-	}
-
-	/**
-	 * @public
-	 * function to set the middleware chain
-	 * @param {Middleware[]} middlewareArray - An array of middlewares
-	 */
-	public setMiddlewareChain(middlewareArray: Middleware[]) {
-		return this.httpClient.setMiddlewareArray(middlewareArray);
 	}
 
 	/**

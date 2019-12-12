@@ -7,13 +7,9 @@
 
 import { assert } from "chai";
 
-import { Client } from "../../src/Client";
 import { HTTPClient } from "../../src/HTTPClient";
 import { Context } from "../../src/IContext";
 import { FetchOptions } from "../../src/IFetchOptions";
-import { RedirectHandlerOptions } from "../../src/middleware/options/RedirectHandlerOptions";
-import { RedirectHandler } from "../../src/middleware/RedirectHandler";
-import { TelemetryHandler } from "../../src/middleware/TelemetryHandler";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 describe("HTTPClient.ts", () => {
@@ -70,41 +66,6 @@ describe("HTTPClient.ts", () => {
 			} catch (error) {
 				throw error;
 			}
-		});
-	});
-
-	describe("getMiddlewareArray", () => {
-		it("Should work fine for a single middleware in the chain, which does have a getNext method", () => {
-			const telemetryHandler = new TelemetryHandler();
-			const tempHttpClient: HTTPClient = new HTTPClient(telemetryHandler);
-			assert.equal(tempHttpClient.getMiddlewareArray().length, 1);
-		});
-
-		it("Should work fine for a single middleware in the chain, which doesn't have a getNext method", () => {
-			const tempHttpClient: HTTPClient = new HTTPClient(httpMessageHandler);
-			assert.equal(tempHttpClient.getMiddlewareArray().length, 1);
-		});
-
-		it("Should work fine for a chain containing many middlewares", () => {
-			const telemetryHandler = new TelemetryHandler();
-			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
-			redirectHandler.setNext(telemetryHandler);
-			telemetryHandler.setNext(httpMessageHandler);
-			const tempHttpClient: HTTPClient = new HTTPClient(redirectHandler);
-			assert.equal(tempHttpClient.getMiddlewareArray().length, 3);
-		});
-	});
-
-	describe("setMiddlewareArray", () => {
-		it("Should make a chain out of the provided array of middlewares", () => {
-			const telemetryHandler = new TelemetryHandler();
-			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
-			redirectHandler.setNext(httpMessageHandler);
-			const tempHttpClient: HTTPClient = new HTTPClient(redirectHandler);
-			const middlewareArray = tempHttpClient.getMiddlewareArray();
-			middlewareArray.splice(1, 0, telemetryHandler);
-			tempHttpClient.setMiddlewareArray(middlewareArray);
-			assert.equal(tempHttpClient.getMiddlewareArray().length, 3);
 		});
 	});
 });
