@@ -1,12 +1,6 @@
 page_type: sample
 products:
-  - office-excel
   - office-365
-  - office-outlook
-  - office-onedrive
-  - office-onenote
-  - office-planner
-  - office-sp
   - ms-graph
 languages:
   - javascript
@@ -16,25 +10,6 @@ extensions:
   technologies:
     - Microsoft Graph
     - Microsoft identity platform
-  services:
-    - Bookings
-    - Dynamics 365 Business Central
-    - Education
-    - Excel
-    - Groups
-    - Insights
-    - Intune
-    - Microsoft identity platform
-    - Office 365
-    - Outlook
-    - OneDrive
-    - OneNote
-    - Planner
-    - Reports
-    - Security
-    - SharePoint
-    - Users
   createdDate: '9/22/2016 2:44:49 PM'
 title: Microsoft Graph JavaScript Client Library
 description: Microsoft Graph client library for JavaScript
-msgraph-sdk-javascript
