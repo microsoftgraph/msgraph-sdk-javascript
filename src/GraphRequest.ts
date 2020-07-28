@@ -170,14 +170,7 @@ export class GraphRequest {
 			// Capture query string into oDataQueryParams and otherURLQueryParams
 			const queryParams = path.substring(queryStrPos + 1, path.length).split("&");
 			for (const queryParam of queryParams) {
-				const qParams = queryParam.split("=");
-				const key = qParams[0];
-				const value = qParams[1];
-				if (oDataQueryNames.indexOf(key) !== -1) {
-					this.urlComponents.oDataQueryParams[key] = value;
-				} else {
-					this.urlComponents.otherURLQueryParams[key] = value;
-				}
+				this.query(queryParam);
 			}
 		}
 	};
@@ -430,7 +423,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add query string for filter OData Query param
+	 * To add query string for filter OData Query param. The request URL accepts only one $filter Odata Query option and it's value is set to the most recently passed filter query string.
 	 * @param {string} filterStr - The filter query string
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -441,7 +434,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add criterion for search OData Query param
+	 * To add criterion for search OData Query param. The request URL accepts only one $search Odata Query option and it's value is set to the most recently passed search criterion string.
 	 * @param {string} searchStr - The search criterion string
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -452,7 +445,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add number for top OData Query param
+	 * To add number for top OData Query param. The request URL accepts only one $top Odata Query option and it's value is set to the most recently passed number value.
 	 * @param {number} n - The number value
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -463,7 +456,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add number for skip OData Query param
+	 * To add number for skip OData Query param. The request URL accepts only one $skip Odata Query option and it's value is set to the most recently passed number value.
 	 * @param {number} n - The number value
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -474,7 +467,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add token string for skipToken OData Query param
+	 * To add token string for skipToken OData Query param. The request URL accepts only one $skipToken Odata Query option and it's value is set to the most recently passed token value.
 	 * @param {string} token - The token value
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -485,7 +478,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add boolean for count OData Query param
+	 * To add boolean for count OData Query param. The URL accepts only one $count Odata Query option and it's value is set to the most recently passed boolean value.
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with
 	 */
@@ -501,18 +494,25 @@ export class GraphRequest {
 	 * @returns The same GraphRequest instance that is being called with
 	 */
 	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
-		const otherURLQueryParams = this.urlComponents.otherURLQueryParams;
+		let paramKey: string;
+		let paramValue: string | number;
 		if (typeof queryDictionaryOrString === "string") {
-			const querySplit = queryDictionaryOrString.split("=");
-			const queryKey = querySplit[0];
-			const queryValue = querySplit[1];
-			otherURLQueryParams[queryKey] = queryValue;
+			const indexOfFirstEquals = queryDictionaryOrString.indexOf("="); // The query key-value pair must be split on the first equals sign to avoid error while parsing nested query parameters
+			const qParams = [queryDictionaryOrString.substring(0, indexOfFirstEquals), queryDictionaryOrString.substring(indexOfFirstEquals + 1, queryDictionaryOrString.length)];
+			paramKey = qParams[0];
+			paramValue = qParams[1];
 		} else {
 			for (const key in queryDictionaryOrString) {
 				if (queryDictionaryOrString.hasOwnProperty(key)) {
-					otherURLQueryParams[key] = queryDictionaryOrString[key];
+					paramKey = key;
+					paramValue = queryDictionaryOrString[key];
 				}
 			}
+		}
+		if (oDataQueryNames.indexOf(paramKey) !== -1) {
+			this.urlComponents.oDataQueryParams[paramKey] = paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby" ? (this.urlComponents.oDataQueryParams[paramKey] ? this.urlComponents.oDataQueryParams[paramKey] + "," + paramValue : paramValue) : paramValue;
+		} else {
+			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
 		}
 		return this;
 	}

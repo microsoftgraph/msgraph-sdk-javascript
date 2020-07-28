@@ -28,6 +28,12 @@ const testCases = {
 	"me?$select=displayName": "https://graph.microsoft.com/v1.0/me?$select=displayName",
 	"me?select=displayName": "https://graph.microsoft.com/v1.0/me?select=displayName",
 	"https://graph.microsoft.com/beta/me?select=displayName": "https://graph.microsoft.com/beta/me?select=displayName",
+
+	// test for nested query parameters
+	"https://graph.microsoft.com/beta/identityGovernance/entitlementManagement/accessPackages/?$expand=accessPackageAssignmentPolicies,accessPackageResourceRoleScopes($expand=accessPackageResourceRole,accessPackageResourceScope)": "https://graph.microsoft.com/beta/identityGovernance/entitlementManagement/accessPackages/?$expand=accessPackageAssignmentPolicies,accessPackageResourceRoleScopes($expand=accessPackageResourceRole,accessPackageResourceScope)",
+	"me?$select=displayName&$select=id": "https://graph.microsoft.com/v1.0/me?$select=displayName,id",
+	"/me?$filter=b&$filter=a": "https://graph.microsoft.com/v1.0/me?$filter=a",
+	"https://graph.microsoft.com/v1.0/me?$top=4&$expand=4&$iscount=true&$top=2": "https://graph.microsoft.com/v1.0/me?$top=2&$expand=4&$iscount=true",
 };
 
 describe("urlParsing.ts", () => {
@@ -42,5 +48,5 @@ describe("urlParsing.ts", () => {
 			}
 		}
 	});
-	/* tslint:enable: no-string-literal */
 });
+/* tslint:enable: no-string-literal */

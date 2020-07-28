@@ -92,6 +92,28 @@ cases.push({
 });
 
 cases.push({
+	url: "https://graph.microsoft.com/beta/me/people?$select=displayName,title,id&$count=false&$expand=a($expand=a,b)",
+	request: client
+		.api("/me/people")
+		.version("beta")
+		.select(["displayName", "title"])
+		.count(true)
+		.expand("a($expand=a,b)")
+		.query("$select=id")
+		.query("$count=false"),
+});
+
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$select=displayName,title,id&select=value",
+	request: client
+		.api("/me/people")
+		.version("v1.0")
+		.select(["displayName", "title"])
+		.query({ select: "value" })
+		.query({ $select: "id" }),
+});
+
+cases.push({
 	url: "https://graph.microsoft.com/v1.0/me/drive/root?$expand=children($select=name),permissions",
 	request: client
 		.api("me/drive/root")
