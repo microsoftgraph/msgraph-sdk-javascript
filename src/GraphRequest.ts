@@ -512,7 +512,7 @@ export class GraphRequest {
 		}
 		if (oDataQueryNames.indexOf(paramKey) !== -1) {
 			const currentValue = this.urlComponents.oDataQueryParams[paramKey];
-			const isValueAppendable = (paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby") && currentValue;
+			const isValueAppendable = currentValue && (paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby");
 			this.urlComponents.oDataQueryParams[paramKey] = isValueAppendable ? currentValue + "," + paramValue : paramValue;
 		} else {
 			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
