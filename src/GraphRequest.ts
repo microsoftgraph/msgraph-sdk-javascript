@@ -303,6 +303,28 @@ export class GraphRequest {
 	}
 
 	/**
+	 * @private
+	 * Checks if the content-type is present in the _headers property. If not present, defaults the content-type to application/json
+	 * @param none
+	 * @returns nothing
+	 */
+	private buildHeaders(): void {
+		if (this._headers === undefined || this._headers === null) {
+			this.header("Content-Type", "application/json");
+		}
+		let isContentTypePresent = false;
+		const headerKeys = Object.keys(this._headers);
+		for (const headerKey of headerKeys) {
+			if (headerKey.toLowerCase() === "content-type") {
+				isContentTypePresent = true;
+			}
+		}
+		if (!isContentTypePresent) {
+			this.header("Content-Type", "application/json");
+		}
+	}
+
+	/**
 	 * @public
 	 * Sets the custom header for a request
 	 * @param {string} headerKey - A header key
@@ -550,13 +572,13 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
-			headers:
-				typeof FormData !== "undefined" && content instanceof FormData
-					? {}
-					: {
-							"Content-Type": "application/json",
-					  },
 		};
+		if (typeof FormData !== "undefined" && content instanceof FormData) {
+			options.headers = {};
+		} else {
+			this.buildHeaders();
+			options.headers = this._headers;
+		}
 		try {
 			const response = await this.send(url, options, callback);
 			return response;
