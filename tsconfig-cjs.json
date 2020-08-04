@@ -4,7 +4,8 @@
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["dom", "esnext"],
-		"outDir": "lib"
+		"outDir": "lib",
+		"esModuleInterop": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/development"],
 	"include": ["./src/**/*.ts", "./spec/**/*.ts"]

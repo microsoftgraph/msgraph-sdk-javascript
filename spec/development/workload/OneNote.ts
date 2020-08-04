@@ -85,6 +85,23 @@ describe("OneNote", function() {
 		}
 	});
 
+	it("Create a OneNote page with application/xhtml+xml page content", async () => {
+		try {
+			const body = "<!DOCTYPE html><html><head><title>A page with a block of HTML</title></head><body><p>This page contains some <i>formatted</i> <b>text</b>.</p></body></html>";
+			const json = await client
+				.api(`/me/onenote/sections/${section.id}/pages`)
+				.header("content-type", "application/xhtml+xml")
+				.post(body);
+			const createdPageFromHTML = json as OnenotePage;
+			console.log(json);
+			assert.isDefined(createdPage.id);
+			assert.isDefined(createdPage.contentUrl);
+			assert.isUndefined(createdPage["random fake property that should be null"]);
+		} catch (error) {
+			throw error;
+		}
+	});
+
 	it("create a OneNote page with html page content and file attachment", async () => {
 		try {
 			const formData = new FormData();

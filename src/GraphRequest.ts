@@ -9,6 +9,8 @@
  * @module GraphRequest
  */
 
+import FormData from "form-data";
+
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
@@ -22,7 +24,6 @@ import { MiddlewareControl } from "./middleware/MiddlewareControl";
 import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
-
 /**
  * @interface
  * Signature to representing key value pairs
@@ -573,8 +574,9 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 		};
-		if (typeof FormData !== "undefined" && content instanceof FormData) {
-			options.headers = {};
+		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+		if (typeof FormData !== "undefined" && className === "FormData") {
+			options.headers = content.getHeaders();
 		} else {
 			this.buildHeaders();
 			options.headers = this._headers;
