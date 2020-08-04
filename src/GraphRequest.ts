@@ -49,6 +49,7 @@ export interface URLComponents {
 	path?: string;
 	oDataQueryParams: KeyValuePairObjectStringNumber;
 	otherURLQueryParams: KeyValuePairObjectStringNumber;
+	otherURLQueryStrings: string[];
 }
 
 /**
@@ -118,6 +119,7 @@ export class GraphRequest {
 			version: this.config.defaultVersion,
 			oDataQueryParams: {},
 			otherURLQueryParams: {},
+			otherURLQueryStrings: [],
 		};
 		this._headers = {};
 		this._options = {};
@@ -170,7 +172,7 @@ export class GraphRequest {
 			// Capture query string into oDataQueryParams and otherURLQueryParams
 			const queryParams = path.substring(queryStrPos + 1, path.length).split("&");
 			for (const queryParam of queryParams) {
-				this.query(queryParam);
+				this.parseQueryParameter(queryParam);
 			}
 		}
 	};
@@ -237,9 +239,87 @@ export class GraphRequest {
 				}
 			}
 		}
+
+		if (urlComponents.otherURLQueryStrings.length !== 0) {
+			for (const str of urlComponents.otherURLQueryStrings) {
+				query.push(str);
+			}
+		}
 		return query.length > 0 ? "?" + query.join("&") : "";
 	}
 
+	/**
+	 * @private
+	 * @param queryDictionaryOrString
+	 */
+	private parseQueryParameter(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
+		if (typeof queryDictionaryOrString === "string") {
+			if (queryDictionaryOrString.charAt(0) === "?") {
+				queryDictionaryOrString = queryDictionaryOrString.substring(1, queryDictionaryOrString.length);
+			}
+
+			if (queryDictionaryOrString.indexOf("&") !== -1) {
+				const queryParams = queryDictionaryOrString.split("&");
+				for (const str of queryParams) {
+					this.parseQueryParamenterString(str);
+				}
+			} else {
+				this.parseQueryParamenterString(queryDictionaryOrString);
+			}
+		} else {
+			for (const key in queryDictionaryOrString) {
+				if (queryDictionaryOrString.hasOwnProperty(key)) {
+					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
+				}
+			}
+		}
+
+		return this;
+	}
+
+	/**
+	 * @private
+	 * @param query
+	 */
+	private parseQueryParamenterString(queryParameter: string): void {
+		/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
+				 Example-> "/me?$expand=home($select=city)" */
+		if (this.isValidQueryKeyValuePair(queryParameter)) {
+			const indexOfFirstEquals = queryParameter.indexOf("=");
+			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
+			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
+			this.setURLComponentsQueryParamater(paramKey, paramValue);
+		} else {
+			this.urlComponents.otherURLQueryStrings.push(queryParameter);
+		}
+	}
+
+	/**
+	 * @private
+	 * @param query
+	 */
+	private setURLComponentsQueryParamater(paramKey: string, paramValue: string | number): void {
+		if (oDataQueryNames.indexOf(paramKey) !== -1) {
+			const currentValue = this.urlComponents.oDataQueryParams[paramKey];
+			const isValueAppendable = currentValue && (paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby");
+			this.urlComponents.oDataQueryParams[paramKey] = isValueAppendable ? currentValue + "," + paramValue : paramValue;
+		} else {
+			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
+		}
+	}
+
+	private isValidQueryKeyValuePair(queryDictionaryOrString: string): boolean {
+		const indexofFirstEquals = queryDictionaryOrString.indexOf("=");
+		if (indexofFirstEquals === -1) {
+			return false;
+		} else {
+			const indexofOpeningParanthesis = queryDictionaryOrString.indexOf("(");
+			if (indexofOpeningParanthesis !== -1 && queryDictionaryOrString.indexOf("(") < indexofFirstEquals) {
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	 * @private
 	 * Updates the custom headers and options for a request
@@ -494,30 +574,7 @@ export class GraphRequest {
 	 * @returns The same GraphRequest instance that is being called with
 	 */
 	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
-		let paramKey: string;
-		let paramValue: string | number;
-		if (typeof queryDictionaryOrString === "string") {
-			/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
-			 Example-> "/me?$expand=home($select=city)" */
-			const indexOfFirstEquals = queryDictionaryOrString.indexOf("=");
-			paramKey = queryDictionaryOrString.substring(0, indexOfFirstEquals);
-			paramValue = queryDictionaryOrString.substring(indexOfFirstEquals + 1, queryDictionaryOrString.length);
-		} else {
-			for (const key in queryDictionaryOrString) {
-				if (queryDictionaryOrString.hasOwnProperty(key)) {
-					paramKey = key;
-					paramValue = queryDictionaryOrString[key];
-				}
-			}
-		}
-		if (oDataQueryNames.indexOf(paramKey) !== -1) {
-			const currentValue = this.urlComponents.oDataQueryParams[paramKey];
-			const isValueAppendable = currentValue && (paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby");
-			this.urlComponents.oDataQueryParams[paramKey] = isValueAppendable ? currentValue + "," + paramValue : paramValue;
-		} else {
-			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
-		}
-		return this;
+		return this.parseQueryParameter(queryDictionaryOrString);
 	}
 
 	/**
