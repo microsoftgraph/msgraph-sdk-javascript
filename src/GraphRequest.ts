@@ -309,7 +309,7 @@ export class GraphRequest {
 	 * @param none
 	 * @returns nothing
 	 */
-	private buildHeaders(): void {
+	private setHeaderContentType(): void {
 		if (this._headers === undefined || this._headers === null) {
 			this.header("Content-Type", "application/json");
 		}
@@ -320,6 +320,7 @@ export class GraphRequest {
 				isContentTypePresent = true;
 			}
 		}
+		// Default the content-type to application/json in case the content-type is not present in the header
 		if (!isContentTypePresent) {
 			this.header("Content-Type", "application/json");
 		}
@@ -576,9 +577,10 @@ export class GraphRequest {
 		};
 		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
 		if (typeof FormData !== "undefined" && className === "FormData") {
-			options.headers = content.getHeaders();
+			// Content-Type headers should not be specified in case the of FormData type content
+			options.headers = {};
 		} else {
-			this.buildHeaders();
+			this.setHeaderContentType();
 			options.headers = this._headers;
 		}
 		try {
@@ -615,12 +617,10 @@ export class GraphRequest {
 	 */
 	public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
+		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
-			headers: {
-				"Content-Type": "application/json",
-			},
 		};
 		try {
 			const response = await this.send(url, options, callback);
@@ -640,12 +640,10 @@ export class GraphRequest {
 	 */
 	public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
+		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PATCH,
 			body: serializeContent(content),
-			headers: {
-				"Content-Type": "application/json",
-			},
 		};
 		try {
 			const response = await this.send(url, options, callback);

@@ -93,7 +93,6 @@ describe("OneNote", function() {
 				.header("content-type", "application/xhtml+xml")
 				.post(body);
 			const createdPageFromHTML = json as OnenotePage;
-			console.log(json);
 			assert.isDefined(createdPage.id);
 			assert.isDefined(createdPage.contentUrl);
 			assert.isUndefined(createdPage["random fake property that should be null"]);
