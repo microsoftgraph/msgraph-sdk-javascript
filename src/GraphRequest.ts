@@ -312,6 +312,7 @@ export class GraphRequest {
 	private setHeaderContentType(): void {
 		if (!this._headers) {
 			this.header("Content-Type", "application/json");
+			return;
 		}
 		let isContentTypePresent = false;
 		const headerKeys = Object.keys(this._headers);
