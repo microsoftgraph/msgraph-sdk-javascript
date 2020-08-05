@@ -310,7 +310,7 @@ export class GraphRequest {
 	 * @returns nothing
 	 */
 	private setHeaderContentType(): void {
-		if (this._headers === undefined || this._headers === null) {
+		if (!this._headers) {
 			this.header("Content-Type", "application/json");
 		}
 		let isContentTypePresent = false;
