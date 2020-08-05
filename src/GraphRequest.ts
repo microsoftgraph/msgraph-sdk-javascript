@@ -308,6 +308,7 @@ export class GraphRequest {
 	 * Sets values into the urlComponents property of GraphRequest object.
 	 * @param {string} paramKey - the query parameter key
 	 * @param {string} paramValue - the query paramter value
+	 * @returns nothing
 	 */
 	private setURLComponentsQueryParamater(paramKey: string, paramValue: string | number): void {
 		if (oDataQueryNames.indexOf(paramKey) !== -1) {
@@ -483,7 +484,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for select OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $select query
 	 */
 	/*
 	 * Accepts .select("displayName,birthday")
@@ -500,7 +501,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for expand OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $expand query
 	 */
 	public expand(properties: string | string[]): GraphRequest {
 		this.addCsvQueryParameter("$expand", properties, arguments);
@@ -511,7 +512,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for orderby OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $orderby query
 	 */
 	public orderby(properties: string | string[]): GraphRequest {
 		this.addCsvQueryParameter("$orderby", properties, arguments);
@@ -522,7 +523,7 @@ export class GraphRequest {
 	 * @public
 	 * To add query string for filter OData Query param. The request URL accepts only one $filter Odata Query option and its value is set to the most recently passed filter query string.
 	 * @param {string} filterStr - The filter query string
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the $filter query
 	 */
 	public filter(filterStr: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$filter = filterStr;
@@ -533,7 +534,7 @@ export class GraphRequest {
 	 * @public
 	 * To add criterion for search OData Query param. The request URL accepts only one $search Odata Query option and its value is set to the most recently passed search criterion string.
 	 * @param {string} searchStr - The search criterion string
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the $search query criteria
 	 */
 	public search(searchStr: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$search = searchStr;
@@ -544,7 +545,7 @@ export class GraphRequest {
 	 * @public
 	 * To add number for top OData Query param. The request URL accepts only one $top Odata Query option and its value is set to the most recently passed number value.
 	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the number for $top query
 	 */
 	public top(n: number): GraphRequest {
 		this.urlComponents.oDataQueryParams.$top = n;
@@ -555,7 +556,7 @@ export class GraphRequest {
 	 * @public
 	 * To add number for skip OData Query param. The request URL accepts only one $skip Odata Query option and its value is set to the most recently passed number value.
 	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the number for the $skip query
 	 */
 	public skip(n: number): GraphRequest {
 		this.urlComponents.oDataQueryParams.$skip = n;
@@ -566,7 +567,7 @@ export class GraphRequest {
 	 * @public
 	 * To add token string for skipToken OData Query param. The request URL accepts only one $skipToken Odata Query option and its value is set to the most recently passed token value.
 	 * @param {string} token - The token value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the token string for $skipToken query option
 	 */
 	public skipToken(token: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$skipToken = token;
@@ -577,7 +578,7 @@ export class GraphRequest {
 	 * @public
 	 * To add boolean for count OData Query param. The URL accepts only one $count Odata Query option and its value is set to the most recently passed boolean value.
 	 * @param {boolean} isCount - The count boolean
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
 	public count(isCount: boolean = false): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
@@ -588,7 +589,11 @@ export class GraphRequest {
 	 * @public
 	 * Appends query string to the urlComponent
 	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after appending the query string to the url component
+	 */
+	/*
+	 * Accepts .query("displayName=xyz")
+	 *     and .select({ name: "value" })
 	 */
 	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
 		return this.parseQueryParameter(queryDictionaryOrString);
