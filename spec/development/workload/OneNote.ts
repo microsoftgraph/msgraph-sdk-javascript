@@ -70,19 +70,15 @@ describe("OneNote", function() {
 		}
 	});
 	it("Create a OneNote page with html page content", async () => {
-		try {
-			const formData = new FormData();
-			formData.append("Presentation", fs.createReadStream("./spec/sample_files/onenotepage.html"));
-			const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
-			const createdPageFromHTML = json as OnenotePage;
+		const formData = new FormData();
+		formData.append("Presentation", fs.createReadStream("./spec/sample_files/onenotepage.html"));
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
+		const createdPageFromHTML = json as OnenotePage;
 
-			assert.isDefined(createdPage.id);
-			assert.isDefined(createdPage.contentUrl);
-			assert.equal("New Page", createdPageFromHTML.title);
-			assert.isUndefined(createdPage["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		assert.isDefined(createdPage.id);
+		assert.isDefined(createdPage.contentUrl);
+		assert.equal("New Page", createdPageFromHTML.title);
+		assert.isUndefined(createdPage["random fake property that should be null"]);
 	});
 
 	it("Create a OneNote page with application/xhtml+xml page content", async () => {
