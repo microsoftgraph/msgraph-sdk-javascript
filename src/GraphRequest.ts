@@ -49,7 +49,7 @@ export interface URLComponents {
 	path?: string;
 	oDataQueryParams: KeyValuePairObjectStringNumber;
 	otherURLQueryParams: KeyValuePairObjectStringNumber;
-	otherURLQueryStrings: string[];
+	otherURLQueryOptions: any[];
 }
 
 /**
@@ -119,7 +119,7 @@ export class GraphRequest {
 			version: this.config.defaultVersion,
 			oDataQueryParams: {},
 			otherURLQueryParams: {},
-			otherURLQueryStrings: [],
+			otherURLQueryOptions: [],
 		};
 		this._headers = {};
 		this._options = {};
@@ -240,8 +240,8 @@ export class GraphRequest {
 			}
 		}
 
-		if (urlComponents.otherURLQueryStrings.length !== 0) {
-			for (const str of urlComponents.otherURLQueryStrings) {
+		if (urlComponents.otherURLQueryOptions.length !== 0) {
+			for (const str of urlComponents.otherURLQueryOptions) {
 				query.push(str);
 			}
 		}
@@ -250,7 +250,9 @@ export class GraphRequest {
 
 	/**
 	 * @private
-	 * @param queryDictionaryOrString
+	 * Parses the query parameters to set the urlComponents property of the GraphRequest object
+	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query parameter
+	 * @returns The same GraphRequest instance that is being called with
 	 */
 	private parseQueryParameter(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
 		if (typeof queryDictionaryOrString === "string") {
@@ -266,12 +268,15 @@ export class GraphRequest {
 			} else {
 				this.parseQueryParamenterString(queryDictionaryOrString);
 			}
-		} else {
+		} else if (queryDictionaryOrString.constructor === Object) {
 			for (const key in queryDictionaryOrString) {
 				if (queryDictionaryOrString.hasOwnProperty(key)) {
 					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
 				}
 			}
+		} else {
+			/*Push values which are not of key-value structure. 
+			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
 		}
 
 		return this;
@@ -279,7 +284,9 @@ export class GraphRequest {
 
 	/**
 	 * @private
-	 * @param query
+	 * Parses the query parameter of string type to set the urlComponents property of the GraphRequest object
+	 * @param {string} queryParameter - the query parameters
+	 * returns nothing
 	 */
 	private parseQueryParamenterString(queryParameter: string): void {
 		/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
@@ -290,13 +297,17 @@ export class GraphRequest {
 			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
-			this.urlComponents.otherURLQueryStrings.push(queryParameter);
+			/* Push values which are not of key-value structure. 
+			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
+			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}
 	}
 
 	/**
 	 * @private
-	 * @param query
+	 * Sets values into the urlComponents property of GraphRequest object.
+	 * @param {string} paramKey - the query parameter key
+	 * @param {string} paramValue - the query paramter value
 	 */
 	private setURLComponentsQueryParamater(paramKey: string, paramValue: string | number): void {
 		if (oDataQueryNames.indexOf(paramKey) !== -1) {
@@ -307,19 +318,25 @@ export class GraphRequest {
 			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
 		}
 	}
-
-	private isValidQueryKeyValuePair(queryDictionaryOrString: string): boolean {
-		const indexofFirstEquals = queryDictionaryOrString.indexOf("=");
+	/**
+	 * @private
+	 * Check if the query parameter string has a valid key-value structure
+	 * @param {string} queryString - the query parameter string. Example -> "name=value"
+	 * #returns true if the query string has a valid key-value structure else false
+	 */
+	private isValidQueryKeyValuePair(queryString: string): boolean {
+		const indexofFirstEquals = queryString.indexOf("=");
 		if (indexofFirstEquals === -1) {
 			return false;
-		} else {
-			const indexofOpeningParanthesis = queryDictionaryOrString.indexOf("(");
-			if (indexofOpeningParanthesis !== -1 && queryDictionaryOrString.indexOf("(") < indexofFirstEquals) {
-				return false;
-			}
+		}
+		const indexofOpeningParanthesis = queryString.indexOf("(");
+		if (indexofOpeningParanthesis !== -1 && queryString.indexOf("(") < indexofFirstEquals) {
+			// Example -> .query($select($expand=true));
+			return false;
 		}
 		return true;
 	}
+
 	/**
 	 * @private
 	 * Updates the custom headers and options for a request
