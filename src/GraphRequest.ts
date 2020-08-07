@@ -49,6 +49,7 @@ export interface URLComponents {
 	path?: string;
 	oDataQueryParams: KeyValuePairObjectStringNumber;
 	otherURLQueryParams: KeyValuePairObjectStringNumber;
+	otherURLQueryOptions: any[];
 }
 
 /**
@@ -118,6 +119,7 @@ export class GraphRequest {
 			version: this.config.defaultVersion,
 			oDataQueryParams: {},
 			otherURLQueryParams: {},
+			otherURLQueryOptions: [],
 		};
 		this._headers = {};
 		this._options = {};
@@ -170,14 +172,7 @@ export class GraphRequest {
 			// Capture query string into oDataQueryParams and otherURLQueryParams
 			const queryParams = path.substring(queryStrPos + 1, path.length).split("&");
 			for (const queryParam of queryParams) {
-				const qParams = queryParam.split("=");
-				const key = qParams[0];
-				const value = qParams[1];
-				if (oDataQueryNames.indexOf(key) !== -1) {
-					this.urlComponents.oDataQueryParams[key] = value;
-				} else {
-					this.urlComponents.otherURLQueryParams[key] = value;
-				}
+				this.parseQueryParameter(queryParam);
 			}
 		}
 	};
@@ -244,7 +239,103 @@ export class GraphRequest {
 				}
 			}
 		}
+
+		if (urlComponents.otherURLQueryOptions.length !== 0) {
+			for (const str of urlComponents.otherURLQueryOptions) {
+				query.push(str);
+			}
+		}
 		return query.length > 0 ? "?" + query.join("&") : "";
+	}
+
+	/**
+	 * @private
+	 * Parses the query parameters to set the urlComponents property of the GraphRequest object
+	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query parameter
+	 * @returns The same GraphRequest instance that is being called with
+	 */
+	private parseQueryParameter(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
+		if (typeof queryDictionaryOrString === "string") {
+			if (queryDictionaryOrString.charAt(0) === "?") {
+				queryDictionaryOrString = queryDictionaryOrString.substring(1, queryDictionaryOrString.length);
+			}
+
+			if (queryDictionaryOrString.indexOf("&") !== -1) {
+				const queryParams = queryDictionaryOrString.split("&");
+				for (const str of queryParams) {
+					this.parseQueryParamenterString(str);
+				}
+			} else {
+				this.parseQueryParamenterString(queryDictionaryOrString);
+			}
+		} else if (queryDictionaryOrString.constructor === Object) {
+			for (const key in queryDictionaryOrString) {
+				if (queryDictionaryOrString.hasOwnProperty(key)) {
+					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
+				}
+			}
+		} else {
+			/*Push values which are not of key-value structure. 
+			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
+		}
+
+		return this;
+	}
+
+	/**
+	 * @private
+	 * Parses the query parameter of string type to set the urlComponents property of the GraphRequest object
+	 * @param {string} queryParameter - the query parameters
+	 * returns nothing
+	 */
+	private parseQueryParamenterString(queryParameter: string): void {
+		/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
+				 Example-> "/me?$expand=home($select=city)" */
+		if (this.isValidQueryKeyValuePair(queryParameter)) {
+			const indexOfFirstEquals = queryParameter.indexOf("=");
+			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
+			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
+			this.setURLComponentsQueryParamater(paramKey, paramValue);
+		} else {
+			/* Push values which are not of key-value structure. 
+			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
+			this.urlComponents.otherURLQueryOptions.push(queryParameter);
+		}
+	}
+
+	/**
+	 * @private
+	 * Sets values into the urlComponents property of GraphRequest object.
+	 * @param {string} paramKey - the query parameter key
+	 * @param {string} paramValue - the query paramter value
+	 * @returns nothing
+	 */
+	private setURLComponentsQueryParamater(paramKey: string, paramValue: string | number): void {
+		if (oDataQueryNames.indexOf(paramKey) !== -1) {
+			const currentValue = this.urlComponents.oDataQueryParams[paramKey];
+			const isValueAppendable = currentValue && (paramKey === "$expand" || paramKey === "$select" || paramKey === "$orderby");
+			this.urlComponents.oDataQueryParams[paramKey] = isValueAppendable ? currentValue + "," + paramValue : paramValue;
+		} else {
+			this.urlComponents.otherURLQueryParams[paramKey] = paramValue;
+		}
+	}
+	/**
+	 * @private
+	 * Check if the query parameter string has a valid key-value structure
+	 * @param {string} queryString - the query parameter string. Example -> "name=value"
+	 * #returns true if the query string has a valid key-value structure else false
+	 */
+	private isValidQueryKeyValuePair(queryString: string): boolean {
+		const indexofFirstEquals = queryString.indexOf("=");
+		if (indexofFirstEquals === -1) {
+			return false;
+		}
+		const indexofOpeningParanthesis = queryString.indexOf("(");
+		if (indexofOpeningParanthesis !== -1 && queryString.indexOf("(") < indexofFirstEquals) {
+			// Example -> .query($select($expand=true));
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -393,7 +484,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for select OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $select query
 	 */
 	/*
 	 * Accepts .select("displayName,birthday")
@@ -410,7 +501,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for expand OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $expand query
 	 */
 	public expand(properties: string | string[]): GraphRequest {
 		this.addCsvQueryParameter("$expand", properties, arguments);
@@ -421,7 +512,7 @@ export class GraphRequest {
 	 * @public
 	 * To add properties for orderby OData Query param
 	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $orderby query
 	 */
 	public orderby(properties: string | string[]): GraphRequest {
 		this.addCsvQueryParameter("$orderby", properties, arguments);
@@ -430,9 +521,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add query string for filter OData Query param
+	 * To add query string for filter OData Query param. The request URL accepts only one $filter Odata Query option and its value is set to the most recently passed filter query string.
 	 * @param {string} filterStr - The filter query string
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the $filter query
 	 */
 	public filter(filterStr: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$filter = filterStr;
@@ -441,9 +532,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add criterion for search OData Query param
+	 * To add criterion for search OData Query param. The request URL accepts only one $search Odata Query option and its value is set to the most recently passed search criterion string.
 	 * @param {string} searchStr - The search criterion string
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the $search query criteria
 	 */
 	public search(searchStr: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$search = searchStr;
@@ -452,9 +543,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add number for top OData Query param
+	 * To add number for top OData Query param. The request URL accepts only one $top Odata Query option and its value is set to the most recently passed number value.
 	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the number for $top query
 	 */
 	public top(n: number): GraphRequest {
 		this.urlComponents.oDataQueryParams.$top = n;
@@ -463,9 +554,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add number for skip OData Query param
+	 * To add number for skip OData Query param. The request URL accepts only one $skip Odata Query option and its value is set to the most recently passed number value.
 	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the number for the $skip query
 	 */
 	public skip(n: number): GraphRequest {
 		this.urlComponents.oDataQueryParams.$skip = n;
@@ -474,9 +565,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add token string for skipToken OData Query param
+	 * To add token string for skipToken OData Query param. The request URL accepts only one $skipToken Odata Query option and its value is set to the most recently passed token value.
 	 * @param {string} token - The token value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the token string for $skipToken query option
 	 */
 	public skipToken(token: string): GraphRequest {
 		this.urlComponents.oDataQueryParams.$skipToken = token;
@@ -485,9 +576,9 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add boolean for count OData Query param
+	 * To add boolean for count OData Query param. The URL accepts only one $count Odata Query option and its value is set to the most recently passed boolean value.
 	 * @param {boolean} isCount - The count boolean
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
 	public count(isCount: boolean = false): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
@@ -498,23 +589,14 @@ export class GraphRequest {
 	 * @public
 	 * Appends query string to the urlComponent
 	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query value
-	 * @returns The same GraphRequest instance that is being called with
+	 * @returns The same GraphRequest instance that is being called with, after appending the query string to the url component
+	 */
+	/*
+	 * Accepts .query("displayName=xyz")
+	 *     and .select({ name: "value" })
 	 */
 	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
-		const otherURLQueryParams = this.urlComponents.otherURLQueryParams;
-		if (typeof queryDictionaryOrString === "string") {
-			const querySplit = queryDictionaryOrString.split("=");
-			const queryKey = querySplit[0];
-			const queryValue = querySplit[1];
-			otherURLQueryParams[queryKey] = queryValue;
-		} else {
-			for (const key in queryDictionaryOrString) {
-				if (queryDictionaryOrString.hasOwnProperty(key)) {
-					otherURLQueryParams[key] = queryDictionaryOrString[key];
-				}
-			}
-		}
-		return this;
+		return this.parseQueryParameter(queryDictionaryOrString);
 	}
 
 	/**
