@@ -314,17 +314,14 @@ export class GraphRequest {
 			this.header("Content-Type", "application/json");
 			return;
 		}
-		let isContentTypePresent = false;
 		const headerKeys = Object.keys(this._headers);
 		for (const headerKey of headerKeys) {
 			if (headerKey.toLowerCase() === "content-type") {
-				isContentTypePresent = true;
+				return;
 			}
 		}
 		// Default the content-type to application/json in case the content-type is not present in the header
-		if (!isContentTypePresent) {
-			this.header("Content-Type", "application/json");
-		}
+		this.header("Content-Type", "application/json");
 	}
 
 	/**
