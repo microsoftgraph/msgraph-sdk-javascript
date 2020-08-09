@@ -12,6 +12,7 @@
 		"no-empty-interface": "off",
 		"prefer-rest-params": "off",
 		"@typescript-eslint/no-empty-interface": "off",
-		"@typescript-eslint/ban-types": "off"
+		"@typescript-eslint/ban-types": "off",
+		"no-mixed-spaces-and-tabs": "off"
 	}
 }
