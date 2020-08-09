@@ -101,6 +101,7 @@ export class GraphResponseHandler {
 			return Promise.resolve();
 		}
 		let responseValue: any;
+		const contentType = rawResponse.headers.get("Content-type");
 		try {
 			switch (responseType) {
 				case ResponseType.ARRAYBUFFER:
@@ -122,7 +123,6 @@ export class GraphResponseHandler {
 					responseValue = await rawResponse.text();
 					break;
 				default:
-					const contentType = rawResponse.headers.get("Content-type");
 					if (contentType !== null) {
 						const mimeType = contentType.split(";")[0];
 						if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {

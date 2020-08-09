@@ -71,7 +71,7 @@ export class TelemetryHandler implements Middleware {
 				clientRequestId = generateUUID();
 				setRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER, clientRequestId);
 			}
-			let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
+			let sdkVersionValue = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
 			let options: TelemetryHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
 				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;

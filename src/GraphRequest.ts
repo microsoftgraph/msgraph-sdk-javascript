@@ -227,14 +227,14 @@ export class GraphRequest {
 		const query: string[] = [];
 		if (Object.keys(urlComponents.oDataQueryParams).length !== 0) {
 			for (const property in urlComponents.oDataQueryParams) {
-				if (urlComponents.oDataQueryParams.hasOwnProperty(property)) {
+				if (Object.prototype.hasOwnProperty.call(urlComponents.oDataQueryParams, property)) {
 					query.push(property + "=" + urlComponents.oDataQueryParams[property]);
 				}
 			}
 		}
 		if (Object.keys(urlComponents.otherURLQueryParams).length !== 0) {
 			for (const property in urlComponents.otherURLQueryParams) {
-				if (urlComponents.otherURLQueryParams.hasOwnProperty(property)) {
+				if (Object.prototype.hasOwnProperty.call(urlComponents.otherURLQueryParams, property)) {
 					query.push(property + "=" + urlComponents.otherURLQueryParams[property]);
 				}
 			}
@@ -270,7 +270,7 @@ export class GraphRequest {
 			}
 		} else if (queryDictionaryOrString.constructor === Object) {
 			for (const key in queryDictionaryOrString) {
-				if (queryDictionaryOrString.hasOwnProperty(key)) {
+				if (Object.prototype.hasOwnProperty.call(queryDictionaryOrString, key)) {
 					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
 				}
 			}
@@ -413,7 +413,7 @@ export class GraphRequest {
 	 */
 	public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
 		for (const key in headers) {
-			if (headers.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(headers, key)) {
 				this._headers[key] = headers[key] as string;
 			}
 		}
@@ -440,7 +440,7 @@ export class GraphRequest {
 	 */
 	public options(options: { [key: string]: any }): GraphRequest {
 		for (const key in options) {
-			if (options.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(options, key)) {
 				this._options[key] = options[key];
 			}
 		}
@@ -580,7 +580,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
-	public count(isCount: boolean = false): GraphRequest {
+	public count(isCount = false): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}

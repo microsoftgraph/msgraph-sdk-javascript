@@ -79,8 +79,8 @@ describe("RetryHandlerOptions.ts", () => {
 
 		it("Should accept all the given values", () => {
 			try {
-				const delay: number = 1;
-				const maxRetries: number = 3;
+				const delay = 1;
+				const maxRetries = 3;
 				const shouldRetry: ShouldRetry = (d, a, req, o, res) => {
 					return false;
 				};

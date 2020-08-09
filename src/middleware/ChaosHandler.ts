@@ -123,16 +123,13 @@ export class ChaosHandler implements Middleware {
 	 */
 	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
 		try {
-			let responseBody: any;
-			let responseHeader: Headers;
-			let requestID: string;
-			let requestDate: Date;
+			const requestID: string = generateUUID();
+			const requestDate: Date = new Date();
+			const responseBody: any = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
+			const responseHeader: Headers = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
+
 			const requestURL = context.request as string;
 
-			requestID = generateUUID();
-			requestDate = new Date();
-			responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
-			responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
 			const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
 			context.response = new Response(responseBody, init);
 		} catch (error) {
@@ -182,7 +179,7 @@ export class ChaosHandler implements Middleware {
 	 * @returns the string as relative URL
 	 */
 	private getRelativeURL(urlMethod: string): string {
-		const pattern: RegExp = /https?:\/\/graph\.microsoft\.com\/[^/]+(.+?)(\?|$)/;
+		const pattern = /https?:\/\/graph\.microsoft\.com\/[^/]+(.+?)(\?|$)/;
 		let relativeURL: string;
 		if (pattern.exec(urlMethod) !== null) {
 			relativeURL = pattern.exec(urlMethod)[1];
@@ -212,7 +209,7 @@ export class ChaosHandler implements Middleware {
 					} else {
 						// checking for regex match if exact match doesn't work
 						this.manualMap.forEach((value: Map<string, number>, key: string) => {
-							const regexURL: RegExp = new RegExp(key + "$");
+							const regexURL = new RegExp(key + "$");
 							if (regexURL.test(relativeURL)) {
 								if (this.manualMap.get(key).get(requestMethod) !== undefined) {
 									chaosHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);

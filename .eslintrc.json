@@ -1,0 +1,17 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
+	"rules": {
+		"max-len": "off",
+		"sort-imports": ["warn", { "allowSeparatedGroups": true }],
+		"sort-keys": "warn",
+		"no-useless-catch": "off", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
+		"no-constant-condition": "off",
+		"no-empty-interface": "off",
+		"prefer-rest-params": "off",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/ban-types": "off"
+	}
+}

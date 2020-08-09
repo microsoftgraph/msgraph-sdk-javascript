@@ -29,7 +29,7 @@ export class AuthenticationHandler implements Middleware {
 	 * @private
 	 * A member representing the authorization header name
 	 */
-	private static AUTHORIZATION_HEADER: string = "Authorization";
+	private static AUTHORIZATION_HEADER = "Authorization";
 
 	/**
 	 * @private
@@ -76,7 +76,7 @@ export class AuthenticationHandler implements Middleware {
 				authenticationProvider = this.authenticationProvider;
 			}
 			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
-			const bearerKey: string = `Bearer ${token}`;
+			const bearerKey = `Bearer ${token}`;
 			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 			return await this.nextMiddleware.execute(context);

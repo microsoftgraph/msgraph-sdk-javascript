@@ -45,7 +45,7 @@ export class Client {
 	public static init(options: Options): Client {
 		const clientOptions: ClientOptions = {};
 		for (const i in options) {
-			if (options.hasOwnProperty(i)) {
+			if (Object.prototype.hasOwnProperty.call(options, i)) {
 				clientOptions[i] = i === "authProvider" ? new CustomAuthenticationProvider(options[i]) : options[i];
 			}
 		}
@@ -80,7 +80,7 @@ export class Client {
 			throw error;
 		}
 		for (const key in clientOptions) {
-			if (clientOptions.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];
 			}
 		}

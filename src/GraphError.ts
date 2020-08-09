@@ -61,7 +61,7 @@ export class GraphError {
 	 * @param {number} [statusCode = -1] - The status code of the error
 	 * @returns An instance of GraphError
 	 */
-	public constructor(statusCode: number = -1) {
+	public constructor(statusCode = -1) {
 		this.statusCode = statusCode;
 		this.code = null;
 		this.message = null;

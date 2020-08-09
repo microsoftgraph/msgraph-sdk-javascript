@@ -37,7 +37,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @static
 	 * Default path for the file being uploaded
 	 */
-	private static DEFAULT_UPLOAD_PATH: string = "/";
+	private static DEFAULT_UPLOAD_PATH = "/";
 
 	/**
 	 * @private
@@ -93,8 +93,8 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 			const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
 			const rangeSize = getValidRangeSize(options.rangeSize);
 			const fileObj: FileObject = {
-				name,
 				content,
+				name,
 				size,
 			};
 			return new OneDriveLargeFileUploadTask(client, fileObj, session, {

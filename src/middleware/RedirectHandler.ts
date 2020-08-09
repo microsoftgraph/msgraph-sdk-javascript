@@ -43,21 +43,21 @@ export class RedirectHandler implements Middleware {
 	 * @static
 	 * A member holding SeeOther status code
 	 */
-	private static STATUS_CODE_SEE_OTHER: number = 303;
+	private static STATUS_CODE_SEE_OTHER = 303;
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding the name of the location header
 	 */
-	private static LOCATION_HEADER: string = "Location";
+	private static LOCATION_HEADER = "Location";
 
 	/**
 	 * @private
 	 * @static
 	 * A member representing the authorization header name
 	 */
-	private static AUTHORIZATION_HEADER: string = "Authorization";
+	private static AUTHORIZATION_HEADER = "Authorization";
 
 	/**
 	 * @private
@@ -138,7 +138,7 @@ export class RedirectHandler implements Middleware {
 	 * @returns A boolean representing whether the authorization header in the request should be dropped for consequent redirected requests
 	 */
 	private shouldDropAuthorizationHeader(requestUrl: string, redirectUrl: string): boolean {
-		const schemeHostRegex: RegExp = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
+		const schemeHostRegex = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
 		const requestMatches: string[] = schemeHostRegex.exec(requestUrl);
 		let requestAuthority: string;
 		let redirectAuthority: string;
@@ -224,7 +224,7 @@ export class RedirectHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			const redirectCount: number = 0;
+			const redirectCount = 0;
 			const options = this.getOptions(context);
 			context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);

@@ -1,0 +1,8 @@
+*.js
+*.js.map
+*.d.ts
+
+node_modules
+lib
+samples
+spec/development

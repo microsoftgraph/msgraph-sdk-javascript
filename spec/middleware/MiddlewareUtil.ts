@@ -13,8 +13,8 @@ import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader }
 
 describe("MiddlewareUtil.ts", async () => {
 	describe("getRequestHeader", () => {
-		const key: string = "Content-Type";
-		const value: string = "application/json";
+		const key = "Content-Type";
+		const value = "application/json";
 		const url = "dummy_url";
 		it("Should get header from request object", () => {
 			const request: Request = new Request(url, {
@@ -63,8 +63,8 @@ describe("MiddlewareUtil.ts", async () => {
 	});
 
 	describe("setRequestHeader", () => {
-		const key: string = "Content-Type";
-		const value: string = "application/json";
+		const key = "Content-Type";
+		const value = "application/json";
 		const url = "dummy_url";
 		it("Should set header in request object", () => {
 			const request: Request = new Request(url, {
@@ -165,9 +165,9 @@ describe("MiddlewareUtil.ts", async () => {
 	});
 
 	describe("appendRequestHeader", () => {
-		const key: string = "Content-Type";
-		const value: string = "application/json";
-		const firstValue: string = "text/html";
+		const key = "Content-Type";
+		const value = "application/json";
+		const firstValue = "text/html";
 		const url = "dummy_url";
 		it("Should set header in request object if the header is not present", () => {
 			const request: Request = new Request(url, {

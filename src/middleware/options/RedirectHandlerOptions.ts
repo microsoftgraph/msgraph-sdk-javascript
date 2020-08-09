@@ -28,14 +28,14 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 	 * @static
 	 * A member holding default max redirects value
 	 */
-	private static DEFAULT_MAX_REDIRECTS: number = 5;
+	private static DEFAULT_MAX_REDIRECTS = 5;
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding maximum max redirects value
 	 */
-	private static MAX_MAX_REDIRECTS: number = 20;
+	private static MAX_MAX_REDIRECTS = 20;
 
 	/**
 	 * @public

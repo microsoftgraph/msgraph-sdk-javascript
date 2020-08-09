@@ -41,14 +41,14 @@ export class RetryHandler implements Middleware {
 	 * @static
 	 * A member holding the name of retry attempt header
 	 */
-	private static RETRY_ATTEMPT_HEADER: string = "Retry-Attempt";
+	private static RETRY_ATTEMPT_HEADER = "Retry-Attempt";
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding the name of retry after header
 	 */
-	private static RETRY_AFTER_HEADER: string = "Retry-After";
+	private static RETRY_AFTER_HEADER = "Retry-After";
 
 	/**
 	 * @private
@@ -198,7 +198,7 @@ export class RetryHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			const retryAttempts: number = 0;
+			const retryAttempts = 0;
 			const options: RetryHandlerOptions = this.getOptions(context);
 			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
 			return await this.executeWithRetry(context, retryAttempts, options);

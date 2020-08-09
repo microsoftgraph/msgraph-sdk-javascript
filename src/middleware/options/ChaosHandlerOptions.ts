@@ -57,7 +57,7 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	 * @param {string} - The Message to be returned in the response
 	 * @returns An instance of ChaosHandlerOptions
 	 */
-	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number) {
+	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage = "Some error Happened", chaosPercentage?: number) {
 		this.chaosStrategy = chaosStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;

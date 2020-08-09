@@ -34,7 +34,7 @@ export class Range {
 	 * @param {number} [maxVal = -1] - The maximum value.
 	 * @returns An instance of a Range
 	 */
-	public constructor(minVal: number = -1, maxVal: number = -1) {
+	public constructor(minVal = -1, maxVal = -1) {
 		this.minValue = minVal;
 		this.maxValue = maxVal;
 	}
