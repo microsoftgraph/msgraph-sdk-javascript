@@ -9,8 +9,6 @@
  * @module GraphRequest
  */
 
-import FormData from "form-data";
-
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
@@ -574,7 +572,7 @@ export class GraphRequest {
 			body: serializeContent(content),
 		};
 		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
-		if (typeof FormData !== "undefined" && className === "FormData") {
+		if (className === "FormData") {
 			// Content-Type headers should not be specified in case the of FormData type content
 			options.headers = {};
 		} else {

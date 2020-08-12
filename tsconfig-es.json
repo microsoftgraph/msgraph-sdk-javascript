@@ -1,11 +1,10 @@
 {
 	"extends": "./tsconfig-base.json",
 	"compilerOptions": {
-		"module": "CommonJS",
+		"module": "es6",
 		"target": "es6",
 		"lib": ["dom", "esnext"],
-		"outDir": "lib/es",
-		"esModuleInterop": true
+		"outDir": "lib/es"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/**"],
 	"include": ["./src/**/*.ts"]
