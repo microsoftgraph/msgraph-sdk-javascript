@@ -11,7 +11,7 @@
 
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
-import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
+import { oDataQueryNames, PathUtils, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
 import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
@@ -134,45 +134,20 @@ export class GraphRequest {
 	 * @returns Nothing
 	 */
 	private parsePath = (path: string): void => {
-		// Strips out the base of the url if they passed in
-		if (path.indexOf("https://") !== -1) {
-			path = path.replace("https://", "");
+		this.urlComponents.host = "https://" + PathUtils.getHostFrom(path);
+		this.urlComponents.version = PathUtils.getVersionFrom(path);
+		this.urlComponents.path = PathUtils.getPathFrom(path);
 
-			// Find where the host ends
-			const endOfHostStrPos = path.indexOf("/");
-			if (endOfHostStrPos !== -1) {
-				// Parse out the host
-				this.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
-				// Strip the host from path
-				path = path.substring(endOfHostStrPos + 1, path.length);
-			}
+		const hasQueryString = path.indexOf("?");
 
-			// Remove the following version
-			const endOfVersionStrPos = path.indexOf("/");
-			if (endOfVersionStrPos !== -1) {
-				// Parse out the version
-				this.urlComponents.version = path.substring(0, endOfVersionStrPos);
-				// Strip version from path
-				path = path.substring(endOfVersionStrPos + 1, path.length);
-			}
-		}
+		if (hasQueryString) {
+			const queryString = PathUtils.getQueryStringFrom(path);
+			const queryParams = queryString && queryString.split("&");
 
-		// Strip out any leading "/"
-		if (path.charAt(0) === "/") {
-			path = path.substr(1);
-		}
-
-		const queryStrPos = path.indexOf("?");
-		if (queryStrPos === -1) {
-			// No query string
-			this.urlComponents.path = path;
-		} else {
-			this.urlComponents.path = path.substr(0, queryStrPos);
-
-			// Capture query string into oDataQueryParams and otherURLQueryParams
-			const queryParams = path.substring(queryStrPos + 1, path.length).split("&");
-			for (const queryParam of queryParams) {
-				this.parseQueryParameter(queryParam);
+			if (queryParams) {
+				for (const queryParam of queryParams) {
+					this.parseQueryParameter(queryParam);
+				}
 			}
 		}
 	};
