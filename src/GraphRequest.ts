@@ -124,24 +124,24 @@ export class GraphRequest {
 		this._headers = {};
 		this._options = {};
 		this._middlewareOptions = [];
-		this.parsePath(path);
+		this.parseUrl(path);
 	}
 
 	/**
 	 * @private
 	 * Parses the path string and creates URLComponents out of it
-	 * @param {string} path - The request path string
+	 * @param {string} url - The request path string
 	 * @returns Nothing
 	 */
-	private parsePath = (path: string): void => {
-		this.urlComponents.host = "https://" + PathUtils.getHostFrom(path);
-		this.urlComponents.version = PathUtils.getVersionFrom(path);
-		this.urlComponents.path = PathUtils.getPathFrom(path);
+	private parseUrl = (url: string): void => {
+		this.urlComponents.host = "https://" + PathUtils.getHostFrom(url);
+		this.urlComponents.version = PathUtils.getVersionFrom(url);
+		this.urlComponents.path = PathUtils.getPathFrom(url);
 
-		const hasQueryString = path.indexOf("?");
+		const hasQueryString = url.indexOf("?");
 
 		if (hasQueryString) {
-			const queryString = PathUtils.getQueryStringFrom(path);
+			const queryString = PathUtils.getQueryStringFrom(url);
 			const queryParams = queryString && queryString.split("&");
 
 			if (queryParams) {

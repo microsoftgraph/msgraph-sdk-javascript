@@ -90,8 +90,8 @@ export class PathUtils {
 	 * Matches the host from url. Given then url https://graph.microsoft.com/v1.0/me/events
 	 * it will return graph.microsoft.com.
 	 *
-	 * @param url
-	 * @returns host
+	 * @param {string} url
+	 * @returns {string} host
 	 */
 	public static getHostFrom(url: string): string {
 		const host = url.match(PathUtils.hostRe);
@@ -108,7 +108,7 @@ export class PathUtils {
 	 * it will return the version, v1.0 or beta.
 	 *
 	 * @param url
-	 * @returns version
+	 * @returns {string} version
 	 */
 	public static getVersionFrom(url: string): string {
 		const version = url.match(PathUtils.versionRe);
@@ -125,8 +125,8 @@ export class PathUtils {
 	 * https://graph.microsoft.com/v1.0/me/events it will return v1.0/me
 	 * And when the users passes a short url like me/events it will return me/events
 	 *
-	 * @param url
-	 * @returns path
+	 * @param {string} url
+	 * @returns {string} path
 	 */
 	public static getPathFrom(url: string) {
 		const isFullPath: boolean = url.includes("microsoft");
@@ -142,8 +142,8 @@ export class PathUtils {
 	 * Matches the query string from url. Given https://graph.microsoft.com/v1.0/me/events?queryString
 	 * or me/events/?queryString it will return ?queryString.
 	 *
-	 * @param url
-	 * @returns queryString
+	 * @param {string} url
+	 * @returns {string} queryString
 	 */
 	public static getQueryStringFrom(url: string): string {
 		const queryString = url.match(PathUtils.queryRe);
