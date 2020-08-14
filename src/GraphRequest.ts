@@ -22,7 +22,6 @@ import { MiddlewareControl } from "./middleware/MiddlewareControl";
 import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
-
 /**
  * @interface
  * Signature to representing key value pairs
@@ -394,6 +393,27 @@ export class GraphRequest {
 	}
 
 	/**
+	 * @private
+	 * Checks if the content-type is present in the _headers property. If not present, defaults the content-type to application/json
+	 * @param none
+	 * @returns nothing
+	 */
+	private setHeaderContentType(): void {
+		if (!this._headers) {
+			this.header("Content-Type", "application/json");
+			return;
+		}
+		const headerKeys = Object.keys(this._headers);
+		for (const headerKey of headerKeys) {
+			if (headerKey.toLowerCase() === "content-type") {
+				return;
+			}
+		}
+		// Default the content-type to application/json in case the content-type is not present in the header
+		this.header("Content-Type", "application/json");
+	}
+
+	/**
 	 * @public
 	 * Sets the custom header for a request
 	 * @param {string} headerKey - A header key
@@ -632,13 +652,15 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
-			headers:
-				typeof FormData !== "undefined" && content instanceof FormData
-					? {}
-					: {
-							"Content-Type": "application/json",
-					  },
 		};
+		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+		if (className === "FormData") {
+			// Content-Type headers should not be specified in case the of FormData type content
+			options.headers = {};
+		} else {
+			this.setHeaderContentType();
+			options.headers = this._headers;
+		}
 		try {
 			const response = await this.send(url, options, callback);
 			return response;
@@ -673,12 +695,10 @@ export class GraphRequest {
 	 */
 	public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
+		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
-			headers: {
-				"Content-Type": "application/json",
-			},
 		};
 		try {
 			const response = await this.send(url, options, callback);
@@ -698,12 +718,10 @@ export class GraphRequest {
 	 */
 	public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
+		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PATCH,
 			body: serializeContent(content),
-			headers: {
-				"Content-Type": "application/json",
-			},
 		};
 		try {
 			const response = await this.send(url, options, callback);
