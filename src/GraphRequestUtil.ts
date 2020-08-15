@@ -60,9 +60,9 @@ export const serializeContent = (content: any): any => {
 };
 
 export class PathUtils {
-	private static hostRe = /([a-z]+.microsoft.[a-z]+)/g;
-	private static versionRe = /(beta|v1.0)/g;
-	private static fullPathRe = /((v1.0|beta).*?(?=\?|$))/g;
+	private static hostRe = /([a-z]+\.microsoft\.[a-z]+)/g;
+	private static versionRe = /(beta|v1\.0)/g;
+	private static fullPathRe = /((v1\.0|beta).*?(?=\?|$))/g;
 	private static shortPathRe = /(.*?)((?=\?|$))/g;
 	private static queryRe = /\?.*/g;
 
