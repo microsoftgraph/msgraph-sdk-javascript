@@ -25,6 +25,7 @@ const testCases = {
 	"me?$filter=b&c=d": "https://graph.microsoft.com/v1.0/me?$filter=b&c=d",
 	"https://graph.microsoft.com/v1.0/me/messages?$filter=startswith(subject, 'anothermatchingurl.microsoft.com')": "https://graph.microsoft.com/v1.0/me/messages?$filter=startswith(subject, 'anothermatchingurl.microsoft.com')",
 	"https://graph.microsoft.com/v1.0/me/messages?$filter=startswith(subject, 'beta')": "https://graph.microsoft.com/v1.0/me/messages?$filter=startswith(subject, 'beta')",
+	"/me/messages?$filter=startswith(subject, 'microsoft')": "https://graph.microsoft.com/v1.0/me/messages?$filter=startswith(subject, 'microsoft')",
 
 	// oData params should work with and without $
 	"me?$select=displayName": "https://graph.microsoft.com/v1.0/me?$select=displayName",

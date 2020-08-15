@@ -122,7 +122,7 @@ export class PathUtils {
 	 * @returns {string} path
 	 */
 	public static getPathFrom(url: string) {
-		const isFullPath: boolean = url.includes("microsoft");
+		const isFullPath: boolean = url.includes("https://graph.microsoft.com");
 
 		if (isFullPath) {
 			return PathUtils.getPathFromFullPath(url);
