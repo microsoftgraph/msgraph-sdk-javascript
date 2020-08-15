@@ -5,6 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { clear } from "console";
+
 /**
  * @module GraphRequestUtil
  */
@@ -66,24 +68,27 @@ export class PathUtils {
 	private static shortPathRe = /(.*?)((?=\?|$))/g;
 	private static queryRe = /\?.*/g;
 
-	private static getPathFromFullPath(url: string): string {
-		const version = PathUtils.getVersionFrom(url);
-		const path = url.match(PathUtils.fullPathRe);
-		if (!path) {
-			return;
+	private static matchRegex(url: string, regex: RegExp, defaultValue: string = "", clearAfterMatch: string = null): string {
+		const matched = url.match(regex);
+
+		if (!matched) {
+			return defaultValue;
 		}
 
-		return path.shift().replace(version, "");
+		if (clearAfterMatch) {
+			return matched.shift().replace(clearAfterMatch, "");
+		}
+
+		return matched.shift();
+	}
+
+	private static getPathFromFullPath(url: string): string {
+		const version = this.getVersionFrom(url);
+		return this.matchRegex(url, this.fullPathRe, "", version);
 	}
 
 	private static getPathFromShortPath(url: string) {
-		const path = url.match(PathUtils.shortPathRe);
-
-		if (!path) {
-			return;
-		}
-
-		return path.shift();
+		return this.matchRegex(url, this.shortPathRe);
 	}
 
 	/**
@@ -94,13 +99,7 @@ export class PathUtils {
 	 * @returns {string} host
 	 */
 	public static getHostFrom(url: string): string {
-		const host = url.match(PathUtils.hostRe);
-
-		if (!host) {
-			return "graph.microsoft.com";
-		}
-
-		return host.shift();
+		return this.matchRegex(url, this.hostRe, "graph.microsoft.com");
 	}
 
 	/**
@@ -111,13 +110,7 @@ export class PathUtils {
 	 * @returns {string} version
 	 */
 	public static getVersionFrom(url: string): string {
-		const version = url.match(PathUtils.versionRe);
-
-		if (!version) {
-			return "v1.0";
-		}
-
-		return version.shift();
+		return this.matchRegex(url, this.versionRe, "v1.0");
 	}
 
 	/**
@@ -146,11 +139,6 @@ export class PathUtils {
 	 * @returns {string} queryString
 	 */
 	public static getQueryStringFrom(url: string): string {
-		const queryString = url.match(PathUtils.queryRe);
-
-		if (!queryString) {
-			return;
-		}
-		return queryString.shift().replace("?", "");
+		return this.matchRegex(url, this.queryRe, "", "?");
 	}
 }
