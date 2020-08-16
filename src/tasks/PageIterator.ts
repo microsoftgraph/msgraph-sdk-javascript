@@ -10,6 +10,7 @@
  */
 
 import { Client } from "../index";
+import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 
 /**
  * Signature representing PageCollection
@@ -23,6 +24,23 @@ export interface PageCollection {
 	"@odata.nextLink"?: string;
 	"@odata.deltaLink"?: string;
 	[Key: string]: any;
+}
+
+/**
+ * Signature to define the header options as a key value pair
+ */
+export interface Headers {
+	[key: string]: string;
+}
+
+/**
+ * Signature to define the options to be sent during request
+ * @property {Headers} headers - the header otpions for the request
+ * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
+ */
+export interface RequestOptions {
+	headers?: Headers;
+	middlewareOptions?: MiddlewareOptions[];
 }
 
 /**
@@ -74,6 +92,11 @@ export class PageIterator {
 	private complete: boolean;
 
 	/**
+	 * Information to be added to the request
+	 */
+	private options: RequestOptions;
+
+	/**
 	 * @public
 	 * @constructor
 	 * Creates new instance for PageIterator
@@ -82,13 +105,14 @@ export class PageIterator {
 	 * @param {PageIteratorCallback} callBack - The callback function
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback) {
+	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, options?: RequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
 		this.callback = callback;
 		this.complete = false;
+		this.options = options;
 	}
 
 	/**
@@ -116,7 +140,14 @@ export class PageIterator {
 	 */
 	private async fetchAndUpdateNextPageData(): Promise<any> {
 		try {
-			const response: PageCollection = await this.client.api(this.nextLink).get();
+			let graphRequest = this.client.api(this.nextLink);
+			if (this.options.headers) {
+				graphRequest = graphRequest.headers(this.options.headers);
+			}
+			if (this.options.middlewareOptions) {
+				graphRequest = graphRequest.middlewareOptions(this.options.middlewareOptions);
+			}
+			const response: PageCollection = await graphRequest.get();
 			this.collection = response.value;
 			this.nextLink = response["@odata.nextLink"];
 			this.deltaLink = response["@odata.deltaLink"];
