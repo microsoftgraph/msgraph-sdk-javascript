@@ -55,7 +55,7 @@
 		"test:tasks": "tsc --p spec/tsconfig.json && mocha spec/tasks",
 		"test:development": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
 		"test:workload": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
-		"lint": "eslint ./ --quiet",
+		"lint": "eslint . --ext .ts",
 		"format:css": "prettier --write \"**/*.css\"",
 		"format:html": "prettier --write \"**/*.html\"",
 		"format:js": "prettier --write \"**/*.js\"",

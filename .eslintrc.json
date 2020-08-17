@@ -1,18 +1,27 @@
 {
 	"root": true,
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint"],
-	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
+	"plugins": ["@typescript-eslint", "prettier"],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 	"rules": {
 		"max-len": "off",
-		"sort-imports": ["warn", { "allowSeparatedGroups": true }],
-		"sort-keys": "warn",
+		"sort-imports": [
+			"off",
+			{
+				"allowSeparatedGroups": true
+			}
+		],
+		"sort-keys": "off",
 		"no-useless-catch": "off", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
 		"no-constant-condition": "off",
 		"no-empty-interface": "off",
 		"prefer-rest-params": "off",
 		"@typescript-eslint/no-empty-interface": "off",
 		"@typescript-eslint/ban-types": "off",
-		"no-mixed-spaces-and-tabs": "off"
+		"no-mixed-spaces-and-tabs": "off",
+		"@typescript-eslint/no-unused-vars": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"prettier/prettier": "error"
 	}
 }
