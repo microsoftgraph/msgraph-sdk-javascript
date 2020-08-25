@@ -17,7 +17,7 @@ import { DummyHandlerOptions } from "../DummyHandlerOptions";
 
 describe("MiddlewareControl.ts", () => {
 	const dummyHandlerOption = new DummyHandlerOptions();
-	/* tslint:disable: no-string-literal */
+
 	describe("constructor", () => {
 		it("Should populate its middleware options map", () => {
 			const middlewareControl = new MiddlewareControl([dummyHandlerOption]);
@@ -31,7 +31,6 @@ describe("MiddlewareControl.ts", () => {
 			assert.equal(middlewareControl["middlewareOptions"].size, 0);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("getMiddlewareOption", () => {
 		it("Should return the middleware option for a given class name", () => {

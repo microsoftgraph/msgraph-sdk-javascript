@@ -10,7 +10,6 @@ import { assert } from "chai";
 import { RetryHandlerOptions, ShouldRetry } from "../../src/middleware/options/RetryHandlerOptions";
 
 describe("RetryHandlerOptions.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("Constructor", () => {
 		it("Should use default values if not given", () => {
 			try {
@@ -100,5 +99,4 @@ describe("RetryHandlerOptions.ts", () => {
 			assert.equal(options.getMaxDelay(), RetryHandlerOptions["MAX_DELAY"]);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

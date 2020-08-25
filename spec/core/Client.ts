@@ -16,7 +16,6 @@ import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
 describe("Client.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("initWithMiddleware", () => {
 		const dummyAuthProvider = new DummyAuthenticationProvider();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
@@ -75,5 +74,4 @@ describe("Client.ts", () => {
 			assert.isDefined(client["httpClient"]);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

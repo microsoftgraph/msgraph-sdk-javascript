@@ -65,7 +65,7 @@ describe("GraphResponseHandler.ts", () => {
 			"Content-Type": "dummy/unknown",
 		},
 	};
-	/* tslint:disable: no-string-literal */
+
 	describe("parseDocumentResponse", () => {
 		it("Should return the html string", async () => {
 			const response = new Response(htmlString, status200);
@@ -143,7 +143,6 @@ describe("GraphResponseHandler.ts", () => {
 			assert.equal(responseValue, htmlString);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("getResponse", () => {
 		it("Should return a raw response", async () => {

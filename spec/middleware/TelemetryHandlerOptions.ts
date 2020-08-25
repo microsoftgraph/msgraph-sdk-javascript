@@ -12,7 +12,6 @@ import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "../../src/middleware/options/TelemetryHandlerOptions";
 
 describe("TelemetryHandlerOptions.ts", () => {
-	/* tslint:disable: no-string-literal no-bitwise */
 	describe("constructor", () => {
 		it("Should initialize the feature usage flag with NONE flag", () => {
 			const telemetryOptions = new TelemetryHandlerOptions();
@@ -71,5 +70,4 @@ describe("TelemetryHandlerOptions.ts", () => {
 			assert.equal(usageFlag, "6");
 		});
 	});
-	/* tslint:enable: no-string-literal no-bitwise*/
 });

@@ -15,15 +15,12 @@ import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 describe("HTTPClient.ts", () => {
 	const httpMessageHandler: DummyHTTPMessageHandler = new DummyHTTPMessageHandler();
 	const httpClient: HTTPClient = new HTTPClient(httpMessageHandler);
-	/* tslint:disable: no-string-literal */
 	describe("constructor", () => {
 		it("Should create an instance and populate middleware member", () => {
 			assert.isDefined(httpClient["middleware"]);
 			assert.equal(httpClient["middleware"], httpMessageHandler);
 		});
 	});
-	/* tslint:enable: no-string-literal */
-
 	describe("sendRequest", async () => {
 		it("Should throw error for invalid request options incase if the url and options are passed", async () => {
 			try {

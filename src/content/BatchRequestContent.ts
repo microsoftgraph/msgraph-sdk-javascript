@@ -234,7 +234,7 @@ export class BatchRequestContent {
 			body = await cloneReq.json();
 			bodyParsed = true;
 		} catch (e) {
-			// tslint:disable-line: no-empty
+			//TODO- Handle empty catches
 		}
 		if (!bodyParsed) {
 			try {
@@ -269,7 +269,7 @@ export class BatchRequestContent {
 				}
 				bodyParsed = true;
 			} catch (e) {
-				// tslint:disable-line: no-empty
+				// TODO-Handle empty catches
 			}
 		}
 		return body;

@@ -70,7 +70,7 @@ export class GraphErrorHandler {
 		try {
 			gError.body = JSON.stringify(error);
 		} catch (error) {
-			// tslint:disable-line: no-empty
+			// TODO- Handle empty catches
 		}
 		return gError;
 	}

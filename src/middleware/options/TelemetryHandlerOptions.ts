@@ -70,9 +70,7 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 	 * @returns nothing
 	 */
 	private setFeatureUsage(flag: FeatureUsageFlag): void {
-		/* tslint:disable: no-bitwise */
 		this.featureUsage = this.featureUsage | flag;
-		/* tslint:enable: no-bitwise */
 	}
 
 	/**

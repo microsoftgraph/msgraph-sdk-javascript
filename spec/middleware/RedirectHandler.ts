@@ -16,7 +16,6 @@ import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 const redirectHandlerOptions = new RedirectHandlerOptions();
 const redirectHandler = new RedirectHandler();
 describe("RedirectHandler.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("constructor", () => {
 		it("Should create an instance with given options", () => {
 			const handler = new RedirectHandler(redirectHandlerOptions);
@@ -340,5 +339,4 @@ describe("RedirectHandler.ts", () => {
 			assert.equal(context.options.redirect, RedirectHandler["MANUAL_REDIRECT"]);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

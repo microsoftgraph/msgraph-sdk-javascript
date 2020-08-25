@@ -419,7 +419,6 @@ describe("BatchRequestContent.ts", () => {
 	});
 
 	describe("validateDependencies", () => {
-		/* tslint:disable: no-string-literal */
 		it("Should throw error for empty request object", (done) => {
 			try {
 				BatchRequestContent["validateDependencies"](new Map() as Map<string, BatchRequestStep>);
@@ -645,6 +644,5 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent([req1, req2, req3]);
 			assert.equal(false, BatchRequestContent["validateDependencies"](batchReq.requests));
 		});
-		/* tslint:enable: no-string-literal */
 	});
 });

@@ -74,7 +74,6 @@ export class GraphRequest {
 	 */
 	private urlComponents: URLComponents;
 
-	/* tslint:disable: variable-name */
 	/**
 	 * @private
 	 * A member to hold custom header options for a request
@@ -100,7 +99,6 @@ export class GraphRequest {
 	 * A member to hold custom response type for a request
 	 */
 	private _responseType: ResponseType;
-	/* tslint:enable: variable-name */
 
 	/**
 	 * @public
@@ -210,7 +208,7 @@ export class GraphRequest {
 		const url = urlJoin([this.urlComponents.host, this.urlComponents.version, this.urlComponents.path]) + this.createQueryString();
 
 		if (this.config.debugLogging) {
-			console.log(url); // tslint:disable-line: no-console
+			console.log(url);
 		}
 		return url;
 	}

@@ -116,13 +116,11 @@ export class RetryHandler implements Middleware {
 		const retryAfter = response.headers !== undefined ? response.headers.get(RetryHandler.RETRY_AFTER_HEADER) : null;
 		let newDelay: number;
 		if (retryAfter !== null) {
-			// tslint:disable: prefer-conditional-expression
 			if (Number.isNaN(Number(retryAfter))) {
 				newDelay = Math.round((new Date(retryAfter).getTime() - Date.now()) / 1000);
 			} else {
 				newDelay = Number(retryAfter);
 			}
-			// tslint:enable: prefer-conditional-expression
 		} else {
 			// Adding randomness to avoid retrying at a same
 			newDelay = retryAttempts >= 2 ? this.getExponentialBackOffTime(retryAttempts) + delay + getRandomness() : delay + getRandomness();

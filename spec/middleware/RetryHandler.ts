@@ -45,7 +45,7 @@ describe("RetryHandler.ts", function() {
 		status: 200,
 		statusText: "OK",
 	});
-	/* tslint:disable: no-string-literal */
+
 	describe("constructor", () => {
 		it("Should set the option member with retryHanderOptions", () => {
 			const handler = new RetryHandler(retryHandlerOptions);
@@ -235,5 +235,4 @@ describe("RetryHandler.ts", function() {
 			assert.equal(cxt.response.status, 429);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

@@ -42,7 +42,6 @@ const testCases = {
 };
 
 describe("urlParsing.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("parsePath", () => {
 		for (const path in testCases) {
 			if (Object.prototype.hasOwnProperty.call(testCases, path)) {
@@ -54,4 +53,3 @@ describe("urlParsing.ts", () => {
 		}
 	});
 });
-/* tslint:enable: no-string-literal */
