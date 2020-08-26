@@ -9,8 +9,10 @@
  * @module PageIterator
  */
 
+import { FetchOptions } from "../IFetchOptions";
 import { Client } from "../index";
 import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
+import { ResponseType } from "../ResponseType";
 
 /**
  * Signature representing PageCollection
@@ -34,13 +36,18 @@ export interface Headers {
 }
 
 /**
- * Signature to define the options to be sent during request
+ * Signature to define the request options to be sent during request.
+ * The values of the RequestOptions properties are passed to the Graph Request object.
  * @property {Headers} headers - the header otpions for the request
  * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
+ * @property {FetchOptions} options - The fetch options for the request
+ * @property {ResponseType} responseType - The response type expected
  */
 export interface RequestOptions {
 	headers?: Headers;
 	middlewareOptions?: MiddlewareOptions[];
+	options?: FetchOptions;
+	responseType?: ResponseType;
 }
 
 /**
@@ -94,7 +101,7 @@ export class PageIterator {
 	/**
 	 * Information to be added to the request
 	 */
-	private options: RequestOptions;
+	private requestOptions: RequestOptions;
 
 	/**
 	 * @public
@@ -105,14 +112,14 @@ export class PageIterator {
 	 * @param {PageIteratorCallback} callBack - The callback function
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, options?: RequestOptions) {
+	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: RequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
 		this.callback = callback;
 		this.complete = false;
-		this.options = options;
+		this.requestOptions = requestOptions;
 	}
 
 	/**
@@ -141,12 +148,21 @@ export class PageIterator {
 	private async fetchAndUpdateNextPageData(): Promise<any> {
 		try {
 			let graphRequest = this.client.api(this.nextLink);
-			if (this.options.headers) {
-				graphRequest = graphRequest.headers(this.options.headers);
+			if (this.requestOptions) {
+				if (this.requestOptions.headers) {
+					graphRequest = graphRequest.headers(this.requestOptions.headers);
+				}
+				if (this.requestOptions.middlewareOptions) {
+					graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
+				}
+				if (this.requestOptions.responseType) {
+					graphRequest = graphRequest.responseType(this.requestOptions.responseType);
+				}
+				if (this.requestOptions.options) {
+					graphRequest = graphRequest.options(this.requestOptions.options);
+				}
 			}
-			if (this.options.middlewareOptions) {
-				graphRequest = graphRequest.middlewareOptions(this.options.middlewareOptions);
-			}
+
 			const response: PageCollection = await graphRequest.get();
 			this.collection = response.value;
 			this.nextLink = response["@odata.nextLink"];
