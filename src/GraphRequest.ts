@@ -79,9 +79,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold custom header options for a request
 	 */
-	private _headers: {
-		[key: string]: string;
-	};
+	private _headers: HeadersInit;
 
 	/**
 	 * @private
@@ -431,7 +429,7 @@ export class GraphRequest {
 	 * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
+	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
 		for (const key in headers) {
 			if (headers.hasOwnProperty(key)) {
 				this._headers[key] = headers[key] as string;

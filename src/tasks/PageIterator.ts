@@ -29,13 +29,6 @@ export interface PageCollection {
 }
 
 /**
- * Signature to define the header options as a key value pair
- */
-export interface Headers {
-	[key: string]: string;
-}
-
-/**
  * Signature to define the request options to be sent during request.
  * The values of the RequestOptions properties are passed to the Graph Request object.
  * @property {Headers} headers - the header otpions for the request
@@ -44,7 +37,7 @@ export interface Headers {
  * @property {ResponseType} responseType - The response type expected
  */
 export interface RequestOptions {
-	headers?: Headers;
+	headers?: HeadersInit;
 	middlewareOptions?: MiddlewareOptions[];
 	options?: FetchOptions;
 	responseType?: ResponseType;
