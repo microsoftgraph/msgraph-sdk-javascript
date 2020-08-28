@@ -31,7 +31,7 @@ export interface PageCollection {
 /**
  * Signature to define the request options to be sent during request.
  * The values of the RequestOptions properties are passed to the Graph Request object.
- * @property {Headers} headers - the header otpions for the request
+ * @property {HeadersInit} headers - the header options for the request
  * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
  * @property {FetchOptions} options - The fetch options for the request
  * @property {ResponseType} responseType - The response type expected
@@ -103,6 +103,7 @@ export class PageIterator {
 	 * @param {Client} client - The graph client instance
 	 * @param {PageCollection} pageCollection - The page collection object
 	 * @param {PageIteratorCallback} callBack - The callback function
+	 * @param {RequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
 	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: RequestOptions) {
