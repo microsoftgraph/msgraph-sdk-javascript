@@ -426,7 +426,7 @@ export class GraphRequest {
 	/**
 	 * @public
 	 * Sets the custom headers for a request
-	 * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
+	 * @param {KeyValuePairObjectStringNumber | HeadersInit} headers - The request headers
 	 * @returns The same GraphRequest instance that is being called with
 	 */
 	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
