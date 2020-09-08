@@ -92,6 +92,59 @@ cases.push({
 });
 
 cases.push({
+	url: "https://graph.microsoft.com/beta/me/people?$select=displayName,title,id&$count=false&$expand=a($expand=a,b)",
+	request: client
+		.api("/me/people")
+		.version("beta")
+		.select(["displayName", "title"])
+		.count(true)
+		.expand("a($expand=a,b)")
+		.query("$select=id")
+		.query("$count=false"),
+});
+
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$select=displayName,title,id&select=value",
+	request: client
+		.api("/me/people")
+		.version("v1.0")
+		.select(["displayName", "title"])
+		.query({ select: "value" })
+		.query({ $select: "id" }),
+});
+
+// handling an invalid input
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$select=displayName,title&select=value&test",
+	request: client
+		.api("/me/people")
+		.version("v1.0")
+		.select(["displayName", "title"])
+		.query({ select: "value" })
+		.query("test"),
+});
+
+// handling an invalid input
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$expand=address($select=home,$expand=city)&$select=home,displayName,title&select=value&test",
+	request: client
+		.api("/me/people?$expand=address($select=home,$expand=city)&$select=home")
+		.version("v1.0")
+		.select(["displayName", "title"])
+		.query({ select: "value" })
+		.query("test"),
+});
+
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$expand=home($select=home)&name=test",
+	request: client.api("/me/people").query("?name=test&$expand=home($select=home)"),
+});
+cases.push({
+	url: "https://graph.microsoft.com/v1.0/me/people?$expand=home($select=home)&name=test",
+	request: client.api("/me/people?name=test&$expand=home($select=home)"),
+});
+
+cases.push({
 	url: "https://graph.microsoft.com/v1.0/me/drive/root?$expand=children($select=name),permissions",
 	request: client
 		.api("me/drive/root")
