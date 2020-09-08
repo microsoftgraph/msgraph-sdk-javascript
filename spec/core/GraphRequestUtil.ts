@@ -71,5 +71,10 @@ describe("GraphRequestUtil.ts", () => {
 			const val = undefined;
 			assert.equal(serializeContent(val), undefined);
 		});
+
+		it("Should return 'null' for the case of null content value", () => {
+			const val = null;
+			assert.equal(serializeContent(val), "null");
+		});
 	});
 });
