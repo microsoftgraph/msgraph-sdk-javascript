@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { Event } from "microsoft-graph";
 
-import { PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
+import { PageIterator, PageIteratorCallback, GraphRequestOptions } from "../../../src/tasks/PageIterator";
 import { getClient } from "../test-helper";
 
 const client = getClient();
@@ -23,13 +23,13 @@ describe("PageIterator", function() {
 				assert.equal(event.start.timeZone, pst);
 				return true;
 			};
-			var requestOptions = { headers: pstHeader };
+			var requestOptions: GraphRequestOptions = { options: { headers: pstHeader } };
 			if (response["@odata.nextLink"]) {
 				const pageIterator = new PageIterator(client, response, callback, requestOptions);
 				await pageIterator.iterate();
 				assert.isTrue(pageIterator.isComplete());
 			}
-		});
+		}).timeout(20 * 1000);
 
 		it("differentHeadersPassedWithPageIterator", async () => {
 			const response = await client

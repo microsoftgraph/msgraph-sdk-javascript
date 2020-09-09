@@ -30,17 +30,15 @@ export interface PageCollection {
 
 /**
  * Signature to define the request options to be sent during request.
- * The values of the RequestOptions properties are passed to the Graph Request object.
+ * The values of the GraphRequestOptions properties are passed to the Graph Request object.
  * @property {HeadersInit} headers - the header options for the request
  * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
  * @property {FetchOptions} options - The fetch options for the request
- * @property {ResponseType} responseType - The response type expected
  */
-export interface RequestOptions {
+export interface GraphRequestOptions {
 	headers?: HeadersInit;
 	middlewareOptions?: MiddlewareOptions[];
 	options?: FetchOptions;
-	responseType?: ResponseType;
 }
 
 /**
@@ -94,7 +92,7 @@ export class PageIterator {
 	/**
 	 * Information to be added to the request
 	 */
-	private requestOptions: RequestOptions;
+	private requestOptions: GraphRequestOptions;
 
 	/**
 	 * @public
@@ -103,10 +101,10 @@ export class PageIterator {
 	 * @param {Client} client - The graph client instance
 	 * @param {PageCollection} pageCollection - The page collection object
 	 * @param {PageIteratorCallback} callBack - The callback function
-	 * @param {RequestOptions} requestOptions - The request options
+	 * @param {GraphRequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: RequestOptions) {
+	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
@@ -148,9 +146,6 @@ export class PageIterator {
 				}
 				if (this.requestOptions.middlewareOptions) {
 					graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
-				}
-				if (this.requestOptions.responseType) {
-					graphRequest = graphRequest.responseType(this.requestOptions.responseType);
 				}
 				if (this.requestOptions.options) {
 					graphRequest = graphRequest.options(this.requestOptions.options);
