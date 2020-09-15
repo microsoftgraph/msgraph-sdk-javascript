@@ -59,7 +59,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		if (path[path.length - 1] !== "/") {
 			path = `${path}/`;
 		}
-		return encodeURI(`/me/drive/root:${path}${fileName}:/createUploadSession`);
+		return `/me/drive/root:${path.split('/').map(p => encodeURIComponent(p)).join('/')}${encodeURIComponent(filename)}:/createUploadSession`;
 	}
 
 	/**
