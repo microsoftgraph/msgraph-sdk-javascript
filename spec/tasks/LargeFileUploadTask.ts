@@ -166,7 +166,7 @@ describe("LargeFileUploadTask.ts", () => {
 			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
-				.then((res) => {
+				.then(() => {
 					throw new Error("Upload is working for upload completed task");
 				})
 				.catch((err) => {

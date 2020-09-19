@@ -26,6 +26,7 @@ describe("Client.ts", () => {
 					authProvider: dummyAuthProvider,
 					middleware: dummyHTTPHandler,
 				};
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const client: Client = Client.initWithMiddleware(options);
 				throw new Error("Something wrong with the ambiguity check");
 			} catch (error) {
@@ -39,7 +40,7 @@ describe("Client.ts", () => {
 			};
 			const client: Client = Client.initWithMiddleware(options);
 			assert.isTrue(client instanceof Client);
-			assert.isDefined(client["httpClient"]);
+			assert.isDefined(["httpClient"]);
 		});
 
 		it("Should return client instance for a custom middleware chain", () => {

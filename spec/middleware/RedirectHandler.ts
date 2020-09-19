@@ -226,13 +226,6 @@ describe("RedirectHandler.ts", () => {
 
 		it("Should drop body and change method to get for SEE_OTHER status code", async () => {
 			const options = new RedirectHandlerOptions();
-			const cxt: Context = {
-				request: "/me",
-				options: {
-					method: "POST",
-					body: "dummy body",
-				},
-			};
 			dummyHTTPHandler.setResponses([
 				new Response("", {
 					status: 303,

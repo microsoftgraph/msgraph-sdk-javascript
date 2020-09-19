@@ -53,7 +53,7 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 	 * @private
 	 * A member holding default shouldRedirect callback
 	 */
-	private static DEFAULT_SHOULD_RETRY: ShouldRedirect = () => true;
+	private static defaultShouldRetry: ShouldRedirect = () => true;
 
 	/**
 	 * @public
@@ -63,7 +63,7 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 	 * @param {ShouldRedirect} [shouldRedirect = RedirectHandlerOptions.DEFAULT_SHOULD_RETRY] - The should redirect callback
 	 * @returns An instance of RedirectHandlerOptions
 	 */
-	public constructor(maxRedirects: number = RedirectHandlerOptions.DEFAULT_MAX_REDIRECTS, shouldRedirect: ShouldRedirect = RedirectHandlerOptions.DEFAULT_SHOULD_RETRY) {
+	public constructor(maxRedirects: number = RedirectHandlerOptions.DEFAULT_MAX_REDIRECTS, shouldRedirect: ShouldRedirect = RedirectHandlerOptions.defaultShouldRetry) {
 		if (maxRedirects > RedirectHandlerOptions.MAX_MAX_REDIRECTS) {
 			const error = new Error(`MaxRedirects should not be more than ${RedirectHandlerOptions.MAX_MAX_REDIRECTS}`);
 			error.name = "MaxLimitExceeded";

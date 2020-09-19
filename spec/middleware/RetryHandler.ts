@@ -224,7 +224,7 @@ describe("RetryHandler.ts", function() {
 		it("Should successfully retry and return ok response", async () => {
 			const opts = new RetryHandlerOptions(1);
 			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
-			await handler["executeWithRetry"](cxt, 0, options);
+			await handler["executeWithRetry"](cxt, 0, opts);
 			assert.equal(cxt.response.status, 200);
 		});
 

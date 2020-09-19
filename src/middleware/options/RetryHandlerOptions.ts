@@ -76,7 +76,7 @@ export class RetryHandlerOptions implements MiddlewareOptions {
 	 * @private
 	 * A member holding default shouldRetry callback
 	 */
-	private static DEFAULT_SHOULD_RETRY: ShouldRetry = () => true;
+	private static defaultShouldRetry: ShouldRetry = () => true;
 
 	/**
 	 * @public
@@ -87,7 +87,7 @@ export class RetryHandlerOptions implements MiddlewareOptions {
 	 * @param {ShouldRetry} [shouldRetry = RetryHandlerOptions.DEFAULT_SHOULD_RETRY] - The shouldRetry callback function
 	 * @returns An instance of RetryHandlerOptions
 	 */
-	public constructor(delay: number = RetryHandlerOptions.DEFAULT_DELAY, maxRetries: number = RetryHandlerOptions.DEFAULT_MAX_RETRIES, shouldRetry: ShouldRetry = RetryHandlerOptions.DEFAULT_SHOULD_RETRY) {
+	public constructor(delay: number = RetryHandlerOptions.DEFAULT_DELAY, maxRetries: number = RetryHandlerOptions.DEFAULT_MAX_RETRIES, shouldRetry: ShouldRetry = RetryHandlerOptions.defaultShouldRetry) {
 		if (delay > RetryHandlerOptions.MAX_DELAY && maxRetries > RetryHandlerOptions.MAX_MAX_RETRIES) {
 			const error = new Error(`Delay and MaxRetries should not be more than ${RetryHandlerOptions.MAX_DELAY} and ${RetryHandlerOptions.MAX_MAX_RETRIES}`);
 			error.name = "MaxLimitExceeded";

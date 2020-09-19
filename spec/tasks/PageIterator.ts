@@ -43,11 +43,13 @@ const getEmptyPageCollectionWithNext = () => {
 	};
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const truthyCallback: PageIteratorCallback = (data) => {
 	return true;
 };
 
 let halfWayCallbackCounter = 5;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const halfWayCallback: PageIteratorCallback = (data) => {
 	halfWayCallbackCounter--;
 	if (halfWayCallbackCounter === 0) {

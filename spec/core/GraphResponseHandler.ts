@@ -51,13 +51,7 @@ describe("GraphResponseHandler.ts", () => {
 			"Content-Type": "application/json",
 		},
 	};
-	const status200Image = {
-		status: 200,
-		stautsText: "OK",
-		headers: {
-			"Content-Type": "image/jpeg",
-		},
-	};
+
 	const status200Unknown = {
 		status: 200,
 		statusText: "OK",
@@ -78,6 +72,12 @@ describe("GraphResponseHandler.ts", () => {
 	describe("convertResponse", () => {
 		it("Should return empty response for the NO CONTENT (204 response)", async () => {
 			const response = new Response(undefined, status204);
+			const responseValue = await GraphResponseHandler["convertResponse"](response);
+			assert.isUndefined(responseValue);
+		});
+
+		it("Should return internal server error (500 response)", async () => {
+			const response = new Response(undefined, status500);
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
 			assert.isUndefined(responseValue);
 		});

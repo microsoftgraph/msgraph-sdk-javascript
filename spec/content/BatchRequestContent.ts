@@ -71,6 +71,7 @@ describe("BatchRequestContent.ts", () => {
 			const createFolderDuplicate1 = getCreateFolderRequestCopy();
 			createFolderDuplicate1.id = "";
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const batchReq = new BatchRequestContent([createFolderDuplicate1]);
 				throw new Error("Something wrong with the empty id check");
 			} catch (error) {
@@ -87,6 +88,7 @@ describe("BatchRequestContent.ts", () => {
 				requests.push(req);
 			}
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const batchReq = new BatchRequestContent(requests);
 				throw new Error("Something wrong with the limiting requests");
 			} catch (error) {
@@ -296,6 +298,7 @@ describe("BatchRequestContent.ts", () => {
 		it("Should return error for empty requests", async () => {
 			const batchReq = new BatchRequestContent();
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const content = await batchReq.getContent();
 				throw new Error("Something wrong with the empty requests validation");
 			} catch (error) {
@@ -354,6 +357,7 @@ describe("BatchRequestContent.ts", () => {
 				},
 			]);
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const content = await batchReq.getContent();
 				throw new Error("Something wrong with the header checking");
 			} catch (error) {
