@@ -30,7 +30,7 @@ Pass instance of MyAuthenticationProvider while initializing.
 import { MyAuthenticationProvider } from "./MyAuthenticationProvider";
 
 let clientOptions: ClientOptions = {
-	authProvider: new MyCustomAuthenticationProvider(),
+	authProvider: new MyAuthenticationProvider(),
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
