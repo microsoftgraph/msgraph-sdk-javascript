@@ -20,7 +20,7 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  */
 export class ChaosHandlerOptions implements MiddlewareOptions {
 	/**
-	 * Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
+	 * Specifies the startegy used for the Testing Handler -> RANDOM/MANUAL
 	 *
 	 * @public
 	 */
@@ -49,19 +49,29 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	public chaosPercentage: number;
 
 	/**
+	 * The response body to be returned in the response
+	 *
+	 * @public
+	 */
+	public responseBody: any;
+
+	/**
 	 * @public
 	 * @constructor
 	 * To create an instance of Testing Handler Options
 	 * @param {ChaosStrategy} ChaosStrategy - Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
-	 * @param {number?} statusCode - The Message to be returned in the response
-	 * @param {string} - The Message to be returned in the response
+	 * @param {number?} statusCode - The statusCode to be returned in the response
+	 * @param {string} statusMessage - The Message to be returned in the response
+	 * @param {number?} chaosPercentage - The percentage of randomness/chaos in the handler
+	 * @param {any?} responseBody - The response body to be returned in the response
 	 * @returns An instance of ChaosHandlerOptions
 	 */
-	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number) {
+	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number, responseBody?: any) {
 		this.chaosStrategy = chaosStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
 		this.chaosPercentage = chaosPercentage !== undefined ? chaosPercentage : 10;
+		this.responseBody = responseBody;
 		if (this.chaosPercentage > 100) {
 			throw new Error("Error Pecentage can not be more than 100");
 		}
