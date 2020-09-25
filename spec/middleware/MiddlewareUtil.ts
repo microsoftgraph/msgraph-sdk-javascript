@@ -6,7 +6,7 @@
  */
 
 import { assert } from "chai";
-import { NFHeaders } from "node-fetch";
+import { NFHeaders } from "../../spec/node_modules/node-fetch";
 
 import { FetchOptions } from "../../src/IFetchOptions";
 import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";

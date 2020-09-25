@@ -12,6 +12,7 @@
 	],
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
+		"@azure/identity": "^1.1.0",
 		"@babel/runtime": "^7.4.4",
 		"tslib": "^1.9.3"
 	},
