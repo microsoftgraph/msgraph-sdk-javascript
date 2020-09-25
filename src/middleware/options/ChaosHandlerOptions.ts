@@ -20,7 +20,7 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  */
 export class ChaosHandlerOptions implements MiddlewareOptions {
 	/**
-	 * Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
+	 * Specifies the startegy used for the Testing Handler -> RANDOM/MANUAL
 	 *
 	 * @public
 	 */
@@ -63,7 +63,7 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	 * @param {number?} statusCode - The statusCode to be returned in the response
 	 * @param {string} statusMessage - The Message to be returned in the response
 	 * @param {number?} chaosPercentage - The percentage of randomness/chaos in the handler
-	 * @param {any} responseBody - The response body to be returned in the response
+	 * @param {any?} responseBody - The response body to be returned in the response
 	 * @returns An instance of ChaosHandlerOptions
 	 */
 	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusCode?: number, statusMessage: string = "Some error Happened", chaosPercentage?: number, responseBody?: any) {

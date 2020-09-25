@@ -91,7 +91,7 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} statusMessage - the status message to be returned for the request
 	 * @param {string} requestID - request id
 	 * @param {string} requestDate - date of the request
-	 * @param {string} requestBody - the request body to be returned for the request
+	 * @param {any?} requestBody - the request body to be returned for the request
 	 * @returns response body
 	 */
 	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: string, responseBody?: any) {
