@@ -12,6 +12,10 @@ import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredentialAuthenticationProviderOptions";
 
 /**
+ * @module ImplicitMSALAuthenticationProvider
+ */
+
+/**
  * @class
  * Class representing TokenCredentialAuthenticationProvider
  * @extends AuthenticationProvider

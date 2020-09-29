@@ -1,0 +1,21 @@
+{
+	"name": "authprovider",
+	"version": "1.0.0",
+	"description": "sample for auth provider using token credentials",
+	"main": "index.js",
+	"scripts": {
+		"test": "tsc",
+		"start": "tsc --p tsconfig.json && node src/AuthenticationCodeSample.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@azure/identity": "^1.1.0",
+		"typescript": "^4.0.3"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"open": "^7.2.1",
+		"qs": "^6.9.4"
+	}
+}

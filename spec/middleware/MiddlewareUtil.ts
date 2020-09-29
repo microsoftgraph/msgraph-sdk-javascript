@@ -4,11 +4,12 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
+/* tslint:disable */
 import { assert } from "chai";
-import { NFHeaders } from "../../spec/node_modules/node-fetch";
 
 import { FetchOptions } from "../../src/IFetchOptions";
+import { NFHeaders } from "../../spec/node_modules/node-fetch";
+
 import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "../../src/middleware/MiddlewareUtil";
 
 describe("MiddlewareUtil.ts", async () => {
