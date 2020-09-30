@@ -1,6 +1,6 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"version": "2.1.0-Preview.1",
+	"version": "2.1.0",
 	"description": "Microsoft Graph Client Library",
 	"main": "lib/src/index.js",
 	"module": "lib/es/index.js",
