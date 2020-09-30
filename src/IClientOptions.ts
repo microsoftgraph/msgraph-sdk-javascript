@@ -17,7 +17,7 @@ import { Middleware } from "./middleware/IMiddleware";
  * @property {boolean} [debugLogging] - The boolean to enable/disable debug logging
  * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
  * @property {FetchOptions} [fetchOptions] - The options for fetch request
- * @property {Middleware} [middleware] - The first middleware of the middleware chain
+ * @property {Middleware| Middleware[]} [middleware] - The first middleware of the middleware chain or  ordered array of the Middlewares
  */
 export interface ClientOptions {
 	authProvider?: AuthenticationProvider;
@@ -25,5 +25,5 @@ export interface ClientOptions {
 	debugLogging?: boolean;
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
-	middleware?: Middleware;
+	middleware?: Middleware | Middleware[];
 }

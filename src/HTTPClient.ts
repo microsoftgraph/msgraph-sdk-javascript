@@ -29,8 +29,21 @@ export class HTTPClient {
 	 * Creates an instance of a HTTPClient
 	 * @param {Middleware} middleware - The first middleware of the middleware chain
 	 */
-	public constructor(middleware: Middleware) {
-		this.middleware = middleware;
+	public constructor(middleware: Middleware | Middleware[]) {
+		if (Array.isArray(middleware)) {
+			this.parseMiddleWareArray(middleware);
+		} else {
+			this.middleware = middleware;
+		}
+	}
+
+	public parseMiddleWareArray(middlewareArray: Middleware[]) {
+		middlewareArray.forEach((middleware, index) => {
+			if (index < middlewareArray.length - 1) {
+				middleware.setNext(this.middleware[index + 1]);
+			}
+		});
+		this.middleware = middlewareArray[0];
 	}
 
 	/**
