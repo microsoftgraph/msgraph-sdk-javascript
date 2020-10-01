@@ -42,7 +42,7 @@ export class MiddlewareFactory {
 	 * @returns an array of the middleware handlers of the default middleware chain
 	 */
 	public static getDefaultMiddlewareChain(authProvider: AuthenticationProvider): Middleware[] {
-		const middleware: Middleware[] = new Array();
+		const middleware: Middleware[] = [];
 		const authenticationHandler = new AuthenticationHandler(authProvider);
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const telemetryHandler = new TelemetryHandler();
