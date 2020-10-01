@@ -113,7 +113,7 @@ describe("PageIterator", function() {
 			return true;
 		};
 
-		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "middleware options for pageIterator", 0, responseBody)];
+		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, responseBody)];
 		const requestOptions = { middlewareOptions };
 
 		const client = Client.initWithMiddleware(clientOptions);
