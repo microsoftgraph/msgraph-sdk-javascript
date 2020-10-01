@@ -68,21 +68,17 @@ describe("Client.ts", () => {
 		});
 
 		it("Init middleware using a middleware array", async () => {
-			try {
-				const provider: AuthProvider = (done) => {
-					done(null, "dummy_token");
-				};
-				const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
-				const responseBody = "Test response body";
-				const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing middleware array", 0, responseBody);
-				const middlewareArray = [authHandler, new ChaosHandler(options)];
-				const client = Client.initWithMiddleware({ middleware: middlewareArray });
+			const provider: AuthProvider = (done) => {
+				done(null, "dummy_token");
+			};
+			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+			const responseBody = "Test response body";
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing middleware array", 0, responseBody);
+			const middlewareArray = [authHandler, new ChaosHandler(options)];
+			const client = Client.initWithMiddleware({ middleware: middlewareArray });
 
-				const response = await client.api("me").get();
-				assert.equal(response, responseBody);
-			} catch (error) {
-				assert.equal(error.name, "InvalidMiddlewareChain");
-			}
+			const response = await client.api("me").get();
+			assert.equal(response, responseBody);
 		});
 	});
 
