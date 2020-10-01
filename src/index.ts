@@ -14,7 +14,7 @@ export * from "./middleware/IMiddleware";
 export * from "./middleware/RetryHandler";
 export * from "./middleware/RedirectHandler";
 export * from "./middleware/TelemetryHandler";
-
+export * from "./middleware/MiddlewareFactory";
 export * from "./middleware/options/AuthenticationHandlerOptions";
 export * from "./middleware/options/IMiddlewareOptions";
 export * from "./middleware/options/RetryHandlerOptions";
@@ -26,6 +26,7 @@ export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/PageIterator";
 
 export * from "./Client";
+export * from "./CustomAuthenticationProvider";
 export * from "./GraphError";
 export * from "./GraphRequest";
 export * from "./IAuthProvider";
