@@ -58,7 +58,7 @@ describe("ChaosHandler.ts", () => {
 		};
 
 		it("Should return a valid response object for MANUAL case", () => {
-			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404), cxt);
+			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual response", 404), cxt);
 			assert.isDefined(cxt.response);
 		});
 
@@ -90,7 +90,7 @@ describe("ChaosHandler.ts", () => {
 		});
 
 		it("Should send the request to the graph", async () => {
-			handler["sendRequest"](new ChaosHandlerOptions(ChaosStrategy.RANDOM, undefined, "I generated the error", 100), cxt);
+			handler["sendRequest"](new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100), cxt);
 			assert.isDefined(cxt.response);
 		});
 	});
@@ -143,13 +143,13 @@ describe("ChaosHandler.ts", () => {
 		const tempChaosHandlerManualRegex = new ChaosHandler(tempManualOptionsRegex, manualMap);
 
 		it("Should set a statusCode for MANUAL mode", () => {
-			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 404);
+			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Set status code", 404);
 			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode", () => {
-			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, undefined, "I generated the error", 100);
+			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100);
 			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
@@ -167,7 +167,7 @@ describe("ChaosHandler.ts", () => {
 
 	describe("getOptions", () => {
 		it("Should return the options in the context object", () => {
-			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 405);
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Get options", 405);
 			const cxt: Context = {
 				request: "url",
 				middlewareControl: new MiddlewareControl([options]),
@@ -240,7 +240,7 @@ describe("ChaosHandler.ts", () => {
 		});
 
 		it("Should return response for Manual Request Level case", async () => {
-			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200);
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 200);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
