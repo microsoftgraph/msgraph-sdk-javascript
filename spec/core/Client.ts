@@ -73,7 +73,7 @@ describe("Client.ts", () => {
 			};
 			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
 			const responseBody = "Test response body";
-			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing middleware array", 0, responseBody);
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing middleware array", 200, 0, responseBody);
 			const middlewareArray = [authHandler, new ChaosHandler(options)];
 			const client = Client.initWithMiddleware({ middleware: middlewareArray });
 
@@ -88,7 +88,7 @@ describe("Client.ts", () => {
 			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
 
 			const responseBody = "Test response body";
-			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing chained middleware array", 0, responseBody);
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing chained middleware array", 200, 0, responseBody);
 			const chaosHandler = new ChaosHandler(options);
 			const telemetryHandler = new TelemetryHandler();
 
