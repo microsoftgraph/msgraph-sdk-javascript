@@ -69,10 +69,10 @@ export class HTTPClientFactory {
 	 * @public
 	 * @static
 	 * Creates a middleware chain with the given one
-	 * @param {Middleware} middleware - The first middleware of the middleware chain
+	 * @property {Middleware| Middleware[]} [middleware] - The first middleware of the middleware chain or an array of the Middleware handlers
 	 * @returns A HTTPClient instance
 	 */
-	public static createWithMiddleware(middleware: Middleware): HTTPClient {
+	public static createWithMiddleware(middleware: Middleware | Middleware[]): HTTPClient {
 		return new HTTPClient(middleware);
 	}
 }

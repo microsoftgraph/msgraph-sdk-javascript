@@ -27,20 +27,38 @@ export class HTTPClient {
 	 * @public
 	 * @constructor
 	 * Creates an instance of a HTTPClient
-	 * @param {Middleware} middleware - The first middleware of the middleware chain
+	 * @param {Middleware| Middleware[]} middleware - The first middleware of the middleware chain or the array of middleware handlers
 	 */
 	public constructor(middleware: Middleware | Middleware[]) {
-		if (Array.isArray(middleware)) {
+		this.setMiddleware(middleware);
+	}
+
+	/**
+	 * @private
+	 * Verifies if the middleware passed is an array or not before setting this.middleware property
+	 * @param {any} middleware - The middleware passed
+	 * @returns Nothing
+	 */
+
+	private setMiddleware(middleware: any): void {
+		if (Object.prototype.toString.call(middleware) === "[object Array]") {
 			this.parseMiddleWareArray(middleware);
 		} else {
 			this.middleware = middleware;
 		}
 	}
 
-	public parseMiddleWareArray(middlewareArray: Middleware[]) {
-		middlewareArray.forEach((middleware, index) => {
+	/**
+	 * @private
+	 * Processes the middleware array to construct the chain
+	 * and sets this.middleware property to the first middlware handler of the array
+	 * @param {Middleware[]} middlewareArray - The array of middleware handlers
+	 * @returns Nothing
+	 */
+	private parseMiddleWareArray(middlewareArray: Middleware[]) {
+		middlewareArray.forEach((element, index) => {
 			if (index < middlewareArray.length - 1) {
-				middleware.setNext(this.middleware[index + 1]);
+				element.setNext(middlewareArray[index + 1]);
 			}
 		});
 		this.middleware = middlewareArray[0];

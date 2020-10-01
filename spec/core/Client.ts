@@ -8,10 +8,15 @@
 import { assert } from "chai";
 import "isomorphic-fetch";
 
+import { CustomAuthenticationProvider } from "../../src";
 import { Client } from "../../src/Client";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
 import { Options } from "../../src/IOptions";
+import { AuthenticationHandler } from "../../src/middleware/AuthenticationHandler";
+import { ChaosHandler } from "../../src/middleware/ChaosHandler";
+import { ChaosHandlerOptions } from "../../src/middleware/options/ChaosHandlerOptions";
+import { ChaosStrategy } from "../../src/middleware/options/ChaosStrategy";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
@@ -57,6 +62,24 @@ describe("Client.ts", () => {
 				const options: ClientOptions = {};
 				Client.initWithMiddleware(options);
 				throw new Error("Something wrong with the client initialization check");
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
+
+		it("Init middleware using a middleware array", async () => {
+			try {
+				const provider: AuthProvider = (done) => {
+					done(null, "dummy_token");
+				};
+				const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+				const responseBody = "Test response body";
+				const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing middleware array", 0, responseBody);
+				const middlewareArray = [authHandler, new ChaosHandler(options)];
+				const client = Client.initWithMiddleware({ middleware: middlewareArray });
+
+				const response = await client.api("me").get();
+				assert.equal(response, responseBody);
 			} catch (error) {
 				assert.equal(error.name, "InvalidMiddlewareChain");
 			}
