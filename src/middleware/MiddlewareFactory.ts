@@ -26,7 +26,7 @@ import { TelemetryHandler } from "./TelemetryHandler";
  * @returns A boolean representing the environment is node or not
  */
 const isNodeEnvironment = (): boolean => {
-	return new Function("try {return this === global;}catch(e){return false;}")(); // tslint:disable-line: function-constructor
+	return typeof process === "object" && typeof require === "function";
 };
 
 /**

@@ -8,7 +8,7 @@
 import { assert } from "chai";
 import "isomorphic-fetch";
 
-import { CustomAuthenticationProvider } from "../../src";
+import { CustomAuthenticationProvider, TelemetryHandler } from "../../src";
 import { Client } from "../../src/Client";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
@@ -75,6 +75,27 @@ describe("Client.ts", () => {
 			const responseBody = "Test response body";
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing middleware array", 0, responseBody);
 			const middlewareArray = [authHandler, new ChaosHandler(options)];
+			const client = Client.initWithMiddleware({ middleware: middlewareArray });
+
+			const response = await client.api("me").get();
+			assert.equal(response, responseBody);
+		});
+
+		it("Init middleware using a chained middleware array", async () => {
+			const provider: AuthProvider = (done) => {
+				done(null, "dummy_token");
+			};
+			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+
+			const responseBody = "Test response body";
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, 200, "Testing chained middleware array", 0, responseBody);
+			const chaosHandler = new ChaosHandler(options);
+			const telemetryHandler = new TelemetryHandler();
+
+			authHandler.setNext(telemetryHandler);
+			telemetryHandler.setNext(chaosHandler);
+
+			const middlewareArray = [authHandler];
 			const client = Client.initWithMiddleware({ middleware: middlewareArray });
 
 			const response = await client.api("me").get();
