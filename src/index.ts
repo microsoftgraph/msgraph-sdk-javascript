@@ -20,6 +20,9 @@ export * from "./middleware/options/IMiddlewareOptions";
 export * from "./middleware/options/RetryHandlerOptions";
 export * from "./middleware/options/RedirectHandlerOptions";
 export * from "./middleware/options/TelemetryHandlerOptions";
+export * from "./middleware/options/ChaosHandlerOptions";
+export * from "./middleware/options/ChaosStrategy";
+export * from "./middleware/ChaosHandler";
 
 export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
