@@ -61,7 +61,10 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		}
 		// we choose to encode each component of the file path separately because when encoding full URI
 		// with encodeURI, special characters like # or % in the file name doesn't get encoded as desired
-		return `/me/drive/root:${path.split('/').map(p => encodeURIComponent(p)).join('/')}${encodeURIComponent(fileName)}:/createUploadSession`;
+		return `/me/drive/root:${path
+			.split("/")
+			.map((p) => encodeURIComponent(p))
+			.join("/")}${encodeURIComponent(fileName)}:/createUploadSession`;
 	}
 
 	/**

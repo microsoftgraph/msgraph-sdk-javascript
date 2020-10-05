@@ -8,10 +8,15 @@
 import { assert } from "chai";
 import "isomorphic-fetch";
 
+import { CustomAuthenticationProvider, TelemetryHandler } from "../../src";
 import { Client } from "../../src/Client";
 import { AuthProvider } from "../../src/IAuthProvider";
 import { ClientOptions } from "../../src/IClientOptions";
 import { Options } from "../../src/IOptions";
+import { AuthenticationHandler } from "../../src/middleware/AuthenticationHandler";
+import { ChaosHandler } from "../../src/middleware/ChaosHandler";
+import { ChaosHandlerOptions } from "../../src/middleware/options/ChaosHandlerOptions";
+import { ChaosStrategy } from "../../src/middleware/options/ChaosStrategy";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
 
@@ -60,6 +65,41 @@ describe("Client.ts", () => {
 			} catch (error) {
 				assert.equal(error.name, "InvalidMiddlewareChain");
 			}
+		});
+
+		it("Init middleware using a middleware array", async () => {
+			const provider: AuthProvider = (done) => {
+				done(null, "dummy_token");
+			};
+			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+			const responseBody = "Test response body";
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing middleware array", 200, 0, responseBody);
+			const middlewareArray = [authHandler, new ChaosHandler(options)];
+			const client = Client.initWithMiddleware({ middleware: middlewareArray });
+
+			const response = await client.api("me").get();
+			assert.equal(response, responseBody);
+		});
+
+		it("Init middleware using a chained middleware array", async () => {
+			const provider: AuthProvider = (done) => {
+				done(null, "dummy_token");
+			};
+			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+
+			const responseBody = "Test response body";
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing chained middleware array", 200, 0, responseBody);
+			const chaosHandler = new ChaosHandler(options);
+			const telemetryHandler = new TelemetryHandler();
+
+			authHandler.setNext(telemetryHandler);
+			telemetryHandler.setNext(chaosHandler);
+
+			const middlewareArray = [authHandler];
+			const client = Client.initWithMiddleware({ middleware: middlewareArray });
+
+			const response = await client.api("me").get();
+			assert.equal(response, responseBody);
 		});
 	});
 
