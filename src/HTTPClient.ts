@@ -30,6 +30,12 @@ export class HTTPClient {
 	 * @param {...Middleware} middleware - The first middleware of the middleware chain or a sequence of all the Middleware handlers
 	 */
 	public constructor(...middleware: Middleware[]) {
+		if (!middleware || !middleware.length) {
+			const error = new Error();
+			error.name = "InvalidMiddlewareChain";
+			error.message = "Please provide a default middleware chain or custom middleware chain";
+			throw error;
+		}
 		this.setMiddleware(...middleware);
 	}
 
@@ -39,7 +45,6 @@ export class HTTPClient {
 	 * @param {...Middleware} middleware - The middleware passed
 	 * @returns Nothing
 	 */
-
 	private setMiddleware(...middleware: Middleware[]): void {
 		if (middleware.length > 1) {
 			this.parseMiddleWareArray(middleware);

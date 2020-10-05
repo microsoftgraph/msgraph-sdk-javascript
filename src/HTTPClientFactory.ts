@@ -73,6 +73,7 @@ export class HTTPClientFactory {
 	 * @returns A HTTPClient instance
 	 */
 	public static createWithMiddleware(...middleware: Middleware[]): HTTPClient {
+		// Middleware should not empty or undefined. This is check is present in the HTTPClient constructor.
 		return new HTTPClient(...middleware);
 	}
 }
