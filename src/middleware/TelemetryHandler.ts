@@ -9,6 +9,7 @@
  * @module TelemetryHandler
  */
 
+import { GRAPH_BASE_URL } from "../Constants";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
 
@@ -66,21 +67,25 @@ export class TelemetryHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
-			if (clientRequestId === null) {
-				clientRequestId = generateUUID();
-				setRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER, clientRequestId);
+			if (typeof context.request === "string" && context.request.indexOf(GRAPH_BASE_URL) !== -1) {
+				let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
+				if (clientRequestId === null) {
+					clientRequestId = generateUUID();
+					setRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER, clientRequestId);
+				}
+				let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
+				let options: TelemetryHandlerOptions;
+				if (context.middlewareControl instanceof MiddlewareControl) {
+					options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
+				}
+				if (typeof options !== "undefined") {
+					const featureUsage: string = options.getFeatureUsage();
+					sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
+				}
+
+				appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 			}
-			let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
-			let options: TelemetryHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
-			}
-			if (typeof options !== "undefined") {
-				const featureUsage: string = options.getFeatureUsage();
-				sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
-			}
-			appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
+
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
 			throw error;
