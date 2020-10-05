@@ -41,7 +41,7 @@ export const urlJoin = (urlSegments: string[]): string => {
  */
 
 export const serializeContent = (content: any): any => {
-	const className: string = content.constructor.name;
+	const className: string = content === undefined || content === null ? undefined : content.constructor.name;
 	if (className === "Buffer" || className === "Blob" || className === "File" || className === "FormData" || typeof content === "string") {
 		return content;
 	}

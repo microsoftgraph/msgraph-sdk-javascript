@@ -5,11 +5,15 @@
  * -------------------------------------------------------------------------------------------
  */
 
-// THIS FILE IS AUTO GENERATED
-// ANY CHANGES WILL BE LOST DURING BUILD
-
 /**
- * @module Version
+ * @module ChaosStrategy
  */
 
-export const PACKAGE_VERSION = "2.1.0-Preview.1";
+/**
+ * Strategy used for Testing Handler
+ * @enum
+ */
+export enum ChaosStrategy {
+	MANUAL,
+	RANDOM,
+}
