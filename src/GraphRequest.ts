@@ -651,7 +651,7 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 		};
-		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+		const className: string = content && content.constructor && content.constructor.name;
 		if (className === "FormData") {
 			// Content-Type headers should not be specified in case the of FormData type content
 			options.headers = {};
