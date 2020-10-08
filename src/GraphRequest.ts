@@ -254,7 +254,7 @@ export class GraphRequest {
 	private parseQueryParameter(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
 		if (typeof queryDictionaryOrString === "string") {
 			if (queryDictionaryOrString.charAt(0) === "?") {
-				queryDictionaryOrString = queryDictionaryOrString.substring(1, queryDictionaryOrString.length);
+				queryDictionaryOrString = queryDictionaryOrString.substring(1);
 			}
 
 			if (queryDictionaryOrString.indexOf("&") !== -1) {
@@ -272,7 +272,7 @@ export class GraphRequest {
 				}
 			}
 		} else {
-			/*Push values which are not of key-value structure. 
+			/*Push values which are not of key-value structure.
 			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
 		}
 
@@ -291,10 +291,10 @@ export class GraphRequest {
 		if (this.isValidQueryKeyValuePair(queryParameter)) {
 			const indexOfFirstEquals = queryParameter.indexOf("=");
 			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
-			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
+			const paramValue = queryParameter.substring(indexOfFirstEquals + 1);
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
-			/* Push values which are not of key-value structure. 
+			/* Push values which are not of key-value structure.
 			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
 			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}

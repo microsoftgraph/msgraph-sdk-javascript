@@ -46,6 +46,8 @@ export class HTTPClient {
 	 * @returns Nothing
 	 */
 	private setMiddleware(...middleware: Middleware[]): void {
+		// The calling function should validate if middleware is not undefined or not empty.
+
 		if (middleware.length > 1) {
 			this.parseMiddleWareArray(middleware);
 		} else {
@@ -61,6 +63,8 @@ export class HTTPClient {
 	 * @returns Nothing
 	 */
 	private parseMiddleWareArray(middlewareArray: Middleware[]) {
+		// The calling function should validate if middleware is not undefined or not empty
+
 		middlewareArray.forEach((element, index) => {
 			if (index < middlewareArray.length - 1) {
 				element.setNext(middlewareArray[index + 1]);
