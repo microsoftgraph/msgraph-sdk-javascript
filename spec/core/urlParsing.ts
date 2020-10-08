@@ -37,8 +37,12 @@ const testCases = {
 	"/items?$expand=fields($select=Title)&$expand=name($select=firstName)": "https://graph.microsoft.com/v1.0/items?$expand=fields($select=Title),name($select=firstName)",
 
 	// Passing invalid parameters
-	"/me?&test&123": "https://graph.microsoft.com/v1.0/me?&test&123",
+	"/me?test&123": "https://graph.microsoft.com/v1.0/me?test&123",
 	"/me?$select($select=name)": "https://graph.microsoft.com/v1.0/me?$select($select=name)",
+	"/me/?$filter=any(Actors, Name eq 'John Belushi')": "https://graph.microsoft.com/v1.0/me/?$filter=any(Actors, Name eq 'John Belushi')",
+	"/me/$filter=any(Actors, it/ID eq Director/ID)": "https://graph.microsoft.com/v1.0/me/$filter=any(Actors, it/ID eq Director/ID)",
+	"/me?$whatif": "https://graph.microsoft.com/v1.0/me?$whatif",
+	"/me/?$filter=any(Actors a, any(a/Movies m, a/ID eq m/Director/ID))": "https://graph.microsoft.com/v1.0/me/?$filter=any(Actors a, any(a/Movies m, a/ID eq m/Director/ID))",
 };
 
 describe("urlParsing.ts", () => {

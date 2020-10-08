@@ -41,6 +41,7 @@ interface KeyValuePairObjectStringNumber {
  * @property {string} [path] - The path of the resource request
  * @property {KeyValuePairObjectStringNumber} oDataQueryParams - The oData Query Params
  * @property {KeyValuePairObjectStringNumber} otherURLQueryParams - The other query params for a request
+ * @property {string[]} otherURLQueryOptions - The non key-value query parameters. Example- '/me?$whatif'
  */
 export interface URLComponents {
 	host: string;
@@ -48,7 +49,7 @@ export interface URLComponents {
 	path?: string;
 	oDataQueryParams: KeyValuePairObjectStringNumber;
 	otherURLQueryParams: KeyValuePairObjectStringNumber;
-	otherURLQueryOptions: any[];
+	otherURLQueryOptions?: string[];
 }
 
 /**
@@ -271,9 +272,6 @@ export class GraphRequest {
 					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
 				}
 			}
-		} else {
-			/*Push values which are not of key-value structure.
-			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
 		}
 
 		return this;
