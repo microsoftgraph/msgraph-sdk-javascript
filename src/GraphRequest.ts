@@ -272,7 +272,7 @@ export class GraphRequest {
 				}
 			}
 		} else {
-			/*Push values which are not of key-value structure. 
+			/*Push values which are not of key-value structure.
 			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
 		}
 
@@ -294,7 +294,7 @@ export class GraphRequest {
 			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
-			/* Push values which are not of key-value structure. 
+			/* Push values which are not of key-value structure.
 			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
 			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}
@@ -598,7 +598,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
-	public count(isCount: boolean = false): GraphRequest {
+	public count(isCount: boolean = true): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}
