@@ -18,7 +18,7 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 	 * This should return a Promise that resolves to an accessToken (in case of success) or rejects with error (in case of failure)
 	 * Basically this method will contain the implementation for getting and refreshing accessTokens
 	 */
-	public async getAccessToken(): Promise<any> {}
+	public async getAccessToken(): Promise<string> {}
 }
 ```
 
@@ -30,7 +30,7 @@ Pass instance of MyAuthenticationProvider while initializing.
 import { MyAuthenticationProvider } from "./MyAuthenticationProvider";
 
 let clientOptions: ClientOptions = {
-	authProvider: new MyCustomAuthenticationProvider(),
+	authProvider: new MyAuthenticationProvider(),
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```

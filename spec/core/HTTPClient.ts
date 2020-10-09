@@ -21,7 +21,38 @@ describe("HTTPClient.ts", () => {
 			assert.isDefined(httpClient["middleware"]);
 			assert.equal(httpClient["middleware"], httpMessageHandler);
 		});
+
+		it("Should create an instance and populate middleware member when passing a middleware array", () => {
+			const client = new HTTPClient(...[httpMessageHandler]);
+			assert.isDefined(client["middleware"]);
+			assert.equal(client["middleware"], httpMessageHandler);
+		});
+
+		it("Should throw an error if middleware is undefined", () => {
+			try {
+				const client = new HTTPClient();
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
+
+		it("Should throw an error if middleware is passed as null", () => {
+			try {
+				const client = new HTTPClient(null);
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
+
+		it("Should throw an error if middleware is passed as an empty array", () => {
+			try {
+				const client = new HTTPClient(...[]);
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
 	});
+
 	/* tslint:enable: no-string-literal */
 
 	describe("sendRequest", async () => {

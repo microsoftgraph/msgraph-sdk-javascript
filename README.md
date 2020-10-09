@@ -95,6 +95,7 @@ npm install msal@<version>
 
 ```typescript
 import { UserAgentApplication } from "msal";
+
 import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client/lib/src/ImplicitMSALAuthenticationProvider";
 import { MSALAuthenticationProviderOptions } from '@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProviderOptions';
 

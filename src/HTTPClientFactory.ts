@@ -26,7 +26,7 @@ import { TelemetryHandler } from "./middleware/TelemetryHandler";
  * @returns A boolean representing the environment is node or not
  */
 const isNodeEnvironment = (): boolean => {
-	return new Function("try {return this === global;}catch(e){return false;}")(); // tslint:disable-line: function-constructor
+	return typeof process === "object" && typeof require === "function";
 };
 
 /**
@@ -69,10 +69,11 @@ export class HTTPClientFactory {
 	 * @public
 	 * @static
 	 * Creates a middleware chain with the given one
-	 * @param {Middleware} middleware - The first middleware of the middleware chain
+	 * @property {...Middleware} middleware - The first middleware of the middleware chain or a sequence of all the Middleware handlers
 	 * @returns A HTTPClient instance
 	 */
-	public static createWithMiddleware(middleware: Middleware): HTTPClient {
-		return new HTTPClient(middleware);
+	public static createWithMiddleware(...middleware: Middleware[]): HTTPClient {
+		// Middleware should not empty or undefined. This is check is present in the HTTPClient constructor.
+		return new HTTPClient(...middleware);
 	}
 }

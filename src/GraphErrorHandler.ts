@@ -27,12 +27,11 @@ export class GraphErrorHandler {
 	 * @returns The GraphError instance
 	 */
 	private static constructError(error: Error, statusCode?: number): GraphError {
-		const gError = new GraphError(statusCode);
+		const gError = new GraphError(statusCode, "", error);
 		if (error.name !== undefined) {
 			gError.code = error.name;
 		}
 		gError.body = error.toString();
-		gError.message = error.message;
 		gError.date = new Date();
 		return gError;
 	}
@@ -60,9 +59,8 @@ export class GraphErrorHandler {
 	 */
 	private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
 		error = error.error;
-		const gError = new GraphError(statusCode);
+		const gError = new GraphError(statusCode, error.message);
 		gError.code = error.code;
-		gError.message = error.message;
 		if (error.innerError !== undefined) {
 			gError.requestId = error.innerError["request-id"];
 			gError.date = new Date(error.innerError.date);

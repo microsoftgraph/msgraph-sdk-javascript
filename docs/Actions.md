@@ -29,13 +29,13 @@ client
 	.then((stream) => {
 		let writeStream = fs.createWriteStream(`../<DOWNLOAD_FILE_NAME>`); // Eg: test.pdf
 		stream.pipe(writeStream).on("error", (err) => {
-			throw error;
+			throw err;
 		});
 		writeStream.on("finish", () => {
 			console.log("Downloaded");
 		});
 		writeStream.on("error", (err) => {
-			throw error;
+			throw err;
 		});
 	})
 	.catch((error) => {
