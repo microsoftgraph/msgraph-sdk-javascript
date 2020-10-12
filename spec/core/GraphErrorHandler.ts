@@ -97,9 +97,9 @@ describe("GraphErrorHandler.ts", () => {
 
 		it("Should construct some default error", async () => {
 			const gError = await GraphErrorHandler.getError();
+			assert.equal(gError.message, "");
 			assert.equal(gError.statusCode, -1);
 			assert.equal(gError.code, null);
-			assert.equal(gError.message, null);
 			assert.equal(gError.body, null);
 			assert.equal(gError.requestId, null);
 		});
