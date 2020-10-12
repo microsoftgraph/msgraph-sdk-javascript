@@ -79,9 +79,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold custom header options for a request
 	 */
-	private _headers: {
-		[key: string]: string;
-	};
+	private _headers: HeadersInit;
 
 	/**
 	 * @private
@@ -428,10 +426,10 @@ export class GraphRequest {
 	/**
 	 * @public
 	 * Sets the custom headers for a request
-	 * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
+	 * @param {KeyValuePairObjectStringNumber | HeadersInit} headers - The request headers
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
+	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
 		for (const key in headers) {
 			if (headers.hasOwnProperty(key)) {
 				this._headers[key] = headers[key] as string;
@@ -653,7 +651,7 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 		};
-		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+		const className: string = content && content.constructor && content.constructor.name;
 		if (className === "FormData") {
 			// Content-Type headers should not be specified in case the of FormData type content
 			options.headers = {};
