@@ -39,6 +39,10 @@ const testCases = {
 	// Passing invalid parameters
 	"/me?&test&123": "https://graph.microsoft.com/v1.0/me?&test&123",
 	"/me?$select($select=name)": "https://graph.microsoft.com/v1.0/me?$select($select=name)",
+
+	// National cloud deployment urls
+	"https://graph.microsoft.us/v1.0/me": "https://graph.microsoft.us/v1.0/me",
+	"https://dod-graph.microsoft.us/beta/me?$filter=a": "https://dod-graph.microsoft.us/beta/me?$filter=a",
 };
 
 describe("urlParsing.ts", () => {

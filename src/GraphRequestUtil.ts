@@ -15,6 +15,11 @@
 export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$top", "$skip", "$skipToken", "$count"];
 
 /**
+ * To hold list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
+ */
+export const graphURLs = ["https://graph.microsoft.com", "https://graph.microsoft.us", "https://dod-graph.microsoft.us", "https://graph.microsoft.de", "https://microsoftgraph.chinacloudapi.cn"];
+
+/**
  * To construct the URL by appending the segments with "/"
  * @param {string[]} urlSegments - The array of strings
  * @returns The constructed URL string

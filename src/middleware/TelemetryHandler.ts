@@ -9,7 +9,7 @@
  * @module TelemetryHandler
  */
 
-import { GRAPH_BASE_URL } from "../Constants";
+import { graphURLs } from "../GraphRequestUtil";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
 
@@ -65,9 +65,26 @@ export class TelemetryHandler implements Middleware {
 	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
+
+	/**
+	 * @private
+	 * Checks if the request url points to the Graph service endpoints
+	 * @param {string} url - The request url string
+	 * @returns true if request url is a Graph url
+	 */
+	private isGraphURL(url: string): boolean {
+		let isGraph = false;
+		graphURLs.forEach((element) => {
+			if (url.indexOf(element) !== -1) {
+				isGraph = true;
+			}
+		});
+		return isGraph;
+	}
+
 	public async execute(context: Context): Promise<void> {
 		try {
-			if (typeof context.request === "string" && context.request.indexOf(GRAPH_BASE_URL) !== -1) {
+			if (typeof context.request === "string" && this.isGraphURL(context.request)) {
 				let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
 				if (clientRequestId === null) {
 					clientRequestId = generateUUID();
