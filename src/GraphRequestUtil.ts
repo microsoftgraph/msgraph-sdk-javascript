@@ -17,7 +17,15 @@ export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$t
 /**
  * To hold list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
  */
-export const graphURLs = ["https://graph.microsoft.com", "https://graph.microsoft.us", "https://dod-graph.microsoft.us", "https://graph.microsoft.de", "https://microsoftgraph.chinacloudapi.cn"];
+export const graphURLs = new Set<string>();
+
+// using an IIFE to populate the set object with the graph host names as Set(iterable:Object) is not supported in Internet Explorer
+(() => {
+	const urls = ["graph.microsoft.com", "graph.microsoft.us", "dod-graph.microsoft.us", "graph.microsoft.de", "microsoftgraph.chinacloudapi.cn"];
+	urls.forEach((url) => {
+		graphURLs.add(url);
+	});
+})();
 
 /**
  * To construct the URL by appending the segments with "/"

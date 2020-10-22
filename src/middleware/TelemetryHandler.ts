@@ -73,13 +73,23 @@ export class TelemetryHandler implements Middleware {
 	 * @returns true if request url is a Graph url
 	 */
 	private isGraphURL(url: string): boolean {
-		let isGraph = false;
-		graphURLs.forEach((element) => {
-			if (url.indexOf(element) !== -1) {
-				isGraph = true;
+		// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+		// Valid Graph URL example - https://graph.microsoft.com/v1.0/me
+
+		if (url.indexOf("https://") !== -1) {
+			url = url.replace("https://", "");
+
+			// Find where the host ends
+			const endOfHostStrPos = url.indexOf("/");
+			if (endOfHostStrPos !== -1) {
+				// Parse out the host
+				const hostName = url.substring(0, endOfHostStrPos);
+				return graphURLs.has(hostName);
 			}
-		});
-		return isGraph;
+			return false;
+		}
+
+		return false;
 	}
 
 	public async execute(context: Context): Promise<void> {
