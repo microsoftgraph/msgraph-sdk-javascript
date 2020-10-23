@@ -74,7 +74,8 @@ export class TelemetryHandler implements Middleware {
 	 */
 	private isGraphURL(url: string): boolean {
 		// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
-		// Valid Graph URL example - https://graph.microsoft.com/v1.0/me
+		// Valid Graph URL example - https://graph.microsoft.com/v1.0/
+		url = url.toLowerCase();
 
 		if (url.indexOf("https://") !== -1) {
 			url = url.replace("https://", "");

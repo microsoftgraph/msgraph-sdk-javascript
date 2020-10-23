@@ -68,7 +68,6 @@ Consulte devDependencies no [package.json](./package.json) para a versão msal c
 ```
 
 ```typescript
-
 // Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
 const msalConfig = {
 	auth: {
@@ -226,4 +225,4 @@ Copyright (c) Microsoft Corporation. Todos os direitos reservados. Licenciado so
 
 ## Valorizamos e cumprimos o Código de Conduta de Código Aberto da Microsoft
 
-Este projeto adotou o [Código de Conduta de Código Aberto da Microsoft](https://opensource.microsoft.com/codeofconduct/).  Para saber mais, confira as [Perguntas frequentes sobre o Código de Conduta](https://opensource.microsoft.com/codeofconduct/faq/) ou entre em contato pelo [opencode@microsoft.com](mailto:opencode@microsoft.com) se tiver outras dúvidas ou comentários.
+Este projeto adotou o [Código de Conduta de Código Aberto da Microsoft](https://opensource.microsoft.com/codeofconduct/). Para saber mais, confira as [Perguntas frequentes sobre o Código de Conduta](https://opensource.microsoft.com/codeofconduct/faq/) ou entre em contato pelo [opencode@microsoft.com](mailto:opencode@microsoft.com) se tiver outras dúvidas ou comentários.

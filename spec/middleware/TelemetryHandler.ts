@@ -48,7 +48,7 @@ describe("TelemetryHandler.ts", () => {
 		it("Should create client-request-id if one is not present in the request header", async () => {
 			try {
 				const context: Context = {
-					request: GRAPH_BASE_URL,
+					request: "https://GRAPH.microsoft.com/",
 					options: {
 						headers: {
 							method: "GET",

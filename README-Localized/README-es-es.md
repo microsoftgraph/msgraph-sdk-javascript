@@ -68,7 +68,6 @@ Consulte devDependencies en [package.json](./package.json) para ver la versión 
 ```
 
 ```typescript
-
 // Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
 const msalConfig = {
 	auth: {

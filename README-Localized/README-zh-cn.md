@@ -57,18 +57,17 @@ import { Client } from "@microsoft/microsoft-graph-client";
 
 对于负责获取 `accessToken` 的 [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core)（Microsoft 身份验证库），Microsoft Graph JavaScript 客户端库拥有适配器实现（[ImplicitMSALAuthenticationProvider](src/ImplicitMSALAuthenticationProvider.ts)）。MSAL 库不随此库提供，用户需要外部将之包含（对于包含 MSAL，参见“[此处](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)”）。
 
-> **重要说明：**MSAL 仅支持前端应用程序，对于服务器侧身份应用，需要实现自己的AuthenticationProvider。了解如何创建“[自定义身份验证提供程序](./docs/CustomAuthenticationProvider.md)”。
+> **重要说明：**MSAL 仅支持前端应用程序，对于服务器侧身份应用，需要实现自己的 AuthenticationProvider。了解如何创建“[自定义身份验证提供程序](./docs/CustomAuthenticationProvider.md)”。
 
 #### 在浏览器环境中创建 ImplicitMSALAuthenticationProvider 实例
 
-有关兼容 msal 版本和下列版本的更新，参见[package.json](./package.json) 中的devDependencies。
+有关兼容 msal 版本和下列版本的更新，参见[package.json](./package.json) 中的 devDependencies。
 
 ```html
 <script src="https://secure.aadcdn.microsoftonline-p.com/lib/<version>/js/msal.min.js"></script>
 ```
 
 ```typescript
-
 // Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
 const msalConfig = {
 	auth: {
@@ -87,7 +86,7 @@ const authProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalA
 
 #### 在节点环境中创建 ImplicitMSALAuthenticationProvider 实例
 
-有关兼容 msal 版本和下列版本的更新，参见[package.json](./package.json) 中的devDependencies。
+有关兼容 msal 版本和下列版本的更新，参见[package.json](./package.json) 中的 devDependencies。
 
 ```cmd
 npm install msal@<version>
