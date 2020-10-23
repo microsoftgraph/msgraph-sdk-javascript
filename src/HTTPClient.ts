@@ -42,6 +42,7 @@ export class HTTPClient {
 	/**
 	 * @private
 	 * Processes the middleware parameter passed to set this.middleware property
+	 * The calling function should validate if middleware is not undefined or not empty.
 	 * @param {...Middleware} middleware - The middleware passed
 	 * @returns Nothing
 	 */
@@ -57,6 +58,7 @@ export class HTTPClient {
 	 * @private
 	 * Processes the middleware array to construct the chain
 	 * and sets this.middleware property to the first middlware handler of the array
+	 * The calling function should validate if middleware is not undefined or not empty
 	 * @param {Middleware[]} middlewareArray - The array of middleware handlers
 	 * @returns Nothing
 	 */
