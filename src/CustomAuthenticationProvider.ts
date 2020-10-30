@@ -47,6 +47,9 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 				if (accessToken) {
 					resolve(accessToken);
 				} else {
+					if (!error) {
+						reject("Access token cannot be undefined or empty");
+					}
 					reject(error);
 				}
 			});

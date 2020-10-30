@@ -58,6 +58,11 @@ export class GraphErrorHandler {
 	 *  }
 	 */
 	private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
+		if (!error.error) {
+			const graphError = new GraphError(statusCode, "SDK failed to send the request");
+			graphError.body = error;
+			return graphError;
+		}
 		error = error.error;
 		const gError = new GraphError(statusCode, error.message);
 		gError.code = error.code;
@@ -85,10 +90,10 @@ export class GraphErrorHandler {
 	 */
 	public static async getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): Promise<GraphError> {
 		let gError: GraphError;
-		if (error && error.error) {
-			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
-		} else if (typeof Error !== "undefined" && error instanceof Error) {
+		if (typeof Error !== "undefined" && error instanceof Error) {
 			gError = GraphErrorHandler.constructError(error, statusCode);
+		} else if (error) {
+			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
 		} else {
 			gError = new GraphError(statusCode);
 		}
