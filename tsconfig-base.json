@@ -7,5 +7,12 @@
 		"removeComments": false,
 		"sourceMap": true,
 		"declaration": true
+	},
+	"ts-node": {
+		"ignore": ["*.d.ts"],
+		"compilerOptions": {
+			"target": "es6",
+			"module": "ES6"
+		}
 	}
 }

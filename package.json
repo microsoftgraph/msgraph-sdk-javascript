@@ -19,21 +19,26 @@
 		"@babel/core": "^7.4.4",
 		"@babel/plugin-transform-runtime": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
-		"@types/mocha": "^5.2.6",
+		"@istanbuljs/nyc-config-typescript": "^1.0.1",
+		"@types/chai": "^4.2.14",
+		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.0.10",
 		"chai": "^4.2.0",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^2.2.1",
 		"lint-staged": "^8.1.5",
-		"mocha": "^6.1.4",
+		"mocha": "^6.2.3",
 		"msal": "^1.0.0",
+		"nyc": "^15.1.0",
 		"prettier": "^1.17.0",
 		"rollup": "^1.10.1",
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-commonjs": "^10.0.1",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.0.0",
+		"source-map-support": "^0.5.19",
+		"ts-node": "^9.0.0",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.4.5",
@@ -61,10 +66,32 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build && npm run test"
+		"prepack": "npm install && npm run build && npm run test",
+		"test:nyc": "mocha -r ts-node/register --project tsconfig-base.json spec/content/*.ts && mocha -r ts-node/register spec/core/*.ts && mocha -r ts-node/register spec/middleware/*.ts && mocha -r ts-node/register spec/tasks/*.ts",
+		"test:mocha": "mocha -r ts-node/register spec/core/*.ts"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"nyc": {
+		"require": [
+			"ts-node/register",
+			"source-map-support/register"
+		],
+		"extends": "@istanbuljs/nyc-config-typescript",
+		"include": [
+			"src/*"
+		],
+		"exclude": [
+			"spec/",
+			"node_modules/**",
+			"**/*.d.ts",
+			"**/*.test.ts",
+			"*.js"
+		],
+		"all": true,
+		"instrument": true,
+		"cache": false
 	}
 }
