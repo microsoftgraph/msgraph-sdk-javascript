@@ -59,6 +59,7 @@ export class GraphErrorHandler {
 	 */
 	private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
 		if (!error.error) {
+			// example - Consider error specified is a string when using type AuthProviderCallback = (error: any, accessToken: string | null) => void;
 			const graphError = new GraphError(statusCode, "Microsoft Graph JavaScript Client SDK came across an error while processing the request");
 			graphError.body = error;
 			return graphError;
