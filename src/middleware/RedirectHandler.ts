@@ -201,8 +201,8 @@ export class RedirectHandler implements Middleware {
 					delete context.options.body;
 				} else {
 					const redirectUrl: string = this.getLocationHeader(response);
-					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
-						setRequestHeader(context.request, context.options, RedirectHandler.AUTHORIZATION_HEADER, undefined);
+					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl) && context.options.headers[RedirectHandler.AUTHORIZATION_HEADER]) {
+						delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
 					}
 					await this.updateRequestUrl(redirectUrl, context);
 				}

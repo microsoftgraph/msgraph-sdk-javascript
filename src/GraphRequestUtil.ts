@@ -58,3 +58,41 @@ export const serializeContent = (content: any): any => {
 	}
 	return content;
 };
+/**
+ * To hold list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
+ */
+export const graphURLs = new Set<string>();
+
+// using an IIFE to populate the set object with the graph host names as Set(iterable:Object) is not supported in Internet Explorer
+(() => {
+	const urls = ["graph.microsoft.com", "graph.microsoft.us", "dod-graph.microsoft.us", "graph.microsoft.de", "microsoftgraph.chinacloudapi.cn"];
+	urls.forEach((url) => {
+		graphURLs.add(url);
+	});
+})();
+
+export const isGraphURL = (url: string): boolean => {
+	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
+	url = url.toLowerCase();
+
+	if (url.indexOf("https://") !== -1) {
+		url = url.replace("https://", "");
+
+		// Find where the host ends
+		const startofPortNoPos = url.indexOf(":");
+		const endOfHostStrPos = url.indexOf("/");
+		let hostName = "";
+		if (endOfHostStrPos !== -1) {
+			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
+				hostName = url.substring(0, startofPortNoPos);
+				return graphURLs.has(hostName);
+			}
+			// Parse out the host
+			hostName = url.substring(0, endOfHostStrPos);
+			return graphURLs.has(hostName);
+		}
+	}
+
+	return false;
+};
