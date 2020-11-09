@@ -59,7 +59,7 @@ export class GraphErrorHandler {
 	 */
 	private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
 		if (!error.error) {
-			const graphError = new GraphError(statusCode, "SDK failed to send the request");
+			const graphError = new GraphError(statusCode, "Microsoft Graph JavaScript Client SDK came across an error while processing the request");
 			graphError.body = error;
 			return graphError;
 		}

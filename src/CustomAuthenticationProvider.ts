@@ -9,6 +9,7 @@
  * @module CustomAuthenticationProvider
  */
 
+import { GraphError } from "./browser";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 
@@ -48,7 +49,7 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 					resolve(accessToken);
 				} else {
 					if (!error) {
-						reject("Access token cannot be undefined or empty");
+						error = new GraphError(-1, "Access token cannot be undefined or empty.");
 					}
 					reject(error);
 				}

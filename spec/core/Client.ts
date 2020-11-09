@@ -101,6 +101,45 @@ describe("Client.ts", () => {
 			const response = await client.api("me").get();
 			assert.equal(response, responseBody);
 		});
+
+		it("Should throw error in case the access token is undefined", async () => {
+			try {
+				const options = {
+					defaultVersion: "v1.0",
+					debugLogging: true,
+					authProvider: (done) => {
+						done(null, getTokenFunction());
+					},
+				};
+
+				const getTokenFunction = (): string => {
+					return undefined;
+				};
+				const client = Client.init(options);
+				const res = await client.api("/test").get();
+			} catch (error) {
+				assert.isDefined(error.body);
+			}
+		});
+
+		it("Should throw error in case the access token is empty", async () => {
+			try {
+				const options = {
+					defaultVersion: "v1.0",
+					debugLogging: true,
+					authProvider: (done) => {
+						done(null, getTokenFunction());
+					},
+				};
+				const getTokenFunction = (): string => {
+					return "";
+				};
+				const client = Client.init(options);
+				const res = await client.api("/test").get();
+			} catch (error) {
+				assert.isDefined(error.body);
+			}
+		});
 	});
 
 	describe("init", () => {
