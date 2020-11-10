@@ -71,6 +71,11 @@ export const graphURLs = new Set<string>();
 	});
 })();
 
+/**
+ * Checks if the url is one of the service root endpoints for Microsoft Graph and Graph Explorer.
+ * @param {string} url - The url to be verified
+ * @returns {boolean} - Returns true if the url is a Graph URL
+ */
 export const isGraphURL = (url: string): boolean => {
 	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
 	// Valid Graph URL example - https://graph.microsoft.com/v1.0/

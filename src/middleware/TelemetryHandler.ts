@@ -68,6 +68,8 @@ export class TelemetryHandler implements Middleware {
 		try {
 			if (typeof context.request === "string") {
 				if (isGraphURL(context.request)) {
+					// Add telemetry only if the request url is a Graph URL.
+					// Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
 					let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
 					if (clientRequestId === null) {
 						clientRequestId = generateUUID();
@@ -84,6 +86,7 @@ export class TelemetryHandler implements Middleware {
 					}
 					appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 				} else {
+					// Remove telemetry headers if present during redirection.
 					if (context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER]) {
 						delete context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER];
 					}
