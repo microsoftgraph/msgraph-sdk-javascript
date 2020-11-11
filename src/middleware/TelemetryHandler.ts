@@ -80,7 +80,7 @@ export class TelemetryHandler implements Middleware {
 					if (context.middlewareControl instanceof MiddlewareControl) {
 						options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
 					}
-					if (typeof options !== "undefined") {
+					if (options) {
 						const featureUsage: string = options.getFeatureUsage();
 						sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
 					}

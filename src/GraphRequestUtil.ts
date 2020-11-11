@@ -60,16 +60,9 @@ export const serializeContent = (content: any): any => {
 };
 /**
  * To hold list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
+ * Set(iterable:Object) is not supported in Internet Explorer. The consumer is recommended to use a suitable polyfill.
  */
-export const graphURLs = new Set<string>();
-
-// using an IIFE to populate the set object with the graph host names as Set(iterable:Object) is not supported in Internet Explorer
-(() => {
-	const urls = ["graph.microsoft.com", "graph.microsoft.us", "dod-graph.microsoft.us", "graph.microsoft.de", "microsoftgraph.chinacloudapi.cn"];
-	urls.forEach((url) => {
-		graphURLs.add(url);
-	});
-})();
+export const graphURLs = new Set<string>(["graph.microsoft.com", "graph.microsoft.us", "dod-graph.microsoft.us", "graph.microsoft.de", "microsoftgraph.chinacloudapi.cn"]);
 
 /**
  * Checks if the url is one of the service root endpoints for Microsoft Graph and Graph Explorer.
