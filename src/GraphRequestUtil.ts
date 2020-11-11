@@ -8,7 +8,7 @@
 /**
  * @module GraphRequestUtil
  */
-
+import { GRAPH_URLS } from "./Constants";
 /**
  * To hold list of OData query params
  */
@@ -58,11 +58,6 @@ export const serializeContent = (content: any): any => {
 	}
 	return content;
 };
-/**
- * To hold list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
- * Set(iterable:Object) is not supported in Internet Explorer. The consumer is recommended to use a suitable polyfill.
- */
-export const graphURLs = new Set<string>(["graph.microsoft.com", "graph.microsoft.us", "dod-graph.microsoft.us", "graph.microsoft.de", "microsoftgraph.chinacloudapi.cn"]);
 
 /**
  * Checks if the url is one of the service root endpoints for Microsoft Graph and Graph Explorer.
@@ -84,11 +79,11 @@ export const isGraphURL = (url: string): boolean => {
 		if (endOfHostStrPos !== -1) {
 			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
 				hostName = url.substring(0, startofPortNoPos);
-				return graphURLs.has(hostName);
+				return GRAPH_URLS.has(hostName);
 			}
 			// Parse out the host
 			hostName = url.substring(0, endOfHostStrPos);
-			return graphURLs.has(hostName);
+			return GRAPH_URLS.has(hostName);
 		}
 	}
 

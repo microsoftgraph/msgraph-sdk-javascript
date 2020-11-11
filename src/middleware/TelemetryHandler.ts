@@ -87,12 +87,8 @@ export class TelemetryHandler implements Middleware {
 					appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 				} else {
 					// Remove telemetry headers if present during redirection.
-					if (context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER]) {
-						delete context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER];
-					}
-					if (context.options.headers[TelemetryHandler.SDK_VERSION_HEADER]) {
-						delete context.options.headers[TelemetryHandler.SDK_VERSION_HEADER];
-					}
+					delete context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER];
+					delete context.options.headers[TelemetryHandler.SDK_VERSION_HEADER];
 				}
 			}
 			return await this.nextMiddleware.execute(context);
