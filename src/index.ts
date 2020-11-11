@@ -40,5 +40,7 @@ export * from "./IClientOptions";
 export * from "./IContext";
 export * from "./IFetchOptions";
 export * from "./IGraphRequestCallback";
+export * from "./ImplicitMSALAuthenticationProvider";
 export * from "./IOptions";
+export * from "./MSALAuthenticationProviderOptions";
 export * from "./ResponseType";
