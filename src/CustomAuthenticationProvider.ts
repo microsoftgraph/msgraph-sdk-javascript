@@ -9,7 +9,7 @@
  * @module CustomAuthenticationProvider
  */
 
-import { GraphError } from "./browser";
+import { GraphClientError } from "./GraphClientError";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 
@@ -44,14 +44,15 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 	 */
 	public async getAccessToken(): Promise<any> {
 		return new Promise((resolve: (accessToken: string) => void, reject: (error: any) => void) => {
-			this.provider((error: any, accessToken: string | null) => {
+			this.provider(async (error: any, accessToken: string | null) => {
 				if (accessToken) {
 					resolve(accessToken);
 				} else {
 					if (!error) {
-						error = new GraphError(-1, "Access token cannot be undefined or empty.");
+						error = new GraphClientError("Access token cannot be undefined or empty.");
 					}
-					reject(error);
+					const err = await GraphClientError.getError(error);
+					reject(err);
 				}
 			});
 		});

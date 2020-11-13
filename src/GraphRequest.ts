@@ -10,6 +10,7 @@
  */
 
 import { GraphError } from "./GraphError";
+import { GraphClientError } from "./GraphClientError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
@@ -379,7 +380,11 @@ export class GraphRequest {
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {
+			if (error instanceof GraphClientError) {
+				throw error;
+			}
 			let statusCode: number;
+
 			if (typeof rawResponse !== "undefined") {
 				statusCode = rawResponse.status;
 			}
