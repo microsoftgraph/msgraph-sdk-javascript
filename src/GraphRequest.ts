@@ -8,9 +8,8 @@
 /**
  * @module GraphRequest
  */
-
-import { GraphError } from "./GraphError";
 import { GraphClientError } from "./GraphClientError";
+import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";

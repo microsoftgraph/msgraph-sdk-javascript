@@ -22,11 +22,6 @@ export class GraphClientError extends Error {
 	 */
 	public body?: any;
 
-	public constructor(message?: string, baseError?: Error) {
-		super(message || (baseError && baseError.message));
-		this.stack = baseError ? baseError.stack : this.stack;
-	}
-
 	/**
 	 * @public
 	 * @static
@@ -45,5 +40,10 @@ export class GraphClientError extends Error {
 			graphClientError.body = error;
 		}
 		return graphClientError;
+	}
+
+	public constructor(message?: string, baseError?: Error) {
+		super(message || (baseError && baseError.message));
+		this.stack = baseError ? baseError.stack : this.stack;
 	}
 }
