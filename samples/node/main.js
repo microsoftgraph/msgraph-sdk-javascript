@@ -18,19 +18,67 @@ const client = MicrosoftGraph.Client.init({
 		done(null, secrets.accessToken);
 	},
 });
+//client.api("https://graph.microsoft.com/beta/users?$whatif").get();;
+function uploadFile() {
+	// client.api('/me/drive/root/children').get().then((response) => {
+	// 				console.log(response);
+	// 				console.log("File Uploaded Successfully.!!");
+	// 			}).catch((error) => {
+	// 				console.log(error);
+	// 			});
+
+	fs.readFile("./sample.png", {}, function(err, file) {
+		if (err) {
+			throw err;
+		}
+		let fileName = "sample.png";
+		oneDriveLargeFileUpload(client, file, fileName)
+			.then((response) => {
+				console.log(response);
+				console.log("File Uploaded Successfully.!!");
+			})
+			.catch((error) => {
+				throw error;
+			});
+	});
+}
+
+async function oneDriveLargeFileUpload(client, file, fileName) {
+	try {
+		let options = {
+			path: "/Documents",
+			fileName,
+			rangeSize: 1024 * 1024,
+		};
+		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+		const response = await uploadTask.upload();
+		return response;
+	} catch (err) {
+		console.log(err);
+	}
+}
+uploadFile();
+// let readStream = fs.createReadStream("../../sample.png");
+// client
+//     .api('/me/drive/root/children/sample.png/content')
+//     .putStream(readStream)
+//     .then((res) => {
+//         console.log(res);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
 
 // Get the name of the authenticated user with promises
-client
-	.api("/me")
-	.select("displayName")
-	.get()
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
-
+// client
+// 	.api("/me/drive/root/children")
+// 	.get()
+// 	.then((res) => {
+// 		console.log(res);
+// 	})
+// 	.catch((err) => {
+// 		console.log(err);
+// 	});
 /*
 
 // Update the authenticated users birthday.

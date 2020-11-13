@@ -37,9 +37,9 @@ var __importDefault =
 	};
 Object.defineProperty(exports, "__esModule", { value: true });
 const identity_1 = require("@azure/identity");
-const TokenCredentialAuthenticationProvider_1 = require("../../../src/authentication/TokenCredentialAuthenticationProvider");
+const TokenCredentialAuthenticationProvider_1 = require("../../../../src/authentication/TokenCredentialAuthenticationProvider");
 require("isomorphic-fetch");
-const MicrosoftGraph = require("../../../lib/src/index.js");
+const MicrosoftGraph = require("../../../../lib/src/index.js");
 // NOTE: When using this code, you must change the module below to "@azure/identity"
 // You will need to install these external dependencies with NPM:
 const qs_1 = __importDefault(require("qs"));

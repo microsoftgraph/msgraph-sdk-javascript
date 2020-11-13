@@ -54,8 +54,8 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 * @returns The promise that resolves to an access token
 	 */
 	public async getAccessToken(): Promise<string> {
-		let scopes: string[];
-		if (this.authenticationProviderOptions !== undefined && this.authenticationProviderOptions !== null) {
+		let scopes: string[] = [];
+		if (this.authenticationProviderOptions && this.authenticationProviderOptions.scopes) {
 			scopes = this.authenticationProviderOptions.scopes;
 		}
 		if (scopes === undefined || scopes === null || scopes.length === 0) {
@@ -65,7 +65,11 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 			throw error;
 		}
 		const response = await this.tokenCredential.getToken(scopes, this.authenticationProviderOptions.getTokenoptions);
-		return response.token;
+		if (response) {
+			return response.token;
+		}
+		throw new Error("Cannot retreive token credential");
+
 		// look into  login pop up creation
 	}
 }

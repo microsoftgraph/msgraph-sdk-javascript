@@ -3,36 +3,16 @@ import { Server } from "http";
 
 import { AuthorizationCodeCredential } from "@azure/identity";
 
-import { TokenCredentialAuthenticationProvider } from "../../../src/authentication/TokenCredentialAuthenticationProvider";
+import { TokenCredentialAuthenticationProvider } from "../../../../src/authentication/TokenCredentialAuthenticationProvider";
 
 require("isomorphic-fetch");
-const MicrosoftGraph = require("../../../lib/src/index.js");
+const MicrosoftGraph = require("../../../../lib/src/index.js");
 // NOTE: When using this code, you must change the module below to "@azure/identity"
 
 // You will need to install these external dependencies with NPM:
 import qs from "qs";
 import open from "open";
 import express from "express";
-// console.log("hello");
-// class AuthorizationCodeSample{
-//     private tenantID= "d4cc7a42-3c44-44f3-aaf3-666302aeab08";
-//     private clientID= "7fd56a8a-209e-46f2-af55-ab409da96008";
-//     private clientSecret= "P4KX.w0EeT9x3LS6bLSJOb3o~c_y8P_1xD";
-//     //public void(){
-
-//     //}
-//     private  getAuthProvider():TokenCredentialAuthenticationProvider{
-//         //const tokenCredential = new AuthorizationCodeCredential(this.tenantID,this.clientID,this.clientSecret);
-//         // const response = fetch();
-//         // try {
-// 		// 	context.response = await fetch(context.request, context.options);
-// 		// 	return;
-// 		// } catch (error) {
-// 		// 	throw error;
-// 		// }
-//         return null;
-//     }
-// }
 
 const port = 8050;
 const tenantId = "d4cc7a42-3c44-44f3-aaf3-666302aeab08";

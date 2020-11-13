@@ -1,0 +1,16 @@
+{
+	"name": "client_credential_flow_sample",
+	"version": "1.0.0",
+	"description": "Example of using the Microsoft Graph JS Client with client credential flow token credential",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "tsc --p tsconfig.json && node index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@azure/identity": "^1.2.0",
+		"typescript": "^4.0.5"
+	}
+}

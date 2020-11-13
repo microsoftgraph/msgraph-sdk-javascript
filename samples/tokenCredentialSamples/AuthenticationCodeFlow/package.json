@@ -1,11 +1,11 @@
 {
-	"name": "authprovider",
+	"name": "authentication_code_flow_sample",
 	"version": "1.0.0",
 	"description": "sample for auth provider using token credentials",
-	"main": "index.js",
+	"main": "src/AuthenticationCodeSample.js",
 	"scripts": {
 		"test": "tsc",
-		"start": "tsc --p tsconfig.json && node src/AuthenticationCodeSample.js"
+		"build": "tsc --p tsconfig.json && node src/AuthenticationCodeSample.js"
 	},
 	"author": "",
 	"license": "ISC",
