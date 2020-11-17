@@ -11,39 +11,51 @@
 
 /**
  * @class
- * This class is to handle errors that within the JavaScript Client SDK
- * unlike GraphError Class which handles errors in response from the Graph API.
+ * Create GraphClientError object to handle client-side errors
+ * encountered within the JavaScript Client SDK.
+ * Whereas GraphError Class should be used to handle errors in the response from the Graph API.
  */
 
 export class GraphClientError extends Error {
 	/**
 	 * @public
-	 * A member holding response by the graph service
+	 * A custom error. This property should set be when the error is not of instanceOf Error/GraphClientError.
+	 * Example =
+	 * const client = MicrosoftGraph.Client.init({
+	 * 		defaultVersion: "v1.0",
+	 *  	authProvider: (done) => { done({TokenError:"AccessToken cannot be null"}, "<ACCESS_TOKEN>");
+	 * });
 	 */
-	public body?: any;
+	public customError?: any;
 
 	/**
 	 * @public
 	 * @static
 	 * @async
-	 * To get the GraphError object
-	 * @param {any} [error = null] - The error returned encountered by the Graph JavaScript Client
-	 * SDK while processing request
-	 * @returns A promise that resolves to GraphError instance
+	 * To set the GraphClientError object
+	 * @param {any} - The error returned encountered by the Graph JavaScript Client SDK while processing request
+	 * @returns GraphClientError object set to the error passed
 	 */
-	public static async getError(error: any = null): Promise<GraphClientError> {
+	public static setGraphClientError(error: any): GraphClientError {
 		let graphClientError: GraphClientError;
-		if (typeof Error !== "undefined" && error instanceof Error) {
+		if (error instanceof Error) {
 			graphClientError = error;
-		} else if (error) {
+		} else {
 			graphClientError = new GraphClientError();
-			graphClientError.body = error;
+			graphClientError.customError = error;
 		}
 		return graphClientError;
 	}
 
-	public constructor(message?: string, baseError?: Error) {
-		super(message || (baseError && baseError.message));
-		this.stack = baseError ? baseError.stack : this.stack;
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of GraphClientError
+	 * @param {string} message? - Error message
+	 * @returns An instance of GraphClientError
+	 */
+	public constructor(message?: string) {
+		super(message);
+		Object.setPrototypeOf(this, GraphClientError.prototype);
 	}
 }

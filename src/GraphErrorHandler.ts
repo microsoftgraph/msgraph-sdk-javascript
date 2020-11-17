@@ -41,7 +41,7 @@ export class GraphErrorHandler {
 	 * @static
 	 * @async
 	 * Populates the GraphError instance from the Error returned by graph service
-	 * @param {any} error - The error returned by graph service or some native error
+	 * @param {any} graphError - The error possibly returned by graph service or some native error
 	 * @param {number} statusCode - The status code of the response
 	 * @returns A promise that resolves to GraphError instance
 	 *
@@ -57,25 +57,17 @@ export class GraphErrorHandler {
 	 *      }
 	 *  }
 	 */
-	private static constructErrorFromResponse(error: any, statusCode: number): GraphError {
-		if (!error.error) {
-			// example - Consider error specified is a string when using type AuthProviderCallback = (error: any, accessToken: string | null) => void;
-			const graphError = new GraphError(statusCode, "Microsoft Graph JavaScript Client SDK came across an error while processing the request");
-			graphError.body = error;
-			return graphError;
-		}
-		error = error.error;
+	private static constructErrorFromResponse(graphError: any, statusCode: number): GraphError {
+		const error = graphError.error;
 		const gError = new GraphError(statusCode, error.message);
 		gError.code = error.code;
 		if (error.innerError !== undefined) {
 			gError.requestId = error.innerError["request-id"];
 			gError.date = new Date(error.innerError.date);
 		}
-		try {
-			gError.body = JSON.stringify(error);
-		} catch (error) {
-			// tslint:disable-line: no-empty
-		}
+
+		gError.body = JSON.stringify(error);
+
 		return gError;
 	}
 
@@ -84,6 +76,7 @@ export class GraphErrorHandler {
 	 * @static
 	 * @async
 	 * To get the GraphError object
+	 * Reference - https://docs.microsoft.com/en-us/graph/errors
 	 * @param {any} [error = null] - The error returned by graph service or some native error
 	 * @param {number} [statusCode = -1] - The status code of the response
 	 * @param {GraphRequestCallback} [callback] - The graph request callback function
@@ -91,12 +84,13 @@ export class GraphErrorHandler {
 	 */
 	public static async getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): Promise<GraphError> {
 		let gError: GraphError;
-		if (typeof Error !== "undefined" && error instanceof Error) {
-			gError = GraphErrorHandler.constructError(error, statusCode);
-		} else if (error) {
+		if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
+		} else if (error instanceof Error) {
+			gError = GraphErrorHandler.constructError(error, statusCode);
 		} else {
 			gError = new GraphError(statusCode);
+			gError.body = error; // if a custom error is passed which is not instance of Error object or a graph API response
 		}
 		if (typeof callback === "function") {
 			callback(gError, null);

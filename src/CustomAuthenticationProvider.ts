@@ -49,9 +49,12 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 					resolve(accessToken);
 				} else {
 					if (!error) {
-						error = new GraphClientError("Access token cannot be undefined or empty.");
+						const invalidTokenMessage = "Access token is undefined or empty.\
+						Please provide a valid token.\
+						For more help - https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/CustomAuthenticationProvider.md";
+						error = new GraphClientError(invalidTokenMessage);
 					}
-					const err = await GraphClientError.getError(error);
+					const err = await GraphClientError.setGraphClientError(error);
 					reject(err);
 				}
 			});
