@@ -384,7 +384,7 @@ export class GraphRequest {
 			}
 			let statusCode: number;
 
-			if (typeof rawResponse !== "undefined") {
+			if (rawResponse) {
 				statusCode = rawResponse.status;
 			}
 			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);

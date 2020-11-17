@@ -9,7 +9,7 @@ import { assert } from "chai";
 
 import { GraphClientError } from "../../src/GraphClientError";
 
-describe("GraphErrorHandler.ts", () => {
+describe("GraphClientError", () => {
 	const message = "test";
 	const name = "test_name";
 	it("Should return GraphClientError error with message set", () => {
