@@ -21,13 +21,15 @@ describe("TelemetryHandler.ts", () => {
 		this.timeout(20 * 1000);
 		const telemetryHandler = new TelemetryHandler();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
+		const uuid = "dummy_uuid";
+		const sdkVersion = "dummy_version";
 		telemetryHandler.setNext(dummyHTTPHandler);
 		const okayResponse = new Response("", {
 			status: 200,
 			statusText: "OK",
 		});
 		it("Should not disturb client-request-id in the header", async () => {
-			const uuid = "dummy_uuid";
+			const request = new Request(GRAPH_BASE_URL);
 			const context: Context = {
 				request: GRAPH_BASE_URL,
 				options: {
@@ -101,6 +103,40 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["client-request-id"], undefined);
 			assert.equal(context.options.headers["SdkVersion"], undefined);
 			assert.equal(context.options.headers["setFeatureUsage"], undefined);
+		});
+
+		it("Should not disturb client-request-id in the header when Request object passed with Graph URL", async () => {
+			const request = new Request(GRAPH_BASE_URL);
+			const context: Context = {
+				request,
+				options: {
+					headers: {
+						"client-request-id": uuid,
+						SdkVersion: sdkVersion,
+					},
+				},
+			};
+			dummyHTTPHandler.setResponses([okayResponse]);
+			await telemetryHandler.execute(context);
+			assert.equal(context.options.headers["client-request-id"], uuid);
+			assert.equal(context.options.headers["SdkVersion"], sdkVersion);
+		});
+
+		it("Should delete Telemetry in the header when Request object passed with non Graph URL", async () => {
+			const request = new Request("test_url");
+			const context: Context = {
+				request,
+				options: {
+					headers: {
+						"client-request-id": uuid,
+						SdkVersion: "test_version",
+					},
+				},
+			};
+			dummyHTTPHandler.setResponses([okayResponse]);
+			await telemetryHandler.execute(context);
+			assert.equal(context.options.headers["client-request-id"], undefined);
+			assert.equal(context.options.headers["SdkVersion"], undefined);
 		});
 	});
 	/* tslint:enable: no-string-literal */
