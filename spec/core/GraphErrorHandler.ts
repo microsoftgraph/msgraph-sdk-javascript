@@ -7,6 +7,7 @@
 
 import { assert } from "chai";
 
+import { GraphError } from "../../src";
 import { GraphErrorHandler } from "../../src/GraphErrorHandler";
 
 describe("GraphErrorHandler.ts", () => {
@@ -41,6 +42,7 @@ describe("GraphErrorHandler.ts", () => {
 
 		it("Should construct error for error response without innerError property", () => {
 			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, null);
 		});
@@ -50,6 +52,7 @@ describe("GraphErrorHandler.ts", () => {
 				"request-id": "some random id",
 			};
 			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, "some random id");
 		});
@@ -62,6 +65,7 @@ describe("GraphErrorHandler.ts", () => {
 				date,
 			};
 			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, "some random id");
 			assert.equal(gError.date.toUTCString(), date.toUTCString());
@@ -81,6 +85,7 @@ describe("GraphErrorHandler.ts", () => {
 				},
 			};
 			const gError = await GraphErrorHandler.getError(errorResponse);
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.requestId, "some random id");
 			assert.equal(gError.code, "500");
 			assert.equal(gError.message, "Internal Server Error");
@@ -90,6 +95,7 @@ describe("GraphErrorHandler.ts", () => {
 			const error = new Error("Some Error");
 			error.name = "InvalidError";
 			const gError = await GraphErrorHandler.getError(error);
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.requestId, null);
 			assert.equal(gError.message, "Some Error");
 			assert.equal(gError.code, "InvalidError");
@@ -97,6 +103,7 @@ describe("GraphErrorHandler.ts", () => {
 
 		it("Should construct some default error", async () => {
 			const gError = await GraphErrorHandler.getError();
+			assert.isTrue(gError instanceof GraphError);
 			assert.equal(gError.message, "");
 			assert.equal(gError.statusCode, -1);
 			assert.equal(gError.code, null);

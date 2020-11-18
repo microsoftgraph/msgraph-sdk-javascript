@@ -57,6 +57,8 @@ export class GraphError extends Error {
 	 */
 	public constructor(statusCode: number = -1, message?: string, baseError?: Error) {
 		super(message || (baseError && baseError.message));
+		// https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
+		Object.setPrototypeOf(this, GraphError.prototype);
 		this.statusCode = statusCode;
 		this.code = null;
 		this.requestId = null;
