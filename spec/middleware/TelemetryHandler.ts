@@ -29,7 +29,6 @@ describe("TelemetryHandler.ts", () => {
 			statusText: "OK",
 		});
 		it("Should not disturb client-request-id in the header", async () => {
-			const request = new Request(GRAPH_BASE_URL);
 			const context: Context = {
 				request: GRAPH_BASE_URL,
 				options: {
@@ -105,7 +104,7 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["setFeatureUsage"], undefined);
 		});
 
-		it("Should not disturb client-request-id in the header when Request object passed with Graph URL", async () => {
+		it("Should not disturb client-request-id in the header when Request object is passed with Graph URL", async () => {
 			const request = new Request(GRAPH_BASE_URL);
 			const context: Context = {
 				request,
@@ -122,7 +121,7 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["SdkVersion"], sdkVersion);
 		});
 
-		it("Should delete Telemetry in the header when Request object passed with non Graph URL", async () => {
+		it("Should delete Telemetry in the header when Request object is passed with non Graph URL", async () => {
 			const request = new Request("test_url");
 			const context: Context = {
 				request,
