@@ -60,16 +60,16 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 		}
 		if (scopes === undefined || scopes === null || scopes.length === 0) {
 			const error = new Error();
-			error.name = "EmptyScopes";
-			error.message = "Scopes cannot be empty, Please provide a scopes";
+			error.name = "Empty Scopes";
+			error.message = "Scopes cannot be empty, Please provide scopes";
 			throw error;
 		}
 		const response = await this.tokenCredential.getToken(scopes, this.authenticationProviderOptions.getTokenoptions);
 		if (response) {
 			return response.token;
 		}
-		throw new Error("Cannot retreive token credential");
-
-		// look into  login pop up creation
+		const error = new Error("Cannot retrieve accessToken");
+		error.name = "Access token is undefined";
+		throw error;
 	}
 }

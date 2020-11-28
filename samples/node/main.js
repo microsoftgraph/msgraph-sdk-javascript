@@ -8,8 +8,9 @@ require("isomorphic-fetch");
 const MicrosoftGraph = require("../../lib/src/index.js");
 
 const secrets = require("./secrets");
-
+const moment = require("moment");
 const fs = require("fs");
+const { BatchResponseContent } = require("../../lib/src/index.js");
 
 const client = MicrosoftGraph.Client.init({
 	defaultVersion: "v1.0",
@@ -79,6 +80,188 @@ uploadFile();
 // 	.catch((err) => {
 // 		console.log(err);
 // 	});
+const s = {
+	attendees: [
+		{
+			emailAddress: {
+				address: "nikitha9090@hotmail.com",
+				name: "Alex Darrow",
+			},
+			type: "Required",
+		},
+	],
+	timeConstraint: {
+		timeslots: [
+			{
+				start: {
+					dateTime: "2020-11-18T08:37:44.203Z",
+					timeZone: "Pacific Standard Time",
+				},
+				end: {
+					dateTime: "2020-11-25T08:37:44.203Z",
+					timeZone: "Pacific Standard Time",
+				},
+			},
+		],
+	},
+	locationConstraint: {
+		isRequired: "false",
+		suggestLocation: "true",
+		locations: [
+			{
+				displayName: "Conf Room 32/1368",
+				locationEmailAddress: "conf32room1368@imgeek.onmicrosoft.com",
+			},
+		],
+	},
+	meetingDuration: "PT1H",
+};
+
+// // Get the name of the authenticated user with promises
+// client
+// 	.api("/me/findMeetingTimes")
+// 	.post(s)
+// 	.then((res) => {
+// 		console.log(res);
+// 	})
+// 	.catch((err) => {
+// 		console.log(err);
+//     });
+
+// Get the name of the authenticated user with promises
+// client
+// 	.api("/me")
+// 	.select("displayName")
+// 	.get()
+// 	.then((res) => {
+// 		console.log(res);
+// 	})
+// 	.catch((err) => {
+// 		console.log(err);
+//     });
+testfunc()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+async function testfunc() {
+	console.log("dfd");
+	// Create a batch request step to GET /me
+	let userRequestStep = {
+		id: "1",
+		request: new Request("/me", {
+			method: "GET",
+		}),
+	};
+	let userRequestStep2 = {
+		id: "2",
+		request: new Request("/https://graph.microsoft.com/v1.0/me/people/?$search=j", {
+			method: "GET",
+		}),
+	};
+	let today = moment({ hour: 0, minute: 0, seconds: 0 });
+
+	// Create a batch request step to add an event
+	let newEvent = {
+		subject: "File end-of-day report",
+		start: {
+			// 5:00 PM
+			dateTime: today.add(17, "hours").format("YYYY-MM-DDTHH:mm:ss"),
+			timeZone: "UTC",
+		},
+		end: {
+			// 5:30 PM
+			dateTime: today
+				.add(17, "hours")
+				.add(30, "minutes")
+				.format("YYYY-MM-DDTHH:mm:ss"),
+			timeZone: "UTC",
+		},
+	};
+
+	let addEventRequestStep = {
+		id: "2",
+		// This step will happen after step 1
+		dependsOn: ["1"],
+		request: new Request("/me/events", {
+			method: "POST",
+			body: JSON.stringify(newEvent),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}),
+	};
+	const s = {
+		attendees: [
+			{
+				emailAddress: {
+					address: "nikitha9090@hotmail.com",
+					name: "Alex Darrow",
+				},
+				type: "Required",
+			},
+		],
+		timeConstraint: {
+			timeslots: [
+				{
+					start: {
+						dateTime: "2020-11-18T08:37:44.203Z",
+						timeZone: "Pacific Standard Time",
+					},
+					end: {
+						dateTime: "2020-11-25T08:37:44.203Z",
+						timeZone: "Pacific Standard Time",
+					},
+				},
+			],
+		},
+		locationConstraint: {
+			isRequired: "false",
+			suggestLocation: "true",
+			locations: [
+				{
+					displayName: "Conf Room 32/1368",
+					locationEmailAddress: "conf32room1368@imgeek.onmicrosoft.com",
+				},
+			],
+		},
+		meetingDuration: "PT1H",
+	};
+	//   let addEventRequestStep = {
+	//     id: "2",
+	//     // This step will happen after step 1
+	//     dependsOn: [ "1" ],
+	//     request: new Request("/me/findMeetingTimes", {
+	//       method: "POST",
+	//       body: JSON.stringify(s),
+	//       headers: {
+	//         "Content-Type": "application/json"
+	//       }
+	//     })
+	//   }
+
+	// Create the batch request content with the steps created
+	// above
+	let batchRequestContent = new MicrosoftGraph.BatchRequestContent([userRequestStep, addEventRequestStep]);
+	console.log(batchRequestContent);
+	let content = await batchRequestContent.getContent();
+	console.log(content);
+	// POST the batch request content to the /$batch endpoint
+	let batchResponse = await client.api("/$batch").post(content);
+	console.log(" console.log(batchResponse);");
+	console.log(batchResponse);
+	const response = new BatchResponseContent(batchResponse);
+	// Get the create event response by id
+	let newEventResponse = response.getResponseById("2");
+	console.log(newEventResponse);
+	if (!newEventResponse.ok) {
+		console.log("newEventResponse");
+		let error = await newEventResponse.json();
+		console.log(error);
+	}
+}
 /*
 
 // Update the authenticated users birthday.
