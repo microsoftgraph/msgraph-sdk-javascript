@@ -17,11 +17,8 @@ import "isomorphic-fetch";
 
 import { AuthorizationCodeCredential } from "@azure/identity";
 
-import { port, tenantId, clientSecret, clientId, scopes } from "./Secrets";
+import { port, tenantId, clientSecret, clientId, scopes, authorityHost, redirectUri } from "./secrets";
 import { Client, TokenCredentialAuthenticationProvider } from "../../../../lib/src";
-
-export const redirectUri = `http://localhost:${port}/authresponse`;
-export const authorityHost = "https://login.microsoftonline.com";
 
 if (tenantId === undefined || clientId === undefined) {
 	console.error("AZURE_TENANT_ID and AZURE_CLIENT_ID environment variables must be set");

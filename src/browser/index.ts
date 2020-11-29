@@ -5,6 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
+export * from "../authentication/ITokenCredentialAuthenticationProviderOptions";
+export * from "../authentication/TokenCredentialAuthenticationProvider";
+
 export * from "../content/BatchRequestContent";
 export * from "../content/BatchResponseContent";
 

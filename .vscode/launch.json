@@ -27,6 +27,17 @@
 		{
 			"type": "node",
 			"request": "launch",
+			"name": "Run auth tests",
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"args": ["${workspaceRoot}/lib/spec/authentication/*.js"],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": "Run Compile",
+			"outFiles": [],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
 			"name": "Run Core tests",
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"args": ["${workspaceRoot}/lib/spec/core/*.js"],

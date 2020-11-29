@@ -19,6 +19,7 @@ import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredential
  * @class
  * Class representing TokenCredentialAuthenticationProvider
  * @extends AuthenticationProvider
+ * Reference - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md
  */
 export class TokenCredentialAuthenticationProvider implements AuthenticationProvider {
 	/**

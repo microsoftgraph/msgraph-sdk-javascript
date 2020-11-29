@@ -18,6 +18,7 @@ src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
 
+samples/**/*/secrets.ts
 samples/node/secrets.json
 samples/browser/src/secrets.js
 samples/browser/src/graph-js-sdk.js
