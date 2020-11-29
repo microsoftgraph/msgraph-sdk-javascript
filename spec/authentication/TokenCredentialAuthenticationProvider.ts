@@ -1,21 +1,16 @@
-//import { Mock, IMock } from "typemoq";
-//import {mock,when} from "ts-mockito";
-import * as sinon from "sinon";
-
 /**
  * -------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
-import { assert, expect } from "chai";
-import "isomorphic-fetch";
+/*tslint:disable*/
 import { AccessToken, AuthorizationCodeCredential, ClientSecretCredential } from "@azure/identity";
-import { TokenCredentialAuthenticationProvider } from "../../src/authentication/TokenCredentialAuthenticationProvider";
-import { TokenCredentialAuthenticationProviderOptions } from "../../src/authentication/ITokenCredentialAuthenticationProviderOptions";
-import { type } from "os";
+import { assert } from "chai";
+import * as sinon from "sinon";
 
+import { TokenCredentialAuthenticationProviderOptions } from "../../src/authentication/ITokenCredentialAuthenticationProviderOptions";
+import { TokenCredentialAuthenticationProvider } from "../../src/authentication/TokenCredentialAuthenticationProvider";
 describe("TokenCredentialAuthenticationProvider.ts", () => {
 	const tenantId = "TENANT_ID";
 	const clientId = "CLIENT_ID";

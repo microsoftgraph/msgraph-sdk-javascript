@@ -55,11 +55,11 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 */
 	public async getAccessToken(): Promise<string> {
 		let scopes: string[] = [];
+		const error = new Error();
 		if (this.authenticationProviderOptions && this.authenticationProviderOptions.scopes) {
 			scopes = this.authenticationProviderOptions.scopes;
 		}
 		if (scopes === undefined || scopes === null || scopes.length === 0) {
-			const error = new Error();
 			error.name = "Empty Scopes";
 			error.message = "Scopes cannot be empty, Please provide scopes";
 			throw error;
@@ -68,7 +68,7 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 		if (response) {
 			return response.token;
 		}
-		const error = new Error("Cannot retrieve accessToken");
+		error.message = "Cannot retrieve accessToken";
 		error.name = "Access token is undefined";
 		throw error;
 	}

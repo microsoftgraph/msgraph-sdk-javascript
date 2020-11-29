@@ -12,16 +12,17 @@
 	],
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
-		"@azure/identity": "^1.1.0",
 		"@babel/runtime": "^7.4.4",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
+		"@azure/identity": "^1.1.0",
 		"@babel/core": "^7.4.4",
 		"@babel/plugin-transform-runtime": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^12.0.10",
+		"@types/sinon": "^9.0.9",
 		"chai": "^4.2.0",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
@@ -62,7 +63,8 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build && npm run test"
+		"prepack": "npm install && npm run build && npm run test",
+		"test:moq": "mocha lib/spec/authentication"
 	},
 	"repository": {
 		"type": "git",
