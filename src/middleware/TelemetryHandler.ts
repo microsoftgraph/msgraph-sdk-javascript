@@ -8,7 +8,7 @@
 /**
  * @module TelemetryHandler
  */
-
+import { isGraphURL } from "../GraphRequestUtil";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
 
@@ -66,21 +66,30 @@ export class TelemetryHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		try {
-			let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
-			if (clientRequestId === null) {
-				clientRequestId = generateUUID();
-				setRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER, clientRequestId);
+			const url = typeof context.request === "string" ? context.request : context.request.url;
+			if (isGraphURL(url)) {
+				// Add telemetry only if the request url is a Graph URL.
+				// Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
+				let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
+				if (!clientRequestId) {
+					clientRequestId = generateUUID();
+					setRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER, clientRequestId);
+				}
+				let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
+				let options: TelemetryHandlerOptions;
+				if (context.middlewareControl instanceof MiddlewareControl) {
+					options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
+				}
+				if (options) {
+					const featureUsage: string = options.getFeatureUsage();
+					sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
+				}
+				appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
+			} else {
+				// Remove telemetry headers if present during redirection.
+				delete context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER];
+				delete context.options.headers[TelemetryHandler.SDK_VERSION_HEADER];
 			}
-			let sdkVersionValue: string = `${TelemetryHandler.PRODUCT_NAME}/${PACKAGE_VERSION}`;
-			let options: TelemetryHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
-			}
-			if (typeof options !== "undefined") {
-				const featureUsage: string = options.getFeatureUsage();
-				sdkVersionValue += ` (${TelemetryHandler.FEATURE_USAGE_STRING}=${featureUsage})`;
-			}
-			appendRequestHeader(context.request, context.options, TelemetryHandler.SDK_VERSION_HEADER, sdkVersionValue);
 			return await this.nextMiddleware.execute(context);
 		} catch (error) {
 			throw error;
