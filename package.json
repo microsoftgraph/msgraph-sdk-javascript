@@ -1,6 +1,6 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "Microsoft Graph Client Library",
 	"license": "MIT",
 	"main": "lib/src/index.js",
@@ -13,6 +13,7 @@
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
 		"@babel/runtime": "^7.4.4",
+		"msal": "^1.4.4",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -27,7 +28,6 @@
 		"isomorphic-fetch": "^2.2.1",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.1.4",
-		"msal": "^1.0.0",
 		"prettier": "^1.17.0",
 		"rollup": "^1.10.1",
 		"rollup-plugin-babel": "^4.3.2",
