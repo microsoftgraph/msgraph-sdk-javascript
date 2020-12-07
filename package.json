@@ -13,6 +13,8 @@
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
 		"@babel/runtime": "^7.4.4",
+		"esm": "^3.2.25",
+		"karma": "^5.2.3",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -27,6 +29,10 @@
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^2.2.1",
+		"karma-chai": "^0.1.0",
+		"karma-firefox-launcher": "^2.1.0",
+		"karma-mocha": "^2.0.1",
+		"karma-typescript": "^5.2.0",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.2.3",
 		"msal": "^1.0.0",
@@ -67,31 +73,19 @@
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
 		"prepack": "npm install && npm run build && npm run test",
-		"test:nyc": "mocha -r ts-node/register --project tsconfig-base.json spec/content/*.ts && mocha -r ts-node/register spec/core/*.ts && mocha -r ts-node/register spec/middleware/*.ts && mocha -r ts-node/register spec/tasks/*.ts",
-		"test:mocha": "mocha -r ts-node/register spec/core/*.ts"
+		"test:cjs": "mocha -r ts-node/register --project tsconfig-base.json spec/content/*.ts && mocha -r ts-node/register spec/core/*.ts && mocha -r ts-node/register spec/middleware/*.ts && mocha -r ts-node/register spec/tasks/*.ts",
+		"test:esm": "mocha -r ts-node/register --require esm spec/content/*.ts && mocha -r ts-node/register --require esm spec/core/*.ts && mocha -r ts-node/register --require esm spec/middleware/*.ts && mocha -r ts-node/register --require esm spec/tasks/*.ts",
+		"test:mocha": "nyc  --require esm mocha -r ts-node/register spec/core/*.ts",
+		"cover": "nyc npm run test:esm",
+		"coverage": "nyc npm run test:cjs",
+		"karma": "karma start karma.conf.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
 	},
 	"nyc": {
-		"require": [
-			"ts-node/register",
-			"source-map-support/register"
-		],
-		"extends": "@istanbuljs/nyc-config-typescript",
-		"include": [
-			"src/*"
-		],
-		"exclude": [
-			"spec/",
-			"node_modules/**",
-			"**/*.d.ts",
-			"**/*.test.ts",
-			"*.js"
-		],
 		"all": true,
-		"instrument": true,
 		"cache": false
 	}
 }
