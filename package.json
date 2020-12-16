@@ -43,6 +43,8 @@
 	},
 	"scripts": {
 		"setVersion": "gulp setVersion",
+		"build:es1": "tsc -b tsconfig-sub-es.json",
+		"build:cjs1": "tsc -b tsconfig-sub-cjs.json",
 		"build:es": "tsc --p tsconfig-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
 		"pre-build": "npm run setVersion",
@@ -63,11 +65,19 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build && npm run test",
+		"prepack": "npm install && npm run build",
 		"test:moq": "mocha lib/spec/authentication"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"peerDependenciesMeta": {
+		"@azure/identity": {
+			"optional": true
+		},
+		"@msal": {
+			"optional": true
+		}
 	}
 }

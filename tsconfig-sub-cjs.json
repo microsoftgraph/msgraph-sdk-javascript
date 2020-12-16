@@ -1,0 +1,16 @@
+{
+	"extends": "./tsconfig-base.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es5",
+		"lib": ["dom", "esnext"],
+		"outDir": "lib"
+	},
+	"exclude": ["node_modules", "lib", "samples", "spec/development", "src"],
+	"include": ["auth/", "spec/"],
+	"references": [
+		{
+			"path": "./tsconfig-cjs.json"
+		}
+	]
+}
