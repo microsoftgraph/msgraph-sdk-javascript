@@ -13,6 +13,20 @@ import { GraphError } from "./GraphError";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
 
 /**
+ * @interface
+ * Signature for the json represent of the error response from the Graph API
+ * https://docs.microsoft.com/en-us/graph/errors
+ * @property {[key: string] : string | number} - The Key value pair
+ */
+interface GraphAPIErrorResponse {
+	error: {
+		code: string;
+		message: string;
+		innerError: any;
+	};
+}
+
+/**
  * @class
  * Class for GraphErrorHandler
  */
@@ -57,7 +71,7 @@ export class GraphErrorHandler {
 	 *      }
 	 *  }
 	 */
-	private static constructErrorFromResponse(graphError: any, statusCode: number): GraphError {
+	private static constructErrorFromResponse(graphError: GraphAPIErrorResponse, statusCode: number): GraphError {
 		const error = graphError.error;
 		const gError = new GraphError(statusCode, error.message);
 		gError.code = error.code;
