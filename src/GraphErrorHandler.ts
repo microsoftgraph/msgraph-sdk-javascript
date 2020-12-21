@@ -55,7 +55,7 @@ export class GraphErrorHandler {
 	 * @static
 	 * @async
 	 * Populates the GraphError instance from the Error returned by graph service
-	 * @param {any} graphError - The error possibly returned by graph service or some native error
+	 * @param {GraphAPIErrorResponse} graphError - The error possibly returned by graph service or some native error
 	 * @param {number} statusCode - The status code of the response
 	 * @returns A promise that resolves to GraphError instance
 	 *
