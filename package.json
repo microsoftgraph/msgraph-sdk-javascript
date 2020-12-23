@@ -1,6 +1,6 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"version": "2.1.0-Preview.1",
+	"version": "2.2.0-Preview.1",
 	"description": "Microsoft Graph Client Library",
 	"license": "MIT",
 	"main": "lib/src/index.js",
@@ -65,19 +65,10 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build",
-		"test:moq": "mocha lib/spec/authentication"
+		"prepack": "npm install && npm run build && npm run test"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
-	},
-	"peerDependenciesMeta": {
-		"@azure/identity": {
-			"optional": true
-		},
-		"@msal": {
-			"optional": true
-		}
 	}
 }
