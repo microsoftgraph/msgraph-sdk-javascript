@@ -136,7 +136,22 @@ describe("ChaosHandler.ts", () => {
 	});
 
 	describe("setStatusCode", () => {
-		const manualMap: Map<string, Map<string, number>> = new Map([["/me/messages/.*", new Map([["GET", 500], ["PATCH", 201]])], ["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
+		const manualMap: Map<string, Map<string, number>> = new Map([
+			[
+				"/me/messages/.*",
+				new Map([
+					["GET", 500],
+					["PATCH", 201],
+				]),
+			],
+			[
+				"/me",
+				new Map([
+					["GET", 500],
+					["PATCH", 201],
+				]),
+			],
+		]);
 		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
 		const tempManualOptionsRegex: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
 		const tempChaosHandlerManual = new ChaosHandler(tempManualOptions, manualMap);
@@ -198,7 +213,15 @@ describe("ChaosHandler.ts", () => {
 	});
 
 	describe("execute", async () => {
-		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500], ["PATCH", 201]])]]);
+		const manualMap: Map<string, Map<string, number>> = new Map([
+			[
+				"/me",
+				new Map([
+					["GET", 500],
+					["PATCH", 201],
+				]),
+			],
+		]);
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 		const tempChaosHandlerDefault = new ChaosHandler(new ChaosHandlerOptions());
 		const tempChaosHandlerRandom = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.RANDOM));

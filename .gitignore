@@ -14,6 +14,8 @@ npm-debug.log
 /lib/*
 !/lib/.npmignore
 
+/authProviders/*
+
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts

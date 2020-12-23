@@ -4,10 +4,10 @@
 		"module": "es6",
 		"target": "es6",
 		"lib": ["dom", "esnext"],
-		"outDir": "lib/es"
+		"outDir": "authProviders/es"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/**", "src"],
-	"include": ["auth/"],
+	"include": ["auth/es/**/*.ts"],
 	"references": [
 		{
 			"path": "./tsconfig-es.json"

@@ -48,7 +48,10 @@ describe("Excel", function() {
 
 	it("Updates workbook worksheet range", async () => {
 		const sampleData: WorkbookRange = {
-			values: [["cell a1", "cell a2"], ["cell b1", "cell b2"]],
+			values: [
+				["cell a1", "cell a2"],
+				["cell b1", "cell b2"],
+			],
 		};
 		try {
 			const response = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range(address='A1:B2')`).patch(sampleData);

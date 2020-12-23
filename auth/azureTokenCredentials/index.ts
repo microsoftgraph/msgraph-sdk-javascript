@@ -1,2 +1,2 @@
-export * from "../../src/authentication/TokenCredentialAuthenticationProvider";
-export * from "../../src/authentication/ITokenCredentialAuthenticationProviderOptions";
+export * from "../../lib/src/authentication/TokenCredentialAuthenticationProvider";
+export * from "../../lib/src/authentication/ITokenCredentialAuthenticationProviderOptions";

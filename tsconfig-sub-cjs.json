@@ -4,10 +4,10 @@
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["dom", "esnext"],
-		"outDir": "lib"
+		"outDir": "authProviders"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/development", "src"],
-	"include": ["auth/", "spec/"],
+	"include": ["auth/azureTokenCredentials/", "auth/msal/"],
 	"references": [
 		{
 			"path": "./tsconfig-cjs.json"
