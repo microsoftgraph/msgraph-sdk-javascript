@@ -8,7 +8,7 @@
 /**
  * @module GraphRequest
  */
-
+import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
@@ -41,6 +41,7 @@ interface KeyValuePairObjectStringNumber {
  * @property {string} [path] - The path of the resource request
  * @property {KeyValuePairObjectStringNumber} oDataQueryParams - The oData Query Params
  * @property {KeyValuePairObjectStringNumber} otherURLQueryParams - The other query params for a request
+ * @property {string[]} otherURLQueryOptions - The non key-value query parameters. Example- '/me?$whatif'
  */
 export interface URLComponents {
 	host: string;
@@ -48,7 +49,7 @@ export interface URLComponents {
 	path?: string;
 	oDataQueryParams: KeyValuePairObjectStringNumber;
 	otherURLQueryParams: KeyValuePairObjectStringNumber;
-	otherURLQueryOptions: any[];
+	otherURLQueryOptions?: string[];
 }
 
 /**
@@ -79,9 +80,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold custom header options for a request
 	 */
-	private _headers: {
-		[key: string]: string;
-	};
+	private _headers: HeadersInit;
 
 	/**
 	 * @private
@@ -256,7 +255,7 @@ export class GraphRequest {
 	private parseQueryParameter(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
 		if (typeof queryDictionaryOrString === "string") {
 			if (queryDictionaryOrString.charAt(0) === "?") {
-				queryDictionaryOrString = queryDictionaryOrString.substring(1, queryDictionaryOrString.length);
+				queryDictionaryOrString = queryDictionaryOrString.substring(1);
 			}
 
 			if (queryDictionaryOrString.indexOf("&") !== -1) {
@@ -273,9 +272,6 @@ export class GraphRequest {
 					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
 				}
 			}
-		} else {
-			/*Push values which are not of key-value structure. 
-			Example-> Handle an invalid input->.query(123) and let the Graph API respond with the error in the URL*/ this.urlComponents.otherURLQueryOptions.push(queryDictionaryOrString);
 		}
 
 		return this;
@@ -293,10 +289,10 @@ export class GraphRequest {
 		if (this.isValidQueryKeyValuePair(queryParameter)) {
 			const indexOfFirstEquals = queryParameter.indexOf("=");
 			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
-			const paramValue = queryParameter.substring(indexOfFirstEquals + 1, queryParameter.length);
+			const paramValue = queryParameter.substring(indexOfFirstEquals + 1);
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
-			/* Push values which are not of key-value structure. 
+			/* Push values which are not of key-value structure.
 			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
 			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}
@@ -383,8 +379,12 @@ export class GraphRequest {
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {
+			if (error instanceof GraphClientError) {
+				throw error;
+			}
 			let statusCode: number;
-			if (typeof rawResponse !== "undefined") {
+
+			if (rawResponse) {
 				statusCode = rawResponse.status;
 			}
 			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
@@ -428,10 +428,10 @@ export class GraphRequest {
 	/**
 	 * @public
 	 * Sets the custom headers for a request
-	 * @param {KeyValuePairObjectStringNumber} headers - The headers key value pair object
+	 * @param {KeyValuePairObjectStringNumber | HeadersInit} headers - The request headers
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public headers(headers: KeyValuePairObjectStringNumber): GraphRequest {
+	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
 		for (const key in headers) {
 			if (headers.hasOwnProperty(key)) {
 				this._headers[key] = headers[key] as string;
@@ -653,7 +653,7 @@ export class GraphRequest {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
 		};
-		const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+		const className: string = content && content.constructor && content.constructor.name;
 		if (className === "FormData") {
 			// Content-Type headers should not be specified in case the of FormData type content
 			options.headers = {};
