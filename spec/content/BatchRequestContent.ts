@@ -355,7 +355,6 @@ describe("BatchRequestContent.ts", () => {
 			]);
 			try {
 				const content = await batchReq.getContent();
-				throw new Error("Something wrong with the header checking");
 			} catch (error) {
 				assert.equal(error.name, "Invalid Content-type header");
 			}

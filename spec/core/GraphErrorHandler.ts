@@ -101,14 +101,14 @@ describe("GraphErrorHandler.ts", () => {
 			assert.equal(gError.code, "InvalidError");
 		});
 
-		// it("Should construct some default error", async () => {
-		// 	const gError = await GraphErrorHandler.getError();
-		// 	assert.isTrue(gError instanceof GraphError);
-		// 	assert.equal(gError.message, "");
-		// 	assert.equal(gError.statusCode, -1);
-		// 	assert.equal(gError.code, null);
-		// 	assert.equal(gError.body, null);
-		// 	assert.equal(gError.requestId, null);
-		// });
+		it("Should construct some default error", async () => {
+			const gError = await GraphErrorHandler.getError();
+			assert.isTrue(gError instanceof GraphError);
+			assert.equal(gError.message, "");
+			assert.equal(gError.statusCode, -1);
+			assert.equal(gError.code, null);
+			assert.equal(gError.body, null);
+			assert.equal(gError.requestId, null);
+		});
 	});
 });

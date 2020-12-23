@@ -26,7 +26,7 @@
 		"chai": "^4.2.0",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
-		"isomorphic-fetch": "^2.2.1",
+		"isomorphic-fetch": "^3.0.0",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.1.4",
 		"msal": "^1.0.0",

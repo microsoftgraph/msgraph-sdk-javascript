@@ -12,8 +12,7 @@
 		"chai": "^4.2.0",
 		"es6-promise": "^4.2.6",
 		"form-data": "^2.3.3",
-		"isomorphic-fetch": "^2.2.1",
-		"msal": "^1.0.0",
-		"node-fetch": "^2.6.1"
+		"isomorphic-fetch": "^3.0.0",
+		"msal": "^1.0.0"
 	}
 }
