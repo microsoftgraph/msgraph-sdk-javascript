@@ -1,0 +1,1 @@
+{"version":3,"file":"AuthenticationHandlerOptions.js","sourceRoot":"","sources":["../../../../../../src/middleware/options/AuthenticationHandlerOptions.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAWH;;;;GAIG;AACH,MAAM,OAAO,4BAA4B;IAaxC;;;;;;;OAOG;IACH,YAAmB,sBAA+C,EAAE,6BAA6D;QAChI,IAAI,CAAC,sBAAsB,GAAG,sBAAsB,CAAC;QACrD,IAAI,CAAC,6BAA6B,GAAG,6BAA6B,CAAC;IACpE,CAAC;CACD"}

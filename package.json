@@ -30,6 +30,7 @@
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^2.2.1",
 		"karma-chai": "^0.1.0",
+		"karma-chrome-launcher": "^3.1.0",
 		"karma-firefox-launcher": "^2.1.0",
 		"karma-mocha": "^2.0.1",
 		"karma-typescript": "^5.2.0",
@@ -38,6 +39,7 @@
 		"msal": "^1.0.0",
 		"nyc": "^15.1.0",
 		"prettier": "^1.17.0",
+		"puppeteer": "^5.5.0",
 		"rollup": "^1.10.1",
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-commonjs": "^10.0.1",
@@ -73,12 +75,13 @@
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
 		"prepack": "npm install && npm run build && npm run test",
-		"test:cjs": "mocha -r ts-node/register --project tsconfig-base.json spec/content/*.ts && mocha -r ts-node/register spec/core/*.ts && mocha -r ts-node/register spec/middleware/*.ts && mocha -r ts-node/register spec/tasks/*.ts",
-		"test:esm": "mocha -r ts-node/register --require esm spec/content/*.ts && mocha -r ts-node/register --require esm spec/core/*.ts && mocha -r ts-node/register --require esm spec/middleware/*.ts && mocha -r ts-node/register --require esm spec/tasks/*.ts",
+		"test:cjs": "mocha -r ts-node/register --project tsconfig-cjs.json spec/content/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/core/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/middleware/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/tasks/*.ts",
+		"test:esm": "TS_NODE_PROJECT='./test/tsconfig-test-es.json' mocha --require  esm test/dist/test/**/*.js",
+		"test:es": "tsc -p ./test/tsconfig-test-es.json  && mocha  test/dist/**/*.js --require  esm",
 		"test:mocha": "nyc  --require esm mocha -r ts-node/register spec/core/*.ts",
-		"cover": "nyc npm run test:esm",
-		"coverage": "nyc npm run test:cjs",
-		"karma": "karma start karma.conf.js"
+		"cover": "nyc npm run test",
+		"coverage": "nyc npm run test:esm",
+		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
 	},
 	"repository": {
 		"type": "git",
@@ -86,6 +89,11 @@
 	},
 	"nyc": {
 		"all": true,
-		"cache": false
+		"cache": false,
+		"exclude": [
+			"samples/",
+			"*.js",
+			"lib/"
+		]
 	}
 }

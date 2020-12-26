@@ -1,0 +1,10 @@
+{
+	"extends": "../tsconfig-base.json",
+	"compilerOptions": {
+		"module": "es6",
+		"target": "es6",
+		"lib": ["dom", "esnext"],
+		"outDir": "dist/es"
+	},
+	"include": ["common", "node", "browser"]
+}
