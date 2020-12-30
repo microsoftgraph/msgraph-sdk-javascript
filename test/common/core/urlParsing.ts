@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { getClient } from "../test-helper";
+import { getClient } from "../../test-helper";
 
 const client = getClient();
 

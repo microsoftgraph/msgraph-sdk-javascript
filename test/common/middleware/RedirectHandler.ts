@@ -11,7 +11,7 @@ import { Context } from "../../../src/IContext";
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { RedirectHandlerOptions } from "../../../src/middleware/options/RedirectHandlerOptions";
 import { RedirectHandler } from "../../../src/middleware/RedirectHandler";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 const redirectHandlerOptions = new RedirectHandlerOptions();
 const redirectHandler = new RedirectHandler();

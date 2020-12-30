@@ -9,7 +9,7 @@ import { assert } from "chai";
 
 import { AuthenticationHandlerOptions } from "../../../src/middleware/options/AuthenticationHandlerOptions";
 import { MSALAuthenticationProviderOptions } from "../../../src/MSALAuthenticationProviderOptions";
-import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
+import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
 
 describe("AuthenticationHandlerOptions.ts", () => {
 	const dummyAuthProvider = new DummyAuthenticationProvider();

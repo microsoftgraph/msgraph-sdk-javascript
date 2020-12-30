@@ -61,7 +61,7 @@ describe("GraphRequestUtil.ts", () => {
 			node2.link = node1;
 			try {
 				serializeContent(node1);
-				throw new Error("Something wrong with the serialize content, it should not stringify cyclic referenced objects");
+				throw new Error("Test Failed - Something wrong with the serialize content, it should not stringify cyclic referenced objects");
 			} catch (error) {
 				assert.equal(error.message, "Unable to stringify the content");
 			}

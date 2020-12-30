@@ -72,7 +72,7 @@ describe("BatchRequestContent.ts", () => {
 			createFolderDuplicate1.id = "";
 			try {
 				const batchReq = new BatchRequestContent([createFolderDuplicate1]);
-				throw new Error("Something wrong with the empty id check");
+				throw new Error(" Test Failed - Something wrong with the empty id check");
 			} catch (error) {
 				assert.equal(error.name, "Empty Id For Request");
 			}
@@ -88,7 +88,7 @@ describe("BatchRequestContent.ts", () => {
 			}
 			try {
 				const batchReq = new BatchRequestContent(requests);
-				throw new Error("Something wrong with the limiting requests");
+				throw new Error("Test Failed - Something wrong with the limiting requests");
 			} catch (error) {
 				assert.equal(error.name, "Limit Exceeded Error");
 				done();
@@ -110,7 +110,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent(requests);
 			try {
 				batchReq.addRequest(req);
-				throw new Error("Something wrong with the limiting requests");
+				throw new Error("Test Failed - Something wrong with the limiting requests");
 			} catch (error) {
 				assert.equal(error.name, "Limit Exceeded Error");
 				done();
@@ -132,7 +132,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent([req1]);
 			try {
 				batchReq.addRequest(req2);
-				throw new Error("Something wrong with duplicate id validation");
+				throw new Error("Test Failed - Something wrong with duplicate id validation");
 			} catch (error) {
 				assert.equal(error.name, "Duplicate RequestId Error");
 				done();
@@ -145,7 +145,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent();
 			try {
 				batchReq.addRequest(req);
-				throw new Error("Something wrong with empty id validation");
+				throw new Error("Test Failed - Something wrong with empty id validation");
 			} catch (error) {
 				assert.equal(error.name, "Empty Id For Request");
 				done();
@@ -199,7 +199,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent([req]);
 			try {
 				batchReq.addDependency("1");
-				throw new Error("Dependent validation is failing");
+				throw new Error("Test Failed - Dependent validation is failing");
 			} catch (err) {
 				assert.equal(err.name, "Invalid Dependency Addition");
 				done();
@@ -211,7 +211,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent([req]);
 			try {
 				batchReq.addDependency("1", "100");
-				throw new Error("Dependency validation is failing");
+				throw new Error("Test Failed - Dependency validation is failing");
 			} catch (err) {
 				assert.equal(err.name, "Invalid Dependency");
 				done();
@@ -297,7 +297,7 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent();
 			try {
 				const content = await batchReq.getContent();
-				throw new Error("Something wrong with the empty requests validation");
+				throw new Error("Test Failed - Something wrong with the empty requests validation");
 			} catch (error) {
 				assert.equal(error.name, "Empty Payload");
 			}
@@ -339,26 +339,6 @@ describe("BatchRequestContent.ts", () => {
 					throw error;
 				}
 			});
-		});
-
-		it("Should throw error for request does not have content-type header if it does have a body", async () => {
-			const createFolderReqWithoutHeader = new Request("/me/drive/root/children", {
-				method: "POST",
-				body: JSON.stringify(folderDetails),
-			});
-
-			const batchReq = new BatchRequestContent([
-				{
-					id: "1",
-					request: createFolderReqWithoutHeader,
-				},
-			]);
-			try {
-				const content = await batchReq.getContent();
-				throw new Error("Something wrong with the header checking");
-			} catch (error) {
-				assert.equal(error.name, "Invalid Content-type header");
-			}
 		});
 	});
 
@@ -423,7 +403,7 @@ describe("BatchRequestContent.ts", () => {
 		it("Should throw error for empty request object", (done) => {
 			try {
 				BatchRequestContent["validateDependencies"](new Map() as Map<string, BatchRequestStep>);
-				throw new Error("Something wrong with the empty requests check");
+				throw new Error("Test Failed - Something wrong with the empty requests check");
 			} catch (error) {
 				assert.equal(error.name, "Empty Requests Error");
 				done();

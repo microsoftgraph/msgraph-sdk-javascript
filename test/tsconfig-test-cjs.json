@@ -2,8 +2,9 @@
 	"extends": "./../tsconfig-base.json",
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es6",
+		"target": "es5",
 		"lib": ["dom", "esnext"],
+		"rootDir": ".",
 		"outDir": "lib/es"
 	},
 	"include": ["test/"],

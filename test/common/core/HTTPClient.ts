@@ -10,7 +10,7 @@ import { assert } from "chai";
 import { HTTPClient } from "../../../src/HTTPClient";
 import { Context } from "../../../src/IContext";
 import { FetchOptions } from "../../../src/IFetchOptions";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("HTTPClient.ts", () => {
 	const httpMessageHandler: DummyHTTPMessageHandler = new DummyHTTPMessageHandler();
@@ -63,7 +63,7 @@ describe("HTTPClient.ts", () => {
 					request: url,
 				};
 				await httpClient.sendRequest(context);
-				throw new Error("Something wrong with the context validation");
+				throw new Error("Test Failed - Something wrong with the context validation");
 			} catch (error) {
 				assert.equal(error.name, "InvalidRequestOptions");
 			}

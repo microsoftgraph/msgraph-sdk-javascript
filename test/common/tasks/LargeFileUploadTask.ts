@@ -8,7 +8,7 @@
 import { assert } from "chai";
 
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
-import { getClient } from "../test-helper";
+import { getClient } from "../../test-helper";
 
 describe("LargeFileUploadTask.ts", () => {
 	/* tslint:disable: no-string-literal */
@@ -168,7 +168,7 @@ describe("LargeFileUploadTask.ts", () => {
 			uploadTask
 				.upload()
 				.then((res) => {
-					throw new Error("Upload is working for upload completed task");
+					throw new Error("Test Failed - Upload is working for upload completed task");
 				})
 				.catch((err) => {
 					assert.equal(err.name, "Invalid Session");

@@ -17,8 +17,8 @@ import { AuthenticationHandler } from "../../../src/middleware/AuthenticationHan
 import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
-import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("Client.ts", () => {
 	/* tslint:disable: no-string-literal */
@@ -33,7 +33,7 @@ describe("Client.ts", () => {
 					middleware: dummyHTTPHandler,
 				};
 				const client: Client = Client.initWithMiddleware(options);
-				throw new Error("Something wrong with the ambiguity check");
+				throw new Error("Test Failed - Something wrong with the ambiguity check");
 			} catch (error) {
 				assert.equal(error.name, "AmbiguityInInitialization");
 			}
@@ -61,7 +61,7 @@ describe("Client.ts", () => {
 			try {
 				const options: ClientOptions = {};
 				Client.initWithMiddleware(options);
-				throw new Error("Something wrong with the client initialization check");
+				throw new Error("Test Failed - Something wrong with the client initialization check");
 			} catch (error) {
 				assert.equal(error.name, "InvalidMiddlewareChain");
 			}

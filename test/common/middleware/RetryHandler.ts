@@ -13,7 +13,7 @@ import { FetchOptions } from "../../../src/IFetchOptions";
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { RetryHandlerOptions, ShouldRetry } from "../../../src/middleware/options/RetryHandlerOptions";
 import { RetryHandler } from "../../../src/middleware/RetryHandler";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("RetryHandler.ts", function() {
 	this.timeout(20 * 1000);

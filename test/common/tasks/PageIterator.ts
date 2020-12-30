@@ -9,7 +9,7 @@ import { assert } from "chai";
 
 import { Client } from "../../../src/index";
 import { PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
-import { getClient } from "../test-helper";
+import { getClient } from "../../test-helper";
 
 const client: Client = getClient();
 

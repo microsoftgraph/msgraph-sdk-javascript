@@ -6,6 +6,6 @@
 		"lib": ["dom", "esnext"],
 		"outDir": "lib"
 	},
-	"exclude": ["node_modules", "lib", "samples", "test/"],
-	"include": ["./src/**/*.ts"]
+	"exclude": ["node_modules", "lib", "samples", "test/development"],
+	"include": ["./src/**/*.ts","./test"]
 }

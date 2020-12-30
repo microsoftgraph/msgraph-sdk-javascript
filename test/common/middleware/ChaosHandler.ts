@@ -6,7 +6,7 @@ import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
 import { RequestMethod } from "../../../src/RequestMethod";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 const chaosHandlerOptions = new ChaosHandlerOptions();
 const chaosHandler = new ChaosHandler();

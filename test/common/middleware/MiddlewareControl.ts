@@ -13,7 +13,7 @@ import { assert } from "chai";
 import "isomorphic-fetch";
 
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
-import { DummyHandlerOptions } from "../DummyHandlerOptions";
+import { DummyHandlerOptions } from "../../DummyHandlerOptions";
 
 describe("MiddlewareControl.ts", () => {
 	const dummyHandlerOption = new DummyHandlerOptions();

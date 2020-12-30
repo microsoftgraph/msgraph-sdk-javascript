@@ -9,8 +9,8 @@ import { assert } from "chai";
 
 import { HTTPClient } from "../../../src/HTTPClient";
 import { HTTPClientFactory } from "../../../src/HTTPClientFactory";
-import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("HTTPClientFactory.ts", () => {
 	/* tslint:disable: no-string-literal */

@@ -12,7 +12,7 @@ import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "../../../src/middleware/options/TelemetryHandlerOptions";
 import { TelemetryHandler } from "../../../src/middleware/TelemetryHandler";
 import { PACKAGE_VERSION } from "../../../src/Version";
-import { DummyHTTPMessageHandler } from "../DummyHTTPMessageHandler";
+import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("TelemetryHandler.ts", () => {
 	/* tslint:disable: no-string-literal */
