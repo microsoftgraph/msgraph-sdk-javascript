@@ -5,29 +5,31 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
-import { Event } from "microsoft-graph";
 
-import { PageIterator, PageIteratorCallback, GraphRequestOptions, PageCollection } from "../../../src/tasks/PageIterator";
+
 import { getClient } from "../test-helper";
+
 import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
+import { GraphRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { Client, ClientOptions } from "../../../src";
 
 const client = getClient();
-describe("PageIterator", function() {
+describe("PageIterator", ()=> {
 	const pstHeader = { Prefer: 'outlook.timezone= "pacific standard time"' };
 	const utc = "UTC";
 	const pst = "Pacific Standard Time";
 	const testURL = "/me/events";
 
-	before(async function() {
+	before(async function () {
 		this.timeout(20000);
 
-		const response = await client.api(testURL).get();
+		const response = await client.api(testURL + "?count=true").get();
 		const numberOfEvents = 4;
-		const existingEventsCount = response.value.length;
+		const existingEventsCount = response.value["@odata.count"];
 
 		if (existingEventsCount >= numberOfEvents) {
 			return;
@@ -58,7 +60,7 @@ describe("PageIterator", function() {
 			assert.equal(event.start.timeZone, pst);
 			return true;
 		};
-		var requestOptions: GraphRequestOptions = { options: { headers: pstHeader } };
+		const requestOptions: GraphRequestOptions = { options: { headers: pstHeader } };
 		if (response["@odata.nextLink"]) {
 			const pageIterator = new PageIterator(client, response, callback, requestOptions);
 			await pageIterator.iterate();
@@ -85,7 +87,7 @@ describe("PageIterator", function() {
 			return true;
 		};
 
-		var requestOptions = { headers: pstHeader };
+		const requestOptions = { headers: pstHeader };
 		if (response["@odata.nextLink"]) {
 			const pageIterator = new PageIterator(client, response, callback, requestOptions);
 			await pageIterator.iterate();

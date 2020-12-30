@@ -3,10 +3,10 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es5",
+		"esModuleInterop": true,
+		"noEmitOnError": true,
 		"lib": ["dom", "esnext"],
-		"rootDir": ".",
-		"outDir": "lib/es"
+		"outDir": "../lib/"
 	},
-	"include": ["test/"],
-	"exclude": ["test/development"]
+	"include": ["./development/","../src/"]
 }

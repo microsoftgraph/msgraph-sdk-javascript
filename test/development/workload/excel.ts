@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 import * as fs from "fs";
-import { WorkbookRange, WorkbookWorksheet } from "microsoft-graph";
+import { WorkbookRange, WorkbookWorksheet } from "@microsoft/microsoft-graph-types";
 
 import { getClient, randomString } from "../test-helper";
 
@@ -24,7 +24,7 @@ describe("Excel", function() {
 	});
 	it("Uploads an Excel file to OneDrive", async () => {
 		try {
-			const file = fs.readFileSync("./spec/sample_files/empty-spreadsheet.xlsx");
+			const file = fs.readFileSync("./test/sample_files/empty-spreadsheet.xlsx");
 			const res = await client.api(`/me/drive/root/children/${ExcelFilename}/content`).put(file);
 			assert.isDefined(res.id);
 		} catch (error) {

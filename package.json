@@ -14,6 +14,7 @@
     "dependencies": {
         "@babel/runtime": "^7.4.4",
         "esm": "^3.2.25",
+        "fs": "0.0.1-security",
         "karma": "^5.2.3",
         "tslib": "^1.9.3"
     },
@@ -22,10 +23,12 @@
         "@babel/plugin-transform-runtime": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
         "@istanbuljs/nyc-config-typescript": "^1.0.1",
+        "@microsoft/microsoft-graph-types": "^1.28.0",
         "@types/chai": "^4.2.14",
         "@types/mocha": "^5.2.7",
         "@types/node": "^12.0.10",
         "chai": "^4.2.0",
+        "form-data": "^2.3.3",
         "gulp": "^4.0.2",
         "husky": "^2.2.0",
         "isomorphic-fetch": "^3.0.0",
@@ -39,7 +42,6 @@
         "msal": "^1.0.0",
         "nyc": "^15.1.0",
         "prettier": "^1.17.0",
-        "puppeteer": "^5.5.0",
         "rollup": "^1.10.1",
         "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^10.0.1",
@@ -58,12 +60,8 @@
         "build:cjs": "tsc --p tsconfig-cjs.json",
         "pre-build": "npm run setVersion",
         "build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
-        "test": "npm run build:cjs && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
-        "test:content": "tsc --p spec/tsconfig.json && mocha spec/content",
-        "test:core": "tsc --p spec/tsconfig.json && mocha spec/core",
-        "test:middleware": "tsc --p spec/tsconfig.json && mocha spec/middleware",
-        "test:tasks": "tsc --p spec/tsconfig.json && mocha spec/tasks",
-        "test:development": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
+        "test": "npm run test:cjs && npm run test:esm",
+        "test:development": "tsc --p test/tsconfig-test-cjs.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
         "test:workload": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
         "lint": "tslint --project ./tsconfig-cjs.json -c tslint.json",
         "format:css": "prettier --write \"**/*.css\"",
@@ -75,12 +73,9 @@
         "format:ts": "prettier --write \"**/*.ts\"",
         "format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
         "prepack": "npm install && npm run build && npm run test",
-        "test:cjs": "mocha -r ts-node/register --project tsconfig-cjs.json spec/content/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/core/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/middleware/*.ts && mocha -r ts-node/register --project tsconfig-cjs.json spec/tasks/*.ts",
-        "test:esm": "TS_NODE_PROJECT='./test/tsconfig-test-es.json' mocha --require  esm test/dist/test/**/*.js",
-        "test:es": "tsc -p tsconfig-es.json  && mocha  lib/es/test/common/content --require  esm && mocha  lib/es/test/common/core --require  esm && mocha  lib/es/test/common/tasks --require  esm && mocha  lib/es/test/common/middleware --require  esm",
-        "test:mocha": "nyc  --require esm mocha -r ts-node/register spec/core/*.ts",
-        "cover": "nyc npm run test",
-        "coverage": "nyc npm run test:esm",
+        "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
+        "test:cjs": "tsc -p tsconfig-cjs.json  && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+        "test:esm": "tsc -p tsconfig-es.json  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
         "karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
     },
     "repository": {
@@ -94,6 +89,9 @@
             "samples/",
             "*.js",
             "lib/"
+        ],
+        "include": [
+            "src/"
         ]
     }
 }

@@ -5,8 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { Group } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
-import { Group } from "microsoft-graph";
 
 import { getClient, randomString } from "../test-helper";
 
