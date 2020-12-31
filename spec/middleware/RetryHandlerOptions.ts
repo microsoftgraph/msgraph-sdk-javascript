@@ -12,14 +12,10 @@ import { RetryHandlerOptions, ShouldRetry } from "../../src/middleware/options/R
 describe("RetryHandlerOptions.ts", () => {
 	describe("Constructor", () => {
 		it("Should use default values if not given", () => {
-			try {
-				const options = new RetryHandlerOptions();
-				assert.equal(options["delay"], RetryHandlerOptions["DEFAULT_DELAY"]);
-				assert.equal(options["maxRetries"], RetryHandlerOptions["DEFAULT_MAX_RETRIES"]);
-				assert.equal(options["shouldRetry"], RetryHandlerOptions["defaultShouldRetry"]);
-			} catch (error) {
-				throw error;
-			}
+			const options = new RetryHandlerOptions();
+			assert.equal(options["delay"], RetryHandlerOptions["DEFAULT_DELAY"]);
+			assert.equal(options["maxRetries"], RetryHandlerOptions["DEFAULT_MAX_RETRIES"]);
+			assert.equal(options["shouldRetry"], RetryHandlerOptions["defaultShouldRetry"]);
 		});
 
 		it("Should throw error for both delay and maxRetries are higher than the limit", () => {
@@ -83,20 +79,16 @@ describe("RetryHandlerOptions.ts", () => {
 		});
 
 		it("Should accept all the given values", () => {
-			try {
-				const delay = 1;
-				const maxRetries = 3;
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const shouldRetry: ShouldRetry = (d, a, req, o, res) => {
-					return false;
-				};
-				const options = new RetryHandlerOptions(delay, maxRetries, shouldRetry);
-				assert.equal(options.delay, delay);
-				assert.equal(options.maxRetries, maxRetries);
-				assert.equal(options.shouldRetry, shouldRetry);
-			} catch (error) {
-				throw error;
-			}
+			const delay = 1;
+			const maxRetries = 3;
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const shouldRetry: ShouldRetry = (d, a, req, o, res) => {
+				return false;
+			};
+			const options = new RetryHandlerOptions(delay, maxRetries, shouldRetry);
+			assert.equal(options.delay, delay);
+			assert.equal(options.maxRetries, maxRetries);
+			assert.equal(options.shouldRetry, shouldRetry);
 		});
 	});
 

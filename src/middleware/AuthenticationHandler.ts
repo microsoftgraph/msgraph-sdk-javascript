@@ -61,28 +61,24 @@ export class AuthenticationHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		try {
-			let options: AuthenticationHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
-			}
-			let authenticationProvider: AuthenticationProvider;
-			let authenticationProviderOptions: AuthenticationProviderOptions;
-			if (typeof options !== "undefined") {
-				authenticationProvider = options.authenticationProvider;
-				authenticationProviderOptions = options.authenticationProviderOptions;
-			}
-			if (typeof authenticationProvider === "undefined") {
-				authenticationProvider = this.authenticationProvider;
-			}
-			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
-			const bearerKey = `Bearer ${token}`;
-			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-			return await this.nextMiddleware.execute(context);
-		} catch (error) {
-			throw error;
+		let options: AuthenticationHandlerOptions;
+		if (context.middlewareControl instanceof MiddlewareControl) {
+			options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
 		}
+		let authenticationProvider: AuthenticationProvider;
+		let authenticationProviderOptions: AuthenticationProviderOptions;
+		if (typeof options !== "undefined") {
+			authenticationProvider = options.authenticationProvider;
+			authenticationProviderOptions = options.authenticationProviderOptions;
+		}
+		if (typeof authenticationProvider === "undefined") {
+			authenticationProvider = this.authenticationProvider;
+		}
+		const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
+		const bearerKey = `Bearer ${token}`;
+		appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+		return await this.nextMiddleware.execute(context);
 	}
 
 	/**

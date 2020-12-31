@@ -93,16 +93,12 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 				}
 			}
 		} else {
-			try {
-				const tokenRequest = {
-					scopes,
-				};
-				await this.msalApplication.loginPopup(tokenRequest);
-				const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
-				return authResponse.accessToken;
-			} catch (error) {
-				throw error;
-			}
+			const tokenRequest = {
+				scopes,
+			};
+			await this.msalApplication.loginPopup(tokenRequest);
+			const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
+			return authResponse.accessToken;
 		}
 	}
 }

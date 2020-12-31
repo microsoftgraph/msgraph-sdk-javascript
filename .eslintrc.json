@@ -4,11 +4,11 @@
 	"plugins": ["@typescript-eslint", "prettier"],
 	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 	"rules": {
-		"no-useless-catch": "off", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
+		"no-useless-catch": "error", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
 		"prefer-rest-params": "off",
 		"no-constant-condition": "off",
 		// @typescript-eslint rules
-		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-empty-interface": "warn",
 		"@typescript-eslint/ban-types": "off",
 		"@typescript-eslint/no-unused-vars": "error",
 		"@typescript-eslint/no-explicit-any": "off",
@@ -161,9 +161,9 @@
 		"@typescript-eslint/no-empty-function": "error",
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/no-parameter-properties": "off",
+
 		// eslint
-		// eslint
-		"brace-style": "off",
+		"brace-style": "error",
 		"constructor-super": "error",
 		"curly": ["error", "multi-line"],
 		"dot-notation": "off",
@@ -178,7 +178,7 @@
 		"no-fallthrough": "error",
 		"no-new-func": "off",
 		"no-new-wrappers": "error",
-		"no-return-await": "error",
+		"no-return-await": "off",
 		"no-sparse-arrays": "error",
 		"no-template-curly-in-string": "error",
 		"no-throw-literal": "error",

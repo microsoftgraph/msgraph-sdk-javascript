@@ -10,4 +10,5 @@
  * Signature representing the middleware options
  */
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface MiddlewareOptions {}

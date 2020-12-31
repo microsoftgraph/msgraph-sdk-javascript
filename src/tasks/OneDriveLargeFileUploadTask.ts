@@ -93,21 +93,17 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
 		}
 
-		try {
-			const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
-			const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
-			const rangeSize = getValidRangeSize(options.rangeSize);
-			const fileObj: FileObject = {
-				content,
-				name,
-				size,
-			};
-			return new OneDriveLargeFileUploadTask(client, fileObj, session, {
-				rangeSize,
-			});
-		} catch (err) {
-			throw err;
-		}
+		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
+		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
+		const rangeSize = getValidRangeSize(options.rangeSize);
+		const fileObj: FileObject = {
+			content,
+			name,
+			size,
+		};
+		return new OneDriveLargeFileUploadTask(client, fileObj, session, {
+			rangeSize,
+		});
 	}
 
 	/**
@@ -127,11 +123,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 				name: fileName,
 			},
 		};
-		try {
-			return super.createUploadSession(client, requestUrl, payload);
-		} catch (err) {
-			throw err;
-		}
+		return super.createUploadSession(client, requestUrl, payload);
 	}
 
 	/**
@@ -155,15 +147,11 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @returns The promise resolves to committed response
 	 */
 	public async commit(requestUrl: string): Promise<any> {
-		try {
-			const payload = {
-				name: this.file.name,
-				"@microsoft.graph.conflictBehavior": "rename",
-				"@microsoft.graph.sourceUrl": this.uploadSession.url,
-			};
-			return await this.client.api(requestUrl).put(payload);
-		} catch (err) {
-			throw err;
-		}
+		const payload = {
+			name: this.file.name,
+			"@microsoft.graph.conflictBehavior": "rename",
+			"@microsoft.graph.sourceUrl": this.uploadSession.url,
+		};
+		return await this.client.api(requestUrl).put(payload);
 	}
 }

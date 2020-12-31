@@ -148,11 +148,7 @@ describe("RetryHandler.ts", function() {
 
 	describe("sleep", async () => {
 		it("Should run the sleep method for 1 second", async () => {
-			try {
-				await retryHandler["sleep"](1);
-			} catch (error) {
-				throw error;
-			}
+			await retryHandler["sleep"](1);
 		});
 	});
 

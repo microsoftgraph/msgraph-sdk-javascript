@@ -60,11 +60,7 @@ export class Client {
 	 * @returns The Client instance
 	 */
 	public static initWithMiddleware(clientOptions: ClientOptions): Client {
-		try {
-			return new Client(clientOptions);
-		} catch (error) {
-			throw error;
-		}
+		return new Client(clientOptions);
 	}
 
 	/**
@@ -74,11 +70,7 @@ export class Client {
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
 	private constructor(clientOptions: ClientOptions) {
-		try {
-			validatePolyFilling();
-		} catch (error) {
-			throw error;
-		}
+		validatePolyFilling();
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];

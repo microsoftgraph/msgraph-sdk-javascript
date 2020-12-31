@@ -629,12 +629,8 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.GET,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -659,12 +655,8 @@ export class GraphRequest {
 			this.setHeaderContentType();
 			options.headers = this._headers;
 		}
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -676,11 +668,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the post response
 	 */
 	public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.post(content, callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.post(content, callback);
 	}
 
 	/**
@@ -698,12 +686,8 @@ export class GraphRequest {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -721,12 +705,8 @@ export class GraphRequest {
 			method: RequestMethod.PATCH,
 			body: serializeContent(content),
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -738,11 +718,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the patch response
 	 */
 	public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.patch(content, callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.patch(content, callback);
 	}
 
 	/**
@@ -757,12 +733,8 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.DELETE,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -773,11 +745,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the delete response
 	 */
 	public async del(callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.delete(callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.delete(callback);
 	}
 
 	/**
@@ -793,12 +761,8 @@ export class GraphRequest {
 			method: RequestMethod.GET,
 		};
 		this.responseType(ResponseType.STREAM);
-		try {
-			const stream = await this.send(url, options, callback);
-			return stream;
-		} catch (error) {
-			throw error;
-		}
+		const stream = await this.send(url, options, callback);
+		return stream;
 	}
 
 	/**
@@ -818,11 +782,7 @@ export class GraphRequest {
 			},
 			body: stream,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 }

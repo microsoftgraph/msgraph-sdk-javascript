@@ -191,27 +191,23 @@ export class RedirectHandler implements Middleware {
 	 * @returns A promise that resolves to nothing
 	 */
 	private async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
-		try {
-			await this.nextMiddleware.execute(context);
-			const response = context.response;
-			if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
-				++redirectCount;
-				if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
-					context.options.method = RequestMethod.GET;
-					delete context.options.body;
-				} else {
-					const redirectUrl: string = this.getLocationHeader(response);
-					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
-						delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
-					}
-					await this.updateRequestUrl(redirectUrl, context);
-				}
-				await this.executeWithRedirect(context, redirectCount, options);
+		await this.nextMiddleware.execute(context);
+		const response = context.response;
+		if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
+			++redirectCount;
+			if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
+				context.options.method = RequestMethod.GET;
+				delete context.options.body;
 			} else {
-				return;
+				const redirectUrl: string = this.getLocationHeader(response);
+				if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
+					delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
+				}
+				await this.updateRequestUrl(redirectUrl, context);
 			}
-		} catch (error) {
-			throw error;
+			await this.executeWithRedirect(context, redirectCount, options);
+		} else {
+			return;
 		}
 	}
 
@@ -223,15 +219,11 @@ export class RedirectHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		try {
-			const redirectCount = 0;
-			const options = this.getOptions(context);
-			context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);
-			return await this.executeWithRedirect(context, redirectCount, options);
-		} catch (error) {
-			throw error;
-		}
+		const redirectCount = 0;
+		const options = this.getOptions(context);
+		context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
+		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);
+		return await this.executeWithRedirect(context, redirectCount, options);
 	}
 
 	/**

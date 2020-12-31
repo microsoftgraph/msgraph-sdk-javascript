@@ -309,13 +309,9 @@ describe("BatchRequestContent.ts", () => {
 		it("Should return json content", async () => {
 			const req = getCreateFolderRequestCopy();
 			const batchReq = new BatchRequestContent([req]);
-			try {
-				const content = await batchReq.getContent();
-				assert.isDefined(content.requests[0].body);
-				assert.equal(typeof content.requests[0].body, "object");
-			} catch (error) {
-				throw error;
-			}
+			const content = await batchReq.getContent();
+			assert.isDefined(content.requests[0].body);
+			assert.equal(typeof content.requests[0].body, "object");
 		});
 
 		it("Should return image's base64 string", async () => {
@@ -335,12 +331,8 @@ describe("BatchRequestContent.ts", () => {
 					}),
 				};
 				const batchReq = new BatchRequestContent([uploadOneDriveFile]);
-				try {
-					const content = await batchReq.getContent();
-					assert.isDefined(content.requests[0].body);
-				} catch (error) {
-					throw error;
-				}
+				const content = await batchReq.getContent();
+				assert.isDefined(content.requests[0].body);
 			});
 		});
 

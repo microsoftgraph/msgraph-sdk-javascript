@@ -65,24 +65,20 @@ export class GraphResponseHandler {
 	 * @returns A promise that resolves to a document content
 	 */
 	private static parseDocumentResponse(rawResponse: Response, type: DocumentType): Promise<any> {
-		try {
-			if (typeof DOMParser !== "undefined") {
-				return new Promise((resolve, reject) => {
-					rawResponse.text().then((xmlString) => {
-						try {
-							const parser = new DOMParser();
-							const xmlDoc = parser.parseFromString(xmlString, type);
-							resolve(xmlDoc);
-						} catch (error) {
-							reject(error);
-						}
-					});
+		if (typeof DOMParser !== "undefined") {
+			return new Promise((resolve, reject) => {
+				rawResponse.text().then((xmlString) => {
+					try {
+						const parser = new DOMParser();
+						const xmlDoc = parser.parseFromString(xmlString, type);
+						resolve(xmlDoc);
+					} catch (error) {
+						reject(error);
+					}
 				});
-			} else {
-				return Promise.resolve(rawResponse.body);
-			}
-		} catch (error) {
-			throw error;
+			});
+		} else {
+			return Promise.resolve(rawResponse.body);
 		}
 	}
 
@@ -102,58 +98,54 @@ export class GraphResponseHandler {
 		}
 		let responseValue: any;
 		const contentType = rawResponse.headers.get("Content-type");
-		try {
-			switch (responseType) {
-				case ResponseType.ARRAYBUFFER:
-					responseValue = await rawResponse.arrayBuffer();
-					break;
-				case ResponseType.BLOB:
-					responseValue = await rawResponse.blob();
-					break;
-				case ResponseType.DOCUMENT:
-					responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
-					break;
-				case ResponseType.JSON:
-					responseValue = await rawResponse.json();
-					break;
-				case ResponseType.STREAM:
-					responseValue = await Promise.resolve(rawResponse.body);
-					break;
-				case ResponseType.TEXT:
-					responseValue = await rawResponse.text();
-					break;
-				default:
-					if (contentType !== null) {
-						const mimeType = contentType.split(";")[0];
-						if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
-							responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
-						} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
-							responseValue = rawResponse.blob();
-						} else if (mimeType === ContentType.TEXT_PLAIN) {
-							responseValue = await rawResponse.text();
-						} else if (mimeType === ContentType.APPLICATION_JSON) {
-							responseValue = await rawResponse.json();
-						} else {
-							responseValue = Promise.resolve(rawResponse.body);
-						}
+		switch (responseType) {
+			case ResponseType.ARRAYBUFFER:
+				responseValue = await rawResponse.arrayBuffer();
+				break;
+			case ResponseType.BLOB:
+				responseValue = await rawResponse.blob();
+				break;
+			case ResponseType.DOCUMENT:
+				responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
+				break;
+			case ResponseType.JSON:
+				responseValue = await rawResponse.json();
+				break;
+			case ResponseType.STREAM:
+				responseValue = await Promise.resolve(rawResponse.body);
+				break;
+			case ResponseType.TEXT:
+				responseValue = await rawResponse.text();
+				break;
+			default:
+				if (contentType !== null) {
+					const mimeType = contentType.split(";")[0];
+					if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
+						responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
+					} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
+						responseValue = rawResponse.blob();
+					} else if (mimeType === ContentType.TEXT_PLAIN) {
+						responseValue = await rawResponse.text();
+					} else if (mimeType === ContentType.APPLICATION_JSON) {
+						responseValue = await rawResponse.json();
 					} else {
-						/**
-						 * RFC specification {@link https://tools.ietf.org/html/rfc7231#section-3.1.1.5} says:
-						 *  A sender that generates a message containing a payload body SHOULD
-						 *  generate a Content-Type header field in that message unless the
-						 *  intended media type of the enclosed representation is unknown to the
-						 *  sender.  If a Content-Type header field is not present, the recipient
-						 *  MAY either assume a media type of "application/octet-stream"
-						 *  ([RFC2046], Section 4.5.1) or examine the data to determine its type.
-						 *
-						 *  So assuming it as a stream type so returning the body.
-						 */
 						responseValue = Promise.resolve(rawResponse.body);
 					}
-					break;
-			}
-		} catch (error) {
-			throw error;
+				} else {
+					/**
+					 * RFC specification {@link https://tools.ietf.org/html/rfc7231#section-3.1.1.5} says:
+					 *  A sender that generates a message containing a payload body SHOULD
+					 *  generate a Content-Type header field in that message unless the
+					 *  intended media type of the enclosed representation is unknown to the
+					 *  sender.  If a Content-Type header field is not present, the recipient
+					 *  MAY either assume a media type of "application/octet-stream"
+					 *  ([RFC2046], Section 4.5.1) or examine the data to determine its type.
+					 *
+					 *  So assuming it as a stream type so returning the body.
+					 */
+					responseValue = Promise.resolve(rawResponse.body);
+				}
+				break;
 		}
 		return responseValue;
 	}

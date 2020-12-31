@@ -63,33 +63,25 @@ describe("HTTPClient.ts", () => {
 		});
 
 		it("Should execute for context object with Request instance", async () => {
-			try {
-				const request: Request = new Request("dummy_url", {
-					method: "GET",
-				});
-				const context: Context = {
-					request,
-				};
-				await httpClient.sendRequest(context);
-			} catch (error) {
-				throw error;
-			}
+			const request: Request = new Request("dummy_url", {
+				method: "GET",
+			});
+			const context: Context = {
+				request,
+			};
+			await httpClient.sendRequest(context);
 		});
 
 		it("Should execute for context object with request uri and options", async () => {
-			try {
-				const url = "dummy_url";
-				const options: FetchOptions = {
-					method: "GET",
-				};
-				const context: Context = {
-					request: url,
-					options,
-				};
-				await httpClient.sendRequest(context);
-			} catch (error) {
-				throw error;
-			}
+			const url = "dummy_url";
+			const options: FetchOptions = {
+				method: "GET",
+			};
+			const context: Context = {
+				request: url,
+				options,
+			};
+			await httpClient.sendRequest(context);
 		});
 	});
 });

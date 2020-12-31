@@ -171,19 +171,15 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
-		try {
-			await this.nextMiddleware.execute(context);
-			if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
-				++retryAttempts;
-				setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
-				const delay = this.getDelay(context.response, retryAttempts, options.delay);
-				await this.sleep(delay);
-				return await this.executeWithRetry(context, retryAttempts, options);
-			} else {
-				return;
-			}
-		} catch (error) {
-			throw error;
+		await this.nextMiddleware.execute(context);
+		if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
+			++retryAttempts;
+			setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
+			const delay = this.getDelay(context.response, retryAttempts, options.delay);
+			await this.sleep(delay);
+			return await this.executeWithRetry(context, retryAttempts, options);
+		} else {
+			return;
 		}
 	}
 
@@ -195,14 +191,10 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		try {
-			const retryAttempts = 0;
-			const options: RetryHandlerOptions = this.getOptions(context);
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
-			return await this.executeWithRetry(context, retryAttempts, options);
-		} catch (error) {
-			throw error;
-		}
+		const retryAttempts = 0;
+		const options: RetryHandlerOptions = this.getOptions(context);
+		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
+		return await this.executeWithRetry(context, retryAttempts, options);
 	}
 
 	/**
