@@ -62,7 +62,6 @@
         "build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
         "test": "npm run test:cjs && npm run test:esm",
         "test:development": "tsc --p test/tsconfig-test-cjs.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-        "test:workload": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
         "lint": "tslint --project ./tsconfig-cjs.json -c tslint.json",
         "format:css": "prettier --write \"**/*.css\"",
         "format:html": "prettier --write \"**/*.html\"",
@@ -74,7 +73,7 @@
         "format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
         "prepack": "npm install && npm run build && npm run test",
         "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
-        "test:cjs": "tsc -p tsconfig-cjs.json  && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+        "test:cjs": "tsc -p tsconfig-cjs.json   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
         "test:esm": "tsc -p tsconfig-es.json  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
         "karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
     },
