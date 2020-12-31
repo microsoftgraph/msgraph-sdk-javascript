@@ -17,7 +17,7 @@
  * Some fields are renamed ie, "request-id" => requestId so you can use dot notation
  */
 
-export class GraphError {
+export class GraphError extends Error {
 	/**
 	 * @public
 	 * A member holding status code of the error
@@ -29,12 +29,6 @@ export class GraphError {
 	 * A member holding code i.e name of the error
 	 */
 	public code: string | null;
-
-	/**
-	 * @public
-	 * A member holding error message
-	 */
-	public message: string | null;
 
 	/**
 	 * @public
@@ -61,12 +55,15 @@ export class GraphError {
 	 * @param {number} [statusCode = -1] - The status code of the error
 	 * @returns An instance of GraphError
 	 */
-	public constructor(statusCode = -1) {
+	public constructor(statusCode = -1, message?: string, baseError?: Error) {
+		super(message || (baseError && baseError.message));
+		// https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
+		Object.setPrototypeOf(this, GraphError.prototype);
 		this.statusCode = statusCode;
 		this.code = null;
-		this.message = null;
 		this.requestId = null;
 		this.date = new Date();
 		this.body = null;
+		this.stack = baseError ? baseError.stack : this.stack;
 	}
 }

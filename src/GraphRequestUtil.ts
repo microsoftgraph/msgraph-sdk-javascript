@@ -8,7 +8,7 @@
 /**
  * @module GraphRequestUtil
  */
-
+import { GRAPH_URLS } from "./Constants";
 /**
  * To hold list of OData query params
  */
@@ -41,7 +41,7 @@ export const urlJoin = (urlSegments: string[]): string => {
  */
 
 export const serializeContent = (content: any): any => {
-	const className: string = content === undefined || content === null ? undefined : content.constructor.name;
+	const className: string = content && content.constructor && content.constructor.name;
 	if (className === "Buffer" || className === "Blob" || className === "File" || className === "FormData" || typeof content === "string") {
 		return content;
 	}
@@ -57,4 +57,35 @@ export const serializeContent = (content: any): any => {
 		}
 	}
 	return content;
+};
+
+/**
+ * Checks if the url is one of the service root endpoints for Microsoft Graph and Graph Explorer.
+ * @param {string} url - The url to be verified
+ * @returns {boolean} - Returns true if the url is a Graph URL
+ */
+export const isGraphURL = (url: string): boolean => {
+	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
+	url = url.toLowerCase();
+
+	if (url.indexOf("https://") !== -1) {
+		url = url.replace("https://", "");
+
+		// Find where the host ends
+		const startofPortNoPos = url.indexOf(":");
+		const endOfHostStrPos = url.indexOf("/");
+		let hostName = "";
+		if (endOfHostStrPos !== -1) {
+			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
+				hostName = url.substring(0, startofPortNoPos);
+				return GRAPH_URLS.has(hostName);
+			}
+			// Parse out the host
+			hostName = url.substring(0, endOfHostStrPos);
+			return GRAPH_URLS.has(hostName);
+		}
+	}
+
+	return false;
 };

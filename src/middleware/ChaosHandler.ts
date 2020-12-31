@@ -91,15 +91,19 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} statusMessage - the status message to be returned for the request
 	 * @param {string} requestID - request id
 	 * @param {string} requestDate - date of the request
+	 * @param {any?} requestBody - the request body to be returned for the request
 	 * @returns response body
 	 */
-	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: string) {
-		let responseBody: any;
+	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: string, responseBody?: any) {
+		if (responseBody) {
+			return responseBody;
+		}
+		let body: any;
 		if (statusCode >= 400) {
 			const codeMessage: string = httpStatusCode[statusCode];
 			const errMessage: string = statusMessage;
 
-			responseBody = {
+			body = {
 				error: {
 					code: codeMessage,
 					message: errMessage,
@@ -110,9 +114,9 @@ export class ChaosHandler implements Middleware {
 				},
 			};
 		} else {
-			responseBody = {};
+			body = {};
 		}
-		return responseBody;
+		return body;
 	}
 
 	/**
@@ -123,13 +127,11 @@ export class ChaosHandler implements Middleware {
 	 */
 	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
 		try {
-			const requestID: string = generateUUID();
-			const requestDate: Date = new Date();
-			const responseBody: any = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString());
-			const responseHeader: Headers = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
-
 			const requestURL = context.request as string;
-
+			const requestID = generateUUID();
+			const requestDate = new Date();
+			const responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
+			const responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString(), chaosHandlerOptions.responseBody);
 			const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
 			context.response = new Response(responseBody, init);
 		} catch (error) {

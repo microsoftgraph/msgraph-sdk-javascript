@@ -20,7 +20,34 @@ describe("HTTPClient.ts", () => {
 			assert.isDefined(httpClient["middleware"]);
 			assert.equal(httpClient["middleware"], httpMessageHandler);
 		});
+
+		it("Should create an instance and populate middleware member when passing a middleware array", () => {
+			const client = new HTTPClient(...[httpMessageHandler]);
+			assert.isDefined(client["middleware"]);
+			assert.equal(client["middleware"], httpMessageHandler);
+		});
+
+		it("Should throw an error if middleware is undefined", () => {
+			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const client = new HTTPClient();
+				throw new Error("Test failed - Expected error was not thrown");
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
+
+		it("Should throw an error if middleware is passed as an empty array", () => {
+			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const client = new HTTPClient(...[]);
+				throw new Error("Test failed - Expected error was not thrown");
+			} catch (error) {
+				assert.equal(error.name, "InvalidMiddlewareChain");
+			}
+		});
 	});
+
 	describe("sendRequest", async () => {
 		it("Should throw error for invalid request options incase if the url and options are passed", async () => {
 			try {

@@ -66,7 +66,7 @@ client
 // OverRiding to Random mode, providing the chaos percentage as 60(percentage times the error would be generated from handler)
 client
 	.api("/me")
-	.middlewareOptions([new MicrosoftGraph.ChaosHandlerOptions(MicrosoftGraph.ChaosStrategy.RANDOM, undefined, "I generated the error", 60)])
+	.middlewareOptions([new MicrosoftGraph.ChaosHandlerOptions(MicrosoftGraph.ChaosStrategy.RANDOM, "I generated the error", undefined, 60)])
 	.get()
 	.then((res) => {
 		console.log(res);

@@ -93,7 +93,7 @@ export class Client {
 		} else if (clientOptions.authProvider !== undefined) {
 			httpClient = HTTPClientFactory.createWithAuthenticationProvider(clientOptions.authProvider);
 		} else if (clientOptions.middleware !== undefined) {
-			httpClient = new HTTPClient(clientOptions.middleware);
+			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
 		} else {
 			const error = new Error();
 			error.name = "InvalidMiddlewareChain";
