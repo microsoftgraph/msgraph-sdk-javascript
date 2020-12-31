@@ -10,6 +10,7 @@ import "isomorphic-fetch";
 
 import { CustomAuthenticationProvider, TelemetryHandler } from "../../../src";
 import { Client } from "../../../src/Client";
+import { GraphClientError } from "../../../src/GraphClientError";
 import { AuthProvider } from "../../../src/IAuthProvider";
 import { ClientOptions } from "../../../src/IClientOptions";
 import { Options } from "../../../src/IOptions";
@@ -100,6 +101,48 @@ describe("Client.ts", () => {
 
 			const response = await client.api("me").get();
 			assert.equal(response, responseBody);
+		});
+
+		it("Should throw error in case the access token is undefined", async () => {
+			try {
+				const options = {
+					defaultVersion: "v1.0",
+					debugLogging: true,
+					authProvider: (done) => {
+						done(null, getTokenFunction());
+					},
+				};
+
+				const getTokenFunction = (): string => {
+					return undefined;
+				};
+				const client = Client.init(options);
+				const res = await client.api("/test").get();
+			} catch (error) {
+				assert.isTrue(error instanceof GraphClientError);
+				assert.isDefined(error.message);
+			}
+		});
+
+		it("Should throw error in case the access token is empty", async () => {
+			const customError = { message: "Token is empty" };
+			try {
+				const options = {
+					defaultVersion: "v1.0",
+					debugLogging: true,
+					authProvider: (done) => {
+						done(customError, getTokenFunction());
+					},
+				};
+				const getTokenFunction = (): string => {
+					return "";
+				};
+				const client = Client.init(options);
+				const res = await client.api("/test").get();
+			} catch (error) {
+				assert.isTrue(error instanceof GraphClientError);
+				assert.equal(error.customError, customError);
+			}
 		});
 	});
 

@@ -43,6 +43,10 @@ const testCases = {
 	"/me/$filter=any(Actors, it/ID eq Director/ID)": "https://graph.microsoft.com/v1.0/me/$filter=any(Actors, it/ID eq Director/ID)",
 	"/me?$whatif": "https://graph.microsoft.com/v1.0/me?$whatif",
 	"/me/?$filter=any(Actors a, any(a/Movies m, a/ID eq m/Director/ID))": "https://graph.microsoft.com/v1.0/me/?$filter=any(Actors a, any(a/Movies m, a/ID eq m/Director/ID))",
+
+	// National cloud deployment urls
+	"https://graph.microsoft.us/v1.0/me": "https://graph.microsoft.us/v1.0/me",
+	"https://dod-graph.microsoft.us/beta/me?$filter=a": "https://dod-graph.microsoft.us/beta/me?$filter=a",
 };
 
 describe("urlParsing.ts", () => {
