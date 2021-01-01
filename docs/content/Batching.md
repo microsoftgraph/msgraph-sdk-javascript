@@ -66,7 +66,7 @@ const serialBatching = async function(elem) {
 };
 ```
 
-### Download multiple profile photos with batching and prepare manipulate these for rendering in a browser 
+### Download multiple profile photos with batching and preprocess these for rendering in a browser 
 
 You should convert the downloaded photos through batching to a Base64 representation if you want to render these in a browser.
 
