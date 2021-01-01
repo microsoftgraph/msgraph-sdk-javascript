@@ -129,7 +129,7 @@ You should convert the downloaded photos through batching to a Base64 representa
       const response = batchResponse.getResponseById(users[0]);
       if (response.ok) {
         var data = await response.text();
-        const _binToBlob = await this.b64toBlob((data),'img/jpg');
+        const binToBlob = await this.b64toBlob((data),'img/jpg');
         
         // you can associate the base64 output to an src attribute of an <img> HTML tag
         const base64Result = await this.blobToBase64(binToBlob);
