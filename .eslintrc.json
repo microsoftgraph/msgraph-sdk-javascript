@@ -6,7 +6,7 @@
 	"rules": {
 		"no-useless-catch": "error", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
 		"prefer-rest-params": "off",
-		"no-constant-condition": "off",
+		"no-constant-condition": "error",
 		// @typescript-eslint rules
 		"@typescript-eslint/no-empty-interface": "warn",
 		"@typescript-eslint/ban-types": "off",
@@ -161,8 +161,18 @@
 		"@typescript-eslint/no-empty-function": "error",
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/no-parameter-properties": "off",
-
+		"@typescript-eslint/no-array-constructor": "error",
 		// eslint
+		// "sort-imports": [
+		//	"error",
+		//	{
+		//		"ignoreCase": false,
+		//		"ignoreDeclarationSort": false,
+		//		"ignoreMemberSort": false,
+		//		"memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+		//		"allowSeparatedGroups": false
+		//	}
+		// ],
 		"brace-style": "error",
 		"constructor-super": "error",
 		"curly": ["error", "multi-line"],

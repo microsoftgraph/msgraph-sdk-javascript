@@ -215,6 +215,7 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to uploaded response
 	 */
 	public async upload(): Promise<any> {
+		// eslint-disable-next-line no-constant-condition
 		while (true) {
 			const nextRange = this.getNextRange();
 			if (nextRange.maxValue === -1) {

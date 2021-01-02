@@ -161,25 +161,21 @@ export class GraphResponseHandler {
 	 * @returns The parsed response
 	 */
 	public static async getResponse(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback): Promise<any> {
-		try {
-			if (responseType === ResponseType.RAW) {
-				return Promise.resolve(rawResponse);
-			} else {
-				const response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
-				if (rawResponse.ok) {
-					// Status Code 2XX
-					if (typeof callback === "function") {
-						callback(null, response);
-					} else {
-						return response;
-					}
+		if (responseType === ResponseType.RAW) {
+			return Promise.resolve(rawResponse);
+		} else {
+			const response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
+			if (rawResponse.ok) {
+				// Status Code 2XX
+				if (typeof callback === "function") {
+					callback(null, response);
 				} else {
-					// NOT OK Response
-					throw response;
+					return response;
 				}
+			} else {
+				// NOT OK Response
+				throw response;
 			}
-		} catch (error) {
-			throw error;
 		}
 	}
 }
