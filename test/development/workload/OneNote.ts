@@ -71,7 +71,7 @@ describe("OneNote", function() {
 	});
 	it("Create a OneNote page with html page content", async () => {
 		const formData = new FormData();
-		formData.append("Presentation", fs.createReadStream("./spec/sample_files/onenotepage.html"));
+		formData.append("Presentation", fs.createReadStream("./test/sample_files/onenotepage.html"));
 		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
 		const createdPageFromHTML = json as OnenotePage;
 
@@ -96,7 +96,7 @@ describe("OneNote", function() {
 	it("create a OneNote page with html page content and file attachment", async () => {
 		try {
 			const formData = new FormData();
-			formData.append("Presentation", fs.createReadStream("./spec/sample_files/onenotepage_fileattachment.html"));
+			formData.append("Presentation", fs.createReadStream("./test/sample_files/onenotepage_fileattachment.html"));
 			formData.append("fileBlock1", fs.createReadStream("./sample.png"));
 			const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
 			const createdPageFromHTML = json as OnenotePage;

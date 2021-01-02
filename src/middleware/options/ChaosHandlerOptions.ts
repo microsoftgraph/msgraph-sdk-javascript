@@ -56,7 +56,7 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	public responseBody: any;
 
 	/**
-	 * The response body to be returned in the response
+	 * The response headers to be returned in the response
 	 *
 	 * @public
 	 */
@@ -73,13 +73,13 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	 * @param {any?} responseBody - The response body to be returned in the response
 	 * @returns An instance of ChaosHandlerOptions
 	 */
-	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusMessage: string = "Some error Happened", statusCode?: number, chaosPercentage?: number, responseBody?: any, headers?:Headers) {
+	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusMessage: string = "Some error Happened", statusCode?: number, chaosPercentage?: number, responseBody?: any, headers?: Headers) {
 		this.chaosStrategy = chaosStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
 		this.chaosPercentage = chaosPercentage !== undefined ? chaosPercentage : 10;
 		this.responseBody = responseBody;
-		this.headers = headers
+		this.headers = headers;
 		if (this.chaosPercentage > 100) {
 			throw new Error("Error Pecentage can not be more than 100");
 		}

@@ -8,10 +8,9 @@
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
-
 import { getClient } from "../test-helper";
 
-import { CgithaosHandler } from "../../../src/middleware/ChaosHandler";
+import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
@@ -19,13 +18,13 @@ import { Client, ClientOptions } from "../../../src";
 
 import { GraphRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 const client = getClient();
-describe("PageIterator", ()=> {
+describe("PageIterator", () => {
 	const pstHeader = { Prefer: 'outlook.timezone= "pacific standard time"' };
 	const utc = "UTC";
 	const pst = "Pacific Standard Time";
 	const testURL = "/me/events";
 
-	before(async function () {
+	before(async function() {
 		this.timeout(20000);
 
 		const response = await client.api(testURL + "?count=true").get();
@@ -96,7 +95,7 @@ describe("PageIterator", ()=> {
 		}
 	}).timeout(30 * 1000);
 
-	// TODO - Temporariliy commenting this test. 
+	// TODO - Temporariliy commenting this test.
 	it("setting middleware with pageIterator", async () => {
 		const middleware = new ChaosHandler();
 		const getPageCollection = () => {
@@ -117,7 +116,7 @@ describe("PageIterator", ()=> {
 			return true;
 		};
 
-		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ 'Content-Type' : 'application/json','content-length':'100'}))];
+		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
 		const requestOptions = { middlewareOptions };
 
 		const client = Client.initWithMiddleware(clientOptions);

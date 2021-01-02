@@ -36,14 +36,6 @@ describe("HTTPClient.ts", () => {
 			}
 		});
 
-		it("Should throw an error if middleware is passed as null", () => {
-			try {
-				const client = new HTTPClient(null);
-			} catch (error) {
-				assert.equal(error.name, "InvalidMiddlewareChain");
-			}
-		});
-
 		it("Should throw an error if middleware is passed as an empty array", () => {
 			try {
 				const client = new HTTPClient(...[]);

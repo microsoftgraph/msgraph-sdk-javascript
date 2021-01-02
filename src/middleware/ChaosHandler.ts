@@ -62,13 +62,12 @@ export class ChaosHandler implements Middleware {
 	/**
 	 * Generates responseHeader
 	 * @private
-	 * @param {number} statusCode - the status code to be returned for the request
+	 * @param {ChaosHandlerOptions} chaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {string} requestID - request id
 	 * @param {string} requestDate - date of the request
 	 * @returns response Header
 	 */
 	private createResponseHeaders(chaosHandlerOptions: ChaosHandlerOptions, requestID: string, requestDate: string) {
-
 		const responseHeader: Headers = chaosHandlerOptions.headers ? new Headers(chaosHandlerOptions.headers) : new Headers();
 		responseHeader.append("Cache-Control", "no-store");
 		responseHeader.append("request-id", requestID);
@@ -88,21 +87,19 @@ export class ChaosHandler implements Middleware {
 	/**
 	 * Generates responseBody
 	 * @private
-	 * @param {number} statusCode - the status code to be returned for the request
-	 * @param {string} statusMessage - the status message to be returned for the request
+	 * @param {ChaosHandlerOptions} options - The ChaosHandlerOptions object
 	 * @param {string} requestID - request id
 	 * @param {string} requestDate - date of the request
-	 * @param {any?} requestBody - the request body to be returned for the request
-	 * @returns response body
+	 *  * @returns response body
 	 */
-	private createResponseBody(options: ChaosHandlerOptions, requestID: string, requestDate: string) {
-		if (options.responseBody) {
-			return options.responseBody;
+	private createResponseBody(chaosHandlerOptions: ChaosHandlerOptions, requestID: string, requestDate: string) {
+		if (chaosHandlerOptions.responseBody) {
+			return chaosHandlerOptions.responseBody;
 		}
 		let body: any;
-		if (options.statusCode >= 400) {
-			const codeMessage: string = httpStatusCode[options.statusCode];
-			const errMessage: string = options.statusMessage;
+		if (chaosHandlerOptions.statusCode >= 400) {
+			const codeMessage: string = httpStatusCode[chaosHandlerOptions.statusCode];
+			const errMessage: string = chaosHandlerOptions.statusMessage;
 
 			body = {
 				error: {

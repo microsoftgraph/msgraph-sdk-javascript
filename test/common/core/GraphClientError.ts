@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { GraphClientError } from "../../src/GraphClientError";
+import { GraphClientError } from "../../../src/GraphClientError";
 
 describe("GraphClientError", () => {
 	const message = "test";

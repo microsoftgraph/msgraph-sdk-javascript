@@ -1,5 +1,5 @@
 {
 	"hooks": {
-		"pre-commit": "npm run build"
+		"pre-commit": "npm run pre-build && git add src/Version.ts && lint-staged && npm run lint && npm run test"
 	}
 }

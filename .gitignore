@@ -24,6 +24,6 @@ samples/browser/src/graph-js-sdk.js
 samples/browser/src/graph-es-sdk.js
 
 
-spec/**/secrets.ts
+test/development/secrets.ts
 
 .nyc_output/*

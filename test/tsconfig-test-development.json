@@ -8,5 +8,5 @@
 		"lib": ["dom", "esnext"],
 		"outDir": "../lib/"
 	},
-	"include": ["./development/","../src/"]
+	"include": ["./development/", "../src/"]
 }
