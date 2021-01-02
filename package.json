@@ -61,7 +61,7 @@
         "pre-build": "npm run setVersion",
         "build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
         "test": "npm run test:cjs && npm run test:esm",
-        "test:development": "tsc --p test/tsconfig-test-cjs.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
+        "test:development": "tsc --p test/tsconfig-test-cjs.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch --grep PageIterator",
         "lint": "tslint --project ./tsconfig-cjs.json -c tslint.json",
         "format:css": "prettier --write \"**/*.css\"",
         "format:html": "prettier --write \"**/*.html\"",

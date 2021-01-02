@@ -67,9 +67,9 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestDate - date of the request
 	 * @returns response Header
 	 */
-	private createResponseHeaders(statusCode: number, requestID: string, requestDate: string) {
-		const responseHeader: Headers = new Headers();
+	private createResponseHeaders(chaosHandlerOptions: ChaosHandlerOptions, requestID: string, requestDate: string) {
 
+		const responseHeader: Headers = chaosHandlerOptions.headers ? new Headers(chaosHandlerOptions.headers) : new Headers();
 		responseHeader.append("Cache-Control", "no-store");
 		responseHeader.append("request-id", requestID);
 		responseHeader.append("client-request-id", requestID);
@@ -77,10 +77,11 @@ export class ChaosHandler implements Middleware {
 		responseHeader.append("Date", requestDate);
 		responseHeader.append("Strict-Transport-Security", "");
 
-		if (statusCode === 429) {
+		if (chaosHandlerOptions.statusCode === 429) {
 			// throttling case has to have a timeout scenario
 			responseHeader.append("retry-after", "300");
 		}
+
 		return responseHeader;
 	}
 
@@ -94,14 +95,14 @@ export class ChaosHandler implements Middleware {
 	 * @param {any?} requestBody - the request body to be returned for the request
 	 * @returns response body
 	 */
-	private createResponseBody(statusCode: number, statusMessage: string, requestID: string, requestDate: string, responseBody?: any) {
-		if (responseBody) {
-			return responseBody;
+	private createResponseBody(options: ChaosHandlerOptions, requestID: string, requestDate: string) {
+		if (options.responseBody) {
+			return options.responseBody;
 		}
 		let body: any;
-		if (statusCode >= 400) {
-			const codeMessage: string = httpStatusCode[statusCode];
-			const errMessage: string = statusMessage;
+		if (options.statusCode >= 400) {
+			const codeMessage: string = httpStatusCode[options.statusCode];
+			const errMessage: string = options.statusMessage;
 
 			body = {
 				error: {
@@ -135,8 +136,8 @@ export class ChaosHandler implements Middleware {
 
 			requestID = generateUUID();
 			requestDate = new Date();
-			responseHeader = this.createResponseHeaders(chaosHandlerOptions.statusCode, requestID, requestDate.toString());
-			responseBody = this.createResponseBody(chaosHandlerOptions.statusCode, chaosHandlerOptions.statusMessage, requestID, requestDate.toString(), chaosHandlerOptions.responseBody);
+			responseHeader = this.createResponseHeaders(chaosHandlerOptions, requestID, requestDate.toString());
+			responseBody = this.createResponseBody(chaosHandlerOptions, requestID, requestDate.toString());
 			const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
 			context.response = new Response(responseBody, init);
 		} catch (error) {

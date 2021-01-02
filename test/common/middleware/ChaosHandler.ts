@@ -27,24 +27,28 @@ describe("ChaosHandler.ts", () => {
 
 	describe("createResponseHeaders", () => {
 		it("Should have request-id for every random statusCode", () => {
-			const responseHeader = chaosHandler["createResponseHeaders"](204, "xxxxxxxxxxxxxxxx", new Date().toString());
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "testStatusCode", 204);
+			const responseHeader = chaosHandler["createResponseHeaders"](options, "xxxxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseHeader.get("request-id"));
 		});
 
 		it("Should have retry-after for 429 case", () => {
-			const responseHeader = chaosHandler["createResponseHeaders"](429, "xxxxxxxxxxxxxxxx", new Date().toString());
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "testStatusCode", 429);
+			const responseHeader = chaosHandler["createResponseHeaders"](options, "xxxxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseHeader.get("retry-after"));
 		});
 	});
 
 	describe("createResponseBody", () => {
 		it("Should return error in response body for error scenarios", () => {
-			const responseBody = chaosHandler["createResponseBody"](404, "Not Found", "xxxxxxxxxxxxxx", new Date().toString());
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Not Found", 404);
+			const responseBody = chaosHandler["createResponseBody"](options, "xxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseBody["error"]);
 		});
 
 		it("Should return empty response body for success scenarios", () => {
-			const responseBody = chaosHandler["createResponseBody"](200, "Not Found", "xxxxxxxxxxxxxx", new Date().toString());
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Not Found", 200);
+			const responseBody = chaosHandler["createResponseBody"](options, "xxxxxxxxxxxxxx", new Date().toString());
 			assert.equal(Object.keys(responseBody).length, 0);
 		});
 	});
