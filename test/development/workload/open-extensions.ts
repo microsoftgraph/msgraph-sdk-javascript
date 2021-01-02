@@ -21,7 +21,7 @@ let extension: ColorOpenExtension = {
 	color: randomString(),
 };
 
-describe("Open Extensions", function () {
+describe("Open Extensions", function() {
 	this.timeout(10 * 1000);
 
 	it("Use open extensions to add a field to users", async () => {

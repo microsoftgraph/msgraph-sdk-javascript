@@ -63,10 +63,7 @@ describe("MiddlewareUtil.ts", async () => {
 		it("Should get header from array of headers", () => {
 			const options: FetchOptions = {
 				method: "test",
-				headers: [
-					["version", "version"],
-					[key, value],
-				],
+				headers: [["version", "version"], [key, value]],
 			};
 			const headerValue: string = getRequestHeader(url, options, key);
 			assert.equal(headerValue, value);

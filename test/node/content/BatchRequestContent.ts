@@ -9,7 +9,7 @@ import { assert } from "chai";
 import * as fs from "fs";
 import "isomorphic-fetch";
 
-import { BatchRequestContent} from "../../../src/content/BatchRequestContent";
+import { BatchRequestContent } from "../../../src/content/BatchRequestContent";
 
 describe("BatchRequestContent.ts", () => {
 	describe("getContent", () => {
@@ -39,5 +39,4 @@ describe("BatchRequestContent.ts", () => {
 			});
 		});
 	});
-
 });

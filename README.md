@@ -68,7 +68,6 @@ Refer devDependencies in [package.json](./package.json) for the compatible msal 
 ```
 
 ```typescript
-
 // Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
 const msalConfig = {
 	auth: {
@@ -97,7 +96,7 @@ npm install msal@<version>
 import { UserAgentApplication } from "msal";
 
 import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client/lib/src/ImplicitMSALAuthenticationProvider";
-import { MSALAuthenticationProviderOptions } from '@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProviderOptions';
+import { MSALAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProviderOptions";
 
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const msalConfig = {
