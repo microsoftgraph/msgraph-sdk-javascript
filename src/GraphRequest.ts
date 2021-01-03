@@ -209,7 +209,7 @@ export class GraphRequest {
 		const url = urlJoin([this.urlComponents.host, this.urlComponents.version, this.urlComponents.path]) + this.createQueryString();
 
 		if (this.config.debugLogging) {
-			console.log(url + "in graph"); // tslint:disable-line: no-console
+			console.log(url); // tslint:disable-line: no-console
 		}
 		return url;
 	}

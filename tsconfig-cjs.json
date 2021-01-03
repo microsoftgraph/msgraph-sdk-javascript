@@ -8,6 +8,5 @@
 		"composite": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/development"],
-	"include": ["./src/**/*.ts", "spec/"],
-	"references": []
+	"include": ["./src/**/*.ts", "./spec/**/*.ts"]
 }
