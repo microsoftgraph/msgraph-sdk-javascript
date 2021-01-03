@@ -8,10 +8,9 @@
 /**
  * @module ImplicitMSALAuthenticationProvider
  */
-
+import { MSALAuthenticationProviderOptions } from "../authentication/msal/MSALAuthenticationProviderOptions";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
-import { MSALAuthenticationProviderOptions } from "../MSALAuthenticationProviderOptions";
 
 /**
  * @constant

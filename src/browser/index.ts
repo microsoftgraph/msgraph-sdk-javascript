@@ -5,8 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export * from "../authentication/ITokenCredentialAuthenticationProviderOptions";
-export * from "../authentication/TokenCredentialAuthenticationProvider";
+export * from "../authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
+export * from "../authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
 
 export * from "../content/BatchRequestContent";
 export * from "../content/BatchResponseContent";
@@ -43,5 +43,5 @@ export * from "../IFetchOptions";
 export * from "../IGraphRequestCallback";
 export * from "../IOptions";
 export * from "./ImplicitMSALAuthenticationProvider";
-export * from "../MSALAuthenticationProviderOptions";
+export * from "../authentication/msal/MSALAuthenticationProviderOptions";
 export * from "../ResponseType";

@@ -3,8 +3,15 @@
 	"version": "2.2.0-Preview.1",
 	"description": "Microsoft Graph Client Library",
 	"license": "MIT",
+	"keywords": [
+		"Microsoft",
+		"Graph",
+		"SDK",
+		"JavaScript",
+		"Client"
+	],
 	"main": "lib/src/index.js",
-	"module": "lib/es/index.js",
+	"module": "lib/es/src/index.js",
 	"typings": "lib/src/index",
 	"files": [
 		"lib/",
@@ -37,6 +44,7 @@
 		"rollup-plugin-commonjs": "^10.0.1",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.0.0",
+		"sinon": "^9.2.2",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.4.5",
@@ -45,12 +53,12 @@
 	"scripts": {
 		"setVersion": "gulp setVersion",
 		"build:es1": "tsc -b tsconfig-sub-es.json",
-		"build:cjs1": "tsc -b tsconfig-sub-cjs.json",
-		"build:es": "tsc --p tsconfig-es.json",
+		"build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
+		"build:sub_es": "tsc --p tsconfig-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
 		"pre-build": "npm run setVersion",
-		"build": "npm run pre-build && npm run build:cjs1 && npm run build:es1 && rollup -c",
-		"test": "npm run build:cjs && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
+		"test": "npm run build && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks && mocha lib/spec/authentication",
 		"test:content": "tsc --p spec/tsconfig.json && mocha spec/content",
 		"test:core": "tsc --p spec/tsconfig.json && mocha spec/core",
 		"test:middleware": "tsc --p spec/tsconfig.json && mocha spec/middleware",
@@ -66,7 +74,16 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build && npm run test"
+		"prepack": "npm install && npm run build && npm run test",
+		"moq": "mocha lib/spec/authentication"
+	},
+	"peerDependenciesMeta": {
+		"msal": {
+			"optional": true
+		},
+		"@azure/identity": {
+			"optional": true
+		}
 	},
 	"repository": {
 		"type": "git",

@@ -9,7 +9,7 @@
  * @module MSALAuthenticationProviderOptions
  */
 
-import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
+import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
 
 /**
  * @class

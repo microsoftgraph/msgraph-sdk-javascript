@@ -8,17 +8,16 @@
 /**
  * This sample is referenced from - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/samples/authorizationCodeSample.ts
  */
-
-import qs from "qs";
-import open from "open";
+import { AuthorizationCodeCredential } from "@azure/identity";
 import express from "express";
 import { Server } from "http";
 import "isomorphic-fetch";
+import open from "open";
+import qs from "qs";
 
-import { AuthorizationCodeCredential } from "@azure/identity";
-
+import { TokenCredentialAuthenticationProvider } from "../../../../authProviders/azureTokenCredentials";
+import { Client } from "../../../../lib/src";
 import { port, tenantId, clientSecret, clientId, scopes, authorityHost, redirectUri } from "./secrets";
-import { Client, TokenCredentialAuthenticationProvider } from "../../../../lib/src";
 
 if (tenantId === undefined || clientId === undefined) {
 	console.error("AZURE_TENANT_ID and AZURE_CLIENT_ID environment variables must be set");
@@ -116,7 +115,7 @@ async function runExample() {
 
 	const client = Client.initWithMiddleware({
 		debugLogging: true,
-		authProvider: authProvider,
+		authProvider,
 	});
 	const response = await client.api("/me").get();
 	console.log(response);

@@ -7,7 +7,8 @@
 
 import { TokenCredential } from "@azure/identity";
 
-import { AuthenticationProvider } from "../IAuthenticationProvider";
+import { GraphClientError } from "../../GraphClientError";
+import { AuthenticationProvider } from "../../IAuthenticationProvider";
 
 import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredentialAuthenticationProviderOptions";
 
@@ -56,7 +57,7 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 */
 	public async getAccessToken(): Promise<string> {
 		let scopes: string[] = [];
-		const error = new Error();
+		const error = new GraphClientError();
 		if (this.authenticationProviderOptions && this.authenticationProviderOptions.scopes) {
 			scopes = this.authenticationProviderOptions.scopes;
 		}

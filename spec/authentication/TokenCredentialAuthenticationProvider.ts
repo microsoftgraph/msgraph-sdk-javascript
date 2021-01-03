@@ -5,18 +5,17 @@
  * -------------------------------------------------------------------------------------------
  */
 /*tslint:disable*/
-import { AccessToken, AuthorizationCodeCredential, ClientSecretCredential } from "@azure/identity";
+import { AccessToken, ClientSecretCredential } from "@azure/identity";
 import { assert } from "chai";
 import * as sinon from "sinon";
 
-import { TokenCredentialAuthenticationProviderOptions } from "../../src/authentication/ITokenCredentialAuthenticationProviderOptions";
-import { TokenCredentialAuthenticationProvider } from "../../src/authentication/TokenCredentialAuthenticationProvider";
+import { TokenCredentialAuthenticationProviderOptions } from "../../src/authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
+import { TokenCredentialAuthenticationProvider } from "../../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
 describe("TokenCredentialAuthenticationProvider.ts", () => {
 	const tenantId = "TENANT_ID";
 	const clientId = "CLIENT_ID";
 	const clientSecret = "CLIENT_SECRET";
 	const scopes = ["test_scopes"];
-	const authorizatonCode = "Auth_Code";
 	it("AccessToken is returned correctly from getToken function", async () => {
 		const client = new ClientSecretCredential(tenantId, clientId, clientSecret);
 		if (typeof client.getToken !== "function") {
@@ -39,7 +38,7 @@ describe("TokenCredentialAuthenticationProvider.ts", () => {
 	it("Error is thrown when accessToken cannot be retrieved from getToken function", async () => {
 		let expectedError;
 		try {
-			const client = new AuthorizationCodeCredential(tenantId, clientId, clientSecret, authorizatonCode);
+			const client = new ClientSecretCredential(tenantId, clientId, clientSecret);
 			if (typeof client.getToken !== "function") {
 				throw new Error("Method definition for getToken is not found");
 			}

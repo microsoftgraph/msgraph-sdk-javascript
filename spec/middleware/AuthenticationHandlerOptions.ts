@@ -7,8 +7,8 @@
 
 import { assert } from "chai";
 
+import { MSALAuthenticationProviderOptions } from "../../src/authentication/msal/MSALAuthenticationProviderOptions";
 import { AuthenticationHandlerOptions } from "../../src/middleware/options/AuthenticationHandlerOptions";
-import { MSALAuthenticationProviderOptions } from "../../src/MSALAuthenticationProviderOptions";
 import { DummyAuthenticationProvider } from "../DummyAuthenticationProvider";
 
 describe("AuthenticationHandlerOptions.ts", () => {

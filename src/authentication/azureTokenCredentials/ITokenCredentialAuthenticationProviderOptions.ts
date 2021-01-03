@@ -6,7 +6,7 @@
  */
 import { GetTokenOptions } from "@azure/identity";
 
-import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
+import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
 
 /**
  * @interface

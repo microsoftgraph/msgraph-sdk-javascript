@@ -1,2 +1,2 @@
-export * from "./authentication/ITokenCredentialAuthenticationProviderOptions";
-export * from "./authentication/TokenCredentialAuthenticationProvider";
+export * from "./authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
+export * from "./authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";

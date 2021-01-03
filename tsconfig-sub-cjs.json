@@ -7,7 +7,7 @@
 		"outDir": "authProviders"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/development", "src"],
-	"include": ["auth/azureTokenCredentials/", "auth/msal/"],
+	"include": ["authProviderOptions/azureTokenCredentials/", "authProviderOptions/msal/"],
 	"references": [
 		{
 			"path": "./tsconfig-cjs.json"

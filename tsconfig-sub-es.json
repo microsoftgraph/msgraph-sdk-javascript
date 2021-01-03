@@ -7,7 +7,7 @@
 		"outDir": "authProviders/es"
 	},
 	"exclude": ["node_modules", "lib", "samples", "spec/**", "src"],
-	"include": ["auth/es/**/*.ts"],
+	"include": ["authProviderOptions/es/**/*.ts"],
 	"references": [
 		{
 			"path": "./tsconfig-es.json"
