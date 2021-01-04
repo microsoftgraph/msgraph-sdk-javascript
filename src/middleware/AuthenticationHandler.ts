@@ -12,7 +12,6 @@
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
 import { Context } from "../IContext";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { appendRequestHeader } from "./MiddlewareUtil";

@@ -11,7 +11,6 @@
 
 import { Context } from "../../IContext";
 import { MiddlewareControl } from "../MiddlewareControl";
-
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**

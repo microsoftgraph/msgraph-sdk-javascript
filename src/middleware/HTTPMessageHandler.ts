@@ -10,7 +10,6 @@
  */
 
 import { Context } from "../IContext";
-
 import { Middleware } from "./IMiddleware";
 
 /**

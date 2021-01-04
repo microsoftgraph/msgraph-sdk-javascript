@@ -10,7 +10,6 @@
  */
 
 import { FetchOptions } from "../../IFetchOptions";
-
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**

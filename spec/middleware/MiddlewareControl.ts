@@ -9,8 +9,9 @@
  * @module MiddlewareControl
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { MiddlewareControl } from "../../src/middleware/MiddlewareControl";
 import { DummyHandlerOptions } from "../DummyHandlerOptions";

@@ -12,7 +12,6 @@
 import { Context } from "../IContext";
 import { FetchOptions } from "../IFetchOptions";
 import { RequestMethod } from "../RequestMethod";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { getRequestHeader, setRequestHeader } from "./MiddlewareUtil";

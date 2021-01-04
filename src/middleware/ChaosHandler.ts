@@ -11,7 +11,6 @@
 
 import { Context } from "../IContext";
 import { RequestMethod } from "../RequestMethod";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { generateUUID } from "./MiddlewareUtil";

@@ -9,7 +9,7 @@
  * @module ImplicitMSALAuthenticationProvider
  */
 
-import { AuthResponse, AuthenticationParameters, InteractionRequiredAuthError, UserAgentApplication } from "msal";
+import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, UserAgentApplication } from "msal";
 
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";

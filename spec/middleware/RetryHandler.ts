@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { Context } from "../../src/IContext";
 import { FetchOptions } from "../../src/IFetchOptions";

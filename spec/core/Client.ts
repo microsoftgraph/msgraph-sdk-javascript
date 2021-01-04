@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { CustomAuthenticationProvider, TelemetryHandler } from "../../src";
 import { Client } from "../../src/Client";

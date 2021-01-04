@@ -5,9 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import "isomorphic-fetch";
+
 import { assert } from "chai";
 import * as fs from "fs";
-import "isomorphic-fetch";
 
 import { BatchRequestContent, BatchRequestStep } from "../../src/content/BatchRequestContent";
 import { randomString } from "../test-helper";

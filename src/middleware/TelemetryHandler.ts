@@ -11,7 +11,6 @@
 import { isGraphURL } from "../GraphRequestUtil";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "./MiddlewareUtil";

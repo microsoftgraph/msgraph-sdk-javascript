@@ -1,7 +1,7 @@
 {
 	"root": true,
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint", "prettier"],
+	"plugins": ["@typescript-eslint", "prettier", "simple-import-sort"],
 	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 	"rules": {
 		"no-useless-catch": "error", //TODO- Remove the unnecessary try-catch lines used and enable no-useless-catch rule.
@@ -163,16 +163,7 @@
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-array-constructor": "error",
 		// eslint
-		// "sort-imports": [
-		//	"error",
-		//	{
-		//		"ignoreCase": false,
-		//		"ignoreDeclarationSort": false,
-		//		"ignoreMemberSort": false,
-		//		"memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
-		//		"allowSeparatedGroups": false
-		//	}
-		// ],
+		"simple-import-sort/imports": "error",
 		"brace-style": "error",
 		"constructor-super": "error",
 		"curly": ["error", "multi-line"],
