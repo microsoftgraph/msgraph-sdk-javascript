@@ -116,7 +116,7 @@ To edit files, open them in an editor of your choice and modify them. To create 
 
 _Note: Make sure to add unit tests to validate you changes._
 
-Once you have done with your changes, You have to build and test your changes To build the library run,
+Build and test your changes with the following commands after you have completed your work:
 
 ```cmd
 npm run build

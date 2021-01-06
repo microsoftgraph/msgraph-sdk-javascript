@@ -53,7 +53,9 @@ describe("BatchResponseContent.ts", () => {
 			batchRes.update({
 				responses: [okWithoutBody, okWithBody],
 			});
+			assert.isDefined(batchRes.getResponseById("1"));
 			assert.isDefined(batchRes.getResponseById("2"));
+			assert.isDefined(batchRes.getResponseById("3"));
 			assert.isDefined(batchRes.getResponseById("4"));
 			done();
 		});
