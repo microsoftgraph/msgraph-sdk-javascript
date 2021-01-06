@@ -7,6 +7,7 @@
 
 /**
  * @module GraphResponseHandler
+ * References - https://fetch.spec.whatwg.org/#responses
  */
 
 import { GraphRequestCallback } from "./IGraphRequestCallback";
@@ -134,6 +135,7 @@ export class GraphResponseHandler {
 						} else if (mimeType === ContentType.APPLICATION_JSON) {
 							responseValue = await rawResponse.json();
 						} else {
+							// TODO - Update handling of responses where content-type is not unknown
 							responseValue = Promise.resolve(rawResponse.body);
 						}
 					} else {
@@ -148,6 +150,8 @@ export class GraphResponseHandler {
 						 *
 						 *  So assuming it as a stream type so returning the body.
 						 */
+
+						// TODO - Update handling of responses where content-type is not present
 						responseValue = Promise.resolve(rawResponse.body);
 					}
 					break;

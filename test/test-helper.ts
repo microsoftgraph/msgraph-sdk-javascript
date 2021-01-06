@@ -5,11 +5,18 @@
  * -------------------------------------------------------------------------------------------
  */
 
-// THIS FILE IS AUTO GENERATED
-// ANY CHANGES WILL BE LOST DURING BUILD
+import { Client } from "../src/index";
 
-/**
- * @module Version
- */
+import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
 
-export const PACKAGE_VERSION = "2.1.0-Preview.2";
+export function getClient(): Client {
+	return Client.initWithMiddleware({
+		authProvider: new DummyAuthenticationProvider(),
+	});
+}
+
+export function randomString() {
+	return Math.random()
+		.toString(36)
+		.substring(7);
+}
