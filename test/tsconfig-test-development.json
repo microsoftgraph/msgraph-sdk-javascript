@@ -1,0 +1,12 @@
+{
+	"extends": "./../tsconfig-base.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es5",
+		"esModuleInterop": true,
+		"noEmitOnError": true,
+		"lib": ["dom", "esnext"],
+		"outDir": "../lib/"
+	},
+	"include": ["./development/", "../src/"]
+}

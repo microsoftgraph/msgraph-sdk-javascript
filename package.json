@@ -1,6 +1,6 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"version": "2.2.0-Preview.1",
+	"version": "2.1.0-Preview.2",
 	"description": "Microsoft Graph Client Library",
 	"license": "MIT",
 	"keywords": [
@@ -28,16 +28,26 @@
 		"@babel/core": "^7.4.4",
 		"@babel/plugin-transform-runtime": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
-		"@types/mocha": "^5.2.6",
+		"@istanbuljs/nyc-config-typescript": "^1.0.1",
+		"@microsoft/microsoft-graph-types": "^1.28.0",
+		"@types/chai": "^4.2.14",
+		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.0.10",
 		"@types/sinon": "^9.0.9",
 		"chai": "^4.2.0",
+		"form-data": "^2.3.3",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^3.0.0",
+		"karma-chai": "^0.1.0",
+		"karma-chrome-launcher": "^3.1.0",
+		"karma-firefox-launcher": "^2.1.0",
+		"karma-mocha": "^2.0.1",
+		"karma-typescript": "^5.2.0",
 		"lint-staged": "^8.1.5",
-		"mocha": "^6.1.4",
+		"mocha": "^6.2.3",
 		"msal": "^1.0.0",
+		"nyc": "^15.1.0",
 		"prettier": "^1.17.0",
 		"rollup": "^1.10.1",
 		"rollup-plugin-babel": "^4.3.2",
@@ -45,10 +55,15 @@
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.0.0",
 		"sinon": "^9.2.2",
+		"source-map-support": "^0.5.19",
+		"ts-node": "^9.0.0",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.4.5",
-		"uglify-es": "^3.3.9"
+		"uglify-es": "^3.3.9",
+		"esm": "^3.2.25",
+		"fs": "0.0.1-security",
+		"karma": "^5.2.3"
 	},
 	"scripts": {
 		"setVersion": "gulp setVersion",
@@ -57,14 +72,9 @@
 		"build:sub_es": "tsc --p tsconfig-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
 		"pre-build": "npm run setVersion",
-		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
-		"test": "npm run build && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks && mocha lib/spec/authentication",
-		"test:content": "tsc --p spec/tsconfig.json && mocha spec/content",
-		"test:core": "tsc --p spec/tsconfig.json && mocha spec/core",
-		"test:middleware": "tsc --p spec/tsconfig.json && mocha spec/middleware",
-		"test:tasks": "tsc --p spec/tsconfig.json && mocha spec/tasks",
-		"test:development": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
-		"test:workload": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
+		"build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
+		"test": "npm run test:cjs && npm run test:esm",
+		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
 		"lint": "tslint --project ./tsconfig-cjs.json -c tslint.json",
 		"format:css": "prettier --write \"**/*.css\"",
 		"format:html": "prettier --write \"**/*.html\"",
@@ -75,18 +85,25 @@
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
 		"prepack": "npm install && npm run build && npm run test",
-		"moq": "mocha lib/spec/authentication"
-	},
-	"peerDependenciesMeta": {
-		"msal": {
-			"optional": true
-		},
-		"@azure/identity": {
-			"optional": true
-		}
+		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
+		"test:cjs": "tsc -p tsconfig-cjs.json   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+		"test:esm": "tsc -p tsconfig-es.json  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
+		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"nyc": {
+		"all": true,
+		"cache": false,
+		"exclude": [
+			"samples/",
+			"*.js",
+			"lib/"
+		],
+		"include": [
+			"src/"
+		]
 	}
 }

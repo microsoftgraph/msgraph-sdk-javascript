@@ -7,9 +7,8 @@ You can get an access token by doing the following:
 1. Rename [secrets.sample.json](./secrets.sample.json) to secrets.json
 2. Go to Graph Explorer.
 3. Login with the account you want to use to run the node samples.
-4. Open the F12 dev tools.
-5. Type tokenPlease() into the console to get an access token.
-6. Copy the access token and put it into the secrets.json file and save the file.
+4. Click on the Access token tab option to get an access token.
+5. Copy the access token and put it into the secrets.json file and save the file.
 
 ## Run Sample
 

@@ -7,6 +7,6 @@
 		"outDir": "lib/es",
 		"composite": true
 	},
-	"exclude": ["node_modules", "lib", "samples", "spec/**"],
-	"include": ["./src/**/*.ts"]
+	"exclude": ["node_modules", "lib", "samples", "test/development"],
+	"include": ["./src/**/*.ts", "./test/**/*.ts"]
 }
