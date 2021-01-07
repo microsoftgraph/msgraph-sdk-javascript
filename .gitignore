@@ -14,6 +14,7 @@ npm-debug.log
 /lib/*
 !/lib/.npmignore
 
+<<<<<<< HEAD
 /authProviders/*
 
 src/**/*.js
@@ -21,6 +22,8 @@ src/**/*.js.map
 src/**/*.d.ts
 
 samples/**/*/secrets.ts
+=======
+>>>>>>> 3.0.0
 samples/node/secrets.json
 samples/browser/src/secrets.js
 samples/browser/src/graph-js-sdk.js
