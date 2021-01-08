@@ -9,7 +9,10 @@
  * @module PageIterator
  */
 
+import { FetchOptions } from "../IFetchOptions";
 import { Client } from "../index";
+import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
+import { ResponseType } from "../ResponseType";
 
 /**
  * Signature representing PageCollection
@@ -23,6 +26,19 @@ export interface PageCollection {
 	"@odata.nextLink"?: string;
 	"@odata.deltaLink"?: string;
 	[Key: string]: any;
+}
+
+/**
+ * Signature to define the request options to be sent during request.
+ * The values of the GraphRequestOptions properties are passed to the Graph Request object.
+ * @property {HeadersInit} headers - the header options for the request
+ * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
+ * @property {FetchOptions} options - The fetch options for the request
+ */
+export interface GraphRequestOptions {
+	headers?: HeadersInit;
+	middlewareOptions?: MiddlewareOptions[];
+	options?: FetchOptions;
 }
 
 /**
@@ -74,21 +90,28 @@ export class PageIterator {
 	private complete: boolean;
 
 	/**
+	 * Information to be added to the request
+	 */
+	private requestOptions: GraphRequestOptions;
+
+	/**
 	 * @public
 	 * @constructor
 	 * Creates new instance for PageIterator
 	 * @param {Client} client - The graph client instance
 	 * @param {PageCollection} pageCollection - The page collection object
 	 * @param {PageIteratorCallback} callBack - The callback function
+	 * @param {GraphRequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback) {
+	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
 		this.callback = callback;
 		this.complete = false;
+		this.requestOptions = requestOptions;
 	}
 
 	/**
@@ -116,7 +139,20 @@ export class PageIterator {
 	 */
 	private async fetchAndUpdateNextPageData(): Promise<any> {
 		try {
-			const response: PageCollection = await this.client.api(this.nextLink).get();
+			let graphRequest = this.client.api(this.nextLink);
+			if (this.requestOptions) {
+				if (this.requestOptions.headers) {
+					graphRequest = graphRequest.headers(this.requestOptions.headers);
+				}
+				if (this.requestOptions.middlewareOptions) {
+					graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
+				}
+				if (this.requestOptions.options) {
+					graphRequest = graphRequest.options(this.requestOptions.options);
+				}
+			}
+
+			const response: PageCollection = await graphRequest.get();
 			this.collection = response.value;
 			this.nextLink = response["@odata.nextLink"];
 			this.deltaLink = response["@odata.deltaLink"];

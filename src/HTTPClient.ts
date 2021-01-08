@@ -27,10 +27,48 @@ export class HTTPClient {
 	 * @public
 	 * @constructor
 	 * Creates an instance of a HTTPClient
-	 * @param {Middleware} middleware - The first middleware of the middleware chain
+	 * @param {...Middleware} middleware - The first middleware of the middleware chain or a sequence of all the Middleware handlers
 	 */
-	public constructor(middleware: Middleware) {
-		this.middleware = middleware;
+	public constructor(...middleware: Middleware[]) {
+		if (!middleware || !middleware.length) {
+			const error = new Error();
+			error.name = "InvalidMiddlewareChain";
+			error.message = "Please provide a default middleware chain or custom middleware chain";
+			throw error;
+		}
+		this.setMiddleware(...middleware);
+	}
+
+	/**
+	 * @private
+	 * Processes the middleware parameter passed to set this.middleware property
+	 * The calling function should validate if middleware is not undefined or not empty.
+	 * @param {...Middleware} middleware - The middleware passed
+	 * @returns Nothing
+	 */
+	private setMiddleware(...middleware: Middleware[]): void {
+		if (middleware.length > 1) {
+			this.parseMiddleWareArray(middleware);
+		} else {
+			this.middleware = middleware[0];
+		}
+	}
+
+	/**
+	 * @private
+	 * Processes the middleware array to construct the chain
+	 * and sets this.middleware property to the first middlware handler of the array
+	 * The calling function should validate if middleware is not undefined or not empty
+	 * @param {Middleware[]} middlewareArray - The array of middleware handlers
+	 * @returns Nothing
+	 */
+	private parseMiddleWareArray(middlewareArray: Middleware[]) {
+		middlewareArray.forEach((element, index) => {
+			if (index < middlewareArray.length - 1) {
+				element.setNext(middlewareArray[index + 1]);
+			}
+		});
+		this.middleware = middlewareArray[0];
 	}
 
 	/**
