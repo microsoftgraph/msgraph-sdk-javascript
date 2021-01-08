@@ -114,10 +114,9 @@ npm install
 
 To edit files, open them in an editor of your choice and modify them. To create a new file, use the editor of your choice and save the new file in the appropriate location in your local copy of the repository. While working, save your work frequently.
 
-*Note: Make sure to add unit tests to validate you changes.*
+_Note: Make sure to add unit tests to validate you changes._
 
-Once you have done with your changes, You have to build and test your changes
-To build the library run,
+Build and test your changes with the following commands after you have completed your work:
 
 ```cmd
 npm run build

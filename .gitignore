@@ -14,16 +14,11 @@ npm-debug.log
 /lib/*
 !/lib/.npmignore
 
-src/**/*.js
-src/**/*.js.map
-src/**/*.d.ts
-
 samples/node/secrets.json
 samples/browser/src/secrets.js
 samples/browser/src/graph-js-sdk.js
 samples/browser/src/graph-es-sdk.js
 
-spec/**/*.js
-spec/**/*.d.ts
-spec/**/*.js.map
-spec/**/secrets.ts
+test/development/secrets.ts
+
+.nyc_output/*
