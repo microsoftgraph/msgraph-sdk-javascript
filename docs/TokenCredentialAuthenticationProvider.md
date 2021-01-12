@@ -6,14 +6,16 @@
 
 -   [npm - Azure Identity client library for JavaScript](https://www.npmjs.com/package/@azure/identity)
 
--   Check the [tokenCredentialSamples folder][../samples/tokencredentialsamples].
+-   Check the [tokenCredentialSamples folder][../samples/tokencredentialsamples]. The ClientSecretCredentialFlow is an example of using TokenCredential to authenticate a node application. The AuthenticationCodeFlow is an example of using TokenCredential to authenticate a browser application.
+
+**Important Note:** TokenCredentials can be used to authentication browser and node applications.
 
 ###### Example of how to create and pass a token credential sample -
 
 ```typescript
     // Import the TokenCredential class that you wish to use. This examples uses a Client SecretCredential
     import { ClientSecretCredential } from "@azure/identity";
-
+	import { TokenCredentialAuthenticationProvider, TokenCredentialAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
     // Create an instance of the TokenCredential Class that is imported
 	const tokenCredential = new ClientSecretCredential("your_tenantId", "your_clientId", "your_clientSecret");
 

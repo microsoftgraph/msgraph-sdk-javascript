@@ -2,7 +2,7 @@
 
 Refer devDependencies in [package.json](../package.json) for the compatible msal version and update that version in below.
 
-**Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Learn how you can create a [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
+**Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to can use [TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md) or implement your own AuthenticationProvider. Learn how you can create a [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
 
 ```html
 <script src="https://secure.aadcdn.microsoftonline-p.com/lib/<version>/js/msal.min.js"></script>
