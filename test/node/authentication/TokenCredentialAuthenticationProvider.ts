@@ -9,8 +9,8 @@ import { AccessToken, ClientSecretCredential } from "@azure/identity";
 import { assert } from "chai";
 import * as sinon from "sinon";
 
-import { TokenCredentialAuthenticationProviderOptions } from "../../src/authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
-import { TokenCredentialAuthenticationProvider } from "../../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
+import { TokenCredentialAuthenticationProviderOptions } from "../../../src/authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
+import { TokenCredentialAuthenticationProvider } from "../../../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
 describe("TokenCredentialAuthenticationProvider.ts", () => {
 	const tenantId = "TENANT_ID";
 	const clientId = "CLIENT_ID";

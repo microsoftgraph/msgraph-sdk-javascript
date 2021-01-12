@@ -5,9 +5,6 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export * from "../authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
-export * from "../authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
-
 export * from "../content/BatchRequestContent";
 export * from "../content/BatchResponseContent";
 

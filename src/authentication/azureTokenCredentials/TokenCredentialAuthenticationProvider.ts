@@ -44,6 +44,12 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 * @returns An instance of TokenCredentialAuthenticationProvider
 	 */
 	public constructor(tokenCredential: TokenCredential, authenticationProviderOptions: TokenCredentialAuthenticationProviderOptions) {
+		if (!tokenCredential) {
+			throw new GraphClientError("Please pass a token credential object to the TokenCredentialAuthenticationProvider class constructor");
+		}
+		if (!authenticationProviderOptions) {
+			throw new GraphClientError("Please pass the TokenCredentialAuthenticationProviderOptions with scopes to the TokenCredentialAuthenticationProvider class constructor");
+		}
 		this.authenticationProviderOptions = authenticationProviderOptions;
 		this.tokenCredential = tokenCredential;
 	}
@@ -56,12 +62,10 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 * @returns The promise that resolves to an access token
 	 */
 	public async getAccessToken(): Promise<string> {
-		let scopes: string[] = [];
+		const scopes = this.authenticationProviderOptions.scopes;
 		const error = new GraphClientError();
-		if (this.authenticationProviderOptions && this.authenticationProviderOptions.scopes) {
-			scopes = this.authenticationProviderOptions.scopes;
-		}
-		if (scopes === undefined || scopes === null || scopes.length === 0) {
+
+		if (!scopes || scopes.length === 0) {
 			error.name = "Empty Scopes";
 			error.message = "Scopes cannot be empty, Please provide scopes";
 			throw error;
@@ -70,7 +74,7 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 		if (response) {
 			return response.token;
 		}
-		error.message = "Cannot retrieve accessToken";
+		error.message = "Cannot retrieve accessToken from the Token Credential object";
 		error.name = "Access token is undefined";
 		throw error;
 	}

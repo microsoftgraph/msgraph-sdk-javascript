@@ -6,7 +6,7 @@
 		"lib": ["dom", "esnext"],
 		"outDir": "authProviders/es"
 	},
-	"exclude": ["node_modules", "lib", "samples", "spec/**", "src"],
+	"exclude": ["node_modules", "lib", "samples", "test/**", "src"],
 	"include": ["authProviderOptions/es/**/*.ts"],
 	"references": [
 		{

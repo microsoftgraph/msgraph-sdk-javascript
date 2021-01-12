@@ -6,7 +6,7 @@
 		"lib": ["dom", "esnext"],
 		"outDir": "authProviders"
 	},
-	"exclude": ["node_modules", "lib", "samples", "spec/development", "src"],
+	"exclude": ["node_modules", "lib", "samples", "test/", "src"],
 	"include": ["authProviderOptions/azureTokenCredentials/", "authProviderOptions/msal/"],
 	"references": [
 		{

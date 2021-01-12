@@ -2,6 +2,8 @@
 
 Refer devDependencies in [package.json](../package.json) for the compatible msal version and update that version in below.
 
+**Important Note:** MSAL is supported only for frontend applications, for server-side authentication you have to implement your own AuthenticationProvider. Learn how you can create a [Custom Authentication Provider](./docs/CustomAuthenticationProvider.md).
+
 ```html
 <script src="https://secure.aadcdn.microsoftonline-p.com/lib/<version>/js/msal.min.js"></script>
 ```
@@ -34,7 +36,7 @@ npm install msal@<version>
 ```typescript
 import { UserAgentApplication } from "msal";
 
-import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client/lib/src/ImplicitMSALAuthenticationProvider";
+import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client/lib/src/authentication/ImplicitMSALAuthenticationProvider";
 import { MSALAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProviderOptions";
 
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
