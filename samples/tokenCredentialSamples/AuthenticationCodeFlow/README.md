@@ -1,4 +1,4 @@
-# Sample of passing a AuthorizationCodeCredential to the Javascript Client Library
+# Sample of passing an AuthorizationCodeCredential to the Javascript Client Library
 
 1. Register your application to enable authentication to Azure Active Directory using an authorization code that was obtained through the authorization code flow. For more details, please check the following links
 

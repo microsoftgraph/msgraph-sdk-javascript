@@ -2,8 +2,8 @@ import { ClientSecretCredential } from "@azure/identity";
 
 import "isomorphic-fetch";
 
-import { TokenCredentialAuthenticationProvider } from "../../../../authProviders/azureTokenCredentials";
-import { Client } from "../../../../lib/src";
+import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
+import { Client } from "@microsoft/microsoft-graph-client";
 import { clientId, clientSecret, scopes, tenantId } from "./secrets";
 
 async function runExample() {

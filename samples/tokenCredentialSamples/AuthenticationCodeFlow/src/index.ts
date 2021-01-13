@@ -6,7 +6,7 @@
  */
 
 /**
- * This sample is referenced from - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/samples/authorizationCodeSample.ts
+ * This sample is referenced from - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/samples/manual/authorizationCodeSample.ts
  */
 import { AuthorizationCodeCredential } from "@azure/identity";
 import express from "express";
@@ -15,8 +15,8 @@ import "isomorphic-fetch";
 import open from "open";
 import qs from "qs";
 
-import { TokenCredentialAuthenticationProvider } from "../../../../authProviders/azureTokenCredentials";
-import { Client } from "../../../../lib/src";
+import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
+import { Client } from "@microsoft/microsoft-graph-client";
 import { port, tenantId, clientSecret, clientId, scopes, authorityHost, redirectUri } from "./secrets";
 
 if (tenantId === undefined || clientId === undefined) {

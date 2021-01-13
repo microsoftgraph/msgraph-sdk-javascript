@@ -36,8 +36,7 @@ npm install msal@<version>
 ```typescript
 import { UserAgentApplication } from "msal";
 
-import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client/lib/src/authentication/ImplicitMSALAuthenticationProvider";
-import { MSALAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/lib/src/MSALAuthenticationProviderOptions";
+import { ImplicitMSALAuthenticationProvider, MSALAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal";
 
 // An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
 const msalConfig = {
@@ -49,6 +48,7 @@ const msalConfig = {
 const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
 
 // Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
+
 // Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
 const msalApplication = new UserAgentApplication(msalConfig);
 const options = new MSALAuthenticationProviderOptions(graphScopes);

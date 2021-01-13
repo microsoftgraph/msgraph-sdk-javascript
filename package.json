@@ -37,7 +37,6 @@
 		"chai": "^4.2.0",
 		"esm": "^3.2.25",
 		"form-data": "^2.3.3",
-		"fs": "0.0.1-security",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^3.0.0",

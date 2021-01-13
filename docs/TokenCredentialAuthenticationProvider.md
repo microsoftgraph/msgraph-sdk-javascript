@@ -13,20 +13,44 @@
 ###### Example of how to create and pass a token credential sample -
 
 ```typescript
-    // Import the TokenCredential class that you wish to use. This examples uses a Client SecretCredential
-    import { ClientSecretCredential } from "@azure/identity";
-	import { TokenCredentialAuthenticationProvider, TokenCredentialAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
-    // Create an instance of the TokenCredential Class that is imported
-	const tokenCredential = new ClientSecretCredential("your_tenantId", "your_clientId", "your_clientSecret");
+// Import the TokenCredential class that you wish to use. This examples uses a Client SecretCredential
 
-	// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
-	const options:TokenCredentialAuthenticationProviderOptions = { scopes: [scopes], getTokenoptions: <> }
+import { ClientSecretCredential } from "@azure/identity";
+import { TokenCredentialAuthenticationProvider, TokenCredentialAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 
-    // Create an instance of the TokenCredentialAuthenticationProvider by passing the tokenCredential instance and options to the constructor
-	const authProvider = new TokenCredentialAuthenticationProvider(tokenCredential, options);
-	const client = Client.initWithMiddleware({
-		debugLogging: true,
-		authProvider: authProvider,
-	});
-	const res = await client.api("/users/").get();
+// Create an instance of the TokenCredential Class that is imported
+const tokenCredential = new ClientSecretCredential("your_tenantId", "your_clientId", "your_clientSecret");
+
+// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
+
+const options: TokenCredentialAuthenticationProviderOptions = { scopes: [scopes], getTokenoptions };
+
+// Create an instance of the TokenCredentialAuthenticationProvider by passing the tokenCredential instance and options to the constructor
+const authProvider = new TokenCredentialAuthenticationProvider(tokenCredential, options);
+const client = Client.initWithMiddleware({
+	debugLogging: true,
+	authProvider: authProvider,
+});
+const res = await client.api("/users/").get();
+```
+
+```javascript
+// Import the TokenCredential class that you wish to use. This examples uses a Client SecretCredential
+
+const { ClientSecretCredential } = require("@azure/identity");
+const { Client } = require("@microsoft/microsoft-graph-client");
+const { TokenCredentialAuthenticationProvider } = require("@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials");
+
+// Create an instance of the TokenCredential Class that is imported
+const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+
+// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
+
+const authProvider = new TokenCredentialAuthenticationProvider(credential, { scopes: [scopes] });
+
+const client = Client.initWithMiddleware({
+	debugLogging: true,
+	authProvider,
+});
+const res = await client.api("/users/").get();
 ```
