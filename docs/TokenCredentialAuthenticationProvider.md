@@ -41,7 +41,7 @@ const { ClientSecretCredential } = require("@azure/identity");
 const { Client } = require("@microsoft/microsoft-graph-client");
 const { TokenCredentialAuthenticationProvider } = require("@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials");
 
-// Create an instance of the TokenCredential Class that is imported
+// Create an instance of the TokenCredential class that is imported
 const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
 // Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
