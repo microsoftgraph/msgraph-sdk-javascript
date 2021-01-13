@@ -19,4 +19,4 @@
 
 4. Navigate to authenticationCodeFlow samples directory [./samples/tokenCredentialSamples/authenticationCodeFlow]
 
-5.Run `npm start` to build and start the application.
+5. Run `npm start` to build and start the application.
