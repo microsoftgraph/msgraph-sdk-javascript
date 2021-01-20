@@ -4,7 +4,7 @@
 
     - [Register an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app)
 
-    - [Documention](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application).
+    - [Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application).
 
 2. Rename [secrets.sample.ts](./typescript/secrets.sample.ts) to secrets.ts or rename [secrets.sample.js](./javascript/secrets.sample.js) to secrets.js
 
