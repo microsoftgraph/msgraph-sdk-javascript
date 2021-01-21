@@ -93,6 +93,14 @@
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
 	},
+	"peerDependenciesMeta": {
+		"msal": {
+			"optional": true
+		},
+		"@azure/identity": {
+			"optional": true
+		}
+	},
 	"nyc": {
 		"all": true,
 		"cache": false,
