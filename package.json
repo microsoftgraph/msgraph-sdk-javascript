@@ -3,12 +3,20 @@
 	"version": "2.1.0-Preview.2",
 	"description": "Microsoft Graph Client Library",
 	"license": "MIT",
+	"keywords": [
+		"Microsoft",
+		"Graph",
+		"SDK",
+		"JavaScript",
+		"Client"
+	],
 	"main": "lib/src/index.js",
-	"module": "lib/es/index.js",
+	"module": "lib/es/src/index.js",
 	"typings": "lib/src/index",
 	"files": [
 		"lib/",
-		"src/"
+		"src/",
+		"authProviders/"
 	],
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
@@ -16,6 +24,7 @@
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
+		"@azure/identity": "^1.2.0",
 		"@babel/core": "^7.4.4",
 		"@babel/plugin-transform-runtime": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
@@ -24,11 +33,14 @@
 		"@types/chai": "^4.2.14",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.0.10",
+		"@types/sinon": "^9.0.9",
 		"chai": "^4.2.0",
+		"esm": "^3.2.25",
 		"form-data": "^2.3.3",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^3.0.0",
+		"karma": "^5.2.3",
 		"karma-chai": "^0.1.0",
 		"karma-chrome-launcher": "^3.1.0",
 		"karma-firefox-launcher": "^2.1.0",
@@ -44,22 +56,22 @@
 		"rollup-plugin-commonjs": "^10.0.1",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.0.0",
+		"sinon": "^9.2.2",
 		"source-map-support": "^0.5.19",
 		"ts-node": "^9.0.0",
 		"tslint": "^5.16.0",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.4.5",
-		"uglify-es": "^3.3.9",
-		"esm": "^3.2.25",
-		"fs": "0.0.1-security",
-		"karma": "^5.2.3"
+		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
 		"setVersion": "gulp setVersion",
-		"build:es": "tsc --p tsconfig-es.json",
+		"build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
+		"build:sub_es": "tsc -b tsconfig-sub-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
+		"build:es": "tsc --p tsconfig-es.json",
 		"pre-build": "npm run setVersion",
-		"build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
+		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
 		"test": "npm run test:cjs && npm run test:esm",
 		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
 		"lint": "tslint --project ./tsconfig-cjs.json -c tslint.json",
@@ -73,13 +85,21 @@
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
 		"prepack": "npm install && npm run build && npm run test",
 		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
-		"test:cjs": "tsc -p tsconfig-cjs.json   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
-		"test:esm": "tsc -p tsconfig-es.json  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
+		"test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
 		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"peerDependenciesMeta": {
+		"msal": {
+			"optional": true
+		},
+		"@azure/identity": {
+			"optional": true
+		}
 	},
 	"nyc": {
 		"all": true,

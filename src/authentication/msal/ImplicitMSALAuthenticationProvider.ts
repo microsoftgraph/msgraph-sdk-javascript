@@ -11,8 +11,9 @@
 
 import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, UserAgentApplication } from "msal";
 
-import { AuthenticationProvider } from "./IAuthenticationProvider";
-import { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
+import { AuthenticationProvider } from "../../IAuthenticationProvider";
+import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
+
 import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderOptions";
 
 /**

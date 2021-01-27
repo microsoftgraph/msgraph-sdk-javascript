@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { MSALAuthenticationProviderOptions } from "../../../src/MSALAuthenticationProviderOptions";
+import { MSALAuthenticationProviderOptions } from "../../../src/authentication/msal/MSALAuthenticationProviderOptions";
 
 describe("MSALAuthenticationProviderOptions.ts", () => {
 	it("Should create an instance with all the given options", () => {

@@ -381,7 +381,7 @@ export class BatchRequestContent {
 		}
 		while (!cur.done) {
 			const requestStep: BatchRequestStep = cur.value[1];
-			const batchRequestData: BatchRequestData = (await BatchRequestContent.getRequestData(requestStep.request as IsomorphicRequest)) as BatchRequestData;	
+			const batchRequestData: BatchRequestData = (await BatchRequestContent.getRequestData(requestStep.request as IsomorphicRequest)) as BatchRequestData;
 			/**
 			 * @see{@https://tools.ietf.org/html/rfc7578#section-4.4}
 			 * TODO- Setting/Defaulting of content-type header to the correct value
