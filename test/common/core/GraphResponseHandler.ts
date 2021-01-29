@@ -98,6 +98,7 @@ describe("GraphResponseHandler.ts", () => {
 		it("Should return raw response incase of unknown content-type", async () => {
 			const data = "test data";
 			const response = new Response(data, status200Unknown);
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
 			// TODO - Handle unknown responses
 			// assert.equal(responseValue, data);

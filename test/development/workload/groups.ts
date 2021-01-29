@@ -15,16 +15,12 @@ const client = getClient();
 describe("Groups", function() {
 	this.timeout(10 * 1000);
 	it("Fetch a list of groups and access properties on a collection item", async () => {
-		try {
-			const res = await client.api("/groups").get();
-			const group = res.value[0] as Group;
-			assert.isDefined(group.displayName);
-			assert.isDefined(group.mail);
-			assert.isDefined(group.id);
-			assert.isUndefined(group["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		const res = await client.api("/groups").get();
+		const group = res.value[0] as Group;
+		assert.isDefined(group.displayName);
+		assert.isDefined(group.mail);
+		assert.isDefined(group.id);
+		assert.isUndefined(group["random fake property that should be null"]);
 	});
 
 	it("Create a group and validate properties were set", async () => {
@@ -36,15 +32,11 @@ describe("Groups", function() {
 			mailNickname: randomString(),
 			securityEnabled: true,
 		};
-		try {
-			const res = await client.api("/groups").post(group);
-			const createdGroup = res as Group;
-			assert.equal(createdGroup.displayName, group.displayName);
-			assert.equal(createdGroup.description, group.description);
-			assert.equal(createdGroup.mailEnabled, group.mailEnabled);
-			assert.isString(createdGroup.id);
-		} catch (error) {
-			throw error;
-		}
+		const res = await client.api("/groups").post(group);
+		const createdGroup = res as Group;
+		assert.equal(createdGroup.displayName, group.displayName);
+		assert.equal(createdGroup.description, group.description);
+		assert.equal(createdGroup.mailEnabled, group.mailEnabled);
+		assert.isString(createdGroup.id);
 	});
 });

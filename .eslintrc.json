@@ -127,14 +127,7 @@
 				"allowTernary": true
 			}
 		],
-		"@typescript-eslint/space-before-function-paren": [
-			"error",
-			{
-				"asyncArrow": "always",
-				"anonymous": "never",
-				"named": "never"
-			}
-		],
+		"@typescript-eslint/space-before-function-paren": "off",
 		"@typescript-eslint/consistent-type-assertions": "error",
 		"@typescript-eslint/explicit-member-accessibility": [
 			"off",

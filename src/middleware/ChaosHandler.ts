@@ -123,22 +123,13 @@ export class ChaosHandler implements Middleware {
 	 * @param {Context} context - Contains the context of the request
 	 */
 	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
-		try {
-			let responseBody: any;
-			let responseHeader: Headers;
-			let requestID: string;
-			let requestDate: Date;
-			const requestURL = context.request as string;
-
-			requestID = generateUUID();
-			requestDate = new Date();
-			responseHeader = this.createResponseHeaders(chaosHandlerOptions, requestID, requestDate.toString());
-			responseBody = this.createResponseBody(chaosHandlerOptions, requestID, requestDate.toString());
-			const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
-			context.response = new Response(responseBody, init);
-		} catch (error) {
-			throw error;
-		}
+		const requestURL = context.request as string;
+		const requestID = generateUUID();
+		const requestDate = new Date();
+		const responseHeader = this.createResponseHeaders(chaosHandlerOptions, requestID, requestDate.toString());
+		const responseBody = this.createResponseBody(chaosHandlerOptions, requestID, requestDate.toString());
+		const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
+		context.response = new Response(responseBody, init);
 	}
 
 	/**

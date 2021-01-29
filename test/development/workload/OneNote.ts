@@ -28,46 +28,34 @@ describe("OneNote", function() {
 	const PageContent = "Sample page content - " + randomString();
 
 	it("Create a OneNote notebook", async () => {
-		try {
-			const json = await client.api("/me/onenote/notebooks").post(notebook);
-			const createdNotebook = json as Notebook;
-			assert.isDefined(createdNotebook.id);
-			assert.equal(notebook.displayName, createdNotebook.displayName);
-			assert.isUndefined(createdNotebook["random fake property that should be null"]);
-			// if this passes, use this notebook in the following tests
-			notebook = createdNotebook;
-		} catch (error) {
-			throw error;
-		}
+		const json = await client.api("/me/onenote/notebooks").post(notebook);
+		const createdNotebook = json as Notebook;
+		assert.isDefined(createdNotebook.id);
+		assert.equal(notebook.displayName, createdNotebook.displayName);
+		assert.isUndefined(createdNotebook["random fake property that should be null"]);
+		// if this passes, use this notebook in the following tests
+		notebook = createdNotebook;
 	});
 
 	it("Create a OneNote section in a Notebook", async () => {
-		try {
-			const json = await client.api(`/me/onenote/notebooks/${notebook.id}/sections`).post(section);
-			const createdSection = json as OnenoteSection;
-			assert.isDefined(createdSection.id);
-			assert.equal(section.displayName, createdSection.displayName);
-			assert.isUndefined(createdSection["random fake property that should be null"]);
-			// if this passes, use this notebook in the following tests
-			section = createdSection;
-		} catch (error) {
-			throw error;
-		}
+		const json = await client.api(`/me/onenote/notebooks/${notebook.id}/sections`).post(section);
+		const createdSection = json as OnenoteSection;
+		assert.isDefined(createdSection.id);
+		assert.equal(section.displayName, createdSection.displayName);
+		assert.isUndefined(createdSection["random fake property that should be null"]);
+		// if this passes, use this notebook in the following tests
+		section = createdSection;
 	});
 
 	it("Create a OneNote page in a section with basic text content", async () => {
-		try {
-			const json = await client
-				.api(`/me/onenote/sections/${section.id}/pages`)
-				.header("Content-Type", "text/html")
-				.post(PageContent);
-			createdPage = json as OnenotePage;
-			assert.isDefined(createdPage.id);
-			assert.isDefined(createdPage.contentUrl);
-			assert.isUndefined(createdPage["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		const json = await client
+			.api(`/me/onenote/sections/${section.id}/pages`)
+			.header("Content-Type", "text/html")
+			.post(PageContent);
+		createdPage = json as OnenotePage;
+		assert.isDefined(createdPage.id);
+		assert.isDefined(createdPage.contentUrl);
+		assert.isUndefined(createdPage["random fake property that should be null"]);
 	});
 	it("Create a OneNote page with html page content", async () => {
 		const formData = new FormData();
@@ -88,24 +76,20 @@ describe("OneNote", function() {
 			.header("content-type", "application/xhtml+xml")
 			.post(body);
 		const createdPageFromHTML = json as OnenotePage;
-		assert.isDefined(createdPage.id);
-		assert.isDefined(createdPage.contentUrl);
-		assert.isUndefined(createdPage["random fake property that should be null"]);
+		assert.isDefined(createdPageFromHTML.id);
+		assert.isDefined(createdPageFromHTML.contentUrl);
+		assert.isUndefined(createdPageFromHTML["random fake property that should be null"]);
 	});
 
 	it("create a OneNote page with html page content and file attachment", async () => {
-		try {
-			const formData = new FormData();
-			formData.append("Presentation", fs.createReadStream("./test/sample_files/onenotepage_fileattachment.html"));
-			formData.append("fileBlock1", fs.createReadStream("./sample.png"));
-			const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
-			const createdPageFromHTML = json as OnenotePage;
-			assert.isDefined(createdPage.id);
-			assert.isDefined(createdPage.contentUrl);
-			assert.equal("A page with rendered file attachment", createdPageFromHTML.title);
-			assert.isUndefined(createdPage["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		const formData = new FormData();
+		formData.append("Presentation", fs.createReadStream("./test/sample_files/onenotepage_fileattachment.html"));
+		formData.append("fileBlock1", fs.createReadStream("./sample.png"));
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(formData);
+		const createdPageFromHTML = json as OnenotePage;
+		assert.isDefined(createdPage.id);
+		assert.isDefined(createdPage.contentUrl);
+		assert.equal("A page with rendered file attachment", createdPageFromHTML.title);
+		assert.isUndefined(createdPage["random fake property that should be null"]);
 	});
 });

@@ -23,27 +23,19 @@ describe("Excel", function() {
 		}, 1000);
 	});
 	it("Uploads an Excel file to OneDrive", async () => {
-		try {
-			const file = fs.readFileSync("./test/sample_files/empty-spreadsheet.xlsx");
-			const res = await client.api(`/me/drive/root/children/${ExcelFilename}/content`).put(file);
-			assert.isDefined(res.id);
-		} catch (error) {
-			throw error;
-		}
+		const file = fs.readFileSync("./test/sample_files/empty-spreadsheet.xlsx");
+		const res = await client.api(`/me/drive/root/children/${ExcelFilename}/content`).put(file);
+		assert.isDefined(res.id);
 	});
 
 	it("Lists the worksheets in an excel file", async () => {
-		try {
-			const res = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets`).get();
-			const worksheets = res.value as WorkbookWorksheet[];
-			const sheet1 = worksheets[0];
-			assert.isNumber(sheet1.position);
-			assert.isString(sheet1.visibility);
-			assert.isString(sheet1.id);
-			assert.isUndefined(sheet1["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		const res = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets`).get();
+		const worksheets = res.value as WorkbookWorksheet[];
+		const sheet1 = worksheets[0];
+		assert.isNumber(sheet1.position);
+		assert.isString(sheet1.visibility);
+		assert.isString(sheet1.id);
+		assert.isUndefined(sheet1["random fake property that should be null"]);
 	});
 
 	it("Updates workbook worksheet range", async () => {
@@ -53,23 +45,15 @@ describe("Excel", function() {
 				["cell b1", "cell b2"],
 			],
 		};
-		try {
-			const response = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range(address='A1:B2')`).patch(sampleData);
-			assert.isDefined(response["@odata.id"]);
-			assert.isDefined(response.values);
-		} catch (error) {
-			throw error;
-		}
+		const response = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range(address='A1:B2')`).patch(sampleData);
+		assert.isDefined(response["@odata.id"]);
+		assert.isDefined(response.values);
 	});
 
 	it("GETs the used range of the worksheet", async () => {
-		try {
-			const res: WorkbookRange = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range/usedrange`).get();
-			assert.isNumber(res.cellCount);
-			assert.isString(res.address);
-			assert.isUndefined(res["random fake property that should be null"]);
-		} catch (error) {
-			throw error;
-		}
+		const res: WorkbookRange = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range/usedrange`).get();
+		assert.isNumber(res.cellCount);
+		assert.isString(res.address);
+		assert.isUndefined(res["random fake property that should be null"]);
 	});
 });

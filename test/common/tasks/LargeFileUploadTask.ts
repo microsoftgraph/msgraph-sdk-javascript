@@ -166,6 +166,7 @@ describe("LargeFileUploadTask.ts", () => {
 			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				.then((res) => {
 					throw new Error("Test Failed - Upload is working for upload completed task");
 				})

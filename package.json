@@ -21,7 +21,6 @@
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
 		"@babel/runtime": "^7.4.4",
-		"sinon": "^9.2.4",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -63,6 +62,9 @@
 		"rollup-plugin-commonjs": "^10.0.1",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.0.0",
+		"sinon": "^9.2.4",
+		"source-map-support": "^0.5.19",
+		"ts-node": "^9.0.0",
 		"typescript": "^3.4.5",
 		"uglify-es": "^3.3.9"
 	},
