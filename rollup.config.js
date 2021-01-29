@@ -5,7 +5,7 @@ import commonjs from "rollup-plugin-commonjs";
 
 const config = [
 	{
-		input: ["lib/es/browser/index.js"],
+		input: ["lib/es/src/browser/index.js"],
 		output: {
 			file: "lib/graph-es-sdk.js",
 			format: "es",
@@ -14,7 +14,7 @@ const config = [
 		plugins: [resolve(), terser()],
 	},
 	{
-		input: ["lib/es/browser/index.js"],
+		input: ["lib/es/src/browser/index.js"],
 		output: {
 			file: "lib/graph-js-sdk.js",
 			format: "iife",

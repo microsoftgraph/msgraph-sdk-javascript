@@ -7,6 +7,7 @@
 
 /**
  * @module GraphResponseHandler
+ * References - https://fetch.spec.whatwg.org/#responses
  */
 
 import { GraphRequestCallback } from "./IGraphRequestCallback";

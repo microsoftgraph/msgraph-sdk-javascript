@@ -6,6 +6,6 @@ src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
 
-spec/**/*.js
-spec/**/*.js.map
-spec/**/*.d.ts
+test/**/*.js
+test/**/*.js.map
+test/**/*.d.ts

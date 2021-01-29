@@ -383,6 +383,8 @@ export class BatchRequestContent {
 			const requestStep: BatchRequestStep = cur.value[1];
 			const batchRequestData: BatchRequestData = (await BatchRequestContent.getRequestData(requestStep.request as IsomorphicRequest)) as BatchRequestData;
 			/**
+			 * @see{@https://tools.ietf.org/html/rfc7578#section-4.4}
+			 * TODO- Setting/Defaulting of content-type header to the correct value
 			 * @see {@link https://developer.microsoft.com/en-us/graph/docs/concepts/json_batching#request-format}
 			 */
 			if (batchRequestData.body !== undefined && (batchRequestData.headers === undefined || batchRequestData.headers["content-type"] === undefined)) {

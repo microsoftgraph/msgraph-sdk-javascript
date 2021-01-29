@@ -1,2 +1,2 @@
 .npmignore
-spec/
+test/

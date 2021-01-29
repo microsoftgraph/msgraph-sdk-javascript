@@ -598,7 +598,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
-	public count(isCount = false): GraphRequest {
+	public count(isCount = true): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}
