@@ -155,7 +155,7 @@
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/no-parameter-properties": "off",
 		"@typescript-eslint/no-array-constructor": "error",
-		// eslint
+		// eslint rules
 		"simple-import-sort/imports": "error",
 		"brace-style": "error",
 		"constructor-super": "error",
