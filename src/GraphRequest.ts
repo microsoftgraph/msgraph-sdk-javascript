@@ -655,8 +655,7 @@ export class GraphRequest {
 			this.setHeaderContentType();
 			options.headers = this._headers;
 		}
-		const response = await this.send(url, options, callback);
-		return response;
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -686,8 +685,7 @@ export class GraphRequest {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
 		};
-		const response = await this.send(url, options, callback);
-		return response;
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -705,8 +703,7 @@ export class GraphRequest {
 			method: RequestMethod.PATCH,
 			body: serializeContent(content),
 		};
-		const response = await this.send(url, options, callback);
-		return response;
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -733,8 +730,7 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.DELETE,
 		};
-		const response = await this.send(url, options, callback);
-		return response;
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -761,8 +757,7 @@ export class GraphRequest {
 			method: RequestMethod.GET,
 		};
 		this.responseType(ResponseType.STREAM);
-		const stream = await this.send(url, options, callback);
-		return stream;
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -782,7 +777,6 @@ export class GraphRequest {
 			},
 			body: stream,
 		};
-		const response = await this.send(url, options, callback);
-		return response;
+		return await this.send(url, options, callback);
 	}
 }

@@ -27,6 +27,5 @@ export class HTTPMessageHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		context.response = await fetch(context.request, context.options);
-		return;
 	}
 }

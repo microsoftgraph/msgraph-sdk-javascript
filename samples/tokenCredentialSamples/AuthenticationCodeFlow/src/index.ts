@@ -8,16 +8,17 @@
 /**
  * This sample is referenced from - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/samples/manual/authorizationCodeSample.ts
  */
+import "isomorphic-fetch";
+
 import { AuthorizationCodeCredential } from "@azure/identity";
+import { Client } from "@microsoft/microsoft-graph-client";
+import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import express from "express";
 import { Server } from "http";
-import "isomorphic-fetch";
 import open from "open";
 import qs from "qs";
 
-import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
-import { Client } from "@microsoft/microsoft-graph-client";
-import { port, tenantId, clientSecret, clientId, scopes, authorityHost, redirectUri } from "./secrets";
+import { authorityHost, clientId, clientSecret, port, redirectUri, scopes, tenantId } from "./secrets";
 
 if (tenantId === undefined || clientId === undefined) {
 	console.error("AZURE_TENANT_ID and AZURE_CLIENT_ID environment variables must be set");
@@ -40,8 +41,7 @@ async function getCredential(): Promise<AuthorizationCodeCredential> {
 	// authentication redirect to be sent to the local redirect URI.
 	const authCodePromise = new Promise<string>((resolve, reject) => {
 		const app = express();
-		let server: Server | undefined = undefined;
-
+		const server: Server = app.listen(port, () => console.log(`Authorization code redirect server listening on port ${port}`));
 		app.get("/authresponse", (req, res) => {
 			// Close the temporary server once we've received the redirect.
 			res.sendStatus(200);
@@ -57,14 +57,12 @@ async function getCredential(): Promise<AuthorizationCodeCredential> {
 				reject(new Error(`Authentication Error "${req.query["error"]}":\n\n${req.query["error_description"]}`));
 			}
 		});
-
-		server = app.listen(port, () => console.log(`Authorization code redirect server listening on port ${port}`));
 	});
 
 	// Direct the user to the authentication URI either by opening a
 	// browser (desktop and mobile apps) or redirecting their browser
 	// using a Location header (web apps and APIs).
-	const authorizeUrl = getAuthorizeUrl(tenantId!, clientId!, scopes);
+	const authorizeUrl = getAuthorizeUrl(tenantId, clientId, scopes);
 	console.log("Opening user's browser to URL:", authorizeUrl);
 	await open(authorizeUrl);
 
@@ -77,8 +75,8 @@ async function getCredential(): Promise<AuthorizationCodeCredential> {
 	// refreshing the access token from this point forward.
 	if (clientSecret) {
 		return new AuthorizationCodeCredential(
-			tenantId!,
-			clientId!,
+			tenantId,
+			clientId,
 			clientSecret,
 			authorizationCode,
 			redirectUri,
@@ -92,8 +90,8 @@ async function getCredential(): Promise<AuthorizationCodeCredential> {
 		// NOTE: If there is no client secret, we can construct an auth code credential
 		// using this method.
 		return new AuthorizationCodeCredential(
-			tenantId!,
-			clientId!,
+			tenantId,
+			clientId,
 			authorizationCode,
 			redirectUri,
 			// NOTE: It is not necessary to explicitly pass the authorityHost when using
