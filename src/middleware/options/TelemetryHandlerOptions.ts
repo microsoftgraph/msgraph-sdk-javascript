@@ -27,6 +27,7 @@ export enum FeatureUsageFlag {
 	REDIRECT_HANDLER_ENABLED = 0x1,
 	RETRY_HANDLER_ENABLED = 0x2,
 	AUTHENTICATION_HANDLER_ENABLED = 0x4,
+	/* eslint-enable  @typescript-eslint/naming-convention */
 }
 
 /**
