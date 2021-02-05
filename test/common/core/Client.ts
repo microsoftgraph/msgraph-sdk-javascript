@@ -47,7 +47,7 @@ describe("Client.ts", () => {
 			};
 			const client: Client = Client.initWithMiddleware(options);
 			assert.isTrue(client instanceof Client);
-			assert.isDefined(["httpClient"]);
+			assert.isDefined(client["httpClient"]);
 		});
 
 		it("Should return client instance for a custom middleware chain", () => {

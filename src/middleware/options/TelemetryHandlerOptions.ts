@@ -22,10 +22,11 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  */
 
 export enum FeatureUsageFlag {
-	NONE = 0x0, // eslint-disable-line @typescript-eslint/naming-convention
-	REDIRECT_HANDLER_ENABLED = 0x1, // eslint-disable-line @typescript-eslint/naming-convention
-	RETRY_HANDLER_ENABLED = 0x2, // eslint-disable-line @typescript-eslint/naming-convention
-	AUTHENTICATION_HANDLER_ENABLED = 0x4, // eslint-disable-line @typescript-eslint/naming-convention
+	/* eslint-disable  @typescript-eslint/naming-convention */
+	NONE = 0x0,
+	REDIRECT_HANDLER_ENABLED = 0x1,
+	RETRY_HANDLER_ENABLED = 0x2,
+	AUTHENTICATION_HANDLER_ENABLED = 0x4,
 }
 
 /**
