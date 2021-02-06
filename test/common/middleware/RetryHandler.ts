@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { Context } from "../../../src/IContext";
 import { FetchOptions } from "../../../src/IFetchOptions";
@@ -45,7 +46,7 @@ describe("RetryHandler.ts", function() {
 		status: 200,
 		statusText: "OK",
 	});
-	/* tslint:disable: no-string-literal */
+
 	describe("constructor", () => {
 		it("Should set the option member with retryHanderOptions", () => {
 			const handler = new RetryHandler(retryHandlerOptions);
@@ -148,11 +149,7 @@ describe("RetryHandler.ts", function() {
 
 	describe("sleep", async () => {
 		it("Should run the sleep method for 1 second", async () => {
-			try {
-				await retryHandler["sleep"](1);
-			} catch (error) {
-				throw error;
-			}
+			await retryHandler["sleep"](1);
 		});
 	});
 
@@ -224,7 +221,7 @@ describe("RetryHandler.ts", function() {
 		it("Should successfully retry and return ok response", async () => {
 			const opts = new RetryHandlerOptions(1);
 			dummyHTTPHandler.setResponses([new Response(null, { status: 429 }), new Response(null, { status: 429 }), new Response("ok", { status: 200 })]);
-			await handler["executeWithRetry"](cxt, 0, options);
+			await handler["executeWithRetry"](cxt, 0, opts);
 			assert.equal(cxt.response.status, 200);
 		});
 
@@ -235,5 +232,4 @@ describe("RetryHandler.ts", function() {
 			assert.equal(cxt.response.status, 429);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

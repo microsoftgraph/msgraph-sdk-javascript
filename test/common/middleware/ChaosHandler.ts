@@ -12,7 +12,6 @@ const chaosHandlerOptions = new ChaosHandlerOptions();
 const chaosHandler = new ChaosHandler();
 
 describe("ChaosHandler.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("constructor", () => {
 		it("Should create an instance with given options", () => {
 			const handler = new ChaosHandler(chaosHandlerOptions);

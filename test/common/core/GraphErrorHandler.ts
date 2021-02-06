@@ -11,7 +11,6 @@ import { GraphError } from "../../../src";
 import { GraphErrorHandler } from "../../../src/GraphErrorHandler";
 
 describe("GraphErrorHandler.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("constructError", () => {
 		it("Should return custom error without code", () => {
 			const message = "test";
@@ -71,7 +70,6 @@ describe("GraphErrorHandler.ts", () => {
 			assert.equal(gError.date.toUTCString(), date.toUTCString());
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("getError", async () => {
 		it("Should construct error from response", async () => {

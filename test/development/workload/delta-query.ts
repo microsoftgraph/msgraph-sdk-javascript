@@ -5,9 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import "isomorphic-fetch";
+
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
-import "isomorphic-fetch";
 
 import { getClient, randomString } from "../test-helper";
 
@@ -32,49 +33,37 @@ describe("Delta Query", function() {
 	};
 
 	it("Gets the delta link for the initial calendar view list", async () => {
-		try {
-			let res = await client
-				.api("/me/calendarview/delta")
-				.query({
-					startdatetime: today.toISOString(),
-					enddatetime: nextWeek.toISOString(),
-				})
-				.get();
-			while (res["@odata.nextLink"] !== undefined) {
-				res = await client.api(res["@odata.nextLink"]).get();
-			}
-			assert.isDefined(res["@odata.deltaLink"]);
-			deltaLink = res["@odata.deltaLink"];
-		} catch (error) {
-			throw error;
+		let res = await client
+			.api("/me/calendarview/delta")
+			.query({
+				startdatetime: today.toISOString(),
+				enddatetime: nextWeek.toISOString(),
+			})
+			.get();
+		while (res["@odata.nextLink"] !== undefined) {
+			res = await client.api(res["@odata.nextLink"]).get();
 		}
+		assert.isDefined(res["@odata.deltaLink"]);
+		deltaLink = res["@odata.deltaLink"];
 	});
 
 	it("Creates a calendar event to see changes in the delta response", async () => {
-		try {
-			const response = await client.api("/me/events").post(mockEvent);
-			assert.isDefined(response.id);
-			assert.equal(response.subject, subject);
-		} catch (error) {
-			throw error;
-		}
+		const response = await client.api("/me/events").post(mockEvent);
+		assert.isDefined(response.id);
+		assert.equal(response.subject, subject);
 	});
 
 	it("Uses delta token to see changed calendar view", async () => {
-		try {
-			let found = false;
-			if (typeof deltaLink !== "undefined") {
-				const res = await client.api(deltaLink).get();
-				const events: Event[] = res.value;
-				for (const event of events) {
-					if (event.subject === mockEvent.subject) {
-						found = true;
-					}
+		let found = false;
+		if (typeof deltaLink !== "undefined") {
+			const res = await client.api(deltaLink).get();
+			const events: Event[] = res.value;
+			for (const event of events) {
+				if (event.subject === mockEvent.subject) {
+					found = true;
 				}
 			}
-			assert.isTrue(found);
-		} catch (error) {
-			throw error;
 		}
+		assert.isTrue(found);
 	});
 });

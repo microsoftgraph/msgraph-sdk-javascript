@@ -14,12 +14,10 @@ const dummyAuthProvider = new DummyAuthenticationProvider();
 const authHandler = new AuthenticationHandler(dummyAuthProvider);
 
 describe("AuthenticationHandler.ts", async () => {
-	/* tslint:disable: no-string-literal */
 	describe("Constructor", () => {
 		it("Should return an AuthenticationHandler for given AuthenticationProvider", () => {
 			assert.isTrue(authHandler instanceof AuthenticationHandler);
 			assert.equal(authHandler["authenticationProvider"], dummyAuthProvider);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

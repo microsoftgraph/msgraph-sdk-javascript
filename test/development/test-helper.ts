@@ -8,7 +8,6 @@
 import "isomorphic-fetch";
 
 import { Client } from "../../src/index";
-
 import { HardCodedAuthenticationProvider } from "./HardCodedAuthenticationProvider";
 
 export function getClient(): Client {

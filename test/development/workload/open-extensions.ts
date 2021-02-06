@@ -25,25 +25,17 @@ describe("Open Extensions", function() {
 	this.timeout(10 * 1000);
 
 	it("Use open extensions to add a field to users", async () => {
-		try {
-			const response = await client.api("/me/extensions").post(extension);
-			const createdExtension = response as ColorOpenExtension;
-			assert.isDefined(createdExtension.id);
-			assert.equal(createdExtension.color, extension.color);
-			assert.equal(createdExtension.extensionName, extension.extensionName);
-			assert.isUndefined(createdExtension["random fake property that should be null"]);
-			// save this createdExtension for later tests (id)
-			extension = createdExtension;
-		} catch (error) {
-			throw error;
-		}
+		const response = await client.api("/me/extensions").post(extension);
+		const createdExtension = response as ColorOpenExtension;
+		assert.isDefined(createdExtension.id);
+		assert.equal(createdExtension.color, extension.color);
+		assert.equal(createdExtension.extensionName, extension.extensionName);
+		assert.isUndefined(createdExtension["random fake property that should be null"]);
+		// save this createdExtension for later tests (id)
+		extension = createdExtension;
 	});
 
 	it("Deletes the created open extension", async () => {
-		try {
-			await client.api(`/me/extensions/${extension.id}`).delete();
-		} catch (error) {
-			throw error;
-		}
+		await client.api(`/me/extensions/${extension.id}`).delete();
 	});
 });

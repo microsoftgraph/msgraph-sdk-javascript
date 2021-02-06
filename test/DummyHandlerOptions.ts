@@ -31,7 +31,7 @@ export class DummyHandlerOptions implements MiddlewareOptions {
 	 * @param {string} dummyString - The dummy string
 	 * @returns An instance of DummyHandlerOptions
 	 */
-	public constructor(dummyString: string = "dummy") {
+	public constructor(dummyString = "dummy") {
 		this.dummyString = dummyString;
 	}
 }

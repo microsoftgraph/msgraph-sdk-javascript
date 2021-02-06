@@ -5,9 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import "isomorphic-fetch";
+
 import { assert } from "chai";
 import * as fs from "fs";
-import "isomorphic-fetch";
 
 import { BatchRequestContent } from "../../../src/content/BatchRequestContent";
 
@@ -30,12 +31,8 @@ describe("BatchRequestContent.ts", () => {
 					}),
 				};
 				const batchReq = new BatchRequestContent([uploadOneDriveFile]);
-				try {
-					const content = await batchReq.getContent();
-					assert.isDefined(content.requests[0].body);
-				} catch (error) {
-					throw error;
-				}
+				const content = await batchReq.getContent();
+				assert.isDefined(content.requests[0].body);
 			});
 		});
 	});

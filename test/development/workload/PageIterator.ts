@@ -8,15 +8,12 @@
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
-import { getClient } from "../test-helper";
-
+import { Client, ClientOptions } from "../../../src";
 import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
-
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
-import { Client, ClientOptions } from "../../../src";
-
 import { GraphRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
+import { getClient } from "../test-helper";
 const client = getClient();
 describe("PageIterator", () => {
 	const pstHeader = { Prefer: 'outlook.timezone= "pacific standard time"' };

@@ -96,7 +96,7 @@ export class GraphErrorHandler {
 	 * @param {GraphRequestCallback} [callback] - The graph request callback function
 	 * @returns A promise that resolves to GraphError instance
 	 */
-	public static async getError(error: any = null, statusCode: number = -1, callback?: GraphRequestCallback): Promise<GraphError> {
+	public static async getError(error: any = null, statusCode = -1, callback?: GraphRequestCallback): Promise<GraphError> {
 		let gError: GraphError;
 		if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);

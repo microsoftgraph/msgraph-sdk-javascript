@@ -84,7 +84,7 @@ export class BatchRequestContent {
 	 * @static
 	 * Limit for number of requests {@link - https://developer.microsoft.com/en-us/graph/docs/concepts/known_issues#json-batching}
 	 */
-	private static requestLimit: number = 20;
+	private static requestLimit = 20;
 
 	/**
 	 * @public
@@ -227,14 +227,14 @@ export class BatchRequestContent {
 	 * @returns The Promise that resolves to a body value of a Request
 	 */
 	private static async getRequestBody(request: IsomorphicRequest): Promise<any> {
-		let bodyParsed: boolean = false;
+		let bodyParsed = false;
 		let body;
 		try {
 			const cloneReq = request.clone();
 			body = await cloneReq.json();
 			bodyParsed = true;
 		} catch (e) {
-			// tslint:disable-line: no-empty
+			//TODO- Handle empty catches
 		}
 		if (!bodyParsed) {
 			try {
@@ -269,7 +269,7 @@ export class BatchRequestContent {
 				}
 				bodyParsed = true;
 			} catch (e) {
-				// tslint:disable-line: no-empty
+				// TODO-Handle empty catches
 			}
 		}
 		return body;

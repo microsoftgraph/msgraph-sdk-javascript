@@ -16,7 +16,6 @@ import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 const redirectHandlerOptions = new RedirectHandlerOptions();
 const redirectHandler = new RedirectHandler();
 describe("RedirectHandler.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("constructor", () => {
 		it("Should create an instance with given options", () => {
 			const handler = new RedirectHandler(redirectHandlerOptions);
@@ -227,13 +226,6 @@ describe("RedirectHandler.ts", () => {
 
 		it("Should drop body and change method to get for SEE_OTHER status code", async () => {
 			const options = new RedirectHandlerOptions();
-			const cxt: Context = {
-				request: "/me",
-				options: {
-					method: "POST",
-					body: "dummy body",
-				},
-			};
 			dummyHTTPHandler.setResponses([
 				new Response("", {
 					status: 303,
@@ -340,5 +332,4 @@ describe("RedirectHandler.ts", () => {
 			assert.equal(context.options.redirect, RedirectHandler["MANUAL_REDIRECT"]);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

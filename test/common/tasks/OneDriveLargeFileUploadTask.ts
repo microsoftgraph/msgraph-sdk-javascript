@@ -16,7 +16,6 @@ describe("OneDriveLargeFileUploadTask.ts", () => {
 		const specialFileName = "test file.png";
 		const encodedFileName = "test%20file.png";
 
-		/* tslint:disable: no-string-literal */
 		it("Should trim the extra spaces in the filename", () => {
 			assert.equal(`/me/drive/root:/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](spaceFileName));
 		});
@@ -44,6 +43,5 @@ describe("OneDriveLargeFileUploadTask.ts", () => {
 		it("Should trim the extra spaces in the path", () => {
 			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, " /Documents/ "));
 		});
-		/* tslint:enable: no-string-literal */
 	});
 });

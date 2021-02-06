@@ -9,7 +9,6 @@ import { TokenCredential } from "@azure/identity";
 
 import { GraphClientError } from "../../GraphClientError";
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
-
 import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredentialAuthenticationProviderOptions";
 
 /**

@@ -10,7 +10,6 @@
  */
 
 import { AuthenticationProvider } from "../../src/IAuthenticationProvider";
-
 import { AccessToken } from "./secrets";
 
 /**

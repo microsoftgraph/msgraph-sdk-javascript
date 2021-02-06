@@ -50,10 +50,9 @@ const testCases = {
 };
 
 describe("urlParsing.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("parsePath", () => {
 		for (const path in testCases) {
-			if (testCases.hasOwnProperty(path)) {
+			if (Object.prototype.hasOwnProperty.call(testCases, path)) {
 				it("should correctly parse " + path, () => {
 					const request = client.api(path);
 					assert.equal(request["buildFullUrl"](), testCases[path]);
@@ -62,4 +61,3 @@ describe("urlParsing.ts", () => {
 		}
 	});
 });
-/* tslint:enable: no-string-literal */

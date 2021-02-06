@@ -16,7 +16,6 @@ import { PACKAGE_VERSION } from "../../../src/Version";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("TelemetryHandler.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("execute", function() {
 		this.timeout(20 * 1000);
 		const telemetryHandler = new TelemetryHandler();
@@ -138,5 +137,4 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["SdkVersion"], undefined);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

@@ -6,7 +6,6 @@
  */
 
 import { Client } from "../src/index";
-
 import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
 
 export function getClient(): Client {

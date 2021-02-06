@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { BatchRequestContent, BatchRequestStep } from "../../../src/content/BatchRequestContent";
 import { randomString } from "../../test-helper";
@@ -70,6 +71,7 @@ describe("BatchRequestContent.ts", () => {
 			const createFolderDuplicate1 = getCreateFolderRequestCopy();
 			createFolderDuplicate1.id = "";
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const batchReq = new BatchRequestContent([createFolderDuplicate1]);
 				throw new Error("Test Failed - Something wrong with the empty id check");
 			} catch (error) {
@@ -86,6 +88,7 @@ describe("BatchRequestContent.ts", () => {
 				requests.push(req);
 			}
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const batchReq = new BatchRequestContent(requests);
 				throw new Error("Test Failed - Something wrong with the limiting requests");
 			} catch (error) {
@@ -195,6 +198,7 @@ describe("BatchRequestContent.ts", () => {
 		it("Should return error for empty requests", async () => {
 			const batchReq = new BatchRequestContent();
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const content = await batchReq.getContent();
 				throw new Error("Test Failed - Something wrong with the empty requests validation");
 			} catch (error) {
@@ -205,13 +209,9 @@ describe("BatchRequestContent.ts", () => {
 		it("Should return json content", async () => {
 			const req = getCreateFolderRequestCopy();
 			const batchReq = new BatchRequestContent([req]);
-			try {
-				const content = await batchReq.getContent();
-				assert.isDefined(content.requests[0].body);
-				assert.equal(typeof content.requests[0].body, "object");
-			} catch (error) {
-				throw error;
-			}
+			const content = await batchReq.getContent();
+			assert.isDefined(content.requests[0].body);
+			assert.equal(typeof content.requests[0].body, "object");
 		});
 	});
 
@@ -272,7 +272,6 @@ describe("BatchRequestContent.ts", () => {
 	});
 
 	describe("validateDependencies", () => {
-		/* tslint:disable: no-string-literal */
 		it("Should throw error for empty request object", (done) => {
 			try {
 				BatchRequestContent["validateDependencies"](new Map() as Map<string, BatchRequestStep>);
@@ -498,6 +497,5 @@ describe("BatchRequestContent.ts", () => {
 			const batchReq = new BatchRequestContent([req1, req2, req3]);
 			assert.equal(false, BatchRequestContent["validateDependencies"](batchReq.requests));
 		});
-		/* tslint:enable: no-string-literal */
 	});
 });

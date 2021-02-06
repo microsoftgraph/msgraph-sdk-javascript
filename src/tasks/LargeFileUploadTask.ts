@@ -117,19 +117,15 @@ export class LargeFileUploadTask {
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
 	public static async createUploadSession(client: Client, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<any> {
-		try {
-			const session = await client
-				.api(requestUrl)
-				.headers(headers)
-				.post(payload);
-			const largeFileUploadSession: LargeFileUploadSession = {
-				url: session.uploadUrl,
-				expiry: new Date(session.expirationDateTime),
-			};
-			return largeFileUploadSession;
-		} catch (err) {
-			throw err;
-		}
+		const session = await client
+			.api(requestUrl)
+			.headers(headers)
+			.post(payload);
+		const largeFileUploadSession: LargeFileUploadSession = {
+			url: session.uploadUrl,
+			expiry: new Date(session.expirationDateTime),
+		};
+		return largeFileUploadSession;
 	}
 
 	/**
@@ -219,25 +215,22 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to uploaded response
 	 */
 	public async upload(): Promise<any> {
-		try {
-			while (true) {
-				const nextRange = this.getNextRange();
-				if (nextRange.maxValue === -1) {
-					const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
-					err.name = "Invalid Session";
-					throw err;
-				}
-				const fileSlice = this.sliceFile(nextRange);
-				const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
-				// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
-				if (response.id !== undefined) {
-					return response;
-				} else {
-					this.updateTaskStatus(response);
-				}
+		// eslint-disable-next-line no-constant-condition
+		while (true) {
+			const nextRange = this.getNextRange();
+			if (nextRange.maxValue === -1) {
+				const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
+				err.name = "Invalid Session";
+				throw err;
 			}
-		} catch (err) {
-			throw err;
+			const fileSlice = this.sliceFile(nextRange);
+			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
+			// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
+			if (response.id !== undefined) {
+				return response;
+			} else {
+				this.updateTaskStatus(response);
+			}
 		}
 	}
 
@@ -250,17 +243,13 @@ export class LargeFileUploadTask {
 	 * @param {number} totalSize - The total size of a complete file
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
-		try {
-			return await this.client
-				.api(this.uploadSession.url)
-				.headers({
-					"Content-Length": `${range.maxValue - range.minValue + 1}`,
-					"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
-				})
-				.put(fileSlice);
-		} catch (err) {
-			throw err;
-		}
+		return await this.client
+			.api(this.uploadSession.url)
+			.headers({
+				"Content-Length": `${range.maxValue - range.minValue + 1}`,
+				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
+			})
+			.put(fileSlice);
 	}
 
 	/**
@@ -270,11 +259,7 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to cancelled response
 	 */
 	public async cancel(): Promise<any> {
-		try {
-			return await this.client.api(this.uploadSession.url).delete();
-		} catch (err) {
-			throw err;
-		}
+		return await this.client.api(this.uploadSession.url).delete();
 	}
 
 	/**
@@ -284,13 +269,9 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to the status enquiry response
 	 */
 	public async getStatus(): Promise<any> {
-		try {
-			const response = await this.client.api(this.uploadSession.url).get();
-			this.updateTaskStatus(response);
-			return response;
-		} catch (err) {
-			throw err;
-		}
+		const response = await this.client.api(this.uploadSession.url).get();
+		this.updateTaskStatus(response);
+		return response;
 	}
 
 	/**
@@ -300,11 +281,7 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to the uploaded response
 	 */
 	public async resume(): Promise<any> {
-		try {
-			await this.getStatus();
-			return await this.upload();
-		} catch (err) {
-			throw err;
-		}
+		await this.getStatus();
+		return await this.upload();
 	}
 }

@@ -26,6 +26,7 @@ describe("RedirectHandlerOptions.ts", () => {
 
 		it("Should throw error for setting max redirects more than allowed", () => {
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const options = new RedirectHandlerOptions(100);
 				throw new Error("Test Failed - Something wrong with the max redirects value redirection");
 			} catch (error) {
@@ -34,6 +35,7 @@ describe("RedirectHandlerOptions.ts", () => {
 		});
 		it("Should throw error for setting max redirects to negative", () => {
 			try {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const options = new RedirectHandlerOptions(-10);
 				throw new Error(" Test Failed - Something wrong with the max redirects value redirection");
 			} catch (error) {
@@ -41,12 +43,10 @@ describe("RedirectHandlerOptions.ts", () => {
 			}
 		});
 
-		/* tslint:disable: no-string-literal */
 		it("Should initialize instance with default options", () => {
 			const options = new RedirectHandlerOptions();
 			assert.equal(options.maxRedirects, RedirectHandlerOptions["DEFAULT_MAX_REDIRECTS"]);
-			assert.equal(options.shouldRedirect, RedirectHandlerOptions["DEFAULT_SHOULD_RETRY"]);
+			assert.equal(options.shouldRedirect, RedirectHandlerOptions["defaultShouldRetry"]);
 		});
-		/* tslint:enable: no-string-literal */
 	});
 });

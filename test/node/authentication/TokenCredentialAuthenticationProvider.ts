@@ -51,6 +51,7 @@ describe("TokenCredentialAuthenticationProvider.ts", () => {
 			const moq = sinon.mock(client);
 			moq.expects("getToken").resolves(accessToken);
 			const tokenCredentialAuthenticationProvider = new TokenCredentialAuthenticationProvider(client, authProviderOptions);
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const access = await tokenCredentialAuthenticationProvider.getAccessToken();
 		} catch (err) {
 			expectedError = err;

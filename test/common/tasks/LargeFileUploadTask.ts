@@ -11,7 +11,6 @@ import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
 
 describe("LargeFileUploadTask.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("Parsing Range", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
@@ -167,6 +166,7 @@ describe("LargeFileUploadTask.ts", () => {
 			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				.then((res) => {
 					throw new Error("Test Failed - Upload is working for upload completed task");
 				})
@@ -177,5 +177,4 @@ describe("LargeFileUploadTask.ts", () => {
 				});
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });

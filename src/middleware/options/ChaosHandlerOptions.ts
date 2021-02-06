@@ -73,7 +73,7 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	 * @param {any?} responseBody - The response body to be returned in the response
 	 * @returns An instance of ChaosHandlerOptions
 	 */
-	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusMessage: string = "Some error Happened", statusCode?: number, chaosPercentage?: number, responseBody?: any, headers?: Headers) {
+	public constructor(chaosStrategy: ChaosStrategy = ChaosStrategy.RANDOM, statusMessage = "Some error Happened", statusCode?: number, chaosPercentage?: number, responseBody?: any, headers?: Headers) {
 		this.chaosStrategy = chaosStrategy;
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;

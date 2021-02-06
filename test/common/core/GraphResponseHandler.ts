@@ -51,13 +51,7 @@ describe("GraphResponseHandler.ts", () => {
 			"Content-Type": "application/json",
 		},
 	};
-	const status200Image = {
-		status: 200,
-		stautsText: "OK",
-		headers: {
-			"Content-Type": "image/jpeg",
-		},
-	};
+
 	const status200Unknown = {
 		status: 200,
 		statusText: "OK",
@@ -71,6 +65,12 @@ describe("GraphResponseHandler.ts", () => {
 			const response = new Response(undefined, status204);
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
 			assert.isUndefined(responseValue);
+		});
+
+		it("Should return internal server error (500 response)", async () => {
+			const response = new Response(undefined, status500);
+			const responseValue = await GraphResponseHandler["convertResponse"](response);
+			assert.isNull(responseValue);
 		});
 
 		it("Should return empty text value for empty response", async () => {
@@ -98,6 +98,7 @@ describe("GraphResponseHandler.ts", () => {
 		it("Should return raw response incase of unknown content-type", async () => {
 			const data = "test data";
 			const response = new Response(data, status200Unknown);
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
 			// TODO - Handle unknown responses
 			// assert.equal(responseValue, data);
@@ -127,7 +128,6 @@ describe("GraphResponseHandler.ts", () => {
 			assert.equal(responseValue, htmlString);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 
 	describe("getResponse", () => {
 		it("Should return a raw response", async () => {

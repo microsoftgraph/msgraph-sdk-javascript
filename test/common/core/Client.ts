@@ -5,8 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { assert } from "chai";
 import "isomorphic-fetch";
+
+import { assert } from "chai";
 
 import { CustomAuthenticationProvider, TelemetryHandler } from "../../../src";
 import { Client } from "../../../src/Client";
@@ -22,7 +23,6 @@ import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("Client.ts", () => {
-	/* tslint:disable: no-string-literal */
 	describe("initWithMiddleware", () => {
 		const dummyAuthProvider = new DummyAuthenticationProvider();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
@@ -33,6 +33,7 @@ describe("Client.ts", () => {
 					authProvider: dummyAuthProvider,
 					middleware: dummyHTTPHandler,
 				};
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const client: Client = Client.initWithMiddleware(options);
 				throw new Error("Test Failed - Something wrong with the ambiguity check");
 			} catch (error) {
@@ -117,6 +118,7 @@ describe("Client.ts", () => {
 					return undefined;
 				};
 				const client = Client.init(options);
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const res = await client.api("/test").get();
 			} catch (error) {
 				assert.isTrue(error instanceof GraphClientError);
@@ -138,7 +140,9 @@ describe("Client.ts", () => {
 					return "";
 				};
 				const client = Client.init(options);
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const res = await client.api("/test").get();
+				throw new Error("Test failed - Expected error was not thrown");
 			} catch (error) {
 				assert.isTrue(error instanceof GraphClientError);
 				assert.equal(error.customError, customError);
@@ -158,5 +162,4 @@ describe("Client.ts", () => {
 			assert.isDefined(client["httpClient"]);
 		});
 	});
-	/* tslint:enable: no-string-literal */
 });
