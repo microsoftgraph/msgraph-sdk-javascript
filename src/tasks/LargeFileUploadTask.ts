@@ -11,6 +11,7 @@
 
 import { Client } from "../index";
 import { Range } from "../Range";
+import { FileUpload } from "./FileObjects/FileUpload";
 
 /**
  * @interface
@@ -60,9 +61,10 @@ export interface LargeFileUploadSession {
  * @property {number} size - Specifies size of the file
  */
 export interface FileObject {
-	content: ArrayBuffer | File;
+	content: any;
 	name: string;
 	size: number;
+	sliceFile(range: Range): ArrayBuffer | Blob;
 }
 
 /**
@@ -140,10 +142,21 @@ export class LargeFileUploadTask {
 	 */
 	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
 		this.client = client;
-		this.file = file;
+
+		if (!file.sliceFile) {
+			console.warn("Please pass a fileObject class");
+			try {
+				this.file = new FileUpload(file.content, file.name, file.size);
+			} catch (err) {
+				throw new Error("use file upload object");
+			}
+		} else {
+			this.file = file;
+		}
 		if (options.rangeSize === undefined) {
 			options.rangeSize = this.DEFAULT_FILE_SIZE;
 		}
+
 		this.options = options;
 		this.uploadSession = uploadSession;
 		this.nextRange = new Range(0, this.options.rangeSize - 1);
@@ -198,13 +211,14 @@ export class LargeFileUploadTask {
 	}
 
 	/**
+	 * deprecated
 	 * @public
 	 * Slices the file content to the given range
 	 * @param {Range} range - The range value
 	 * @returns The sliced ArrayBuffer or Blob
 	 */
 	public sliceFile(range: Range): ArrayBuffer | Blob {
-		const blob = this.file.content.slice(range.minValue, range.maxValue + 1);
+		const blob = this.file.content.sliceFile(range.minValue, range.maxValue + 1);
 		return blob;
 	}
 
@@ -223,7 +237,7 @@ export class LargeFileUploadTask {
 				err.name = "Invalid Session";
 				throw err;
 			}
-			const fileSlice = this.sliceFile(nextRange);
+			const fileSlice = this.file.sliceFile(nextRange);
 			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
 			// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
 			if (response.id !== undefined) {

@@ -10,6 +10,7 @@
  */
 
 import { Client } from "../index";
+import { FileUpload } from "./FileObjects/FileUpload";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
@@ -95,11 +96,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
 		const rangeSize = getValidRangeSize(options.rangeSize);
-		const fileObj: FileObject = {
-			content,
-			name,
-			size,
-		};
+		const fileObj = new FileUpload(content, name, size);
 		return new OneDriveLargeFileUploadTask(client, fileObj, session, {
 			rangeSize,
 		});
