@@ -26,6 +26,7 @@ export * from "./middleware/ChaosHandler";
 
 export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
+export * from "./tasks/FileObjects/StreamUpload";
 export * from "./tasks/PageIterator";
 
 export * from "./Client";

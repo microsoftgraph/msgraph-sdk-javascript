@@ -12,24 +12,73 @@ const secrets = require("./secrets");
 const fs = require("fs");
 
 const client = MicrosoftGraph.Client.init({
-	defaultVersion: "v1.0",
-	debugLogging: true,
-	authProvider: (done) => {
-		done(null, secrets.accessToken);
-	},
+    defaultVersion: "v1.0",
+    debugLogging: true,
+    authProvider: (done) => {
+        done(null, secrets.accessToken);
+    },
 });
 
+// function uploadFile() {
+//     // client.api('/me/drive/root/children').get().then((response) => {
+//     //              console.log(response);
+//     //              console.log("File Uploaded Successfully.!!");
+//     //          }).catch((error) => {
+//     //              console.log(error);
+//     //          });
+//     fs.readFile("./mouser.pdf", {}, function(err, file) {
+//         if (err) {
+//             throw err;
+//         }
+//       
+
+//         oneDriveLargeFileUpload(client, , fileName)
+//             .then((response) => {
+//                 console.log(response);
+//                 console.log("File Uploaded Successfully.!!");
+//             })
+//             .catch((error) => {
+//                 throw error;
+//             });
+//     });
+// }
+async function uploadFile() {
+    let fileName = "testpd.pdf";
+    let size = "";
+    var stats = fs.statSync("testpd.pdf")
+   
+        console.log(stats.fileName);
+   
+    const file = new MicrosoftGraph.StreamUpload(fs.createReadStream("./testpd.pdf"),fileName, stats.size);
+    try {
+        let options = {
+            path: "/Documents",
+            fileName,
+            rangeSize: 1024 * 1024,
+        };
+
+        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+        //const uploadSession = await uploadTask.cr
+        const response = await uploadTask.upload();
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+uploadFile();
+
+
 // Get the name of the authenticated user with promises
-client
-	.api("/me")
-	.select("displayName")
-	.get()
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+// client
+// 	.api("/me")
+// 	.select("displayName")
+// 	.get()
+// 	.then((res) => {
+// 		console.log(res);
+// 	})
+// 	.catch((err) => {
+// 		console.log(err);
+// 	});
 
 /*
 

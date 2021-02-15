@@ -64,7 +64,7 @@ export interface FileObject {
 	content: any;
 	name: string;
 	size: number;
-	sliceFile(range: Range): ArrayBuffer | Blob;
+	sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer>;
 }
 
 /**
@@ -237,7 +237,7 @@ export class LargeFileUploadTask {
 				err.name = "Invalid Session";
 				throw err;
 			}
-			const fileSlice = this.file.sliceFile(nextRange);
+			const fileSlice =  await this.file.sliceFile(nextRange);
 			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
 			// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
 			if (response.id !== undefined) {

@@ -10,7 +10,7 @@ export class FileUpload implements FileObject {
 		this.name = name;
 		this.size = size;
 	}
-	public sliceFile(range: Range) {
+	public async sliceFile(range: Range):Promise<ArrayBuffer|Blob> {
 		return this.content.slice(range.minValue, range.maxValue);
 	}
 }

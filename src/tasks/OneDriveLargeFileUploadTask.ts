@@ -77,27 +77,27 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<any> {
-		const name: string = options.fileName;
-		let content;
-		let size;
-		if (typeof Blob !== "undefined" && file instanceof Blob) {
-			content = new File([file as Blob], name);
-			size = content.size;
-		} else if (typeof File !== "undefined" && file instanceof File) {
-			content = file as File;
-			size = content.size;
-		} else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
-			const b = file as Buffer;
-			size = b.byteLength - b.byteOffset;
-			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
-		}
+	public static async create(client: Client, file: FileObject, options: OneDriveLargeFileUploadOptions): Promise<any> {
+		// const name: string = options.fileName;
+		// let content;
+		// let size;
+		// if (typeof Blob !== "undefined" && file instanceof Blob) {
+		// 	content = new File([file as Blob], name);
+		// 	size = content.size;
+		// } else if (typeof File !== "undefined" && file instanceof File) {
+		// 	content = file as File;
+		// 	size = content.size;
+		// } else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
+		// 	const b = file as Buffer;
+		// 	size = b.byteLength - b.byteOffset;
+		// 	content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+		// }
 
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
 		const rangeSize = getValidRangeSize(options.rangeSize);
-		const fileObj = new FileUpload(content, name, size);
-		return new OneDriveLargeFileUploadTask(client, fileObj, session, {
+		//const fileObj = new FileUpload(content, name, size);
+		return new OneDriveLargeFileUploadTask(client, file, session, {
 			rangeSize,
 		});
 	}
