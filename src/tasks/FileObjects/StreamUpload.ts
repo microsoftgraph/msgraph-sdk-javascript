@@ -67,9 +67,9 @@ export class StreamUpload implements FileObject {
 				if (length == size) {
 					return resolve(Buffer.concat(chunks));
 				}
-				// if(!this.content.readable){
-				// 	return reject(new Error("Error occurred"));
-				// }
+				if(!this.content.readable){
+					return reject(new Error("Error occurred"));
+				}
 			});
 		});
 	}

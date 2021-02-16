@@ -12,7 +12,7 @@
 import { Client } from "../index";
 import { Range } from "../Range";
 import { FileUpload } from "./FileObjects/FileUpload";
-
+import { Progress } from "./Interfaces/IProgress"
 /**
  * @interface
  * Signature to representing key value pairs
@@ -40,6 +40,7 @@ interface UploadStatusResponse {
  */
 export interface LargeFileUploadTaskOptions {
 	rangeSize?: number;
+	progressCallBack?: Progress;
 }
 
 /**
@@ -237,7 +238,11 @@ export class LargeFileUploadTask {
 				err.name = "Invalid Session";
 				throw err;
 			}
-			const fileSlice =  await this.file.sliceFile(nextRange);
+			
+			const fileSlice = await this.file.sliceFile(nextRange);
+			if (this.options.progressCallBack) {
+				this.options.progressCallBack.progress(nextRange);
+			}
 			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
 			// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
 			if (response.id !== undefined) {

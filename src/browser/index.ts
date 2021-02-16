@@ -21,7 +21,7 @@ export * from "../middleware/options/TelemetryHandlerOptions";
 export * from "../middleware/options/ChaosHandlerOptions";
 export * from "../middleware/options/ChaosStrategy";
 export * from "../middleware/ChaosHandler";
-
+export * from "../tasks/FileObjects/StreamUpload";
 export * from "../tasks/LargeFileUploadTask";
 export * from "../tasks/OneDriveLargeFileUploadTask";
 export * from "../tasks/PageIterator";
