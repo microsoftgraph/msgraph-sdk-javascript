@@ -4,10 +4,15 @@ This document proposes high-level design modifications to the `LargeFileUploadTa
 
 -   Enhancement - Support Node.js Stream upload. Issue [#320](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/320).
 -   Bug Fix - Support large file uploads to Outlook API. Issue [#359](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/359).
+-   Enhancement- Support upload progress handler callback.  Issue [#305](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/305).
 
 Outline of the current implementation -
 
 ```
+interface LargeFileUploadTaskOptions {
+	rangeSize?: number;
+}
+
 interface FileObject {
 	content: ArrayBuffer | File;
 	name: string;
@@ -71,3 +76,17 @@ sliceFile(range: Range): ArrayBuffer | Blob {
 -   Proposed changes-
     -   Add class `OutlookLargeFileUploadTask.ts` extending the `LargeFileUploadTask` similar to `OneDriveLargeFileUploadTask.ts`. This allows to handle Outlook API specific file upload customizations.
     -   Currently the `upload` function in the `LargeFileUploadTask` returns only the response body. This can be changed to return the raw response received from the API which can filtered in the child class implementations.
+  
+###### 3. Support upload progress handler callback
+- Proposed changes -
+	- Add interface -> `interface Progress{
+    				progress(range: Range):void
+			   }`
+	- Add progressCallBack option to ->
+	  ```
+	  interface LargeFileUploadTaskOptions {
+		rangeSize?: number;
+		progressCallBack?: Progress;
+	  }
+	  ```
+	- In the `upload` function call the `progressCallBack.progress()` function if defined.
