@@ -1,9 +1,6 @@
-
-import { GraphResponseHandler } from "../../GraphResponseHandler";
 export class UploadResult {
     private _location: string;
     private _body: unknown;
-    private _uploadSuccess: boolean;
 
     public get location(): string {
         return this._location;
@@ -22,10 +19,12 @@ export class UploadResult {
         this._body = body;
     }
 
-    public async setUploadResult(response: Response) {
-        this._location = response.headers.get("Location");
-        this._body = await GraphResponseHandler.getResponse(response);
-        this._uploadSuccess = 
+    public constructor(body:unknown, location:string){
+        this._location = location;
+        this._body = body;
     }
-
+    
+    public static CreateUploadResult(responsebody?:unknown, responseHeaders?:Headers){
+        return new UploadResult(responsebody, (responseHeaders.get("Location") || responseHeaders.get("headers")));
+    }
 }

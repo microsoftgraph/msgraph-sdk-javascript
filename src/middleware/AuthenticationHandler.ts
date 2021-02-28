@@ -9,6 +9,7 @@
  * @module AuthenticationHandler
  */
 
+import { isGraphURL } from "../GraphRequestUtil";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
 import { Context } from "../IContext";
@@ -60,6 +61,8 @@ export class AuthenticationHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
+		const url = typeof context.request === "string" ? context.request : context.request.url;
+			if (isGraphURL(url)) {
 		let options: AuthenticationHandlerOptions;
 		if (context.middlewareControl instanceof MiddlewareControl) {
 			options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
@@ -77,6 +80,11 @@ export class AuthenticationHandler implements Middleware {
 		const bearerKey = `Bearer ${token}`;
 		appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
 		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+	} else {
+		if (context.options.headers) {
+			delete context.options.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
+		}
+	}
 		return await this.nextMiddleware.execute(context);
 	}
 

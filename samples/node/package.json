@@ -9,6 +9,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"isomorphic-fetch": "^2.2.1"
+		"bytes": "^3.1.0",
+		"isomorphic-fetch": "^2.2.1",
+		"minimist": "^1.2.5",
+		"path": "^0.12.7"
 	}
 }

@@ -236,11 +236,10 @@ export class LargeFileUploadTask {
 
 			const responseBody = await GraphResponseHandler.getResponse(rawResponse);
 			if (rawResponse.status == 201 || (rawResponse.status == 200 && responseBody.id)) {
-				const result = new UploadResult();
-				return result.setUploadResult(rawResponse);
+				return UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
 			}
 
-			/* Handling an API issue where the case of Outlook upload 'nextExpectedRanges' property is not uniform.
+			/* Handling the API issue where the case of Outlook upload response property -'nextExpectedRanges'  is not uniform.
 			* https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
 			*/
 			const res: UploadStatusResponse = {
@@ -249,7 +248,6 @@ export class LargeFileUploadTask {
 			};
 
 			this.updateTaskStatus(res);
-			this.updateTaskStatus(responseBody);
 		}
 	}
 
