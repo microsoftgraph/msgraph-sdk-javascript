@@ -11,7 +11,7 @@
 
 import { Client } from "../index";
 import { Range } from "../Range";
-import { FileUpload } from "./FileObjects/FileUpload";
+import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
 import { Progress } from "./Interfaces/IProgress"
 /**
  * @interface
@@ -145,7 +145,7 @@ export class LargeFileUploadTask {
 		this.client = client;
 
 		if (!file.sliceFile) {
-			console.warn("Please pass a fileObject class");
+			console.warn("Please pass a fileObject instance");
 			try {
 				this.file = new FileUpload(file.content, file.name, file.size);
 			} catch (err) {
@@ -231,6 +231,7 @@ export class LargeFileUploadTask {
 	 */
 	public async upload(): Promise<any> {
 		// eslint-disable-next-line no-constant-condition
+		const progressCallBack = this.options.progressCallBack;
 		while (true) {
 			const nextRange = this.getNextRange();
 			if (nextRange.maxValue === -1) {
@@ -238,14 +239,17 @@ export class LargeFileUploadTask {
 				err.name = "Invalid Session";
 				throw err;
 			}
-			
+
 			const fileSlice = await this.file.sliceFile(nextRange);
-			if (this.options.progressCallBack) {
+			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
+			if (progressCallBack && progressCallBack.progress) {
 				this.options.progressCallBack.progress(nextRange);
 			}
-			const response = await this.uploadSlice(fileSlice, nextRange, this.file.size);
 			// Upon completion of upload process incase of onedrive, driveItem is returned, which contains id
 			if (response.id !== undefined) {
+				if (progressCallBack && progressCallBack.completed) {
+					this.options.progressCallBack.completed();
+				}
 				return response;
 			} else {
 				this.updateTaskStatus(response);
@@ -262,13 +266,15 @@ export class LargeFileUploadTask {
 	 * @param {number} totalSize - The total size of a complete file
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
-		return await this.client
+		console.log("here");
+		const s = await this.client
 			.api(this.uploadSession.url)
 			.headers({
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
 			})
 			.put(fileSlice);
+		return s;
 	}
 
 	/**

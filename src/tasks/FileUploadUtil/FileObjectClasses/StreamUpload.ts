@@ -1,8 +1,8 @@
 import { Readable } from "stream";
 
-import { GraphClientError } from "../../GraphClientError";
-import { Range } from "../../Range";
-import { FileObject } from "../LargeFileUploadTask";
+import { GraphClientError } from "../../../GraphClientError";
+import { Range } from "../../../Range";
+import { FileObject } from "../../LargeFileUploadTask";
 
 export class StreamUpload implements FileObject {
 	content: Readable;
@@ -25,7 +25,6 @@ export class StreamUpload implements FileObject {
 	 */
 	public async sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer> {
 		//considering only paused streams
-		let chunk;
 		const rangeSize = range.maxValue - range.minValue + 1;
 		/* readable.readable Is true if it is safe to call readable.read(),
 		* which means the stream has not been destroyed or emitted 'error' or 'end'

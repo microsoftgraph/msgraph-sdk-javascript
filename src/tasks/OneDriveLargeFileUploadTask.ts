@@ -10,7 +10,7 @@
  */
 
 import { Client } from "../index";
-import { FileUpload } from "./FileObjects/FileUpload";
+import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
@@ -25,6 +25,19 @@ interface OneDriveLargeFileUploadOptions {
 	fileName: string;
 	path?: string;
 	rangeSize?: number;
+	conflictBehavior?: string;
+}
+
+/**
+ * @interface
+ * Signature to define options when creating an upload task
+ * @property {string} fileName - Specifies the name of a file to be uploaded (with extension)
+ * @property {string} [path] - The path to which the file needs to be uploaded
+ * @property {number} [rangeSize] - Specifies the range chunk size
+ */
+interface OneDriveFileUploadSessionPayLoad {
+	fileName: string;
+	conflictBehavior?: string;
 }
 
 /**
@@ -77,27 +90,44 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async create(client: Client, file: FileObject, options: OneDriveLargeFileUploadOptions): Promise<any> {
-		// const name: string = options.fileName;
-		// let content;
-		// let size;
-		// if (typeof Blob !== "undefined" && file instanceof Blob) {
-		// 	content = new File([file as Blob], name);
-		// 	size = content.size;
-		// } else if (typeof File !== "undefined" && file instanceof File) {
-		// 	content = file as File;
-		// 	size = content.size;
-		// } else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
-		// 	const b = file as Buffer;
-		// 	size = b.byteLength - b.byteOffset;
-		// 	content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
-		// }
+	public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<any> {
+		const name: string = options.fileName;
+		let content;
+		let size;
+		if (typeof Blob !== "undefined" && file instanceof Blob) {
+			content = new File([file as Blob], name);
+			size = content.size;
+		} else if (typeof File !== "undefined" && file instanceof File) {
+			content = file as File;
+			size = content.size;
+		} else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
+			const b = file as Buffer;
+			size = b.byteLength - b.byteOffset;
+			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+		}
+		const fileObj = new FileUpload(content, name, size);
+		return this.createTaskWithFileObject(client, fileObj, options);
+	}
 
+	/**
+	 * @public
+	 * @static
+	 * @async
+	 * Creates a OneDriveLargeFileUploadTask
+	 * @param {Client} client - The GraphClient instance
+	 * @param {FileObject} file - FileObject instance
+	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
+	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
+	 */
+	public static async createTaskWithFileObject(client: Client, fileObject: FileObject, options: OneDriveLargeFileUploadOptions) {
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
-		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, options.fileName);
+		const uploadSessionPayload: OneDriveFileUploadSessionPayLoad = {
+			fileName : options.fileName,
+			conflictBehavior : options.conflictBehavior
+		};
+		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, uploadSessionPayload);
 		const rangeSize = getValidRangeSize(options.rangeSize);
-		//const fileObj = new FileUpload(content, name, size);
-		return new OneDriveLargeFileUploadTask(client, file, session, {
+		return new OneDriveLargeFileUploadTask(client, fileObject, session, {
 			rangeSize,
 		});
 	}
@@ -110,13 +140,14 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @param {Client} client - The GraphClient instance
 	 * @param {string} requestUrl - The URL to create the upload session
 	 * @param {string} fileName - The name of a file to upload, (with extension)
+	 * @param {string} conflictBehavior - Conflict behaviour option. Default is 'rename'
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, fileName: string): Promise<any> {
+	public static async createUploadSession(client: Client, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<any> {
 		const payload = {
 			item: {
-				"@microsoft.graph.conflictBehavior": "rename",
-				name: fileName,
+				"@microsoft.graph.conflictBehavior": payloadOptions.conflictBehavior || 'rename',
+				name: payloadOptions.fileName,
 			},
 		};
 		return super.createUploadSession(client, requestUrl, payload);
@@ -140,12 +171,13 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @public
 	 * Commits upload session to end uploading
 	 * @param {string} requestUrl - The URL to commit the upload session
+	 * @param {string} conflictBehavior - Conflict behaviour option. Default is 'rename'
 	 * @returns The promise resolves to committed response
 	 */
-	public async commit(requestUrl: string): Promise<any> {
+	public async commit(requestUrl: string, conflictBehavior = "rename"): Promise<any> {
 		const payload = {
 			name: this.file.name,
-			"@microsoft.graph.conflictBehavior": "rename",
+			"@microsoft.graph.conflictBehavior": conflictBehavior,
 			"@microsoft.graph.sourceUrl": this.uploadSession.url,
 		};
 		return await this.client.api(requestUrl).put(payload);

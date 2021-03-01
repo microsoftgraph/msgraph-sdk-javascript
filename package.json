@@ -63,6 +63,7 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.12.5",
+		"sinon": "^9.2.4",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {

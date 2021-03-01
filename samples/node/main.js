@@ -1,8 +1,3 @@
-// when using the npm module, use the following syntax
-// const MicrosoftGraph = require("@microsoft/microsoft-graph-client").Client;
-
-// for fast development, simply require the generated lib without bundling the npm module
-
 require("isomorphic-fetch");
 
 const MicrosoftGraph = require("../../lib/src/index.js");
@@ -19,30 +14,41 @@ const client = MicrosoftGraph.Client.init({
     },
 });
 
-// function uploadFile() {
-//     // client.api('/me/drive/root/children').get().then((response) => {
-//     //              console.log(response);
-//     //              console.log("File Uploaded Successfully.!!");
-//     //          }).catch((error) => {
-//     //              console.log(error);
-//     //          });
-//     fs.readFile("./mouser.pdf", {}, function(err, file) {
-//         if (err) {
-//             throw err;
-//         }
-//       
 
-//         oneDriveLargeFileUpload(client, , fileName)
-//             .then((response) => {
-//                 console.log(response);
-//                 console.log("File Uploaded Successfully.!!");
-//             })
-//             .catch((error) => {
-//                 throw error;
-//             });
-//     });
-// }
+function uploadFile1() {
+    fs.readFile("./testpd.pdf", {}, function(err, file) {
+        if (err) {
+            throw err;
+        }
+        let fileName = "testpd.pdf";
+        oneDriveLargeFileUpload1(client, file, fileName)
+            .then((response) => {
+                console.log(response);
+                console.log("File Uploaded Successfully.!!");
+            })
+            .catch((error) => {
+                throw error;
+            });
+    });
+}
+async function oneDriveLargeFileUpload1(client, file, fileName) {
+    try {
+        let options = {
+            path: "/Documents",
+            fileName,
+            rangeSize: 1024 * 1024,
+        };
+        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+        const response = await uploadTask.upload();
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+//uploadFile1();
+
 async function uploadFile() {
+
     let fileName = "testpd.pdf";
     let size = "";
     var stats = fs.statSync("testpd.pdf")
@@ -57,7 +63,7 @@ async function uploadFile() {
             rangeSize: 1024 * 1024,
         };
 
-        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
+        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.createTaskWithFileObject(client, file, options);
         //const uploadSession = await uploadTask.cr
         const response = await uploadTask.upload();
         return response;
@@ -67,6 +73,41 @@ async function uploadFile() {
 }
 uploadFile();
 
+
+//file upload test 
+function uploadFile2() {
+    fs.readFile("./test.txt", {}, function(err, file) {
+        if (err) {
+            throw err;
+        }
+        let fileName = "test.txt";
+        oneDriveLargeFileUpload2(client, file, fileName)
+            .then((response) => {
+                console.log(response);
+                console.log("File Uploaded Successfully.!!");
+            })
+            .catch((error) => {
+                throw error;
+            });
+    });
+}
+async function oneDriveLargeFileUpload2(client, file, fileName) {
+    var stats = fs.statSync("./test.txt")
+    try {
+        let options = {
+            path: "/Documents",
+            fileName,
+            rangeSize: 1024 * 1024,
+        };
+        const fileObj = new MicrosoftGraph.FileUpload(file,fileName, stats.size);
+        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObj, options);
+        const response = await uploadTask.upload();
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+//uploadFile2();
 
 // Get the name of the authenticated user with promises
 // client
