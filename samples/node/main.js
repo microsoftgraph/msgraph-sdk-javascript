@@ -9,119 +9,28 @@ const MicrosoftGraph = require("../../lib/src/index.js");
 
 const secrets = require("./secrets");
 
-const fs = require('fs');
+const fs = require("fs");
 
 const client = MicrosoftGraph.Client.init({
-    defaultVersion: "v1.0",
-    debugLogging: true,
-    authProvider: (done) => {
-        done(null, secrets.accessToken);
-    },
+	defaultVersion: "v1.0",
+	debugLogging: true,
+	authProvider: (done) => {
+		done(null, secrets.accessToken);
+	},
 });
 
-function uploadFile1() {
-    fs.readFile("./test.txt", {}, function(err, file) {
-        if (err) {
-            throw err;
-        }
-        let fileName = "text.txt";
-        oneDriveLargeFileUpload1(client, file, fileName)
-            .then((response) => {
-                console.log(response);
-                console.log("File Uploaded Successfully.!!");
-            })
-            .catch((error) => {
-                throw error;
-            });
-    });
-}
-async function oneDriveLargeFileUpload1(client, file, fileName) {
-    try {
-        let options = {
-            path: "/Documents",
-            fileName,
-            rangeSize: 1024 * 1024,
-        };
-        const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
-        const response = await uploadTask.upload();
-        return response;
-    } catch (err) {
-        console.log(err);
-    }
-}
-uploadFile1();
-
 // Get the name of the authenticated user with promises
-// client
-// 	.api("/me")
-// 	.select("displayName")
-// 	.get()
-// 	.then((res) => {
-// 		console.log(res);
-// 	})
-// 	.catch((err) => {
-// 		console.log(err);
-// 	});
+client
+	.api("/me")
+	.select("displayName")
+	.get()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
-
-//uploadFile();
-function uploadFile() {
-    fs.readFile("./test.txt", {}, function (err, file) {
-        if (err) {
-            throw err;
-        }
-        var stats = fs.statSync("./test.txt")
-
-        const messageId = "AAMkADZiNzhhNTVkLWU5MDEtNGNlNy1hMjZiLTJjN2RkNjcyNGM4NgBGAAAAAABxs3khvJ1fSYvq33QgqqSJBwBC_D0Xqz_3TKBt1JyxMQ_VAAAAAAEMAABC_D0Xqz_3TKBt1JyxMQ_VAACGMDZTAAA=";
-        client.api(`me/messages/${messageId}/attachments/createUploadSession`).post({
-            AttachmentItem: {
-                attachmentType: 'file',
-                name: "test.txt",
-                size: stats.size,
-            }
-        })
-            .then((response) => {
-                console.log(response);
-
-                console.log("File Uploaded Successfully.!!");
-                oneDriveLargeFileUpload(client, file, response)
-                    .then((res) => {
-                        console.log(res);
-                        console.log("File Uploaded Successfully.!!");
-                    })
-                    .catch((error) => {
-                        throw error;
-                    });
-            })
-            .catch((error) => {
-                console.log(".!!");
-                console.log(error);
-            });
-
-    });
-}
-
-async function oneDriveLargeFileUpload(client, file, uploadSession) {
-    try {
-        let fileName = "test.txt";
-        let options = {
-            path: "/Documents",
-            fileName,
-            rangeSize: 1024 * 1024,
-        };
-        const s = {
-            url:uploadSession.uploadUrl,
-            expiry: uploadSession.expirationDateTime
-        }
-        console.log("uploadSession");
-        const uploadTask = new MicrosoftGraph.LargeFileUploadTask(client, file, s, options);
-        console.log(uploadTask+"uploadTask");
-        const response = await uploadTask.upload();
-        return response;
-    } catch (err) {
-        console.log(err);
-    }
-}
 /*
 
 // Update the authenticated users birthday.

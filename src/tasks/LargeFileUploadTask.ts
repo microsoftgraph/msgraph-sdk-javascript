@@ -10,10 +10,10 @@
  */
 
 import { GraphClientError } from "../GraphClientError";
+import { GraphResponseHandler } from "../GraphResponseHandler";
 import { Client } from "../index";
 import { Range } from "../Range";
 import { ResponseType } from "../ResponseType";
-import { GraphResponseHandler } from "../GraphResponseHandler";
 import { UploadResult } from "./FileUploadUtil/UploadResult";
 
 /**
@@ -129,7 +129,7 @@ export class LargeFileUploadTask {
 		const largeFileUploadSession: LargeFileUploadSession = {
 			url: session.uploadUrl,
 			expiry: new Date(session.expirationDateTime),
-			isCancelled: false
+			isCancelled: false,
 		};
 		return largeFileUploadSession;
 	}
@@ -235,13 +235,17 @@ export class LargeFileUploadTask {
 			}
 
 			const responseBody = await GraphResponseHandler.getResponse(rawResponse);
-			if (rawResponse.status == 201 || (rawResponse.status == 200 && responseBody.id)) {
+			/**
+			 * (rawResponse.status === 201) -> This condition is applicable for OneDrive, PrintDocument and Outlook APIs.
+			 * (rawResponse.status === 200 && responseBody.id) -> This additional condition is applicable only for OneDrive API.
+			 */
+			if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
 				return UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
 			}
 
 			/* Handling the API issue where the case of Outlook upload response property -'nextExpectedRanges'  is not uniform.
-			* https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
-			*/
+			 * https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
+			 */
 			const res: UploadStatusResponse = {
 				expirationDateTime: responseBody.expirationDateTime,
 				nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
@@ -258,6 +262,7 @@ export class LargeFileUploadTask {
 	 * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
 	 * @param {Range} range - The range value
 	 * @param {number} totalSize - The total size of a complete file
+	 * @returns The response body of the upload slice result
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
 		return await this.client
@@ -272,9 +277,10 @@ export class LargeFileUploadTask {
 	 * @public
 	 * @async
 	 * Uploads given slice to the server
-	 * @param {ArrayBuffer | Blob | File} fileSlice - The file slice
+	 * @param {unknown} fileSlice - The file slice
 	 * @param {Range} range - The range value
 	 * @param {number} totalSize - The total size of a complete file
+	 * @returns The raw response of the upload slice result
 	 */
 	public async uploadSliceGetRawResponse(fileSlice: unknown, range: Range, totalSize: number): Promise<Response> {
 		return await this.client
@@ -282,7 +288,8 @@ export class LargeFileUploadTask {
 			.headers({
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
-			}).responseType(ResponseType.RAW)
+			})
+			.responseType(ResponseType.RAW)
 			.put(fileSlice);
 	}
 
@@ -293,11 +300,14 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to cancelled response
 	 */
 	public async cancel(): Promise<any> {
-		const deleteResponse = await this.client.api(this.uploadSession.url).responseType(ResponseType.RAW).delete()
-		if (deleteResponse.status && deleteResponse.status == 204) {
+		const cancelResponse = await this.client
+			.api(this.uploadSession.url)
+			.responseType(ResponseType.RAW)
+			.delete();
+		if (cancelResponse.status === 204) {
 			this.uploadSession.isCancelled = true;
 		}
-		return deleteResponse;
+		return cancelResponse;
 	}
 
 	/**
@@ -327,7 +337,7 @@ export class LargeFileUploadTask {
 	 * @public
 	 * @async
 	 * Get the upload session information
-	 * @returns The large file upload large file session
+	 * @returns The large file upload session
 	 */
 	public getUploadSession(): LargeFileUploadSession {
 		return this.uploadSession;
