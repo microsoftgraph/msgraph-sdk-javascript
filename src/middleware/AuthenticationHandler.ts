@@ -69,11 +69,11 @@ export class AuthenticationHandler implements Middleware {
 			}
 			let authenticationProvider: AuthenticationProvider;
 			let authenticationProviderOptions: AuthenticationProviderOptions;
-			if (typeof options !== "undefined") {
+			if (options) {
 				authenticationProvider = options.authenticationProvider;
 				authenticationProviderOptions = options.authenticationProviderOptions;
 			}
-			if (typeof authenticationProvider === "undefined") {
+			if (!authenticationProvider) {
 				authenticationProvider = this.authenticationProvider;
 			}
 			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
