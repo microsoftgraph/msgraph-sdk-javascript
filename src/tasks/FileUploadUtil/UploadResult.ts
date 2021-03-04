@@ -68,8 +68,8 @@ export class UploadResult {
 
 	/**
 	 * @public
-	 * @param {responsebody} responseBody - The response body from the completed upload response
-	 * @param {responsebody} responseHeaders - The headers from the completed upload response
+	 * @param {responseBody} responseBody - The response body from the completed upload response
+	 * @param {responseHeaders} responseHeaders - The headers from the completed upload response
 	 */
 	public static CreateUploadResult(responseBody?: unknown, responseHeaders?: Headers) {
 		return new UploadResult(responseBody, responseHeaders.get("location"));
