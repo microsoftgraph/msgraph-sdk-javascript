@@ -30,7 +30,7 @@
 
 3. Rollup bundling output
 * `graph-js-sdk.js` - Bundled and minified file in IIFE format. This file can be directly used in the browser with a `<script>` tag.
-* `graph-es-sdk.js` - Bundled filein ES format.
+* `graph-es-sdk.js` - Bundled file in ES format.
 4. Entry point for rollup - `lib/es/src/browser/index.js`.
 
 ##### Difference between src/index.js and src/browser/index.js
@@ -46,22 +46,26 @@ Note - Browser applications using the ES modules from the npm package of the JS 
 
 1. Use the browser field for the following -
 
-* We currently have two entry files, `src/index` and `src/browser/index`.
+* The Graph JS SDK currently has two entry files, `src/index` and `src/browser/index`.
 Use the browser field to indicate the browser entry point.
 Example -
+```json
 "browser":
 { "lib/es/src/index.js": "lib/es/src/browser/index.js" }
-Currently, we have the main and "module field in the package.json. This will remain the same.
-* Better way to handle environment specific implementation. For example, using the `browser` field we can indicate as follows -
+```
+Currently, the main and "module field in the package.json. This will remain the same.
+* Better way to handle environment specific implementation. For example, using the `browser` field as follows -
 "browser":
-{ "stream": "stream-browserify",
-  "Feature-Node.js": "Feature-Browser.js"
+```json
+{ 
+ "stream": "stream-browserify",
+ "Feature-Node.js": "Feature-Browser.js"
 } 
-
+```
 
 2. Remove  export of `src/browser/ImplicitMsalProvider` from `src/browser/index`.
-* Till `ImplicitMsalProvider` is maintained in the repo, maintain a separate entry point say `rollup-index` for the rollup process which exports  `src/browser/index` and `src/browser/ImplicitMsalProvider`. 
-* Continue rolling up the `src/browser/ImplicitMsalProvider` as we currently do and not introduce breaking changes here as we are planning to deprecate this.
+* Till `ImplicitMsalProvider` is maintained in the repo, maintain a separate entry point say `rollup-index` for the rollup process which exports `src/browser/index` and `src/browser/ImplicitMsalProvider`. 
+* Continue rolling up the `src/browser/ImplicitMsalProvider` as it is currently done and not introduce breaking changes here as it is going to be deprecated.
 * Remove the separate entry point once `ImplicitMsalProvider` is removed and use the browser entry point for roll up thereafter. The goal is to maintain a consistent entry point or usage for browser applications using the JS SDK and the rollup/bundling process. 
 
 3. Bundle the authproviders separately as they are optional.
