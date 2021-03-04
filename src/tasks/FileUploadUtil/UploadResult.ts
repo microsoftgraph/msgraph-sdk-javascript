@@ -57,8 +57,8 @@ export class UploadResult {
 
 	/**
 	 * @public
-	 * @param {responsebody} responsebody - The response body from the completed upload response
-	 * @param {responsebody} location - The location value from the headers from the completed upload response
+	 * @param {responseBody} responsebody - The response body from the completed upload response
+	 * @param {location} location - The location value from the headers from the completed upload response
 	 */
 	public constructor(responseBody: unknown, location: string) {
 		// Response body or the location parameter can be undefined.
