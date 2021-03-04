@@ -129,3 +129,19 @@ async function largeFileUpload(client, file) {
 	}
 }
 ```
+
+## Cancelling a largeFileUpload task
+
+_Cancelling an upload session sends a DELETE request to the upload session URL_
+
+```typescript
+const cancelResponse = await uploadTask.cancel();
+```
+
+## Get the largeFileUpload session
+
+_Returns the largeFileUpload session information containing the URL, expiry date and cancellation status of the task_
+
+```typescript
+const uploadsession: LargeFileUploadSession = uploadTask.getUploadSession();
+```

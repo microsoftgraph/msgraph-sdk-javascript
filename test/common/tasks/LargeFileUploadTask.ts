@@ -6,7 +6,9 @@
  */
 
 import { assert } from "chai";
+import * as sinon from "sinon";
 
+import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
 
@@ -157,12 +159,66 @@ describe("LargeFileUploadTask.ts", () => {
 		const options = {
 			rangeSize: 327680,
 		};
-		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+
+		it("Should return a Upload Result object after a completed task with 201 status", async () => {
+			const location = "TEST_URL";
+			const body = {
+				id: "TEST_ID",
+			};
+			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+			const status201 = {
+				status: 200,
+				stautsText: "OK",
+				headers: {
+					"Content-Type": "application/json",
+					location,
+				},
+			};
+			const rawResponse = new Response(JSON.stringify(body), status201);
+
+			const moq = sinon.mock(uploadTask);
+			moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+			const result = await uploadTask.upload();
+			assert.isDefined(result);
+			assert.instanceOf(result, UploadResult);
+			assert.equal(result["location"], location);
+			const responseBody = result["responseBody"];
+			assert.isDefined(responseBody);
+			assert.equal(responseBody["id"], "TEST_ID");
+		});
+
+		it("Should return a Upload Result object after a completed task with 200 status and id", async () => {
+			const location = "TEST_URL";
+			const body = {
+				id: "TEST_ID",
+			};
+			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+			const status200 = {
+				status: 200,
+				stautsText: "OK",
+				headers: {
+					"Content-Type": "application/json",
+					location,
+				},
+			};
+			const rawResponse = new Response(JSON.stringify(body), status200);
+
+			const moq = sinon.mock(uploadTask);
+			moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+			const result = await uploadTask.upload();
+			assert.isDefined(result);
+			assert.instanceOf(result, UploadResult);
+			assert.equal(result["location"], location);
+			const responseBody = result["responseBody"];
+			assert.isDefined(responseBody);
+			assert.equal(responseBody["id"], "TEST_ID");
+		});
 		it("Should return an exception while trying to upload the file upload completed task", (done) => {
 			const statusResponse = {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: [],
 			};
+			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
