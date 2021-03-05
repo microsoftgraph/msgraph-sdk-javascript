@@ -9,6 +9,7 @@
  * @module AuthenticationHandler
  */
 
+import { isGraphURL } from "../GraphRequestUtil";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
 import { Context } from "../IContext";
@@ -60,23 +61,30 @@ export class AuthenticationHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		let options: AuthenticationHandlerOptions;
-		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
+		const url = typeof context.request === "string" ? context.request : context.request.url;
+		if (isGraphURL(url)) {
+			let options: AuthenticationHandlerOptions;
+			if (context.middlewareControl instanceof MiddlewareControl) {
+				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
+			}
+			let authenticationProvider: AuthenticationProvider;
+			let authenticationProviderOptions: AuthenticationProviderOptions;
+			if (options) {
+				authenticationProvider = options.authenticationProvider;
+				authenticationProviderOptions = options.authenticationProviderOptions;
+			}
+			if (!authenticationProvider) {
+				authenticationProvider = this.authenticationProvider;
+			}
+			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
+			const bearerKey = `Bearer ${token}`;
+			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
+		} else {
+			if (context.options.headers) {
+				delete context.options.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
+			}
 		}
-		let authenticationProvider: AuthenticationProvider;
-		let authenticationProviderOptions: AuthenticationProviderOptions;
-		if (typeof options !== "undefined") {
-			authenticationProvider = options.authenticationProvider;
-			authenticationProviderOptions = options.authenticationProviderOptions;
-		}
-		if (typeof authenticationProvider === "undefined") {
-			authenticationProvider = this.authenticationProvider;
-		}
-		const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
-		const bearerKey = `Bearer ${token}`;
-		appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
-		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 		return await this.nextMiddleware.execute(context);
 	}
 
