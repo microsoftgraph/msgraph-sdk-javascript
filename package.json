@@ -66,6 +66,11 @@
 		"sinon": "^9.2.4",
 		"tslib": "^1.9.3"
 	},
+	"browser":
+	{
+		"stream":"stream-browserify"
+	},
+
 	"devDependencies": {
 		"@azure/identity": "^1.2.0",
 		"@babel/core": "^7.12.10",

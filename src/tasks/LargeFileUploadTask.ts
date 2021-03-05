@@ -12,7 +12,7 @@
 import { Client } from "../index";
 import { Range } from "../Range";
 import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
-import { Progress } from "./Interfaces/IProgress"
+import { Progress } from "./FileUploadUtil/Interfaces/IProgress"
 /**
  * @interface
  * Signature to representing key value pairs

@@ -11,6 +11,6 @@ export class FileUpload implements FileObject {
 		this.size = size;
 	}
 	public async sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer> {
-		return this.content.slice(range.minValue, range.maxValue);
+		return this.content.slice(range.minValue, range.maxValue +1);
 	}
 }
