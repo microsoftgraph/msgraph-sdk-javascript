@@ -9,13 +9,13 @@
  * @module LargeFileUploadTask
  */
 
-import {GraphClientError} from "../GraphClientError"
+import { GraphClientError } from "../GraphClientError";
 import { GraphResponseHandler } from "../GraphResponseHandler";
 import { Client } from "../index";
 import { Range } from "../Range";
-import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
-import { Progress } from "./FileUploadUtil/Interfaces/IProgress"
 import { ResponseType } from "../ResponseType";
+import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
+import { Progress } from "./FileUploadUtil/Interfaces/IProgress";
 import { UploadResult } from "./FileUploadUtil/UploadResult";
 
 /**
@@ -237,41 +237,57 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to uploaded response
 	 */
 	public async upload(): Promise<any> {
-		// eslint-disable-next-line no-constant-condition
 		const progressCallBack = this.options.progressCallBack;
-		while (!this.uploadSession.isCancelled) {
-			const nextRange = this.getNextRange();
-			if (nextRange.maxValue === -1) {
-				const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
-				err.name = "Invalid Session";
-				throw err;
-			}
-			const fileSlice = this.sliceFile(nextRange);
-			const rawResponse = await this.uploadSliceGetRawResponse(fileSlice, nextRange, this.file.size);
-			if (!rawResponse) {
-				throw new GraphClientError("Something went wrong! Large file upload slice response is null.");
-			}
-			if (progressCallBack && progressCallBack.progress) {
-				this.options.progressCallBack.progress(nextRange);
-			}
-			const responseBody = await GraphResponseHandler.getResponse(rawResponse);
-			/**
-			 * (rawResponse.status === 201) -> This condition is applicable for OneDrive, PrintDocument and Outlook APIs.
-			 * (rawResponse.status === 200 && responseBody.id) -> This additional condition is applicable only for OneDrive API.
-			 */
-			if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
-				return UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
-			}
+		try {
+			while (!this.uploadSession.isCancelled) {
+				const nextRange = this.getNextRange();
+				if (nextRange.maxValue === -1) {
+					const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
+					err.name = "Invalid Session";
+					throw err;
+				}
+				console.log("min");
+				console.log(nextRange.minValue);
+				console.log(nextRange.maxValue);
+				console.log("max");
+				const fileSlice = await this.file.sliceFile(nextRange);
+				const rawResponse = await this.uploadSliceGetRawResponse(fileSlice, nextRange, this.file.size);
+				if (!rawResponse) {
+					throw new GraphClientError("Something went wrong! Large file upload slice response is null.");
+				}
 
-			/* Handling the API issue where the case of Outlook upload response property -'nextExpectedRanges'  is not uniform.
-			 * https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
-			 */
-			const res: UploadStatusResponse = {
-				expirationDateTime: responseBody.expirationDateTime,
-				nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
-			};
+				const responseBody = await GraphResponseHandler.getResponse(rawResponse);
+				/**
+				 * (rawResponse.status === 201) -> This condition is applicable for OneDrive, PrintDocument and Outlook APIs.
+				 * (rawResponse.status === 200 && responseBody.id) -> This additional condition is applicable only for OneDrive API.
+				 */
+				if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
+					console.log("here");
+					const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
+					if (progressCallBack && progressCallBack.completed) {
+						this.options.progressCallBack.completed(uploadResult);
+					}
+					return uploadResult;
+				}
 
-			this.updateTaskStatus(res);
+				/* Handling the API issue where the case of Outlook upload response property -'nextExpectedRanges'  is not uniform.
+				 * https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
+				 */
+				const res: UploadStatusResponse = {
+					expirationDateTime: responseBody.expirationDateTime,
+					nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
+				};
+				console.log(responseBody.NextExpectedRanges);
+				this.updateTaskStatus(res);
+				if (progressCallBack && progressCallBack.progress) {
+					this.options.progressCallBack.progress(nextRange);
+				}
+			}
+		} catch (error) {
+			if (progressCallBack && progressCallBack.failure) {
+				this.options.progressCallBack.failure(error);
+			}
+			throw error;
 		}
 	}
 

@@ -122,8 +122,8 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	public static async createTaskWithFileObject(client: Client, fileObject: FileObject, options: OneDriveLargeFileUploadOptions) {
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const uploadSessionPayload: OneDriveFileUploadSessionPayLoad = {
-			fileName : options.fileName,
-			conflictBehavior : options.conflictBehavior
+			fileName: options.fileName,
+			conflictBehavior: options.conflictBehavior,
 		};
 		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, uploadSessionPayload);
 		const rangeSize = getValidRangeSize(options.rangeSize);
@@ -146,7 +146,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	public static async createUploadSession(client: Client, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<any> {
 		const payload = {
 			item: {
-				"@microsoft.graph.conflictBehavior": payloadOptions.conflictBehavior || 'rename',
+				"@microsoft.graph.conflictBehavior": payloadOptions.conflictBehavior || "rename",
 				name: payloadOptions.fileName,
 			},
 		};

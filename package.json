@@ -47,7 +47,8 @@
 		"test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
 		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
 		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
+		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
+		"stream":"mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch --grep StreamUpload"
 	},
 	"nyc": {
 		"all": true,

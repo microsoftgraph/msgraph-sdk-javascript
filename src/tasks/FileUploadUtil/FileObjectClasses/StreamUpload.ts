@@ -3,7 +3,6 @@ import { Readable } from "stream";
 import { GraphClientError } from "../../../GraphClientError";
 import { Range } from "../../../Range";
 import { FileObject } from "../../LargeFileUploadTask";
-
 export class StreamUpload implements FileObject {
 	content: Readable;
 	name: string;
@@ -27,47 +26,53 @@ export class StreamUpload implements FileObject {
 		//considering only paused streams
 		const rangeSize = range.maxValue - range.minValue + 1;
 		/* readable.readable Is true if it is safe to call readable.read(),
-		* which means the stream has not been destroyed or emitted 'error' or 'end'
-		*/
+		 * which means the stream has not been destroyed or emitted 'error' or 'end'
+		 */
 		if (this.content.readable) {
 			if (this.content.readableLength >= rangeSize) {
 				return this.content.read(rangeSize);
-			}
-			else {
+			} else {
 				return await this.readNBytesFromStream(rangeSize);
 			}
+		} else {
+			throw new GraphClientError("Stream is not readable.");
 		}
-
-		//consider completed streams?
-		//convert to array buffer
-		return null;
 	}
 
 	private readNBytesFromStream(size: number): Promise<Buffer> {
 		return new Promise((resolve, reject) => {
-			let chunks = [];
+			const chunks = [];
 			let remainder = size;
 			let length = 0;
-
-			this.content.on('readable', () => {
-				/** 
-				* (chunk = this.content.read(size)) can return null if size of stream is less than 'size'.
-				* Read the remainder number of bytes from the stream iteratively as they are available.
-				*/
+			this.content.on("end", () => {
+				console.log("end called");
+				if (remainder > 0) {
+					return reject(new GraphClientError("Stream ended before reading required range size"));
+				}
+			});
+			this.content.on("readable", () => {
+				/**
+				 * (chunk = this.content.read(size)) can return null if size of stream is less than 'size' parameter.
+				 * Read the remainder number of bytes from the stream iteratively as they are available.
+				 */
 				let chunk;
+				console.log("within readable");
 				while (length < size && (chunk = this.content.read(remainder)) !== null) {
+					//console.log(this.content.readableEnded);
+					//console.log(this.content.readable + " " + i++);
 					length += chunk.length;
 					chunks.push(chunk);
 					if (remainder > 0) {
 						remainder = size - length;
 					}
-				}//end of while 
+				} // end of while
 
-				if (length == size) {
+				if (length === size) {
 					return resolve(Buffer.concat(chunks));
 				}
-				if(!this.content.readable){
-					return reject(new Error("Error occurred"));
+
+				if (!this.content.readable) {
+					return reject(new GraphClientError("Error encountered while reading the stream during the upload"));
 				}
 			});
 		});

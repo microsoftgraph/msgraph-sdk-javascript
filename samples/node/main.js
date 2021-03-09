@@ -6,6 +6,8 @@ const secrets = require("./secrets");
 
 const fs = require("fs");
 
+const stream = require("stream")
+
 const client = MicrosoftGraph.Client.init({
     defaultVersion: "v1.0",
     debugLogging: true,
@@ -49,13 +51,13 @@ async function oneDriveLargeFileUpload1(client, file, fileName) {
 
 async function uploadFile() {
 
-    let fileName = "testpd.pdf";
+    let fileName = "test.txt";
     let size = "";
-    var stats = fs.statSync("testpd.pdf")
+    var stats = fs.statSync("test.txt")
    
         console.log(stats.fileName);
    
-    const file = new MicrosoftGraph.StreamUpload(fs.createReadStream("./testpd.pdf"),fileName, stats.size);
+    const file = new MicrosoftGraph.StreamUpload(fs.createReadStream("./test.txt"),fileName, stats.size);
     try {
         let options = {
             path: "/Documents",
@@ -66,12 +68,13 @@ async function uploadFile() {
         const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.createTaskWithFileObject(client, file, options);
         //const uploadSession = await uploadTask.cr
         const response = await uploadTask.upload();
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);
     }
 }
-uploadFile();
+//uploadFile();
 
 
 //file upload test 
@@ -108,6 +111,43 @@ async function oneDriveLargeFileUpload2(client, file, fileName) {
     }
 }
 //uploadFile2();
+
+function up() {
+    fs.readFile("./test.txt", {}, function(err, file) {
+        if (err) {
+            throw err;
+        }
+        //let fileName = "test.txt";
+        up2()
+            .then((response) => {
+                console.log(response);
+                console.log("File Uploaded Successfully.!!");
+            })
+            .catch((error) => {
+                throw error;
+            });
+    });
+}
+async function up2() {
+
+    const totalsize = 6;
+    const sliceSize = 20;
+    const buf = Buffer.alloc(totalsize, "a");
+    const readStream = new stream.Readable({
+        read() {
+            this.push(buf);
+            this.push(null);
+        },
+    });
+    const f = "Test_File_Name";
+
+const upload = new MicrosoftGraph.StreamUpload(readStream, f, totalsize);
+
+const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
+}
+up();
+//uploadFile2();
+
 
 // Get the name of the authenticated user with promises
 // client

@@ -6,9 +6,9 @@
  */
 
 import { assert } from "chai";
-import { FileUpload } from "../../../src";
 import * as sinon from "sinon";
 
+import { FileUpload } from "../../../src";
 import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
@@ -22,7 +22,7 @@ describe("LargeFileUploadTask.ts", () => {
 			expiry: new Date(),
 		};
 		const options = {};
-        const fileObj = new FileUpload(arrayBuffer,name,size);
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 		it("Should return default range for given undefined range", (done) => {
 			const range = uploadTask["parseRange"]([]);
@@ -61,7 +61,7 @@ describe("LargeFileUploadTask.ts", () => {
 			expiry: new Date(),
 		};
 		const options = {};
-        const fileObj = new FileUpload(arrayBuffer,name,size);
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 		it("Should update status with expiration date and next expected ranges as given", (done) => {
 			const statusResponse = {
@@ -96,7 +96,7 @@ describe("LargeFileUploadTask.ts", () => {
 		const options = {
 			rangeSize: 327680,
 		};
-        const fileObj = new FileUpload(arrayBuffer,name,size);
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 
 		it("Should return proper next range well within the file size", (done) => {
@@ -142,7 +142,7 @@ describe("LargeFileUploadTask.ts", () => {
 		const options = {
 			rangeSize: 327680,
 		};
-        const fileObj = new FileUpload(arrayBuffer,name,size);
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 
 		it("Should return a Upload Result object after a completed task with 201 status", async () => {
 			const location = "TEST_URL";
