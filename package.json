@@ -16,6 +16,9 @@
 	"license": "MIT",
 	"main": "lib/src/index.js",
 	"module": "lib/es/src/index.js",
+	"browser": {
+		"stream": "stream-browserify"
+	},
 	"types": "./lib/src/index.d.ts",
 	"typings": "lib/src/index",
 	"files": [
@@ -64,9 +67,6 @@
 	"dependencies": {
 		"@babel/runtime": "^7.12.5",
 		"tslib": "^1.9.3"
-	},
-	"browser": {
-		"stream": "stream-browserify"
 	},
 	"devDependencies": {
 		"@azure/identity": "^1.2.0",
@@ -118,13 +118,13 @@
 		"@azure/identity": {
 			"optional": true
 		},
+		"buffer": {
+			"optional": true
+		},
 		"msal": {
 			"optional": true
 		},
 		"stream-browserify": {
-			"optional": true
-		},
-		"buffer": {
 			"optional": true
 		}
 	}

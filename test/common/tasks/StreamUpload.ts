@@ -65,6 +65,9 @@ it("Should throw error if stream  ends before complete range size is read", asyn
 	try {
 		const upload = new StreamUpload(readStream, fileName, totalsize);
 		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
+		if (slice) {
+			throw Error("Test failed. Expected error now thrown");
+		}
 	} catch (err) {
 		assert.instanceOf(err, GraphClientError);
 		assert.equal(err.message, "Stream ended before reading required range size");
