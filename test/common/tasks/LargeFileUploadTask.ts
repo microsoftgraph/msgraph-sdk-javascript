@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * -------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
@@ -6,25 +5,28 @@
  * -------------------------------------------------------------------------------------------
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { assert } from "chai";
 import * as sinon from "sinon";
 
+import { Range } from ".../../../src/Range";
 import { FileUpload, LargeFileUploadTaskOptions } from "../../../src";
-import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
+import { GraphClientError } from "../../../src/GraphClientError";
 import { Progress } from "../../../src/tasks/FileUploadUtil/Interfaces/IProgress";
+import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
-import { GraphClientError } from "../../../src/GraphClientError";
-import { Range } from ".../../../src/Range";
+
 describe("LargeFileUploadTask.ts", () => {
+	const rangeSize = 327680;
+	const uploadSession = {
+		url: "test url",
+		expiry: new Date(),
+	};
 	describe("Parsing Range", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 100000;
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {};
 		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -60,10 +62,6 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 100000;
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {};
 		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -93,12 +91,8 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 328680;
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {
-			rangeSize: 327680,
+			rangeSize,
 		};
 		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
@@ -139,14 +133,15 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 328680;
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {
 			rangeSize: 327680,
 		};
 		const fileObj = new FileUpload(arrayBuffer, name, size);
+		const location = "TEST_URL";
+		const body = {
+			id: "TEST_ID",
+		};
+
 		describe("Should return a Upload Result object after a completed task with 201 status", () => {
 			const location = "TEST_URL";
 			it("Test with progressCallback", async () => {
@@ -157,8 +152,8 @@ describe("LargeFileUploadTask.ts", () => {
 				const progress = (range?: Range) => {
 					isProgressReportCalled = true;
 				};
-				const completed = (result?: UploadResult, extraCallBackParams?: unknown) => {
-					assert.isTrue(extraCallBackParams);
+				const completed = (result?: UploadResult, extraCallbackParams?: unknown) => {
+					assert.isTrue(extraCallbackParams);
 					assert.equal(result.location, location);
 					isProgressCompletedCalled = true;
 				};
@@ -170,25 +165,25 @@ describe("LargeFileUploadTask.ts", () => {
 					progress,
 					completed,
 					failure,
-					extraCallBackParams: true,
+					extraCallbackParams: true,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize: 327680,
+					rangeSize,
 					progressCallBack,
 				};
 
-				const body = {};
+				const emptyBody = {};
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
 				const status201 = {
 					status: 201,
-					stautsText: "OK",
+					statusText: "OK",
 					headers: {
 						"Content-Type": "application/json",
 						location,
 					},
 				};
-				const rawResponse = new Response(JSON.stringify(body), status201);
+				const rawResponse = new Response(JSON.stringify(emptyBody), status201);
 
 				const moq = sinon.mock(uploadTask);
 				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
@@ -202,21 +197,17 @@ describe("LargeFileUploadTask.ts", () => {
 			});
 
 			it("Test without progress callback", async () => {
-				const location = "TEST_URL";
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 				const status201 = {
 					status: 201,
-					stautsText: "OK",
+					statusText: "OK",
 					headers: {
 						"Content-Type": "application/json",
 						location,
 					},
 				};
-				const body = {
-					id: "TEST_ID",
-				};
-				const rawResponse = new Response(JSON.stringify(body), status201);
 
+				const rawResponse = new Response(JSON.stringify(body), status201);
 				const moq = sinon.mock(uploadTask);
 				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
 				const result = await uploadTask.upload();
@@ -243,17 +234,14 @@ describe("LargeFileUploadTask.ts", () => {
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize: 327680,
+					rangeSize,
 					progressCallBack,
 				};
-				const location = "TEST_URL";
-				const body = {
-					id: "TEST_ID",
-				};
+
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
 				const status200 = {
 					status: 200,
-					stautsText: "OK",
+					statusText: "OK",
 					headers: {
 						"Content-Type": "application/json",
 						location,
@@ -290,17 +278,15 @@ describe("LargeFileUploadTask.ts", () => {
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize: 327680,
+					rangeSize,
 					progressCallBack,
 				};
-				const location = "TEST_URL";
-				const body = {
-					id: "TEST_ID",
-				};
+
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
+
 				const status200 = {
 					status: 200,
-					stautsText: "OK",
+					statusText: "OK",
 					headers: {
 						"Content-Type": "application/json",
 						location,
@@ -323,6 +309,10 @@ describe("LargeFileUploadTask.ts", () => {
 			});
 		});
 		describe("Should return an exception while trying to upload the file upload completed task", () => {
+			const statusResponse = {
+				expirationDateTime: "2018-08-06T09:05:45.195Z",
+				nextExpectedRanges: [],
+			};
 			it("Test with progressCallback", (done) => {
 				let isProgressReportCalled = false;
 				let isProgressCompletedCalled = false;
@@ -334,25 +324,21 @@ describe("LargeFileUploadTask.ts", () => {
 				const completed = (res?: UploadResult) => {
 					isProgressCompletedCalled = true;
 				};
-				const failure = (error?: GraphClientError, extraCallBackParams?: unknown) => {
+				const failure = (error?: GraphClientError, extraCallbackParams?: unknown) => {
 					isProgressFailureCalled = true;
-					assert.isTrue(extraCallBackParams);
+					assert.isTrue(extraCallbackParams);
 				};
 
 				const progressCallBack: Progress = {
 					progress,
 					completed,
 					failure,
-					extraCallBackParams: true,
+					extraCallbackParams: true,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize: 327680,
+					rangeSize,
 					progressCallBack,
-				};
-				const statusResponse = {
-					expirationDateTime: "2018-08-06T09:05:45.195Z",
-					nextExpectedRanges: [],
 				};
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
 				uploadTask["updateTaskStatus"](statusResponse);
@@ -372,15 +358,10 @@ describe("LargeFileUploadTask.ts", () => {
 			});
 
 			it("Test without progressCallback", (done) => {
-				const statusResponse = {
-					expirationDateTime: "2018-08-06T09:05:45.195Z",
-					nextExpectedRanges: [],
-				};
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 				uploadTask["updateTaskStatus"](statusResponse);
 				uploadTask
 					.upload()
-					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					.then(() => {
 						throw new Error("Test Failed - Upload is working for upload completed task");
 					})

@@ -219,7 +219,7 @@ export class LargeFileUploadTask {
 	}
 
 	/**
-	 * deprecated
+	 * @deprecated This function has been moved into FileObject interface.
 	 * @public
 	 * Slices the file content to the given range
 	 * @param {Range} range - The range value
@@ -260,7 +260,7 @@ export class LargeFileUploadTask {
 				if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
 					const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
 					if (progressCallBack && progressCallBack.completed) {
-						progressCallBack.completed(uploadResult, progressCallBack.extraCallBackParams);
+						progressCallBack.completed(uploadResult, progressCallBack.extraCallbackParams);
 					}
 					return uploadResult;
 				}
@@ -274,12 +274,12 @@ export class LargeFileUploadTask {
 				};
 				this.updateTaskStatus(res);
 				if (progressCallBack && progressCallBack.progress) {
-					progressCallBack.progress(nextRange, progressCallBack.extraCallBackParams);
+					progressCallBack.progress(nextRange, progressCallBack.extraCallbackParams);
 				}
 			}
 		} catch (error) {
 			if (progressCallBack && progressCallBack.failure) {
-				progressCallBack.failure(error, progressCallBack.extraCallBackParams);
+				progressCallBack.failure(error, progressCallBack.extraCallbackParams);
 			}
 			throw error;
 		}
@@ -295,15 +295,15 @@ export class LargeFileUploadTask {
 	 * @returns The response body of the upload slice result
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
-		const s = await this.client
+		return await this.client
 			.api(this.uploadSession.url)
 			.headers({
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
 			})
 			.put(fileSlice);
-		return s;
 	}
+
 	/**
 	 * @public
 	 * @async

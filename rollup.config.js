@@ -29,19 +29,19 @@ const config = [
 		plugins: [
 			resolve({
 				browser: true,
-				preferBuiltins: false
+				preferBuiltins: false,
 			}),
 			babel({
 				babelHelpers: "runtime",
 				exclude: "node_modules/**",
 			}),
 			commonjs({ include: "node_modules/**" }),
-			// terser({
-			// 	format: {
-			// 		comments: false,
-			// 		preamble: copyRight,
-			// 	},
-			// }),
+			terser({
+				format: {
+					comments: false,
+					preamble: copyRight,
+				},
+			}),
 		],
 	},
 ];

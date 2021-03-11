@@ -10,6 +10,7 @@ import "isomorphic-fetch";
 import { assert } from "chai";
 import { Readable } from "stream";
 
+import { GraphClientError } from "../../../src";
 import { StreamUpload } from "../../../src/tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
 
 const fileName = "Test_File_Name";
@@ -51,7 +52,7 @@ it("Should return slice ", async () => {
 	assert.equal(readStream.readableLength, 0);
 });
 
-it("Should throw error if stream ends before total size", async () => {
+it("Should throw error if stream  ends before complete range size is read", async () => {
 	const totalsize = 6;
 	const sliceSize = 20;
 	const buf = Buffer.alloc(totalsize, "a");
@@ -65,6 +66,7 @@ it("Should throw error if stream ends before total size", async () => {
 		const upload = new StreamUpload(readStream, fileName, totalsize);
 		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
 	} catch (err) {
-		console.log(err);
+		assert.instanceOf(err, GraphClientError);
+		assert.equal(err.message, "Stream ended before reading required range size");
 	}
 });

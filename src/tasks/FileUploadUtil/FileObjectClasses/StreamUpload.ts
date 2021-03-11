@@ -61,7 +61,6 @@ export class StreamUpload implements FileObject {
 				 * Read the remainder number of bytes from the stream iteratively as they are available.
 				 */
 				let chunk;
-				console.log("within readable");
 				while (length < size && (chunk = this.content.read(remainder)) !== null) {
 					length += chunk.length;
 					chunks.push(chunk);

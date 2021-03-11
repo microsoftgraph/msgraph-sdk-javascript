@@ -47,10 +47,7 @@
 		"test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
 		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
 		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch",
-		"stream": "mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch --grep StreamUpload",
-		"stest": "mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch --grep LargeFileUploadTask.ts",
-		"roll": "rollup -c"
+		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
 	},
 	"nyc": {
 		"all": true,
@@ -66,8 +63,6 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.12.5",
-		"sinon": "^9.2.4",
-		"stream-browserify": "^3.0.0",
 		"tslib": "^1.9.3"
 	},
 	"browser": {
@@ -112,7 +107,9 @@
 		"prettier": "^1.17.0",
 		"rollup": "^2.36.2",
 		"rollup-plugin-terser": "^7.0.2",
+		"sinon": "^9.2.4",
 		"source-map-support": "^0.5.19",
+		"stream-browserify": "^3.0.0",
 		"ts-node": "^9.0.0",
 		"typescript": "^3.4.5",
 		"uglify-es": "^3.3.9"
