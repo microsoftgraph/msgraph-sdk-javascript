@@ -11,6 +11,7 @@
 
 import { Client } from "../index";
 import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
+import { Progress } from "./FileUploadUtil/Interfaces/IProgress";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
@@ -21,11 +22,12 @@ import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
  * @property {string} [path] - The path to which the file needs to be uploaded
  * @property {number} [rangeSize] - Specifies the range chunk size
  */
-interface OneDriveLargeFileUploadOptions {
+export interface OneDriveLargeFileUploadOptions {
 	fileName: string;
 	path?: string;
 	rangeSize?: number;
 	conflictBehavior?: string;
+	progressCallBack?: Progress;
 }
 
 /**
@@ -129,6 +131,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		const rangeSize = getValidRangeSize(options.rangeSize);
 		return new OneDriveLargeFileUploadTask(client, fileObject, session, {
 			rangeSize,
+			progressCallBack: options.progressCallBack,
 		});
 	}
 

@@ -240,7 +240,6 @@ export class LargeFileUploadTask {
 		const progressCallBack = this.options.progressCallBack;
 		try {
 			while (!this.uploadSession.isCancelled) {
-				console.log(progressCallBack);
 				const nextRange = this.getNextRange();
 				if (nextRange.maxValue === -1) {
 					const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
@@ -260,7 +259,6 @@ export class LargeFileUploadTask {
 				 */
 				if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
 					const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
-					console.log("completed" + (progressCallBack && progressCallBack.completed));
 					if (progressCallBack && progressCallBack.completed) {
 						progressCallBack.completed(uploadResult, progressCallBack.extraCallBackParams);
 					}
@@ -275,14 +273,12 @@ export class LargeFileUploadTask {
 					nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
 				};
 				this.updateTaskStatus(res);
-				console.log("progress" + (progressCallBack && progressCallBack.progress));
 				if (progressCallBack && progressCallBack.progress) {
 					progressCallBack.progress(nextRange, progressCallBack.extraCallBackParams);
 				}
 			}
 		} catch (error) {
 			if (progressCallBack && progressCallBack.failure) {
-				console.log("failure" + (progressCallBack && progressCallBack.failure));
 				progressCallBack.failure(error, progressCallBack.extraCallBackParams);
 			}
 			throw error;

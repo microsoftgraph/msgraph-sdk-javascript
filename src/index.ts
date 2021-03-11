@@ -28,12 +28,16 @@ export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
 export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
 export * from "./tasks/FileUploadUtil/FileObjectClasses/FileUpload";
+export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
+export * from "./tasks/FileUploadUtil/UploadResult";
 export * from "./tasks/FileUploadUtil/Interfaces/IProgress";
+export * from "./Range";
 export * from "./tasks/PageIterator";
 
 export * from "./Client";
 export * from "./CustomAuthenticationProvider";
 export * from "./GraphError";
+export * from "./GraphClientError";
 export * from "./GraphRequest";
 export * from "./IAuthProvider";
 export * from "./IAuthenticationProvider";

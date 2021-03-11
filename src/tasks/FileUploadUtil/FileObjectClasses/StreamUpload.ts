@@ -20,10 +20,9 @@ export class StreamUpload implements FileObject {
 	 * @public
 	 * Slices the file content to the given range
 	 * @param {Range} range - The range value
-	 * @returns The sliced ArrayBuffer or Blob
+	 * @returns The sliced file part
 	 */
 	public async sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer> {
-		//considering only paused streams
 		const rangeSize = range.maxValue - range.minValue + 1;
 		/* readable.readable Is true if it is safe to call readable.read(),
 		 * which means the stream has not been destroyed or emitted 'error' or 'end'
@@ -39,13 +38,19 @@ export class StreamUpload implements FileObject {
 		}
 	}
 
+	/**
+	 * @private
+	 * Reads the specified byte size from the stream
+	 * @param {number} size - The size of bytes to be read
+	 * @returns Buffer with the given length of data.
+	 */
+
 	private readNBytesFromStream(size: number): Promise<Buffer> {
 		return new Promise((resolve, reject) => {
 			const chunks = [];
 			let remainder = size;
 			let length = 0;
 			this.content.on("end", () => {
-				console.log("end called");
 				if (remainder > 0) {
 					return reject(new GraphClientError("Stream ended before reading required range size"));
 				}
@@ -58,14 +63,12 @@ export class StreamUpload implements FileObject {
 				let chunk;
 				console.log("within readable");
 				while (length < size && (chunk = this.content.read(remainder)) !== null) {
-					//console.log(this.content.readableEnded);
-					//console.log(this.content.readable + " " + i++);
 					length += chunk.length;
 					chunks.push(chunk);
 					if (remainder > 0) {
 						remainder = size - length;
 					}
-				} // end of while
+				}
 
 				if (length === size) {
 					return resolve(Buffer.concat(chunks));
