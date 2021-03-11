@@ -240,16 +240,13 @@ export class LargeFileUploadTask {
 		const progressCallBack = this.options.progressCallBack;
 		try {
 			while (!this.uploadSession.isCancelled) {
+				console.log(progressCallBack);
 				const nextRange = this.getNextRange();
 				if (nextRange.maxValue === -1) {
 					const err = new Error("Task with which you are trying to upload is already completed, Please check for your uploaded file");
 					err.name = "Invalid Session";
 					throw err;
 				}
-				console.log("min");
-				console.log(nextRange.minValue);
-				console.log(nextRange.maxValue);
-				console.log("max");
 				const fileSlice = await this.file.sliceFile(nextRange);
 				const rawResponse = await this.uploadSliceGetRawResponse(fileSlice, nextRange, this.file.size);
 				if (!rawResponse) {
@@ -262,10 +259,10 @@ export class LargeFileUploadTask {
 				 * (rawResponse.status === 200 && responseBody.id) -> This additional condition is applicable only for OneDrive API.
 				 */
 				if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
-					console.log("here");
 					const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
+					console.log("completed" + (progressCallBack && progressCallBack.completed));
 					if (progressCallBack && progressCallBack.completed) {
-						this.options.progressCallBack.completed(uploadResult);
+						progressCallBack.completed(uploadResult, progressCallBack.extraCallBackParams);
 					}
 					return uploadResult;
 				}
@@ -277,15 +274,16 @@ export class LargeFileUploadTask {
 					expirationDateTime: responseBody.expirationDateTime,
 					nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
 				};
-				console.log(responseBody.NextExpectedRanges);
 				this.updateTaskStatus(res);
+				console.log("progress" + (progressCallBack && progressCallBack.progress));
 				if (progressCallBack && progressCallBack.progress) {
-					this.options.progressCallBack.progress(nextRange);
+					progressCallBack.progress(nextRange, progressCallBack.extraCallBackParams);
 				}
 			}
 		} catch (error) {
 			if (progressCallBack && progressCallBack.failure) {
-				this.options.progressCallBack.failure(error);
+				console.log("failure" + (progressCallBack && progressCallBack.failure));
+				progressCallBack.failure(error, progressCallBack.extraCallBackParams);
 			}
 			throw error;
 		}
@@ -301,7 +299,6 @@ export class LargeFileUploadTask {
 	 * @returns The response body of the upload slice result
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
-		console.log("here");
 		const s = await this.client
 			.api(this.uploadSession.url)
 			.headers({

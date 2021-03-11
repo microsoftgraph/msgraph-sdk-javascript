@@ -3,6 +3,12 @@ import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 
+const copyRight = `/**
+* -------------------------------------------------------------------------------------------
+* Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+* See License in the project root for license information.
+* -------------------------------------------------------------------------------------------
+*/`;
 const config = [
 	{
 		input: ["lib/es/src/browser/index.js"],
@@ -21,13 +27,21 @@ const config = [
 			name: "MicrosoftGraph",
 		},
 		plugins: [
-			resolve(),
+			resolve({
+				browser: true,
+				preferBuiltins: false
+			}),
 			babel({
 				babelHelpers: "runtime",
 				exclude: "node_modules/**",
 			}),
 			commonjs({ include: "node_modules/**" }),
-			terser(),
+			// terser({
+			// 	format: {
+			// 		comments: false,
+			// 		preamble: copyRight,
+			// 	},
+			// }),
 		],
 	},
 ];
