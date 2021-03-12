@@ -9,29 +9,31 @@ References -
 
 Refer [this documentation](../CreatingClientInstance.md) for initializing the client.
 
-
 ## Using the LargeFileUpload Task
 
 #### Create an upload session
 First step for any upload task is the creation of the upload session.
+
 **Example of a payload for Outlook**
+
 ```typescript
 const payload = {
 	AttachmentItem: {
 		attachmentType: 'file',
-		name: "<FILE_NAMe>",
+		name: "<FILE_NAME>",
 		size: FILE_SIZE,
 	}
 }
 ```
 **Example of a payload for OneDrive**
+
 ```typescript
 const payload = {
-			item: {
-				"@microsoft.graph.conflictBehavior": "rename",
-				name: "<FILE_NAMe>",
-		},
-	};
+	item: {
+		"@microsoft.graph.conflictBehavior": "rename",
+		name: "<FILE_NAME>",
+	}
+};
 ```
 **Create the upload session**
 ```typescript
@@ -40,10 +42,11 @@ const uploadSession = LargeFileUploadTask.createUploadSession(client, "REQUEST_U
 #### Creating the LargeFileUploadTask object
 
 * To create the LargeFileUploadTask object you need to create -
-    *  An upload session as shown above.
-    *  A `FileObject` instance.
+* An upload session as shown above.
+* A `FileObject` instance.
 
 **FileObject Interface**
+
 ```typescript
 export interface FileObject {
 	content: any;
@@ -54,52 +57,56 @@ export interface FileObject {
 ```
 The Microsoft Graph JavaScript Client SDK provides two implementions -
 1. StreamUpload - Supports Node.js stream upload
-    ```typescript
-    
-    import StreamUpload from "@microsoft/microsoft-graph-client";
-    import * as fs from "fs";
-    
-    const fileName = "<FILE_NAME>";
-	const stats = fs.statSync(`./test/sample_files/${fileName}`);
-	const totalsize = stats.size;
-    const readStream = fs.createReadStream(`./test/sample_files/${fileName}`);
-	const fileObject = new StreamUpload(readStream, fileName, totalsize);
-    ```
-    Note - In case of  a browser application, you can use [stream-browserify](https://www.npmjs.com/package/stream-browserify), [buffer](https://www.npmjs.com/package/buffer);
+```typescript
+
+import StreamUpload from "@microsoft/microsoft-graph-client";
+import * as fs from "fs";
+
+const fileName = "<FILE_NAME>";
+const stats = fs.statSync(`./test/sample_files/${fileName}`);
+const totalsize = stats.size;
+const readStream = fs.createReadStream(`./test/sample_files/${fileName}`);
+const fileObject = new StreamUpload(readStream, fileName, totalsize);
+```
+Note - In case of  a browser application, you can use [stream-browserify](https://www.npmjs.com/package/stream-browserify) and [buffer](https://www.npmjs.com/package/buffer).
     
 2. FileUpload - Supports upload of file formats - ArrayBuffer, Blob, Buffer
-    ```typescript
-    
-    import FileUpload from "@microsoft/microsoft-graph-client";
-    import * as fs from "fs";
-    
-    const fileName = "<FILE_NAME>";
-	const stats = fs.statSync(`./test/sample_files/${fileName}`);
-	const totalsize = stats.size;
-    const readStream = fs.readFileSync(`./test/sample_files/${fileName}`);
-	const fileObject = new StreamUpload(readStream, fileName, totalsize);
-    ```
+```typescript
+
+import FileUpload from "@microsoft/microsoft-graph-client";
+import * as fs from "fs";
+
+const fileName = "<FILE_NAME>";
+const stats = fs.statSync(`./test/sample_files/${fileName}`);
+const totalsize = stats.size;
+const readStream = fs.readFileSync(`./test/sample_files/${fileName}`);
+const fileObject = new FileUpload(readStream, fileName, totalsize);
+```
 ***Note*** - You can also have a customized `FileObject` implementation which contains the `sliceFile(range: Range)` function which implements the logic to split the file into ranges.
 
-**Initiate the LargefileUploadTask options with Progres Handler and Range Size**
+**Initiate the LargefileUploadTask options with Progress Handler and Range Size**
+
 ```typescript
-    const progress = (range?: Range, extraCallBackParams?: unknown) => {
-	};
-	const completed = (result?: UploadResult, extraCallBackParams?: unknown) => {
-	};
-	const failure = (error?: GraphClientError, extraCallBackParams?: unknown) => {
-	};
-	const progressCallBack: Progress = {
-		progress,
-		completed,
-		failure,
-		extraCallBackParams, // additional parameters to the callback
-	};
-	
-	const options: LargeFileUploadTaskOptions = {
-			rangeSize: 327680,
-			progressCallBack: progressCallBack,
-	    };
+const progress = (range?: Range, extraCallBackParams?: unknown) => {
+	// Handle progress event
+};
+const completed = (result?: UploadResult, extraCallBackParams?: unknown) => {
+	// Handle completion event
+};
+const failure = (error?: GraphClientError, extraCallBackParams?: unknown) => {
+	// Handle failure event
+};
+const progressCallBack: Progress = {
+	progress,
+	completed,
+	failure,
+	extraCallBackParams, // additional parameters to the callback
+};
+
+const options: LargeFileUploadTaskOptions = {
+	rangeSize: 327680,
+	progressCallBack: progressCallBack,
+};
 ```
 **Create a LargefileUploadTask object**
 
@@ -110,30 +117,31 @@ const uploadResult:UploadResult = await uploadTask.upload();
 `UploadResult` contains the `location`(received in the Outlook API header response) and the `responseBody` properties.
 
 ## OneDriveLargeFileUploadTask.
-You can also use `OneDriveLargeFileUploadTask` which provides easier access to upload to OneDrive API.
+_You can also use `OneDriveLargeFileUploadTask` which provides easier access to upload to OneDrive API_
+
 Example -
 ```typescript
-		const progressCallBack: Progress = {
-			progress,
-			completed,
-			failure,
-			extraCallBackParams: true,
-		};
+const progressCallBack: Progress = {
+	progress,
+	completed,
+	failure,
+	extraCallBackParams: true,
+};
 
-		const options: OneDriveLargeFileUploadOptions = {
-			path: "/Documents",
-			fileName,
-			rangeSize: 1024 * 1024,
-			progressCallBack,
-		};
-		const readStream = fs.createReadStream(`./fileName`);
-		const fileObject = new StreamUpload(readStream, fileName, totalsize);
-		or
-		const readFile = fs.readFileSync(`./fileName`);
-		const fileObject = new FileUpload(readStream, fileName, totalsize);
+const options: OneDriveLargeFileUploadOptions = {
+	path: "/Documents",
+	fileName,
+	rangeSize: 1024 * 1024,
+	progressCallBack,
+};
+const readStream = fs.createReadStream(`./fileName`);
+const fileObject = new StreamUpload(readStream, fileName, totalsize);
+or
+const readFile = fs.readFileSync(`./fileName`);
+const fileObject = new FileUpload(readStream, fileName, totalsize);
 
-		const uploadTask = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
-		const uploadResult:UploadResult = await uploadTask.upload();
+const uploadTask = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
+const uploadResult:UploadResult = await uploadTask.upload();
 }
 ```
 **Note - The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.**
