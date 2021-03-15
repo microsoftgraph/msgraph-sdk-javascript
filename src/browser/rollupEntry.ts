@@ -7,9 +7,9 @@
 /**
  * The purpose of this file is to export from src/browser/index.ts
  * and the src/browser/ImplicitMSALAuthenticationProvider.
- * No separate rollup entry point is added for ImplicitMSALAuthenticationProvider as it is deprecated.
+ * No separate rollup entry point and bundled file is added for ImplicitMSALAuthenticationProvider as it is deprecated.
  * After the ImplicitMSALAuthenticationProvider feature is removed,
- * the entry point for rollup should point to src/browser/index.ts/.
+ * the entry point for rollup should point to src/browser/index.ts.
  */
 export * from "./index";
 export * from "./ImplicitMSALAuthenticationProvider";

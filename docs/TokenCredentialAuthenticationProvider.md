@@ -67,6 +67,6 @@ The browser use of the file is as follows:
 var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes });
 
 client = MicrosoftGraph.Client.initWithMiddleware({
-	authProvider: auth,
+	authProvider: authProvider,
 });
 ```
