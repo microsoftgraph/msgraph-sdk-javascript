@@ -16,6 +16,10 @@ import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOpti
 import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderOptions";
 
 /**
+ * @deprecated Use of ImplicitMSALAuthenticationProvider, that is,
+ * using the implicit authorization flow is not recommended.
+ * Use the TokenCredentialAuthenticationProvider with azure/identity library or
+ * a CustomAuthenticationProvider with msal-browser library instead.
  * @class
  * Class representing ImplicitMSALAuthenticationProvider
  * @extends AuthenticationProvider
