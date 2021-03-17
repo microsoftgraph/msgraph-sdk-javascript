@@ -11,7 +11,7 @@
 
 import { Client } from "../index";
 import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
-import { Progress } from "./FileUploadUtil/Interfaces/IProgress";
+import { UploadEventHandlers } from "./FileUploadUtil/Interfaces/IUploadEventHandlers";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
@@ -27,7 +27,7 @@ export interface OneDriveLargeFileUploadOptions {
 	path?: string;
 	rangeSize?: number;
 	conflictBehavior?: string;
-	progressCallBack?: Progress;
+	uploadEventHandlers?: UploadEventHandlers;
 }
 
 /**
@@ -46,7 +46,7 @@ interface OneDriveFileUploadSessionPayLoad {
  * @class
  * Class representing OneDriveLargeFileUploadTask
  */
-export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
+export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	/**
 	 * @private
 	 * @static
@@ -121,7 +121,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async createTaskWithFileObject(client: Client, fileObject: FileObject, options: OneDriveLargeFileUploadOptions) {
+	public static async createTaskWithFileObject<T>(client: Client, fileObject: FileObject<T>, options: OneDriveLargeFileUploadOptions) {
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const uploadSessionPayload: OneDriveFileUploadSessionPayLoad = {
 			fileName: options.fileName,
@@ -131,7 +131,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 		const rangeSize = getValidRangeSize(options.rangeSize);
 		return new OneDriveLargeFileUploadTask(client, fileObject, session, {
 			rangeSize,
-			progressCallBack: options.progressCallBack,
+			uploadEventHandlers: options.uploadEventHandlers,
 		});
 	}
 
@@ -166,7 +166,7 @@ export class OneDriveLargeFileUploadTask extends LargeFileUploadTask {
 	 * @param {LargeFileUploadTaskOptions} options - The upload task options
 	 * @returns An instance of OneDriveLargeFileUploadTask
 	 */
-	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+	public constructor(client: Client, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
 		super(client, file, uploadSession, options);
 	}
 

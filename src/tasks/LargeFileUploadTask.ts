@@ -15,7 +15,7 @@ import { Client } from "../index";
 import { Range } from "../Range";
 import { ResponseType } from "../ResponseType";
 import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
-import { Progress } from "./FileUploadUtil/Interfaces/IProgress";
+import { UploadEventHandlers } from "./FileUploadUtil/Interfaces/IUploadEventHandlers";
 import { UploadResult } from "./FileUploadUtil/UploadResult";
 
 /**
@@ -45,7 +45,7 @@ interface UploadStatusResponse {
  */
 export interface LargeFileUploadTaskOptions {
 	rangeSize?: number;
-	progressCallBack?: Progress;
+	uploadEventHandlers?: UploadEventHandlers;
 }
 
 /**
@@ -60,6 +60,7 @@ export interface LargeFileUploadSession {
 	isCancelled?: boolean;
 }
 
+export type SliceType = ArrayBuffer | Blob | Buffer;
 /**
  * @interface
  * Signature to define the properties and content of the file in upload task
@@ -67,18 +68,18 @@ export interface LargeFileUploadSession {
  * @property {string} name - Specifies the file name with extension
  * @property {number} size - Specifies size of the file
  */
-export interface FileObject {
-	content: any;
+export interface FileObject<T> {
+	content: T;
 	name: string;
 	size: number;
-	sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer>;
+	sliceFile(range: Range): SliceType | Promise<SliceType>;
 }
 
 /**
  * @class
  * Class representing LargeFileUploadTask
  */
-export class LargeFileUploadTask {
+export class LargeFileUploadTask<T> {
 	/**
 	 * @private
 	 * Default value for the rangeSize
@@ -95,7 +96,7 @@ export class LargeFileUploadTask {
 	 * @protected
 	 * The object holding file details
 	 */
-	protected file: FileObject;
+	protected file: FileObject<T>;
 
 	/**
 	 * @protected
@@ -148,19 +149,16 @@ export class LargeFileUploadTask {
 	 * @param {LargeFileUploadTaskOptions} options - The upload task options
 	 * @returns An instance of LargeFileUploadTask
 	 */
-	public constructor(client: Client, file: FileObject, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
+	public constructor(client: Client, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
 		this.client = client;
 
-		if (!file.sliceFile) {
-			console.warn("Please pass a fileObject instance");
-			try {
-				this.file = new FileUpload(file.content, file.name, file.size);
-			} catch (err) {
-				throw new Error("use file upload object");
-			}
+		if (!file.sliceFile && (file.content instanceof Blob || file.content instanceof ArrayBuffer || file.content instanceof Buffer)) {
+			console.warn("Please pass a FileObject class instance");
+			//this.file = new FileUpload(file.content, file.name, file.size);
 		} else {
 			this.file = file;
 		}
+		this.file = file;
 		if (options.rangeSize === undefined) {
 			options.rangeSize = this.DEFAULT_FILE_SIZE;
 		}
@@ -226,8 +224,11 @@ export class LargeFileUploadTask {
 	 * @returns The sliced ArrayBuffer or Blob
 	 */
 	public sliceFile(range: Range): ArrayBuffer | Blob {
-		const blob = this.file.content.sliceFile(range.minValue, range.maxValue + 1);
-		return blob;
+		console.warn("The LargeFileUploadTask.sliceFile() function has been deprecated and moved into the FileObject interface.");
+		if (this.file.content instanceof ArrayBuffer || this.file.content instanceof Blob || this.file.content instanceof Buffer) {
+			return this.file.content.slice(range.minValue, range.maxValue + 1);
+		}
+		throw new GraphClientError("The LargeFileUploadTask.sliceFile() function expects only Blob, ArrayBuffer or Buffer file content. Please note that the sliceFile() function is deprecated.");
 	}
 
 	/**
@@ -237,7 +238,7 @@ export class LargeFileUploadTask {
 	 * @returns The promise resolves to uploaded response
 	 */
 	public async upload(): Promise<any> {
-		const progressCallBack = this.options.progressCallBack;
+		const uploadEventHandlers = this.options.uploadEventHandlers;
 		try {
 			while (!this.uploadSession.isCancelled) {
 				const nextRange = this.getNextRange();
@@ -259,8 +260,8 @@ export class LargeFileUploadTask {
 				 */
 				if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
 					const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
-					if (progressCallBack && progressCallBack.completed) {
-						progressCallBack.completed(uploadResult, progressCallBack.extraCallbackParams);
+					if (uploadEventHandlers && uploadEventHandlers.completed) {
+						uploadEventHandlers.completed(uploadResult, uploadEventHandlers.extraCallbackParam);
 					}
 					return uploadResult;
 				}
@@ -269,17 +270,17 @@ export class LargeFileUploadTask {
 				 * https://github.com/microsoftgraph/msgraph-sdk-serviceissues/issues/39
 				 */
 				const res: UploadStatusResponse = {
-					expirationDateTime: responseBody.expirationDateTime,
+					expirationDateTime: responseBody.expirationDateTime || responseBody.ExpirationDateTime,
 					nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
 				};
 				this.updateTaskStatus(res);
-				if (progressCallBack && progressCallBack.progress) {
-					progressCallBack.progress(nextRange, progressCallBack.extraCallbackParams);
+				if (uploadEventHandlers && uploadEventHandlers.progress) {
+					uploadEventHandlers.progress(nextRange, uploadEventHandlers.extraCallbackParam);
 				}
 			}
 		} catch (error) {
-			if (progressCallBack && progressCallBack.failure) {
-				progressCallBack.failure(error, progressCallBack.extraCallbackParams);
+			if (uploadEventHandlers && uploadEventHandlers.failure) {
+				uploadEventHandlers.failure(error, uploadEventHandlers.extraCallbackParam);
 			}
 			throw error;
 		}

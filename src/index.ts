@@ -30,7 +30,7 @@ export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
 export * from "./tasks/FileUploadUtil/FileObjectClasses/FileUpload";
 export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
 export * from "./tasks/FileUploadUtil/UploadResult";
-export * from "./tasks/FileUploadUtil/Interfaces/IProgress";
+export * from "./tasks/FileUploadUtil/Interfaces/IUploadEventHandlers";
 export * from "./Range";
 export * from "./tasks/PageIterator";
 

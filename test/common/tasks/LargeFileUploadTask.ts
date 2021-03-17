@@ -12,7 +12,7 @@ import * as sinon from "sinon";
 import { Range } from ".../../../src/Range";
 import { FileUpload, LargeFileUploadTaskOptions } from "../../../src";
 import { GraphClientError } from "../../../src/GraphClientError";
-import { Progress } from "../../../src/tasks/FileUploadUtil/Interfaces/IProgress";
+import { UploadEventHandlers } from "../../../src/tasks/FileUploadUtil/Interfaces/IUploadEventHandlers";
 import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
@@ -161,16 +161,16 @@ describe("LargeFileUploadTask.ts", () => {
 					isProgressFailureCalled = true;
 				};
 
-				const progressCallBack: Progress = {
+				const uploadEventHandlers: UploadEventHandlers = {
 					progress,
 					completed,
 					failure,
-					extraCallbackParams: true,
+					extraCallbackParam: true,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
 					rangeSize,
-					progressCallBack,
+					uploadEventHandlers,
 				};
 
 				const emptyBody = {};
@@ -229,13 +229,13 @@ describe("LargeFileUploadTask.ts", () => {
 				const completed = (res?: UploadResult) => {
 					isProgressCompletedCalled = true;
 				};
-				const progressCallBack: Progress = {
+				const uploadEventHandlers: UploadEventHandlers = {
 					completed,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
 					rangeSize,
-					progressCallBack,
+					uploadEventHandlers,
 				};
 
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
@@ -272,14 +272,14 @@ describe("LargeFileUploadTask.ts", () => {
 				const failure = (error?: GraphClientError) => {
 					isProgressFailureCalled = true;
 				};
-				const progressCallBack: Progress = {
+				const uploadEventHandlers: UploadEventHandlers = {
 					progress,
 					failure,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
 					rangeSize,
-					progressCallBack,
+					uploadEventHandlers,
 				};
 
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
@@ -329,16 +329,16 @@ describe("LargeFileUploadTask.ts", () => {
 					assert.isTrue(extraCallbackParams);
 				};
 
-				const progressCallBack: Progress = {
+				const uploadEventHandlers: UploadEventHandlers = {
 					progress,
 					completed,
 					failure,
-					extraCallbackParams: true,
+					extraCallbackParam: true,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
 					rangeSize,
-					progressCallBack,
+					uploadEventHandlers,
 				};
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
 				uploadTask["updateTaskStatus"](statusResponse);

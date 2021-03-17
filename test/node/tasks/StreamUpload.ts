@@ -14,6 +14,7 @@ import { StreamUpload } from "../../../src/tasks/FileUploadUtil/FileObjectClasse
 
 describe("StreamUpload", () => {
 	const fileName = "sample_image.jpg";
+	const filePath = `./test/sample_files/${fileName}`;
 	const stats = fs.statSync(`./test/sample_files/${fileName}`);
 	const totalsize = stats.size;
 	it("Stream size smaller than upload range size", async () => {
@@ -29,8 +30,7 @@ describe("StreamUpload", () => {
 	});
 
 	it("Stream size greater than upload range size", async () => {
-		const fileName = "sample_image.jpg";
-		const readStream = fs.createReadStream(`./test/sample_files/${fileName}`, { highWaterMark: 200 });
+		const readStream = fs.createReadStream(filePath, { highWaterMark: 200 });
 		const sliceSize = 100;
 
 		const upload = new StreamUpload(readStream, fileName, totalsize);
@@ -41,8 +41,7 @@ describe("StreamUpload", () => {
 	});
 
 	it("Stream size with complete file and greater than upload range size", async () => {
-		const fileName = "sample_image.jpg";
-		const readStream = fs.createReadStream(`./test/sample_files/${fileName}`, { highWaterMark: totalsize });
+		const readStream = fs.createReadStream(filePath, { highWaterMark: totalsize });
 		const sliceSize = 100;
 
 		const upload = new StreamUpload(readStream, fileName, totalsize);

@@ -6,21 +6,21 @@ import { UploadResult } from "../UploadResult";
 /**
  * Interface enabling progress handling with callbacks.
  */
-export interface Progress {
+export interface UploadEventHandlers {
 	/**
 	 * Parameters that are passed into the progress, completed, failure callback options.
 	 */
-	extraCallbackParams?: unknown;
+	extraCallbackParam?: unknown;
 	/**
 	 * Callback function called on each slice upload during the LargeFileUploadTask.upload() process
 	 */
-	progress?: (range?: Range, extraCallbackParams?: unknown) => void;
+	progress?: (range?: Range, extraCallbackParam?: unknown) => void;
 	/**
-	 *  Callback function called when the LargeFileUploadTask.upload() is successfully complete
+	 *  Callback function called when the LargeFileUploadTask.upload() is successfully completed.
 	 */
-	completed?: (upload?: UploadResult, extraCallbackParams?: unknown) => void;
+	completed?: (upload?: UploadResult, extraCallbackParam?: unknown) => void;
 	/**
 	 * Callback function called when the LargeFileUploadTask.upload() fails or errors out
 	 */
-	failure?: (error?: GraphClientError, extraCallbackParams?: unknown) => void;
+	failure?: (error?: GraphClientError, extraCallbackParam?: unknown) => void;
 }

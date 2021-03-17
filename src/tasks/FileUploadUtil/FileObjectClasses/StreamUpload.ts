@@ -3,17 +3,11 @@ import { Readable } from "stream";
 import { GraphClientError } from "../../../GraphClientError";
 import { Range } from "../../../Range";
 import { FileObject } from "../../LargeFileUploadTask";
-export class StreamUpload implements FileObject {
-	content: Readable;
-	name: string;
-	size: number;
-	public constructor(content: Readable, name: string, size: number) {
+export class StreamUpload implements FileObject<Readable> {
+	public constructor(public content: Readable, public name: string, public size: number) {
 		if (!content || !name || !size) {
 			throw new GraphClientError("Please provide the Readable Stream content, name of the file and size of the file");
 		}
-		this.content = content;
-		this.size = size;
-		this.name = name;
 	}
 
 	/**
@@ -27,7 +21,7 @@ export class StreamUpload implements FileObject {
 		/* readable.readable Is true if it is safe to call readable.read(),
 		 * which means the stream has not been destroyed or emitted 'error' or 'end'
 		 */
-		if (this.content.readable) {
+		if (this.content && this.content.readable) {
 			if (this.content.readableLength >= rangeSize) {
 				return this.content.read(rangeSize);
 			} else {
@@ -73,7 +67,7 @@ export class StreamUpload implements FileObject {
 					return resolve(Buffer.concat(chunks));
 				}
 
-				if (!this.content.readable) {
+				if (!this.content || !this.content.readable) {
 					return reject(new GraphClientError("Error encountered while reading the stream during the upload"));
 				}
 			});
