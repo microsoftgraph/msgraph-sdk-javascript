@@ -54,8 +54,8 @@ const uploadSession = LargeFileUploadTask.createUploadSession(client, "REQUEST_U
 **FileObject Interface**
 
 ```typescript
-export interface FileObject {
-	content: any;
+export interface FileObject<T> {
+	content: T;
 	name: string;
 	size: number;
 	sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer>;
@@ -100,17 +100,10 @@ const fileObject = new FileUpload(readStream, fileName, totalsize);
 const progress = (range?: Range, extraCallBackParams?: unknown) => {
 	// Handle progress event
 };
-const completed = (result?: UploadResult, extraCallBackParams?: unknown) => {
-	// Handle completion event
-};
-const failure = (error?: GraphClientError, extraCallBackParams?: unknown) => {
-	// Handle failure event
-};
+
 const progressCallBack: Progress = {
 	progress,
-	completed,
-	failure,
-	extraCallBackParams, // additional parameters to the callback
+	extraCallBackParam, // additional parameters to the callback
 };
 
 const options: LargeFileUploadTaskOptions = {
@@ -159,7 +152,7 @@ const uploadResult:UploadResult = await uploadTask.upload();
 }
 ```
 
-**Note - The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.**
+> Note: The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.**
 
 ## We can just resume the broken upload
 
