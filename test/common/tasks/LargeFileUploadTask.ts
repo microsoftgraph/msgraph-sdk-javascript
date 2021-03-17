@@ -142,30 +142,17 @@ describe("LargeFileUploadTask.ts", () => {
 			id: "TEST_ID",
 		};
 
-		describe("Should return a Upload Result object after a completed task with 201 status", () => {
+		it("Should return a Upload Result object after a completed task with 201 status", () => {
 			const location = "TEST_URL";
 			it("Test with progressCallback", async () => {
 				let isProgressReportCalled = false;
-				let isProgressCompletedCalled = false;
-				let isProgressFailureCalled = false;
 
 				const progress = (range?: Range) => {
 					isProgressReportCalled = true;
 				};
-				const completed = (result?: UploadResult, extraCallbackParams?: unknown) => {
-					assert.isTrue(extraCallbackParams);
-					assert.equal(result.location, location);
-					isProgressCompletedCalled = true;
-				};
-				const failure = (error?: GraphClientError) => {
-					isProgressFailureCalled = true;
-				};
 
 				const uploadEventHandlers: UploadEventHandlers = {
 					progress,
-					completed,
-					failure,
-					extraCallbackParam: true,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
@@ -191,9 +178,7 @@ describe("LargeFileUploadTask.ts", () => {
 				assert.isDefined(result);
 				assert.instanceOf(result, UploadResult);
 				assert.equal(result["location"], location);
-				assert.isTrue(isProgressCompletedCalled);
 				assert.isFalse(isProgressReportCalled);
-				assert.isFalse(isProgressFailureCalled);
 			});
 
 			it("Test without progress callback", async () => {
@@ -220,61 +205,15 @@ describe("LargeFileUploadTask.ts", () => {
 			});
 		});
 
-		describe("Should return a Upload Result object after a completed task with 200 status and body", () => {
-			it("Test with completed progress callback", async () => {
-				const isProgressReportCalled = false;
-				let isProgressCompletedCalled = false;
-				const isProgressFailureCalled = false;
-
-				const completed = (res?: UploadResult) => {
-					isProgressCompletedCalled = true;
-				};
-				const uploadEventHandlers: UploadEventHandlers = {
-					completed,
-				};
-
-				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize,
-					uploadEventHandlers,
-				};
-
-				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
-				const status200 = {
-					status: 200,
-					statusText: "OK",
-					headers: {
-						"Content-Type": "application/json",
-						location,
-					},
-				};
-				const rawResponse = new Response(JSON.stringify(body), status200);
-
-				const moq = sinon.mock(uploadTask);
-				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
-				const result = await uploadTask.upload();
-				assert.isDefined(result);
-				assert.instanceOf(result, UploadResult);
-				assert.equal(result["location"], location);
-				const responseBody = result["responseBody"];
-				assert.isDefined(responseBody);
-				assert.equal(responseBody["id"], "TEST_ID");
-				assert.isTrue(isProgressCompletedCalled);
-				assert.isFalse(isProgressReportCalled);
-				assert.isFalse(isProgressFailureCalled);
-			});
-			it("Test with progress callback other than completed", async () => {
+		it("Should return a Upload Result object after a completed task with 200 status and body", () => {
+			it("Test with progress callback", async () => {
 				let isProgressReportCalled = false;
-				const isProgressCompletedCalled = false;
-				let isProgressFailureCalled = false;
+
 				const progress = (range?: Range) => {
 					isProgressReportCalled = true;
 				};
-				const failure = (error?: GraphClientError) => {
-					isProgressFailureCalled = true;
-				};
 				const uploadEventHandlers: UploadEventHandlers = {
 					progress,
-					failure,
 				};
 
 				const optionsWithProgress: LargeFileUploadTaskOptions = {
@@ -283,6 +222,29 @@ describe("LargeFileUploadTask.ts", () => {
 				};
 
 				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
+				const status200 = {
+					status: 200,
+					statusText: "OK",
+					headers: {
+						"Content-Type": "application/json",
+						location,
+					},
+				};
+				const rawResponse = new Response(JSON.stringify(body), status200);
+
+				const moq = sinon.mock(uploadTask);
+				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+				const result = await uploadTask.upload();
+				assert.isDefined(result);
+				assert.instanceOf(result, UploadResult);
+				assert.equal(result["location"], location);
+				const responseBody = result["responseBody"];
+				assert.isDefined(responseBody);
+				assert.equal(responseBody["id"], "TEST_ID");
+				assert.isFalse(isProgressReportCalled);
+			});
+			it("Test without progress callback", async () => {
+				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 
 				const status200 = {
 					status: 200,
@@ -303,74 +265,25 @@ describe("LargeFileUploadTask.ts", () => {
 				const responseBody = result["responseBody"];
 				assert.isDefined(responseBody);
 				assert.equal(responseBody["id"], "TEST_ID");
-				assert.isFalse(isProgressCompletedCalled);
-				assert.isFalse(isProgressReportCalled);
-				assert.isFalse(isProgressFailureCalled);
 			});
 		});
-		describe("Should return an exception while trying to upload the file upload completed task", () => {
+		it("Should return an exception while trying to upload the file upload completed task", (done) => {
 			const statusResponse = {
 				expirationDateTime: "2018-08-06T09:05:45.195Z",
 				nextExpectedRanges: [],
 			};
-			it("Test with progressCallback", (done) => {
-				let isProgressReportCalled = false;
-				let isProgressCompletedCalled = false;
-				let isProgressFailureCalled = false;
-
-				const progress = (range?: Range) => {
-					isProgressReportCalled = true;
-				};
-				const completed = (res?: UploadResult) => {
-					isProgressCompletedCalled = true;
-				};
-				const failure = (error?: GraphClientError, extraCallbackParams?: unknown) => {
-					isProgressFailureCalled = true;
-					assert.isTrue(extraCallbackParams);
-				};
-
-				const uploadEventHandlers: UploadEventHandlers = {
-					progress,
-					completed,
-					failure,
-					extraCallbackParam: true,
-				};
-
-				const optionsWithProgress: LargeFileUploadTaskOptions = {
-					rangeSize,
-					uploadEventHandlers,
-				};
-				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
-				uploadTask["updateTaskStatus"](statusResponse);
-				uploadTask
-					.upload()
-					.then(() => {
-						throw new Error("Test Failed - Upload is working for upload completed task");
-					})
-					.catch((err) => {
-						assert.equal(err.name, "Invalid Session");
-						assert.equal(err.message, "Task with which you are trying to upload is already completed, Please check for your uploaded file");
-						assert.isFalse(isProgressCompletedCalled);
-						assert.isFalse(isProgressReportCalled);
-						assert.isTrue(isProgressFailureCalled);
-						done();
-					});
-			});
-
-			it("Test without progressCallback", (done) => {
-				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
-				uploadTask["updateTaskStatus"](statusResponse);
-				uploadTask
-					.upload()
-					.then(() => {
-						throw new Error("Test Failed - Upload is working for upload completed task");
-					})
-					.catch((err) => {
-						assert.equal(err.name, "Invalid Session");
-						assert.equal(err.message, "Task with which you are trying to upload is already completed, Please check for your uploaded file");
-						done();
-					});
-			});
+			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+			uploadTask["updateTaskStatus"](statusResponse);
+			uploadTask
+				.upload()
+				.then(() => {
+					throw new Error("Test Failed - Upload is working for upload completed task");
+				})
+				.catch((err) => {
+					assert.equal(err.name, "Invalid Session");
+					assert.equal(err.message, "Task with which you are trying to upload is already completed, Please check for your uploaded file");
+					done();
+				});
 		});
 	});
 });
