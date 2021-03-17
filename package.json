@@ -17,6 +17,7 @@
 	"main": "lib/src/index.js",
 	"module": "lib/es/src/index.js",
 	"browser": {
+		"./lib/es/src/index.js": "./lib/es/src/browser/index.js",
 		"stream": "stream-browserify"
 	},
 	"types": "./lib/src/index.d.ts",

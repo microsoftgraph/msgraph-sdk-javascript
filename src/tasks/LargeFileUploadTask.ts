@@ -59,7 +59,12 @@ export interface LargeFileUploadSession {
 	isCancelled?: boolean;
 }
 
+/**
+ * @type
+ * Representing the return type of the sliceFile function that is type of the slice of a given range.
+ */
 export type SliceType = ArrayBuffer | Blob | Buffer;
+
 /**
  * @interface
  * Signature to define the properties and content of the file in upload task

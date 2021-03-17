@@ -6,7 +6,7 @@
  */
 
 import { GraphClientError } from "../../../GraphClientError";
-import { FileObject } from "../../LargeFileUploadTask";
+import { FileObject, SliceType } from "../../LargeFileUploadTask";
 import { Range } from "../Range";
 
 /**
@@ -14,7 +14,7 @@ import { Range } from "../Range";
  * Class used for creating LargeFileUploadTask fileobject.
  * This class accepts files of type ArrayBuffer, Blob, Buffer.
  */
-export class FileUpload implements FileObject<ArrayBuffer | Blob | Buffer> {
+export class FileUpload implements FileObject<SliceType> {
 	/**
 	 * @public
 	 * @constructor

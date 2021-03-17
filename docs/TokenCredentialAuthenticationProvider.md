@@ -54,3 +54,13 @@ const client = Client.initWithMiddleware({
 });
 const res = await client.api("/users/").get();
 ```
+
+The `TokenCredentialAuthenticationProvider` and the `TokenCredentialAuthenticationProviderOptions` are bundled into the `lib/graph-client-tokenCredentialAuthProvider.js` file in an `iife` format.
+
+The browser use of the file is as follows:
+
+```html
+<!-- include the script -->
+<script type="text/javascript" src="<PATH_TO_SCRIPT>/graph-client-tokenCredentialAuthProvider.js"></script>
+; // create an authProvider var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes }); client = MicrosoftGraph.Client.initWithMiddleware({ authProvider: authProvider, });
+```
