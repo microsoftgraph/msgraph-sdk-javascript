@@ -59,10 +59,9 @@ The `TokenCredentialAuthenticationProvider` and the `TokenCredentialAuthenticati
 
 The browser use of the file is as follows:
 
-```javascript
-// include the script
+```html
+<!-- include the script -->
 <script type="text/javascript" src="<PATH_TO_SCRIPT>/graph-client-tokenCredentialAuthProvider.js"></script>;
-
 // create an authProvider
 var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes });
 
