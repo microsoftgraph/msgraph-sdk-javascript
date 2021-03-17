@@ -9,11 +9,10 @@
 import { assert } from "chai";
 import * as sinon from "sinon";
 
-import { Range } from ".../../../src/Range";
+import { Range } from ".../../../src/tasks/FileUploadTask/Range";
 import { FileUpload, LargeFileUploadTaskOptions } from "../../../src";
-import { GraphClientError } from "../../../src/GraphClientError";
-import { UploadEventHandlers } from "../../../src/tasks/FileUploadUtil/Interfaces/IUploadEventHandlers";
-import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
+import { UploadEventHandlers } from "../../../src/tasks/FileUploadTask/Interfaces/IUploadEventHandlers";
+import { UploadResult } from "../../../src/tasks/FileUploadTask/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
 

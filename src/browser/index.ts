@@ -21,9 +21,15 @@ export * from "../middleware/options/TelemetryHandlerOptions";
 export * from "../middleware/options/ChaosHandlerOptions";
 export * from "../middleware/options/ChaosStrategy";
 export * from "../middleware/ChaosHandler";
-export * from "../tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
+
 export * from "../tasks/LargeFileUploadTask";
 export * from "../tasks/OneDriveLargeFileUploadTask";
+export * from "../tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "../tasks/FileUploadTask/FileObjectClasses/FileUpload";
+export * from "../tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "../tasks/FileUploadTask/UploadResult";
+export * from "../tasks/FileUploadTask/Interfaces/IUploadEventHandlers";
+export * from "../tasks/FileUploadTask/Range";
 export * from "../tasks/PageIterator";
 
 export * from "../Client";

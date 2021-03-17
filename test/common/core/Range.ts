@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { Range } from "../../../src/Range";
+import { Range } from "../../../src/tasks/FileUploadTask/Range";
 
 describe("Range.ts", () => {
 	describe("Constructor", () => {

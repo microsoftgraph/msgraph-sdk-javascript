@@ -10,7 +10,7 @@ import "isomorphic-fetch";
 import { assert } from "chai";
 import * as fs from "fs";
 
-import { StreamUpload } from "../../../src/tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
+import { StreamUpload } from "../../../src/tasks/FileUploadTask/FileObjectClasses/StreamUpload";
 
 describe("StreamUpload", () => {
 	const fileName = "sample_image.jpg";

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/type-annotation-spacing */
-import { Range } from "../../../Range";
+import { Range } from "../Range";
 
 /**
  * Interface enabling progress handling with callbacks.

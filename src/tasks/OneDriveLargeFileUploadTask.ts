@@ -10,8 +10,8 @@
  */
 
 import { Client } from "../index";
-import { FileUpload } from "./FileUploadUtil/FileObjectClasses/FileUpload";
-import { UploadEventHandlers } from "./FileUploadUtil/Interfaces/IUploadEventHandlers";
+import { FileUpload } from "./FileUploadTask/FileObjectClasses/FileUpload";
+import { UploadEventHandlers } from "./FileUploadTask/Interfaces/IUploadEventHandlers";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
@@ -146,7 +146,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {string} conflictBehavior - Conflict behaviour option. Default is 'rename'
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<any> {
+	public static async createUploadSession(client: Client, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<LargeFileUploadSession> {
 		const payload = {
 			item: {
 				"@microsoft.graph.conflictBehavior": payloadOptions.conflictBehavior || "rename",

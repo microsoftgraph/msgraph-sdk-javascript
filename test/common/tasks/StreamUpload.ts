@@ -11,7 +11,7 @@ import { assert } from "chai";
 import { Readable } from "stream";
 
 import { GraphClientError } from "../../../src";
-import { StreamUpload } from "../../../src/tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
+import { StreamUpload } from "../../../src/tasks/FileUploadTask/FileObjectClasses/StreamUpload";
 
 const fileName = "Test_File_Name";
 describe("StreamUpload.test", () => {

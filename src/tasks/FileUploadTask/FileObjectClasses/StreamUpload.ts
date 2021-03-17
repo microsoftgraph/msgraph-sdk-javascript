@@ -1,8 +1,8 @@
 import { Readable } from "stream";
 
 import { GraphClientError } from "../../../GraphClientError";
-import { Range } from "../../../Range";
 import { FileObject } from "../../LargeFileUploadTask";
+import { Range } from "../Range";
 export class StreamUpload implements FileObject<Readable> {
 	public constructor(public content: Readable, public name: string, public size: number) {
 		if (!content || !name || !size) {

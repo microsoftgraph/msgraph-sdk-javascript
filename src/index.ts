@@ -26,12 +26,12 @@ export * from "./middleware/ChaosHandler";
 
 export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
-export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
-export * from "./tasks/FileUploadUtil/FileObjectClasses/FileUpload";
-export * from "./tasks/FileUploadUtil/FileObjectClasses/StreamUpload";
-export * from "./tasks/FileUploadUtil/UploadResult";
-export * from "./tasks/FileUploadUtil/Interfaces/IUploadEventHandlers";
-export * from "./Range";
+export * from "./tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "./tasks/FileUploadTask/FileObjectClasses/FileUpload";
+export * from "./tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "./tasks/FileUploadTask/UploadResult";
+export * from "./tasks/FileUploadTask/Interfaces/IUploadEventHandlers";
+export * from "./tasks/FileUploadTask/Range";
 export * from "./tasks/PageIterator";
 
 export * from "./Client";

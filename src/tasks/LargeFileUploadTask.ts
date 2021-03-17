@@ -12,10 +12,10 @@
 import { GraphClientError } from "../GraphClientError";
 import { GraphResponseHandler } from "../GraphResponseHandler";
 import { Client } from "../index";
-import { Range } from "../Range";
 import { ResponseType } from "../ResponseType";
-import { UploadEventHandlers } from "./FileUploadUtil/Interfaces/IUploadEventHandlers";
-import { UploadResult } from "./FileUploadUtil/UploadResult";
+import { UploadEventHandlers } from "./FileUploadTask/Interfaces/IUploadEventHandlers";
+import { Range } from "./FileUploadTask/Range";
+import { UploadResult } from "./FileUploadTask/UploadResult";
 
 /**
  * @interface
@@ -125,7 +125,7 @@ export class LargeFileUploadTask<T> {
 	 * @param {KeyValuePairObjectStringNumber} headers - The headers that needs to be sent
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<any> {
+	public static async createUploadSession(client: Client, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<LargeFileUploadSession> {
 		const session = await client
 			.api(requestUrl)
 			.headers(headers)
@@ -157,7 +157,7 @@ export class LargeFileUploadTask<T> {
 			this.file = file;
 		}
 		this.file = file;
-		if (options.rangeSize === undefined) {
+		if (!options.rangeSize) {
 			options.rangeSize = this.DEFAULT_FILE_SIZE;
 		}
 
@@ -235,7 +235,7 @@ export class LargeFileUploadTask<T> {
 	 * Uploads file to the server in a sequential order by slicing the file
 	 * @returns The promise resolves to uploaded response
 	 */
-	public async upload(): Promise<any> {
+	public async upload(): Promise<UploadResult> {
 		const uploadEventHandlers = this.options.uploadEventHandlers;
 		while (!this.uploadSession.isCancelled) {
 			const nextRange = this.getNextRange();

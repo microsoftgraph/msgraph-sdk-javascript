@@ -6,8 +6,8 @@
  */
 
 import { GraphClientError } from "../../../GraphClientError";
-import { Range } from "../../../Range";
 import { FileObject } from "../../LargeFileUploadTask";
+import { Range } from "../Range";
 
 /**
  * @class
