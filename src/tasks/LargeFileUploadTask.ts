@@ -288,7 +288,7 @@ export class LargeFileUploadTask<T> {
 	 * @param {number} totalSize - The total size of a complete file
 	 * @returns The response body of the upload slice result
 	 */
-	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<any> {
+	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<unknown> {
 		return await this.client
 			.api(this.uploadSession.url)
 			.headers({
@@ -324,7 +324,7 @@ export class LargeFileUploadTask<T> {
 	 * Deletes upload session in the server
 	 * @returns The promise resolves to cancelled response
 	 */
-	public async cancel(): Promise<any> {
+	public async cancel(): Promise<unknown> {
 		const cancelResponse = await this.client
 			.api(this.uploadSession.url)
 			.responseType(ResponseType.RAW)
@@ -341,7 +341,7 @@ export class LargeFileUploadTask<T> {
 	 * Gets status for the upload session
 	 * @returns The promise resolves to the status enquiry response
 	 */
-	public async getStatus(): Promise<any> {
+	public async getStatus(): Promise<unknown> {
 		const response = await this.client.api(this.uploadSession.url).get();
 		this.updateTaskStatus(response);
 		return response;
@@ -353,7 +353,7 @@ export class LargeFileUploadTask<T> {
 	 * Resumes upload session and continue uploading the file from the last sent range
 	 * @returns The promise resolves to the uploaded response
 	 */
-	public async resume(): Promise<any> {
+	public async resume(): Promise<unknown> {
 		await this.getStatus();
 		return await this.upload();
 	}
