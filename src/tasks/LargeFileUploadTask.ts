@@ -241,7 +241,7 @@ export class LargeFileUploadTask<T> {
 	 * @returns The promise resolves to uploaded response
 	 */
 	public async upload(): Promise<UploadResult> {
-		const uploadEventHandlers = this.options.uploadEventHandlers;
+		const uploadEventHandlers = this.options && this.options.uploadEventHandlers;
 		while (!this.uploadSession.isCancelled) {
 			const nextRange = this.getNextRange();
 			if (nextRange.maxValue === -1) {

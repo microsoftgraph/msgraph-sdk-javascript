@@ -13,7 +13,7 @@ import * as fs from "fs";
 import { getClient } from "../test-helper";
 const client = getClient();
 
-import { OneDriveLargeFileUploadOptions, OneDriveLargeFileUploadTask, Progress, Range, StreamUpload, UploadResult } from "../../../src/index";
+import { OneDriveLargeFileUploadOptions, OneDriveLargeFileUploadTask, Range, StreamUpload, UploadEventHandlers } from "../../../src/index";
 
 describe("LargeFileUpload", () => {
 	const fileName = "sample_image.jpg";
@@ -21,35 +21,23 @@ describe("LargeFileUpload", () => {
 	const totalsize = stats.size;
 	it("Test OneDrive stream upload with progress callback options", async () => {
 		let isProgressReportCalled = false;
-		let isProgressCompletedCalled = false;
-		let isProgressFailureCalled = false;
 
 		const progress = (range?: Range, extraCallBackParams?: unknown) => {
 			assert.isTrue(extraCallBackParams);
 			assert.isDefined(range);
 			isProgressReportCalled = true;
 		};
-		const completed = (result?: UploadResult, extraCallBackParams?: unknown) => {
-			assert.isTrue(extraCallBackParams);
-			assert.isDefined(result.responseBody);
-			isProgressCompletedCalled = true;
-		};
-		const failure = () => {
-			isProgressFailureCalled = true;
-		};
 
-		const progressCallBack: Progress = {
+		const uploadEventHandlers: UploadEventHandlers = {
 			progress,
-			completed,
-			failure,
-			extraCallBackParams: true,
+			extraCallbackParam: true,
 		};
 
 		const options: OneDriveLargeFileUploadOptions = {
 			path: "/Documents",
 			fileName,
 			rangeSize: 1024 * 1024,
-			progressCallBack,
+			uploadEventHandlers,
 		};
 		const readStream = fs.createReadStream(`./test/sample_files/${fileName}`);
 		const file = new StreamUpload(readStream, fileName, totalsize);
@@ -57,8 +45,6 @@ describe("LargeFileUpload", () => {
 		const response = await uploadTask.upload();
 		assert.isDefined(response.responseBody["id"]);
 		assert.isTrue(isProgressReportCalled);
-		assert.isTrue(isProgressCompletedCalled);
-		assert.isFalse(isProgressFailureCalled);
 	}).timeout(30 * 1000);
 
 	it("Test OneDrive File Upload", async () => {
