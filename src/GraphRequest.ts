@@ -623,7 +623,7 @@ export class GraphRequest {
 	 */
 	/*
 	 * Accepts .query("displayName=xyz")
-	 *     and .select({ name: "value" })
+	 *     and .query({ name: "value" })
 	 */
 	public query(queryDictionaryOrString: string | KeyValuePairObjectStringNumber): GraphRequest {
 		return this.parseQueryParameter(queryDictionaryOrString);
@@ -649,48 +649,49 @@ export class GraphRequest {
 		}
 	}
 
-	private extractQueryParamFromLink(paramName: string, link?: string) {
-	    return link
-		? new URL(link).searchParams.get(paramName) ?? undefined
-		: undefined
+	private extractQueryParam(link: string, paramName: string) {
+		return new URL(link).searchParams.get(paramName) ?? undefined
 	}
 
 	/**
 	 * @public
 	 * @async
-	 * Makes a http request with GET method, taylored for /delta APIs which include a skip/delta token in the response
+	 * Makes a http request with GET method against a /delta endpoint, parsing the skip/delta token from the response
+	 * and also returning callbacks to follow the next/delta Link provided in the response.
 	 */
-    	public async getDelta<T>(
-	    client: graphSdk.Client,
-	    request: graphSdk.GraphRequest,
-	): Promise<DeltaResponse<T>> {
-	    const apiPath: string = (request as any).urlComponents.path;
-	    assert(apiPath.endsWith("/delta"),
-		"getDelta should only be called with a '/delta' API");
+    	public async getDelta<T>(): Promise<DeltaResponse<T>> {
+	    //* temp polyfill for draft PR
+	    function assert(condition, message) { if (!condition) { throw new Error(message); } }
+	    const apiPath: string = this.urlComponents.path;
+	    assert(apiPath.endsWith("/delta"), "getDelta should only be called with a '/delta' API");
 
-	    const response = await request.get();
+	    const response = await this.get();
 
-	    const skipToken = extractQueryParamFromLink("$skiptoken", response["@odata.nextLink"]);
-	    const deltaToken = extractQueryParamFromLink("$deltatoken", response["@odata.deltaLink"]);
-	    const link: string = response["@odata.nextLink"] ?? response["@odata.deltaLink"];
-	    assert(link && link.includes(apiPath), "nextLink or deltaLink should be present and contain the original API path");
-
-	    if (skipToken) {
+	    const nextLink: string | undefined = response["@odata.nextLink"];
+	    const deltaLink: string | undefined = response["@odata.deltaLink"]
+	    if (nextLink) {
+		const skipToken = extractQueryParam(nextLink, "$skiptoken");
+		assert(skipToken), "@odata.nextLink should always contain $skiptoken param";
+		assert(nextLink.includes(apiPath), "nextLink should contain the original API path");
 		return {
-		    tokenType: "skip",
+		    linkType: "next",
 		    skipToken,
-		    value: response.value,
-		    nextRequest: () => getDelta(client, client.api(apiPath).skipToken(skipToken)),
+		    followNextLink: () => getDelta(new GraphRequest(this.httpClient, this.config, apiPath).skipToken(skipToken)),
+		    body: response,
 		};
-	    } else if (deltaToken) {
+	    } else if (deltaLink) {
 		assert.strictEqual(response.value.length, 0, "When a deltaToken is returned, value should be empty");
+		const deltaToken = extractQueryParam(deltaLink, "$deltatoken");
+		assert(deltaToken), "@odata.deltaLink should always contain $deltaToken param";
+		assert(deltaLink.includes(apiPath), "deltaLink should contain the original API path");
 		return {
-		    tokenType: "delta",
+		    linkType: "delta",
 		    deltaToken,
-		    nextRequest: () => getDelta(client, client.api(apiPath).query({"$deltatoken": deltaToken})),
+		    followDeltaLink: () => getDelta(new GraphRequest(this.httpClient, this.config, apiPath).query({"$deltatoken": deltaToken})),
+		    body: response,
 		};
 	    } else {
-		assert.fail("/delta response contained neither skipToken nor deltaToken");
+		assert(false, "/delta response should contain either @odata.nextLink or @odata.deltaLink");
 	    }
 	}
 
