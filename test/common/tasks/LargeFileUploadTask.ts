@@ -5,28 +5,29 @@
  * -------------------------------------------------------------------------------------------
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { assert } from "chai";
 import * as sinon from "sinon";
 
-import { UploadResult } from "../../../src/tasks/FileUploadUtil/UploadResult";
+import { Range } from ".../../../src/tasks/FileUploadTask/Range";
+import { FileUpload, LargeFileUploadTaskOptions } from "../../../src";
+import { UploadEventHandlers } from "../../../src/tasks/FileUploadTask/Interfaces/IUploadEventHandlers";
+import { UploadResult } from "../../../src/tasks/FileUploadTask/UploadResult";
 import { LargeFileUploadTask } from "../../../src/tasks/LargeFileUploadTask";
 import { getClient } from "../../test-helper";
 
 describe("LargeFileUploadTask.ts", () => {
+	const rangeSize = 327680;
+	const uploadSession = {
+		url: "test url",
+		expiry: new Date(),
+	};
 	describe("Parsing Range", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 100000;
-		const fileObj = {
-			content: arrayBuffer,
-			name,
-			size,
-		};
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {};
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 		it("Should return default range for given undefined range", (done) => {
 			const range = uploadTask["parseRange"]([]);
@@ -60,16 +61,8 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 100000;
-		const fileObj = {
-			content: arrayBuffer,
-			name,
-			size,
-		};
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {};
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 		it("Should update status with expiration date and next expected ranges as given", (done) => {
 			const statusResponse = {
@@ -97,18 +90,10 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 328680;
-		const fileObj = {
-			content: arrayBuffer,
-			name,
-			size,
-		};
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {
-			rangeSize: 327680,
+			rangeSize,
 		};
+		const fileObj = new FileUpload(arrayBuffer, name, size);
 		const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
 
 		it("Should return proper next range well within the file size", (done) => {
@@ -147,71 +132,139 @@ describe("LargeFileUploadTask.ts", () => {
 		const name = "sample_image.jpg";
 		const arrayBuffer = new ArrayBuffer(80000);
 		const size = 328680;
-		const fileObj = {
-			content: arrayBuffer,
-			name,
-			size,
-		};
-		const uploadSession = {
-			url: "test url",
-			expiry: new Date(),
-		};
 		const options = {
 			rangeSize: 327680,
 		};
+		const fileObj = new FileUpload(arrayBuffer, name, size);
+		const location = "TEST_URL";
+		const body = {
+			id: "TEST_ID",
+		};
 
-		it("Should return a Upload Result object after a completed task with 201 status", async () => {
+		it("Should return a Upload Result object after a completed task with 201 status", () => {
 			const location = "TEST_URL";
-			const body = {
-				id: "TEST_ID",
-			};
-			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
-			const status201 = {
-				status: 200,
-				stautsText: "OK",
-				headers: {
-					"Content-Type": "application/json",
-					location,
-				},
-			};
-			const rawResponse = new Response(JSON.stringify(body), status201);
+			it("Test with progressCallback", async () => {
+				let isProgressReportCalled = false;
 
-			const moq = sinon.mock(uploadTask);
-			moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
-			const result = await uploadTask.upload();
-			assert.isDefined(result);
-			assert.instanceOf(result, UploadResult);
-			assert.equal(result["location"], location);
-			const responseBody = result["responseBody"];
-			assert.isDefined(responseBody);
-			assert.equal(responseBody["id"], "TEST_ID");
+				const progress = (range?: Range) => {
+					isProgressReportCalled = true;
+				};
+
+				const uploadEventHandlers: UploadEventHandlers = {
+					progress,
+				};
+
+				const optionsWithProgress: LargeFileUploadTaskOptions = {
+					rangeSize,
+					uploadEventHandlers,
+				};
+
+				const emptyBody = {};
+				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
+				const status201 = {
+					status: 201,
+					statusText: "OK",
+					headers: {
+						"Content-Type": "application/json",
+						location,
+					},
+				};
+				const rawResponse = new Response(JSON.stringify(emptyBody), status201);
+
+				const moq = sinon.mock(uploadTask);
+				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+				const result = await uploadTask.upload();
+				assert.isDefined(result);
+				assert.instanceOf(result, UploadResult);
+				assert.equal(result["location"], location);
+				assert.isFalse(isProgressReportCalled);
+			});
+
+			it("Test without progress callback", async () => {
+				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+				const status201 = {
+					status: 201,
+					statusText: "OK",
+					headers: {
+						"Content-Type": "application/json",
+						location,
+					},
+				};
+
+				const rawResponse = new Response(JSON.stringify(body), status201);
+				const moq = sinon.mock(uploadTask);
+				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+				const result = await uploadTask.upload();
+				assert.isDefined(result);
+				assert.instanceOf(result, UploadResult);
+				assert.equal(result["location"], location);
+				const responseBody = result["responseBody"];
+				assert.isDefined(responseBody);
+				assert.equal(responseBody["id"], "TEST_ID");
+			});
 		});
 
-		it("Should return a Upload Result object after a completed task with 200 status and id", async () => {
-			const location = "TEST_URL";
-			const body = {
-				id: "TEST_ID",
-			};
-			const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
-			const status200 = {
-				status: 200,
-				stautsText: "OK",
-				headers: {
-					"Content-Type": "application/json",
-					location,
-				},
-			};
-			const rawResponse = new Response(JSON.stringify(body), status200);
+		it("Should return a Upload Result object after a completed task with 200 status and body", () => {
+			it("Test with progress callback", async () => {
+				let isProgressReportCalled = false;
 
-			const moq = sinon.mock(uploadTask);
-			moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
-			const result = await uploadTask.upload();
-			assert.isDefined(result);
-			assert.instanceOf(result, UploadResult);
-			assert.equal(result["location"], location);
-			const responseBody = result["responseBody"];
-			assert.isDefined(responseBody);
-			assert.equal(responseBody["id"], "TEST_ID");
+				const progress = (range?: Range) => {
+					isProgressReportCalled = true;
+				};
+				const uploadEventHandlers: UploadEventHandlers = {
+					progress,
+				};
+
+				const optionsWithProgress: LargeFileUploadTaskOptions = {
+					rangeSize,
+					uploadEventHandlers,
+				};
+
+				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, optionsWithProgress);
+				const status200 = {
+					status: 200,
+					statusText: "OK",
+					headers: {
+						"Content-Type": "application/json",
+						location,
+					},
+				};
+				const rawResponse = new Response(JSON.stringify(body), status200);
+
+				const moq = sinon.mock(uploadTask);
+				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+				const result = await uploadTask.upload();
+				assert.isDefined(result);
+				assert.instanceOf(result, UploadResult);
+				assert.equal(result["location"], location);
+				const responseBody = result["responseBody"];
+				assert.isDefined(responseBody);
+				assert.equal(responseBody["id"], "TEST_ID");
+				assert.isFalse(isProgressReportCalled);
+			});
+			it("Test without progress callback", async () => {
+				const uploadTask = new LargeFileUploadTask(getClient(), fileObj, uploadSession, options);
+
+				const status200 = {
+					status: 200,
+					statusText: "OK",
+					headers: {
+						"Content-Type": "application/json",
+						location,
+					},
+				};
+				const rawResponse = new Response(JSON.stringify(body), status200);
+
+				const moq = sinon.mock(uploadTask);
+				moq.expects("uploadSliceGetRawResponse").resolves(rawResponse);
+				const result = await uploadTask.upload();
+				assert.isDefined(result);
+				assert.instanceOf(result, UploadResult);
+				assert.equal(result["location"], location);
+				const responseBody = result["responseBody"];
+				assert.isDefined(responseBody);
+				assert.equal(responseBody["id"], "TEST_ID");
+			});
 		});
 		it("Should return an exception while trying to upload the file upload completed task", (done) => {
 			const statusResponse = {
@@ -222,8 +275,7 @@ describe("LargeFileUploadTask.ts", () => {
 			uploadTask["updateTaskStatus"](statusResponse);
 			uploadTask
 				.upload()
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				.then((res) => {
+				.then(() => {
 					throw new Error("Test Failed - Upload is working for upload completed task");
 				})
 				.catch((err) => {

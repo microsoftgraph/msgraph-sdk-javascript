@@ -51,7 +51,10 @@ const config = [
 			name: "MicrosoftGraph.TokenCredentialAuthProvider",
 		},
 		plugins: [
-			resolve({ browser: true, preferBuiltins: false }),
+			resolve({
+				browser: true,
+				preferBuiltins: false,
+			}),
 			babel({
 				babelHelpers: "runtime",
 				exclude: "node_modules/**",

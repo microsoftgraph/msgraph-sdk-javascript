@@ -26,11 +26,19 @@ export * from "./middleware/ChaosHandler";
 
 export * from "./tasks/LargeFileUploadTask";
 export * from "./tasks/OneDriveLargeFileUploadTask";
+export * from "./tasks/OneDriveLargeFileUploadTaskUtil";
+export * from "./tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "./tasks/FileUploadTask/FileObjectClasses/FileUpload";
+export * from "./tasks/FileUploadTask/FileObjectClasses/StreamUpload";
+export * from "./tasks/FileUploadTask/UploadResult";
+export * from "./tasks/FileUploadTask/Interfaces/IUploadEventHandlers";
+export * from "./tasks/FileUploadTask/Range";
 export * from "./tasks/PageIterator";
 
 export * from "./Client";
 export * from "./CustomAuthenticationProvider";
 export * from "./GraphError";
+export * from "./GraphClientError";
 export * from "./GraphRequest";
 export * from "./IAuthProvider";
 export * from "./IAuthenticationProvider";

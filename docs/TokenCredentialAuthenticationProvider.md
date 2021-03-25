@@ -61,11 +61,6 @@ The browser use of the file is as follows:
 
 ```html
 <!-- include the script -->
-<script type="text/javascript" src="<PATH_TO_SCRIPT>/graph-client-tokenCredentialAuthProvider.js"></script>;
-// create an authProvider
-var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes });
-
-client = MicrosoftGraph.Client.initWithMiddleware({
-	authProvider: authProvider,
-});
+<script type="text/javascript" src="<PATH_TO_SCRIPT>/graph-client-tokenCredentialAuthProvider.js"></script>
+; // create an authProvider var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes }); client = MicrosoftGraph.Client.initWithMiddleware({ authProvider: authProvider, });
 ```
