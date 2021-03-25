@@ -53,15 +53,17 @@ export interface URLComponents {
 }
 
 export type DeltaResponse<T> = {
-    tokenType: "skip",
+    linkType: "next",
     skipToken: string,
-    value: T[],
-    nextRequest: () => Promise<DeltaResponse<T>>,
+    followNextLink: () => Promise<DeltaResponse<T>>,
+    body: any,
 } | {
-    tokenType: "delta",
+    linkType: "delta",
     deltaToken: string,
-    nextRequest: () => Promise<DeltaResponse<T>>,
+    followDeltaLink: () => Promise<DeltaResponse<T>>,
+    body: any,
 };
+
 /**
  * @class
  * A Class representing GraphRequest
