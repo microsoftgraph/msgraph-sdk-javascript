@@ -52,6 +52,16 @@ export interface URLComponents {
 	otherURLQueryOptions?: string[];
 }
 
+export type DeltaResponse<T> = {
+    tokenType: "skip",
+    skipToken: string,
+    value: T[],
+    nextRequest: () => Promise<DeltaResponse<T>>,
+} | {
+    tokenType: "delta",
+    deltaToken: string,
+    nextRequest: () => Promise<DeltaResponse<T>>,
+};
 /**
  * @class
  * A Class representing GraphRequest
@@ -637,6 +647,51 @@ export class GraphRequest {
 		} catch (error) {
 			throw error;
 		}
+	}
+
+	private extractQueryParamFromLink(paramName: string, link?: string) {
+	    return link
+		? new URL(link).searchParams.get(paramName) ?? undefined
+		: undefined
+	}
+
+	/**
+	 * @public
+	 * @async
+	 * Makes a http request with GET method, taylored for /delta APIs which include a skip/delta token in the response
+	 */
+    	public async getDelta<T>(
+	    client: graphSdk.Client,
+	    request: graphSdk.GraphRequest,
+	): Promise<DeltaResponse<T>> {
+	    const apiPath: string = (request as any).urlComponents.path;
+	    assert(apiPath.endsWith("/delta"),
+		"getDelta should only be called with a '/delta' API");
+
+	    const response = await request.get();
+
+	    const skipToken = extractQueryParamFromLink("$skiptoken", response["@odata.nextLink"]);
+	    const deltaToken = extractQueryParamFromLink("$deltatoken", response["@odata.deltaLink"]);
+	    const link: string = response["@odata.nextLink"] ?? response["@odata.deltaLink"];
+	    assert(link && link.includes(apiPath), "nextLink or deltaLink should be present and contain the original API path");
+
+	    if (skipToken) {
+		return {
+		    tokenType: "skip",
+		    skipToken,
+		    value: response.value,
+		    nextRequest: () => getDelta(client, client.api(apiPath).skipToken(skipToken)),
+		};
+	    } else if (deltaToken) {
+		assert.strictEqual(response.value.length, 0, "When a deltaToken is returned, value should be empty");
+		return {
+		    tokenType: "delta",
+		    deltaToken,
+		    nextRequest: () => getDelta(client, client.api(apiPath).query({"$deltatoken": deltaToken})),
+		};
+	    } else {
+		assert.fail("/delta response contained neither skipToken nor deltaToken");
+	    }
 	}
 
 	/**
