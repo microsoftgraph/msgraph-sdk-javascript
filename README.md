@@ -8,6 +8,9 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 [![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
+## Node version requirement
+Node.js 10 LTS or higher.
+
 ## Installation
 
 ### Via npm
