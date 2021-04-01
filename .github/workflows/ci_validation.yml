@@ -12,9 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x, 14.x, 15.x]
-        # Adding version 8.x considering SharePoint Framework depends on JS Graph library
-        # https://docs.microsoft.com/en-us/sharepoint/dev/spfx/compatibility
+        node-version: [10.x, 12.x, 14.x, 15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,3 +24,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: npm run test:coverage
+    - run: npm run karma
+    - name: Publish coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }} 
