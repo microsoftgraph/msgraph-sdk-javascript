@@ -4,7 +4,25 @@
 
 The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that can be used server-side and in the browser.
 
-**Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!**
+-   [Microsoft Graph JavaScript Client Library](#microsoft-graph-javascript-client-library)
+    -   [Installation](#installation)
+        -   [Via npm](#via-npm)
+        -   [Via Script Tag](#via-script-tag)
+    -   [Getting started](#getting-started)
+        -   [1. Register your application](#1-register-your-application)
+        -   [2. Authenticate for the Microsoft Graph service](#2-authenticate-for-the-microsoft-graph-service)
+        -   [3. Initialize a Microsoft Graph Client object with an authentication provider](#3-initialize-a-microsoft-graph-client-object-with-an-authentication-provider)
+            -   [For browser environment](#for-browser-environment)
+            -   [For node environment](#for-node-environment)
+        -   [4. Make requests to the graph](#4-make-requests-to-the-graph)
+    -   [Documentation](#documentation)
+    -   [Questions and comments](#questions-and-comments)
+    -   [Contributing](#contributing)
+    -   [Additional resources](#additional-resources)
+    -   [Third Party Notices](#third-party-notices)
+    -   [Security Reporting](#security-reporting)
+    -   [License](#license)
+    -   [We Value and Adhere to the Microsoft Open Source Code of Conduct](#we-value-and-adhere-to-the-microsoft-open-source-code-of-conduct) **Looking for IntelliSense on models (Users, Groups, etc.)? Check out the [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) repository!**
 
 [![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
