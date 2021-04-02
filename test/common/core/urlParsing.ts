@@ -46,6 +46,7 @@ const testCases = {
 
 	// National cloud deployment urls
 	"https://graph.microsoft.us/v1.0/me": "https://graph.microsoft.us/v1.0/me",
+	"https://canary.graph.microsoft.us/v1.0/me": "https://canary.graph.microsoft.us/v1.0/me",
 	"https://dod-graph.microsoft.us/beta/me?$filter=a": "https://dod-graph.microsoft.us/beta/me?$filter=a",
 };
 
