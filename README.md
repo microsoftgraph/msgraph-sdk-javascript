@@ -148,11 +148,16 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 
 ## Additional resources
 
--   [Microsoft Graph website](https://graph.microsoft.io)
--   [Microsoft Graph TypeScript types](https://github.com/microsoftgraph/msgraph-typescript-typings/)
--   [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
--   [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
--   [Office Dev Center](http://dev.office.com/)
+- [Microsoft Graph website](https://graph.microsoft.io)
+
+- The Microsoft Graph TypeScript definitions enable editors to provide intellisense on Microsoft Graph objects including users, messages, and groups.
+    - [@microsoft/microsoft-graph-types](https://www.npmjs.com/package/@microsoft/microsoft-graph-types) or [@types/microsoft-graph](https://www.npmjs.com/package/@types/microsoft-graph)
+    - [@microsoft/microsoft-graph-types-beta](https://www.npmjs.com/package/@microsoft/microsoft-graph-types-beta)
+- [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
+- [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
+- [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
+- [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/en-us/graph/toolkit/overview)
+- [Office Dev Center](http://dev.office.com/)
 
 ## Third Party Notices
 
