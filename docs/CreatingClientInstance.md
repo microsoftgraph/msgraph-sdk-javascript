@@ -10,7 +10,7 @@ In order to instantiate a Client object, one has to pass in the `authProvider` o
 
 ### Option A. Default Middleware chain
 
-The default middleware chain contains consecutively chained one instance of each of the following -
+The default middleware chain contains consecutively chained instances of the following -
 - [AuthenticationHandler](../src/middleware/AuthenticationHandler.ts)
 - [RetryHandler](../src/middleware/RetryHandler.ts)
 - [RedirectHandler](../src/middleware/RedirectHandler.ts)
@@ -41,7 +41,6 @@ The Microsoft Graph JavaScript Client Library has an adapter implementation for 
     > Learn how to [create an instance of ImplicitMSALAuthenticationProvider](./ImplicitMSALAuthenticationProvider.md).
 
 **User can integrate any preferred authentication library by implementing `IAuthenticationProvider` interface**. Refer implementing [Custom Authentication Provider](./CustomAuthenticationProvider.md) for more detailed information.
-Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
 let clientOptions: ClientOptions = {
@@ -53,9 +52,9 @@ const client = Client.initWithMiddleware(clientOptions);
 
 ### Option B. Custom Middleware chain
 
-The Microsoft Graph SDK client allows configuring custom middleware customizable, allowing you to change the behavior of the client. For example, you can insert customized logging, or add a test handler to simulate specific scenarios.
+The Microsoft Graph SDK client allows configuring custom middleware, allowing you to change the behavior of the client. For example, you can insert customized logging, or add a test handler to simulate specific scenarios.
 
-To create a client instance with the default middleware chain -
+To create a client instance with the custom middleware chain -
 
 1. Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
 2. Create the middleware chain and pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
