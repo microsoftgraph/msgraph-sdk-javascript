@@ -10,14 +10,14 @@ In order to instantiate a Client object, one has to pass in the `authProvider` o
 
 ### Option A. Default Middleware chain
 
-The default middleware chain contains consecutively chained instances of the following -
+The default middleware chain contains consecutively chained instances of the following:
 - [AuthenticationHandler](../src/middleware/AuthenticationHandler.ts)
 - [RetryHandler](../src/middleware/RetryHandler.ts)
 - [RedirectHandler](../src/middleware/RedirectHandler.ts)
 - [TelemetryHandler](../src/middleware/TelemetryHandler.ts)
 - [HTTPMessageHandler](../src/middleware/HTTPMessageHandler.ts)
 
-To create a client instance with the default middleware chain -
+To create a client instance with the default middleware chain:
 
 1. Create an instance of a class which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface. This class should contain the logic to get the access token to be passed to the Microsoft Graph API.
 
@@ -54,9 +54,9 @@ const client = Client.initWithMiddleware(clientOptions);
 
 The Microsoft Graph SDK client allows configuring custom middleware, allowing you to change the behavior of the client. For example, you can insert customized logging, or add a test handler to simulate specific scenarios.
 
-To create a client instance with the custom middleware chain -
+To create a client instance with the custom middleware chain:
 
-1. Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
+1. Refer to [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
 2. Create the middleware chain and pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
