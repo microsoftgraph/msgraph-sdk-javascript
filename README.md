@@ -99,7 +99,7 @@ For information on how to create a client instance, see [Creating Client Instanc
 
 Once you have authentication setup and an instance of Client, you can begin to make calls to the service. All requests should start with `client.api(path)` and end with an [action](./docs/Actions.md).
 
-Getting user details -
+Example of getting user details:
 
 ```typescript
 try {
@@ -110,7 +110,7 @@ try {
 }
 ```
 
-Sending an email to the recipients -
+Example of sending an email to the recipients:
 
 ```typescript
 // Construct email object
