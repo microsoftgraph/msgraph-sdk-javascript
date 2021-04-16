@@ -4,41 +4,43 @@
 
 The Microsoft Graph JavaScript client library is a lightweight wrapper around the Microsoft Graph API that can be used server-side and in the browser.
 
-- [Microsoft Graph JavaScript Client Library](#microsoft-graph-javascript-client-library)
-  - [Installation](#installation)
-    - [Via npm](#via-npm)
-    - [Via Script Tag](#via-script-tag)
-  - [Getting started](#getting-started)
-    - [1. Register your application](#1-register-your-application)
-    - [2. Create a Client Instance](#2-create-a-client-instance)
-    - [3. Make requests to the graph](#3-make-requests-to-the-graph)
-  - Documentation
-    - [HTTP Actions](docs/Actions.md)
-    - [Chained APIs to call Microsoft Graph](docs/CallingPattern.md)
-    - [OData system query options - Query Parameters](docs/QueryParameters.md)
-    - [Batch multiple requests into single HTTP request](docs/content/Batching.md)
-    - [Configurations to your request](docs/OtherAPIs.md)
-        - [Query](docs/OtherAPIs.md#QUERY)
-        - [Version](docs/OtherAPIs.md#VERSION)
-        - [Headers](docs/OtherAPIs.md#HEADER-AND-HEADERS)
-        - [Options](docs/OtherAPIs.md#OPTION-AND-OPTIONS)
-        - [MiddlewareOptions](docs/OtherAPIs.md#MIDDLEWAREOPTIONS)
-        - [ResponseType](docs/OtherAPIs.md#RESPONSETYPE)
-    -  [Upload large files to OneDrive, Outlook, Print API](docs/tasks/LargeFileUploadTask.md)
-    - [Page Iteration](docs/tasks/PageIterator.md)
-    - [Getting Raw Response](docs/GettingRawResponse.md)
-    - [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
-  - [Questions and comments](#questions-and-comments)
-  - [Contributing](#contributing)
-  - [Additional resources](#additional-resources)
-  - [Third Party Notices](#third-party-notices)
-  - [Security Reporting](#security-reporting)
-  - [License](#license)
-  - [We Value and Adhere to the Microsoft Open Source Code of Conduct](#we-value-and-adhere-to-the-microsoft-open-source-code-of-conduct)
+-   [Microsoft Graph JavaScript Client Library](#microsoft-graph-javascript-client-library)
+    -   [Installation](#installation)
+        -   [Via npm](#via-npm)
+        -   [Via Script Tag](#via-script-tag)
+    -   [Getting started](#getting-started)
+        -   [1. Register your application](#1-register-your-application)
+        -   [2. Create a Client Instance](#2-create-a-client-instance)
+        -   [3. Make requests to the graph](#3-make-requests-to-the-graph)
+    -   Documentation
+        -   [HTTP Actions](docs/Actions.md)
+        -   [Chained APIs to call Microsoft Graph](docs/CallingPattern.md)
+        -   [OData system query options - Query Parameters](docs/QueryParameters.md)
+        -   [Batch multiple requests into single HTTP request](docs/content/Batching.md)
+        -   [Cancel a HTTP request](docs/CancellingAHTTPRequest.md)
+        -   [Configurations to your request](docs/OtherAPIs.md)
+            -   [Query](docs/OtherAPIs.md#QUERY)
+            -   [Version](docs/OtherAPIs.md#VERSION)
+            -   [Headers](docs/OtherAPIs.md#HEADER-AND-HEADERS)
+            -   [Options](docs/OtherAPIs.md#OPTION-AND-OPTIONS)
+            -   [MiddlewareOptions](docs/OtherAPIs.md#MIDDLEWAREOPTIONS)
+            -   [ResponseType](docs/OtherAPIs.md#RESPONSETYPE)
+        -   [Upload large files to OneDrive, Outlook, Print API](docs/tasks/LargeFileUploadTask.md)
+        -   [Page Iteration](docs/tasks/PageIterator.md)
+        -   [Getting Raw Response](docs/GettingRawResponse.md)
+        -   [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
+    -   [Questions and comments](#questions-and-comments)
+    -   [Contributing](#contributing)
+    -   [Additional resources](#additional-resources)
+    -   [Third Party Notices](#third-party-notices)
+    -   [Security Reporting](#security-reporting)
+    -   [License](#license)
+    -   [We Value and Adhere to the Microsoft Open Source Code of Conduct](#we-value-and-adhere-to-the-microsoft-open-source-code-of-conduct)
 
 [![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Node version requirement
+
 Node.js 10 LTS or higher.
 
 ## Installation
@@ -51,11 +53,11 @@ npm install @microsoft/microsoft-graph-client
 
 import `@microsoft/microsoft-graph-client` into your module.
 
-Also, you will need to import any fetch polyfill which suits your requirements.
-Following are some fetch polyfills -
-* [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch).
-* [cross-fetch](https://www.npmjs.com/package/cross-fetch)
-* [whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch)
+Also, you will need to import any fetch polyfill which suits your requirements. Following are some fetch polyfills -
+
+-   [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch).
+-   [cross-fetch](https://www.npmjs.com/package/cross-fetch)
+-   [whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch)
 
 ```typescript
 import "isomorphic-fetch"; // or import the fetch polyfill you installed
@@ -84,19 +86,19 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 ```
 
 ## Getting started
+
 ### 1. Register your application
 
-To call Microsoft Graph, your app must acquire an access token from the Microsoft identity platform.
-Learn more about this -
-- [Authentication and authorization basics for Microsoft Graph](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
-- [Register your app with the Microsoft identity platform](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
+To call Microsoft Graph, your app must acquire an access token from the Microsoft identity platform. Learn more about this -
+
+-   [Authentication and authorization basics for Microsoft Graph](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
+-   [Register your app with the Microsoft identity platform](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
 
 ### 2. Create a Client Instance
 
 The Microsoft Graph client is designed to make it simple to make calls to Microsoft Graph. You can use a single client instance for the lifetime of the application.
 
 For information on how to create a client instance, see [Creating Client Instance](./docs/CreatingClientInstance.md)
-
 
 ### 3. Make requests to the graph
 
@@ -151,16 +153,16 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 
 ## Additional resources
 
-- [Microsoft Graph website](https://graph.microsoft.io)
+-   [Microsoft Graph website](https://graph.microsoft.io)
 
-- The Microsoft Graph TypeScript definitions enable editors to provide intellisense on Microsoft Graph objects including users, messages, and groups.
-    - [@microsoft/microsoft-graph-types](https://www.npmjs.com/package/@microsoft/microsoft-graph-types) or [@types/microsoft-graph](https://www.npmjs.com/package/@types/microsoft-graph)
-    - [@microsoft/microsoft-graph-types-beta](https://www.npmjs.com/package/@microsoft/microsoft-graph-types-beta)
-- [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
-- [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
-- [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
-- [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/en-us/graph/toolkit/overview)
-- [Office Dev Center](http://dev.office.com/)
+-   The Microsoft Graph TypeScript definitions enable editors to provide intellisense on Microsoft Graph objects including users, messages, and groups.
+    -   [@microsoft/microsoft-graph-types](https://www.npmjs.com/package/@microsoft/microsoft-graph-types) or [@types/microsoft-graph](https://www.npmjs.com/package/@types/microsoft-graph)
+    -   [@microsoft/microsoft-graph-types-beta](https://www.npmjs.com/package/@microsoft/microsoft-graph-types-beta)
+-   [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
+-   [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
+-   [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
+-   [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/en-us/graph/toolkit/overview)
+-   [Office Dev Center](http://dev.office.com/)
 
 ## Third Party Notices
 

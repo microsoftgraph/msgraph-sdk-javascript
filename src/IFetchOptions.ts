@@ -13,7 +13,7 @@
  * @property {number} [size] - node-fetch option: maximum response body size in bytes. 0 to disable
  * @property {any} [agent] - node-fetch option: HTTP(S).Agent instance, allows custom proxy, certificate, lookup, family etc.
  * @property {number} [highWaterMark] - node-fetch option: maximum number of bytes to store in the internal buffer before ceasing to read from the underlying resource.
- * @property {boolean} [insecureHTTPParser] - node-fetch option: HTTP(S).Use an insecure HTTP parser that accepts invalid HTTP headers when `true`.
+ * @property {boolean} [insecureHTTPParser] - node-fetch option: use an insecure HTTP parser that accepts invalid HTTP headers when `true`.
  */
 export interface NodeFetchInit {
 	follow?: number;
