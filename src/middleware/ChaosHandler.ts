@@ -77,7 +77,7 @@ export class ChaosHandler implements Middleware {
 
 		if (chaosHandlerOptions.statusCode === 429) {
 			// throttling case has to have a timeout scenario
-			responseHeader.append("retry-after", "300");
+			responseHeader.append("retry-after", "3");
 		}
 
 		return responseHeader;
