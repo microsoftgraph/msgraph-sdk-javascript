@@ -77,7 +77,7 @@ export class ChaosHandler implements Middleware {
 
 		if (chaosHandlerOptions.statusCode === 429) {
 			// throttling case has to have a timeout scenario
-			responseHeader.append("retry-after", "300");
+			responseHeader.append("retry-after", "3");
 		}
 
 		return responseHeader;
@@ -129,7 +129,7 @@ export class ChaosHandler implements Middleware {
 		const responseHeader = this.createResponseHeaders(chaosHandlerOptions, requestID, requestDate.toString());
 		const responseBody = this.createResponseBody(chaosHandlerOptions, requestID, requestDate.toString());
 		const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
-		context.response = new Response(responseBody, init);
+		context.response = new Response(typeof responseBody === "string" ? responseBody : JSON.stringify(responseBody), init);
 	}
 
 	/**
@@ -141,10 +141,12 @@ export class ChaosHandler implements Middleware {
 	 */
 	private async sendRequest(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
 		this.setStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
-		if (!chaosHandlerOptions.statusCode) {
-			await this.nextMiddleware.execute(context);
-		} else {
+		if (Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
 			this.createResponse(chaosHandlerOptions, context);
+		} else {
+			if (this.nextMiddleware) {
+				await this.nextMiddleware.execute(context);
+			}
 		}
 	}
 
@@ -209,9 +211,7 @@ export class ChaosHandler implements Middleware {
 			}
 		} else {
 			// Handling the case of Random here
-			if (Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
-				chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
-			}
+			chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
 			// else statusCode would be undefined
 		}
 	}

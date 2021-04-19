@@ -80,7 +80,7 @@ describe("ChaosHandler.ts", () => {
 		};
 
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500]])]]);
-		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
+		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, undefined, undefined, 100);
 		const tempChaosHandler = new ChaosHandler(tempManualOptions, manualMap);
 
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
@@ -267,6 +267,18 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should return response for Manual Request Level case", async () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 200);
+			const cxt: Context = {
+				request: "https://graph.microsoft.com/v1.0/me",
+				options: {
+					method: "GET",
+				},
+				middlewareControl: new MiddlewareControl([options]),
+			};
+			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
+		});
+
+		it("Should return response for Manual Request Level case 100%", async () => {
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 429, 100);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
