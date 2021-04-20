@@ -265,7 +265,7 @@ describe("ChaosHandler.ts", () => {
 			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
 		});
 
-		it("Should return response for Manual Request Level case", async () => {
+		it("Should return response for Manual Request Level case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 200);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
