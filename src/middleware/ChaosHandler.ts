@@ -141,7 +141,7 @@ export class ChaosHandler implements Middleware {
 	 */
 	private async sendRequest(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
 		this.setStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
-		if (chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL || Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
+		if ((chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL && !this.nextMiddleware) || Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
 			this.createResponse(chaosHandlerOptions, context);
 		} else if (this.nextMiddleware) {
 			await this.nextMiddleware.execute(context);
