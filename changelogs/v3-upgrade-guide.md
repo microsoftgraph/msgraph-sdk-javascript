@@ -20,8 +20,8 @@
 ### Update in the `package.json` entry points.
 ```json
 {
-    "main": "lib/src/index.js"
-    "module": "lib/es/src/index.js
+    "main": "lib/src/index.js",
+    "module": "lib/es/src/index.js,
     "browser": {
 	    "./lib/es/src/index.js": "./lib/es/src/browser/index.js",
     }
@@ -36,6 +36,7 @@
 ### Introducing support for `@azure/identity TokenCredentials`
 - Added a `TokenCredentialAuthenticationProvider` enabling the use of `@azure/identity` `credential classes` for authentication purposes. 
 - The `TokenCredentialAuthenticationProvider` enables server-side authentication using `credential classes` such as `ClientSecretCredential` or `ClientCertificateCredential`.
+- Find the samples on how to use `TokenCredentialAuthenticationProvider` here - [TokenCredentialAuthenticationProvider samples](./samples/tokenCredentialSamples)
 
 ### LargeFileUploadTask
 
@@ -48,7 +49,7 @@
 
 ## Deprecation
 
-### Deprecating ImplicitMSALAuthenticationProvider 
-* Use of ImplicitMSALAuthenticationProvider, that is,using the implicit authorization flow is not recommended any more.
-* Use the TokenCredentialAuthenticationProvider with azure/identity library or a CustomAuthenticationProvider with an auth library of your choice instead.
+### Deprecating `ImplicitMSALAuthenticationProvider` 
+* Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
+* Alternatives to `ImplicitMSALAuthenticationProvider` - TokenCredentialAuthenticationProvider with azure/identity library or a CustomAuthenticationProvider with an auth library of your choice.
 
