@@ -8,7 +8,7 @@ This document proposes high-level design modifications to the `LargeFileUploadTa
 
 Outline of the current implementation -
 
-```
+```TypeScript
 interface LargeFileUploadTaskOptions {
 	rangeSize?: number;
 }
@@ -51,7 +51,7 @@ sliceFile(range: Range): ArrayBuffer | Blob {
 
 -   Proposed changes in the current design -
     -   Move `sliceFlice()` in the FileObject Interface
-    ```
+    ```TypeScript
     interface FileObject{
         sliceFile(range: Range): ArrayBuffer | Blob
     }
@@ -74,19 +74,22 @@ sliceFile(range: Range): ArrayBuffer | Blob {
 -   An upload task should be marked as completed if the response status is a 201. [SDK-design document](https://github.com/microsoftgraph/msgraph-sdk-design/blob/master/tasks/FileUploadTask.md).
 -   The LargeFileUploadTask should allow uploads to OneDrive API, Outlook API and PrintDocument API.
 -   Proposed changes-
-    -   Add class `OutlookLargeFileUploadTask.ts` extending the `LargeFileUploadTask` similar to `OneDriveLargeFileUploadTask.ts`. This allows to handle Outlook API specific file upload customizations.
-    -   Currently the `upload` function in the `LargeFileUploadTask` returns only the response body. This can be changed to return the raw response received from the API which can filtered in the child class implementations.
+    -   Add class `UploadResult` containing `location` and `responseBody` properties.
+    -  `location` provides access to the `location` field in the response headers.
+    -  `responseBody` provides access to the Graph API response body.
+    -  The `upload` task should return the `UploadResult` object on successful completion of task. 
   
 ###### 3. Support upload progress handler callback
 - Proposed changes -
-	- Add interface -> `interface Progress{
-    				progress(range: Range):void
+	- Add interface -> `interface UploadEventHandler{
+				extraCallbackParam?: unknown;
+    				progress(range: Range, extraCallbackParam?: unknown):void
 			   }`
-	- Add progressCallBack option to ->
+	- Add uploadEventHandlers option to ->
 	  ```
 	  interface LargeFileUploadTaskOptions {
 		rangeSize?: number;
-		progressCallBack?: Progress;
+		uploadEventHandlers?: UploadEventHandler;
 	  }
 	  ```
-	- In the `upload` function call the `progressCallBack.progress()` function if defined.
+	- In the `upload` function call the `uploadEventHandlers.progress()` function if defined.
