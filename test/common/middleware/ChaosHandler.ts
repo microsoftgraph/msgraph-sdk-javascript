@@ -71,7 +71,7 @@ describe("ChaosHandler.ts", () => {
 		});
 	});
 
-	describe("sendRequest", async () => {
+	describe("sendRequest", () => {
 		const cxt: Context = {
 			request: "https://graph.microsoft.com/v1.0/me",
 			options: {
@@ -80,19 +80,19 @@ describe("ChaosHandler.ts", () => {
 		};
 
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500]])]]);
-		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL);
+		const tempManualOptions: ChaosHandlerOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, undefined, undefined, 100);
 		const tempChaosHandler = new ChaosHandler(tempManualOptions, manualMap);
 
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 		const handler = new ChaosHandler();
 		handler.setNext(dummyHTTPHandler);
 
-		it("Should return a response after creating it", async () => {
+		it("Should return a response after creating it", () => {
 			tempChaosHandler["sendRequest"](tempManualOptions, cxt);
 			assert.isDefined(cxt.response);
 		});
 
-		it("Should send the request to the graph", async () => {
+		it("Should send the request to the graph", () => {
 			handler["sendRequest"](new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100), cxt);
 			assert.isDefined(cxt.response);
 		});
@@ -215,7 +215,7 @@ describe("ChaosHandler.ts", () => {
 		});
 	});
 
-	describe("execute", async () => {
+	describe("execute", () => {
 		const manualMap: Map<string, Map<string, number>> = new Map([
 			[
 				"/me",
@@ -233,7 +233,7 @@ describe("ChaosHandler.ts", () => {
 		tempChaosHandlerRandom.setNext(dummyHTTPHandler);
 		tempChaosHandlerManual.setNext(dummyHTTPHandler);
 
-		it("Should return response for Default Case", async () => {
+		it("Should return response for Default Case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.RANDOM);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
@@ -245,7 +245,7 @@ describe("ChaosHandler.ts", () => {
 			assert.isDefined(tempChaosHandlerDefault["execute"](cxt));
 		});
 
-		it("Should return response for Random case", async () => {
+		it("Should return response for Random case", () => {
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
@@ -255,7 +255,7 @@ describe("ChaosHandler.ts", () => {
 			assert.isDefined(tempChaosHandlerRandom["execute"](cxt));
 		});
 
-		it("Should return response for Manual Global case", async () => {
+		it("Should return response for Manual Global case", () => {
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
@@ -265,8 +265,20 @@ describe("ChaosHandler.ts", () => {
 			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
 		});
 
-		it("Should return response for Manual Request Level case", async () => {
+		it("Should return response for Manual Request Level case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 200);
+			const cxt: Context = {
+				request: "https://graph.microsoft.com/v1.0/me",
+				options: {
+					method: "GET",
+				},
+				middlewareControl: new MiddlewareControl([options]),
+			};
+			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
+		});
+
+		it("Should return response for Manual Request Level case 100%", () => {
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 429, 100);
 			const cxt: Context = {
 				request: "https://graph.microsoft.com/v1.0/me",
 				options: {
