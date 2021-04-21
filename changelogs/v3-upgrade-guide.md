@@ -21,9 +21,9 @@
 ```json
 {
     "main": "lib/src/index.js",
-    "module": "lib/es/src/index.js,
+    "module": "lib/es/src/index.js",
     "browser": {
-	    "./lib/es/src/index.js": "./lib/es/src/browser/index.js",
+	    "./lib/es/src/index.js": "./lib/es/src/browser/index.js"
     }
 }
 ```
@@ -51,5 +51,7 @@
 
 ### Deprecating `ImplicitMSALAuthenticationProvider` 
 * Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
-* Alternatives to `ImplicitMSALAuthenticationProvider` - TokenCredentialAuthenticationProvider with azure/identity library or a CustomAuthenticationProvider with an auth library of your choice.
+* Alternatives to `ImplicitMSALAuthenticationProvider` - 
+	* TokenCredentialAuthenticationProvider with the `azure/identity` library. Learn more about [InteractiveBrowserCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/interactive-browser-credential.md) 
+	* A CustomAuthenticationProvider with an auth library of your choice. [Choose a Microsoft Graph authentication provider based on scenario](https://docs.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=CS)
 
