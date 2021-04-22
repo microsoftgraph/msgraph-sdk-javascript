@@ -12,7 +12,6 @@
 import { FetchOptions } from "../IFetchOptions";
 import { Client } from "../index";
 import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
-import { ResponseType } from "../ResponseType";
 
 /**
  * Signature representing PageCollection
@@ -138,27 +137,23 @@ export class PageIterator {
 	 * @returns A promise that resolves to a response data with next page collection
 	 */
 	private async fetchAndUpdateNextPageData(): Promise<any> {
-		try {
-			let graphRequest = this.client.api(this.nextLink);
-			if (this.requestOptions) {
-				if (this.requestOptions.headers) {
-					graphRequest = graphRequest.headers(this.requestOptions.headers);
-				}
-				if (this.requestOptions.middlewareOptions) {
-					graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
-				}
-				if (this.requestOptions.options) {
-					graphRequest = graphRequest.options(this.requestOptions.options);
-				}
+		let graphRequest = this.client.api(this.nextLink);
+		if (this.requestOptions) {
+			if (this.requestOptions.headers) {
+				graphRequest = graphRequest.headers(this.requestOptions.headers);
 			}
-
-			const response: PageCollection = await graphRequest.get();
-			this.collection = response.value;
-			this.nextLink = response["@odata.nextLink"];
-			this.deltaLink = response["@odata.deltaLink"];
-		} catch (error) {
-			throw error;
+			if (this.requestOptions.middlewareOptions) {
+				graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
+			}
+			if (this.requestOptions.options) {
+				graphRequest = graphRequest.options(this.requestOptions.options);
+			}
 		}
+
+		const response: PageCollection = await graphRequest.get();
+		this.collection = response.value;
+		this.nextLink = response["@odata.nextLink"];
+		this.deltaLink = response["@odata.deltaLink"];
 	}
 
 	/**
@@ -178,21 +173,17 @@ export class PageIterator {
 	 * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy.
 	 */
 	public async iterate(): Promise<any> {
-		try {
-			let advance = this.iterationHelper();
-			while (advance) {
-				if (this.nextLink !== undefined) {
-					await this.fetchAndUpdateNextPageData();
-					advance = this.iterationHelper();
-				} else {
-					advance = false;
-				}
+		let advance = this.iterationHelper();
+		while (advance) {
+			if (this.nextLink !== undefined) {
+				await this.fetchAndUpdateNextPageData();
+				advance = this.iterationHelper();
+			} else {
+				advance = false;
 			}
-			if (this.nextLink === undefined && this.collection.length === 0) {
-				this.complete = true;
-			}
-		} catch (error) {
-			throw error;
+		}
+		if (this.nextLink === undefined && this.collection.length === 0) {
+			this.complete = true;
 		}
 	}
 
@@ -204,11 +195,7 @@ export class PageIterator {
 	 * @returns A Promise that resolves to nothing on completion and throws error incase of any discrepancy
 	 */
 	public async resume(): Promise<any> {
-		try {
-			return this.iterate();
-		} catch (error) {
-			throw error;
-		}
+		return this.iterate();
 	}
 
 	/**

@@ -11,7 +11,6 @@
 
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
-
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**

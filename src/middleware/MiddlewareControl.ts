@@ -20,7 +20,6 @@ export class MiddlewareControl {
 	 * @private
 	 * A member holding map of MiddlewareOptions
 	 */
-	// tslint:disable-next-line:ban-types
 	private middlewareOptions: Map<Function, MiddlewareOptions>;
 
 	/**
@@ -31,7 +30,6 @@ export class MiddlewareControl {
 	 * @returns The instance of MiddlewareControl
 	 */
 	public constructor(middlewareOptions: MiddlewareOptions[] = []) {
-		// tslint:disable-next-line:ban-types
 		this.middlewareOptions = new Map<Function, MiddlewareOptions>();
 		for (const option of middlewareOptions) {
 			const fn = option.constructor;
@@ -49,7 +47,6 @@ export class MiddlewareControl {
 	 * // call this function like this:
 	 * getMiddlewareOptions(MiddlewareControl)
 	 */
-	// tslint:disable-next-line:ban-types
 	public getMiddlewareOptions(fn: Function): MiddlewareOptions {
 		return this.middlewareOptions.get(fn);
 	}
@@ -61,7 +58,6 @@ export class MiddlewareControl {
 	 * @param {MiddlewareOptions} option - The strongly typed middleware option
 	 * @returns nothing
 	 */
-	// tslint:disable-next-line:ban-types
 	public setMiddlewareOptions(fn: Function, option: MiddlewareOptions): void {
 		this.middlewareOptions.set(fn, option);
 	}

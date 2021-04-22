@@ -4,35 +4,43 @@ Initialization of the Client can be done in one of below two ways
 
 ## 1. Create With ClientOptions [Recommended]
 
+The Microsoft Graph SDK client configures a default set of middleware that allows the SDK to communicate with the Microsoft Graph endpoints. This default set is customizable, allowing you to change the behavior of the client
+
 In order to instantiate a Client object, one has to pass in the `authProvider` or `middleware` chain in [ClientOptions](../src/IClientOptions.ts).
 
 ### Option A. Default Middleware chain
 
-Pass an instance of a class which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface as `authProvider` in [ClientOptions](../src/IClientOptions.ts), which will instantiate the Client with default set of middleware chain.
+The default middleware chain contains consecutively chained instances of the following:
+- [AuthenticationHandler](../src/middleware/AuthenticationHandler.ts)
+- [RetryHandler](../src/middleware/RetryHandler.ts)
+- [RedirectHandler](../src/middleware/RedirectHandler.ts)
+- [TelemetryHandler](../src/middleware/TelemetryHandler.ts)
+- [HTTPMessageHandler](../src/middleware/HTTPMessageHandler.ts)
 
-Library is shipped with one such authentication provider named [ImplicitMSALAuthenticationProvider](../src/ImplicitMSALAuthenticationProvider.ts). This ImplicitMSALAuthenticationProvider depends on an authentication library [msal.js](https://github.com/AzureAD/microsoft-authentication-library-for-js) which is not shipped along with the library, one has to externally include msal.js to use ImplicitMSALAuthenticationProvider.
+To create a client instance with the default middleware chain:
+
+1. Create an instance of a class which implements [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface. This class should contain the logic to get the access token to be passed to the Microsoft Graph API.
+
+2. Pass the instance as `authProvider` in [ClientOptions](../src/IClientOptions.ts) to instantiate the Client which will create and set the default middleware chain.
 
 ```typescript
-// Instantiating Client with ImplicitMSALAuthenticationProvider
-
-// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-const msalConfig = {
-	auth: {
-		clientId: <CLIENT_ID> // Client Id of the registered application
-	},
-};
-
-// Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
-// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
-const msalApplication = new UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(<SCOPES>); // An array of graph scopes
 let clientOptions: ClientOptions = {
-    authProvider: new ImplicitMSALAuthenticationProvider(msalApplication, options)
+	authProvider: new YourAuthProviderClass(),
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
 
-Want to use own preferred authentication library, for which one has to implement [AuthenticationProvider](../src/IAuthenticationProvider.ts) interface and pass in the instance of it as `authProvider` in [ClientOptions](../src/IClientOptions.ts).
+The Microsoft Graph JavaScript Client Library has an adapter implementation for the following -
+
+-   ([TokenCredentialAuthenticationProvider](src/authentication/TokenCredentialAuthenticationProvider.ts)) to support [Azure Identity TokenCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md) (Azure Identity client library for JavaScript) which takes care of getting the `accessToken`. @azure/identity library does not ship with this library, user has to include it externally (For including @azure/identity, refer [this](https://www.npmjs.com/package/@azure/identity)).
+
+    > Learn how to [create an instance of TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md).
+
+-   **DEPRECATED** ([ImplicitMSALAuthenticationProvider](src/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
+
+    > Learn how to [create an instance of ImplicitMSALAuthenticationProvider](./ImplicitMSALAuthenticationProvider.md).
+
+**User can integrate any preferred authentication library by implementing `IAuthenticationProvider` interface**. Refer implementing [Custom Authentication Provider](./CustomAuthenticationProvider.md) for more detailed information.
 
 ```typescript
 let clientOptions: ClientOptions = {
@@ -42,11 +50,14 @@ let clientOptions: ClientOptions = {
 const client = Client.initWithMiddleware(clientOptions);
 ```
 
-Refer, [custom authentication provider](./CustomAuthenticationProvider.md) for more detailed information.
-
 ### Option B. Custom Middleware chain
 
-Want to have complete control over the request and the response objects, one can provide his own chain of middleware. Have to pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
+The Microsoft Graph SDK client allows configuring custom middleware, allowing you to change the behavior of the client. For example, you can insert customized logging, or add a test handler to simulate specific scenarios.
+
+To create a client instance with the custom middleware chain:
+
+1. Refer to [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
+2. Create the middleware chain and pass first middleware in the chain as `middleware` in [ClientOptions](../src/IClientOptions.ts).
 
 ```typescript
 let clientOptions: ClientOptions = {
@@ -55,8 +66,6 @@ let clientOptions: ClientOptions = {
 };
 const client = Client.initWithMiddleware(clientOptions);
 ```
-
-Refer, [custom middleware chain](./CustomMiddlewareChain.md) for more detailed information.
 
 ## 2. Create With Options
 
