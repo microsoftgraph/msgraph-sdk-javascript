@@ -38,7 +38,7 @@ describe("GraphRequestUtil.ts", () => {
 		it("Should return Buffer/Blob/File/FormData/String as it is", () => {
 			const str = "Content";
 			assert.equal(serializeContent(str), str);
-			const buffer = new Buffer("Buffer");
+			const buffer = Buffer.alloc(2, "Buffer");
 			assert.equal(serializeContent(buffer), buffer);
 		});
 

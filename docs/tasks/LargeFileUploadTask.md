@@ -97,18 +97,18 @@ const fileObject = new FileUpload(readStream, fileName, totalsize);
 **Initiate the LargefileUploadTask options with Progress Handler and Range Size**
 
 ```typescript
-const progress = (range?: Range, extraCallBackParams?: unknown) => {
+const progress = (range?: Range, extraCallBackParam?: unknown) => {
 	// Handle progress event
 };
 
-const progressCallBack: Progress = {
+const uploadEventHandlers: UploadEventHandlers = {
 	progress,
 	extraCallBackParam, // additional parameters to the callback
 };
 
 const options: LargeFileUploadTaskOptions = {
 	rangeSize: 327680,
-	progressCallBack: progressCallBack,
+	uploadEventHandlers: UploadEventHandlers,
 };
 ```
 
@@ -128,18 +128,16 @@ _You can also use `OneDriveLargeFileUploadTask` which provides easier access to 
 Example -
 
 ```typescript
-const progressCallBack: Progress = {
+const uploadEventHandlers: UploadEventHandlers = {
 	progress,
-	completed,
-	failure,
-	extraCallBackParams: true,
+	extraCallBackParam: true,
 };
 
 const options: OneDriveLargeFileUploadOptions = {
 	path: "/Documents",
 	fileName,
 	rangeSize: 1024 * 1024,
-	progressCallBack,
+	uploadEventHandlers,
 };
 const readStream = fs.createReadStream(`./fileName`);
 const fileObject = new StreamUpload(readStream, fileName, totalsize);
@@ -152,7 +150,7 @@ const uploadResult:UploadResult = await uploadTask.upload();
 }
 ```
 
-> Note: The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.**
+> Note: The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.\*\*
 
 ## We can just resume the broken upload
 
