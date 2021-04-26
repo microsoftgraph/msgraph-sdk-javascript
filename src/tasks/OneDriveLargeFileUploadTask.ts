@@ -93,7 +93,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<unknown> {
+	public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<Blob | ArrayBuffer | Buffer>> {
 		if (!client || !file || !options) {
 			throw new GraphClientError("Please provide the Graph client instance, file object and OneDriveLargeFileUploadOptions value");
 		}
@@ -112,7 +112,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
 		}
 		const fileObj = new FileUpload(content, name, size);
-		return this.createTaskWithFileObject(client, fileObj, options);
+		return this.createTaskWithFileObject<Blob | ArrayBuffer | Buffer>(client, fileObj, options);
 	}
 
 	/**
