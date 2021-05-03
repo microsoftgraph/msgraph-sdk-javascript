@@ -1,6 +1,7 @@
 # Using Custom Authentication Provider
 
-Using preferred choice of Authentication library for authenticating with Microsoft is possible.
+Using preferred choice of Authentication library for authenticating with Microsoft is possible. 
+Learn how to [choose a Microsoft Graph authentication provider based on scenario](https://docs.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=CS) here.
 
 ## Step by step procedure
 
