@@ -65,6 +65,14 @@ export const serializeContent = (content: any): any => {
  * @returns {boolean} - Returns true if the url is a Graph URL
  */
 export const isGraphURL = (url: string): boolean => {
+	return isValidEndpoint(url);
+};
+
+export const isCustomEndpoint = (url: string, customEndpoints: Set<string>): boolean => {
+	return isValidEndpoint(url, customEndpoints);
+};
+
+const isValidEndpoint = (url: string, allowedEndPoints: Set<string> = GRAPH_URLS): boolean => {
 	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
 	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
 	url = url.toLowerCase();
@@ -79,11 +87,11 @@ export const isGraphURL = (url: string): boolean => {
 		if (endOfHostStrPos !== -1) {
 			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
 				hostName = url.substring(0, startofPortNoPos);
-				return GRAPH_URLS.has(hostName);
+				return allowedEndPoints.has(hostName);
 			}
 			// Parse out the host
 			hostName = url.substring(0, endOfHostStrPos);
-			return GRAPH_URLS.has(hostName);
+			return allowedEndPoints.has(hostName);
 		}
 	}
 

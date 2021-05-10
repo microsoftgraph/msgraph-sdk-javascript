@@ -21,4 +21,5 @@ export interface Context {
 	options?: FetchOptions;
 	response?: Response;
 	middlewareControl?: MiddlewareControl;
+	customHosts?: Set<string>;
 }

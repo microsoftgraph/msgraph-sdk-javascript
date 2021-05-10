@@ -283,7 +283,7 @@ export class GraphRequest {
 	 */
 	private parseQueryParamenterString(queryParameter: string): void {
 		/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
-				 Example-> "/me?$expand=home($select=city)" */
+                 Example-> "/me?$expand=home($select=city)" */
 		if (this.isValidQueryKeyValuePair(queryParameter)) {
 			const indexOfFirstEquals = queryParameter.indexOf("=");
 			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
@@ -291,7 +291,7 @@ export class GraphRequest {
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
 			/* Push values which are not of key-value structure.
-			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
+            Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
 			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}
 	}
@@ -367,12 +367,15 @@ export class GraphRequest {
 		let rawResponse: Response;
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
+		const customHosts = this.config.customHosts;
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,
 				options,
 				middlewareControl,
+				customHosts,
 			});
+
 			rawResponse = context.response;
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;

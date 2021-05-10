@@ -26,4 +26,5 @@ export interface ClientOptions {
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 	middleware?: Middleware | Middleware[];
+	customHosts?: Set<string>;
 }

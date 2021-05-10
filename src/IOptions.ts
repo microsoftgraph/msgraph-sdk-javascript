@@ -16,6 +16,7 @@ import { FetchOptions } from "./IFetchOptions";
  * @property {boolean} [debugLogging] - The boolean to enable/disable debug logging
  * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
  * @property {FetchOptions} [fetchOptions] - The options for fetch request
+ * @property {Set<string>} [customURLs] - A set of custom URLS or endpoints not in the list of the service root endpoints for Microsoft Graph and Graph Explorer for each national cloud.
  */
 export interface Options {
 	authProvider: AuthProvider;
@@ -23,4 +24,5 @@ export interface Options {
 	debugLogging?: boolean;
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
+	customHosts?: Set<string>;
 }
