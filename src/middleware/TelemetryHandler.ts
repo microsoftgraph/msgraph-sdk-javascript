@@ -8,7 +8,7 @@
 /**
  * @module TelemetryHandler
  */
-import { isGraphURL } from "../GraphRequestUtil";
+import { isCustomEndpoint, isGraphURL } from "../GraphRequestUtil";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
 import { Middleware } from "./IMiddleware";
@@ -65,7 +65,7 @@ export class TelemetryHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		const url = typeof context.request === "string" ? context.request : context.request.url;
-		if (isGraphURL(url)) {
+		if (isGraphURL(url) || (context.customHosts && isCustomEndpoint(url, context.customHosts))) {
 			// Add telemetry only if the request url is a Graph URL.
 			// Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
 			let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
