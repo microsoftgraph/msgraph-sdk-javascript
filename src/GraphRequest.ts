@@ -367,7 +367,7 @@ export class GraphRequest {
 		let rawResponse: Response;
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
-		const customHosts = this.config.customHosts;
+		const customHosts = this.config?.customHosts;
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,

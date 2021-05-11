@@ -14,6 +14,8 @@ import { MiddlewareControl } from "./middleware/MiddlewareControl";
  * @property {FetchOptions} [options] - The options for the request
  * @property {Response} [response] - The response content
  * @property {MiddlewareControl} [middlewareControl] - The options for the middleware chain
+ * @property {Set<string>}[customHosts] - A set of custom host names. Should contain hostnames only.
+ *
  */
 
 export interface Context {
@@ -21,5 +23,8 @@ export interface Context {
 	options?: FetchOptions;
 	response?: Response;
 	middlewareControl?: MiddlewareControl;
+	/**
+	 * Example - If URL is "https://test_host" then set Property customHosts: Set<string>(["test_host"])
+	 */
 	customHosts?: Set<string>;
 }

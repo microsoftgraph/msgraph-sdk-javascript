@@ -8,6 +8,7 @@
 import "isomorphic-fetch";
 
 import { assert } from "chai";
+import * as sinon from "sinon";
 
 import { CustomAuthenticationProvider, TelemetryHandler } from "../../../src";
 import { Client } from "../../../src/Client";
@@ -147,6 +148,32 @@ describe("Client.ts", () => {
 				assert.isTrue(error instanceof GraphClientError);
 				assert.equal(error.customError, customError);
 			}
+		});
+
+		it("Init middleware with custom hosts", async () => {
+			const accessToken = "DUMMY_TOKEN";
+			const provider: AuthProvider = (done) => {
+				done(null, "DUMMY_TOKEN");
+			};
+
+			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing chained middleware array", 200, 100, "");
+			const chaosHandler = new ChaosHandler(options);
+
+			const authHandler = new AuthenticationHandler(new CustomAuthenticationProvider(provider));
+
+			const telemetry = new TelemetryHandler();
+			const middleware = [authHandler, telemetry, chaosHandler];
+
+			const customHost = "test_custom";
+			const customHosts = new Set<string>([customHost]);
+			const client = Client.initWithMiddleware({ middleware, customHosts });
+
+			const spy = sinon.spy(telemetry, "execute");
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const response = await client.api(`https://${customHost}/v1.0/me`).get();
+			const context = spy.getCall(0).args[0];
+
+			assert.equal(context.options.headers["Authorization"], `Bearer ${accessToken}`);
 		});
 	});
 
