@@ -68,11 +68,22 @@ export const isGraphURL = (url: string): boolean => {
 	return isValidEndpoint(url);
 };
 
-export const isCustomEndpoint = (url: string, customEndpoints: Set<string>): boolean => {
-	return isValidEndpoint(url, customEndpoints);
+/**
+ * Checks if the url is for one of the custom hosts provided during client initialization
+ * @param {string} url - The url to be verified
+ * @returns {boolean} - Returns true if the url is a for a custom host
+ */
+export const isCustomHost = (url: string, customHostNames: Set<string>): boolean => {
+	return isValidEndpoint(url, customHostNames);
 };
 
-const isValidEndpoint = (url: string, allowedEndPoints: Set<string> = GRAPH_URLS): boolean => {
+/**
+ * Checks if the url is for one of the provided hosts.
+ * @param {string} url - The url to be verified
+ * @param {Set<string>} allowedHostNames - A set of hostnames.
+ * @returns {boolean} - Returns true is for one of the provided endpoints.
+ */
+const isValidEndpoint = (url: string, allowedHostNames: Set<string> = GRAPH_URLS): boolean => {
 	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
 	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
 	url = url.toLowerCase();
@@ -87,11 +98,11 @@ const isValidEndpoint = (url: string, allowedEndPoints: Set<string> = GRAPH_URLS
 		if (endOfHostStrPos !== -1) {
 			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
 				hostName = url.substring(0, startofPortNoPos);
-				return allowedEndPoints.has(hostName);
+				return allowedHostNames.has(hostName);
 			}
 			// Parse out the host
 			hostName = url.substring(0, endOfHostStrPos);
-			return allowedEndPoints.has(hostName);
+			return allowedHostNames.has(hostName);
 		}
 	}
 

@@ -24,7 +24,7 @@ export interface Context {
 	response?: Response;
 	middlewareControl?: MiddlewareControl;
 	/**
-	 * Example - If URL is "https://test_host" then set Property customHosts: Set<string>(["test_host"])
+	 * Example - If URL is "https://test_host", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
 	 */
 	customHosts?: Set<string>;
 }
