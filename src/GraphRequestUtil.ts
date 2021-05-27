@@ -9,6 +9,7 @@
  * @module GraphRequestUtil
  */
 import { GRAPH_URLS } from "./Constants";
+import { GraphClientError } from "./GraphClientError";
 /**
  * To hold list of OData query params
  */
@@ -71,9 +72,11 @@ export const isGraphURL = (url: string): boolean => {
 /**
  * Checks if the url is for one of the custom hosts provided during client initialization
  * @param {string} url - The url to be verified
+ * @param {Set} customHostNames - The url to be verified
  * @returns {boolean} - Returns true if the url is a for a custom host
  */
 export const isCustomHost = (url: string, customHostNames: Set<string>): boolean => {
+	customHostNames.forEach((x) => isCustomHostValid(x));
 	return isValidEndpoint(url, customHostNames);
 };
 
@@ -107,4 +110,10 @@ const isValidEndpoint = (url: string, allowedHostNames: Set<string> = GRAPH_URLS
 	}
 
 	return false;
+};
+
+const isCustomHostValid = (hostName: string) => {
+	if (hostName.indexOf("/") !== -1) {
+		throw new GraphClientError("Please add only hostnames to the CustomHosts config");
+	}
 };
