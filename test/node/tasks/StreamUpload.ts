@@ -50,4 +50,20 @@ describe("StreamUpload", () => {
 		assert.isDefined(slice);
 		assert.equal(sliceSize, (slice as Buffer).length);
 	});
+
+	it("Stream resume", async () => {
+		const readStream = fs.createReadStream(filePath, { highWaterMark: totalsize });
+		const sliceSize = 20;
+
+		const upload = new StreamUpload(readStream, fileName, totalsize);
+
+		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
+		const retrySlice = await upload.sliceFile({ minValue: 15, maxValue: 21 });
+		assert.isDefined(slice);
+		assert.isDefined(retrySlice);
+		assert.equal(sliceSize, (slice as Buffer).length);
+
+		console.log(retrySlice);
+		console.log(slice);
+	});
 });

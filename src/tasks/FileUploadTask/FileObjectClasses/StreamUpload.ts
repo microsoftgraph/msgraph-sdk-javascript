@@ -3,7 +3,13 @@ import { Readable } from "stream";
 import { GraphClientError } from "../../../GraphClientError";
 import { FileObject, SliceType } from "../../LargeFileUploadTask";
 import { Range } from "../Range";
+
+interface ChunkRecord {
+	chunk: Buffer;
+	range: Range;
+}
 export class StreamUpload implements FileObject<Readable> {
+	private previousChunk: ChunkRecord;
 	public constructor(public content: Readable, public name: string, public size: number) {
 		if (!content || !name || !size) {
 			throw new GraphClientError("Please provide the Readable Stream content, name of the file and size of the file");
@@ -17,19 +23,47 @@ export class StreamUpload implements FileObject<Readable> {
 	 * @returns The sliced file part
 	 */
 	public async sliceFile(range: Range): Promise<SliceType> {
-		const rangeSize = range.maxValue - range.minValue + 1;
+		let rangeSize = range.maxValue - range.minValue + 1;
 		/* readable.readable Is true if it is safe to call readable.read(),
 		 * which means the stream has not been destroyed or emitted 'error' or 'end'
 		 */
+
+		let slicedChunk;
+		let bufs = [];
+		if (this.previousChunk && (range.minValue === this.previousChunk.range.minValue || range.minValue < this.previousChunk.range.maxValue)) {
+			if (range.minValue === this.previousChunk.range.minValue && range.maxValue === this.previousChunk.range.maxValue) {
+				return this.previousChunk.chunk;
+			}
+
+			console.log(this.previousChunk.range.minValue);
+			console.log(this.previousChunk.range.maxValue);
+
+			console.log("range");
+			console.log(range.minValue);
+			console.log(range.maxValue);
+			console.log("range");
+
+			console.log(this.previousChunk.chunk.slice(range.minValue, this.previousChunk.range.maxValue + 1));
+			bufs.push(this.previousChunk.chunk.slice(range.minValue, this.previousChunk.range.maxValue + 1));
+
+			rangeSize = range.maxValue - this.previousChunk.range.maxValue;
+			console.log("rangeSize");
+			console.log(rangeSize);
+		}
+
 		if (this.content && this.content.readable) {
 			if (this.content.readableLength >= rangeSize) {
-				return this.content.read(rangeSize);
+				bufs.push(this.content.read(rangeSize));
 			} else {
-				return await this.readNBytesFromStream(rangeSize);
+				bufs.push(await this.readNBytesFromStream(rangeSize));
 			}
 		} else {
 			throw new GraphClientError("Stream is not readable.");
 		}
+		slicedChunk = Buffer.concat(bufs);
+		this.previousChunk = { chunk: slicedChunk, range: range };
+
+		return slicedChunk;
 	}
 
 	/**
