@@ -28,27 +28,21 @@ export class StreamUpload implements FileObject<Readable> {
 		 * which means the stream has not been destroyed or emitted 'error' or 'end'
 		 */
 
-		let slicedChunk;
-		let bufs = [];
-		if (this.previousChunk && (range.minValue === this.previousChunk.range.minValue || range.minValue < this.previousChunk.range.maxValue)) {
-			if (range.minValue === this.previousChunk.range.minValue && range.maxValue === this.previousChunk.range.maxValue) {
+		const bufs = [];
+		if (this.previousChunk && range.minValue < this.previousChunk.range.maxValue) {
+			const previousRangeMin = this.previousChunk.range.minValue;
+			const previousRangeMax = this.previousChunk.range.maxValue;
+			if (range.minValue === previousRangeMin && range.maxValue === previousRangeMax) {
 				return this.previousChunk.chunk;
 			}
 
-			console.log(this.previousChunk.range.minValue);
-			console.log(this.previousChunk.range.maxValue);
+			if (range.maxValue === previousRangeMax) {
+				return this.previousChunk.chunk.slice(range.minValue, range.maxValue + 1);
+			}
 
-			console.log("range");
-			console.log(range.minValue);
-			console.log(range.maxValue);
-			console.log("range");
+			bufs.push(this.previousChunk.chunk.slice(range.minValue, previousRangeMax + 1));
 
-			console.log(this.previousChunk.chunk.slice(range.minValue, this.previousChunk.range.maxValue + 1));
-			bufs.push(this.previousChunk.chunk.slice(range.minValue, this.previousChunk.range.maxValue + 1));
-
-			rangeSize = range.maxValue - this.previousChunk.range.maxValue;
-			console.log("rangeSize");
-			console.log(rangeSize);
+			rangeSize = range.maxValue - previousRangeMax;
 		}
 
 		if (this.content && this.content.readable) {
@@ -60,8 +54,8 @@ export class StreamUpload implements FileObject<Readable> {
 		} else {
 			throw new GraphClientError("Stream is not readable.");
 		}
-		slicedChunk = Buffer.concat(bufs);
-		this.previousChunk = { chunk: slicedChunk, range: range };
+		const slicedChunk = Buffer.concat(bufs);
+		this.previousChunk = { chunk: slicedChunk, range };
 
 		return slicedChunk;
 	}
