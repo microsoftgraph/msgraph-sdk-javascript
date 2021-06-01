@@ -72,21 +72,21 @@ export const isGraphURL = (url: string): boolean => {
 /**
  * Checks if the url is for one of the custom hosts provided during client initialization
  * @param {string} url - The url to be verified
- * @param {Set} customHostNames - The url to be verified
+ * @param {Set} customHosts - The url to be verified
  * @returns {boolean} - Returns true if the url is a for a custom host
  */
-export const isCustomHost = (url: string, customHostNames: Set<string>): boolean => {
-	customHostNames.forEach((x) => isCustomHostValid(x));
-	return isValidEndpoint(url, customHostNames);
+export const isCustomHost = (url: string, customHosts: Set<string>): boolean => {
+	customHosts.forEach((host) => isCustomHostValid(host));
+	return isValidEndpoint(url, customHosts);
 };
 
 /**
  * Checks if the url is for one of the provided hosts.
  * @param {string} url - The url to be verified
- * @param {Set<string>} allowedHostNames - A set of hostnames.
+ * @param {Set<string>} allowedHosts - A set of hosts.
  * @returns {boolean} - Returns true is for one of the provided endpoints.
  */
-const isValidEndpoint = (url: string, allowedHostNames: Set<string> = GRAPH_URLS): boolean => {
+const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): boolean => {
 	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
 	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
 	url = url.toLowerCase();
@@ -101,19 +101,23 @@ const isValidEndpoint = (url: string, allowedHostNames: Set<string> = GRAPH_URLS
 		if (endOfHostStrPos !== -1) {
 			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
 				hostName = url.substring(0, startofPortNoPos);
-				return allowedHostNames.has(hostName);
+				return allowedHosts.has(hostName);
 			}
 			// Parse out the host
 			hostName = url.substring(0, endOfHostStrPos);
-			return allowedHostNames.has(hostName);
+			return allowedHosts.has(hostName);
 		}
 	}
 
 	return false;
 };
 
-const isCustomHostValid = (hostName: string) => {
-	if (hostName.indexOf("/") !== -1) {
-		throw new GraphClientError("Please add only hostnames to the CustomHosts config");
+/**
+ * Throws error if the string is not a valid host/hostname and contains other url parts.
+ * @param {string} url - The host to be verified
+ */
+const isCustomHostValid = (host: string) => {
+	if (host.indexOf("/") !== -1) {
+		throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
 	}
 };
