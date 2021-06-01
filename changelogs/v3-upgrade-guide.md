@@ -28,9 +28,28 @@
 }
 ```
 ## Removed the `graph-es-sdk.js`
-* `graph-es-sdk.js` - the bundled file in ES format will not be shipped anymore as the ES modules are being shipped.
-* `graph-js-sdk.js` will be shipped as is.
+- `graph-es-sdk.js` - the bundled file in ES format will not be shipped anymore as the ES modules are being shipped.
+- `graph-js-sdk.js` will be shipped as is.
 
+## Changed folder paths
+- Files in `lib/es` have been moved to `lib/es/src`. The `lib` folder contains the transpiled `src` files.
+	- The `lib` contains the ES and CJS modules as follows:
+	```
+		lib
+		│
+		└─── src (CJS modules)
+		|
+		│   
+		└─── es 
+		     |___ src (ES modules)
+	 ```
+- `Range`: `src/Range` changed to `src/tasks/FileUploadTask/Range`.
+- `ImplicitMSALAuthenticationProvider`: 
+	- `src/ImplicitMSALAuthenticationProvider` changed to `src/authentication/msal/ImplicitMSALAuthenticationProvider`.
+	-  Alternatively, `ImplicitMSALAuthenticationProvider` can be imported or required from `@microsoft/microsoft-graph-client/authProviders/msal`.
+- `MSALAuthenticationProviderOptions`: 
+	- `src/MSALAuthenticationProviderOptions` changed to `src/authentication/msal/MSALAuthenticationProviderOptions`.
+	- Alternatively, `MSALAuthenticationProviderOptions` can be imported or required from `@microsoft/microsoft-graph-client/authProviders/msal`.
 ## Enhancements
 
 ### Introducing support for `@azure/identity TokenCredentials`
@@ -47,11 +66,16 @@
 ### Added `browser` field in package.json.
 - The `browser` field indicates the entry point for client applications using Microsoft Graph JS SDK library.
 
+### Added `GraphClientError`
+- `GraphClientError` handles client-side errors encountered within the JavaScript Client SDK whereas, `GraphError` class should be used to handle errors in the response from the Graph API.
+
 ## Deprecation
 
 ### Deprecating `ImplicitMSALAuthenticationProvider` 
-* Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
-* Alternatives to `ImplicitMSALAuthenticationProvider` - 
-	* TokenCredentialAuthenticationProvider with the `azure/identity` library. Learn more about [InteractiveBrowserCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/interactive-browser-credential.md) 
-	* A CustomAuthenticationProvider with an auth library of your choice. [Choose a Microsoft Graph authentication provider based on scenario](https://docs.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=CS)
+- Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
+- Alternatives to `ImplicitMSALAuthenticationProvider` - 
+	- TokenCredentialAuthenticationProvider with the `azure/identity` library. Learn more about [InteractiveBrowserCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/interactive-browser-credential.md) 
+	- A CustomAuthenticationProvider with an auth library of your choice. [Choose a Microsoft Graph authentication provider based on scenario](https://docs.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=CS)
 
+### Deprecating the `sliceFile` function of the `LargeFileUploadTask` class.
+- The `sliceFile` function has been moved to the `FileObject` interface.
