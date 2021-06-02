@@ -32,11 +32,11 @@ const client = Client.initWithMiddleware(clientOptions);
 
 The Microsoft Graph JavaScript Client Library has an adapter implementation for the following -
 
--   ([TokenCredentialAuthenticationProvider](src/authentication/TokenCredentialAuthenticationProvider.ts)) to support [Azure Identity TokenCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md) (Azure Identity client library for JavaScript) which takes care of getting the `accessToken`. @azure/identity library does not ship with this library, user has to include it externally (For including @azure/identity, refer [this](https://www.npmjs.com/package/@azure/identity)).
+-   ([TokenCredentialAuthenticationProvider](../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider.ts)) to support [Azure Identity TokenCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md) (Azure Identity client library for JavaScript) which takes care of getting the `accessToken`. @azure/identity library does not ship with this library, user has to include it externally (For including @azure/identity, refer [this](https://www.npmjs.com/package/@azure/identity)).
 
     > Learn how to [create an instance of TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md).
 
--   **DEPRECATED** ([ImplicitMSALAuthenticationProvider](src/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
+-   **DEPRECATED** ([ImplicitMSALAuthenticationProvider](../src/authentication/msal/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
 
     > Learn how to [create an instance of ImplicitMSALAuthenticationProvider](./ImplicitMSALAuthenticationProvider.md).
 
