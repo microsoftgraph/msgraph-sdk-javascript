@@ -41,6 +41,7 @@ interface UploadStatusResponse {
  * @interface
  * Signature to define options for upload task
  * @property {number} [rangeSize = LargeFileUploadTask.DEFAULT_FILE_SIZE] - Specifies the range chunk size
+ * @property {UploadEventHandlers} uploadEventHandlers - UploadEventHandlers attached to an upload task
  */
 export interface LargeFileUploadTaskOptions {
 	rangeSize?: number;

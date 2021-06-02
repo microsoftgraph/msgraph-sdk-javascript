@@ -4,12 +4,28 @@ import { GraphClientError } from "../../../GraphClientError";
 import { FileObject, SliceType } from "../../LargeFileUploadTask";
 import { Range } from "../Range";
 
+/**
+ * @interface
+ * Interface to store slice of a stream and range of the chunk.
+ * @property {Buffer} chunk - The slice of the stream
+ * @property {Range} range - The range of the slice
+ */
 interface ChunkRecord {
 	chunk: Buffer;
 	range: Range;
 }
+
+/**
+ * @class
+ * FileObject class for Readable Stream upload
+ */
 export class StreamUpload implements FileObject<Readable> {
+	/**
+	 * @private
+	 * Previous slice information.
+	 */
 	private previousChunk: ChunkRecord;
+
 	public constructor(public content: Readable, public name: string, public size: number) {
 		if (!content || !name || !size) {
 			throw new GraphClientError("Please provide the Readable Stream content, name of the file and size of the file");
@@ -27,22 +43,27 @@ export class StreamUpload implements FileObject<Readable> {
 		/* readable.readable Is true if it is safe to call readable.read(),
 		 * which means the stream has not been destroyed or emitted 'error' or 'end'
 		 */
-
 		const bufs = [];
-		if (this.previousChunk && range.minValue < this.previousChunk.range.maxValue) {
-			const previousRangeMin = this.previousChunk.range.minValue;
-			const previousRangeMax = this.previousChunk.range.maxValue;
-			if (range.minValue === previousRangeMin && range.maxValue === previousRangeMax) {
-				return this.previousChunk.chunk;
+
+		if (this.previousChunk) {
+			if (range.minValue < this.previousChunk.range.minValue) {
+				throw new GraphClientError("An error occurred while uploading the stream. Please restart the stream upload from the first byte of the file.");
 			}
+			if (range.minValue < this.previousChunk.range.maxValue) {
+				const previousRangeMin = this.previousChunk.range.minValue;
+				const previousRangeMax = this.previousChunk.range.maxValue;
+				if (range.minValue === previousRangeMin && range.maxValue === previousRangeMax) {
+					return this.previousChunk.chunk;
+				}
 
-			if (range.maxValue === previousRangeMax) {
-				return this.previousChunk.chunk.slice(range.minValue, range.maxValue + 1);
+				if (range.maxValue === previousRangeMax) {
+					return this.previousChunk.chunk.slice(range.minValue, range.maxValue + 1);
+				}
+
+				bufs.push(this.previousChunk.chunk.slice(range.minValue, previousRangeMax + 1));
+
+				rangeSize = range.maxValue - previousRangeMax;
 			}
-
-			bufs.push(this.previousChunk.chunk.slice(range.minValue, previousRangeMax + 1));
-
-			rangeSize = range.maxValue - previousRangeMax;
 		}
 
 		if (this.content && this.content.readable) {

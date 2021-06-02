@@ -61,10 +61,10 @@ describe("Stream upload resume", () => {
 		const upload = new StreamUpload(readStream, fileName, totalsize);
 
 		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
-		const retrySlice = await upload.sliceFile({ minValue: 15, maxValue: 21 });
+		const retrySlice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
 		assert.isDefined(slice);
 		assert.isDefined(retrySlice);
-		assert.equal(sliceSize, (slice as Buffer).length);
+		assert.equal(Buffer.compare(slice as Buffer, retrySlice as Buffer), 0);
 	});
 
 	it("New Range.Minimum greater than previous Range.Minimum and new Range.Maximum is equal previous Range.Maximum", async () => {
@@ -72,24 +72,27 @@ describe("Stream upload resume", () => {
 		const sliceSize = 20;
 
 		const upload = new StreamUpload(readStream, fileName, totalsize);
-
+		const retryRangeMin = 15;
 		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
 		const retrySlice = await upload.sliceFile({ minValue: 15, maxValue: sliceSize - 1 });
 		assert.isDefined(slice);
 		assert.isDefined(retrySlice);
 		assert.equal(sliceSize, (slice as Buffer).length);
+		assert.equal(Buffer.compare(slice.slice(retryRangeMin, sliceSize) as Buffer, retrySlice as Buffer), 0);
 	});
 
 	it("New Range.Minimum greater than previous Range.Minimum and new Range.Maximum is greater than previous Range.Maximum", async () => {
 		const readStream = fs.createReadStream(filePath, { highWaterMark: totalsize });
 		const sliceSize = 20;
-
+		const retryRangeMin = 15;
+		const retryRangeMax = 21;
 		const upload = new StreamUpload(readStream, fileName, totalsize);
 
 		const slice = await upload.sliceFile({ minValue: 0, maxValue: sliceSize - 1 });
-		const retrySlice = await upload.sliceFile({ minValue: 15, maxValue: 21 });
+		const retrySlice = (await upload.sliceFile({ minValue: retryRangeMin, maxValue: retryRangeMax })) as Buffer;
 		assert.isDefined(slice);
 		assert.isDefined(retrySlice);
-		assert.equal(sliceSize, (slice as Buffer).length);
+		assert.equal(retrySlice.length, retryRangeMax - retryRangeMin + 1);
+		assert.equal(Buffer.compare(slice.slice(retryRangeMin, sliceSize) as Buffer, retrySlice.slice(0, sliceSize - retryRangeMin)), 0);
 	});
 });
