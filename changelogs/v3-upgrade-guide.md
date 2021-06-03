@@ -10,12 +10,12 @@
 - Updated to TypeScript 4.x.
 
 ### LargeFileUploadTask 
-- Modified the `FileObject` interface which now contains the `sliceFile` function. Learn more [LargeFileUploadTask](./docs/tasks/LargeFileUploadTask.md). 
+- Modified the `FileObject` interface which now contains the `sliceFile` function. Learn more [LargeFileUploadTask](../docs/tasks/LargeFileUploadTask.md). 
 - The `FileObject` instance passed on creation of the `LargeFileUploadTask` object should contain the implementation of the `sliceFile` function.
 - Added new classes `FileUpload` and `StreamUpload` implementing the `FileObject` interface.
 
 ### Removed `timeout` option from `FetchOptions` interface
-- Recommended way is to [cancel a request](./docs/CancellingAHTTPRequest.md) by passing a signal.
+- Recommended way is to [cancel a request](../docs/CancellingAHTTPRequest.md) by passing a signal.
 
 ### Update in the `package.json` entry points.
 ```json
@@ -55,11 +55,11 @@
 ### Introducing support for `@azure/identity TokenCredentials`
 - Added a `TokenCredentialAuthenticationProvider` enabling the use of `@azure/identity` `credential classes` for authentication purposes. 
 - The `TokenCredentialAuthenticationProvider` enables server-side authentication using `credential classes` such as `ClientSecretCredential` or `ClientCertificateCredential`.
-- Find the samples on how to use `TokenCredentialAuthenticationProvider` here - [TokenCredentialAuthenticationProvider samples](./samples/tokenCredentialSamples)
+- Find the samples on how to use `TokenCredentialAuthenticationProvider` here - [TokenCredentialAuthenticationProvider samples](../samples/tokenCredentialSamples)
 
 ### LargeFileUploadTask
 
-- Added support for Node.js Stream upload. Learn more [LargeFileUploadTask](./docs/tasks/LargeFileUploadTask.md). 
+- Added support for Node.js Stream upload. Learn more [LargeFileUploadTask](../docs/tasks/LargeFileUploadTask.md). 
 - Added capabilities to track the upload progress using `UploadEventHandlers`.
 - Resolved a bug to enable large file uploads to Outlook and Print APIs.
 
