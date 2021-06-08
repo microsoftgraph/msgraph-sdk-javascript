@@ -66,6 +66,17 @@
 ### Added `browser` field in package.json.
 - The `browser` field indicates the entry point for client applications using Microsoft Graph JS SDK library.
 
+### Added `customHosts` options
+- The `AuthenticationHandler` and `TelemetryHandler` will add or update the request headers only if the request URL is a Graph endpoint or a custom endpoint.
+- `customHosts` property in `IOptions`, `IClientOptions` takes in a `Set` of custom hosts.  
+
+```typescript
+// Consider the custom request url is https://CUSTOM_HOST.com
+const customHost = "CUSTOM_HOST";
+const customHosts = new Set<string>([customHost]);
+const client = Client.initWithMiddleware({ middleware, customHosts });
+```
+
 ### Added `GraphClientError`
 - `GraphClientError` handles client-side errors encountered within the JavaScript Client SDK whereas, `GraphError` class should be used to handle errors in the response from the Graph API.
 
