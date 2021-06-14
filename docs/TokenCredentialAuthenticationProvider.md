@@ -6,7 +6,7 @@
 
 -   [npm - Azure Identity client library for JavaScript](https://www.npmjs.com/package/@azure/identity)
 
--   Check the [tokenCredentialSamples folder][../samples/tokencredentialsamples]. The ClientSecretCredentialFlow is an example of using TokenCredential to authenticate a node application. The AuthenticationCodeFlow is an example of using TokenCredential to authenticate a browser application.
+-   Check the [tokenCredentialSamples folder](../samples/tokencredentialsamples). The ClientSecretCredentialFlow is an example of using TokenCredential to authenticate a node application. The AuthenticationCodeFlow is an example of using TokenCredential to authenticate a browser application.
 
 **Important Note:** TokenCredentials can be used to authenticate browser and node applications.
 
