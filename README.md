@@ -29,6 +29,20 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
         -   [Page Iteration](docs/tasks/PageIterator.md)
         -   [Getting Raw Response](docs/GettingRawResponse.md)
         -   [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
+    - [Samples and tutorials](#samples-and-tutorials)
+        - Step-by-step training exercises on creating a basic application using the Microsoft Graph JavaScript SDK:
+            - [Build Angular single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/angular)
+            - [Build Node.js Express apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/node)
+            - [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
+            - [Build React single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react)
+            - [Build JavaScript single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/javascript)
+            - [Explore Microsoft Graph scenarios for JavaScript development](https://docs.microsoft.com/en-us/learn/paths/m365-msgraph-scenarios/)
+        - Samples using `TokenCredentialAuthenticationProvider` with the `@azure/identity` library:
+            - [TokenCredentialAuthenticationProvider Samples](samples/tokenCredentialSamples)
+        - Samples to learn more about authentication using `MSAL`libraries:
+            - [Azure-Sample Vanilla JS SPA using MSAL Browser and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/main/2-Authorization-I/1-call-graph)
+            - [ Azure-Sample Angular SPA using MSAL Angular and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-angular-tutorial/tree/main/2-Authorization-I/1-call-graph)
+            - [ Azure-Sample React SPA using MSAL React and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-react-tutorial/tree/main/2-Authorization-I/1-call-graph)
     -   [Questions and comments](#questions-and-comments)
     -   [Contributing](#contributing)
     -   [Additional resources](#additional-resources)
@@ -142,6 +156,26 @@ try {
 ```
 
 For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions](docs/Actions.md), [Query Params](docs/QueryParameters.md), [API Methods](docs/OtherAPIs.md) and [more](docs/).
+
+## Samples and tutorials
+
+Step-by-step training exercises that guide you through creating a basic application that accesses data via the Microsoft Graph:
+- [Build Angular single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/angular)
+- [Build Node.js Express apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/node)
+- [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
+- [Build React single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react)
+- [Build JavaScript single-page apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/javascript)
+- [Explore Microsoft Graph scenarios for JavaScript development](https://docs.microsoft.com/en-us/learn/paths/m365-msgraph-scenarios/)
+
+The Microsoft Graph JavaScript SDK provides a `TokenCredentialAuthenticationProvider` to authenticate using the `@azure/identity` auth library. Learn more:
+- [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
+- [TokenCredentialAuthenticationProvider Samples](samples/tokenCredentialSamples)
+
+The following `MSAL` samples provide information on authentication using `MSAL` libraries and how to use the Microsoft Graph JavaScript SDK client with MSAL as a custom authentication provider to query the Graph API:
+
+- [Azure-Sample Vanilla JS SPA using MSAL Browser and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/main/2-Authorization-I/1-call-graph)
+- [Azure-Sample Angular SPA using MSAL Angular and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-angular-tutorial/tree/main/2-Authorization-I/1-call-graph)
+- [Azure-Sample React SPA using MSAL React and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-react-tutorial/tree/main/2-Authorization-I/1-call-graph)
 
 ## Questions and comments
 
