@@ -29,6 +29,20 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
         -   [Page Iteration](docs/tasks/PageIterator.md)
         -   [Getting Raw Response](docs/GettingRawResponse.md)
         -   [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
+    - [Samples and tutorials](#samples-and-tutorials)
+        - Step-by-step training exercises on creating a basic application using the Microsoft Graph JavaScript SDK:
+            - [Build Angular single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/angular)
+            - [Build Node.js Express apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/node)
+            - [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/react-native)
+            - [Build React single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/react)
+            - [Build JavaScript single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/javascript)
+            - [Explore Microsoft Graph scenarios for JavaScript development](https://docs.microsoft.com/learn/paths/m365-msgraph-scenarios/)
+        - Samples using `TokenCredentialAuthenticationProvider` with the `@azure/identity` library:
+            - [TokenCredentialAuthenticationProvider Samples](samples/tokenCredentialSamples)
+        - Samples to learn more about authentication using `MSAL`libraries:
+            - [Azure-Sample Vanilla JS SPA using MSAL Browser and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/main/2-Authorization-I/1-call-graph)
+            - [ Azure-Sample Angular SPA using MSAL Angular and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-angular-tutorial/tree/main/2-Authorization-I/1-call-graph)
+            - [ Azure-Sample React SPA using MSAL React and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-react-tutorial/tree/main/2-Authorization-I/1-call-graph)
     -   [Questions and comments](#questions-and-comments)
     -   [Contributing](#contributing)
     -   [Additional resources](#additional-resources)
@@ -36,6 +50,8 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
     -   [Security Reporting](#security-reporting)
     -   [License](#license)
     -   [We Value and Adhere to the Microsoft Open Source Code of Conduct](#we-value-and-adhere-to-the-microsoft-open-source-code-of-conduct)
+
+**Looking for IntelliSense on models (Users, Groups, etc.)? Check out the Microsoft Graph Types [v1.0](https://github.com/microsoftgraph/msgraph-typescript-typings) and [beta](https://github.com/microsoftgraph/msgraph-beta-typescript-typings)!!**
 
 [![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
@@ -72,7 +88,7 @@ Include [graph-js-sdk.js](https://cdn.jsdelivr.net/npm/@microsoft/microsoft-grap
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@microsoft/microsoft-graph-client/lib/graph-js-sdk.js"></script>
 ```
 
-In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)] or [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you need to use polyfills like [github/fetch](https://github.com/github/fetch) for fetch and [es6-promise](https://github.com/stefanpenner/es6-promise) for promise.
+In case your browser doesn't have support for [Fetch](https://developer.mozilla.org/docs/Web/API/Fetch_API) [[support](https://developer.mozilla.org/docs/Web/API/Fetch_API#Browser_compatibility)] or [Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise) [[support](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility)], you need to use polyfills like [github/fetch](https://github.com/github/fetch) for fetch and [es6-promise](https://github.com/stefanpenner/es6-promise) for promise.
 
 ```HTML
 <!-- polyfilling promise -->
@@ -91,8 +107,8 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 
 To call Microsoft Graph, your app must acquire an access token from the Microsoft identity platform. Learn more about this -
 
--   [Authentication and authorization basics for Microsoft Graph](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
--   [Register your app with the Microsoft identity platform](https://docs.microsoft.com/en-us/graph/auth/auth-concepts)
+-   [Authentication and authorization basics for Microsoft Graph](https://docs.microsoft.com/graph/auth/auth-concepts)
+-   [Register your app with the Microsoft identity platform](https://docs.microsoft.com/graph/auth/auth-concepts)
 
 ### 2. Create a Client Instance
 
@@ -143,6 +159,26 @@ try {
 
 For more information, refer: [Calling Pattern](docs/CallingPattern.md), [Actions](docs/Actions.md), [Query Params](docs/QueryParameters.md), [API Methods](docs/OtherAPIs.md) and [more](docs/).
 
+## Samples and tutorials
+
+Step-by-step training exercises that guide you through creating a basic application that accesses data via the Microsoft Graph:
+- [Build Angular single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/angular)
+- [Build Node.js Express apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/node)
+- [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/react-native)
+- [Build React single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/react)
+- [Build JavaScript single-page apps with Microsoft Graph](https://docs.microsoft.com/graph/tutorials/javascript)
+- [Explore Microsoft Graph scenarios for JavaScript development](https://docs.microsoft.com/learn/paths/m365-msgraph-scenarios/)
+
+The Microsoft Graph JavaScript SDK provides a `TokenCredentialAuthenticationProvider` to authenticate using the `@azure/identity` auth library. Learn more:
+- [Creating an instance of TokenCredentialAuthenticationProvider](docs/TokenCredentialAuthenticationProvider.md)
+- [TokenCredentialAuthenticationProvider Samples](samples/tokenCredentialSamples)
+
+The following `MSAL` samples provide information on authentication using `MSAL` libraries and how to use the Microsoft Graph JavaScript SDK client with MSAL as a custom authentication provider to query the Graph API:
+
+- [Azure-Sample Vanilla JS SPA using MSAL Browser and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/main/2-Authorization-I/1-call-graph)
+- [Azure-Sample Angular SPA using MSAL Angular and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-angular-tutorial/tree/main/2-Authorization-I/1-call-graph)
+- [Azure-Sample React SPA using MSAL React and Microsoft Graph JavaScript SDK](https://github.com/Azure-Samples/ms-identity-javascript-react-tutorial/tree/main/2-Authorization-I/1-call-graph)
+
 ## Questions and comments
 
 We'd love to get your feedback about the Microsoft Graph JavaScript client library. You can send your questions and suggestions to us in the [Issues](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues) section of this repository.
@@ -154,14 +190,10 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 ## Additional resources
 
 -   [Microsoft Graph website](https://graph.microsoft.io)
-
 -   The Microsoft Graph TypeScript definitions enable editors to provide intellisense on Microsoft Graph objects including users, messages, and groups.
     -   [@microsoft/microsoft-graph-types](https://www.npmjs.com/package/@microsoft/microsoft-graph-types) or [@types/microsoft-graph](https://www.npmjs.com/package/@types/microsoft-graph)
     -   [@microsoft/microsoft-graph-types-beta](https://www.npmjs.com/package/@microsoft/microsoft-graph-types-beta)
--   [Build React Native apps with Microsoft Graph](https://docs.microsoft.com/en-us/graph/tutorials/react-native)
--   [Build Angular single-page apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-angularspa)
--   [Build Node.js Express apps with Microsoft Graph](https://github.com/microsoftgraph/msgraph-training-nodeexpressapp)
--   [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/en-us/graph/toolkit/overview)
+-   [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/graph/toolkit/overview)
 -   [Office Dev Center](http://dev.office.com/)
 
 ## Third Party Notices
@@ -170,7 +202,7 @@ See [Third Party Notices](./THIRD%20PARTY%20NOTICES) for information on the pack
 
 ## Security Reporting
 
-If you find a security issue with our libraries or services please report it to [secure@microsoft.com](mailto:secure@microsoft.com) with as much detail as possible. Your submission may be eligible for a bounty through the [Microsoft Bounty](http://aka.ms/bugbounty) program. Please do not post security issues to GitHub Issues or any other public site. We will contact you shortly upon receiving the information. We encourage you to get notifications of when security incidents occur by visiting [this page](https://technet.microsoft.com/en-us/security/dd252948) and subscribing to Security Advisory Alerts.
+If you find a security issue with our libraries or services please report it to [secure@microsoft.com](mailto:secure@microsoft.com) with as much detail as possible. Your submission may be eligible for a bounty through the [Microsoft Bounty](http://aka.ms/bugbounty) program. Please do not post security issues to GitHub Issues or any other public site. We will contact you shortly upon receiving the information. We encourage you to get notifications of when security incidents occur by visiting [this page](https://technet.microsoft.com/security/dd252948) and subscribing to Security Advisory Alerts.
 
 ## License
 
