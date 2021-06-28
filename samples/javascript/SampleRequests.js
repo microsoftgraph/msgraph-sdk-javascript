@@ -1,23 +1,10 @@
-// when using the npm module, use the following syntax
-// const MicrosoftGraph = require("@microsoft/microsoft-graph-client").Client;
-
-// for fast development, simply require the generated lib without bundling the npm module
-
-require("isomorphic-fetch");
-
-const MicrosoftGraph = require("../../lib/src/index.js");
-
-const secrets = require("./secrets");
-
-const fs = require("fs");
-
-const client = MicrosoftGraph.Client.init({
-	defaultVersion: "v1.0",
-	debugLogging: true,
-	authProvider: (done) => {
-		done(null, secrets.accessToken);
-	},
-});
+const { client } = require("../clientInitialization/ClientWithOptions");
+/**
+ * OR
+ * const { client } = require("../clientInitialization/TokenCredentialAuthenticationProvider");
+ * OR 
+ * require or import client created using an custom authentication provider
+ */
 
 // Get the name of the authenticated user with promises
 client
