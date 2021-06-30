@@ -1,10 +1,23 @@
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
 import "isomorphic-fetch";
 
 import { ClientSecretCredential } from "@azure/identity";
 import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 
-import { clientId, clientSecret, scopes, tenantId } from "./secrets";
+const port = "<PORT_NUMBER>";
+const tenantId = "<TENANT_ID>";
+const clientId = "<CLIENT_ID>";
+const clientSecret = "<CLIENT_SECRET>";
+const scopes = "<SCOPE>";
+const redirectUri = `http://localhost:${port}/authresponse`;
+const authorityHost = "https://login.microsoftonline.com";
 
 async function runExample() {
 	const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);

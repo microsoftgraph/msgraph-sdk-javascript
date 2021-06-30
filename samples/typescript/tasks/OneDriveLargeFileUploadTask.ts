@@ -1,4 +1,13 @@
 /**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+
+// First, create an instance of the Microsoft Graph JS SDK Client class
+import { client } from "../clientInitialization/ClientWithOptions";
+/**
  * OR
  * import { client } from ("../clientInitialization/TokenCredentialAuthenticationProvider");
  * OR
@@ -7,8 +16,6 @@
 import { OneDriveLargeFileUploadOptions, OneDriveLargeFileUploadTask, Range, StreamUpload, UploadEventHandlers, UploadResult } from "@microsoft/microsoft-graph-client";
 import * as fs from "fs";
 import { Readable } from "stream";
-
-import { client } from "../clientInitialization/ClientWithOptions";
 
 async function upload() {
 	const file = fs.createReadStream("./test.pdf");

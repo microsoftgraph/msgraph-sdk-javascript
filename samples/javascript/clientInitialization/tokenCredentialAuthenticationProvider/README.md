@@ -6,8 +6,7 @@
 
     - [Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application).
 
-
-2. Update your clientId, tenantId, scopes, clientSecret in the **secrets.ts/secrets.js** file.
+2. Update your clientId, tenantId, scopes, clientSecret in the code.
 
 ## Run Sample
 
@@ -17,8 +16,8 @@
 
 3. Run `npm run build` to build the library files.
 
-4. Navigate to the samples folder [./samples]and run `npm install` 
+4. Navigate to the samples folder [./samples]and run `npm install`
 
-4. Navigate to tokenCredentialAuthenticationProvider[./samples/javascript/clientInitialization/tokenCredentialAuthenticationProvider] in the samples directory.
+5. Navigate to tokenCredentialAuthenticationProvider[./samples/javascript/clientInitialization/tokenCredentialAuthenticationProvider] in the samples directory.
 
 6. For running this javascript sample, run `node index.js`

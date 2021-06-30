@@ -1,8 +1,15 @@
+/**
+ * -------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
+ * See License in the project root for license information.
+ * -------------------------------------------------------------------------------------------
+ */
+// First, create an instance of the Microsoft Graph JS SDK Client class
 const { client } = require("../clientInitialization/ClientWithOptions");
 /**
  * OR
  * const { client } = require("../clientInitialization/TokenCredentialAuthenticationProvider");
- * OR 
+ * OR
  * require or import client created using an custom authentication provider
  */
 
