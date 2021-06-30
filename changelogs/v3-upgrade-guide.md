@@ -84,9 +84,7 @@ const client = Client.initWithMiddleware({ middleware, customHosts });
 
 ### Deprecating `ImplicitMSALAuthenticationProvider` 
 - Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
-- Alternatives to `ImplicitMSALAuthenticationProvider` - 
-	- TokenCredentialAuthenticationProvider with the `azure/identity` library. Learn more about [InteractiveBrowserCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/interactive-browser-credential.md) 
-	- A CustomAuthenticationProvider with an auth library of your choice. [Choose a Microsoft Graph authentication provider based on scenario](https://docs.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=CS)
+- Alternatively, you can implement a `CustomAuthenticationProvider` with an auth library of your choice. Learn more using the [samples](https://github.com/microsoftgraph/msgraph-sdk-javascript#samples-and-tutorials).
 
 ### Deprecating the `sliceFile` function of the `LargeFileUploadTask` class.
 - The `sliceFile` function has been moved to the `FileObject` interface.
