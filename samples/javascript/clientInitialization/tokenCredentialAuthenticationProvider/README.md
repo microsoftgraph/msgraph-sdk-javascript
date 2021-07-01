@@ -6,9 +6,7 @@
 
     - [Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application).
 
-2. Rename [secrets.sample.ts](./typescript/secrets.sample.ts) to secrets.ts or rename [secrets.sample.js](./javascript/secrets.sample.js) to secrets.js
-
-3. Update your clientId, tenantId, scopes, clientSecret in the **secrets.ts/secrets.js** file.
+2. Update your `clientId`, `tenantId`, `scopes`, `clientSecret`, `port` in the index.js .
 
 ## Run Sample
 
@@ -18,8 +16,8 @@
 
 3. Run `npm run build` to build the library files.
 
-4. Navigate to clientCredentialFlow samples directory [./samples/tokenCredentialSamples/clientCredentialFlow]
+4. Navigate to the samples folder [./samples]and run `npm install`
 
-5. For running the typescript sample, run `npm start` to build and start the application.
+5. Navigate to tokenCredentialAuthenticationProvider[./samples/javascript/clientInitialization/tokenCredentialAuthenticationProvider] in the samples directory.
 
-6. For running the javascript sample, navigate to the javascript/ directory and run `node clientSecretCredential.js`
+6. For running this javascript sample, run `node index.js`

@@ -47,9 +47,8 @@ const uploadSession = LargeFileUploadTask.createUploadSession(client, "REQUEST_U
 
 #### Creating the LargeFileUploadTask object
 
--   To create the LargeFileUploadTask object you need to create -
--   An upload session as shown above.
--   A `FileObject` instance.
+-   First, you will need to initialize a [Client instance](../CreatingClientInstance.md). This `client` instance should passed as a parameter when creating the `LargeFileUploadTask` or `OneDriveLargeFileUploadTask` object.
+-   To create the LargeFileUploadTask object you need to create - - An upload session as shown above. - A `FileObject` instance.
 
 **FileObject Interface**
 
@@ -185,3 +184,11 @@ _Returns the largeFileUpload session information containing the URL, expiry date
 ```typescript
 const uploadsession: LargeFileUploadSession = uploadTask.getUploadSession();
 ```
+
+## Samples
+
+Check out the samples for:
+
+-   LargeFileUploadTask - [JavaScript](../../samples/javascript/tasks/LargeFileUploadTask.js) - [Typescript](../../samples/typescript/tasks/LargeFileUploadTask.ts)
+
+-   OneDriveLargeFileUploadTask - [JavaScript](../../samples/javascript/tasks/OneDriveLargeFileUploadTask.js) - [TypeScript](../../samples/typescript/tasks/OneDriveLargeFileUploadTask.ts)
