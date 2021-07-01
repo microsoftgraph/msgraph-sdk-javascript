@@ -6,7 +6,7 @@
 
     - [Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application).
 
-2. Update your clientId, tenantId, scopes, clientSecret in the code.
+2. Update your `clientId`, `tenantId`, `scopes`, `clientSecret`, `port` in the index.js .
 
 ## Run Sample
 
