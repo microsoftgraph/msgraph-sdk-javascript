@@ -5,6 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
+/* eslint-disable simple-import-sort/imports */
+
 // First, create an instance of the Microsoft Graph JS SDK Client class
 import { client } from "../clientInitialization/ClientWithOptions";
 /**
