@@ -11,7 +11,6 @@
 
 import { Context } from "../../IContext";
 import { MiddlewareControl } from "../MiddlewareControl";
-
 import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**
@@ -21,11 +20,14 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  * @property {number} RETRY_HANDLER_ENABLED - The hexadecimal flag value for retry handler enabled
  * @property {number} AUTHENTICATION_HANDLER_ENABLED - The hexadecimal flag value for the authentication handler enabled
  */
+
 export enum FeatureUsageFlag {
+	/* eslint-disable  @typescript-eslint/naming-convention */
 	NONE = 0x0,
 	REDIRECT_HANDLER_ENABLED = 0x1,
 	RETRY_HANDLER_ENABLED = 0x2,
 	AUTHENTICATION_HANDLER_ENABLED = 0x4,
+	/* eslint-enable  @typescript-eslint/naming-convention */
 }
 
 /**
@@ -70,9 +72,7 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 	 * @returns nothing
 	 */
 	private setFeatureUsage(flag: FeatureUsageFlag): void {
-		/* tslint:disable: no-bitwise */
 		this.featureUsage = this.featureUsage | flag;
-		/* tslint:enable: no-bitwise */
 	}
 
 	/**

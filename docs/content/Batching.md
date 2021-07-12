@@ -66,6 +66,81 @@ const serialBatching = async function(elem) {
 };
 ```
 
+### Download multiple profile photos with batching and preprocess these for rendering in a browser
+
+You should convert the downloaded photos through batching to a Base64 representation if you want to render these in a browser.
+
+```typescript
+b64toBlob = async (b64Data: any, contentType: string, sliceSize?: number): Promise<Blob> => {
+	contentType = contentType || "image/png";
+	sliceSize = sliceSize || 512;
+
+	let byteCharacters: string = atob(b64Data);
+	let byteArrays = [];
+
+	for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+		let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+		let byteNumbers = new Array(slice.length);
+		for (let i = 0; i < slice.length; i++) {
+			byteNumbers[i] = slice.charCodeAt(i);
+		}
+
+		let byteArray = new Uint8Array(byteNumbers);
+		byteArrays.push(byteArray);
+	}
+
+	let blob = new Blob(byteArrays, { type: contentType });
+	return blob;
+};
+
+blobToBase64 = (blob: Blob): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onerror = reject;
+		reader.onload = (_) => {
+			resolve(reader.result as string);
+		};
+		reader.readAsDataURL(blob);
+	});
+};
+
+downloadPhotosBatching = async (client: Client) => {
+	try {
+		let users = ["user1@contoso.com", "user2@contoso.com"];
+
+		// create batch request steps for the users specified above
+		const batchRequestSteps: BatchRequestStep[] = users.map((userId) => {
+			const request: BatchRequestStep = {
+				id: userId,
+				request: new Request(`/users/${userId}/photo/$value`, {
+					method: "GET",
+				}),
+			};
+			return request;
+		});
+
+		// initiate the batchrequest and execute the operation
+		const batchRequestContent = new BatchRequestContent(batchRequestSteps);
+		const content = await batchRequestContent.getContent();
+		const batchResponse = new BatchResponseContent(await client.api("/$batch").post(content));
+
+		// example on how to retrieve the base64 representation of the downloaded image for the first user
+		const response = batchResponse.getResponseById(users[0]);
+		if (response.ok) {
+			var data = await response.text();
+			const binToBlob = await this.b64toBlob(data, "img/jpg");
+
+			// you can associate the base64 output to an src attribute of an <img> HTML tag
+			const base64Result = await this.blobToBase64(binToBlob);
+			console.log(base64Result);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+```
+
 ### GET and POST contents from and to different workloads - Making parallel requests
 
 ```typescript

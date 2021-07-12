@@ -55,7 +55,7 @@ export class GraphError extends Error {
 	 * @param {number} [statusCode = -1] - The status code of the error
 	 * @returns An instance of GraphError
 	 */
-	public constructor(statusCode: number = -1, message?: string, baseError?: Error) {
+	public constructor(statusCode = -1, message?: string, baseError?: Error) {
 		super(message || (baseError && baseError.message));
 		// https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
 		Object.setPrototypeOf(this, GraphError.prototype);

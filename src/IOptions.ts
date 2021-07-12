@@ -16,6 +16,7 @@ import { FetchOptions } from "./IFetchOptions";
  * @property {boolean} [debugLogging] - The boolean to enable/disable debug logging
  * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
  * @property {FetchOptions} [fetchOptions] - The options for fetch request
+ * @property {Set<string>}[customHosts] - A set of custom host names. Should contain hostnames only.
  */
 export interface Options {
 	authProvider: AuthProvider;
@@ -23,4 +24,8 @@ export interface Options {
 	debugLogging?: boolean;
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
+	/**
+	 * Example - If URL is "https://test_host/v1.0", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
+	 */
+	customHosts?: Set<string>;
 }

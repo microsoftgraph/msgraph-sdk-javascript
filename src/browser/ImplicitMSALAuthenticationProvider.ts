@@ -8,10 +8,9 @@
 /**
  * @module ImplicitMSALAuthenticationProvider
  */
-
+import { MSALAuthenticationProviderOptions } from "../authentication/msal/MSALAuthenticationProviderOptions";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
-import { MSALAuthenticationProviderOptions } from "../MSALAuthenticationProviderOptions";
 
 /**
  * @constant
@@ -20,6 +19,10 @@ import { MSALAuthenticationProviderOptions } from "../MSALAuthenticationProvider
 declare const Msal: any;
 
 /**
+ * @deprecated Use of ImplicitMSALAuthenticationProvider, that is,
+ * using the implicit authorization flow is not recommended.
+ * Use the TokenCredentialAuthenticationProvider with azure/identity library or
+ * a CustomAuthenticationProvider with msal-browser library instead.
  * @class
  * Class representing ImplicitMSALAuthenticationProvider
  * @extends AuthenticationProvider
@@ -82,27 +85,19 @@ export class ImplicitMSALAuthenticationProvider implements AuthenticationProvide
 				return authResponse.accessToken;
 			} catch (error) {
 				if (error.name === "InteractionRequiredAuthError") {
-					try {
-						const authResponse = await this.msalApplication.acquireTokenPopup(tokenRequest);
-						return authResponse.accessToken;
-					} catch (error) {
-						throw error;
-					}
+					const authResponse = await this.msalApplication.acquireTokenPopup(tokenRequest);
+					return authResponse.accessToken;
 				} else {
 					throw error;
 				}
 			}
 		} else {
-			try {
-				const tokenRequest = {
-					scopes,
-				};
-				await this.msalApplication.loginPopup(tokenRequest);
-				const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
-				return authResponse.accessToken;
-			} catch (error) {
-				throw error;
-			}
+			const tokenRequest = {
+				scopes,
+			};
+			await this.msalApplication.loginPopup(tokenRequest);
+			const authResponse = await this.msalApplication.acquireTokenSilent(tokenRequest);
+			return authResponse.accessToken;
 		}
 	}
 }

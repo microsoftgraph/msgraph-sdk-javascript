@@ -1,0 +1,15 @@
+page_type: sample
+products:
+  - office-365
+  - ms-graph
+languages:
+  - javascript
+  - typescript
+extensions:
+  contentType: sdks
+  technologies:
+    - Microsoft Graph
+    - Microsoft identity platform
+  createdDate: '9/22/2016 2:44:49 PM'
+title: Microsoft Graph JavaScript Client Library
+description: Microsoft Graph client library for JavaScript

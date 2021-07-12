@@ -10,7 +10,6 @@
  */
 
 import { AuthenticationProvider } from "../IAuthenticationProvider";
-
 import { AuthenticationHandler } from "./AuthenticationHandler";
 import { HTTPMessageHandler } from "./HTTPMessageHandler";
 import { Middleware } from "./IMiddleware";

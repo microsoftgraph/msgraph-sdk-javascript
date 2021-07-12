@@ -12,7 +12,6 @@
 import { Context } from "../IContext";
 import { FetchOptions } from "../IFetchOptions";
 import { RequestMethod } from "../RequestMethod";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
 import { getRequestHeader, setRequestHeader } from "./MiddlewareUtil";
@@ -41,14 +40,14 @@ export class RetryHandler implements Middleware {
 	 * @static
 	 * A member holding the name of retry attempt header
 	 */
-	private static RETRY_ATTEMPT_HEADER: string = "Retry-Attempt";
+	private static RETRY_ATTEMPT_HEADER = "Retry-Attempt";
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding the name of retry after header
 	 */
-	private static RETRY_AFTER_HEADER: string = "Retry-After";
+	private static RETRY_AFTER_HEADER = "Retry-After";
 
 	/**
 	 * @private
@@ -116,13 +115,11 @@ export class RetryHandler implements Middleware {
 		const retryAfter = response.headers !== undefined ? response.headers.get(RetryHandler.RETRY_AFTER_HEADER) : null;
 		let newDelay: number;
 		if (retryAfter !== null) {
-			// tslint:disable: prefer-conditional-expression
 			if (Number.isNaN(Number(retryAfter))) {
 				newDelay = Math.round((new Date(retryAfter).getTime() - Date.now()) / 1000);
 			} else {
 				newDelay = Number(retryAfter);
 			}
-			// tslint:enable: prefer-conditional-expression
 		} else {
 			// Adding randomness to avoid retrying at a same
 			newDelay = retryAttempts >= 2 ? this.getExponentialBackOffTime(retryAttempts) + delay + getRandomness() : delay + getRandomness();
@@ -173,19 +170,15 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
-		try {
-			await this.nextMiddleware.execute(context);
-			if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
-				++retryAttempts;
-				setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
-				const delay = this.getDelay(context.response, retryAttempts, options.delay);
-				await this.sleep(delay);
-				return await this.executeWithRetry(context, retryAttempts, options);
-			} else {
-				return;
-			}
-		} catch (error) {
-			throw error;
+		await this.nextMiddleware.execute(context);
+		if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
+			++retryAttempts;
+			setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
+			const delay = this.getDelay(context.response, retryAttempts, options.delay);
+			await this.sleep(delay);
+			return await this.executeWithRetry(context, retryAttempts, options);
+		} else {
+			return;
 		}
 	}
 
@@ -197,14 +190,10 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		try {
-			const retryAttempts: number = 0;
-			const options: RetryHandlerOptions = this.getOptions(context);
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
-			return await this.executeWithRetry(context, retryAttempts, options);
-		} catch (error) {
-			throw error;
-		}
+		const retryAttempts = 0;
+		const options: RetryHandlerOptions = this.getOptions(context);
+		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);
+		return await this.executeWithRetry(context, retryAttempts, options);
 	}
 
 	/**

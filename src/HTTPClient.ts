@@ -79,17 +79,13 @@ export class HTTPClient {
 	 * @returns A promise that resolves to the Context
 	 */
 	public async sendRequest(context: Context): Promise<Context> {
-		try {
-			if (typeof context.request === "string" && context.options === undefined) {
-				const error = new Error();
-				error.name = "InvalidRequestOptions";
-				error.message = "Unable to execute the middleware, Please provide valid options for a request";
-				throw error;
-			}
-			await this.middleware.execute(context);
-			return context;
-		} catch (error) {
+		if (typeof context.request === "string" && context.options === undefined) {
+			const error = new Error();
+			error.name = "InvalidRequestOptions";
+			error.message = "Unable to execute the middleware, Please provide valid options for a request";
 			throw error;
 		}
+		await this.middleware.execute(context);
+		return context;
 	}
 }
