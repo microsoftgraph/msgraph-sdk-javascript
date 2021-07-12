@@ -59,7 +59,7 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 ## Node version requirement
 
-Node.js 10 LTS or higher.
+Node.js 12 LTS or higher. The active Long Term Service (LTS) version of Node.js is used for on-going testing of existing and upcoming product features.
 
 ## Installation
 
