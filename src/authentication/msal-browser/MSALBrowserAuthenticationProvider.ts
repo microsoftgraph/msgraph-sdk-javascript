@@ -16,7 +16,8 @@ import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { MSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
 
 /**
- * a AuthenticationProvider implementation supporting msal-browser library instead.
+ * an AuthenticationProvider implementation supporting msal-browser library.
+ * This feature is introduced in Version 3.0.0
  * @class
  * @extends AuthenticationProvider
  */

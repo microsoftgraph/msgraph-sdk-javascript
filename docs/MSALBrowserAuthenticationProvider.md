@@ -1,54 +1,64 @@
 #### Creating an instance of MSALBrowserAuthenticationProvider for a browser application
 
-Refer devDependencies in [package.json](../package.json) for the compatible msal version and update that version in below.
+**Note**: The `MSALBrowserAuthenticationProvider` is introduced in version 3.0.0 of Microsoft Graph Client Library
 
-```html
-<script src="https://secure.aadcdn.microsoftonline-p.com/lib/<version>/js/msal.min.js"></script>
-```
+###### Links for more information -
 
-```typescript
-// Configuration options for MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#configuration-options
-const msalConfig = {
-	auth: {
-		clientId: "your_client_id", // Client Id of the registered application
-		redirectUri: "your_redirect_uri",
-	},
-};
-const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+-   [npm - @azure/msal-browser](https://www.npmjs.com/package/@azure/msal-browser)
+-   [github - @azure/msal-browser](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/README.md)
 
-// Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
-// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
-const msalApplication = new Msal.UserAgentApplication(msalConfig);
-const options = new MicrosoftGraph.MSALAuthenticationProviderOptions(graphScopes);
-const authProvider = new MicrosoftGraph.ImplicitMSALAuthenticationProvider(msalApplication, options);
-```
+Steps to use `MSALBrowserAuthenticationProvider`;
 
-#### Creating an instance of ImplicitMSALAuthenticationProvider in node environment
+1.  Using npm: `npm install @azure/msal-browser`
 
-Refer devDependencies in [package.json](./package.json) for the compatible msal version and update that version in below.
+    Using html:
 
-```cmd
-npm install msal@<version>
-```
+    ```html
+    <!--Using script tag to include the bundled file or the CDN source-->
+    <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.15.0/js/msal-browser.min.js"></script>
+    <script src="graph-js-sdk.js"></script>
+    <script src="graph-client-msalBrowserAuthProvider.js"></script>
+    ```
+
+2.  Initialize the `msal-browser` `PublicClientApplication` instance: Learn more [how to initialize msal](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/initialization.md)
+
+3.  Following sample shows how to initialize a Microsoft Graph SDK `Client` instance,
+
+Using npm:
 
 ```typescript
-import { UserAgentApplication } from "msal";
+    import { PublicClientApplication, InteractionType, AccountInfo } from "@azure/msal-browser";
 
-import { ImplicitMSALAuthenticationProvider, MSALAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal";
+    import { MSALBrowserAuthenticationProvider, MSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal-browser";
 
-// An Optional options for initializing the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL-basics#configuration-options
-const msalConfig = {
-	auth: {
-		clientId: "your_client_id", // Client Id of the registered application
-		redirectUri: "your_redirect_uri",
-	},
-};
-const graphScopes = ["user.read", "mail.send"]; // An array of graph scopes
+    const options:MSALBrowserAuthenticationProviderOptions: {
+        account: account, // the AccountInfo instance to acquire the token for.
+        interactionType: InteractionType.PopUp , // msal-browser InteractionType
+        scopes: ["user.read", "mail.send"] // example of the scopes to be passed
+    }
 
-// Important Note: This library implements loginPopup and acquireTokenPopup flow, remember this while initializing the msal
+    // Pass the PublicClientApplication instance from step 2 to create MSALBrowserAuthenticationProvider instance
+    const authProvider: new MSALBrowserAuthenticationProvider(publicClientApplication, options),
 
-// Initialize the MSAL @see https://github.com/AzureAD/microsoft-authentication-library-for-js#1-instantiate-the-useragentapplication
-const msalApplication = new UserAgentApplication(msalConfig);
-const options = new MSALAuthenticationProviderOptions(graphScopes);
-const authProvider = new ImplicitMSALAuthenticationProvider(msalApplication, options);
+
+    // Initialize the Graph client
+    const graphClient = Client.initWithMiddleware({
+        authprovider
+    });
+
+```
+
+Using CDN or script:
+
+```javascript
+const msalClient = new msal.PublicClientApplication(msalConfig);
+
+const authProvider = new MicrosoftGraphMSALBrowserAuthProvider.MSALBrowserAuthenticationProvider(msalClient, {
+	account, // the AccountInfo instance to acquire the token for
+	scopes: ["user.read", "mail.send"],
+	interactionType: msal.InteractionType.Popup,
+});
+
+// Initialize the Graph client
+const graphClient = MicrosoftGraph.Client.initWithMiddleware({ authProvider });
 ```
