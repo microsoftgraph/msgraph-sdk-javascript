@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { MSALAuthenticationProviderOptions } from "../../../src/authentication/msal/MSALAuthenticationProviderOptions";
+import { MSALAuthenticationProviderOptions } from "../../../src/authentication/msalOptions/MSALAuthenticationProviderOptions";
 import { AuthenticationHandlerOptions } from "../../../src/middleware/options/AuthenticationHandlerOptions";
 import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
 

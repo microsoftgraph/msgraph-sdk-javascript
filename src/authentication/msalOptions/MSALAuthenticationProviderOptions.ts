@@ -9,11 +9,12 @@
  * @module MSALAuthenticationProviderOptions
  */
 
-import { AccountInfo } from "@azure/msal-browser";
+import { AccountInfo, InteractionType } from "@azure/msal-browser";
 
 import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
 
 /**
+ * @deprecated
  * @class
  * @implements AuthenticationProviderOptions
  * Class representing MSALAuthenticationProviderOptions
@@ -37,24 +38,11 @@ export class MSALAuthenticationProviderOptions implements AuthenticationProvider
 	}
 }
 
-/**
- * LoginType
- *
- * @export
- * @enum {number}
- */
-export enum LoginType {
-	/**
-	 * Popup = 0
-	 */
-	Popup,
-	/**
-	 * Redirect = 1
-	 */
-	Redirect,
+export interface MSALAuthenticationProviderSharedOptions extends AuthenticationProviderOptions {
+	scopes: string[];
 }
 
-export interface MSALBrowserAuthenticationProviderOptions extends AuthenticationProviderOptions {
-	loginType?: LoginType;
-	getAccount?: () => AccountInfo;
+export interface MSALBrowserAuthenticationProviderOptions extends MSALAuthenticationProviderSharedOptions {
+	account: AccountInfo;
+	interactionType: InteractionType;
 }
