@@ -12,12 +12,13 @@ import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredentialAuthenticationProviderOptions";
 
 /**
- * @module ImplicitMSALAuthenticationProvider
+ * @module TokenCredentialAuthenticationProvider
  */
 
 /**
  * @class
  * Class representing TokenCredentialAuthenticationProvider
+ * This feature is introduced in Version 3.0.0
  * @extends AuthenticationProvider
  * Reference - https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md
  */

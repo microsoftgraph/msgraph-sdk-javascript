@@ -1,5 +1,7 @@
 #### Creating an instance of TokenCredentialAuthentication
 
+**Note**: The `TokenCredentialAuthentication` is introduced in version 3.0.0 of Microsoft Graph Client Library
+
 ###### Links for more information -
 
 -   [GitHub - Azure Identity client library for JavaScript ](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md)
@@ -60,5 +62,5 @@ The browser use of the file is as follows:
 ```html
 <!-- include the script -->
 <script type="text/javascript" src="<PATH_TO_SCRIPT>/graph-client-tokenCredentialAuthProvider.js"></script>
-; // create an authProvider var authProvider = new MicrosoftGraph.TokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes }); client = MicrosoftGraph.Client.initWithMiddleware({ authProvider: authProvider, });
+; // create an authProvider var authProvider = new MicrosoftGraphTokenCredentialAuthProvider.TokenCredentialAuthenticationProvider(tokenCred, { scopes: scopes }); client = MicrosoftGraph.Client.initWithMiddleware({ authProvider: authProvider, });
 ```

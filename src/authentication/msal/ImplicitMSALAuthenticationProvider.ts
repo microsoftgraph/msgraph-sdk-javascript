@@ -13,7 +13,7 @@ import { AuthenticationParameters, AuthResponse, InteractionRequiredAuthError, U
 
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
-import { MSALAuthenticationProviderOptions } from "./MSALAuthenticationProviderOptions";
+import { MSALAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
 
 /**
  * @deprecated Use of ImplicitMSALAuthenticationProvider, that is,

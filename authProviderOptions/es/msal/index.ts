@@ -6,4 +6,4 @@
  */
 
 export * from "../../../lib/es/src/authentication/msal/ImplicitMSALAuthenticationProvider";
-export * from "../../../lib/es/src/authentication/msal/MSALAuthenticationProviderOptions";
+export * from "../../../lib/es/src/authentication/msalOptions/MSALAuthenticationProviderOptions";
