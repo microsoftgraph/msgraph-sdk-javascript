@@ -29,7 +29,7 @@ Using npm:
 ```typescript
     import { PublicClientApplication, InteractionType, AccountInfo } from "@azure/msal-browser";
 
-    import { AuthCodeMSALBrowserAuthenticationProvider, AuthCodeMSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal-browser";
+    import { AuthCodeMSALBrowserAuthenticationProvider, AuthCodeMSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser";
 
     const options:AuthCodeMSALBrowserAuthenticationProviderOptions: {
         account: account, // the AccountInfo instance to acquire the token for.

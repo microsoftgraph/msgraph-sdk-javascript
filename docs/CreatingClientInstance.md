@@ -11,11 +11,12 @@ In order to instantiate a Client object, one has to pass in the `authProvider` o
 ### Option A. Default Middleware chain
 
 The default middleware chain contains consecutively chained instances of the following:
-- [AuthenticationHandler](../src/middleware/AuthenticationHandler.ts)
-- [RetryHandler](../src/middleware/RetryHandler.ts)
-- [RedirectHandler](../src/middleware/RedirectHandler.ts)
-- [TelemetryHandler](../src/middleware/TelemetryHandler.ts)
-- [HTTPMessageHandler](../src/middleware/HTTPMessageHandler.ts)
+
+-   [AuthenticationHandler](../src/middleware/AuthenticationHandler.ts)
+-   [RetryHandler](../src/middleware/RetryHandler.ts)
+-   [RedirectHandler](../src/middleware/RedirectHandler.ts)
+-   [TelemetryHandler](../src/middleware/TelemetryHandler.ts)
+-   [HTTPMessageHandler](../src/middleware/HTTPMessageHandler.ts)
 
 To create a client instance with the default middleware chain:
 
@@ -36,9 +37,9 @@ The Microsoft Graph JavaScript Client Library has an adapter implementation for 
 
     > Learn how to [create an instance of TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md).
 
--   **DEPRECATED** ([ImplicitMSALAuthenticationProvider](../src/authentication/msal/ImplicitMSALAuthenticationProvider.ts)) for [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core) (Microsoft Authentication Library) which takes care of getting the `accessToken`. MSAL library does not ship with this library, user has to include it externally (For including MSAL, refer [this](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-core#installation)).
+-   ([AuthCodeMSALBrowserAuthenticationProvider](../src/authentication/msal/ImplicitMSALAuthenticationProvider.ts)) for [msal-browser](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser) (Microsoft Authentication Library) which takes care of getting the `accessToken`. `msal-browser` library does not ship with this library, user has to include it externally.
 
-    > Learn how to [create an instance of ImplicitMSALAuthenticationProvider](./ImplicitMSALAuthenticationProvider.md).
+    > Learn how to [create an instance of AuthCodeMSALBrowserAuthenticationProvider](./AuthCodeMSALBrowserAuthenticationProvider.md).
 
 **User can integrate any preferred authentication library by implementing `IAuthenticationProvider` interface**. Refer implementing [Custom Authentication Provider](./CustomAuthenticationProvider.md) for more detailed information.
 

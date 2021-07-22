@@ -56,6 +56,11 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 				scopes,
 				account,
 			});
+			if (!response || !response.accessToken) {
+				error.name = "Access token is undefined";
+				error.message = "Received empty access token from PublicClientApplication";
+				throw error;
+			}
 			return response.accessToken;
 		} catch (error) {
 			if (error instanceof InteractionRequiredAuthError) {
