@@ -6,14 +6,14 @@
  */
 
 /**
- * @module MSALBrowserAuthenticationProvider
+ * @module AuthCodeMSALBrowserAuthenticationProvider
  */
 
 import { AuthenticationResult, InteractionRequiredAuthError, InteractionType, PublicClientApplication } from "@azure/msal-browser";
 
 import { GraphClientError } from "../../GraphClientError";
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
-import { MSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
+import { AuthCodeMSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
 
 /**
  * an AuthenticationProvider implementation supporting msal-browser library.
@@ -21,21 +21,19 @@ import { MSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAut
  * @class
  * @extends AuthenticationProvider
  */
-export class MSALBrowserAuthenticationProvider implements AuthenticationProvider {
+export class AuthCodeMSALBrowserAuthenticationProvider implements AuthenticationProvider {
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of ImplicitMSALAuthenticationProvider
 	 * @param {PublicClientApplication} msalApplication - An instance of MSAL PublicClientApplication
-	 * @param {MSALBrowserAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
+	 * @param {AuthCodeMSALBrowserAuthenticationProviderOptions} options - An instance of MSALAuthenticationProviderOptions
 	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
-	public constructor(private publicClientApplication: PublicClientApplication, private options: MSALBrowserAuthenticationProviderOptions) {
-		if (!this.options || !this.publicClientApplication) {
-			throw new GraphClientError("Please pass valid PublicClientApplication instance and MSALBrowserAuthenticationProviderOptions instance to instantiate MSALBrowserAuthenticationProvider");
+	public constructor(private publicClientApplication: PublicClientApplication, private options: AuthCodeMSALBrowserAuthenticationProviderOptions) {
+		if (!options || !publicClientApplication) {
+			throw new GraphClientError("Please pass valid PublicClientApplication instance and AuthCodeMSALBrowserAuthenticationProviderOptions instance to instantiate MSALBrowserAuthenticationProvider");
 		}
-		this.options = options;
-		this.publicClientApplication = publicClientApplication;
 	}
 
 	/**

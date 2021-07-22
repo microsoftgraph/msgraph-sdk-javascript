@@ -9,9 +9,9 @@ import { AccountInfo, AuthenticationResult, InteractionRequiredAuthError, Intera
 import { assert } from "chai";
 import * as sinon from "sinon";
 
-import { MSALBrowserAuthenticationProvider } from "../../../src/authentication/msal-browser/MSALBrowserAuthenticationProvider";
-import { MSALBrowserAuthenticationProviderOptions } from "../../../src/authentication/msalOptions/MSALAuthenticationProviderOptions";
-describe("MSALBrowserAuthenticationProvider.ts", () => {
+import { AuthCodeMSALBrowserAuthenticationProvider } from "../../../src/authentication/msal-browser/AuthCodeMSALBrowserAuthenticationProvider";
+import { AuthCodeMSALBrowserAuthenticationProviderOptions } from "../../../src/authentication/msalOptions/MSALAuthenticationProviderOptions";
+describe("AuthCodeMSALBrowserAuthenticationProvider.ts", () => {
 	const scopes = ["test_scopes"];
 	it("AccessToken is returned correctly from getToken function", async () => {
 		const dummyApp = new PublicClientApplication({
@@ -29,7 +29,7 @@ describe("MSALBrowserAuthenticationProvider.ts", () => {
 			tenantId: "",
 			username: "",
 		};
-		const options: MSALBrowserAuthenticationProviderOptions = {
+		const options: AuthCodeMSALBrowserAuthenticationProviderOptions = {
 			interactionType: InteractionType.Popup,
 			scopes,
 			account,
@@ -50,7 +50,7 @@ describe("MSALBrowserAuthenticationProvider.ts", () => {
 
 		const moq = sinon.mock(dummyApp);
 		moq.expects("acquireTokenSilent").resolves(accessToken);
-		const msalBrowserAuthenticationProvider = new MSALBrowserAuthenticationProvider(dummyApp, options);
+		const msalBrowserAuthenticationProvider = new AuthCodeMSALBrowserAuthenticationProvider(dummyApp, options);
 		const access = await msalBrowserAuthenticationProvider.getAccessToken();
 		assert.equal(access, accessToken.accessToken);
 	});
@@ -71,7 +71,7 @@ describe("MSALBrowserAuthenticationProvider.ts", () => {
 			tenantId: "",
 			username: "",
 		};
-		const options: MSALBrowserAuthenticationProviderOptions = {
+		const options: AuthCodeMSALBrowserAuthenticationProviderOptions = {
 			interactionType: InteractionType.Popup,
 			scopes,
 			account,
@@ -93,7 +93,7 @@ describe("MSALBrowserAuthenticationProvider.ts", () => {
 		const moq = sinon.mock(dummyApp);
 		moq.expects("acquireTokenSilent").throws(new InteractionRequiredAuthError("TEST_ERROR"));
 		moq.expects("acquireTokenPopup").resolves(accessToken);
-		const msalBrowserAuthenticationProvider = new MSALBrowserAuthenticationProvider(dummyApp, options);
+		const msalBrowserAuthenticationProvider = new AuthCodeMSALBrowserAuthenticationProvider(dummyApp, options);
 		const access = await msalBrowserAuthenticationProvider.getAccessToken();
 		assert.equal(access, accessToken.accessToken);
 	});

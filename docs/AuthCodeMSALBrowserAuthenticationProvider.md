@@ -1,15 +1,15 @@
-#### Creating an instance of MSALBrowserAuthenticationProvider for a browser application
+#### Creating an instance of AuthCodeMSALBrowserAuthenticationProvider for a browser application
 
-**Note**: The `MSALBrowserAuthenticationProvider` is introduced in version 3.0.0 of Microsoft Graph Client Library
+**Note**: The `AuthCodeMSALBrowserAuthenticationProvider` is introduced in version 3.0.0 of Microsoft Graph Client Library
 
 ###### Links for more information -
 
 -   [npm - @azure/msal-browser](https://www.npmjs.com/package/@azure/msal-browser)
 -   [github - @azure/msal-browser](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/README.md)
 
-Steps to use `MSALBrowserAuthenticationProvider`;
+Steps to use `AuthCodeMSALBrowserAuthenticationProvider`;
 
-1.  Using npm: `npm install @azure/msal-browser`
+1.  Using npm: `npm install @azure/msal-browser @microsoft/microsoft-graph-client`
 
     Using html:
 
@@ -29,16 +29,16 @@ Using npm:
 ```typescript
     import { PublicClientApplication, InteractionType, AccountInfo } from "@azure/msal-browser";
 
-    import { MSALBrowserAuthenticationProvider, MSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal-browser";
+    import { AuthCodeMSALBrowserAuthenticationProvider, AuthCodeMSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/msal-browser";
 
-    const options:MSALBrowserAuthenticationProviderOptions: {
+    const options:AuthCodeMSALBrowserAuthenticationProviderOptions: {
         account: account, // the AccountInfo instance to acquire the token for.
         interactionType: InteractionType.PopUp , // msal-browser InteractionType
         scopes: ["user.read", "mail.send"] // example of the scopes to be passed
     }
 
-    // Pass the PublicClientApplication instance from step 2 to create MSALBrowserAuthenticationProvider instance
-    const authProvider: new MSALBrowserAuthenticationProvider(publicClientApplication, options),
+    // Pass the PublicClientApplication instance from step 2 to create AuthCodeMSALBrowserAuthenticationProvider instance
+    const authProvider: new AuthCodeMSALBrowserAuthenticationProvider(publicClientApplication, options),
 
 
     // Initialize the Graph client
@@ -53,7 +53,7 @@ Using CDN or script:
 ```javascript
 const msalClient = new msal.PublicClientApplication(msalConfig);
 
-const authProvider = new MicrosoftGraphMSALBrowserAuthProvider.MSALBrowserAuthenticationProvider(msalClient, {
+const authProvider = new MSGraphAuthCodeMSALBrowserAuthProvider.AuthCodeMSALBrowserAuthenticationProvider(msalClient, {
 	account, // the AccountInfo instance to acquire the token for
 	scopes: ["user.read", "mail.send"],
 	interactionType: msal.InteractionType.Popup,

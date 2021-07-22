@@ -68,14 +68,14 @@ const config = [
 			}),
 		],
 	},
-    {
-		input: ["lib/es/src/authentication/msal-browser/MSALBrowserAuthenticationProvider.js"],
-        external: ["@azure/msal-browser"],
+	{
+		input: ["lib/es/src/authentication/msal-browser/AuthCodeMSALBrowserAuthenticationProvider.js"],
+		external: ["@azure/msal-browser"],
 		output: {
 			file: "lib/graph-client-msalBrowserAuthProvider.js",
 			format: "iife",
-			name: "MicrosoftGraphMSALBrowserAuthProvider",
-            globals: {
+			name: "MSGraphAuthCodeMSALBrowserAuthProvider",
+			globals: {
 				"@azure/msal-browser": "msal",
 			},
 		},

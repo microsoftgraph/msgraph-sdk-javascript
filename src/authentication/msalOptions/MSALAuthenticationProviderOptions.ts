@@ -42,7 +42,7 @@ export interface MSALAuthenticationProviderSharedOptions extends AuthenticationP
 	scopes: string[];
 }
 
-export interface MSALBrowserAuthenticationProviderOptions extends MSALAuthenticationProviderSharedOptions {
+export interface AuthCodeMSALBrowserAuthenticationProviderOptions extends MSALAuthenticationProviderSharedOptions {
 	account: AccountInfo;
 	interactionType: InteractionType;
 }
