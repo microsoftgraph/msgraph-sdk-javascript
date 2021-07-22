@@ -70,6 +70,8 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 					const response: AuthenticationResult = await this.publicClientApplication.acquireTokenPopup({ scopes });
 					return response.accessToken;
 				}
+			} else {
+				throw error;
 			}
 		}
 	}
