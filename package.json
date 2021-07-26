@@ -1,139 +1,139 @@
 {
-    "name": "@microsoft/microsoft-graph-client",
-    "version": "3.0.0-Preview.2",
-    "description": "Microsoft Graph Client Library",
-    "keywords": [
-        "Microsoft",
-        "Graph",
-        "SDK",
-        "JavaScript",
-        "Client"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
-    },
-    "license": "MIT",
-    "main": "lib/src/index.js",
-    "module": "lib/es/src/index.js",
-    "browser": {
-        "./lib/es/src/index.js": "./lib/es/src/browser/index.js",
-        "stream": "stream-browserify"
-    },
-    "types": "./lib/src/index.d.ts",
-    "typings": "lib/src/index",
-    "files": [
-        "lib/",
-        "src/",
-        "authProviders/"
-    ],
-    "scripts": {
-        "build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
-        "build:cjs": "tsc --p tsconfig-cjs.json",
-        "build:es": "tsc --p tsconfig-es.json",
-        "build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
-        "build:sub_es": "tsc -b tsconfig-sub-es.json",
-        "format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-        "format:css": "prettier --write \"**/*.css\"",
-        "format:html": "prettier --write \"**/*.html\"",
-        "format:js": "prettier --write \"**/*.js\"",
-        "format:json": "prettier --write \"**/*.json\"",
-        "format:md": "prettier --write \"**/*.md\"",
-        "format:rc": "prettier --write --parser json \"**/.*rc\"",
-        "format:ts": "prettier --write \"**/*.ts\"",
-        "karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js",
-        "lint": "eslint . --ext .ts",
-        "lint:fix": "eslint . --ext .ts --fix",
-        "prepack": "npm install && npm run build && npm run test",
-        "pre-build": "npm run setVersion",
-        "setVersion": "gulp setVersion",
-        "test": "npm run test:cjs && npm run test:esm",
-        "test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
-        "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
-        "test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-        "test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
-    },
-    "nyc": {
-        "all": true,
-        "cache": false,
-        "exclude": [
-            "samples/",
-            "*.js",
-            "lib/"
-        ],
-        "include": [
-            "src/"
-        ]
-    },
-    "dependencies": {
-        "@babel/runtime": "^7.12.5",
-        "tslib": "^2.2.0"
-    },
-    "devDependencies": {
-        "@azure/identity": "^1.3.0",
-        "@azure/msal-browser": "^2.15.0",
-        "@babel/core": "^7.12.10",
-        "@babel/plugin-transform-runtime": "^7.12.10",
-        "@babel/preset-env": "^7.12.11",
-        "@istanbuljs/nyc-config-typescript": "^1.0.1",
-        "@microsoft/microsoft-graph-types": "^1.28.0",
-        "@rollup/plugin-babel": "^5.2.2",
-        "@rollup/plugin-commonjs": "^17.0.0",
-        "@rollup/plugin-node-resolve": "^11.1.0",
-        "@types/chai": "^4.2.14",
-        "@types/mocha": "^5.2.7",
-        "@types/node": "^12.0.10",
-        "@types/sinon": "^9.0.9",
-        "@typescript-eslint/eslint-plugin": "^3.8.0",
-        "@typescript-eslint/parser": "^3.8.0",
-        "chai": "^4.2.0",
-        "eslint": "^7.19.0",
-        "eslint-config-prettier": "^7.2.0",
-        "eslint-plugin-prettier": "^3.3.1",
-        "eslint-plugin-simple-import-sort": "^7.0.0",
-        "esm": "^3.2.25",
-        "form-data": "^2.3.3",
-        "gulp": "^4.0.2",
-        "husky": "^2.2.0",
-        "isomorphic-fetch": "^3.0.0",
-        "karma": "^6.3.2",
-        "karma-chai": "^0.1.0",
-        "karma-chrome-launcher": "^3.1.0",
-        "karma-firefox-launcher": "^2.1.0",
-        "karma-mocha": "^2.0.1",
-        "karma-typescript": "^5.2.0",
-        "lint-staged": "^11.0.0",
-        "mocha": "^6.2.3",
-        "msal": "^1.0.0",
-        "nyc": "^15.1.0",
-        "prettier": "^1.17.0",
-        "rollup": "^2.36.2",
-        "rollup-plugin-terser": "^7.0.2",
-        "sinon": "^9.2.4",
-        "source-map-support": "^0.5.19",
-        "stream-browserify": "^3.0.0",
-        "ts-node": "^9.0.0",
-        "typescript": "^4.2.4",
-        "uglify-es": "^3.3.9"
-    },
-    "peerDependenciesMeta": {
-        "@azure/identity": {
-            "optional": true
-        },
-        "buffer": {
-            "optional": true
-        },
-        "msal": {
-            "optional": true
-        },
-        "stream-browserify": {
-            "optional": true
-        },
-        "@azure/msal-browser": {
-            "optional": true
-        }
-    },
-    "engines": {
-        "node": ">=10.0.0"
-    }
+	"name": "@microsoft/microsoft-graph-client",
+	"version": "3.0.0-Preview.2",
+	"description": "Microsoft Graph Client Library",
+	"keywords": [
+		"Microsoft",
+		"Graph",
+		"SDK",
+		"JavaScript",
+		"Client"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"license": "MIT",
+	"main": "lib/src/index.js",
+	"module": "lib/es/src/index.js",
+	"browser": {
+		"./lib/es/src/index.js": "./lib/es/src/browser/index.js",
+		"stream": "stream-browserify"
+	},
+	"types": "./lib/src/index.d.ts",
+	"typings": "lib/src/index",
+	"files": [
+		"lib/",
+		"src/",
+		"authProviders/"
+	],
+	"scripts": {
+		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
+		"build:cjs": "tsc --p tsconfig-cjs.json",
+		"build:es": "tsc --p tsconfig-es.json",
+		"build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
+		"build:sub_es": "tsc -b tsconfig-sub-es.json",
+		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
+		"format:css": "prettier --write \"**/*.css\"",
+		"format:html": "prettier --write \"**/*.html\"",
+		"format:js": "prettier --write \"**/*.js\"",
+		"format:json": "prettier --write \"**/*.json\"",
+		"format:md": "prettier --write \"**/*.md\"",
+		"format:rc": "prettier --write --parser json \"**/.*rc\"",
+		"format:ts": "prettier --write \"**/*.ts\"",
+		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"prepack": "npm install && npm run build && npm run test",
+		"pre-build": "npm run setVersion",
+		"setVersion": "gulp setVersion",
+		"test": "npm run test:cjs && npm run test:esm",
+		"test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
+		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
+		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
+	},
+	"nyc": {
+		"all": true,
+		"cache": false,
+		"exclude": [
+			"samples/",
+			"*.js",
+			"lib/"
+		],
+		"include": [
+			"src/"
+		]
+	},
+	"dependencies": {
+		"@babel/runtime": "^7.12.5",
+		"tslib": "^2.2.0"
+	},
+	"devDependencies": {
+		"@azure/identity": "^1.3.0",
+		"@azure/msal-browser": "^2.15.0",
+		"@babel/core": "^7.12.10",
+		"@babel/plugin-transform-runtime": "^7.12.10",
+		"@babel/preset-env": "^7.12.11",
+		"@istanbuljs/nyc-config-typescript": "^1.0.1",
+		"@microsoft/microsoft-graph-types": "^1.28.0",
+		"@rollup/plugin-babel": "^5.2.2",
+		"@rollup/plugin-commonjs": "^17.0.0",
+		"@rollup/plugin-node-resolve": "^11.1.0",
+		"@types/chai": "^4.2.14",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.0.10",
+		"@types/sinon": "^9.0.9",
+		"@typescript-eslint/eslint-plugin": "^3.8.0",
+		"@typescript-eslint/parser": "^3.8.0",
+		"chai": "^4.2.0",
+		"eslint": "^7.19.0",
+		"eslint-config-prettier": "^7.2.0",
+		"eslint-plugin-prettier": "^3.3.1",
+		"eslint-plugin-simple-import-sort": "^7.0.0",
+		"esm": "^3.2.25",
+		"form-data": "^2.3.3",
+		"gulp": "^4.0.2",
+		"husky": "^2.2.0",
+		"isomorphic-fetch": "^3.0.0",
+		"karma": "^6.3.2",
+		"karma-chai": "^0.1.0",
+		"karma-chrome-launcher": "^3.1.0",
+		"karma-firefox-launcher": "^2.1.0",
+		"karma-mocha": "^2.0.1",
+		"karma-typescript": "^5.2.0",
+		"lint-staged": "^11.0.0",
+		"mocha": "^6.2.3",
+		"msal": "^1.0.0",
+		"nyc": "^15.1.0",
+		"prettier": "^1.17.0",
+		"rollup": "^2.36.2",
+		"rollup-plugin-terser": "^7.0.2",
+		"sinon": "^9.2.4",
+		"source-map-support": "^0.5.19",
+		"stream-browserify": "^3.0.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^4.2.4",
+		"uglify-es": "^3.3.9"
+	},
+	"peerDependenciesMeta": {
+		"@azure/identity": {
+			"optional": true
+		},
+		"buffer": {
+			"optional": true
+		},
+		"msal": {
+			"optional": true
+		},
+		"stream-browserify": {
+			"optional": true
+		},
+		"@azure/msal-browser": {
+			"optional": true
+		}
+	},
+	"engines": {
+		"node": ">=12.0.0"
+	}
 }
