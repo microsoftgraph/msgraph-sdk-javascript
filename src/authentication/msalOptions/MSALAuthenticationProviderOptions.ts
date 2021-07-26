@@ -9,9 +9,12 @@
  * @module MSALAuthenticationProviderOptions
  */
 
+import { AccountInfo, InteractionType } from "@azure/msal-browser";
+
 import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
 
 /**
+ * @deprecated
  * @class
  * @implements AuthenticationProviderOptions
  * Class representing MSALAuthenticationProviderOptions
@@ -33,4 +36,13 @@ export class MSALAuthenticationProviderOptions implements AuthenticationProvider
 	public constructor(scopes: string[]) {
 		this.scopes = scopes;
 	}
+}
+
+export interface MSALAuthenticationProviderSharedOptions extends AuthenticationProviderOptions {
+	scopes: string[];
+}
+
+export interface AuthCodeMSALBrowserAuthenticationProviderOptions extends MSALAuthenticationProviderSharedOptions {
+	account: AccountInfo;
+	interactionType: InteractionType;
 }

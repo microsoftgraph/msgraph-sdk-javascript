@@ -48,7 +48,36 @@ const config = [
 		output: {
 			file: "lib/graph-client-tokenCredentialAuthProvider.js",
 			format: "iife",
-			name: "MicrosoftGraph.TokenCredentialAuthProvider",
+			name: "MicrosoftGraphTokenCredentialAuthProvider",
+		},
+		plugins: [
+			resolve({
+				browser: true,
+				preferBuiltins: false,
+			}),
+			babel({
+				babelHelpers: "runtime",
+				exclude: "node_modules/**",
+			}),
+			commonjs({ include: "node_modules/**" }),
+			terser({
+				format: {
+					comments: false,
+					preamble: copyRight,
+				},
+			}),
+		],
+	},
+	{
+		input: ["lib/es/src/authentication/msal-browser/AuthCodeMSALBrowserAuthenticationProvider.js"],
+		external: ["@azure/msal-browser"],
+		output: {
+			file: "lib/graph-client-msalBrowserAuthProvider.js",
+			format: "iife",
+			name: "MSGraphAuthCodeMSALBrowserAuthProvider",
+			globals: {
+				"@azure/msal-browser": "msal",
+			},
 		},
 		plugins: [
 			resolve({
