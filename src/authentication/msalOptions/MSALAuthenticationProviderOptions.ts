@@ -9,4 +9,12 @@
  * @module MSALAuthenticationProviderOptions
  */
 
+import { AccountInfo, InteractionType } from "@azure/msal-browser";
+
 import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOptions";
+
+export interface AuthCodeMSALBrowserAuthenticationProviderOptions extends AuthenticationProviderOptions {
+	scopes: string[];
+	account: AccountInfo;
+	interactionType: InteractionType;
+}
