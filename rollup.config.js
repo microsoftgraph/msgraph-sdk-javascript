@@ -19,7 +19,7 @@ const copyRight = `/**
 
 const config = [
 	{
-		input: ["lib/es/src/browser/rollupEntry.js"],
+		input: ["lib/es/src/browser/index.js"],
 		output: {
 			file: "lib/graph-js-sdk.js",
 			format: "iife",
