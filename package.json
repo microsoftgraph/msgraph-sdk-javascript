@@ -1,6 +1,6 @@
 {
 	"name": "@microsoft/microsoft-graph-client",
-	"version": "3.0.0-Preview.2",
+	"version": "3.0.0-Preview.3",
 	"description": "Microsoft Graph Client Library",
 	"keywords": [
 		"Microsoft",
