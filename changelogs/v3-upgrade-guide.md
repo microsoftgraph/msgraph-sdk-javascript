@@ -11,6 +11,12 @@
 -   Microsoft Graph JS SDK requires Node.js 12 LTS or higher. The active Long Term Service (LTS) version of Node.js is used for on-going testing of existing and upcoming product features.
 -   Updated to TypeScript 4.x.
 
+### Removing `ImplicitMSALAuthenticationProvider` and `MSALAuthenticationProviderOptions` class.
+
+-   Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
+-   The 3.0.0 version introduces `AuthCodeMSALBrowserAuthenticationProvider` which supports the [MSAL Browser](https://www.npmjs.com/package/@azure/msal-browser) and enables authorization using the Authentication Code Flow with PKCE. Learn more about the [AuthCodeMSALBrowserAuthenticationProvider](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/AuthCodeMSALBrowserAuthenticationProvider.md).
+-   Alternatively, you can implement a `CustomAuthenticationProvider` with an auth library of your choice. Learn more using the [samples](https://github.com/microsoftgraph/msgraph-sdk-javascript#samples-and-tutorials).
+
 ### LargeFileUploadTask
 
 -   Modified the `FileObject` interface which now contains the `sliceFile` function. Learn more [LargeFileUploadTask](../docs/tasks/LargeFileUploadTask.md).
@@ -47,11 +53,15 @@
 
 ## Enhancements
 
+### Introducing support for `@azure/msal-browser`
+- The 3.0.0 version introduces `AuthCodeMSALBrowserAuthenticationProvider` which supports authentication using the [MSAL Browser](https://www.npmjs.com/package/@azure/msal-browser)
+-  `AuthCodeMSALBrowserAuthenticationProvider` enables authorization using the Authentication Code Flow with PKCE. Learn more about the [AuthCodeMSALBrowserAuthenticationProvider](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/AuthCodeMSALBrowserAuthenticationProvider.md).
+
 ### Introducing support for `@azure/identity TokenCredentials`
 
 -   Added a `TokenCredentialAuthenticationProvider` enabling the use of `@azure/identity` `credential classes` for authentication purposes.
 -   The `TokenCredentialAuthenticationProvider` enables server-side authentication using `credential classes` such as `ClientSecretCredential` or `ClientCertificateCredential`.
--   Find the samples on how to use `TokenCredentialAuthenticationProvider` here - [TokenCredentialAuthenticationProvider samples](../samples/tokenCredentialSamples)
+-   Find the samples on how to use `TokenCredentialAuthenticationProvider` here - [TokenCredentialAuthenticationProvider samples](../samples/javascript/clientInitialization/tokenCredentialAuthenticationProvider)
 
 ### LargeFileUploadTask
 
@@ -80,11 +90,6 @@ const client = Client.initWithMiddleware({ middleware, customHosts });
 -   `GraphClientError` handles client-side errors encountered within the JavaScript Client SDK whereas, `GraphError` class should be used to handle errors in the response from the Graph API.
 
 ## Deprecation
-
-### Deprecating `ImplicitMSALAuthenticationProvider`
-
--   Use of `ImplicitMSALAuthenticationProvider`, that is,using the implicit authorization flow is not recommended any more. [OAuth 2.0 Implicit Grant](https://oauth.net/2/grant-types/implicit/).
--   Alternatively, you can implement a `CustomAuthenticationProvider` with an auth library of your choice. Learn more using the [samples](https://github.com/microsoftgraph/msgraph-sdk-javascript#samples-and-tutorials).
 
 ### Deprecating the `sliceFile` function of the `LargeFileUploadTask` class.
 
