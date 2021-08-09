@@ -1,84 +1,155 @@
-# Large File Upload Task - Uploading large files to OneDrive
+# Large File Upload Task - Uploading large files to OneDrive, Outlook, Print API.
 
-This task simplifies the implementation of OneDrive's [resumable upload](https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createuploadsession).
+References -
+
+-   [Outlook's large file attachment](https://docs.microsoft.com/en-us/graph/outlook-large-attachments)
+-   [OneDrive's resumable upload](https://docs.microsoft.com/en-us/graph/api/driveitem-createuploadsession?view=graph-rest-1.0&preserve-view=true)
+-   [Print API's large file upload](https://docs.microsoft.com/en-us/graph/upload-data-to-upload-session)
 
 ## Creating the client instance
 
 Refer [this documentation](../CreatingClientInstance.md) for initializing the client.
 
-## Uploading from browser
+## Using the LargeFileUpload Task
 
-HTML to select the file for uploading.
+#### Create an upload session
 
-```HTML
-<input id="fileUpload" type="file" onchange="fileUpload(this)" />
-```
+First step for any upload task is the creation of the upload session.
 
-Get files from the input element and start uploading.
+**Example of a payload for Outlook**
 
 ```typescript
-async function fileUpload(elem) {
-	let file = elem.files[0];
-	try {
-		let response = await largeFileUpload(client, file, file.name);
-		console.log(response);
-		console.log("File Uploaded Successfully.!!");
-	} catch (error) {
-		console.error(error);
-	}
-}
-
-async function largeFileUpload(client, file) {
-	try {
-		let options = {
-			path: "/Documents",
-			fileName: file.name,
-			rangeSize: 1024 * 1024,
-		};
-		const uploadTask = await MicrosoftGraph.OneDriveLargeFileUploadTask.create(client, file, options);
-		const response = await uploadTask.upload();
-		return response;
-	} catch (err) {
-		throw err;
-	}
-}
+const payload = {
+	AttachmentItem: {
+		attachmentType: "file",
+		name: "<FILE_NAME>",
+		size: FILE_SIZE,
+	},
+};
 ```
 
-## Uploading from NodeJS
+**Example of a payload for OneDrive**
 
 ```typescript
-function uploadFile() {
-	fs.readFile("<PATH_OF_THE_FILE>", {}, function(err, file) {
-		if (err) {
-			throw err;
-		}
-		let fileName = "<NAME_OF_THE_FILE_WITH_EXTN>";
-		oneDriveLargeFileUpload(client, file, fileName)
-			.then((response) => {
-				console.log(response);
-				console.log("File Uploaded Successfully.!!");
-			})
-			.catch((error) => {
-				throw err;
-			});
-	});
-}
+const payload = {
+	item: {
+		"@microsoft.graph.conflictBehavior": "rename",
+		name: "<FILE_NAME>",
+	},
+};
+```
 
-async function oneDriveLargeFileUpload(client, file, fileName) {
-	try {
-		let options = {
-			path: "/Documents",
-			fileName,
-			rangeSize: 1024 * 1024,
-		};
-		const uploadTask = await OneDriveLargeFileUploadTask.create(client, file, options);
-		const response = await uploadTask.upload();
-		return response;
-	} catch (err) {
-		console.log(err);
-	}
+**Create the upload session**
+
+```typescript
+const uploadSession = LargeFileUploadTask.createUploadSession(client, "REQUEST_URL", payload);
+```
+
+#### Creating the LargeFileUploadTask object
+
+-   First, you will need to initialize a [Client instance](../CreatingClientInstance.md). This `client` instance should passed as a parameter when creating the `LargeFileUploadTask` or `OneDriveLargeFileUploadTask` object.
+-   To create the LargeFileUploadTask object you need to create - - An upload session as shown above. - A `FileObject` instance.
+
+**FileObject Interface**
+
+```typescript
+export interface FileObject<T> {
+	content: T;
+	name: string;
+	size: number;
+	sliceFile(range: Range): Promise<ArrayBuffer | Blob | Buffer>;
 }
 ```
+
+The Microsoft Graph JavaScript Client SDK provides two implementions -
+
+1. StreamUpload - Supports Node.js stream upload
+
+```typescript
+import StreamUpload from "@microsoft/microsoft-graph-client";
+import * as fs from "fs";
+
+const fileName = "<FILE_NAME>";
+const stats = fs.statSync(`./test/sample_files/${fileName}`);
+const totalsize = stats.size;
+const readStream = fs.createReadStream(`./test/sample_files/${fileName}`);
+const fileObject = new StreamUpload(readStream, fileName, totalsize);
+```
+
+Note - In case of a browser application, you can use [stream-browserify](https://www.npmjs.com/package/stream-browserify) and [buffer](https://www.npmjs.com/package/buffer).
+
+2. FileUpload - Supports upload of file formats - ArrayBuffer, Blob, Buffer
+
+```typescript
+import FileUpload from "@microsoft/microsoft-graph-client";
+import * as fs from "fs";
+
+const fileName = "<FILE_NAME>";
+const stats = fs.statSync(`./test/sample_files/${fileName}`);
+const totalsize = stats.size;
+const readStream = fs.readFileSync(`./test/sample_files/${fileName}`);
+const fileObject = new FileUpload(readStream, fileName, totalsize);
+```
+
+**_Note_** - You can also have a customized `FileObject` implementation which contains the `sliceFile(range: Range)` function which implements the logic to split the file into ranges.
+
+**Initiate the LargefileUploadTask options with Progress Handler and Range Size**
+
+```typescript
+const progress = (range?: Range, extraCallBackParam?: unknown) => {
+	// Handle progress event
+};
+
+const uploadEventHandlers: UploadEventHandlers = {
+	progress,
+	extraCallBackParam, // additional parameters to the callback
+};
+
+const options: LargeFileUploadTaskOptions = {
+	rangeSize: 327680,
+	uploadEventHandlers: UploadEventHandlers,
+};
+```
+
+**Create a LargefileUploadTask object**
+
+```typescript
+const uploadTask = new LargeFileUploadTask(client, fileObj, uploadSession, optionsWithProgress);
+const uploadResult: UploadResult = await uploadTask.upload();
+```
+
+`UploadResult` contains the `location`(received in the Outlook API response headers) and the `responseBody` (responseBody received after successful upload.) properties.
+
+## OneDriveLargeFileUploadTask.
+
+_You can also use `OneDriveLargeFileUploadTask` which provides easier access to upload to OneDrive API_
+
+Example -
+
+```typescript
+const uploadEventHandlers: UploadEventHandlers = {
+	progress,
+	extraCallBackParam: true,
+};
+
+const options: OneDriveLargeFileUploadOptions = {
+	path: "/Documents",
+	fileName,
+	rangeSize: 1024 * 1024,
+	uploadEventHandlers,
+};
+const readStream = fs.createReadStream(`./fileName`);
+const fileObject = new StreamUpload(readStream, fileName, totalsize);
+or
+const readFile = fs.readFileSync(`./fileName`);
+const fileObject = new FileUpload(readStream, fileName, totalsize);
+
+const uploadTask = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
+const uploadResult:UploadResult = await uploadTask.upload();
+}
+```
+
+> Note: The `OneDriveLargeFileUploadTask.createTaskWithFileObject` also handles the upload session creation.\*\*
 
 ## We can just resume the broken upload
 
@@ -98,34 +169,26 @@ let slicedFile = uploadTask.sliceFile(range);
 uploadTask.uploadSlice(slicedFile, range, uploadTask.file.size);
 ```
 
-## Uploading with custom options
+## Cancelling a largeFileUpload task
 
-_You can pass in the customized options using LargeFileUploadTask_
+_Cancelling an upload session sends a DELETE request to the upload session URL_
 
 ```typescript
-async function largeFileUpload(client, file) {
-	const fileName = file.name;
-	const driveId = "<YOUR_DRIVE_ID>";
-	const path = "<LOCATION_TO_STORE_FILE>";
-	try {
-		const requestUrl = `/drives/${driveId}/root:${path}/${fileName}:/createUploadSession`;
-		const payload = {
-			item: {
-				"@microsoft.graph.conflictBehavior": "fail",
-				name: fileName,
-			},
-		};
-		const fileObject = {
-			size: file.size,
-			content: file,
-			name: fileName,
-		};
-		const uploadSession = await LargeFileUploadTask.createUploadSession(client, requestUrl, payload);
-		const uploadTask = await new LargeFileUploadTask(client, fileObject, uploadSession);
-		const response = await uploadTask.upload();
-		return response;
-	} catch (err) {
-		throw err;
-	}
-}
+const cancelResponse = await uploadTask.cancel();
 ```
+
+## Get the largeFileUpload session
+
+_Returns the largeFileUpload session information containing the URL, expiry date and cancellation status of the task_
+
+```typescript
+const uploadsession: LargeFileUploadSession = uploadTask.getUploadSession();
+```
+
+## Samples
+
+Check out the samples for:
+
+-   LargeFileUploadTask - [JavaScript](../../samples/javascript/tasks/LargeFileUploadTask.js) - [Typescript](../../samples/typescript/tasks/LargeFileUploadTask.ts)
+
+-   OneDriveLargeFileUploadTask - [JavaScript](../../samples/javascript/tasks/OneDriveLargeFileUploadTask.js) - [TypeScript](../../samples/typescript/tasks/OneDriveLargeFileUploadTask.ts)

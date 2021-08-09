@@ -81,7 +81,7 @@ try {
 You can pass in additional request options through `.option()` and `.options()`, either individually or in a dictionary. Options can be [node specific](https://github.com/bitinn/node-fetch#options) or [from fetch standard](https://fetch.spec.whatwg.org/#requestinit)
 
 ```typescript
-let HttpProxyAgent = require('http-proxy-agent');
+let HttpProxyAgent = require('https-proxy-agent');
 try {
     // HTTP/HTTPS proxy to connect to
     let proxy = <YOUR PROXY>;

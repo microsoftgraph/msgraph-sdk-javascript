@@ -11,10 +11,9 @@
 
 import { Context } from "../IContext";
 import { RequestMethod } from "../RequestMethod";
-
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { cloneRequestWithNewUrl, setRequestHeader } from "./MiddlewareUtil";
+import { cloneRequestWithNewUrl } from "./MiddlewareUtil";
 import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
@@ -43,21 +42,21 @@ export class RedirectHandler implements Middleware {
 	 * @static
 	 * A member holding SeeOther status code
 	 */
-	private static STATUS_CODE_SEE_OTHER: number = 303;
+	private static STATUS_CODE_SEE_OTHER = 303;
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding the name of the location header
 	 */
-	private static LOCATION_HEADER: string = "Location";
+	private static LOCATION_HEADER = "Location";
 
 	/**
 	 * @private
 	 * @static
 	 * A member representing the authorization header name
 	 */
-	private static AUTHORIZATION_HEADER: string = "Authorization";
+	private static AUTHORIZATION_HEADER = "Authorization";
 
 	/**
 	 * @private
@@ -138,7 +137,7 @@ export class RedirectHandler implements Middleware {
 	 * @returns A boolean representing whether the authorization header in the request should be dropped for consequent redirected requests
 	 */
 	private shouldDropAuthorizationHeader(requestUrl: string, redirectUrl: string): boolean {
-		const schemeHostRegex: RegExp = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
+		const schemeHostRegex = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
 		const requestMatches: string[] = schemeHostRegex.exec(requestUrl);
 		let requestAuthority: string;
 		let redirectAuthority: string;
@@ -191,27 +190,23 @@ export class RedirectHandler implements Middleware {
 	 * @returns A promise that resolves to nothing
 	 */
 	private async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
-		try {
-			await this.nextMiddleware.execute(context);
-			const response = context.response;
-			if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
-				++redirectCount;
-				if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
-					context.options.method = RequestMethod.GET;
-					delete context.options.body;
-				} else {
-					const redirectUrl: string = this.getLocationHeader(response);
-					if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
-						delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
-					}
-					await this.updateRequestUrl(redirectUrl, context);
-				}
-				await this.executeWithRedirect(context, redirectCount, options);
+		await this.nextMiddleware.execute(context);
+		const response = context.response;
+		if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
+			++redirectCount;
+			if (response.status === RedirectHandler.STATUS_CODE_SEE_OTHER) {
+				context.options.method = RequestMethod.GET;
+				delete context.options.body;
 			} else {
-				return;
+				const redirectUrl: string = this.getLocationHeader(response);
+				if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
+					delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
+				}
+				await this.updateRequestUrl(redirectUrl, context);
 			}
-		} catch (error) {
-			throw error;
+			await this.executeWithRedirect(context, redirectCount, options);
+		} else {
+			return;
 		}
 	}
 
@@ -223,15 +218,11 @@ export class RedirectHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
-		try {
-			const redirectCount: number = 0;
-			const options = this.getOptions(context);
-			context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);
-			return await this.executeWithRedirect(context, redirectCount, options);
-		} catch (error) {
-			throw error;
-		}
+		const redirectCount = 0;
+		const options = this.getOptions(context);
+		context.options.redirect = RedirectHandler.MANUAL_REDIRECT;
+		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.REDIRECT_HANDLER_ENABLED);
+		return await this.executeWithRedirect(context, redirectCount, options);
 	}
 
 	/**

@@ -1,2 +1,4 @@
 .npmignore
-spec/
+test/
+**/*.tsbuildinfo
+es/test/

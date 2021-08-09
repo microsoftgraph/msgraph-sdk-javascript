@@ -1,0 +1,16 @@
+{
+	"extends": "./tsconfig-base.json",
+	"compilerOptions": {
+		"module": "es6",
+		"target": "es6",
+		"lib": ["dom", "esnext"],
+		"outDir": "authProviders/es"
+	},
+	"exclude": ["node_modules", "lib", "samples", "test/**", "src"],
+	"include": ["authProviderOptions/es/**/*.ts"],
+	"references": [
+		{
+			"path": "./tsconfig-es.json"
+		}
+	]
+}

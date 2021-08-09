@@ -9,6 +9,7 @@
  * @module CustomAuthenticationProvider
  */
 
+import { GraphClientError } from "./GraphClientError";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 
@@ -43,11 +44,18 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 	 */
 	public async getAccessToken(): Promise<any> {
 		return new Promise((resolve: (accessToken: string) => void, reject: (error: any) => void) => {
-			this.provider((error: any, accessToken: string | null) => {
+			this.provider(async (error: any, accessToken: string | null) => {
 				if (accessToken) {
 					resolve(accessToken);
 				} else {
-					reject(error);
+					if (!error) {
+						const invalidTokenMessage = "Access token is undefined or empty.\
+						Please provide a valid token.\
+						For more help - https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/CustomAuthenticationProvider.md";
+						error = new GraphClientError(invalidTokenMessage);
+					}
+					const err = await GraphClientError.setGraphClientError(error);
+					reject(err);
 				}
 			});
 		});

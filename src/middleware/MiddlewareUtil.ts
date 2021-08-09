@@ -17,7 +17,7 @@ import { FetchOptions } from "../IFetchOptions";
  * @returns The UUID string
  */
 export const generateUUID = (): string => {
-	let uuid: string = "";
+	let uuid = "";
 	for (let j = 0; j < 32; j++) {
 		if (j === 8 || j === 12 || j === 16 || j === 20) {
 			uuid += "-";

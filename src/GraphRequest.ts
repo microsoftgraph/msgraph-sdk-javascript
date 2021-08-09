@@ -8,7 +8,7 @@
 /**
  * @module GraphRequest
  */
-
+import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
@@ -75,7 +75,6 @@ export class GraphRequest {
 	 */
 	private urlComponents: URLComponents;
 
-	/* tslint:disable: variable-name */
 	/**
 	 * @private
 	 * A member to hold custom header options for a request
@@ -99,7 +98,6 @@ export class GraphRequest {
 	 * A member to hold custom response type for a request
 	 */
 	private _responseType: ResponseType;
-	/* tslint:enable: variable-name */
 
 	/**
 	 * @public
@@ -209,7 +207,7 @@ export class GraphRequest {
 		const url = urlJoin([this.urlComponents.host, this.urlComponents.version, this.urlComponents.path]) + this.createQueryString();
 
 		if (this.config.debugLogging) {
-			console.log(url); // tslint:disable-line: no-console
+			console.log(url);
 		}
 		return url;
 	}
@@ -225,14 +223,14 @@ export class GraphRequest {
 		const query: string[] = [];
 		if (Object.keys(urlComponents.oDataQueryParams).length !== 0) {
 			for (const property in urlComponents.oDataQueryParams) {
-				if (urlComponents.oDataQueryParams.hasOwnProperty(property)) {
+				if (Object.prototype.hasOwnProperty.call(urlComponents.oDataQueryParams, property)) {
 					query.push(property + "=" + urlComponents.oDataQueryParams[property]);
 				}
 			}
 		}
 		if (Object.keys(urlComponents.otherURLQueryParams).length !== 0) {
 			for (const property in urlComponents.otherURLQueryParams) {
-				if (urlComponents.otherURLQueryParams.hasOwnProperty(property)) {
+				if (Object.prototype.hasOwnProperty.call(urlComponents.otherURLQueryParams, property)) {
 					query.push(property + "=" + urlComponents.otherURLQueryParams[property]);
 				}
 			}
@@ -268,7 +266,7 @@ export class GraphRequest {
 			}
 		} else if (queryDictionaryOrString.constructor === Object) {
 			for (const key in queryDictionaryOrString) {
-				if (queryDictionaryOrString.hasOwnProperty(key)) {
+				if (Object.prototype.hasOwnProperty.call(queryDictionaryOrString, key)) {
 					this.setURLComponentsQueryParamater(key, queryDictionaryOrString[key]);
 				}
 			}
@@ -285,7 +283,7 @@ export class GraphRequest {
 	 */
 	private parseQueryParamenterString(queryParameter: string): void {
 		/* The query key-value pair must be split on the first equals sign to avoid errors in parsing nested query parameters.
-				 Example-> "/me?$expand=home($select=city)" */
+                 Example-> "/me?$expand=home($select=city)" */
 		if (this.isValidQueryKeyValuePair(queryParameter)) {
 			const indexOfFirstEquals = queryParameter.indexOf("=");
 			const paramKey = queryParameter.substring(0, indexOfFirstEquals);
@@ -293,7 +291,7 @@ export class GraphRequest {
 			this.setURLComponentsQueryParamater(paramKey, paramValue);
 		} else {
 			/* Push values which are not of key-value structure.
-			Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
+            Example-> Handle an invalid input->.query(test), .query($select($select=name)) and let the Graph API respond with the error in the URL*/
 			this.urlComponents.otherURLQueryOptions.push(queryParameter);
 		}
 	}
@@ -369,18 +367,25 @@ export class GraphRequest {
 		let rawResponse: Response;
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
+		const customHosts = this.config?.customHosts;
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,
 				options,
 				middlewareControl,
+				customHosts,
 			});
+
 			rawResponse = context.response;
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {
+			if (error instanceof GraphClientError) {
+				throw error;
+			}
 			let statusCode: number;
-			if (typeof rawResponse !== "undefined") {
+
+			if (rawResponse) {
 				statusCode = rawResponse.status;
 			}
 			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
@@ -429,7 +434,7 @@ export class GraphRequest {
 	 */
 	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
 		for (const key in headers) {
-			if (headers.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(headers, key)) {
 				this._headers[key] = headers[key] as string;
 			}
 		}
@@ -456,7 +461,7 @@ export class GraphRequest {
 	 */
 	public options(options: { [key: string]: any }): GraphRequest {
 		for (const key in options) {
-			if (options.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(options, key)) {
 				this._options[key] = options[key];
 			}
 		}
@@ -596,7 +601,7 @@ export class GraphRequest {
 	 * @param {boolean} isCount - The count boolean
 	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
 	 */
-	public count(isCount: boolean = false): GraphRequest {
+	public count(isCount = true): GraphRequest {
 		this.urlComponents.oDataQueryParams.$count = isCount.toString();
 		return this;
 	}
@@ -627,12 +632,8 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.GET,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		const response = await this.send(url, options, callback);
+		return response;
 	}
 
 	/**
@@ -657,12 +658,7 @@ export class GraphRequest {
 			this.setHeaderContentType();
 			options.headers = this._headers;
 		}
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -674,11 +670,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the post response
 	 */
 	public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.post(content, callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.post(content, callback);
 	}
 
 	/**
@@ -696,12 +688,7 @@ export class GraphRequest {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -719,12 +706,7 @@ export class GraphRequest {
 			method: RequestMethod.PATCH,
 			body: serializeContent(content),
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -736,11 +718,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the patch response
 	 */
 	public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.patch(content, callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.patch(content, callback);
 	}
 
 	/**
@@ -755,12 +733,7 @@ export class GraphRequest {
 		const options: FetchOptions = {
 			method: RequestMethod.DELETE,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -771,11 +744,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the delete response
 	 */
 	public async del(callback?: GraphRequestCallback): Promise<any> {
-		try {
-			return await this.delete(callback);
-		} catch (error) {
-			throw error;
-		}
+		return await this.delete(callback);
 	}
 
 	/**
@@ -791,12 +760,7 @@ export class GraphRequest {
 			method: RequestMethod.GET,
 		};
 		this.responseType(ResponseType.STREAM);
-		try {
-			const stream = await this.send(url, options, callback);
-			return stream;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 
 	/**
@@ -816,11 +780,6 @@ export class GraphRequest {
 			},
 			body: stream,
 		};
-		try {
-			const response = await this.send(url, options, callback);
-			return response;
-		} catch (error) {
-			throw error;
-		}
+		return await this.send(url, options, callback);
 	}
 }

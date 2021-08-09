@@ -18,7 +18,9 @@ import { Middleware } from "./middleware/IMiddleware";
  * @property {string} [defaultVersion] - The default version that needs to be used while making graph api request
  * @property {FetchOptions} [fetchOptions] - The options for fetch request
  * @property {Middleware| Middleware[]} [middleware] - The first middleware of the middleware chain or an array of the Middleware handlers
+ * @property {Set<string>}[customHosts] - A set of custom host names. Should contain hostnames only.
  */
+
 export interface ClientOptions {
 	authProvider?: AuthenticationProvider;
 	baseUrl?: string;
@@ -26,4 +28,8 @@ export interface ClientOptions {
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 	middleware?: Middleware | Middleware[];
+	/**
+	 * Example - If URL is "https://test_host/v1.0", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
+	 */
+	customHosts?: Set<string>;
 }
