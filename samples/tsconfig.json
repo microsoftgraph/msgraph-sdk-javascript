@@ -3,7 +3,7 @@
 		"target": "es5",
 		"module": "commonjs",
 		"strict": true,
-        "outDir": "lib"
+		"outDir": "lib"
 	},
-    "include": ["typescript/"]
+	"include": ["typescript/"]
 }

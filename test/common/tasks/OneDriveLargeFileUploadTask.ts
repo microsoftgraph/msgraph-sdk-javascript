@@ -44,4 +44,20 @@ describe("OneDriveLargeFileUploadTask.ts", () => {
 			assert.equal(`/me/drive/root:/Documents/${fileName}:/createUploadSession`, OneDriveLargeFileUploadTask["constructCreateSessionUrl"](fileName, " /Documents/ "));
 		});
 	});
+
+	describe("getFileInfo", () => {
+		/* tslint:disable: no-string-literal */
+		it("Should return file content info for Buffer", () => {
+			const bytes = [1, 2, 3, 4, 5];
+			const buffer = Buffer.from(bytes);
+			const fileContent = OneDriveLargeFileUploadTask["getFileInfo"](buffer, "test.png");
+			const arrayBuffer = new ArrayBuffer(bytes.length);
+			const typedArray = new Uint8Array(arrayBuffer);
+			for (let i = 0; i < bytes.length; i++) {
+				typedArray[i] = bytes[i];
+			}
+			assert.deepEqual(fileContent, { content: arrayBuffer as Buffer, size: bytes.length });
+		});
+		/* tslint:enable: no-string-literal */
+	});
 });
