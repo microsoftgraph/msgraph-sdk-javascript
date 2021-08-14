@@ -127,6 +127,7 @@ export class LargeFileUploadTask<T> {
 	 * @async
 	 * Makes request to the server to create an upload session
 	 * @param {Client} client - The GraphClient instance
+	 * @param {string} requestUrl - The URL to create the upload session
 	 * @param {any} payload - The payload that needs to be sent
 	 * @param {KeyValuePairObjectStringNumber} headers - The headers that needs to be sent
 	 * @returns The promise that resolves to LargeFileUploadSession
@@ -295,6 +296,7 @@ export class LargeFileUploadTask<T> {
 			.headers({
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
+				"Content-Type": "application/octet-stream",
 			})
 			.put(fileSlice);
 	}
@@ -314,6 +316,7 @@ export class LargeFileUploadTask<T> {
 			.headers({
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
+				"Content-Type": "application/octet-stream",
 			})
 			.responseType(ResponseType.RAW)
 			.put(fileSlice);

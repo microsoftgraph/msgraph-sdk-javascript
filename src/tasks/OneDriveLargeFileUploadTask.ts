@@ -22,6 +22,8 @@ import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
  * @property {string} fileName - Specifies the name of a file to be uploaded (with extension)
  * @property {string} [path] - The path to which the file needs to be uploaded
  * @property {number} [rangeSize] - Specifies the range chunk size
+ * @property {string} [conflictBehavior] - Conflict behaviour option
+ * @property {UploadEventHandlers} [uploadEventHandlers] - UploadEventHandlers attached to an upload task
  */
 export interface OneDriveLargeFileUploadOptions {
 	fileName: string;
@@ -35,8 +37,7 @@ export interface OneDriveLargeFileUploadOptions {
  * @interface
  * Signature to define options when creating an upload task
  * @property {string} fileName - Specifies the name of a file to be uploaded (with extension)
- * @property {string} [path] - The path to which the file needs to be uploaded
- * @property {number} [rangeSize] - Specifies the range chunk size
+ * @property {string} [conflictBehavior] - Conflict behaviour option
  */
 interface OneDriveFileUploadSessionPayLoad {
 	fileName: string;
