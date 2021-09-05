@@ -33,7 +33,7 @@ export class GraphClientError extends Error {
 	 * @static
 	 * @async
 	 * To set the GraphClientError object
-	 * @param {any} - The error returned encountered by the Graph JavaScript Client SDK while processing request
+	 * @param {any} error - The error returned encountered by the Graph JavaScript Client SDK while processing request
 	 * @returns GraphClientError object set to the error passed
 	 */
 	public static setGraphClientError(error: any): GraphClientError {

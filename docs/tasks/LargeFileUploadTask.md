@@ -61,7 +61,7 @@ export interface FileObject<T> {
 }
 ```
 
-The Microsoft Graph JavaScript Client SDK provides two implementions -
+The Microsoft Graph JavaScript Client SDK provides two implementations -
 
 1. StreamUpload - Supports Node.js stream upload
 

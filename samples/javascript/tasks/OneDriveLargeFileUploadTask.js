@@ -33,7 +33,7 @@ async function upload() {
 
 	const uploadEventHandlers = {
 		progress,
-		extraCallbackParam: "any paramater needed by the callback implementation",
+		extraCallbackParam: "any parameter needed by the callback implementation",
 	};
 
 	const options = {
