@@ -11,7 +11,7 @@
 
 **A request Passes through to the Graph, if there is no entry for the request**
 
-**Note - Always add ChaosHandler before HttpMessageHandler in the midllewareChain**
+**Note - Always add ChaosHandler before HttpMessageHandler in the middlewareChain**
 
 ### Samples
 

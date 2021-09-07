@@ -64,7 +64,7 @@ export class MyHttpMessageHandler implements Middleware {
 
 ### Create Middleware Chain
 
-Can use own middlewares and the ones shipped with the library [[Here](../src/middleware) are the set of Middlwares shipped with the library] to create the middleware chain. Create a chain out of these one has to link them in sequentially manner in own preferred order using `.setNext()` method.
+Can use own middlewares and the ones shipped with the library [[Here](../src/middleware) are the set of Middlewares shipped with the library] to create the middleware chain. Create a chain out of these one has to link them in sequentially manner in own preferred order using `.setNext()` method.
 
 Using AuthenticationHandler [one shipped with the library] and MyLoggingHandler, and MyHttpMessageHandler [custom ones] to create a middleware chain here.
 
