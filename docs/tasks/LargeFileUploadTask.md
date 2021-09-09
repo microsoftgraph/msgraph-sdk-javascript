@@ -87,8 +87,8 @@ import * as fs from "fs";
 const fileName = "<FILE_NAME>";
 const stats = fs.statSync(`./test/sample_files/${fileName}`);
 const totalsize = stats.size;
-const readStream = fs.readFileSync(`./test/sample_files/${fileName}`);
-const fileObject = new FileUpload(readStream, fileName, totalsize);
+const fileContent = fs.readFileSync(`./test/sample_files/${fileName}`);
+const fileObject = new FileUpload(fileContent, fileName, totalsize);
 ```
 
 **_Note_** - You can also have a customized `FileObject` implementation which contains the `sliceFile(range: Range)` function which implements the logic to split the file into ranges.
@@ -114,7 +114,7 @@ const options: LargeFileUploadTaskOptions = {
 **Create a LargefileUploadTask object**
 
 ```typescript
-const uploadTask = new LargeFileUploadTask(client, fileObj, uploadSession, optionsWithProgress);
+const uploadTask = new LargeFileUploadTask(client, fileObject, uploadSession, optionsWithProgress);
 const uploadResult: UploadResult = await uploadTask.upload();
 ```
 
@@ -141,8 +141,8 @@ const options: OneDriveLargeFileUploadOptions = {
 const readStream = fs.createReadStream(`./fileName`);
 const fileObject = new StreamUpload(readStream, fileName, totalsize);
 or
-const readFile = fs.readFileSync(`./fileName`);
-const fileObject = new FileUpload(readStream, fileName, totalsize);
+const uploadContent = fs.readFileSync(`./fileName`);
+const fileObject = new FileUpload(uploadContent, fileName, totalsize);
 
 const uploadTask = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
 const uploadResult:UploadResult = await uploadTask.upload();

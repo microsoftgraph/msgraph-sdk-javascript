@@ -25,7 +25,7 @@ export class FileUpload implements FileObject<SliceType> {
 	 */
 	public constructor(public content: ArrayBuffer | Blob | Buffer, public name: string, public size: number) {
 		if (!content || !name || !size) {
-			throw new GraphClientError("Please provide the Readable Stream content, name of the file and size of the file");
+			throw new GraphClientError("Please provide the upload content, name of the file and size of the file");
 		}
 	}
 
