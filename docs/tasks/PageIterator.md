@@ -17,7 +17,7 @@ async function callingPattern() {
 		// Creating a new page iterator instance with client a graph client instance, page collection response from request and callback
 		let pageIterator = new PageIterator(client, response, callback);
 		// This iterates the collection until the nextLink is drained out.
-		pageIterator.iterate();
+		await pageIterator.iterate();
 	} catch (e) {
 		throw e;
 	}
@@ -44,12 +44,12 @@ async function customSize() {
 		};
 		let pageIterator = new PageIterator(client, response, callback);
 		// This stops iterating over for 1000 entities.
-		pageIterator.iterate();
+		await pageIterator.iterate();
 
 		// Resuming will do start from where it left off and iterate for next 1000 entities.
 		// Check and resume is likely to be called in any user interaction requiring to load more data.
 		if (!pageIterator.isComplete()) {
-			pageIterator.resume();
+			await pageIterator.resume();
 		}
 	} catch (e) {
 		throw e;
