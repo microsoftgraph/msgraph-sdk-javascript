@@ -23,7 +23,7 @@ interface KeyValuePairObject {
  * @property {KeyValuePairObject[]} responses - An array of key value pair representing response object for every request
  * @property {string} [@odata.nextLink] - The nextLink value to get next set of responses in case of asynchronous batch requests
  */
-interface BatchResponseBody {
+export interface BatchResponseBody {
 	responses: KeyValuePairObject[];
 	"@odata.nextLink"?: string;
 }
