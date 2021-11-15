@@ -21,7 +21,6 @@ src/**/*.js.map
 src/**/*.d.ts
 
 samples/**/secrets.ts
-samples/**/secrets.js
 samples/node_modules/**
 samples/lib/
 

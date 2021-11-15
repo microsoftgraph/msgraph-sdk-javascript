@@ -20,7 +20,7 @@
 
 ##### Current set up -
 
-1.                       TypeScript Source Code
+1.                           TypeScript Source Code
                                 / \
                       Transpiles into JavaScript
                              'lib' folder
@@ -40,7 +40,7 @@
 1. `src/browser/index.js` does not export `RedirectHandler` and `RedirectHandlerOptions`. Redirection is handled by the browser.
 2. `src/browser/index.js` exports `src/browser/ImplicitMsalProvider`.
 3. `src/browser/ImplicitMsalProvider` does not import or require 'msal' dependency. While, `src/ImplicitMsalProvider` imports or requires 'msal' in the implementation.
-4. My assumtion is that `src/browser/ImplicitMsalProvider` is implemented specifically for the rollup process and to skip the rollup external dependency while using `graph-js-sdk.js` in the browser.
+4. My assumption is that `src/browser/ImplicitMsalProvider` is implemented specifically for the rollup process and to skip the rollup external dependency while using `graph-js-sdk.js` in the browser.
 
 Note - Browser applications using the ES modules from the npm package of the JS SDK refer to the `module` entry point - `lib/es/src/index.js`(not the browser entry point). Example - Graph Explorer.
 

@@ -53,6 +53,8 @@ export class GraphError extends Error {
 	 * @constructor
 	 * Creates an instance of GraphError
 	 * @param {number} [statusCode = -1] - The status code of the error
+	 * @param {string} [message] - The message of the error
+	 * @param {Error} [baseError] - The base error
 	 * @returns An instance of GraphError
 	 */
 	public constructor(statusCode = -1, message?: string, baseError?: Error) {

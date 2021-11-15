@@ -66,7 +66,7 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 	 * @public
 	 * @constructor
 	 * To create an instance of Testing Handler Options
-	 * @param {ChaosStrategy} ChaosStrategy - Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
+	 * @param {ChaosStrategy} chaosStrategy - Specifies the startegy used for the Testing Handler -> RAMDOM/MANUAL
 	 * @param {string} statusMessage - The Message to be returned in the response
 	 * @param {number?} statusCode - The statusCode to be returned in the response
 	 * @param {number?} chaosPercentage - The percentage of randomness/chaos in the handler

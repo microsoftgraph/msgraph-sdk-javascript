@@ -21,7 +21,7 @@ async function upload() {
 	const file = fs.createReadStream(`./${fileName}`);
 
 	const stats = fs.statSync(`./${fileName}`);
-	const totalsize = stats.size;
+	const totalSize = stats.size;
 
 	const progress = (range, extraCallbackParam) => {
 		// Implement the progress callback here
@@ -31,7 +31,7 @@ async function upload() {
 
 	const uploadEventHandlers = {
 		progress,
-		extraCallbackParam: "Any paramater needed by the callback implementation",
+		extraCallbackParam: "Any parameter needed by the callback implementation",
 	};
 
 	const options = {
@@ -55,18 +55,18 @@ async function upload() {
 	//     AttachmentItem: {
 	//         attachmentType: 'file',
 	//         name: "FILE_NAME",
-	//         size: totalsize,
+	//         size: totalSize,
 	//     }
 	// }
 
-	const fileObject = new StreamUpload(file, fileName, totalsize);
+	const fileObject = new StreamUpload(file, fileName, totalSize);
 
-	//OR
+	// OR
 	// You can also use a FileUpload instance
-	//const file = fs.readFileSync();
-	//const fileObject = new FileUpload(file, fileName, totalsize);
+	// const file = fs.readFileSync();
+	// const fileObject = new FileUpload(file, fileName, totalSize);
 
-	//OR
+	// OR
 	// You can also create an object from a custom implementation of the FileObject interface
 	const task = new MicrosoftGraph.LargeFileUploadTask(client, fileObject, uploadSession, options);
 	const uploadResult = await task.upload();

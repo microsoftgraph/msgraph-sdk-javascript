@@ -86,7 +86,7 @@ export class ChaosHandler implements Middleware {
 	/**
 	 * Generates responseBody
 	 * @private
-	 * @param {ChaosHandlerOptions} options - The ChaosHandlerOptions object
+	 * @param {ChaosHandlerOptions} chaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {string} requestID - request id
 	 * @param {string} requestDate - date of the request
 	 *  * @returns response body
@@ -119,7 +119,7 @@ export class ChaosHandler implements Middleware {
 	/**
 	 * creates a response
 	 * @private
-	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
+	 * @param {ChaosHandlerOptions} chaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {Context} context - Contains the context of the request
 	 */
 	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
@@ -177,7 +177,7 @@ export class ChaosHandler implements Middleware {
 	/**
 	 * To fetch the status code from the map(if needed), then returns response by calling createResponse
 	 * @private
-	 * @param {ChaosHandlerOptions} ChaosHandlerOptions - The ChaosHandlerOptions object
+	 * @param {ChaosHandlerOptions} chaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
 	 */

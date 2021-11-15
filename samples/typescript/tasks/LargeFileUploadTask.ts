@@ -9,6 +9,8 @@
 
 // First, create an instance of the Microsoft Graph JS SDK Client class
 
+import { LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions, Range, StreamUpload, UploadEventHandlers, UploadResult } from "@microsoft/microsoft-graph-client";
+import * as fs from "fs";
 import { client } from "../clientInitialization/ClientWithOptions";
 /**
  * OR
@@ -16,14 +18,12 @@ import { client } from "../clientInitialization/ClientWithOptions";
  * OR
  * require or import client created using an custom authentication provider
  */
-import * as fs from "fs";
-import { LargeFileUploadTaskOptions, LargeFileUploadSession, LargeFileUploadTask, StreamUpload, UploadEventHandlers, UploadResult, Range, FileUpload } from "@microsoft/microsoft-graph-client";
 
 async function upload(): Promise<UploadResult> {
 	const file = fs.createReadStream("./test.pdf");
 
 	const stats = fs.statSync(`./test.pdf`);
-	const totalsize = stats.size;
+	const totalSize = stats.size;
 
 	const progress = (range?: Range, extraCallbackParam?: unknown) => {
 		// Implement the progress callback here
@@ -34,7 +34,7 @@ async function upload(): Promise<UploadResult> {
 
 	const uploadEventHandlers: UploadEventHandlers = {
 		progress,
-		extraCallbackParam: "any paramater needed by the callback implementation",
+		extraCallbackParam: "any parameter needed by the callback implementation",
 	};
 
 	const options: LargeFileUploadTaskOptions = {
@@ -58,18 +58,18 @@ async function upload(): Promise<UploadResult> {
 	//     AttachmentItem: {
 	//         attachmentType: 'file',
 	//         name: "FILE_NAME",
-	//         size: totalsize,
+	//         size: totalSize,
 	//     }
 	// }
 
-	const fileObject = new StreamUpload(file, "test.pdf", totalsize);
+	const fileObject = new StreamUpload(file, "test.pdf", totalSize);
 
-	//OR
+	// OR
 	// You can also use a FileUpload instance
-	//const file = fs.readFileSync();
-	//const fileObject = new FileUpload(file, 'test.pdf', totalsize);
+	// const file = fs.readFileSync();
+	// const fileObject = new FileUpload(file, 'test.pdf', totalSize);
 
-	//OR
+	// OR
 	// You can also create an object from a custom implementation of FileObject
 	const task = new LargeFileUploadTask(client, fileObject, uploadSession, options);
 	const uploadResult = await task.upload();

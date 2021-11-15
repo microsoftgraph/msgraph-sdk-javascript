@@ -114,7 +114,7 @@ const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): b
 
 /**
  * Throws error if the string is not a valid host/hostname and contains other url parts.
- * @param {string} url - The host to be verified
+ * @param {string} host - The host to be verified
  */
 const isCustomHostValid = (host: string) => {
 	if (host.indexOf("/") !== -1) {
