@@ -6,7 +6,7 @@
  */
 
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
-export { BatchResponseContent } from "../content/BatchResponseContent";
+export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
 export { AuthenticationHandler } from "../middleware/AuthenticationHandler";
 export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
