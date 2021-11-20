@@ -20,6 +20,7 @@ import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
  * @interface
  * Signature to define options when creating an upload task
  * @property {string} fileName - Specifies the name of a file to be uploaded (with extension)
+ * @property {string} [fileDescription] - Specifies the description of the file to be uploaded
  * @property {string} [path] - The path to which the file needs to be uploaded
  * @property {number} [rangeSize] - Specifies the range chunk size
  * @property {string} [conflictBehavior] - Conflict behaviour option
@@ -27,6 +28,7 @@ import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
  */
 export interface OneDriveLargeFileUploadOptions {
 	fileName: string;
+	fileDescription?: string;
 	path?: string;
 	rangeSize?: number;
 	conflictBehavior?: string;
@@ -37,10 +39,12 @@ export interface OneDriveLargeFileUploadOptions {
  * @interface
  * Signature to define options when creating an upload task
  * @property {string} fileName - Specifies the name of a file to be uploaded (with extension)
+ * @property {string} [fileDescription] - Specifies the description of the file to be uploaded
  * @property {string} [conflictBehavior] - Conflict behaviour option
  */
 interface OneDriveFileUploadSessionPayLoad {
 	fileName: string;
+	fileDescription?: string;
 	conflictBehavior?: string;
 }
 
@@ -160,6 +164,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const uploadSessionPayload: OneDriveFileUploadSessionPayLoad = {
 			fileName: options.fileName,
+			fileDescription: options.fileDescription,
 			conflictBehavior: options.conflictBehavior,
 		};
 		const session = await OneDriveLargeFileUploadTask.createUploadSession(client, requestUrl, uploadSessionPayload);
@@ -185,6 +190,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 			item: {
 				"@microsoft.graph.conflictBehavior": payloadOptions?.conflictBehavior || "rename",
 				name: payloadOptions?.fileName,
+				description: payloadOptions?.fileDescription,
 			},
 		};
 		return super.createUploadSession(client, requestUrl, payload);
