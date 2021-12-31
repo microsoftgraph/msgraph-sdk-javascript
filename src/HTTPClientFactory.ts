@@ -12,13 +12,8 @@
 import { HTTPClient } from "./HTTPClient";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
-import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
-import { Middleware } from "./middleware/IMiddleware";
-import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOptions";
-import { RetryHandlerOptions } from "./middleware/options/RetryHandlerOptions";
-import { RedirectHandler } from "./middleware/RedirectHandler";
-import { RetryHandler } from "./middleware/RetryHandler";
-import { TelemetryHandler } from "./middleware/TelemetryHandler";
+
+import { TelemetryHandler, RetryHandler, RedirectHandler, RedirectHandlerOptions, RetryHandlerOptions, DefaultFetchHandler } from "@microsoft/kiota-http-fetchlibrary";
 
 /**
  * @private

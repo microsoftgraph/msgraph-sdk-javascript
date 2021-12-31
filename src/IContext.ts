@@ -5,8 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { FetchOptions } from "./IFetchOptions";
-import { MiddlewareControl } from "./middleware/MiddlewareControl";
+import { MiddlewareContext } from "@microsoft/kiota-http-fetchlibrary"
 
 /**
  * @interface
@@ -18,13 +17,6 @@ import { MiddlewareControl } from "./middleware/MiddlewareControl";
  *
  */
 
-export interface Context {
-	request: RequestInfo;
-	options?: FetchOptions;
-	response?: Response;
-	middlewareControl?: MiddlewareControl;
-	/**
-	 * Example - If URL is "https://test_host", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
-	 */
+export interface Context extends MiddlewareContext {
 	customHosts?: Set<string>;
 }

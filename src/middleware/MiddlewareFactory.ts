@@ -9,15 +9,13 @@
  * @module MiddlewareFactory
  */
 
+import { RedirectHandler, RedirectHandlerOptions, RetryHandler, RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationHandler } from "./AuthenticationHandler";
 import { HTTPMessageHandler } from "./HTTPMessageHandler";
 import { Middleware } from "./IMiddleware";
-import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
-import { RetryHandlerOptions } from "./options/RetryHandlerOptions";
-import { RedirectHandler } from "./RedirectHandler";
-import { RetryHandler } from "./RetryHandler";
-import { TelemetryHandler } from "./TelemetryHandler";
+import { TelemetryHandler } from "./TelemetryUtil";
 
 /**
  * @private

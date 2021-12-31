@@ -8,11 +8,11 @@
 /**
  * @module Client
  */
+ import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
 import { GraphRequest } from "./GraphRequest";
-import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
 import { Options } from "./IOptions";
@@ -33,7 +33,7 @@ export class Client {
 	 * @private
 	 * A member which holds the HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	private httpClient: HttpClient;
 
 	/**
 	 * @public
@@ -76,7 +76,7 @@ export class Client {
 				this.config[key] = clientOptions[key];
 			}
 		}
-		let httpClient: HTTPClient;
+		let httpClient: HttpClient;
 		if (clientOptions.authProvider !== undefined && clientOptions.middleware !== undefined) {
 			const error = new Error();
 			error.name = "AmbiguityInInitialization";
@@ -85,7 +85,7 @@ export class Client {
 		} else if (clientOptions.authProvider !== undefined) {
 			httpClient = HTTPClientFactory.createWithAuthenticationProvider(clientOptions.authProvider);
 		} else if (clientOptions.middleware !== undefined) {
-			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
+			httpClient = new HttpClient(...[].concat(clientOptions.middleware));
 		} else {
 			const error = new Error();
 			error.name = "InvalidMiddlewareChain";

@@ -18,8 +18,6 @@ import { ClientOptions } from "./IClientOptions";
 import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
-import { MiddlewareControl } from "./middleware/MiddlewareControl";
-import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 /**

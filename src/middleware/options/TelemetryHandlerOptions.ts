@@ -10,8 +10,7 @@
  */
 
 import { Context } from "../../IContext";
-import { MiddlewareControl } from "../MiddlewareControl";
-import { MiddlewareOptions } from "./IMiddlewareOptions";
+import { TelemetryHandlerOptionsKey } from "../TelemetryUtil";
 
 /**
  * @enum
@@ -30,13 +29,18 @@ export enum FeatureUsageFlag {
 	/* eslint-enable  @typescript-eslint/naming-convention */
 }
 
+export interface RequestOption {
+	/** Gets the option key for when adding it to a request. Must be unique. */
+	getKey(): string;
+}
+
 /**
  * @class
  * @implements MiddlewareOptions
  * Class for TelemetryHandlerOptions
  */
 
-export class TelemetryHandlerOptions implements MiddlewareOptions {
+export class TelemetryHandlerOptions implements RequestOption {
 	/**
 	 * @private
 	 * A member to hold the OR of feature usage flags
@@ -52,15 +56,13 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 	 * @returns nothing
 	 */
 	public static updateFeatureUsageFlag(context: Context, flag: FeatureUsageFlag): void {
+
 		let options: TelemetryHandlerOptions;
-		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(TelemetryHandlerOptions) as TelemetryHandlerOptions;
-		} else {
-			context.middlewareControl = new MiddlewareControl();
-		}
+		// check if following throws error when undefined
+		options = (context?.requestInformationOptions && context.requestInformationOptions[TelemetryHandlerOptionsKey]) as TelemetryHandlerOptions;
 		if (typeof options === "undefined") {
 			options = new TelemetryHandlerOptions();
-			context.middlewareControl.setMiddlewareOptions(TelemetryHandlerOptions, options);
+			context.requestInformationOptions[TelemetryHandlerOptionsKey] = options;
 		}
 		options.setFeatureUsage(flag);
 	}
@@ -82,5 +84,8 @@ export class TelemetryHandlerOptions implements MiddlewareOptions {
 	 */
 	public getFeatureUsage(): string {
 		return this.featureUsage.toString(16);
+	}
+	public getKey(): string {
+		return TelemetryHandlerOptionsKey; 
 	}
 }

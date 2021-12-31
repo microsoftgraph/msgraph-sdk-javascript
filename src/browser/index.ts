@@ -5,20 +5,20 @@
  * -------------------------------------------------------------------------------------------
  */
 
+export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+export { RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+
+export { Middleware } from "@microsoft/kiota-http-fetchlibrary";
+
 export * from "../content/BatchRequestContent";
 export * from "../content/BatchResponseContent";
 
 export * from "../middleware/AuthenticationHandler";
 export * from "../middleware/HTTPMessageHandler";
-export * from "../middleware/IMiddleware";
-export * from "../middleware/RetryHandler";
-export * from "../middleware/RedirectHandler";
 export * from "../middleware/TelemetryHandler";
 export * from "../middleware/MiddlewareFactory";
 export * from "../middleware/options/AuthenticationHandlerOptions";
 export * from "../middleware/options/IMiddlewareOptions";
-export * from "../middleware/options/RetryHandlerOptions";
-export * from "../middleware/options/RedirectHandlerOptions";
 export * from "../middleware/options/TelemetryHandlerOptions";
 export * from "../middleware/options/ChaosHandlerOptions";
 export * from "../middleware/options/ChaosStrategy";
