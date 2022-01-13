@@ -92,7 +92,7 @@
 		"eslint-plugin-prettier": "^3.3.1",
 		"eslint-plugin-simple-import-sort": "^7.0.0",
 		"esm": "^3.2.25",
-		"form-data": "^2.3.3",
+		"form-data": "^4.0.0",
 		"gulp": "^4.0.2",
 		"husky": "^2.2.0",
 		"isomorphic-fetch": "^3.0.0",
