@@ -67,8 +67,9 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.12.5",
-        "tslib": "^2.2.0",
-        "@microsoft/kiota-http-fetchlibrary": "../kiota/http/typescript/fetch"
+        "@microsoft/kiota-abstractions": "file:microsoft-kiota-abstractions-1.0.21.tgz",
+        "@microsoft/kiota-http-fetchlibrary": "../kiota/http/typescript/fetch",
+        "tslib": "^2.2.0"
     },
     "devDependencies": {
         "@azure/identity": "^1.3.0",

@@ -8,12 +8,15 @@
 /**
  * @module GraphRequest
  */
+
+import { AuthenticationProvider, RequestInformation, RequestOption } from "@microsoft/kiota-abstractions";
+import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
+
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
-import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
 import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
@@ -59,7 +62,9 @@ export class GraphRequest {
 	 * @private
 	 * A member variable to hold HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	private httpClient: HttpClient;
+
+	private authenticationProvider: AuthenticationProvider;
 
 	/**
 	 * @private
@@ -89,7 +94,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-	private _middlewareOptions: MiddlewareOptions[];
+	private _middlewareOptions: RequestOption[];
 
 	/**
 	 * @private
@@ -361,13 +366,14 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the response content
 	 */
-	private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
+	private async send(request: RequestInformation, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
 		let rawResponse: Response;
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
 		const customHosts = this.config?.customHosts;
+		await this.authenticationProvider.authenticateRequest(requestInfo);
 		try {
-			const context: Context = await this.httpClient.sendRequest({
+			const context: Context = await this.httpClient.send({
 				request,
 				options,
 				middlewareControl,

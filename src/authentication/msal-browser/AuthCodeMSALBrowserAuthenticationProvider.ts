@@ -10,9 +10,10 @@
  */
 
 import { AuthenticationResult, InteractionRequiredAuthError, InteractionType, PublicClientApplication } from "@azure/msal-browser";
+import { RequestInformation } from "@microsoft/kiota-abstractions";
 
 import { GraphClientError } from "../../GraphClientError";
-import { AuthenticationProvider } from "../../IAuthenticationProvider";
+import { GraphBaseBearerTokenAuthenticationProvider } from "../../middleware/GraphBaseBearerAuthenticationProvider";
 import { AuthCodeMSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
 
 /**
@@ -21,7 +22,7 @@ import { AuthCodeMSALBrowserAuthenticationProviderOptions } from "../msalOptions
  * @class
  * @extends AuthenticationProvider
  */
-export class AuthCodeMSALBrowserAuthenticationProvider implements AuthenticationProvider {
+export class AuthCodeMSALBrowserAuthenticationProvider extends GraphBaseBearerTokenAuthenticationProvider {
 	/**
 	 * @public
 	 * @constructor
@@ -31,6 +32,7 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 	 * @returns An instance of ImplicitMSALAuthenticationProvider
 	 */
 	public constructor(private publicClientApplication: PublicClientApplication, private options: AuthCodeMSALBrowserAuthenticationProviderOptions) {
+		super();
 		if (!options || !publicClientApplication) {
 			throw new GraphClientError("Please pass valid PublicClientApplication instance and AuthCodeMSALBrowserAuthenticationProviderOptions instance to instantiate MSALBrowserAuthenticationProvider");
 		}
@@ -42,7 +44,7 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 	 * To get the access token for the request
 	 * @returns The promise that resolves to an access token
 	 */
-	public async getAccessToken(): Promise<string> {
+	public async getAuthorizationToken(request: RequestInformation): Promise<string> {
 		const scopes = this.options && this.options.scopes;
 		const account = this.options && this.options.account;
 		const error = new GraphClientError();
