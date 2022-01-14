@@ -76,7 +76,7 @@
 		"@babel/plugin-transform-runtime": "^7.12.10",
 		"@babel/preset-env": "^7.12.11",
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
-		"@microsoft/microsoft-graph-types": "^1.28.0",
+		"@microsoft/microsoft-graph-types": "^2.11.0",
 		"@rollup/plugin-babel": "^5.2.2",
 		"@rollup/plugin-commonjs": "^17.0.0",
 		"@rollup/plugin-node-resolve": "^11.1.0",
