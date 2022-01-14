@@ -4,7 +4,7 @@ This document proposes high-level design modifications to the `LargeFileUploadTa
 
 -   Enhancement - Support Node.js Stream upload. Issue [#320](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/320).
 -   Bug Fix - Support large file uploads to Outlook API. Issue [#359](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/359).
--   Enhancement- Support upload progress handler callback. Issue [#305](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/305).
+-   Enhancement- Support upload progress handler callback.  Issue [#305](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues/305).
 
 Outline of the current implementation -
 
@@ -75,10 +75,21 @@ sliceFile(range: Range): ArrayBuffer | Blob {
 -   The LargeFileUploadTask should allow uploads to OneDrive API, Outlook API and PrintDocument API.
 -   Proposed changes-
     -   Add class `UploadResult` containing `location` and `responseBody` properties.
-    -   `location` provides access to the `location` field in the response headers.
-    -   `responseBody` provides access to the Graph API response body.
-    -   The `upload` task should return the `UploadResult` object on successful completion of task.
-
+    -  `location` provides access to the `location` field in the response headers.
+    -  `responseBody` provides access to the Graph API response body.
+    -  The `upload` task should return the `UploadResult` object on successful completion of task. 
+  
 ###### 3. Support upload progress handler callback
-
--   Proposed changes - - Add interface -> `interface UploadEventHandler{ extraCallbackParam?: unknown; progress(range: Range, extraCallbackParam?: unknown):void }` - Add uploadEventHandlers option to -> `interface LargeFileUploadTaskOptions { rangeSize?: number; uploadEventHandlers?: UploadEventHandler; }` - In the `upload` function call the `uploadEventHandlers.progress()` function if defined.
+- Proposed changes -
+	- Add interface -> `interface UploadEventHandler{
+				extraCallbackParam?: unknown;
+    				progress(range: Range, extraCallbackParam?: unknown):void
+			   }`
+	- Add uploadEventHandlers option to ->
+	  ```
+	  interface LargeFileUploadTaskOptions {
+		rangeSize?: number;
+		uploadEventHandlers?: UploadEventHandler;
+	  }
+	  ```
+	- In the `upload` function call the `uploadEventHandlers.progress()` function if defined.

@@ -18,7 +18,7 @@
 
 4. Navigate to the samples folder [./samples]and run `npm install`
 
-5. Navigate to secrets.js[./secrets] and populate all the values (tenantId, clientId, clientSecret, scopes)
+5. Navigate to secrets.js[./secrets] and populate all the values (tenantId, clientId, clientSecret, scopes) 
 
 6. Navigate to tokenCredentialAuthenticationProvider[./samples/javascript/clientInitialization/tokenCredentialAuthenticationProvider] in the samples directory.
 
