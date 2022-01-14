@@ -54,8 +54,9 @@
 ## Enhancements
 
 ### Introducing support for `@azure/msal-browser`
-- The 3.0.0 version introduces `AuthCodeMSALBrowserAuthenticationProvider` which supports authentication using the [MSAL Browser](https://www.npmjs.com/package/@azure/msal-browser)
--  `AuthCodeMSALBrowserAuthenticationProvider` enables authorization using the Authentication Code Flow with PKCE. Learn more about the [AuthCodeMSALBrowserAuthenticationProvider](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/AuthCodeMSALBrowserAuthenticationProvider.md).
+
+-   The 3.0.0 version introduces `AuthCodeMSALBrowserAuthenticationProvider` which supports authentication using the [MSAL Browser](https://www.npmjs.com/package/@azure/msal-browser)
+-   `AuthCodeMSALBrowserAuthenticationProvider` enables authorization using the Authentication Code Flow with PKCE. Learn more about the [AuthCodeMSALBrowserAuthenticationProvider](https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/AuthCodeMSALBrowserAuthenticationProvider.md).
 
 ### Introducing support for `@azure/identity TokenCredentials`
 

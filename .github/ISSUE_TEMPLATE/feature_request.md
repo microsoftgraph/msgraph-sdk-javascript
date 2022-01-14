@@ -1,13 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
 
----
-
-# Feature Request
+name: Feature request about: Suggest an idea for this project title: "" labels: "" assignees: "" ---# Feature Request
 
 ## Is your feature request related to a problem? Please describe
 

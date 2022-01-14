@@ -1,13 +1,6 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
 
----
-
-# Bug Report
+name: Bug report about: Create a report to help us improve title: "" labels: "" assignees: "" ---# Bug Report
 
 ## Prerequisites
 
@@ -41,6 +34,7 @@ For more information, see the `CONTRIBUTING` guide.
 Add any other context about the problem here..
 
 ## Usage Information
+
 Request ID - Value of the `requestId` field if you are receiving a Graph API error response
 
 SDK Version - [SDK version you are using]

@@ -20,7 +20,7 @@
 
 ##### Current set up -
 
-1.                           TypeScript Source Code
+1.                              TypeScript Source Code
                                 / \
                       Transpiles into JavaScript
                              'lib' folder
