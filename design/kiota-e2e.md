@@ -115,6 +115,7 @@ npm install @microsoft/kiota-authentication-azure --save
 // App.ts
 
 import { Client } from "@microsoft/msgraph-sdk-javascript-core";
+import { User, Message, BodyType } from "@microsoft/msgraph-sdk-javascript-core-types";
 import { AzureIdentityAuthenticationProvider } from "@microsoft/kiota-authentication-azure";
 import { DeviceCodeCredential } from "@azure/identity";
 
