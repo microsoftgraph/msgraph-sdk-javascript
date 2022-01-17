@@ -36,7 +36,7 @@ const scopes = ["User.Read", "Mail.Send"];
 
 const graphClient = Client.init({
 	// Note that this is not an authentication provider, but an access token provider.
-	accessTokenProvider: new AzureIdentityAccessTokenProvider(deviceCodeCredentials, scopes),
+	authenticationTokenProvider: new AzureIdentityAuthenticationProvider(deviceCodeCredentials, scopes),
 });
 
 // Calling the API via the fluent API
