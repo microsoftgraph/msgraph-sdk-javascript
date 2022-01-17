@@ -15,7 +15,8 @@ Before we jump into the end-to-end walk-through, it's important to set some cons
 ## NodeJS e2e using the Service library
 
 ```bash
-npm install @microsoft/msgraph-sdk-typescript --save
+## Depending on the needs, you could also install the @microsoft/msgraph-sdk-javascript-beta side-by-side with the v1.0 one. Not covered in this walkthrough.
+npm install @microsoft/msgraph-sdk-javascript --save ## Installing the Javascript service library should also install the core SDK and the types (based on the version of the service library).
 npm install @microsoft/kiota-authentication-azure --save
 ```
 
@@ -34,23 +35,33 @@ const deviceCodeCredentials = new DeviceCodeCredential({
 const scopes = ["User.Read", "Mail.Send"];
 
 const graphClient = Client.init({
+	// Note that this is not an authentication provider, but an access token provider.
 	accessTokenProvider: new AzureIdentityAccessTokenProvider(deviceCodeCredentials, scopes),
 });
 
+// Calling the API via the fluent API
 const me = await getMe();
+
+// Allowing raw calls (using the .api() method instead of the full fluent API) is important for migration purposes and cases we don't know the resource beforehands (thinking Graph Explorer, mgt-get, etc.)
 const meRaw = await getMeRaw();
+
+// Sending an email via the fluent API
 await sendMail();
+
+// Sending the email via the .api() method
 await sendMailRaw();
 
+// The types returned by the fluent API should be the same as the .api() area. It should also be the same (or at least very similar) as the current @microsoft/microsoft-graph-types to offer seamless migration.
 async function getMe(): Promise<User | undefined> {
 	return await graphClient.me.get();
 }
 
-async function getMe(): Promise<User | undefined> {
+async function getMeRaw(): Promise<User | undefined> {
 	return await graphClient.api("/me").get();
 }
 
 async function sendMail(): Promise<void> {
+	// Noting that we are using Interfaces and not Classes. There is an open discussion about this topic here https://github.com/microsoft/kiota/issues/1013
 	const message: Message = {
 		subject: "Hello Graph TypeScript SDK!",
 		body: {
@@ -96,6 +107,7 @@ async function sendMailRaw(): Promise<void> {
 ```bash
 npm install @microsoft/msgraph-sdk-javascript-core --save
 npm install @microsoft/msgraph-sdk-javascript-types --save
+## npm install @microsoft/msgraph-sdk-javascript-types-beta --save
 npm install @microsoft/kiota-authentication-azure --save
 ```
 
