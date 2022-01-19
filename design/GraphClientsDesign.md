@@ -1,7 +1,7 @@
 
 ### Graph JS Deliverables:
 
-Note: Package names yet to be decided
+Note: Package names yet to be decided. The names are just examples and  `service` and `core` prefix in the package names are for clarity purposes. 
 
 1. `microsoftgraph/microsoft-graph-javascript-service`: 
 
@@ -25,6 +25,15 @@ Note: Package names yet to be decided
 
 As mentioned in PR: #558
 
+Also, tasks constructors such as `PageIterator` and `LargeFileUpload` tasks should accept both `GraphServiceClient` and `GraphCoreClient` 
+
+```
+// both should work
+const pageIterator = PageIterator(GraphServiceClient, options);
+or
+const pageIterator = PageIterator(GraphCoreClient, options);
+```
+
 Goals: 
 
 - A Graph JS SDK user should not be required to create separate client instances for Graph Service library or the Graph Core library.
@@ -45,6 +54,7 @@ class GraphServiceClient extends GraphCoreClient {
         super.api();
     }
 }
+
 ```
 
 - To acheive the above design we will need to customize the auto-generated `GraphServiceClient`.
