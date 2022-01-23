@@ -8,6 +8,8 @@
 /**
  * @module GraphRequest
  */
+import { AuthenticationProvider } from "@microsoft/kiota-abstraction";
+
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
@@ -61,6 +63,7 @@ export class GraphRequest {
 	 * @private
 	 * A member variable to hold HTTPClient instance
 	 */
+	private authenticationProvider: AuthenticationProvider;
 	private httpClient: HTTPClient;
 
 	/**
@@ -368,6 +371,8 @@ export class GraphRequest {
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
 		const customHosts = this.config?.customHosts;
+        this.authenticationProvider.authenticateRequest(null);
+        
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,

@@ -9,8 +9,10 @@
  * @module Client
  */
 
+import { GraphAuthenticationProvider } from "./authentication/GraphAuthenticationProvider";
+import { CallBackAccessTokenProvider } from "./CallBackAccessTokenProvider";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
-import { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
+import { GraphClientError } from "./GraphClientError";
 import { GraphRequest } from "./GraphRequest";
 import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
@@ -35,6 +37,8 @@ export class Client {
 	 */
 	private httpClient: HTTPClient;
 
+	private authenticationProvider: AuthenticationProvider;
+
 	/**
 	 * @public
 	 * @static
@@ -46,7 +50,7 @@ export class Client {
 		const clientOptions: ClientOptions = {};
 		for (const i in options) {
 			if (Object.prototype.hasOwnProperty.call(options, i)) {
-				clientOptions[i] = i === "authProvider" ? new CustomAuthenticationProvider(options[i]) : options[i];
+				clientOptions[i] = i === "authProvider" ? new CallBackAccessTokenProvider(options[i]) : options[i];
 			}
 		}
 		return Client.initWithMiddleware(clientOptions);
@@ -77,14 +81,18 @@ export class Client {
 			}
 		}
 		let httpClient: HTTPClient;
-		if (clientOptions.authProvider !== undefined && clientOptions.middleware !== undefined) {
-			const error = new Error();
+		if (clientOptions.accessTokenProvider !== undefined && clientOptions.authenticationProvider !== undefined) {
+			const error = new GraphClientError();
 			error.name = "AmbiguityInInitialization";
-			error.message = "Unable to Create Client, Please provide either authentication provider for default middleware chain or custom middleware chain not both";
+			error.message = "Unable to Create Client, Please provide either an AuthenticationProvider implementation or an AccessTokenProvider implementation not both";
 			throw error;
-		} else if (clientOptions.authProvider !== undefined) {
-			httpClient = HTTPClientFactory.createWithAuthenticationProvider(clientOptions.authProvider);
-		} else if (clientOptions.middleware !== undefined) {
+		} else if (clientOptions.authenticationProvider !== undefined) {
+			this.authenticationProvider = clientOptions.authenticationProvider;
+		} else if (clientOptions.accessTokenProvider !== undefined) {
+			this.authenticationProvider = new GraphAuthenticationProvider(clientOptions.accessTokenProvider);
+		}
+
+		if (clientOptions.middleware !== undefined) {
 			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
 		} else {
 			const error = new Error();

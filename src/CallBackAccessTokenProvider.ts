@@ -9,8 +9,9 @@
  * @module CustomAuthenticationProvider
  */
 
+import { AccessTokenProvider } from "@microsoft/kiota-abstraction";
+
 import { GraphClientError } from "./GraphClientError";
-import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 
 /**
@@ -18,7 +19,7 @@ import { AuthProvider } from "./IAuthProvider";
  * Class representing CustomAuthenticationProvider
  * @extends AuthenticationProvider
  */
-export class CustomAuthenticationProvider implements AuthenticationProvider {
+export class CallBackAccessTokenProvider implements AccessTokenProvider {
 	/**
 	 * @private
 	 * A member to hold authProvider callback
@@ -42,7 +43,7 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 	 * To get the access token
 	 * @returns The promise that resolves to an access token
 	 */
-	public async getAccessToken(): Promise<any> {
+	public async getAuthorizationToken(): Promise<string> {
 		return new Promise((resolve: (accessToken: string) => void, reject: (error: any) => void) => {
 			this.provider(async (error: any, accessToken: string | null) => {
 				if (accessToken) {

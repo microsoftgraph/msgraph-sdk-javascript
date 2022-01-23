@@ -67,6 +67,8 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.12.5",
+		"@microsoft/kiota-abstraction": "file:./../../SDKS/kiota/abstractions/typescript",
+		"@microsoft/kiota-abstractions": "file:microsoft-kiota-abstractions-1.0.24.tgz",
 		"tslib": "^2.2.0"
 	},
 	"devDependencies": {
