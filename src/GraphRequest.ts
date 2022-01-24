@@ -371,8 +371,9 @@ export class GraphRequest {
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
 		const customHosts = this.config?.customHosts;
-        this.authenticationProvider.authenticateRequest(null);
-        
+        const headers = new Map();
+		this.authenticationProvider.authenticateRequest("", headers);
+
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,
