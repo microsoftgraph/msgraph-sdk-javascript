@@ -46,7 +46,7 @@ describe("RedirectHandlerOptions.ts", () => {
 		it("Should initialize instance with default options", () => {
 			const options = new RedirectHandlerOptions();
 			assert.equal(options.maxRedirects, RedirectHandlerOptions["DEFAULT_MAX_REDIRECTS"]);
-			assert.equal(options.shouldRedirect, RedirectHandlerOptions["defaultShouldRetry"]);
+			assert.equal(options.shouldRedirect, RedirectHandlerOptions["defaultShouldRedirect"]);
 		});
 	});
 });

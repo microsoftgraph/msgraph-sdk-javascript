@@ -13,10 +13,6 @@ const { clientId, clientSecret, scopes, tenantId } = require("./secrets");
 require("isomorphic-fetch");
 
 const port = "<PORT_NUMBER>";
-const tenantId = "<TENANT_ID>";
-const clientId = "<CLIENT_ID>";
-const clientSecret = "<CLIENT_SECRET>";
-const scopes = "<SCOPE>";
 const redirectUri = `http://localhost:${port}/authresponse`;
 const authorityHost = "https://login.microsoftonline.com";
 
