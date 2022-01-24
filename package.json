@@ -94,7 +94,7 @@
 		"esm": "^3.2.25",
 		"form-data": "^4.0.0",
 		"gulp": "^4.0.2",
-		"husky": "^2.2.0",
+		"husky": "^7.0.4",
 		"isomorphic-fetch": "^3.0.0",
 		"karma": "^6.3.2",
 		"karma-chai": "^0.1.0",
