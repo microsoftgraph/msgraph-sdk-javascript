@@ -1,9 +1,0 @@
-{
-	"*.css": ["npm run format:css", "git add"],
-	"*.html": ["npm run format:html", "git add"],
-	"*.js": ["npm run format:js", "git add"],
-	"*.json": ["npm run format:json", "git add"],
-	"*.md": ["npm run format:md", "git add"],
-	".*rc": ["npm run format:rc", "git add"],
-	"*.ts": ["npm run format:ts", "git add"]
-}

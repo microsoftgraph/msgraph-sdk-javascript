@@ -1,0 +1,93 @@
+{
+	"name": "@microsoft/microsoft-graph-client",
+	"version": "3.0.0-Preview.3",
+	"description": "Microsoft Graph Client Library",
+	"keywords": [
+		"Microsoft",
+		"Graph",
+		"SDK",
+		"JavaScript",
+		"Client"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
+	},
+	"license": "MIT",
+	"main": "lib/src/index.js",
+	"module": "lib/es/src/index.js",
+	"browser": {
+		"./lib/es/src/index.js": "./lib/es/src/browser/index.js",
+		"stream": "stream-browserify"
+	},
+	"types": "./lib/src/index.d.ts",
+	"typings": "lib/src/index",
+	"files": [
+		"lib/",
+		"src/",
+		"authProviders/"
+	],
+	"scripts": {
+		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
+		"build:cjs": "tsc --p tsconfig-cjs.json",
+		"build:es": "tsc --p tsconfig-es.json",
+		"build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
+		"build:sub_es": "tsc -b tsconfig-sub-es.json",
+		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
+		"format:css": "prettier --write \"**/*.css\"",
+		"format:html": "prettier --write \"**/*.html\"",
+		"format:js": "prettier --write \"**/*.js\"",
+		"format:json": "prettier --write \"**/*.json\"",
+		"format:md": "prettier --write \"**/*.md\"",
+		"format:rc": "prettier --write --parser json \"**/.*rc\"",
+		"format:ts": "prettier --write \"**/*.ts\"",
+		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"prepack": "npm install && npm run build && npm run test",
+		"pre-build": "npm run setVersion",
+		"setVersion": "gulp setVersion",
+		"test": "npm run test:cjs && npm run test:esm",
+		"test:cjs": "npm run build:sub_cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
+		"test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
+		"test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
+		"test:esm": "npm run build:sub_es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
+	},
+	"nyc": {
+		"all": true,
+		"cache": false,
+		"exclude": [
+			"samples/",
+			"*.js",
+			"lib/"
+		],
+		"include": [
+			"src/"
+		]
+	},
+	"dependencies": {
+		"@microsoft/kiota-abstractions": "*",
+		"tslib": "^2.2.0"
+	},
+	"devDependencies": {
+		"typescript": "^4.2.4"
+
+	},
+	"peerDependenciesMeta": {
+		"@azure/identity": {
+			"optional": true
+		},
+		"buffer": {
+			"optional": true
+		},
+		"stream-browserify": {
+			"optional": true
+		},
+		"@azure/msal-browser": {
+			"optional": true
+		}
+	},
+	"engines": {
+		"node": ">=12.0.0"
+	}
+}

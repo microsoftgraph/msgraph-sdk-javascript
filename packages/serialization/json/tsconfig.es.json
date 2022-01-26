@@ -1,0 +1,24 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions":{
+        "target": "es6",
+        "module": "es6",
+        "outDir": "./dist/es",
+        "composite": true,
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "paths": {
+            "@microsoft/kiota-abstractions": [
+                "../../abstractions/*"
+            ]
+        }
+    },
+	"exclude": ["node_modules", "dist"],
+	"include": ["./src/**/*.ts"],
+    "files": [],
+    "references": [
+        {
+            "path": "../../abstractions/tsconfig.es.json"
+        }
+    ]
+}

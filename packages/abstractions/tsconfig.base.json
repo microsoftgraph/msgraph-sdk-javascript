@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"importHelpers": false,
+		"noEmitOnError": true,
+		"noImplicitAny": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"declaration": true,
+        "declarationMap": true,
+        "composite": true
+	}
+}
