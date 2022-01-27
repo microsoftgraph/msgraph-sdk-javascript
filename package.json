@@ -6,14 +6,13 @@
     },
     "workspaces": [
         "packages/abstractions",
-        "packages/serialization/*",
         "packages/http/*",
         "packages/graph"
     ],
     "scripts": {
-        "compile": "yarn run compileFull:cjs && yarn run compileFull:es",
-        "compileFull:cjs": "tsc -b packages/graph/tsconfig.cjs.json",
-        "compileFull:es": "tsc -b packages/graph/tsconfig.es.json",
+        "compile": "yarn run compile:cjs && yarn run compile:es",
+        "compile:cjs": "tsc -b packages/graph/tsconfig.cjs.json",
+        "compile:es": "tsc -b packages/graph/tsconfig.es.json",
         "test": "node ./packages/testSample/dist/cjs/main/main.js"
     }
 }

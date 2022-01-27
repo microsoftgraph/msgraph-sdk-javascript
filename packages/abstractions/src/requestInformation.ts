@@ -9,18 +9,18 @@ import * as urlTpl from "uri-template-lite";
 /** This class represents an abstract HTTP request. */
 export class RequestInformation {
     /** The URI of the request. */
-    private uri?: URL;
+    private uri?: string;
     /** The path parameters for the request. */
     public pathParameters: Map<string, unknown> = new Map<string, unknown>();
     /** The URL template for the request */
     public urlTemplate?: string;
     /** Gets the URL of the request  */
-    public get URL(): URL {
-        const rawUrl = this.pathParameters.get(RequestInformation.raw_url_key);
+    public get URL(): string {
+        const rawUrl = this.pathParameters.get(RequestInformation.raw_url_key) as string;
         if(this.uri) {
             return this.uri;
         } else if (rawUrl) {
-            const value = new URL(rawUrl as string);
+            const value = rawUrl;
             this.URL = value;
             return value;
         } else if(!this.queryParameters) {
@@ -38,12 +38,11 @@ export class RequestInformation {
             this.pathParameters.forEach((v, k) => {
                 if(v) data[k] = v;
             });
-            const result = template.expand(data);
-            return new URL(result);
+            return template.expand(data);
         }   
     }
     /** Sets the URL of the request */
-    public set URL(url: URL) {
+    public set URL(url: string) {
         if(!url) throw new Error("URL cannot be undefined");
         this.uri = url;
         this.queryParameters.clear();
@@ -57,7 +56,7 @@ export class RequestInformation {
     /** The Query Parameters of the request. */
     public queryParameters: Map<string, string | number | boolean | undefined> = new Map<string, string | number | boolean | undefined>(); //TODO: case insensitive
     /** The Request Headers. */
-    public headers: Map<string, string> = new Map<string, string>(); //TODO: case insensitive
+    public headers: Record<string, string> = {}//TODO: case insensitive
     private _requestOptions = new Map<string, RequestOption>(); //TODO: case insensitive
     /** Gets the request options for the request. */
     public getRequestOptions() { return this._requestOptions.values(); }
@@ -89,7 +88,7 @@ export class RequestInformation {
         if(!values || values.length === 0) throw new Error("values cannot be undefined or empty");
 
         const writer = requestAdapter.getSerializationWriterFactory().getSerializationWriter(contentType);
-        this.headers.set(RequestInformation.contentTypeHeader, contentType);
+        this.headers[RequestInformation.contentTypeHeader] = contentType;
         if(values.length === 1) 
             writer.writeObjectValue(undefined, values[0]);
         else
@@ -101,18 +100,11 @@ export class RequestInformation {
      * @param value the binary stream
      */
     public setStreamContent = (value: ReadableStream): void => {
-        this.headers.set(RequestInformation.contentTypeHeader, RequestInformation.binaryContentType);
+        this.headers[RequestInformation.contentTypeHeader] = RequestInformation.binaryContentType;
         this.content = value;
     }
     /**
-     * Sets the request headers from a raw object.
-     * @param headers the headers.
-     */
-    public setHeadersFromRawObject = (h: object) : void => {
-        Object.entries(h).forEach(([k, v]) => {
-            this.headers.set(k, v as string);
-        });
-    }
+
     /**
      * Sets the query string parameters from a raw object.
      * @param parameters the parameters.

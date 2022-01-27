@@ -11,9 +11,9 @@
             "@microsoft/kiota-abstractions": [
                 "../abstractions"
             ],
-            "@microsoft/kiota-serialization-json": [
-                "../serialization/json"
-            ],
+            // "@microsoft/kiota-serialization-json": [
+            //     "../serialization/json"
+            // ],
             "@microsoft/kiota-http-fetchlibrary": [
                 "../http/fetchlibrary"
             ],
@@ -23,9 +23,9 @@
         {
             "path": "../abstractions/tsconfig.cjs.json"
         },
-        {
-            "path": "../serialization/json/tsconfig.cjs.json"
-        },
+        // {
+        //     "path": "../serialization/json/tsconfig.cjs.json"
+        // },
         {
             "path": "../http/fetch/tsconfig.cjs.json"
         }

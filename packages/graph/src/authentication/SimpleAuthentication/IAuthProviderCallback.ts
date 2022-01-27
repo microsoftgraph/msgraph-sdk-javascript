@@ -5,11 +5,14 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { AuthProviderCallback } from "./IAuthProviderCallback";
 
-/**
- * @interface
- * Signature that holds authProvider
- * @callback - The anonymous callback function which takes a single param
- */
-export type AuthProvider = (done: AuthProviderCallback) => void;
+export interface AuthProviderCallback {
+	/**
+	 * Parameters that are passed into the getAccessTokenCallback
+	 */
+	authOptions?: unknown;
+	/**
+	 * Signature that defines callback for an authentication provider
+	 */
+	getAccessTokenCallback?: (authOptions?: unknown) => Promise<string>;
+}

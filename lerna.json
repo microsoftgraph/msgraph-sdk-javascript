@@ -1,7 +1,6 @@
 {
   "packages": [
     "packages/abstractions",
-    "packages/serialization/*",
     "packages/http/*",
     "packages/graph"
   ],

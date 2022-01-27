@@ -67,7 +67,8 @@
 	},
 	"dependencies": {
 		"@microsoft/kiota-abstractions": "*",
-		"tslib": "^2.2.0"
+		"tslib": "^2.2.0",
+        "isomorphic-fetch": "^2.2.1"
 	},
 	"devDependencies": {
 		"typescript": "^4.2.4"

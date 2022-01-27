@@ -9,8 +9,6 @@
  * @module MiddlewareFactory
  */
 
-import { AuthenticationProvider } from "../IAuthenticationProvider";
-import { AuthenticationHandler } from "./AuthenticationHandler";
 import { HTTPMessageHandler } from "./HTTPMessageHandler";
 import { Middleware } from "./IMiddleware";
 import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
@@ -40,14 +38,12 @@ export class MiddlewareFactory {
 	 * @param {AuthenticationProvider} authProvider - The authentication provider instance
 	 * @returns an array of the middleware handlers of the default middleware chain
 	 */
-	public static getDefaultMiddlewareChain(authProvider: AuthenticationProvider): Middleware[] {
+	public static getDefaultMiddlewareChain(): Middleware[] {
 		const middleware: Middleware[] = [];
-		const authenticationHandler = new AuthenticationHandler(authProvider);
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const telemetryHandler = new TelemetryHandler();
 		const httpMessageHandler = new HTTPMessageHandler();
 
-		middleware.push(authenticationHandler);
 		middleware.push(retryHandler);
 		if (isNodeEnvironment()) {
 			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());

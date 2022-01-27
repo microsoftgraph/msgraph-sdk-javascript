@@ -8,14 +8,12 @@
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
-export { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 export { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 export { Middleware } from "./middleware/IMiddleware";
 export { RetryHandler } from "./middleware/RetryHandler";
 export { RedirectHandler } from "./middleware/RedirectHandler";
 export { TelemetryHandler } from "./middleware/TelemetryHandler";
 export { MiddlewareFactory } from "./middleware/MiddlewareFactory";
-export { AuthenticationHandlerOptions } from "./middleware/options/AuthenticationHandlerOptions";
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 export { RetryHandlerOptions, ShouldRetry } from "./middleware/options/RetryHandlerOptions";
 export { RedirectHandlerOptions, ShouldRedirect } from "./middleware/options/RedirectHandlerOptions";
@@ -35,17 +33,13 @@ export { Range } from "./tasks/FileUploadTask/Range";
 export { GraphRequestOptions, PageCollection, PageIterator, PageIteratorCallback } from "./tasks/PageIterator";
 
 export { Client } from "./Client";
-export { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
 export { GraphError } from "./GraphError";
 export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
-export { AuthProvider } from "./IAuthProvider";
-export { AuthenticationProvider } from "./IAuthenticationProvider";
-export { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
-export { AuthProviderCallback } from "./IAuthProviderCallback";
+
 export { ClientOptions } from "./IClientOptions";
 export { Context } from "./IContext";
 export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
-export { Options } from "./IOptions";
+
 export { ResponseType } from "./ResponseType";
