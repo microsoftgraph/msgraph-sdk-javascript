@@ -6,26 +6,16 @@
  */
 
 import { Client } from "@microsoft/microsoft-graph-client";
+import "isomorphic-fetch";
 
-const error = "error throw by the authentication handler";
+import { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
 
-export const client = Client.init({
-	defaultVersion: "v1.0",
-	debugLogging: true,
-	authProvider: (done) => {
-		done(error, "ACCESS_TOKEN");
-	},
+const token = "";
+const simpleAuthenticationProvider = new SimpleAuthenticationProvider({getAccessTokenCallback:async () => { return token;}});
+const client = Client.init({
+    authProvider: simpleAuthenticationProvider
 });
 
-// Following is the example of how to make requests to the Microsoft Graph API using the client instance
-
-client
-	.api("/me")
-	.select("displayName")
-	.get()
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+client.api('/me').get().then(res => {
+    console.log(res);
+});

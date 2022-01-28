@@ -10,8 +10,6 @@
  */
 
 import { HTTPClient } from "./HTTPClient";
-import { AuthenticationProvider } from "./IAuthenticationProvider";
-import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 import { Middleware } from "./middleware/IMiddleware";
 import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOptions";
@@ -47,13 +45,12 @@ export class HTTPClientFactory {
 	 * 		* The best place for AuthenticationHandler is in the starting of the pipeline, because every other handler might have to work for multiple times for a request but the auth token for
 	 * 		  them will remain same. For example, Retry and Redirect handlers might be working multiple times for a request based on the response but their auth token would remain same.
 	 */
-	public static createWithAuthenticationProvider(authProvider: AuthenticationProvider): HTTPClient {
-		const authenticationHandler = new AuthenticationHandler(authProvider);
+	public static createWithDefaultMiddleware(): HTTPClient {
+	
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const telemetryHandler = new TelemetryHandler();
 		const httpMessageHandler = new HTTPMessageHandler();
 
-		authenticationHandler.setNext(retryHandler);
 		if (isNodeEnvironment()) {
 			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
 			retryHandler.setNext(redirectHandler);
@@ -62,7 +59,7 @@ export class HTTPClientFactory {
 			retryHandler.setNext(telemetryHandler);
 		}
 		telemetryHandler.setNext(httpMessageHandler);
-		return HTTPClientFactory.createWithMiddleware(authenticationHandler);
+		return HTTPClientFactory.createWithMiddleware(retryHandler);
 	}
 
 	/**

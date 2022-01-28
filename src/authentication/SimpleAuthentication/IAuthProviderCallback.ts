@@ -5,11 +5,14 @@
  * -------------------------------------------------------------------------------------------
  */
 
-/**
- * @interface
- * A signature represents the Authentication provider options
- * @property {string[]} [scopes] - The array of scopes
- */
-export interface AuthenticationProviderOptions {
-	scopes?: string[];
+
+export interface AuthProviderCallback {
+	/**
+	 * Parameters that are passed into the getAccessTokenCallback
+	 */
+	authOptions?: unknown;
+	/**
+	 * Signature that defines callback for an authentication provider
+	 */
+	getAccessTokenCallback?: (authOptions?: unknown) => Promise<string>;
 }

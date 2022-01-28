@@ -5,17 +5,18 @@
  * -------------------------------------------------------------------------------------------
  */
 
+ export { AuthenticationProvider, AccessTokenProvider  } from "@microsoft/kiota-abstractions";
+ 
+
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
-export { AuthenticationHandler } from "../middleware/AuthenticationHandler";
 export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
 export { Middleware } from "../middleware/IMiddleware";
 export { RetryHandler } from "../middleware/RetryHandler";
 export { RedirectHandler } from "../middleware/RedirectHandler";
 export { TelemetryHandler } from "../middleware/TelemetryHandler";
 export { MiddlewareFactory } from "../middleware/MiddlewareFactory";
-export { AuthenticationHandlerOptions } from "../middleware/options/AuthenticationHandlerOptions";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 export { ShouldRetry, RetryHandlerOptions } from "../middleware/options/RetryHandlerOptions";
 export { ShouldRedirect, RedirectHandlerOptions } from "../middleware/options/RedirectHandlerOptions";
@@ -35,17 +36,13 @@ export { Range } from "../tasks/FileUploadTask/Range";
 export { PageIteratorCallback, PageIterator, PageCollection, GraphRequestOptions } from "../tasks/PageIterator";
 
 export { Client } from "../Client";
-export { CustomAuthenticationProvider } from "../CustomAuthenticationProvider";
 export { GraphError } from "../GraphError";
 export { GraphClientError } from "../GraphClientError";
 export { GraphRequest } from "../GraphRequest";
-export { AuthProvider } from "../IAuthProvider";
-export { AuthenticationProvider } from "../IAuthenticationProvider";
-export { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
-export { AuthProviderCallback } from "../IAuthProviderCallback";
+
 export { ClientOptions } from "../IClientOptions";
 export { Context } from "../IContext";
 export { NodeFetchInit, FetchOptions } from "../IFetchOptions";
 export { GraphRequestCallback } from "../IGraphRequestCallback";
-export { Options } from "../IOptions";
+
 export { ResponseType } from "../ResponseType";

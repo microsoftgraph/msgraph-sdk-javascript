@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { AuthenticationProvider } from "./IAuthenticationProvider";
+import { AuthenticationProvider } from "@microsoft/kiota-abstractions";
 import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./middleware/IMiddleware";
 
