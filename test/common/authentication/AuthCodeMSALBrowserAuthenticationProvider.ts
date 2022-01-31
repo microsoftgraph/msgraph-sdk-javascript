@@ -46,6 +46,7 @@ describe("AuthCodeMSALBrowserAuthenticationProvider.ts", () => {
 			fromCache: false,
 			expiresOn: new Date(),
 			tokenType: "",
+            correlationId: ""
 		};
 
 		const moq = sinon.mock(dummyApp);
@@ -88,6 +89,7 @@ describe("AuthCodeMSALBrowserAuthenticationProvider.ts", () => {
 			fromCache: false,
 			expiresOn: new Date(),
 			tokenType: "",
+            correlationId: ""
 		};
 
 		const moq = sinon.mock(dummyApp);
