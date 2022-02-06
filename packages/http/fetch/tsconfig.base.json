@@ -1,12 +1,12 @@
 {
 	"compilerOptions": {
-		"importHelpers": false,
+        "importHelpers": false,
 		"noEmitOnError": true,
-        "composite": true,
 		"noImplicitAny": false,
+		"moduleResolution": "node",
 		"removeComments": false,
 		"sourceMap": true,
 		"declaration": true,
-        "declarationMap": true
+        "declarationMap": true,
 	}
 }

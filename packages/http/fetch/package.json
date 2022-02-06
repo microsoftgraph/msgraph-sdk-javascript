@@ -44,7 +44,7 @@
         "test:es": " npm run build:es && mocha 'dist/es/test/common/**/*.js'  --require  esm && mocha 'dist/es/test/node/**/*.js'  --require  esm"
     },
     "dependencies": {
-        "@microsoft/kiota-abstractions": "file:microsoft-kiota-abstractions-1.0.21.tgz",
+        "@microsoft/kiota-abstractions": "*",
         "node-fetch": "^2.6.5",
         "tslib": "2.3.1"
     },
@@ -62,12 +62,12 @@
         "eslint-plugin-prettier": "^3.4.1",
         "eslint-plugin-simple-import-sort": "^7.0.0",
         "esm": "^3.2.25",
-        "karma": "^6.3.4",
+        "karma": "^6.3.2",
         "karma-chai": "^0.1.0",
         "karma-chrome-launcher": "^3.1.0",
-        "karma-firefox-launcher": "^2.1.1",
+        "karma-firefox-launcher": "^2.1.0",
         "karma-mocha": "^2.0.1",
-        "karma-typescript": "^5.5.2",
+        "karma-typescript": "^5.2.0",
         "mocha": "^8.4.0",
         "prettier": "^1.19.1",
         "rollup": "^2.58.0",

@@ -9,7 +9,7 @@
  * @module RedirectHandler
  */
 
-import { HttpMethod } from "@microsoft/kiota-abstractions";
+import { type RequestOption, HttpMethod } from "@microsoft/kiota-abstractions";
 
 import { FetchRequestInit, FetchResponse } from "../utils/fetchDefinitions";
 import { Middleware } from "./middleware";
@@ -189,7 +189,7 @@ export class RedirectHandler implements Middleware {
      */
     public execute(url: string, requestInit: FetchRequestInit, requestOptions?: Record<string, RequestOption>): Promise<FetchResponse> {
         const redirectCount = 0;
-        if (requestOptions && requestOptions[RedirectHandlerOptionKey]))
+        if (requestOptions && requestOptions[RedirectHandlerOptionKey])
         {
             this.options = requestOptions[RedirectHandlerOptionKey] as RedirectHandlerOptions;
         }

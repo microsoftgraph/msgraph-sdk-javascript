@@ -3,7 +3,7 @@
     "compilerOptions":{
         "target": "es6",
         "module": "commonjs",
-        "outDir": "./dist/cjs"
+        "outDir": "./dist/cjs",
     },
 	"exclude": ["node_modules", "dist"],
 	"include": ["./src/**/*.ts", "./test"],

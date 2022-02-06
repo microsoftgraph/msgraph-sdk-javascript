@@ -17,7 +17,7 @@ export class HttpClient {
 	 * @param {(request: FetchRequestInfo, init?: FetchRequestInit) => Promise < FetchResponse >} custom fetch function - a Fetch API implementation
 	 *
 	 */
-	public constructor(private customFetch?: (request: FetchRequestInfo, init?: FetchRequestInit) => Promise<FetchResponse>, ...middlewares: Middleware[]) {
+	public constructor(private customFetch?: (request: string, init?: RequestInit) => Promise<FetchResponse>, ...middlewares: Middleware[]) {
 		// Use default middleware chain if middlewares and custom fetch function are  undefined
 		if (!middlewares.length) {
 			if (this.customFetch) {
@@ -79,7 +79,7 @@ export class HttpClient {
 	 * @param options request options.
 	 * @returns the promise resolving the response.
 	 */
-	public async executeFetch(url: string, requestInit?: FetchRequestInit, requestOptions?: RequestOption[]): Promise<FetchResponse> {
+	public async executeFetch(url: string, requestInit?: RequestInit, requestOptions?: RequestOption[]): Promise<FetchResponse> {
 		if (this.customFetch && !this.middleware) {
 			return this.customFetch(url, requestInit);
 		}

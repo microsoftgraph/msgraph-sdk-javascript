@@ -14,7 +14,6 @@ import { CustomFetchHandler } from "../customFetchHandler";
 import { Middleware } from "../middleware";
 import { RetryHandlerOptions } from "../options/retryHandlerOptions";
 import { RetryHandler } from "../retryHandler";
-import { DefaultFetchHandler } from "./defaultFetchHandler";
 
 /**
  * @class

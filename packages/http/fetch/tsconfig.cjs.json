@@ -5,7 +5,6 @@
         "module": "commonjs",
         "outDir": "./dist/cjs",
         "composite": true,
-        "rootDir": "./src",
         "paths": {
             "@microsoft/kiota-abstractions": [
                 "../../abstractions/*"
