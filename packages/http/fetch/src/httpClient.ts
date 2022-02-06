@@ -1,40 +1,93 @@
-import { Middleware } from "./middleware";
-import { fetch } from 'cross-fetch';
-import { RequestOption } from "@microsoft/kiota-abstractions";
-import { getDefaultMiddlewares, getDefaultRequestSettings } from "./kiotaClientFactory";
+import { CustomFetchHandler } from "./middlewares/customFetchHandler";
+import { DefaultFetchHandler } from "./middlewares/defaultFetchHandler";
+import { Middleware } from "./middlewares/middleware";
+import { MiddlewareFactory } from "./middlewares/middlewareFactory";
+import { FetchRequestInfo, FetchRequestInit, FetchResponse } from "./utils/fetchDefinitions";
 
-/** Default fetch client with options and a middleware pipleline for requests execution. */
 export class HttpClient {
-    /**
-     * Instantiates a new HttpClient.
-     * @param middlewares middlewares to be used for requests execution.
-     * @param defaultRequestSettings default request settings to be used for requests execution.
-     */
-    public constructor(private readonly middlewares: Middleware[] = getDefaultMiddlewares(), private readonly defaultRequestSettings: RequestInit = getDefaultRequestSettings()) {
-        this.middlewares = [...this.middlewares, new FetchMiddleware()];
-        this.middlewares.forEach((middleware, idx) => {
-            if(idx < this.middlewares.length)
-                middleware.next = this.middlewares[idx + 1];
-        });
-    }
-    /**
-     * Executes a request and returns a promise resolving the response.
-     * @param url the request url.
-     * @param options request options.
-     * @returns the promise resolving the response.
-     */
-    public fetch(url: string, options?: RequestInit, requestOptions?: RequestOption[]): Promise<Response> {
-        const finalOptions = {...this.defaultRequestSettings, ...options} as RequestInit;
-        if(this.middlewares.length > 0 && this.middlewares[0])
-            return this.middlewares[0].execute(url, finalOptions, requestOptions);
-        else
-            throw new Error("No middlewares found");
-    }
-}
-/** Default middleware executing a request. Internal use only. */
-class FetchMiddleware implements Middleware {
-    next: Middleware | undefined;
-    public execute(url: string, req: RequestInit, _?: RequestOption[]): Promise<Response> {
-        return fetch(url, req);
-    }
+	private middleware: Middleware;
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of a HttpClient which contains the middlewares and fetch implementation for request execution.
+	 * @param {...Middleware} middleware - The first middleware of the middleware chain or a sequence of all the Middleware handlers
+	 * If middlewares param is undefined, the httpClient instance will use the default array of middlewares.
+	 * Set middlewares to `null` if you do not wish to use middlewares.
+	 * If custom fetch is undefined, the httpClient instance uses the `DefaultFetchHandler`
+	 * @param {(request: FetchRequestInfo, init?: FetchRequestInit) => Promise < FetchResponse >} custom fetch function - a Fetch API implementation
+	 *
+	 */
+	public constructor(private customFetch?: (request: FetchRequestInfo, init?: FetchRequestInit) => Promise<FetchResponse>, ...middlewares: Middleware[]) {
+		// Use default middleware chain if middlewares and custom fetch function are  undefined
+		if (!middlewares.length) {
+			if (this.customFetch) {
+				this.setMiddleware(...MiddlewareFactory.getDefaultMiddlewareChain(customFetch));
+			} else {
+				this.setMiddleware(...MiddlewareFactory.getDefaultMiddlewareChain());
+			}
+		} else {
+			if (middlewares[0] === null) {
+				if (!customFetch) {
+					this.setMiddleware(...MiddlewareFactory.getDefaultMiddlewareChain());
+				}
+				return;
+			} else {
+				if (this.customFetch) {
+					this.setMiddleware(...middlewares, new CustomFetchHandler(customFetch));
+				} else {
+					this.setMiddleware(...middlewares);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @private
+	 * Processes the middleware parameter passed to set this.middleware property
+	 * The calling function should validate if middleware is not undefined or not empty.
+	 * @param {...Middleware} middleware - The middleware passed
+	 * @returns Nothing
+	 */
+	private setMiddleware(...middleware: Middleware[]): void {
+		if (middleware.length > 1) {
+			this.parseMiddleWareArray(middleware);
+		} else {
+			this.middleware = middleware[0];
+		}
+	}
+
+	/**
+	 * @private
+	 * Processes the middleware array to construct the chain
+	 * and sets this.middleware property to the first middlware handler of the array
+	 * The calling function should validate if middleware is not undefined or not empty
+	 * @param {Middleware[]} middlewareArray - The array of middleware handlers
+	 * @returns Nothing
+	 */
+	private parseMiddleWareArray(middlewareArray: Middleware[]) {
+		middlewareArray.forEach((element, index) => {
+			if (index < middlewareArray.length - 1) {
+				element.next = middlewareArray[index + 1];
+			}
+		});
+		this.middleware = middlewareArray[0];
+	}
+
+	/**
+	 * Executes a request and returns a promise resolving the response.
+	 * @param url the request url.
+	 * @param options request options.
+	 * @returns the promise resolving the response.
+	 */
+	public async executeFetch(url: string, requestInit?: FetchRequestInit, requestOptions?: RequestOption[]): Promise<FetchResponse> {
+		if (this.customFetch && !this.middleware) {
+			return this.customFetch(url, requestInit);
+		}
+
+		if (this.middleware) {
+			return await this.middleware.execute(url, requestInit, requestOptions);
+		} else {
+			throw new Error("Please provide middlewares or a custom fetch function to execute the request");
+		}
+	}
 }

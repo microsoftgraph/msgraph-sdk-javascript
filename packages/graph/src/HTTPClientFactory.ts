@@ -9,13 +9,11 @@
  * @module HTTPClientFactory
  */
 
-import { HTTPClient } from "./HTTPClient";
+import {HttpClient} from "@microsoft/kiota-http-fetchlibrary";
+
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
-import { Middleware } from "./middleware/IMiddleware";
 import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOptions";
 import { RetryHandlerOptions } from "./middleware/options/RetryHandlerOptions";
-import { RedirectHandler } from "./middleware/RedirectHandler";
-import { RetryHandler } from "./middleware/RetryHandler";
 import { TelemetryHandler } from "./middleware/TelemetryHandler";
 
 /**
@@ -47,19 +45,19 @@ export class HTTPClientFactory {
 	 */
 	public static createWithDefaultMiddleware(): HTTPClient {
 	
-		const retryHandler = new RetryHandler(new RetryHandlerOptions());
-		const telemetryHandler = new TelemetryHandler();
-		const httpMessageHandler = new HTTPMessageHandler();
+		// const retryHandler = new RetryHandler(new RetryHandlerOptions());
+		// const telemetryHandler = new TelemetryHandler();
+		// const httpMessageHandler = new HTTPMessageHandler();
 
-		if (isNodeEnvironment()) {
-			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
-			retryHandler.setNext(redirectHandler);
-			redirectHandler.setNext(telemetryHandler);
-		} else {
-			retryHandler.setNext(telemetryHandler);
-		}
-		telemetryHandler.setNext(httpMessageHandler);
-		return HTTPClientFactory.createWithMiddleware(retryHandler);
+		// if (isNodeEnvironment()) {
+		// 	const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
+		// 	retryHandler.setNext(redirectHandler);
+		// 	redirectHandler.setNext(telemetryHandler);
+		// } else {
+		// 	retryHandler.setNext(telemetryHandler);
+		// }
+		// telemetryHandler.setNext(httpMessageHandler);
+		// return HTTPClientFactory.createWithMiddleware(retryHandler);
 	}
 
 	/**
@@ -73,4 +71,7 @@ export class HTTPClientFactory {
 		// Middleware should not empty or undefined. This is check is present in the HTTPClient constructor.
 		return new HTTPClient(...middleware);
 	}
+
+
+    private static appendTelemetry(){}
 }

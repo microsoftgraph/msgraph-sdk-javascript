@@ -9,14 +9,13 @@
  * @module GraphRequest
  */
 import { AuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
+import {HttpClient} from "@microsoft/kiota-http-fetchlibrary"
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
-import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
-import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
 import { MiddlewareControl } from "./middleware/MiddlewareControl";
@@ -62,7 +61,7 @@ export class GraphRequest {
 	 * @private
 	 * A member variable to hold HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	private httpClient: HttpClient;
 
     private authenticationProvider: AuthenticationProvider
 
@@ -110,7 +109,7 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HTTPClient, authProvider: AuthenticationProvider, config: ClientOptions, path: string) {
+	public constructor(httpClient: HttpClient, authProvider: AuthenticationProvider, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
         this.authenticationProvider = authProvider;
 		this.config = config;
@@ -381,14 +380,18 @@ export class GraphRequest {
        await this.authenticationProvider.authenticateRequest(requestInfo);
        // options.headers = requestInfo.headers;
 		try {
-			const context: Context = await this.httpClient.sendRequest({
-				request,
-				options,
-				middlewareControl,
-				customHosts,
-			});
+			// const context: Context = await this.httpClient.fetch({
+			// 	request,
+			// 	options,
+			// 	middlewareControl,
+			// 	customHosts,
+			// });
 
-			rawResponse = context.response;
+            const rawResponse = await this.httpClient.fetch(
+				request as string,
+				options
+			);
+
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {

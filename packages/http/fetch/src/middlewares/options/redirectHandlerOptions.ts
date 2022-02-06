@@ -9,7 +9,7 @@
  * @module RedirectHandlerOptions
  */
 
-import { MiddlewareOptions } from "./IMiddlewareOptions";
+import { RequestOption } from "@microsoft/kiota-abstractions";
 
 /**
  * @type
@@ -17,12 +17,13 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  */
 export type ShouldRedirect = (response: Response) => boolean;
 
+export const RedirectHandlerOptionKey = "RedirectHandlerOption";
 /**
  * @class
  * @implements MiddlewareOptions
  * A class representing RedirectHandlerOptions
  */
-export class RedirectHandlerOptions implements MiddlewareOptions {
+export class RedirectHandlerOptions implements RequestOption {
 	/**
 	 * @private
 	 * @static
@@ -38,22 +39,10 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 	private static MAX_MAX_REDIRECTS = 20;
 
 	/**
-	 * @public
-	 * A member holding max redirects value
-	 */
-	public maxRedirects: number;
-
-	/**
-	 * @public
-	 * A member holding shouldRedirect callback
-	 */
-	public shouldRedirect: ShouldRedirect;
-
-	/**
 	 * @private
 	 * A member holding default shouldRedirect callback
 	 */
-	private static defaultShouldRedirect: ShouldRedirect = () => true;
+	private static defaultShouldRetry: ShouldRedirect = () => true;
 
 	/**
 	 * @public
@@ -63,7 +52,7 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 	 * @param {ShouldRedirect} [shouldRedirect = RedirectHandlerOptions.DEFAULT_SHOULD_RETRY] - The should redirect callback
 	 * @returns An instance of RedirectHandlerOptions
 	 */
-	public constructor(maxRedirects: number = RedirectHandlerOptions.DEFAULT_MAX_REDIRECTS, shouldRedirect: ShouldRedirect = RedirectHandlerOptions.defaultShouldRedirect) {
+	public constructor(public maxRedirects: number = RedirectHandlerOptions.DEFAULT_MAX_REDIRECTS, public shouldRedirect: ShouldRedirect = RedirectHandlerOptions.defaultShouldRetry) {
 		if (maxRedirects > RedirectHandlerOptions.MAX_MAX_REDIRECTS) {
 			const error = new Error(`MaxRedirects should not be more than ${RedirectHandlerOptions.MAX_MAX_REDIRECTS}`);
 			error.name = "MaxLimitExceeded";
@@ -76,5 +65,9 @@ export class RedirectHandlerOptions implements MiddlewareOptions {
 		}
 		this.maxRedirects = maxRedirects;
 		this.shouldRedirect = shouldRedirect;
+	}
+
+	public getKey(): string {
+		return RedirectHandlerOptionKey;
 	}
 }
