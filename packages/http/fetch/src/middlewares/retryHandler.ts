@@ -9,12 +9,11 @@
  * @module RetryHandler
  */
 
-import { HttpMethod } from "@microsoft/kiota-abstractions";
+import { HttpMethod, RequestOption } from "@microsoft/kiota-abstractions";
 
 import { FetchRequestInfo, FetchRequestInit, FetchResponse } from "../utils/fetchDefinitions";
 import { getRequestHeader, setRequestHeader } from "../utils/headersUtil";
 import { Middleware } from "./middleware";
-import { MiddlewareContext } from "./middlewareContext";
 import { RetryHandlerOptionKey, RetryHandlerOptions } from "./options/retryHandlerOptions";
 
 /**
@@ -152,7 +151,7 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	private async executeWithRetry(url: string, requestInit: FetchRequestInit, retryAttempts:number, requestOptions?: Record<string, RequestOption>): Promise<FetchResponse> {
-		const response = await this.next.execute(url, requestInit, requestOptions);
+		const response = await this.next.execute(url, requestInit as RequestInit, requestOptions);
 		if (retryAttempts < this.options.maxRetries && this.isRetry(response) && this.isBuffered(url, requestInit) && this.options.shouldRetry(this.options.delay, retryAttempts, url, requestInit as FetchRequestInit, response)) {
 			++retryAttempts;
 			setRequestHeader(requestInit, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
@@ -171,12 +170,12 @@ export class RetryHandler implements Middleware {
 	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
-	public execute(url: string, requestInit: FetchRequestInit, requestOptions?: Record<string, RequestOption>): Promise<FetchResponse> {
+	public execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
 		const retryAttempts = 0;
 
         if((requestOptions && requestOptions[RetryHandlerOptionKey])){
             this.options = requestOptions[RetryHandlerOptionKey] as RetryHandlerOptions;
         }
-	    return this.executeWithRetry(url, requestInit, retryAttempts, requestOptions);
+	    return this.executeWithRetry(url, requestInit as FetchRequestInit, retryAttempts, requestOptions);
 	}
 }

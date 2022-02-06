@@ -1,8 +1,7 @@
+import { type RequestOption } from "@microsoft/kiota-abstractions";
 import { CustomFetchHandler } from "./middlewares/customFetchHandler";
-import { DefaultFetchHandler } from "./middlewares/defaultFetchHandler";
 import { Middleware } from "./middlewares/middleware";
 import { MiddlewareFactory } from "./middlewares/middlewareFactory";
-import { FetchRequestInfo, FetchRequestInit, FetchResponse } from "./utils/fetchDefinitions";
 
 export class HttpClient {
 	private middleware: Middleware;
@@ -14,10 +13,10 @@ export class HttpClient {
 	 * If middlewares param is undefined, the httpClient instance will use the default array of middlewares.
 	 * Set middlewares to `null` if you do not wish to use middlewares.
 	 * If custom fetch is undefined, the httpClient instance uses the `DefaultFetchHandler`
-	 * @param {(request: FetchRequestInfo, init?: FetchRequestInit) => Promise < FetchResponse >} custom fetch function - a Fetch API implementation
+	 * @param {(request: FetchRequestInfo, init?: FetchRequestInit) => Promise < Response >} custom fetch function - a Fetch API implementation
 	 *
 	 */
-	public constructor(private customFetch?: (request: string, init?: RequestInit) => Promise<FetchResponse>, ...middlewares: Middleware[]) {
+	public constructor(private customFetch?: (request: string, init?: RequestInit) => Promise<Response>, ...middlewares: Middleware[]) {
 		// Use default middleware chain if middlewares and custom fetch function are  undefined
 		if (!middlewares.length) {
 			if (this.customFetch) {
@@ -79,7 +78,7 @@ export class HttpClient {
 	 * @param options request options.
 	 * @returns the promise resolving the response.
 	 */
-	public async executeFetch(url: string, requestInit?: RequestInit, requestOptions?: RequestOption[]): Promise<FetchResponse> {
+	public async executeFetch(url: string, requestInit?: RequestInit, requestOptions?: Record<string,RequestOption>): Promise<Response> {
 		if (this.customFetch && !this.middleware) {
 			return this.customFetch(url, requestInit);
 		}

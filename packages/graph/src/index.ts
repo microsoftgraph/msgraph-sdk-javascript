@@ -5,18 +5,16 @@
  * -------------------------------------------------------------------------------------------
  */
 
+export { RetryHandler, RedirectHandler,} from "@microsoft/kiota-http-fetchlibrary";
+
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
 export { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 export { Middleware } from "./middleware/IMiddleware";
-export { RetryHandler } from "./middleware/RetryHandler";
-export { RedirectHandler } from "./middleware/RedirectHandler";
+
 export { TelemetryHandler } from "./middleware/TelemetryHandler";
-export { MiddlewareFactory } from "./middleware/MiddlewareFactory";
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
-export { RetryHandlerOptions, ShouldRetry } from "./middleware/options/RetryHandlerOptions";
-export { RedirectHandlerOptions, ShouldRedirect } from "./middleware/options/RedirectHandlerOptions";
 export { FeatureUsageFlag, TelemetryHandlerOptions } from "./middleware/options/TelemetryHandlerOptions";
 export { ChaosHandlerOptions } from "./middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "./middleware/options/ChaosStrategy";

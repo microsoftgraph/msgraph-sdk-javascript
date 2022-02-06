@@ -13,8 +13,8 @@ export { BatchResponseBody, BatchResponseContent } from "../content/BatchRespons
 
 export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
 export { Middleware } from "../middleware/IMiddleware";
-export { RetryHandler } from "../middleware/RetryHandler";
-export { RedirectHandler } from "../middleware/RedirectHandler";
+export { RetryHandler } from "../middleware/retryHandler";
+export { RedirectHandler } from "../middleware/redirectHandler";
 export { TelemetryHandler } from "../middleware/TelemetryHandler";
 export { MiddlewareFactory } from "../middleware/MiddlewareFactory";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";

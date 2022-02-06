@@ -15,7 +15,7 @@
             //     "../serialization/json"
             // ],
             "@microsoft/kiota-http-fetchlibrary": [
-                "../http/fetchlibrary"
+                "../http/fetch"
             ],
         },
         "files": [],

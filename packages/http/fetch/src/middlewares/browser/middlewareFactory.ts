@@ -9,7 +9,6 @@
  * @module MiddlewareFactory
  */
 
-import { FetchRequestInfo, FetchRequestInit, FetchResponse } from "../../utils/fetchDefinitions";
 import { CustomFetchHandler } from "../customFetchHandler";
 import { Middleware } from "../middleware";
 import { RetryHandlerOptions } from "../options/retryHandlerOptions";
@@ -27,7 +26,7 @@ export class MiddlewareFactory {
 	 * @param {AuthenticationProvider} authProvider - The authentication provider instance
 	 * @returns an array of the middleware handlers of the default middleware chain
 	 */
-	public static getDefaultMiddlewareChain(customFetch?: (request: FetchRequestInfo, init?: FetchRequestInit) => Promise<FetchResponse>): Middleware[] {
+	public static getDefaultMiddlewareChain(customFetch?: (request: string, init?: RequestInit) => Promise<Response>): Middleware[] {
 		// Browsers handles redirection automatically and do not require the redirectionHandler
 
 		const middlewareArray: Middleware[] = [];
