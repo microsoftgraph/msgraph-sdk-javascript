@@ -28,9 +28,5 @@ export interface ClientOptions {
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 	middleware?: Middleware | Middleware[];
-    customFetch: (input: string, init?: RequestInit) => Promise<Response>;
-	/**
-	 * Example - If URL is "https://test_host/v1.0", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
-	 */
-	customHosts?: Set<string>;
+    customFetch?: (input: string, init?: RequestInit) => Promise<Response>;
 }

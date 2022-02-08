@@ -9,7 +9,7 @@
  * @module CustomAuthenticationProvider
  */
 
-import { AccessTokenProvider } from "@microsoft/kiota-abstractions";
+import { AccessTokenProvider, AllowedHostsValidator } from "@microsoft/kiota-abstractions";
 
 import { GraphClientError } from "../../GraphClientError";
 import { AuthProviderCallback } from "./IAuthProviderCallback";
@@ -29,6 +29,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
      * @returns An instance of CustomAuthenticationProvider
      */
     public constructor(private authProviderCallback: AuthProviderCallback) { }
+    getAllowedHostsValidator: () => AllowedHostsValidator;
 
     /**
      * @public
@@ -41,4 +42,5 @@ const token = this.authProviderCallback.getAccessTokenCallback(this.authProvider
 console.log(token);
         return this.authProviderCallback.getAccessTokenCallback(this.authProviderCallback.authOptions);
     }
+    
 }

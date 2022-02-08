@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export { RetryHandler, RedirectHandler,} from "@microsoft/kiota-http-fetchlibrary";
+export { RetryHandler, RedirectHandler} from "@microsoft/kiota-http-fetchlibrary" ;
 
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";

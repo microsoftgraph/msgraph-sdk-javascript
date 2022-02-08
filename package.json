@@ -13,6 +13,7 @@
         "compile": "yarn run compile:cjs && yarn run compile:es",
         "compile:cjs": "tsc -b packages/graph/tsconfig.cjs.json",
         "compile:es": "tsc -b packages/graph/tsconfig.es.json",
-        "test": "node ./packages/testSample/dist/cjs/main/main.js"
+        "test": "node ./packages/testSample/dist/cjs/main/main.js",
+        "clean": "rimraf ./dist ./node_modules"
     }
 }

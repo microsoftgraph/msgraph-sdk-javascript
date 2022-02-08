@@ -10,11 +10,10 @@
  */
 
 import { AuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
-import { HTTPClient } from "./HTTPClient";
-import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
 import { validatePolyFilling } from "./ValidatePolyFilling";
 
@@ -33,7 +32,7 @@ export class Client {
 	 * @private
 	 * A member which holds the HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	private httpClient: HttpClient;
 
     private authProvider:AuthenticationProvider
 
@@ -61,7 +60,7 @@ export class Client {
 				this.config[key] = clientOptions[key];
 			}
 		}
-		let httpClient: HTTPClient;
+		let httpClient: HttpClient;
 		if (clientOptions.authProvider === undefined) {
 			const error = new GraphClientError();
 			error.name = "AmbiguityInInitialization";
@@ -70,9 +69,9 @@ export class Client {
 		}
         this.authProvider = clientOptions.authProvider;
         if (!clientOptions.middleware) {
-			httpClient = HTTPClientFactory.createWithDefaultMiddleware();
+			httpClient = new HttpClient();
 		} else  {
-			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
+			httpClient = new HttpClient(...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
 	}

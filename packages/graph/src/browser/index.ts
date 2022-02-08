@@ -13,13 +13,13 @@ export { BatchResponseBody, BatchResponseContent } from "../content/BatchRespons
 
 export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
 export { Middleware } from "../middleware/IMiddleware";
-export { RetryHandler } from "../middleware/retryHandler";
-export { RedirectHandler } from "../middleware/redirectHandler";
+export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+export { RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
 export { TelemetryHandler } from "../middleware/TelemetryHandler";
-export { MiddlewareFactory } from "../middleware/MiddlewareFactory";
+export { MiddlewareFactory } from "@microsoft/kiota-http-fetchlibrary";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
-export { ShouldRetry, RetryHandlerOptions } from "../middleware/options/RetryHandlerOptions";
-export { ShouldRedirect, RedirectHandlerOptions } from "../middleware/options/RedirectHandlerOptions";
+export { ShouldRetry, RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+export { ShouldRedirect, RedirectHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 export { FeatureUsageFlag, TelemetryHandlerOptions } from "../middleware/options/TelemetryHandlerOptions";
 export { ChaosHandlerOptions } from "../middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "../middleware/options/ChaosStrategy";

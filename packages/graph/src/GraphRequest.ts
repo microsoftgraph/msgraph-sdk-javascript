@@ -8,7 +8,7 @@
 /**
  * @module GraphRequest
  */
-import { AuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
+import { AuthenticationProvider, RequestInformation, RequestOption } from "@microsoft/kiota-abstractions";
 import {HttpClient} from "@microsoft/kiota-http-fetchlibrary"
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
@@ -93,7 +93,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-	private _middlewareOptions: MiddlewareOptions[];
+	private _middlewareOptions: Record<string, RequestOption>;
 
 	/**
 	 * @private
@@ -122,7 +122,7 @@ export class GraphRequest {
 		};
 		this._headers = {};
 		this._options = {};
-		this._middlewareOptions = [];
+		this._middlewareOptions = {};
 		this.parsePath(path);
 	}
 
@@ -340,7 +340,7 @@ export class GraphRequest {
 	 * @param {FetchOptions} options - The request options object
 	 * @returns Nothing
 	 */
-	private updateRequestOptions(options: FetchOptions): void {
+	private updateRequestInitOptions(options: FetchOptions): void {
 		const optionsHeaders: HeadersInit = { ...options.headers };
 		if (this.config.fetchOptions !== undefined) {
 			const fetchOptions: FetchOptions = { ...this.config.fetchOptions };
@@ -368,9 +368,7 @@ export class GraphRequest {
 	 */
 	private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
 		let rawResponse: Response;
-		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
-		this.updateRequestOptions(options);
-		const customHosts = this.config?.customHosts;
+		this.updateRequestInitOptions(options);
         const requestInfo = new RequestInformation();
 
         requestInfo.URL = request as string;
@@ -387,9 +385,10 @@ export class GraphRequest {
 			// 	customHosts,
 			// });
 
-            const rawResponse = await this.httpClient.fetch(
+            const rawResponse = await this.httpClient.executeFetch(
 				request as string,
-				options
+				options,
+                this._middlewareOptions
 			);
 
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
@@ -489,7 +488,7 @@ export class GraphRequest {
 	 * @param {MiddlewareOptions[]} options - The array of middleware options
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public middlewareOptions(options: MiddlewareOptions[]): GraphRequest {
+	public middlewareOptions(options: Record<string,RequestOption>): GraphRequest {
 		this._middlewareOptions = options;
 		return this;
 	}

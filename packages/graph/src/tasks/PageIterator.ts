@@ -142,9 +142,9 @@ export class PageIterator {
 			if (this.requestOptions.headers) {
 				graphRequest = graphRequest.headers(this.requestOptions.headers);
 			}
-			if (this.requestOptions.middlewareOptions) {
-				graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
-			}
+			// if (this.requestOptions.middlewareOptions) {
+			// 	graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
+			// }
 			if (this.requestOptions.options) {
 				graphRequest = graphRequest.options(this.requestOptions.options);
 			}

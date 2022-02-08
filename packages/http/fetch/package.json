@@ -2,15 +2,15 @@
     "name": "@microsoft/kiota-http-fetchlibrary",
     "version": "1.0.12",
     "description": "Kiota request adapter implementation with fetch",
-    "main": "dist/cjs/index.js",
-    "module": "dist/es/index.js",
-    "types": "dist/cjs/index.d.ts",
+    "main": "dist/cjs/src/index.js",
+    "module": "dist/es/src/index.js",
+    "types": "dist/cjs/src/index.d.ts",
     "scripts": {
         "build": "npm run build:cjs && npm run build:esm",
         "build:cjs": "tsc -b tsconfig.cjs.json",
         "build:esm": "tsc -b tsconfig.es.json",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "clean": "rm -r ./dist"
+        "clean": "rimraf ./dist ./node_modules"
     },
     "repository": {
         "type": "git",
