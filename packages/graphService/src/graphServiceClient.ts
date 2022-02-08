@@ -2,9 +2,11 @@ import {UserRequestBuilder} from './users/item/userRequestBuilder';
 import {UsersRequestBuilder} from './users/usersRequestBuilder';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
+import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 
+import {Client, GraphRequest} from "@microsoft/microsoft-graph-client"
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
-export class GraphServiceClient {
+export class GraphServiceClient extends Client{
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -19,13 +21,14 @@ export class GraphServiceClient {
      * @param requestAdapter The request adapter to use to execute the requests.
      */
     public constructor(requestAdapter: RequestAdapter) {
+        super();
         if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
-        registerDefaultSerializer(JsonSerializationWriterFactory);
-        registerDefaultDeserializer(JsonParseNodeFactory);
-        requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
+        //registerDefaultSerializer(JsonSerializationWriterFactory);
+        //registerDefaultDeserializer(JsonParseNodeFactory);
+        //requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item collection
@@ -38,4 +41,13 @@ export class GraphServiceClient {
         urlTplParams["user_id"] = id
         return new UserRequestBuilder(urlTplParams, this.requestAdapter);
     };
+
+    public static init({authProvider:AuthenticationProvider}): GraphServiceClient {
+        const client = new GraphServiceClient(new FetchRequestAdapter(null));
+        return client;
+    }
+
+    public api(path: string): GraphRequest {
+        return super.api(path);
+    }
 }
