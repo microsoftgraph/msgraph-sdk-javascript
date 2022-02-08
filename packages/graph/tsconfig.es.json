@@ -3,7 +3,8 @@
     "compilerOptions":{
         "target": "es6",
         "module": "es6",
-        "outDir": "./dist/es"
+        "outDir": "./dist/es",
+        "composite": true
     },
 	"exclude": ["node_modules", "dist"],
 	"include": ["./src/**/*.ts", "./test"],

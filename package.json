@@ -7,13 +7,19 @@
     "workspaces": [
         "packages/abstractions",
         "packages/http/*",
-        "packages/graph"
+        "packages/graph",
+        "packages/serialization/json",
+        "packages/graphService",
+        "packages/testLibraries"
     ],
     "scripts": {
         "compile": "yarn run compile:cjs && yarn run compile:es",
         "compile:cjs": "tsc -b packages/graph/tsconfig.cjs.json",
         "compile:es": "tsc -b packages/graph/tsconfig.es.json",
-        "test": "node ./packages/testSample/dist/cjs/main/main.js",
+        "build:cjs": "tsc -b packages/graphService/tsconfig.cjs.json",
+        "build:es": "tsc -b packages/graphService/tsconfig.es.json",
+        "buildTest:cjs": "tsc -b packages/testLibraries/tsconfig.cjs.json",
+        "test": "node ./packages/graphService/dist/cjs/main/main.js",
         "clean": "rimraf ./dist ./node_modules"
     }
 }
