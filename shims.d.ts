@@ -6,12 +6,6 @@
  */
 
 /**
- * Shim for Buffer interface when the environment do not provide Buffer/DOM definitions
- */
-interface Buffer { }
-
-
-/**
  * Shim for Node stream interface.
  */
 interface NodeStream {

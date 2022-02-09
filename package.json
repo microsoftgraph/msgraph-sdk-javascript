@@ -26,7 +26,7 @@
 		"lib/",
 		"src/",
 		"authProviders/",
-        "shims.d.ts"
+		"shims.d.ts"
 	],
 	"scripts": {
 		"build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
