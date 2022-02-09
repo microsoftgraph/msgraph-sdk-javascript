@@ -78,7 +78,7 @@ export class RequestInformation {
 
     /** Removes the request options for the request. */
     public removeRequestOptions(keys: string[]) {
-        if (!keys || !MediaKeySession.length) return;
+        if (!keys || !keys.length) return;
         keys.forEach((key) => {
             delete this._requestOptions[key];
         });

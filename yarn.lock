@@ -828,16 +828,6 @@
     npmlog "^4.1.2"
     write-file-atomic "^3.0.3"
 
-"@microsoft/kiota-abstractions@^1.0.27":
-  version "1.0.28"
-  resolved "https://npm.pkg.github.com/download/@microsoft/kiota-abstractions/1.0.28/f44d4f93fa1fc8d6356834acb636411137c5761e72859d337f42d215e1d197be#2f505ca32f5cf4c87c25afe36c01a7ce2beafa77"
-  integrity sha512-s+iJDiqk7Ce/p1/Gqfm7WjOxI2QAvxkSd3Kx9y/oaVgZXLhqQwV3GCbhV3DHHmI7Xn3S8q0qT6nLlXMZZ2+aKQ==
-  dependencies:
-    tinyduration "^3.2.2"
-    tslib "^2.3.1"
-    uri-template-lite "^22.1.0"
-    uuid "^8.3.2"
-
 "@microsoft/microsoft-graph-client@*":
   version "1.1.0"
   resolved "https://npm.pkg.github.com/download/@microsoft/microsoft-graph-client/1.1.0/3b90cbd97feb955c5be98a94eb87ace68b58638731af7451864867d7acc12d09#bec7c111d1c9332776af3261801a3a481caacef4"

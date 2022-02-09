@@ -11,3 +11,6 @@ const client = Client.init({
 client.api('/me').get().then(res => {
     console.log(res);
 });
+
+
+const graphRequest = client.api("/me").select("displayName").count(true).headers({}).get();

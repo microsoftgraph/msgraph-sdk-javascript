@@ -4,7 +4,7 @@ import {enableBackingStoreForSerializationWriterFactory, getPathParameters, Pars
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
 import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 
-import {Client, GraphRequest} from "@microsoft/microsoft-graph-client"
+import {Client, GraphRequest} from "@microsoft/microsoft-graph-client-core"
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
 export class GraphServiceClient extends Client{
     /** Path parameters for the request  */
@@ -26,9 +26,9 @@ export class GraphServiceClient extends Client{
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
-        //registerDefaultSerializer(JsonSerializationWriterFactory);
-        //registerDefaultDeserializer(JsonParseNodeFactory);
-        //requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
+        registerDefaultSerializer(JsonSerializationWriterFactory);
+        registerDefaultDeserializer(JsonParseNodeFactory);
+        requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item collection

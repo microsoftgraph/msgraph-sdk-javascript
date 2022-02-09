@@ -18,7 +18,7 @@
             "@microsoft/kiota-http-fetchlibrary": [
                 "../http/fetchlibrary"
             ],
-            "@microsoft/microsoft-graph-client": [
+            "@microsoft/microsoft-graph-client-core": [
                 "../graph"
             ],
         },

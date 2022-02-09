@@ -1,5 +1,5 @@
 {
-	"name": "@microsoft/microsoft-graph-client",
+	"name": "@microsoft/microsoft-graph-client-core",
 	"version": "3.0.0-Preview.3",
 	"description": "Microsoft Graph Client Library",
 	"keywords": [

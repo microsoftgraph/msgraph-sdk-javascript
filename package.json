@@ -20,6 +20,6 @@
         "build:es": "tsc -b packages/graphService/tsconfig.es.json",
         "buildTest:cjs": "tsc -b packages/testLibraries/tsconfig.cjs.json",
         "test": "node ./packages/graphService/dist/cjs/main/main.js",
-        "clean": "rimraf ./dist ./node_modules"
+        "clean": "rimraf ./node_modules"
     }
 }
