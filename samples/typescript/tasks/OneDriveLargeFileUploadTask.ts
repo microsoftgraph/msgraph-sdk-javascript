@@ -22,6 +22,7 @@ import { client } from "../clientInitialization/ClientWithOptions";
 async function upload() {
 	const file = fs.createReadStream("./test.pdf");
 	const fileName = "FILENAME";
+	const fileDescription = "FILEDESCRIPTION";
 	const stats = fs.statSync(`./test.pdf`);
 	const totalSize = stats.size;
 
@@ -38,6 +39,7 @@ async function upload() {
 
 	const options: OneDriveLargeFileUploadOptions = {
 		fileName,
+		fileDescription,
 		conflictBehavior: "rename",
 		rangeSize: 1024 * 1024,
 		uploadEventHandlers,

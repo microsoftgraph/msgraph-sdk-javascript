@@ -5,8 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path= "./../shims.d.ts" />
+
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
-export { BatchResponseContent } from "./content/BatchResponseContent";
+export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
 export { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 export { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";

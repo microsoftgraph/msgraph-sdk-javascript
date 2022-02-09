@@ -64,7 +64,7 @@ export interface LargeFileUploadSession {
  * @type
  * Representing the return type of the sliceFile function that is type of the slice of a given range.
  */
-export type SliceType = ArrayBuffer | Blob | Buffer;
+export type SliceType = ArrayBuffer | Blob | Uint8Array;
 
 /**
  * @interface
@@ -230,10 +230,10 @@ export class LargeFileUploadTask<T> {
 	 */
 	public sliceFile(range: Range): ArrayBuffer | Blob {
 		console.warn("The LargeFileUploadTask.sliceFile() function has been deprecated and moved into the FileObject interface.");
-		if (this.file.content instanceof ArrayBuffer || this.file.content instanceof Blob || this.file.content instanceof Buffer) {
+		if (this.file.content instanceof ArrayBuffer || this.file.content instanceof Blob || this.file.content instanceof Uint8Array) {
 			return this.file.content.slice(range.minValue, range.maxValue + 1);
 		}
-		throw new GraphClientError("The LargeFileUploadTask.sliceFile() function expects only Blob, ArrayBuffer or Buffer file content. Please note that the sliceFile() function is deprecated.");
+		throw new GraphClientError("The LargeFileUploadTask.sliceFile() function expects only Blob, ArrayBuffer or Uint8Array file content. Please note that the sliceFile() function is deprecated.");
 	}
 
 	/**

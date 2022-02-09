@@ -1,5 +1,3 @@
-import { Readable } from "stream";
-
 import { GraphClientError } from "../../../GraphClientError";
 import { FileObject, SliceType } from "../../LargeFileUploadTask";
 import { Range } from "../Range";
@@ -19,7 +17,7 @@ interface SliceRecord {
  * @class
  * FileObject class for Readable Stream upload
  */
-export class StreamUpload implements FileObject<Readable> {
+export class StreamUpload implements FileObject<NodeStream> {
 	/**
 	 * @private
 	 * Represents a cache of the last attempted upload slice.
@@ -27,7 +25,7 @@ export class StreamUpload implements FileObject<Readable> {
 	 */
 	private previousSlice: SliceRecord;
 
-	public constructor(public content: Readable, public name: string, public size: number) {
+	public constructor(public content: NodeStream, public name: string, public size: number) {
 		if (!content || !name || !size) {
 			throw new GraphClientError("Please provide the Readable Stream content, name of the file and size of the file");
 		}
