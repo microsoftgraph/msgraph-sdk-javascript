@@ -21,6 +21,6 @@
         "build:es": "tsc -b packages/graphService/tsconfig.es.json",
         "buildTest:cjs": "tsc -b packages/testLibraries/tsconfig.cjs.json",
         "test": "node ./packages/testLibraries/dist/cjs/testMail.js",
-        "clean": "rimraf -r./node_modules"
+        "clean": "rimraf -rf./node_modules"
     }
 }

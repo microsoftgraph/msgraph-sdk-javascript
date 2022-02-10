@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "clean": "rimraf -r ./dist"
+        "clean": "rimraf -rf ./dist"
     },
     "author": "",
     "license": "ISC",
