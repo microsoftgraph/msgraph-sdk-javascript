@@ -5,14 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
+/**
+ * Signature that defines callback for an authentication provider
+ */
 
-export interface AuthProviderCallback {
-	/**
-	 * Parameters that are passed into the getAccessTokenCallback
-	 */
-	authOptions?: unknown;
-	/**
-	 * Signature that defines callback for an authentication provider
-	 */
-	getAccessTokenCallback?: (authOptions?: unknown) => Promise<string>;
-}
+export type AuthProviderCallback = (scopes?: string[]) => Promise<string>;

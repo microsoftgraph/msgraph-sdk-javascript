@@ -5,7 +5,7 @@ import { SimpleAccessTokenProvider } from "./SimpleAccessTokenProvider";
 
 export class SimpleAuthenticationProvider extends BaseBearerTokenAuthenticationProvider {
 
-    constructor(authProviderCallback: AuthProviderCallback) {
+    constructor(authProviderCallback: (scopes?: string[]) => Promise<string>) {
         super(new SimpleAccessTokenProvider(authProviderCallback));
     }
 }

@@ -1,30 +1,39 @@
 {
     "extends": "./tsconfig.base.json",
-    "compilerOptions":{
+    "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
         "outDir": "./dist/cjs"
     },
-	"exclude": ["node_modules", "dist"],
-	"include": ["./src/**/*.ts", "./test"],
-        "paths": {
-            "@microsoft/kiota-abstractions": [
-                "../abstractions"
-            ],
-            "@microsoft/kiota-serialization-json": [
-                "../serialization/json"
-            ],
-            "@microsoft/kiota-http-fetchlibrary": [
-                "../http/fetchlibrary"
-            ],
-            "@microsoft/microsoft-graph-client": [
-                "../graphService"
-            ],
-        },
-        "files": [],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "include": [
+        "./src/**/*.ts",
+        "./test"
+    ],
+    "paths": {
+        "@microsoft/kiota-abstractions": [
+            "../abstractions"
+        ],
+        "@microsoft/kiota-serialization-json": [
+            "../serialization/json"
+        ],
+        "graph-service-library": [
+            "../graph-service-library"
+        ],
+        "@microsoft/microsoft-graph-client": [
+            "../graph"
+        ],
+    },
+    "files": [],
     "references": [
         {
             "path": "../graphService/tsconfig.cjs.json"
+        },
+        {
+            "path": "../graph/tsconfig.cjs.json"
         }
     ]
 }

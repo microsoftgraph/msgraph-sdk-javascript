@@ -3,7 +3,7 @@ import "isomorphic-fetch";
 import { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
 
 const token = "";
-const simpleAuthenticationProvider = new SimpleAuthenticationProvider({getAccessTokenCallback:async () => { return token;}});
+const simpleAuthenticationProvider = new SimpleAuthenticationProvider(async () => { return token;});
 const client = Client.init({
     authProvider: simpleAuthenticationProvider
 });

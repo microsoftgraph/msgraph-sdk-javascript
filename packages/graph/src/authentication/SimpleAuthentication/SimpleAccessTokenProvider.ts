@@ -28,7 +28,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
      * @param {AuthProviderCallback} provider - An authProvider function
      * @returns An instance of CustomAuthenticationProvider
      */
-    public constructor(private authProviderCallback: AuthProviderCallback) { }
+    public constructor(private authProviderCallback: (scopes?: string[]) => Promise<string>) { }
     getAllowedHostsValidator: () => AllowedHostsValidator;
 
     /**
@@ -38,9 +38,9 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
      * @returns The promise that resolves to an access token
      */
     public getAuthorizationToken(): Promise<string> {
-const token = this.authProviderCallback.getAccessTokenCallback(this.authProviderCallback.authOptions);
+const token = this.authProviderCallback();
 console.log(token);
-        return this.authProviderCallback.getAccessTokenCallback(this.authProviderCallback.authOptions);
+        return this.authProviderCallback();
     }
     
 }

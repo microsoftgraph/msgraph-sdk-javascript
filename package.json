@@ -5,12 +5,13 @@
         "lerna": "^4.0.0"
     },
     "workspaces": [
+        "packages/testLibraries",
         "packages/abstractions",
         "packages/http/*",
         "packages/graph",
         "packages/serialization/json/",
-        "packages/graphService",
-        "packages/testLibraries"
+        "packages/graphService"
+        
     ],
     "scripts": {
         "compile": "yarn run compile:cjs && yarn run compile:es",
@@ -19,7 +20,7 @@
         "build:cjs": "tsc -b packages/graphService/tsconfig.cjs.json",
         "build:es": "tsc -b packages/graphService/tsconfig.es.json",
         "buildTest:cjs": "tsc -b packages/testLibraries/tsconfig.cjs.json",
-        "test": "node ./packages/graphService/dist/cjs/main/main.js",
-        "clean": "rimraf ./node_modules"
+        "test": "node ./packages/testLibraries/dist/cjs/testMail.js",
+        "clean": "rimraf -r./node_modules"
     }
 }

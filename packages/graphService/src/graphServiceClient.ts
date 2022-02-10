@@ -21,8 +21,9 @@ export class GraphServiceClient extends Client{
      * Instantiates a new GraphServiceClient and sets the default values.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
-    public constructor(requestAdapter: RequestAdapter) {
-        super({});
+    public constructor(clientOptions: ClientOptions) {
+        super(clientOptions);
+        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider)
         if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
@@ -44,7 +45,7 @@ export class GraphServiceClient extends Client{
     };
 
     public static init(clientOptions: ClientOptions): GraphServiceClient {
-        const client = new GraphServiceClient(new FetchRequestAdapter(null));
+        const client = new GraphServiceClient(clientOptions);
         return client;
     }
 

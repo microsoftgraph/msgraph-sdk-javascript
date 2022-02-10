@@ -1,11 +1,12 @@
 {
     "packages": [
+        "packages/testLibraries",
         "packages/abstractions",
         "packages/http/*",
         "packages/graph/*",
         "packages/serialization/json/",
-        "packages/graphService",
-        "packages/testLibraries"
+        "packages/graphService"
+        
     ],
     "version": "0.0.0",
     "npmClient": "yarn",

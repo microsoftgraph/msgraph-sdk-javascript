@@ -2,10 +2,10 @@
     "name": "graph-service-library",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/cjs/graphServiceClient.js",
+    "main": "dist/cjs/src/graphServiceClient.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "clean": "rimraf ./dist ./node_modules"
+        "clean": "rimraf -r ./dist ./node_modules"
     },
     "author": "",
     "license": "ISC",
