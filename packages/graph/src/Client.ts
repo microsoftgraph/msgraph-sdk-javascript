@@ -53,7 +53,7 @@ export class Client {
 	 * Creates an instance of Client
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
-	private constructor(clientOptions: ClientOptions) {
+	public constructor(clientOptions: ClientOptions) {
 		validatePolyFilling();
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {

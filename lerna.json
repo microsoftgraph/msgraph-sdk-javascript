@@ -2,8 +2,8 @@
     "packages": [
         "packages/abstractions",
         "packages/http/*",
-        "packages/graph",
-        "packages/serialization/json",
+        "packages/graph/*",
+        "packages/serialization/json/",
         "packages/graphService",
         "packages/testLibraries"
     ],
