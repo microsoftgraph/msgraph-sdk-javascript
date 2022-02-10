@@ -51,11 +51,11 @@ interface OneDriveFileUploadSessionPayLoad {
 /**
  * @interface
  * Signature to define the file information when processing an upload task
- * @property {File | Buffer} content - The file content
+ * @property {File | Uint8Array} content - The file content
  * @property {number} size - The size of file
  */
 interface FileInfo {
-	content: File | Buffer;
+	content: File | Uint8Array;
 	size: number;
 }
 
@@ -103,11 +103,11 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @private
 	 * @static
 	 * Get file information
-	 * @param {Blob | Buffer | File} file - The file entity
+	 * @param {Blob | Uint8Array | File} file - The file entity
 	 * @param {string} fileName - The file name
 	 * @returns {FileInfo} The file information
 	 */
-	private static getFileInfo(file: Blob | Buffer | File, fileName: string): FileInfo {
+	private static getFileInfo(file: Blob | Uint8Array | File, fileName: string): FileInfo {
 		let content;
 		let size;
 		if (typeof Blob !== "undefined" && file instanceof Blob) {
@@ -116,8 +116,8 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 		} else if (typeof File !== "undefined" && file instanceof File) {
 			content = file as File;
 			size = content.size;
-		} else if (typeof Buffer !== "undefined" && file instanceof Buffer) {
-			const b = file as Buffer;
+		} else if (typeof Uint8Array !== "undefined" && file instanceof Uint8Array) {
+			const b = file as Uint8Array;
 			size = b.byteLength;
 			content = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
 		}
@@ -133,18 +133,18 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @async
 	 * Creates a OneDriveLargeFileUploadTask
 	 * @param {Client} client - The GraphClient instance
-	 * @param {Blob | Buffer | File} file - File represented as Blob, Buffer or File
+	 * @param {Blob | Uint8Array | File} file - File represented as Blob, Uint8Array or File
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async create(client: Client, file: Blob | Buffer | File, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<Blob | ArrayBuffer | Buffer>> {
+	public static async create(client: Client, file: Blob | Uint8Array | File, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<Blob | ArrayBuffer | Uint8Array>> {
 		if (!client || !file || !options) {
 			throw new GraphClientError("Please provide the Graph client instance, file object and OneDriveLargeFileUploadOptions value");
 		}
 		const fileName = options.fileName;
 		const fileInfo = OneDriveLargeFileUploadTask.getFileInfo(file, fileName);
 		const fileObj = new FileUpload(fileInfo.content, fileName, fileInfo.size);
-		return this.createTaskWithFileObject<Blob | ArrayBuffer | Buffer>(client, fileObj, options);
+		return this.createTaskWithFileObject<Blob | ArrayBuffer | Uint8Array>(client, fileObj, options);
 	}
 
 	/**
