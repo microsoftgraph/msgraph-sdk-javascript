@@ -224,14 +224,14 @@ export class GraphRequest {
 		if (Object.keys(urlComponents.oDataQueryParams).length !== 0) {
 			for (const property in urlComponents.oDataQueryParams) {
 				if (Object.prototype.hasOwnProperty.call(urlComponents.oDataQueryParams, property)) {
-					query.push(property + "=" + urlComponents.oDataQueryParams[property]);
+					query.push(property + "=" + encodeURIComponent(urlComponents.oDataQueryParams[property]));
 				}
 			}
 		}
 		if (Object.keys(urlComponents.otherURLQueryParams).length !== 0) {
 			for (const property in urlComponents.otherURLQueryParams) {
 				if (Object.prototype.hasOwnProperty.call(urlComponents.otherURLQueryParams, property)) {
-					query.push(property + "=" + urlComponents.otherURLQueryParams[property]);
+					query.push(property + "=" + encodeURIComponent(urlComponents.otherURLQueryParams[property]));
 				}
 			}
 		}
