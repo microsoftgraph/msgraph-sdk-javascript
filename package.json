@@ -68,8 +68,8 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.12.5",
-		"tslib": "^2.2.0",
-        "@microsoft/kiota-abstractions": "*"
+		"@microsoft/kiota-abstractions": "1.0.29",
+		"tslib": "^2.2.0"
 	},
 	"devDependencies": {
 		"@azure/identity": "^2.0.1",
@@ -78,6 +78,7 @@
 		"@babel/plugin-transform-runtime": "^7.12.10",
 		"@babel/preset-env": "^7.12.11",
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
+		"@microsoft/kiota-authentication-azure": "1.0.7",
 		"@microsoft/microsoft-graph-types": "^2.11.0",
 		"@rollup/plugin-babel": "^5.2.2",
 		"@rollup/plugin-commonjs": "^21.0.1",

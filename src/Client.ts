@@ -9,10 +9,12 @@
  * @module Client
  */
 
-import { AuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
+
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
+import { appendGraphHosts } from "./GraphRequestUtil";
 import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
@@ -35,7 +37,7 @@ export class Client {
 	 */
 	private httpClient: HTTPClient;
 
-    private authProvider:AuthenticationProvider
+	private authProvider: BaseBearerTokenAuthenticationProvider;
 
 	/**
 	 * @public
@@ -68,10 +70,14 @@ export class Client {
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
-        this.authProvider = clientOptions.authProvider;
-        if (!clientOptions.middleware) {
+		this.authProvider = clientOptions.authProvider;
+		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
+		const hosts = hostsValidator.getAllowedHosts();
+		const hostSetWithGraphHosts = appendGraphHosts(hosts);
+		hostsValidator.setAllowedHosts(hostSetWithGraphHosts);
+		if (!clientOptions.middleware) {
 			httpClient = HTTPClientFactory.createWithDefaultMiddleware();
-		} else  {
+		} else {
 			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
@@ -84,6 +90,6 @@ export class Client {
 	 * @returns The graph request instance
 	 */
 	public api(path: string): GraphRequest {
-		return new GraphRequest(this.httpClient, this.authProvider,this.config, path);
+		return new GraphRequest(this.httpClient, this.authProvider, this.config, path);
 	}
 }

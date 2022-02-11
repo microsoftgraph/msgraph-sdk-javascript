@@ -8,7 +8,8 @@
 /**
  * @module GraphRequest
  */
-import { AuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
+import { AuthenticationProvider, BaseBearerTokenAuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
+
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
@@ -64,7 +65,7 @@ export class GraphRequest {
 	 */
 	private httpClient: HTTPClient;
 
-    private authenticationProvider: AuthenticationProvider
+	private authenticationProvider: BaseBearerTokenAuthenticationProvider;
 
 	/**
 	 * @private
@@ -112,7 +113,7 @@ export class GraphRequest {
 	 */
 	public constructor(httpClient: HTTPClient, authProvider: AuthenticationProvider, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
-        this.authenticationProvider = authProvider;
+		this.authenticationProvider = authProvider;
 		this.config = config;
 		this.urlComponents = {
 			host: this.config.baseUrl,
@@ -372,14 +373,14 @@ export class GraphRequest {
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
 		const customHosts = this.config?.customHosts;
-        const requestInfo = new RequestInformation();
+		const requestInfo = new RequestInformation();
 
-        requestInfo.URL = request as string;
-        requestInfo.headers = options.headers as Record<string,string>;
-        console.log(options.headers);
-        
-       await this.authenticationProvider.authenticateRequest(requestInfo);
-       // options.headers = requestInfo.headers;
+		requestInfo.URL = request as string;
+		requestInfo.headers = options.headers as Record<string, string>;
+		console.log(options.headers);
+
+		await this.authenticationProvider.authenticateRequest(requestInfo);
+		// options.headers = requestInfo.headers;
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,

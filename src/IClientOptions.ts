@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { AuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { AuthenticationProvider, BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
 import { FetchOptions } from "./IFetchOptions";
 import { Middleware } from "./middleware/IMiddleware";
 
@@ -22,7 +22,7 @@ import { Middleware } from "./middleware/IMiddleware";
  */
 
 export interface ClientOptions {
-	authProvider?: AuthenticationProvider;
+	authProvider?: BaseBearerTokenAuthenticationProvider;
 	baseUrl?: string;
 	debugLogging?: boolean;
 	defaultVersion?: string;

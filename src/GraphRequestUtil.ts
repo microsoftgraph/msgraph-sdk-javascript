@@ -21,11 +21,11 @@ export const oDataQueryNames = ["$select", "$expand", "$orderby", "$filter", "$t
  * @returns The constructed URL string
  */
 export const urlJoin = (urlSegments: string[]): string => {
-	const removePostSlash = (s) => s.replace(/\/+$/, "");
-	const removePreSlash = (s) => s.replace(/^\/+/, "");
-	const joiner = (pre, cur) => [removePostSlash(pre), removePreSlash(cur)].join("/");
-	const parts = Array.prototype.slice.call(urlSegments);
-	return parts.reduce(joiner);
+    const removePostSlash = (s) => s.replace(/\/+$/, "");
+    const removePreSlash = (s) => s.replace(/^\/+/, "");
+    const joiner = (pre, cur) => [removePostSlash(pre), removePreSlash(cur)].join("/");
+    const parts = Array.prototype.slice.call(urlSegments);
+    return parts.reduce(joiner);
 };
 
 /**
@@ -42,22 +42,22 @@ export const urlJoin = (urlSegments: string[]): string => {
  */
 
 export const serializeContent = (content: any): any => {
-	const className: string = content && content.constructor && content.constructor.name;
-	if (className === "Buffer" || className === "Blob" || className === "File" || className === "FormData" || typeof content === "string") {
-		return content;
-	}
-	if (className === "ArrayBuffer") {
-		content = Buffer.from(content);
-	} else if (className === "Int8Array" || className === "Int16Array" || className === "Int32Array" || className === "Uint8Array" || className === "Uint16Array" || className === "Uint32Array" || className === "Uint8ClampedArray" || className === "Float32Array" || className === "Float64Array" || className === "DataView") {
-		content = Buffer.from(content.buffer);
-	} else {
-		try {
-			content = JSON.stringify(content);
-		} catch (error) {
-			throw new Error("Unable to stringify the content");
-		}
-	}
-	return content;
+    const className: string = content && content.constructor && content.constructor.name;
+    if (className === "Buffer" || className === "Blob" || className === "File" || className === "FormData" || typeof content === "string") {
+        return content;
+    }
+    if (className === "ArrayBuffer") {
+        content = Buffer.from(content);
+    } else if (className === "Int8Array" || className === "Int16Array" || className === "Int32Array" || className === "Uint8Array" || className === "Uint16Array" || className === "Uint32Array" || className === "Uint8ClampedArray" || className === "Float32Array" || className === "Float64Array" || className === "DataView") {
+        content = Buffer.from(content.buffer);
+    } else {
+        try {
+            content = JSON.stringify(content);
+        } catch (error) {
+            throw new Error("Unable to stringify the content");
+        }
+    }
+    return content;
 };
 
 /**
@@ -66,7 +66,7 @@ export const serializeContent = (content: any): any => {
  * @returns {boolean} - Returns true if the url is a Graph URL
  */
 export const isGraphURL = (url: string): boolean => {
-	return isValidEndpoint(url);
+    return isValidEndpoint(url);
 };
 
 /**
@@ -76,8 +76,8 @@ export const isGraphURL = (url: string): boolean => {
  * @returns {boolean} - Returns true if the url is a for a custom host
  */
 export const isCustomHost = (url: string, customHosts: Set<string>): boolean => {
-	customHosts.forEach((host) => isCustomHostValid(host));
-	return isValidEndpoint(url, customHosts);
+    customHosts.forEach((host) => isCustomHostValid(host));
+    return isValidEndpoint(url, customHosts);
 };
 
 /**
@@ -87,29 +87,29 @@ export const isCustomHost = (url: string, customHosts: Set<string>): boolean => 
  * @returns {boolean} - Returns true is for one of the provided endpoints.
  */
 const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): boolean => {
-	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
-	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
-	url = url.toLowerCase();
+    // Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+    // Valid Graph URL example - https://graph.microsoft.com/v1.0/
+    url = url.toLowerCase();
 
-	if (url.indexOf("https://") !== -1) {
-		url = url.replace("https://", "");
+    if (url.indexOf("https://") !== -1) {
+        url = url.replace("https://", "");
 
-		// Find where the host ends
-		const startofPortNoPos = url.indexOf(":");
-		const endOfHostStrPos = url.indexOf("/");
-		let hostName = "";
-		if (endOfHostStrPos !== -1) {
-			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
-				hostName = url.substring(0, startofPortNoPos);
-				return allowedHosts.has(hostName);
-			}
-			// Parse out the host
-			hostName = url.substring(0, endOfHostStrPos);
-			return allowedHosts.has(hostName);
-		}
-	}
+        // Find where the host ends
+        const startofPortNoPos = url.indexOf(":");
+        const endOfHostStrPos = url.indexOf("/");
+        let hostName = "";
+        if (endOfHostStrPos !== -1) {
+            if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
+                hostName = url.substring(0, startofPortNoPos);
+                return allowedHosts.has(hostName);
+            }
+            // Parse out the host
+            hostName = url.substring(0, endOfHostStrPos);
+            return allowedHosts.has(hostName);
+        }
+    }
 
-	return false;
+    return false;
 };
 
 /**
@@ -117,7 +117,13 @@ const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): b
  * @param {string} host - The host to be verified
  */
 const isCustomHostValid = (host: string) => {
-	if (host.indexOf("/") !== -1) {
-		throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
-	}
+    if (host.indexOf("/") !== -1) {
+        throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
+    }
+};
+
+export const appendGraphHosts = (customHosts: string[]): Set<string> => {
+    if (!customHosts) return GRAPH_URLS;
+
+    return new Set([...customHosts, ...GRAPH_URLS]);
 };
