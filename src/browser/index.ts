@@ -8,6 +8,8 @@
  export { AuthenticationProvider, AccessTokenProvider  } from "@microsoft/kiota-abstractions";
  
 
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path= "../../shims.d.ts" />
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 

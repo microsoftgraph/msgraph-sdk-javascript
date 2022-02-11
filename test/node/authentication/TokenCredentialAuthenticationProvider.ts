@@ -12,7 +12,7 @@ import * as sinon from "sinon";
 import { TokenCredentialAuthenticationProviderOptions } from "../../../src/authentication/azureTokenCredentials/ITokenCredentialAuthenticationProviderOptions";
 import { TokenCredentialAuthenticationProvider } from "../../../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider";
 describe("TokenCredentialAuthenticationProvider.ts", () => {
-	const tenantId = "TENANT_ID";
+	const tenantId = "0000-1111-0000-1111";
 	const clientId = "CLIENT_ID";
 	const clientSecret = "CLIENT_SECRET";
 	const scopes = ["test_scopes"];
