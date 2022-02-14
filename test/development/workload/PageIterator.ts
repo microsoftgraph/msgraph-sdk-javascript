@@ -116,7 +116,7 @@ describe("PageIterator", () => {
 		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
 		const requestOptions = { middlewareOptions };
 
-		const client = Client.initWithMiddleware(clientOptions);
+		const client = Client.init(clientOptions);
 		const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
 		await pageIterator.iterate();
 	});

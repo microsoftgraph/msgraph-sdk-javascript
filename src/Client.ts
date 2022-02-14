@@ -14,7 +14,7 @@ import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstract
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
-import { appendGraphHosts } from "./GraphRequestUtil";
+import { appendGraphAndCustomHosts } from "./GraphRequestUtil";
 import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
@@ -66,15 +66,15 @@ export class Client {
 		let httpClient: HTTPClient;
 		if (clientOptions.authProvider === undefined) {
 			const error = new GraphClientError();
-			error.name = "AmbiguityInInitialization";
+			error.name = "Client Initialization Failed";
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
 		this.authProvider = clientOptions.authProvider;
 		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
-		const hosts = hostsValidator.getAllowedHosts();
-		const hostSetWithGraphHosts = appendGraphHosts(hosts);
-		hostsValidator.setAllowedHosts(hostSetWithGraphHosts);
+		const allowedHosts = clientOptions.customHosts ? new Set([...clientOptions.customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
+		const hostSetWithGraphandCustomHosts = appendGraphAndCustomHosts(allowedHosts);
+		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
 		if (!clientOptions.middleware) {
 			httpClient = HTTPClientFactory.createWithDefaultMiddleware();
 		} else {

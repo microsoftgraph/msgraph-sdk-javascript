@@ -8,7 +8,7 @@
 /**
  * @module GraphRequest
  */
-import { AuthenticationProvider, BaseBearerTokenAuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
+import {BaseBearerTokenAuthenticationProvider, RequestInformation } from "@microsoft/kiota-abstractions";
 
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
@@ -111,7 +111,7 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HTTPClient, authProvider: AuthenticationProvider, config: ClientOptions, path: string) {
+	public constructor(httpClient: HTTPClient, authProvider: BaseBearerTokenAuthenticationProvider, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
 		this.authenticationProvider = authProvider;
 		this.config = config;
@@ -372,7 +372,7 @@ export class GraphRequest {
 		let rawResponse: Response;
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
-		const customHosts = this.config?.customHosts;
+        const customHosts = this.config?.customHosts;
 		const requestInfo = new RequestInformation();
 
 		requestInfo.URL = request as string;

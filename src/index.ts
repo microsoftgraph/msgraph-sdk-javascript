@@ -46,3 +46,6 @@ export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
 
 export { ResponseType } from "./ResponseType";
+
+export { SimpleAccessTokenProvider } from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
+export { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";

@@ -122,7 +122,7 @@ const isCustomHostValid = (host: string) => {
     }
 };
 
-export const appendGraphHosts = (customHosts: string[]): Set<string> => {
+export const appendGraphAndCustomHosts = (customHosts: Set<string>): Set<string> => {
     if (!customHosts) return GRAPH_URLS;
 
     return new Set([...customHosts, ...GRAPH_URLS]);

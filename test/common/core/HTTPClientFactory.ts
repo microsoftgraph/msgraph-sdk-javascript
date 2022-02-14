@@ -9,15 +9,13 @@ import { assert } from "chai";
 
 import { HTTPClient } from "../../../src/HTTPClient";
 import { HTTPClientFactory } from "../../../src/HTTPClientFactory";
-import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("HTTPClientFactory.ts", () => {
 	describe("createWithAuthenticationProvider", () => {
-		const dummyAuthProvider = new DummyAuthenticationProvider();
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 		it("Should create an HTTPClient instance with default middleware chain", () => {
-			const client: HTTPClient = HTTPClientFactory.createWithAuthenticationProvider(dummyAuthProvider);
+			const client: HTTPClient = HTTPClientFactory.createWithDefaultMiddleware();
 			assert.isTrue(client instanceof HTTPClient);
 			assert.isDefined(client["middleware"]);
 		});
