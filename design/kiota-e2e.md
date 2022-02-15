@@ -2,17 +2,31 @@
 
 While working with the Kiota + Javascript teams, it became clear that we needed more context and provide a better vision on how we should be using a kiota-generated SDK. This design document aims at providing clarity and a better understanding on how developers will be using our SDKs and the underlying kiota packages.
 
+## Status
+
+| Date                | Version | Author           | Status |
+| ------------------- | ------- | ---------------- | ------ |
+| February 15th, 2022 | v0.2    | Sébastien Levert | Draft  |
+| January 17th, 2022  | v0.1    | Sébastien Levert | Draft  |
+
 ## Constraints
 
 Before we jump into the end-to-end walk-through, it's important to set some constraints.
 
-| Type      | Description                                                                                                                                   |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms | Node : Current and Previous LTS (14 / 16)<br /> Web : Edge, Chrome, Firefox and Safari (Latest released version + immediate previous version) |
-| Modules   | Node : ESM (For preview) and potentially CJS (Based on feedback)<br /> Web : ESM                                                              |
-| Types     | Typings / Models should be available for both the core and the service libraries for Graph models                                             |
+| Type      | Environment | Description                                                                                       |
+| --------- | ----------- | ------------------------------------------------------------------------------------------------- |
+| Platforms | Node        | Current and Previous LTS (14 / 16)                                                                |
+| Platforms | Web         | Edge, Chrome, Firefox and Safari (Latest released version + immediate previous version)           |
+| Modules   | Node        | ESM + CJS                                                                                         |
+| Modules   | Web         | ESM                                                                                               |
+| Types     | All         | Typings / Models should be available for both the core and the service libraries for Graph models |
 
-## NodeJS e2e using the Service library
+## Table of Contents
+
+-   [NodeJS e2e using the Service library](#node-service-library)
+-   [NodeJS e2e using the Core library](#node-core-library)
+
+## <a id="node-service-library"></a> NodeJS e2e using the Service library
 
 ### Concept
 
@@ -29,10 +43,8 @@ The Microsoft Graph Javascript Service Library includes the following packages:
 
 You can use [npm](https://www.npmjs.com) to install the Microsoft Graph Javascript Service Library :
 
-```Shell
+```shell
 npm install @microsoft/msgraph-sdk-javascript --save
-npm install @microsoft/msgraph-sdk-javascript-beta --save-dev
-npm install @microsoft/kiota-authentication-azure --save
 ```
 
 ### Importing the right functionalities from the Graph Javascript Service Library
@@ -40,8 +52,11 @@ npm install @microsoft/kiota-authentication-azure --save
 ```typescript
 // App.ts
 
-import { Client, User, Message, BodyType } from "@microsoft/msgraph-sdk-javascript";
-import { AzureIdentityAuthenticationProvider } from "@microsoft/kiota-authentication-azure";
+import { Client } from "@microsoft/msgraph-sdk-javascript";
+import { User, Message, BodyType } from "@microsoft/msgraph-sdk-javascript/models";
+
+// The authentication providers would get re-exported from @microsoft/msgraph-sdk-javascript-core/authentication
+import { AzureIdentityAuthenticationProvider } from "@microsoft/msgraph-sdk-javascript/authentication";
 import { DeviceCodeCredential } from "@azure/identity";
 ```
 
@@ -69,8 +84,8 @@ Models are also available in this package and should reflect the underlying vers
 We have an open issue about the above topic that can be followed here : [TypeScript - Use of interface models instead of class models](https://github.com/microsoft/kiota/issues/1013)
 
 ```typescript
-const me = await getMe();
-const meRaw = await getMeRaw();
+const me: User | undefined = await getMe();
+const meRaw: User | undefined = await getMeRaw();
 await sendMail();
 await sendMailRaw();
 
@@ -81,7 +96,7 @@ async function getMe(): Promise<User | undefined> {
 
 // Allowing raw calls (using the .api() method instead of the full fluent API) is important for migration purposes and cases we don't know the resource beforehands (thinking Graph Explorer, mgt-get, etc.)
 async function getMeRaw(): Promise<User | undefined> {
-	return await graphClient.api("/me").get();
+	return await graphClient.api("/me").get<User>();
 }
 
 // Sending an email via the fluent API
@@ -127,7 +142,7 @@ async function sendMailRaw(): Promise<void> {
 }
 ```
 
-## NodeJS e2e using the Core library
+## <a id="node-core-library"></a> NodeJS e2e using the Core library
 
 ### Concept
 
@@ -145,17 +160,16 @@ You can use [npm](https://www.npmjs.com) to install the Microsoft Graph Javascri
 ```Shell
 npm install @microsoft/msgraph-sdk-javascript-core --save
 npm install @microsoft/msgraph-sdk-javascript-types --save-dev
-npm install @microsoft/kiota-authentication-azure --save
 ```
 
-As a developer, the only package you really need is the `@microsoft/msgraph-sdk-javascript-core` one. This will deliver the expected capabilities (authentication, middlewares, tasks, etc.) and should be used in a comprehensive way for existing NodeJS developers. The types and authentication packages are recommended but optional.
+As a developer, the only package you really need is the `@microsoft/msgraph-sdk-javascript-core` one. This will deliver the expected capabilities (authentication, middlewares, tasks, etc.) and should be used in a comprehensive way for existing NodeJS developers. The types are recommended but optional.
 
 ### Importing the right functionalities from the Graph Javascript Core SDK
 
 ```typescript
 import { Client } from "@microsoft/msgraph-sdk-javascript-core";
 import { User, Message, BodyType } from "@microsoft/msgraph-sdk-javascript-core-types";
-import { AzureIdentityAuthenticationProvider } from "@microsoft/kiota-authentication-azure";
+import { AzureIdentityAuthenticationProvider } from "@microsoft/msgraph-sdk-javascript-core/authentication";
 import { DeviceCodeCredential } from "@azure/identity";
 ```
 
@@ -185,11 +199,11 @@ Developers using our types should do it in a way that will be familiar to how th
 We have an open issue about the above topic that can be followed here : [TypeScript - Use of interface models instead of class models](https://github.com/microsoft/kiota/issues/1013)
 
 ```typescript
-const me = await getMe();
+const me: User = await getMe();
 await sendMail();
 
 async function getMe(): Promise<User | undefined> {
-	return await graphClient.api("/me").get();
+	return await graphClient.api("/me").get<User>();
 }
 
 async function sendMail(): Promise<void> {
