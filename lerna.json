@@ -5,7 +5,8 @@
         "packages/http/*",
         "packages/graph/*",
         "packages/serialization/json/",
-        "packages/graphService"
+        "packages/graphService",
+        "packages/serviceLib"
         
     ],
     "version": "0.0.0",

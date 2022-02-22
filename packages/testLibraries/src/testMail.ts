@@ -20,5 +20,5 @@ async function test() {
     console.log(coreMe);
 }
 
-test().catch(console.error);
 
+test().catch(console.error);

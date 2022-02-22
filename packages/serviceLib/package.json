@@ -1,0 +1,24 @@
+{
+    "name": "serviceLib",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "clean": "rimraf -r ./dist ./node_modules"
+    },
+    "dependencies": {
+        "@microsoft/kiota-abstractions": "*",
+        "@microsoft/kiota-http-fetchlibrary": "*",
+        "@microsoft/kiota-serialization-json": "*",
+        "@microsoft/microsoft-graph-client": "*",
+        "tslib": "^2.3.1"
+    },
+    "devDependencies": {
+        "@types/node": "^16.7.10",
+        "typescript": "^4.4.2"
+    }
+}
