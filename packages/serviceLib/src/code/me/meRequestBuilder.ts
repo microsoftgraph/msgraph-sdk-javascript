@@ -1,39 +1,39 @@
 import {User} from '../models/microsoft/graph/';
 import {ActivitiesRequestBuilder} from './activities/';
-import {UserActivityRequestBuilder} from './activities/item/';
+import {UserActivityItemRequestBuilder} from './activities/item/';
 import {AgreementAcceptancesRequestBuilder} from './agreementAcceptances/';
 import {AppRoleAssignmentsRequestBuilder} from './appRoleAssignments/';
-import {AppRoleAssignmentRequestBuilder} from './appRoleAssignments/item/';
+import {AppRoleAssignmentItemRequestBuilder} from './appRoleAssignments/item/';
 import {AssignLicenseRequestBuilder} from './assignLicense/';
 import {AuthenticationRequestBuilder} from './authentication/';
-import {CalendarRequestBuilder as i79ef96267c6b96de5b2a6002578097b8174c238b0ce5a52ed2dbac7551100f1a} from './calendar/';
+import {CalendarRequestBuilder} from './calendar/';
 import {CalendarGroupsRequestBuilder} from './calendarGroups/';
-import {CalendarGroupRequestBuilder} from './calendarGroups/item/';
+import {CalendarGroupItemRequestBuilder} from './calendarGroups/item/';
 import {CalendarsRequestBuilder} from './calendars/';
-import {CalendarRequestBuilder as i78023f8d1bb5f60e5165306ad312537c3209e12d66c8773c610529d3b6db3196} from './calendars/item/';
+import {CalendarItemRequestBuilder} from './calendars/item/';
 import {CalendarViewRequestBuilder} from './calendarView/';
-import {EventRequestBuilder as i1ba109851d4567b7a4f4727e6433d93597a0925cb9007dc61c6ab58623cb5e40} from './calendarView/item/';
+import {EventItemRequestBuilder as if5ae6bb0d503d5b19d9a3b27f3384af303f49f16962e7ab567adedada01113cb} from './calendarView/item/';
 import {ChangePasswordRequestBuilder} from './changePassword/';
 import {ChatsRequestBuilder} from './chats/';
-import {ChatRequestBuilder} from './chats/item/';
+import {ChatItemRequestBuilder} from './chats/item/';
 import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
 import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
 import {ContactFoldersRequestBuilder} from './contactFolders/';
-import {ContactFolderRequestBuilder} from './contactFolders/item/';
+import {ContactFolderItemRequestBuilder} from './contactFolders/item/';
 import {ContactsRequestBuilder} from './contacts/';
-import {ContactRequestBuilder} from './contacts/item/';
+import {ContactItemRequestBuilder} from './contacts/item/';
 import {CreatedObjectsRequestBuilder} from './createdObjects/';
 import {DeviceManagementTroubleshootingEventsRequestBuilder} from './deviceManagementTroubleshootingEvents/';
-import {DeviceManagementTroubleshootingEventRequestBuilder} from './deviceManagementTroubleshootingEvents/item/';
+import {DeviceManagementTroubleshootingEventItemRequestBuilder} from './deviceManagementTroubleshootingEvents/item/';
 import {DirectReportsRequestBuilder} from './directReports/';
-import {DriveRequestBuilder as i0df763c4416fe9aec47c1096b40b0e161b690ac6b43dcbe46aac0a7e90c59b43} from './drive/';
+import {DriveRequestBuilder} from './drive/';
 import {DrivesRequestBuilder} from './drives/';
-import {DriveRequestBuilder as i912ea36a2ba030731f0e4b94d641ebe28d01a2c4c6378fef0122dc7b9a1119c6} from './drives/item/';
+import {DriveItemRequestBuilder} from './drives/item/';
 import {EventsRequestBuilder} from './events/';
-import {EventRequestBuilder as id521880eaa4d15a442c4ad54a5234847f946015811b3c6e6c7ad82dad7bf9032} from './events/item/';
+import {EventItemRequestBuilder as ie2bacd240752e8765f2155d8e0a7935b3716fc9cd45e16a913438f57cd3e576f} from './events/item/';
 import {ExportPersonalDataRequestBuilder} from './exportPersonalData/';
 import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionRequestBuilder} from './extensions/item/';
+import {ExtensionItemRequestBuilder} from './extensions/item/';
 import {FindMeetingTimesRequestBuilder} from './findMeetingTimes/';
 import {FollowedSitesRequestBuilder} from './followedSites/';
 import {GetMailTipsRequestBuilder} from './getMailTips/';
@@ -44,29 +44,30 @@ import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
 import {InferenceClassificationRequestBuilder} from './inferenceClassification/';
 import {InsightsRequestBuilder} from './insights/';
 import {JoinedTeamsRequestBuilder} from './joinedTeams/';
-import {TeamRequestBuilder} from './joinedTeams/item/';
+import {TeamItemRequestBuilder} from './joinedTeams/item/';
 import {LicenseDetailsRequestBuilder} from './licenseDetails/';
+import {LicenseDetailsItemRequestBuilder} from './licenseDetails/item/';
 import {MailFoldersRequestBuilder} from './mailFolders/';
-import {MailFolderRequestBuilder} from './mailFolders/item/';
+import {MailFolderItemRequestBuilder} from './mailFolders/item/';
 import {ManagedAppRegistrationsRequestBuilder} from './managedAppRegistrations/';
 import {ManagedDevicesRequestBuilder} from './managedDevices/';
-import {ManagedDeviceRequestBuilder} from './managedDevices/item/';
+import {ManagedDeviceItemRequestBuilder} from './managedDevices/item/';
 import {ManagerRequestBuilder} from './manager/';
 import {MemberOfRequestBuilder} from './memberOf/';
 import {MessagesRequestBuilder} from './messages/';
-import {MessageRequestBuilder} from './messages/item/';
+import {MessageItemRequestBuilder} from './messages/item/';
 import {Oauth2PermissionGrantsRequestBuilder} from './oauth2PermissionGrants/';
 import {OnenoteRequestBuilder} from './onenote/';
 import {OnlineMeetingsRequestBuilder} from './onlineMeetings/';
-import {OnlineMeetingRequestBuilder} from './onlineMeetings/item/';
+import {OnlineMeetingItemRequestBuilder} from './onlineMeetings/item/';
 import {OutlookRequestBuilder} from './outlook/';
 import {OwnedDevicesRequestBuilder} from './ownedDevices/';
 import {OwnedObjectsRequestBuilder} from './ownedObjects/';
 import {PeopleRequestBuilder} from './people/';
-import {PersonRequestBuilder} from './people/item/';
+import {PersonItemRequestBuilder} from './people/item/';
 import {PhotoRequestBuilder} from './photo/';
 import {PhotosRequestBuilder} from './photos/';
-import {ProfilePhotoRequestBuilder} from './photos/item/';
+import {ProfilePhotoItemRequestBuilder} from './photos/item/';
 import {PlannerRequestBuilder} from './planner/';
 import {PresenceRequestBuilder} from './presence/';
 import {RegisteredDevicesRequestBuilder} from './registeredDevices/';
@@ -76,7 +77,7 @@ import {ReprocessLicenseAssignmentRequestBuilder} from './reprocessLicenseAssign
 import {RestoreRequestBuilder} from './restore/';
 import {RevokeSignInSessionsRequestBuilder} from './revokeSignInSessions/';
 import {ScopedRoleMemberOfRequestBuilder} from './scopedRoleMemberOf/';
-import {ScopedRoleMembershipRequestBuilder} from './scopedRoleMemberOf/item/';
+import {ScopedRoleMembershipItemRequestBuilder} from './scopedRoleMemberOf/item/';
 import {SendMailRequestBuilder} from './sendMail/';
 import {SettingsRequestBuilder} from './settings/';
 import {TeamworkRequestBuilder} from './teamwork/';
@@ -103,8 +104,8 @@ export class MeRequestBuilder {
     public get authentication(): AuthenticationRequestBuilder {
         return new AuthenticationRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    public get calendar(): i79ef96267c6b96de5b2a6002578097b8174c238b0ce5a52ed2dbac7551100f1a {
-        return new i79ef96267c6b96de5b2a6002578097b8174c238b0ce5a52ed2dbac7551100f1a(this.pathParameters, this.requestAdapter);
+    public get calendar(): CalendarRequestBuilder {
+        return new CalendarRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get calendarGroups(): CalendarGroupsRequestBuilder {
         return new CalendarGroupsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -142,8 +143,8 @@ export class MeRequestBuilder {
     public get directReports(): DirectReportsRequestBuilder {
         return new DirectReportsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    public get drive(): i0df763c4416fe9aec47c1096b40b0e161b690ac6b43dcbe46aac0a7e90c59b43 {
-        return new i0df763c4416fe9aec47c1096b40b0e161b690ac6b43dcbe46aac0a7e90c59b43(this.pathParameters, this.requestAdapter);
+    public get drive(): DriveRequestBuilder {
+        return new DriveRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get drives(): DrivesRequestBuilder {
         return new DrivesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -283,68 +284,68 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.activities.item collection
      * @param id Unique identifier of the item
-     * @returns a userActivityRequestBuilder
+     * @returns a userActivityItemRequestBuilder
      */
-    public activitiesById(id: string) : UserActivityRequestBuilder {
+    public activitiesById(id: string) : UserActivityItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["userActivity_id"] = id
-        return new UserActivityRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UserActivityItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.appRoleAssignments.item collection
      * @param id Unique identifier of the item
-     * @returns a appRoleAssignmentRequestBuilder
+     * @returns a appRoleAssignmentItemRequestBuilder
      */
-    public appRoleAssignmentsById(id: string) : AppRoleAssignmentRequestBuilder {
+    public appRoleAssignmentsById(id: string) : AppRoleAssignmentItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["appRoleAssignment_id"] = id
-        return new AppRoleAssignmentRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AppRoleAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.calendarGroups.item collection
      * @param id Unique identifier of the item
-     * @returns a calendarGroupRequestBuilder
+     * @returns a calendarGroupItemRequestBuilder
      */
-    public calendarGroupsById(id: string) : CalendarGroupRequestBuilder {
+    public calendarGroupsById(id: string) : CalendarGroupItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["calendarGroup_id"] = id
-        return new CalendarGroupRequestBuilder(urlTplParams, this.requestAdapter);
+        return new CalendarGroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.calendars.item collection
      * @param id Unique identifier of the item
-     * @returns a calendarRequestBuilder
+     * @returns a calendarItemRequestBuilder
      */
-    public calendarsById(id: string) : i78023f8d1bb5f60e5165306ad312537c3209e12d66c8773c610529d3b6db3196 {
+    public calendarsById(id: string) : CalendarItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["calendar_id"] = id
-        return new i78023f8d1bb5f60e5165306ad312537c3209e12d66c8773c610529d3b6db3196(urlTplParams, this.requestAdapter);
+        return new CalendarItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.calendarView.item collection
      * @param id Unique identifier of the item
-     * @returns a eventRequestBuilder
+     * @returns a eventItemRequestBuilder
      */
-    public calendarViewById(id: string) : i1ba109851d4567b7a4f4727e6433d93597a0925cb9007dc61c6ab58623cb5e40 {
+    public calendarViewById(id: string) : if5ae6bb0d503d5b19d9a3b27f3384af303f49f16962e7ab567adedada01113cb {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["event_id"] = id
-        return new i1ba109851d4567b7a4f4727e6433d93597a0925cb9007dc61c6ab58623cb5e40(urlTplParams, this.requestAdapter);
+        return new if5ae6bb0d503d5b19d9a3b27f3384af303f49f16962e7ab567adedada01113cb(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.chats.item collection
      * @param id Unique identifier of the item
-     * @returns a chatRequestBuilder
+     * @returns a chatItemRequestBuilder
      */
-    public chatsById(id: string) : ChatRequestBuilder {
+    public chatsById(id: string) : ChatItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["chat_id"] = id
-        return new ChatRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ChatItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new MeRequestBuilder and sets the default values.
@@ -362,24 +363,24 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.contactFolders.item collection
      * @param id Unique identifier of the item
-     * @returns a contactFolderRequestBuilder
+     * @returns a contactFolderItemRequestBuilder
      */
-    public contactFoldersById(id: string) : ContactFolderRequestBuilder {
+    public contactFoldersById(id: string) : ContactFolderItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["contactFolder_id"] = id
-        return new ContactFolderRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ContactFolderItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.contacts.item collection
      * @param id Unique identifier of the item
-     * @returns a contactRequestBuilder
+     * @returns a contactItemRequestBuilder
      */
-    public contactsById(id: string) : ContactRequestBuilder {
+    public contactsById(id: string) : ContactItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["contact_id"] = id
-        return new ContactRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ContactItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get me
@@ -422,46 +423,46 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.deviceManagementTroubleshootingEvents.item collection
      * @param id Unique identifier of the item
-     * @returns a deviceManagementTroubleshootingEventRequestBuilder
+     * @returns a deviceManagementTroubleshootingEventItemRequestBuilder
      */
-    public deviceManagementTroubleshootingEventsById(id: string) : DeviceManagementTroubleshootingEventRequestBuilder {
+    public deviceManagementTroubleshootingEventsById(id: string) : DeviceManagementTroubleshootingEventItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["deviceManagementTroubleshootingEvent_id"] = id
-        return new DeviceManagementTroubleshootingEventRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DeviceManagementTroubleshootingEventItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.drives.item collection
      * @param id Unique identifier of the item
-     * @returns a driveRequestBuilder
+     * @returns a driveItemRequestBuilder
      */
-    public drivesById(id: string) : i912ea36a2ba030731f0e4b94d641ebe28d01a2c4c6378fef0122dc7b9a1119c6 {
+    public drivesById(id: string) : DriveItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["drive_id"] = id
-        return new i912ea36a2ba030731f0e4b94d641ebe28d01a2c4c6378fef0122dc7b9a1119c6(urlTplParams, this.requestAdapter);
+        return new DriveItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.events.item collection
      * @param id Unique identifier of the item
-     * @returns a eventRequestBuilder
+     * @returns a eventItemRequestBuilder
      */
-    public eventsById(id: string) : id521880eaa4d15a442c4ad54a5234847f946015811b3c6e6c7ad82dad7bf9032 {
+    public eventsById(id: string) : ie2bacd240752e8765f2155d8e0a7935b3716fc9cd45e16a913438f57cd3e576f {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["event_id"] = id
-        return new id521880eaa4d15a442c4ad54a5234847f946015811b3c6e6c7ad82dad7bf9032(urlTplParams, this.requestAdapter);
+        return new ie2bacd240752e8765f2155d8e0a7935b3716fc9cd45e16a913438f57cd3e576f(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.extensions.item collection
      * @param id Unique identifier of the item
-     * @returns a extensionRequestBuilder
+     * @returns a extensionItemRequestBuilder
      */
-    public extensionsById(id: string) : ExtensionRequestBuilder {
+    public extensionsById(id: string) : ExtensionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["extension_id"] = id
-        return new ExtensionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get me
@@ -497,68 +498,68 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.joinedTeams.item collection
      * @param id Unique identifier of the item
-     * @returns a teamRequestBuilder
+     * @returns a teamItemRequestBuilder
      */
-    public joinedTeamsById(id: string) : TeamRequestBuilder {
+    public joinedTeamsById(id: string) : TeamItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["team_id"] = id
-        return new TeamRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TeamItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.licenseDetails.item collection
      * @param id Unique identifier of the item
-     * @returns a licenseDetailsRequestBuilder
+     * @returns a licenseDetailsItemRequestBuilder
      */
-    public licenseDetailsById(id: string) : LicenseDetailsRequestBuilder {
+    public licenseDetailsById(id: string) : LicenseDetailsItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["licenseDetails_id"] = id
-        return new LicenseDetailsRequestBuilder(urlTplParams, this.requestAdapter);
+        return new LicenseDetailsItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.mailFolders.item collection
      * @param id Unique identifier of the item
-     * @returns a mailFolderRequestBuilder
+     * @returns a mailFolderItemRequestBuilder
      */
-    public mailFoldersById(id: string) : MailFolderRequestBuilder {
+    public mailFoldersById(id: string) : MailFolderItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["mailFolder_id"] = id
-        return new MailFolderRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MailFolderItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.managedDevices.item collection
      * @param id Unique identifier of the item
-     * @returns a managedDeviceRequestBuilder
+     * @returns a managedDeviceItemRequestBuilder
      */
-    public managedDevicesById(id: string) : ManagedDeviceRequestBuilder {
+    public managedDevicesById(id: string) : ManagedDeviceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedDevice_id"] = id
-        return new ManagedDeviceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedDeviceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.messages.item collection
      * @param id Unique identifier of the item
-     * @returns a messageRequestBuilder
+     * @returns a messageItemRequestBuilder
      */
-    public messagesById(id: string) : MessageRequestBuilder {
+    public messagesById(id: string) : MessageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["message_id"] = id
-        return new MessageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.onlineMeetings.item collection
      * @param id Unique identifier of the item
-     * @returns a onlineMeetingRequestBuilder
+     * @returns a onlineMeetingItemRequestBuilder
      */
-    public onlineMeetingsById(id: string) : OnlineMeetingRequestBuilder {
+    public onlineMeetingsById(id: string) : OnlineMeetingItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onlineMeeting_id"] = id
-        return new OnlineMeetingRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnlineMeetingItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update me
@@ -577,24 +578,24 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.people.item collection
      * @param id Unique identifier of the item
-     * @returns a personRequestBuilder
+     * @returns a personItemRequestBuilder
      */
-    public peopleById(id: string) : PersonRequestBuilder {
+    public peopleById(id: string) : PersonItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["person_id"] = id
-        return new PersonRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PersonItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.me.photos.item collection
      * @param id Unique identifier of the item
-     * @returns a profilePhotoRequestBuilder
+     * @returns a profilePhotoItemRequestBuilder
      */
-    public photosById(id: string) : ProfilePhotoRequestBuilder {
+    public photosById(id: string) : ProfilePhotoItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["profilePhoto_id"] = id
-        return new ProfilePhotoRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ProfilePhotoItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Builds and executes requests for operations under /me/microsoft.graph.reminderView(StartDateTime='{StartDateTime}',EndDateTime='{EndDateTime}')
@@ -610,12 +611,12 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.scopedRoleMemberOf.item collection
      * @param id Unique identifier of the item
-     * @returns a scopedRoleMembershipRequestBuilder
+     * @returns a scopedRoleMembershipItemRequestBuilder
      */
-    public scopedRoleMemberOfById(id: string) : ScopedRoleMembershipRequestBuilder {
+    public scopedRoleMemberOfById(id: string) : ScopedRoleMembershipItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["scopedRoleMembership_id"] = id
-        return new ScopedRoleMembershipRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ScopedRoleMembershipItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

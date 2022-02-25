@@ -1,2 +1,2 @@
-export * from './Quartile_IncRequestBuilder'
 export * from './Quartile_IncRequestBody'
+export * from './Quartile_IncRequestBuilder'

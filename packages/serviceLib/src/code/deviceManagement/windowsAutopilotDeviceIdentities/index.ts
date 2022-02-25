@@ -1,2 +1,2 @@
-export * from './WindowsAutopilotDeviceIdentitiesResponse'
 export * from './WindowsAutopilotDeviceIdentitiesRequestBuilder'
+export * from './WindowsAutopilotDeviceIdentitiesResponse'

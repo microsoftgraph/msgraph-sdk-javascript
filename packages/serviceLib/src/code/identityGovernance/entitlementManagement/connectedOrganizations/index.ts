@@ -1,2 +1,2 @@
-export * from './ConnectedOrganizationsResponse'
 export * from './ConnectedOrganizationsRequestBuilder'
+export * from './ConnectedOrganizationsResponse'

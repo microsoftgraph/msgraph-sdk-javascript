@@ -1,1 +1,1 @@
-export * from './WorkbookPivotTableRequestBuilder'
+export * from './WorkbookPivotTableItemRequestBuilder'

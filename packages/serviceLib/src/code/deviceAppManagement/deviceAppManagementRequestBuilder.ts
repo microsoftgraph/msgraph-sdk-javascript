@@ -1,33 +1,33 @@
 import {DeviceAppManagement} from '../models/microsoft/graph/';
 import {AndroidManagedAppProtectionsRequestBuilder} from './androidManagedAppProtections/';
-import {AndroidManagedAppProtectionRequestBuilder} from './androidManagedAppProtections/item/';
+import {AndroidManagedAppProtectionItemRequestBuilder} from './androidManagedAppProtections/item/';
 import {DefaultManagedAppProtectionsRequestBuilder} from './defaultManagedAppProtections/';
-import {DefaultManagedAppProtectionRequestBuilder} from './defaultManagedAppProtections/item/';
+import {DefaultManagedAppProtectionItemRequestBuilder} from './defaultManagedAppProtections/item/';
 import {IosManagedAppProtectionsRequestBuilder} from './iosManagedAppProtections/';
-import {IosManagedAppProtectionRequestBuilder} from './iosManagedAppProtections/item/';
+import {IosManagedAppProtectionItemRequestBuilder} from './iosManagedAppProtections/item/';
 import {ManagedAppPoliciesRequestBuilder} from './managedAppPolicies/';
-import {ManagedAppPolicyRequestBuilder} from './managedAppPolicies/item/';
+import {ManagedAppPolicyItemRequestBuilder} from './managedAppPolicies/item/';
 import {ManagedAppRegistrationsRequestBuilder} from './managedAppRegistrations/';
-import {ManagedAppRegistrationRequestBuilder} from './managedAppRegistrations/item/';
+import {ManagedAppRegistrationItemRequestBuilder} from './managedAppRegistrations/item/';
 import {ManagedAppStatusesRequestBuilder} from './managedAppStatuses/';
-import {ManagedAppStatusRequestBuilder} from './managedAppStatuses/item/';
+import {ManagedAppStatusItemRequestBuilder} from './managedAppStatuses/item/';
 import {ManagedEBooksRequestBuilder} from './managedEBooks/';
-import {ManagedEBookRequestBuilder} from './managedEBooks/item/';
+import {ManagedEBookItemRequestBuilder} from './managedEBooks/item/';
 import {MdmWindowsInformationProtectionPoliciesRequestBuilder} from './mdmWindowsInformationProtectionPolicies/';
-import {MdmWindowsInformationProtectionPolicyRequestBuilder} from './mdmWindowsInformationProtectionPolicies/item/';
+import {MdmWindowsInformationProtectionPolicyItemRequestBuilder} from './mdmWindowsInformationProtectionPolicies/item/';
 import {MobileAppCategoriesRequestBuilder} from './mobileAppCategories/';
-import {MobileAppCategoryRequestBuilder} from './mobileAppCategories/item/';
+import {MobileAppCategoryItemRequestBuilder} from './mobileAppCategories/item/';
 import {MobileAppConfigurationsRequestBuilder} from './mobileAppConfigurations/';
-import {ManagedDeviceMobileAppConfigurationRequestBuilder} from './mobileAppConfigurations/item/';
+import {ManagedDeviceMobileAppConfigurationItemRequestBuilder} from './mobileAppConfigurations/item/';
 import {MobileAppsRequestBuilder} from './mobileApps/';
-import {MobileAppRequestBuilder} from './mobileApps/item/';
+import {MobileAppItemRequestBuilder} from './mobileApps/item/';
 import {SyncMicrosoftStoreForBusinessAppsRequestBuilder} from './syncMicrosoftStoreForBusinessApps/';
 import {TargetedManagedAppConfigurationsRequestBuilder} from './targetedManagedAppConfigurations/';
-import {TargetedManagedAppConfigurationRequestBuilder} from './targetedManagedAppConfigurations/item/';
+import {TargetedManagedAppConfigurationItemRequestBuilder} from './targetedManagedAppConfigurations/item/';
 import {VppTokensRequestBuilder} from './vppTokens/';
-import {VppTokenRequestBuilder} from './vppTokens/item/';
+import {VppTokenItemRequestBuilder} from './vppTokens/item/';
 import {WindowsInformationProtectionPoliciesRequestBuilder} from './windowsInformationProtectionPolicies/';
-import {WindowsInformationProtectionPolicyRequestBuilder} from './windowsInformationProtectionPolicies/item/';
+import {WindowsInformationProtectionPolicyItemRequestBuilder} from './windowsInformationProtectionPolicies/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /deviceAppManagement  */
@@ -86,13 +86,13 @@ export class DeviceAppManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.androidManagedAppProtections.item collection
      * @param id Unique identifier of the item
-     * @returns a androidManagedAppProtectionRequestBuilder
+     * @returns a androidManagedAppProtectionItemRequestBuilder
      */
-    public androidManagedAppProtectionsById(id: string) : AndroidManagedAppProtectionRequestBuilder {
+    public androidManagedAppProtectionsById(id: string) : AndroidManagedAppProtectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["androidManagedAppProtection_id"] = id
-        return new AndroidManagedAppProtectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AndroidManagedAppProtectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new DeviceAppManagementRequestBuilder and sets the default values.
@@ -148,13 +148,13 @@ export class DeviceAppManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.defaultManagedAppProtections.item collection
      * @param id Unique identifier of the item
-     * @returns a defaultManagedAppProtectionRequestBuilder
+     * @returns a defaultManagedAppProtectionItemRequestBuilder
      */
-    public defaultManagedAppProtectionsById(id: string) : DefaultManagedAppProtectionRequestBuilder {
+    public defaultManagedAppProtectionsById(id: string) : DefaultManagedAppProtectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["defaultManagedAppProtection_id"] = id
-        return new DefaultManagedAppProtectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DefaultManagedAppProtectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get deviceAppManagement
@@ -176,101 +176,101 @@ export class DeviceAppManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.iosManagedAppProtections.item collection
      * @param id Unique identifier of the item
-     * @returns a iosManagedAppProtectionRequestBuilder
+     * @returns a iosManagedAppProtectionItemRequestBuilder
      */
-    public iosManagedAppProtectionsById(id: string) : IosManagedAppProtectionRequestBuilder {
+    public iosManagedAppProtectionsById(id: string) : IosManagedAppProtectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["iosManagedAppProtection_id"] = id
-        return new IosManagedAppProtectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new IosManagedAppProtectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedAppPolicies.item collection
      * @param id Unique identifier of the item
-     * @returns a managedAppPolicyRequestBuilder
+     * @returns a managedAppPolicyItemRequestBuilder
      */
-    public managedAppPoliciesById(id: string) : ManagedAppPolicyRequestBuilder {
+    public managedAppPoliciesById(id: string) : ManagedAppPolicyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedAppPolicy_id"] = id
-        return new ManagedAppPolicyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedAppPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedAppRegistrations.item collection
      * @param id Unique identifier of the item
-     * @returns a managedAppRegistrationRequestBuilder
+     * @returns a managedAppRegistrationItemRequestBuilder
      */
-    public managedAppRegistrationsById(id: string) : ManagedAppRegistrationRequestBuilder {
+    public managedAppRegistrationsById(id: string) : ManagedAppRegistrationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedAppRegistration_id"] = id
-        return new ManagedAppRegistrationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedAppRegistrationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedAppStatuses.item collection
      * @param id Unique identifier of the item
-     * @returns a managedAppStatusRequestBuilder
+     * @returns a managedAppStatusItemRequestBuilder
      */
-    public managedAppStatusesById(id: string) : ManagedAppStatusRequestBuilder {
+    public managedAppStatusesById(id: string) : ManagedAppStatusItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedAppStatus_id"] = id
-        return new ManagedAppStatusRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedAppStatusItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedEBooks.item collection
      * @param id Unique identifier of the item
-     * @returns a managedEBookRequestBuilder
+     * @returns a managedEBookItemRequestBuilder
      */
-    public managedEBooksById(id: string) : ManagedEBookRequestBuilder {
+    public managedEBooksById(id: string) : ManagedEBookItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedEBook_id"] = id
-        return new ManagedEBookRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedEBookItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mdmWindowsInformationProtectionPolicies.item collection
      * @param id Unique identifier of the item
-     * @returns a mdmWindowsInformationProtectionPolicyRequestBuilder
+     * @returns a mdmWindowsInformationProtectionPolicyItemRequestBuilder
      */
-    public mdmWindowsInformationProtectionPoliciesById(id: string) : MdmWindowsInformationProtectionPolicyRequestBuilder {
+    public mdmWindowsInformationProtectionPoliciesById(id: string) : MdmWindowsInformationProtectionPolicyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["mdmWindowsInformationProtectionPolicy_id"] = id
-        return new MdmWindowsInformationProtectionPolicyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MdmWindowsInformationProtectionPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileAppCategories.item collection
      * @param id Unique identifier of the item
-     * @returns a mobileAppCategoryRequestBuilder
+     * @returns a mobileAppCategoryItemRequestBuilder
      */
-    public mobileAppCategoriesById(id: string) : MobileAppCategoryRequestBuilder {
+    public mobileAppCategoriesById(id: string) : MobileAppCategoryItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["mobileAppCategory_id"] = id
-        return new MobileAppCategoryRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MobileAppCategoryItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileAppConfigurations.item collection
      * @param id Unique identifier of the item
-     * @returns a managedDeviceMobileAppConfigurationRequestBuilder
+     * @returns a managedDeviceMobileAppConfigurationItemRequestBuilder
      */
-    public mobileAppConfigurationsById(id: string) : ManagedDeviceMobileAppConfigurationRequestBuilder {
+    public mobileAppConfigurationsById(id: string) : ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["managedDeviceMobileAppConfiguration_id"] = id
-        return new ManagedDeviceMobileAppConfigurationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ManagedDeviceMobileAppConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileApps.item collection
      * @param id Unique identifier of the item
-     * @returns a mobileAppRequestBuilder
+     * @returns a mobileAppItemRequestBuilder
      */
-    public mobileAppsById(id: string) : MobileAppRequestBuilder {
+    public mobileAppsById(id: string) : MobileAppItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["mobileApp_id"] = id
-        return new MobileAppRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MobileAppItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update deviceAppManagement
@@ -289,34 +289,34 @@ export class DeviceAppManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.targetedManagedAppConfigurations.item collection
      * @param id Unique identifier of the item
-     * @returns a targetedManagedAppConfigurationRequestBuilder
+     * @returns a targetedManagedAppConfigurationItemRequestBuilder
      */
-    public targetedManagedAppConfigurationsById(id: string) : TargetedManagedAppConfigurationRequestBuilder {
+    public targetedManagedAppConfigurationsById(id: string) : TargetedManagedAppConfigurationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["targetedManagedAppConfiguration_id"] = id
-        return new TargetedManagedAppConfigurationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TargetedManagedAppConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.vppTokens.item collection
      * @param id Unique identifier of the item
-     * @returns a vppTokenRequestBuilder
+     * @returns a vppTokenItemRequestBuilder
      */
-    public vppTokensById(id: string) : VppTokenRequestBuilder {
+    public vppTokensById(id: string) : VppTokenItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["vppToken_id"] = id
-        return new VppTokenRequestBuilder(urlTplParams, this.requestAdapter);
+        return new VppTokenItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.windowsInformationProtectionPolicies.item collection
      * @param id Unique identifier of the item
-     * @returns a windowsInformationProtectionPolicyRequestBuilder
+     * @returns a windowsInformationProtectionPolicyItemRequestBuilder
      */
-    public windowsInformationProtectionPoliciesById(id: string) : WindowsInformationProtectionPolicyRequestBuilder {
+    public windowsInformationProtectionPoliciesById(id: string) : WindowsInformationProtectionPolicyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["windowsInformationProtectionPolicy_id"] = id
-        return new WindowsInformationProtectionPolicyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WindowsInformationProtectionPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

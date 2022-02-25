@@ -1,1 +1,1 @@
-export * from './ThumbnailSetRequestBuilder'
+export * from './ThumbnailSetItemRequestBuilder'

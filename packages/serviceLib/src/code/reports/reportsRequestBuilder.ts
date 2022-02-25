@@ -1,8 +1,8 @@
 import {ReportRoot} from '../models/microsoft/graph/';
 import {DailyPrintUsageByPrinterRequestBuilder} from './dailyPrintUsageByPrinter/';
-import {PrintUsageByPrinterRequestBuilder as iff79304268ae25b56206316ae4b6f7f4a7ec7f08d2be1ef5b609f3979ac4b4ef} from './dailyPrintUsageByPrinter/item/';
+import {PrintUsageByPrinterItemRequestBuilder as ib67a70a60b2942ceb0cfb3d4f396db59334d867adc1a42ddd8755743f4383a28} from './dailyPrintUsageByPrinter/item/';
 import {DailyPrintUsageByUserRequestBuilder} from './dailyPrintUsageByUser/';
-import {PrintUsageByUserRequestBuilder as i3533150e74057c14dd653c49c935a31ec632e54ffd70c3884bcdd0fff327695c} from './dailyPrintUsageByUser/item/';
+import {PrintUsageByUserItemRequestBuilder as i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3} from './dailyPrintUsageByUser/item/';
 import {DeviceConfigurationDeviceActivityRequestBuilder} from './deviceConfigurationDeviceActivity/';
 import {DeviceConfigurationUserActivityRequestBuilder} from './deviceConfigurationUserActivity/';
 import {GetEmailActivityCountsWithPeriodRequestBuilder} from './getEmailActivityCountsWithPeriod/';
@@ -96,9 +96,9 @@ import {ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTo
 import {ManagedDeviceEnrollmentTopFailuresRequestBuilder} from './managedDeviceEnrollmentTopFailures/';
 import {ManagedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder} from './managedDeviceEnrollmentTopFailuresWithPeriod/';
 import {MonthlyPrintUsageByPrinterRequestBuilder} from './monthlyPrintUsageByPrinter/';
-import {PrintUsageByPrinterRequestBuilder as i2811fd2d057a6dfed54fa969fb51cea4aa6eb8017e9a59f0d70fc2c383a8f4a8} from './monthlyPrintUsageByPrinter/item/';
+import {PrintUsageByPrinterItemRequestBuilder as i2c60a8e28db21474c0e58e0f539afec944871233fe3f764a516b7389d62b1fab} from './monthlyPrintUsageByPrinter/item/';
 import {MonthlyPrintUsageByUserRequestBuilder} from './monthlyPrintUsageByUser/';
-import {PrintUsageByUserRequestBuilder as ia79d2dce40236fafa7231c9c1b1c82c9ae6f9481127446b01ef78fd01944a7d2} from './monthlyPrintUsageByUser/item/';
+import {PrintUsageByUserItemRequestBuilder as i19a558e8de9c295f0ad48586ddbc0a19b77027bdd76ac25f42b3d301110f77d7} from './monthlyPrintUsageByUser/item/';
 import {DateOnly, getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /reports  */
@@ -175,24 +175,24 @@ export class ReportsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.reports.dailyPrintUsageByPrinter.item collection
      * @param id Unique identifier of the item
-     * @returns a printUsageByPrinterRequestBuilder
+     * @returns a printUsageByPrinterItemRequestBuilder
      */
-    public dailyPrintUsageByPrinterById(id: string) : iff79304268ae25b56206316ae4b6f7f4a7ec7f08d2be1ef5b609f3979ac4b4ef {
+    public dailyPrintUsageByPrinterById(id: string) : ib67a70a60b2942ceb0cfb3d4f396db59334d867adc1a42ddd8755743f4383a28 {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printUsageByPrinter_id"] = id
-        return new iff79304268ae25b56206316ae4b6f7f4a7ec7f08d2be1ef5b609f3979ac4b4ef(urlTplParams, this.requestAdapter);
+        return new ib67a70a60b2942ceb0cfb3d4f396db59334d867adc1a42ddd8755743f4383a28(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.reports.dailyPrintUsageByUser.item collection
      * @param id Unique identifier of the item
-     * @returns a printUsageByUserRequestBuilder
+     * @returns a printUsageByUserItemRequestBuilder
      */
-    public dailyPrintUsageByUserById(id: string) : i3533150e74057c14dd653c49c935a31ec632e54ffd70c3884bcdd0fff327695c {
+    public dailyPrintUsageByUserById(id: string) : i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3 {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printUsageByUser_id"] = id
-        return new i3533150e74057c14dd653c49c935a31ec632e54ffd70c3884bcdd0fff327695c(urlTplParams, this.requestAdapter);
+        return new i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3(urlTplParams, this.requestAdapter);
     };
     /**
      * Builds and executes requests for operations under /reports/microsoft.graph.deviceConfigurationDeviceActivity()
@@ -1046,24 +1046,24 @@ export class ReportsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.reports.monthlyPrintUsageByPrinter.item collection
      * @param id Unique identifier of the item
-     * @returns a printUsageByPrinterRequestBuilder
+     * @returns a printUsageByPrinterItemRequestBuilder
      */
-    public monthlyPrintUsageByPrinterById(id: string) : i2811fd2d057a6dfed54fa969fb51cea4aa6eb8017e9a59f0d70fc2c383a8f4a8 {
+    public monthlyPrintUsageByPrinterById(id: string) : i2c60a8e28db21474c0e58e0f539afec944871233fe3f764a516b7389d62b1fab {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printUsageByPrinter_id"] = id
-        return new i2811fd2d057a6dfed54fa969fb51cea4aa6eb8017e9a59f0d70fc2c383a8f4a8(urlTplParams, this.requestAdapter);
+        return new i2c60a8e28db21474c0e58e0f539afec944871233fe3f764a516b7389d62b1fab(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.reports.monthlyPrintUsageByUser.item collection
      * @param id Unique identifier of the item
-     * @returns a printUsageByUserRequestBuilder
+     * @returns a printUsageByUserItemRequestBuilder
      */
-    public monthlyPrintUsageByUserById(id: string) : ia79d2dce40236fafa7231c9c1b1c82c9ae6f9481127446b01ef78fd01944a7d2 {
+    public monthlyPrintUsageByUserById(id: string) : i19a558e8de9c295f0ad48586ddbc0a19b77027bdd76ac25f42b3d301110f77d7 {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printUsageByUser_id"] = id
-        return new ia79d2dce40236fafa7231c9c1b1c82c9ae6f9481127446b01ef78fd01944a7d2(urlTplParams, this.requestAdapter);
+        return new i19a558e8de9c295f0ad48586ddbc0a19b77027bdd76ac25f42b3d301110f77d7(urlTplParams, this.requestAdapter);
     };
     /**
      * Update reports

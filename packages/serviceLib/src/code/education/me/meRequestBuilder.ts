@@ -1,9 +1,9 @@
 import {EducationUser} from '../../models/microsoft/graph/';
 import {AssignmentsRequestBuilder} from './assignments/';
-import {EducationAssignmentRequestBuilder} from './assignments/item/';
+import {EducationAssignmentItemRequestBuilder} from './assignments/item/';
 import {ClassesRequestBuilder} from './classes/';
 import {RubricsRequestBuilder} from './rubrics/';
-import {EducationRubricRequestBuilder} from './rubrics/item/';
+import {EducationRubricItemRequestBuilder} from './rubrics/item/';
 import {SchoolsRequestBuilder} from './schools/';
 import {TaughtClassesRequestBuilder} from './taughtClasses/';
 import {UserRequestBuilder} from './user/';
@@ -38,13 +38,13 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.education.me.assignments.item collection
      * @param id Unique identifier of the item
-     * @returns a educationAssignmentRequestBuilder
+     * @returns a educationAssignmentItemRequestBuilder
      */
-    public assignmentsById(id: string) : EducationAssignmentRequestBuilder {
+    public assignmentsById(id: string) : EducationAssignmentItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["educationAssignment_id"] = id
-        return new EducationAssignmentRequestBuilder(urlTplParams, this.requestAdapter);
+        return new EducationAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new MeRequestBuilder and sets the default values.
@@ -158,12 +158,12 @@ export class MeRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.education.me.rubrics.item collection
      * @param id Unique identifier of the item
-     * @returns a educationRubricRequestBuilder
+     * @returns a educationRubricItemRequestBuilder
      */
-    public rubricsById(id: string) : EducationRubricRequestBuilder {
+    public rubricsById(id: string) : EducationRubricItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["educationRubric_id"] = id
-        return new EducationRubricRequestBuilder(urlTplParams, this.requestAdapter);
+        return new EducationRubricItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

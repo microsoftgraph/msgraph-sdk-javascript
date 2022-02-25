@@ -1,1 +1,1 @@
-export * from './VppTokenRequestBuilder'
+export * from './VppTokenItemRequestBuilder'

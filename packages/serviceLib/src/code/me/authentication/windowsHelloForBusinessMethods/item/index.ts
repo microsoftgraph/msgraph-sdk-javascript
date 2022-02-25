@@ -1,1 +1,1 @@
-export * from './WindowsHelloForBusinessAuthenticationMethodRequestBuilder'
+export * from './WindowsHelloForBusinessAuthenticationMethodItemRequestBuilder'

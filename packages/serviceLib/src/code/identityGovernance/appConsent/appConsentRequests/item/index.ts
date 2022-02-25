@@ -1,1 +1,1 @@
-export * from './AppConsentRequestRequestBuilder'
+export * from './AppConsentRequestItemRequestBuilder'

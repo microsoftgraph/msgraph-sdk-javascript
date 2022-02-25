@@ -1,8 +1,8 @@
 import {Store} from '../../../models/microsoft/graph/termStore/';
 import {GroupsRequestBuilder} from './groups/';
-import {GroupRequestBuilder} from './groups/item/';
+import {GroupItemRequestBuilder} from './groups/item/';
 import {SetsRequestBuilder} from './sets/';
-import {SetRequestBuilder} from './sets/item/';
+import {SetItemRequestBuilder} from './sets/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /sites/{site-id}/termStore  */
@@ -117,13 +117,13 @@ export class TermStoreRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStore.groups.item collection
      * @param id Unique identifier of the item
-     * @returns a groupRequestBuilder
+     * @returns a groupItemRequestBuilder
      */
-    public groupsById(id: string) : GroupRequestBuilder {
+    public groupsById(id: string) : GroupItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["group_id"] = id
-        return new GroupRequestBuilder(urlTplParams, this.requestAdapter);
+        return new GroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * The default termStore under this site.
@@ -142,12 +142,12 @@ export class TermStoreRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStore.sets.item collection
      * @param id Unique identifier of the item
-     * @returns a setRequestBuilder
+     * @returns a setItemRequestBuilder
      */
-    public setsById(id: string) : SetRequestBuilder {
+    public setsById(id: string) : SetItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["set_id"] = id
-        return new SetRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SetItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

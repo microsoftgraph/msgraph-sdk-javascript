@@ -1,6 +1,6 @@
 import {AgreementFile} from '../../../models/microsoft/graph/';
 import {LocalizationsRequestBuilder} from './localizations/';
-import {AgreementFileLocalizationRequestBuilder} from './localizations/item/';
+import {AgreementFileLocalizationItemRequestBuilder} from './localizations/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /agreements/{agreement-id}/file  */
@@ -112,13 +112,13 @@ export class FileRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.agreements.item.file.localizations.item collection
      * @param id Unique identifier of the item
-     * @returns a agreementFileLocalizationRequestBuilder
+     * @returns a agreementFileLocalizationItemRequestBuilder
      */
-    public localizationsById(id: string) : AgreementFileLocalizationRequestBuilder {
+    public localizationsById(id: string) : AgreementFileLocalizationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["agreementFileLocalization_id"] = id
-        return new AgreementFileLocalizationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AgreementFileLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Default PDF linked to this agreement.

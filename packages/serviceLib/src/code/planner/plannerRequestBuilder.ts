@@ -1,10 +1,10 @@
 import {Planner} from '../models/microsoft/graph/';
 import {BucketsRequestBuilder} from './buckets/';
-import {PlannerBucketRequestBuilder} from './buckets/item/';
+import {PlannerBucketItemRequestBuilder} from './buckets/item/';
 import {PlansRequestBuilder} from './plans/';
-import {PlannerPlanRequestBuilder} from './plans/item/';
+import {PlannerPlanItemRequestBuilder} from './plans/item/';
 import {TasksRequestBuilder} from './tasks/';
-import {PlannerTaskRequestBuilder} from './tasks/item/';
+import {PlannerTaskItemRequestBuilder} from './tasks/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /planner  */
@@ -27,13 +27,13 @@ export class PlannerRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.planner.buckets.item collection
      * @param id Unique identifier of the item
-     * @returns a plannerBucketRequestBuilder
+     * @returns a plannerBucketItemRequestBuilder
      */
-    public bucketsById(id: string) : PlannerBucketRequestBuilder {
+    public bucketsById(id: string) : PlannerBucketItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["plannerBucket_id"] = id
-        return new PlannerBucketRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PlannerBucketItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new PlannerRequestBuilder and sets the default values.
@@ -120,23 +120,23 @@ export class PlannerRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.planner.plans.item collection
      * @param id Unique identifier of the item
-     * @returns a plannerPlanRequestBuilder
+     * @returns a plannerPlanItemRequestBuilder
      */
-    public plansById(id: string) : PlannerPlanRequestBuilder {
+    public plansById(id: string) : PlannerPlanItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["plannerPlan_id"] = id
-        return new PlannerPlanRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PlannerPlanItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.planner.tasks.item collection
      * @param id Unique identifier of the item
-     * @returns a plannerTaskRequestBuilder
+     * @returns a plannerTaskItemRequestBuilder
      */
-    public tasksById(id: string) : PlannerTaskRequestBuilder {
+    public tasksById(id: string) : PlannerTaskItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["plannerTask_id"] = id
-        return new PlannerTaskRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PlannerTaskItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

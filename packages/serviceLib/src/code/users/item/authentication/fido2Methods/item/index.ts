@@ -1,1 +1,1 @@
-export * from './Fido2AuthenticationMethodRequestBuilder'
+export * from './Fido2AuthenticationMethodItemRequestBuilder'

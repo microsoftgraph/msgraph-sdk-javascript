@@ -1,2 +1,2 @@
-export * from './DmaxRequestBuilder'
 export * from './DmaxRequestBody'
+export * from './DmaxRequestBuilder'

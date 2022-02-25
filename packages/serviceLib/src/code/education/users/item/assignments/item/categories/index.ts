@@ -1,2 +1,2 @@
-export * from './CategoriesRequestBuilder'
 export * from './CategoriesResponse'
+export * from './CategoriesRequestBuilder'

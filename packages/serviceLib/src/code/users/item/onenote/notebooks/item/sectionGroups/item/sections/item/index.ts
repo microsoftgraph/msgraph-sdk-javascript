@@ -1,1 +1,1 @@
-export * from './OnenoteSectionRequestBuilder'
+export * from './OnenoteSectionItemRequestBuilder'

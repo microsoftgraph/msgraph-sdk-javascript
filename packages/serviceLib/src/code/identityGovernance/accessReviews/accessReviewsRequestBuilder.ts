@@ -1,8 +1,8 @@
 import {AccessReviewSet} from '../../models/microsoft/graph/';
 import {DefinitionsRequestBuilder} from './definitions/';
-import {AccessReviewScheduleDefinitionRequestBuilder} from './definitions/item/';
+import {AccessReviewScheduleDefinitionItemRequestBuilder} from './definitions/item/';
 import {HistoryDefinitionsRequestBuilder} from './historyDefinitions/';
-import {AccessReviewHistoryDefinitionRequestBuilder} from './historyDefinitions/item/';
+import {AccessReviewHistoryDefinitionItemRequestBuilder} from './historyDefinitions/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identityGovernance/accessReviews  */
@@ -88,13 +88,13 @@ export class AccessReviewsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.accessReviews.definitions.item collection
      * @param id Unique identifier of the item
-     * @returns a accessReviewScheduleDefinitionRequestBuilder
+     * @returns a accessReviewScheduleDefinitionItemRequestBuilder
      */
-    public definitionsById(id: string) : AccessReviewScheduleDefinitionRequestBuilder {
+    public definitionsById(id: string) : AccessReviewScheduleDefinitionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessReviewScheduleDefinition_id"] = id
-        return new AccessReviewScheduleDefinitionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessReviewScheduleDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Delete navigation property accessReviews for identityGovernance
@@ -128,13 +128,13 @@ export class AccessReviewsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.accessReviews.historyDefinitions.item collection
      * @param id Unique identifier of the item
-     * @returns a accessReviewHistoryDefinitionRequestBuilder
+     * @returns a accessReviewHistoryDefinitionItemRequestBuilder
      */
-    public historyDefinitionsById(id: string) : AccessReviewHistoryDefinitionRequestBuilder {
+    public historyDefinitionsById(id: string) : AccessReviewHistoryDefinitionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessReviewHistoryDefinition_id"] = id
-        return new AccessReviewHistoryDefinitionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessReviewHistoryDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update the navigation property accessReviews in identityGovernance

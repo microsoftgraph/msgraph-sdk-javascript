@@ -1,1 +1,1 @@
-export * from './DeviceManagementTroubleshootingEventRequestBuilder'
+export * from './DeviceManagementTroubleshootingEventItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './SchemaExtensionRequestBuilder'
+export * from './SchemaExtensionItemRequestBuilder'

@@ -1,6 +1,6 @@
 import {External} from '../models/microsoft/graph/externalConnectors/';
 import {ConnectionsRequestBuilder} from './connections/';
-import {ExternalConnectionRequestBuilder} from './connections/item/';
+import {ExternalConnectionItemRequestBuilder} from './connections/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /external  */
@@ -17,13 +17,13 @@ export class ExternalRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.external.connections.item collection
      * @param id Unique identifier of the item
-     * @returns a externalConnectionRequestBuilder
+     * @returns a externalConnectionItemRequestBuilder
      */
-    public connectionsById(id: string) : ExternalConnectionRequestBuilder {
+    public connectionsById(id: string) : ExternalConnectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["externalConnection_id"] = id
-        return new ExternalConnectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ExternalConnectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new ExternalRequestBuilder and sets the default values.

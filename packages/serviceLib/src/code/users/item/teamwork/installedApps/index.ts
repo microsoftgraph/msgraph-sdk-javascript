@@ -1,2 +1,2 @@
-export * from './InstalledAppsResponse'
 export * from './InstalledAppsRequestBuilder'
+export * from './InstalledAppsResponse'

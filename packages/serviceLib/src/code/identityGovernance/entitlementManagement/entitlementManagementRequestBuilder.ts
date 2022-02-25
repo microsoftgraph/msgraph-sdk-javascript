@@ -1,16 +1,16 @@
 import {EntitlementManagement} from '../../models/microsoft/graph/';
 import {AccessPackageAssignmentApprovalsRequestBuilder} from './accessPackageAssignmentApprovals/';
-import {ApprovalRequestBuilder} from './accessPackageAssignmentApprovals/item/';
+import {ApprovalItemRequestBuilder} from './accessPackageAssignmentApprovals/item/';
 import {AccessPackagesRequestBuilder} from './accessPackages/';
-import {AccessPackageRequestBuilder} from './accessPackages/item/';
+import {AccessPackageItemRequestBuilder} from './accessPackages/item/';
 import {AssignmentRequestsRequestBuilder} from './assignmentRequests/';
-import {AccessPackageAssignmentRequestRequestBuilder} from './assignmentRequests/item/';
+import {AccessPackageAssignmentRequestItemRequestBuilder} from './assignmentRequests/item/';
 import {AssignmentsRequestBuilder} from './assignments/';
-import {AccessPackageAssignmentRequestBuilder} from './assignments/item/';
+import {AccessPackageAssignmentItemRequestBuilder} from './assignments/item/';
 import {CatalogsRequestBuilder} from './catalogs/';
-import {AccessPackageCatalogRequestBuilder} from './catalogs/item/';
+import {AccessPackageCatalogItemRequestBuilder} from './catalogs/item/';
 import {ConnectedOrganizationsRequestBuilder} from './connectedOrganizations/';
-import {ConnectedOrganizationRequestBuilder} from './connectedOrganizations/item/';
+import {ConnectedOrganizationItemRequestBuilder} from './connectedOrganizations/item/';
 import {SettingsRequestBuilder} from './settings/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
@@ -46,68 +46,68 @@ export class EntitlementManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.accessPackageAssignmentApprovals.item collection
      * @param id Unique identifier of the item
-     * @returns a approvalRequestBuilder
+     * @returns a approvalItemRequestBuilder
      */
-    public accessPackageAssignmentApprovalsById(id: string) : ApprovalRequestBuilder {
+    public accessPackageAssignmentApprovalsById(id: string) : ApprovalItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["approval_id"] = id
-        return new ApprovalRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ApprovalItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.accessPackages.item collection
      * @param id Unique identifier of the item
-     * @returns a accessPackageRequestBuilder
+     * @returns a accessPackageItemRequestBuilder
      */
-    public accessPackagesById(id: string) : AccessPackageRequestBuilder {
+    public accessPackagesById(id: string) : AccessPackageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessPackage_id"] = id
-        return new AccessPackageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessPackageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.assignmentRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a accessPackageAssignmentRequestRequestBuilder
+     * @returns a accessPackageAssignmentRequestItemRequestBuilder
      */
-    public assignmentRequestsById(id: string) : AccessPackageAssignmentRequestRequestBuilder {
+    public assignmentRequestsById(id: string) : AccessPackageAssignmentRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessPackageAssignmentRequest_id"] = id
-        return new AccessPackageAssignmentRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessPackageAssignmentRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.assignments.item collection
      * @param id Unique identifier of the item
-     * @returns a accessPackageAssignmentRequestBuilder
+     * @returns a accessPackageAssignmentItemRequestBuilder
      */
-    public assignmentsById(id: string) : AccessPackageAssignmentRequestBuilder {
+    public assignmentsById(id: string) : AccessPackageAssignmentItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessPackageAssignment_id"] = id
-        return new AccessPackageAssignmentRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessPackageAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.catalogs.item collection
      * @param id Unique identifier of the item
-     * @returns a accessPackageCatalogRequestBuilder
+     * @returns a accessPackageCatalogItemRequestBuilder
      */
-    public catalogsById(id: string) : AccessPackageCatalogRequestBuilder {
+    public catalogsById(id: string) : AccessPackageCatalogItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessPackageCatalog_id"] = id
-        return new AccessPackageCatalogRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AccessPackageCatalogItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.connectedOrganizations.item collection
      * @param id Unique identifier of the item
-     * @returns a connectedOrganizationRequestBuilder
+     * @returns a connectedOrganizationItemRequestBuilder
      */
-    public connectedOrganizationsById(id: string) : ConnectedOrganizationRequestBuilder {
+    public connectedOrganizationsById(id: string) : ConnectedOrganizationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["connectedOrganization_id"] = id
-        return new ConnectedOrganizationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ConnectedOrganizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new EntitlementManagementRequestBuilder and sets the default values.

@@ -1,2 +1,2 @@
-export * from './SetPositionRequestBody'
 export * from './SetPositionRequestBuilder'
+export * from './SetPositionRequestBody'

@@ -1,8 +1,8 @@
 import {Directory} from '../models/microsoft/graph/';
 import {AdministrativeUnitsRequestBuilder} from './administrativeUnits/';
-import {AdministrativeUnitRequestBuilder} from './administrativeUnits/item/';
+import {AdministrativeUnitItemRequestBuilder} from './administrativeUnits/item/';
 import {DeletedItemsRequestBuilder} from './deletedItems/';
-import {DirectoryObjectRequestBuilder} from './deletedItems/item/';
+import {DirectoryObjectItemRequestBuilder} from './deletedItems/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /directory  */
@@ -22,13 +22,13 @@ export class DirectoryRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.directory.administrativeUnits.item collection
      * @param id Unique identifier of the item
-     * @returns a administrativeUnitRequestBuilder
+     * @returns a administrativeUnitItemRequestBuilder
      */
-    public administrativeUnitsById(id: string) : AdministrativeUnitRequestBuilder {
+    public administrativeUnitsById(id: string) : AdministrativeUnitItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["administrativeUnit_id"] = id
-        return new AdministrativeUnitRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AdministrativeUnitItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new DirectoryRequestBuilder and sets the default values.
@@ -84,13 +84,13 @@ export class DirectoryRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.directory.deletedItems.item collection
      * @param id Unique identifier of the item
-     * @returns a directoryObjectRequestBuilder
+     * @returns a directoryObjectItemRequestBuilder
      */
-    public deletedItemsById(id: string) : DirectoryObjectRequestBuilder {
+    public deletedItemsById(id: string) : DirectoryObjectItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["directoryObject_id"] = id
-        return new DirectoryObjectRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DirectoryObjectItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get directory

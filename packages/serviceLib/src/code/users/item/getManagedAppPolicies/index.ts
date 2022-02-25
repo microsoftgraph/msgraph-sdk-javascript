@@ -1,2 +1,2 @@
-export * from './GetManagedAppPolicies'
 export * from './GetManagedAppPoliciesRequestBuilder'
+export * from './GetManagedAppPolicies'

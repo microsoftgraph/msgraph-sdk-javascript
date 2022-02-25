@@ -1,1 +1,1 @@
-export * from './DriveItemVersionRequestBuilder'
+export * from './DriveItemVersionItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './GetApplicableContentTypesForListWithListIdRequestBuilder'
 export * from './GetApplicableContentTypesForListWithListId'
+export * from './GetApplicableContentTypesForListWithListIdRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './UserActivityRequestBuilder'
+export * from './UserActivityItemRequestBuilder'

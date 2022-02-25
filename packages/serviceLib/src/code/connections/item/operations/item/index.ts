@@ -1,1 +1,1 @@
-export * from './ConnectionOperationRequestBuilder'
+export * from './ConnectionOperationItemRequestBuilder'

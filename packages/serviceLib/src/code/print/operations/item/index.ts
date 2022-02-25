@@ -1,1 +1,1 @@
-export * from './PrintOperationRequestBuilder'
+export * from './PrintOperationItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './AmorDegrcRequestBuilder'
 export * from './AmorDegrcRequestBody'
+export * from './AmorDegrcRequestBuilder'

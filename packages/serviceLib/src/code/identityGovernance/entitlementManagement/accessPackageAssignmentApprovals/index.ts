@@ -1,2 +1,2 @@
-export * from './AccessPackageAssignmentApprovalsResponse'
 export * from './AccessPackageAssignmentApprovalsRequestBuilder'
+export * from './AccessPackageAssignmentApprovalsResponse'

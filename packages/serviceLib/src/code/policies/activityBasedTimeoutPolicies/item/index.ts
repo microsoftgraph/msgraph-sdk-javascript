@@ -1,1 +1,1 @@
-export * from './ActivityBasedTimeoutPolicyRequestBuilder'
+export * from './ActivityBasedTimeoutPolicyItemRequestBuilder'

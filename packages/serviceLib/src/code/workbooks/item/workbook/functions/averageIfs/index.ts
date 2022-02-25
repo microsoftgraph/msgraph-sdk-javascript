@@ -1,2 +1,2 @@
-export * from './AverageIfsRequestBody'
 export * from './AverageIfsRequestBuilder'
+export * from './AverageIfsRequestBody'

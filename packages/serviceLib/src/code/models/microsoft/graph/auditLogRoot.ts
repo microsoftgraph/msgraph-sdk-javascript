@@ -2,8 +2,6 @@ import {DirectoryAudit, Entity, ProvisioningObjectSummary, RestrictedSignIn, Sig
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AuditLogRoot extends Entity implements Parsable {
-    /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
-   // private _additionalData: Map<string, unknown>;
     /** Read-only. Nullable.  */
     private _directoryAudits?: DirectoryAudit[] | undefined;
     private _provisioning?: ProvisioningObjectSummary[] | undefined;
@@ -15,14 +13,6 @@ export class AuditLogRoot extends Entity implements Parsable {
      */
     public constructor() {
         super();
-       // this._additionalData = new Map<string, unknown>();
-    };
-    /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
-     */
-    public get additionalData() {
-        return null;
     };
     /**
      * Gets the directoryAudits property value. Read-only. Nullable.
@@ -75,14 +65,6 @@ export class AuditLogRoot extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<ProvisioningObjectSummary>("provisioning", this.provisioning);
         writer.writeCollectionOfObjectValues<RestrictedSignIn>("restrictedSignIns", this.restrictedSignIns);
         writer.writeCollectionOfObjectValues<SignIn>("signIns", this.signIns);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-     //   this._additionalData = value;
     };
     /**
      * Sets the directoryAudits property value. Read-only. Nullable.

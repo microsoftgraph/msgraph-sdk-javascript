@@ -1,1 +1,1 @@
-export * from './ApplicationTemplateRequestBuilder'
+export * from './ApplicationTemplateItemRequestBuilder'

@@ -1,6 +1,6 @@
 import {Privacy} from '../models/microsoft/graph/';
 import {SubjectRightsRequestsRequestBuilder} from './subjectRightsRequests/';
-import {SubjectRightsRequestRequestBuilder} from './subjectRightsRequests/item/';
+import {SubjectRightsRequestItemRequestBuilder} from './subjectRightsRequests/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /privacy  */
@@ -99,12 +99,12 @@ export class PrivacyRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.privacy.subjectRightsRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a subjectRightsRequestRequestBuilder
+     * @returns a subjectRightsRequestItemRequestBuilder
      */
-    public subjectRightsRequestsById(id: string) : SubjectRightsRequestRequestBuilder {
+    public subjectRightsRequestsById(id: string) : SubjectRightsRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["subjectRightsRequest_id"] = id
-        return new SubjectRightsRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SubjectRightsRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

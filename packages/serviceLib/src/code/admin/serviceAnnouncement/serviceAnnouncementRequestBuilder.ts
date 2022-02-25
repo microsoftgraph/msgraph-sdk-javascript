@@ -1,10 +1,10 @@
 import {ServiceAnnouncement} from '../../models/microsoft/graph/';
 import {HealthOverviewsRequestBuilder} from './healthOverviews/';
-import {ServiceHealthRequestBuilder} from './healthOverviews/item/';
+import {ServiceHealthItemRequestBuilder} from './healthOverviews/item/';
 import {IssuesRequestBuilder} from './issues/';
-import {ServiceHealthIssueRequestBuilder} from './issues/item/';
+import {ServiceHealthIssueItemRequestBuilder} from './issues/item/';
 import {MessagesRequestBuilder} from './messages/';
-import {ServiceUpdateMessageRequestBuilder} from './messages/item/';
+import {ServiceUpdateMessageItemRequestBuilder} from './messages/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /admin/serviceAnnouncement  */
@@ -122,35 +122,35 @@ export class ServiceAnnouncementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.admin.serviceAnnouncement.healthOverviews.item collection
      * @param id Unique identifier of the item
-     * @returns a serviceHealthRequestBuilder
+     * @returns a serviceHealthItemRequestBuilder
      */
-    public healthOverviewsById(id: string) : ServiceHealthRequestBuilder {
+    public healthOverviewsById(id: string) : ServiceHealthItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["serviceHealth_id"] = id
-        return new ServiceHealthRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ServiceHealthItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.admin.serviceAnnouncement.issues.item collection
      * @param id Unique identifier of the item
-     * @returns a serviceHealthIssueRequestBuilder
+     * @returns a serviceHealthIssueItemRequestBuilder
      */
-    public issuesById(id: string) : ServiceHealthIssueRequestBuilder {
+    public issuesById(id: string) : ServiceHealthIssueItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["serviceHealthIssue_id"] = id
-        return new ServiceHealthIssueRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ServiceHealthIssueItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.admin.serviceAnnouncement.messages.item collection
      * @param id Unique identifier of the item
-     * @returns a serviceUpdateMessageRequestBuilder
+     * @returns a serviceUpdateMessageItemRequestBuilder
      */
-    public messagesById(id: string) : ServiceUpdateMessageRequestBuilder {
+    public messagesById(id: string) : ServiceUpdateMessageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["serviceUpdateMessage_id"] = id
-        return new ServiceUpdateMessageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ServiceUpdateMessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * A container for service communications resources. Read-only.

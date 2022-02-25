@@ -1,2 +1,2 @@
-export * from './NominalRequestBuilder'
 export * from './NominalRequestBody'
+export * from './NominalRequestBuilder'

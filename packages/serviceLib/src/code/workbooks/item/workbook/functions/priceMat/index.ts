@@ -1,2 +1,2 @@
-export * from './PriceMatRequestBuilder'
 export * from './PriceMatRequestBody'
+export * from './PriceMatRequestBuilder'

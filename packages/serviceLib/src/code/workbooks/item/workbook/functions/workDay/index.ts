@@ -1,2 +1,2 @@
-export * from './WorkDayRequestBuilder'
 export * from './WorkDayRequestBody'
+export * from './WorkDayRequestBuilder'

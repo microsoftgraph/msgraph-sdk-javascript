@@ -1,8 +1,8 @@
 import {ConditionalAccessRoot} from '../../models/microsoft/graph/';
 import {NamedLocationsRequestBuilder} from './namedLocations/';
-import {NamedLocationRequestBuilder} from './namedLocations/item/';
+import {NamedLocationItemRequestBuilder} from './namedLocations/item/';
 import {PoliciesRequestBuilder} from './policies/';
-import {ConditionalAccessPolicyRequestBuilder} from './policies/item/';
+import {ConditionalAccessPolicyItemRequestBuilder} from './policies/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identity/conditionalAccess  */
@@ -117,13 +117,13 @@ export class ConditionalAccessRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identity.conditionalAccess.namedLocations.item collection
      * @param id Unique identifier of the item
-     * @returns a namedLocationRequestBuilder
+     * @returns a namedLocationItemRequestBuilder
      */
-    public namedLocationsById(id: string) : NamedLocationRequestBuilder {
+    public namedLocationsById(id: string) : NamedLocationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["namedLocation_id"] = id
-        return new NamedLocationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new NamedLocationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * the entry point for the Conditional Access (CA) object model.
@@ -142,12 +142,12 @@ export class ConditionalAccessRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identity.conditionalAccess.policies.item collection
      * @param id Unique identifier of the item
-     * @returns a conditionalAccessPolicyRequestBuilder
+     * @returns a conditionalAccessPolicyItemRequestBuilder
      */
-    public policiesById(id: string) : ConditionalAccessPolicyRequestBuilder {
+    public policiesById(id: string) : ConditionalAccessPolicyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["conditionalAccessPolicy_id"] = id
-        return new ConditionalAccessPolicyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ConditionalAccessPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,6 +1,6 @@
 import {InferenceClassification} from '../../models/microsoft/graph/';
 import {OverridesRequestBuilder} from './overrides/';
-import {InferenceClassificationOverrideRequestBuilder} from './overrides/item/';
+import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /me/inferenceClassification  */
@@ -110,13 +110,13 @@ export class InferenceClassificationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.inferenceClassification.overrides.item collection
      * @param id Unique identifier of the item
-     * @returns a inferenceClassificationOverrideRequestBuilder
+     * @returns a inferenceClassificationOverrideItemRequestBuilder
      */
-    public overridesById(id: string) : InferenceClassificationOverrideRequestBuilder {
+    public overridesById(id: string) : InferenceClassificationOverrideItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["inferenceClassificationOverride_id"] = id
-        return new InferenceClassificationOverrideRequestBuilder(urlTplParams, this.requestAdapter);
+        return new InferenceClassificationOverrideItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.

@@ -1,2 +1,2 @@
-export * from './SecureScoreControlProfilesRequestBuilder'
 export * from './SecureScoreControlProfilesResponse'
+export * from './SecureScoreControlProfilesRequestBuilder'

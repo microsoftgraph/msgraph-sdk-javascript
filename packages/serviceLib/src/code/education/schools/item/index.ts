@@ -1,1 +1,1 @@
-export * from './EducationSchoolRequestBuilder'
+export * from './EducationSchoolItemRequestBuilder'

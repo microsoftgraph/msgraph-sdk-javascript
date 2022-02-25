@@ -1,2 +1,2 @@
-export * from './PostsRequestBuilder'
 export * from './PostsResponse'
+export * from './PostsRequestBuilder'

@@ -1,16 +1,16 @@
 import {Calendar} from '../../../models/microsoft/graph/';
 import {AllowedCalendarSharingRolesWithUserRequestBuilder} from './allowedCalendarSharingRolesWithUser/';
 import {CalendarPermissionsRequestBuilder} from './calendarPermissions/';
-import {CalendarPermissionRequestBuilder} from './calendarPermissions/item/';
+import {CalendarPermissionItemRequestBuilder} from './calendarPermissions/item/';
 import {CalendarViewRequestBuilder} from './calendarView/';
-import {EventRequestBuilder as ibbbc05ea3674a62f0ca66884e087005a060b8fc9367bba319fdc1b02e5bdba10} from './calendarView/item/';
+import {EventItemRequestBuilder as ida79600fc0ecd6fe5e4152434e2e3af25ea468b1ddcbac221a2729cf12bdcaeb} from './calendarView/item/';
 import {EventsRequestBuilder} from './events/';
-import {EventRequestBuilder as ia10c273014eb5ce64fa6d0ef54195c546518ff927600f45b895b98256b15a987} from './events/item/';
+import {EventItemRequestBuilder as i54c5f2563fd9622c6190e5a3f283a31fe56519ee423d3d4f677caf021fb29491} from './events/item/';
 import {GetScheduleRequestBuilder} from './getSchedule/';
 import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/';
-import {MultiValueLegacyExtendedPropertyRequestBuilder} from './multiValueExtendedProperties/item/';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/';
 import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/';
-import {SingleValueLegacyExtendedPropertyRequestBuilder} from './singleValueExtendedProperties/item/';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/calendar  */
@@ -51,24 +51,24 @@ export class CalendarRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendar.calendarPermissions.item collection
      * @param id Unique identifier of the item
-     * @returns a calendarPermissionRequestBuilder
+     * @returns a calendarPermissionItemRequestBuilder
      */
-    public calendarPermissionsById(id: string) : CalendarPermissionRequestBuilder {
+    public calendarPermissionsById(id: string) : CalendarPermissionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["calendarPermission_id"] = id
-        return new CalendarPermissionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new CalendarPermissionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendar.calendarView.item collection
      * @param id Unique identifier of the item
-     * @returns a eventRequestBuilder
+     * @returns a eventItemRequestBuilder
      */
-    public calendarViewById(id: string) : ibbbc05ea3674a62f0ca66884e087005a060b8fc9367bba319fdc1b02e5bdba10 {
+    public calendarViewById(id: string) : ida79600fc0ecd6fe5e4152434e2e3af25ea468b1ddcbac221a2729cf12bdcaeb {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["event_id"] = id
-        return new ibbbc05ea3674a62f0ca66884e087005a060b8fc9367bba319fdc1b02e5bdba10(urlTplParams, this.requestAdapter);
+        return new ida79600fc0ecd6fe5e4152434e2e3af25ea468b1ddcbac221a2729cf12bdcaeb(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new CalendarRequestBuilder and sets the default values.
@@ -150,13 +150,13 @@ export class CalendarRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendar.events.item collection
      * @param id Unique identifier of the item
-     * @returns a eventRequestBuilder
+     * @returns a eventItemRequestBuilder
      */
-    public eventsById(id: string) : ia10c273014eb5ce64fa6d0ef54195c546518ff927600f45b895b98256b15a987 {
+    public eventsById(id: string) : i54c5f2563fd9622c6190e5a3f283a31fe56519ee423d3d4f677caf021fb29491 {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["event_id"] = id
-        return new ia10c273014eb5ce64fa6d0ef54195c546518ff927600f45b895b98256b15a987(urlTplParams, this.requestAdapter);
+        return new i54c5f2563fd9622c6190e5a3f283a31fe56519ee423d3d4f677caf021fb29491(urlTplParams, this.requestAdapter);
     };
     /**
      * The user's primary calendar. Read-only.
@@ -177,13 +177,13 @@ export class CalendarRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendar.multiValueExtendedProperties.item collection
      * @param id Unique identifier of the item
-     * @returns a multiValueLegacyExtendedPropertyRequestBuilder
+     * @returns a multiValueLegacyExtendedPropertyItemRequestBuilder
      */
-    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyRequestBuilder {
+    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["multiValueLegacyExtendedProperty_id"] = id
-        return new MultiValueLegacyExtendedPropertyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * The user's primary calendar. Read-only.
@@ -202,12 +202,12 @@ export class CalendarRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendar.singleValueExtendedProperties.item collection
      * @param id Unique identifier of the item
-     * @returns a singleValueLegacyExtendedPropertyRequestBuilder
+     * @returns a singleValueLegacyExtendedPropertyItemRequestBuilder
      */
-    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyRequestBuilder {
+    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["singleValueLegacyExtendedProperty_id"] = id
-        return new SingleValueLegacyExtendedPropertyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SingleValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

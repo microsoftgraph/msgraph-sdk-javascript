@@ -1,2 +1,2 @@
-export * from './ReplaceBRequestBuilder'
 export * from './ReplaceBRequestBody'
+export * from './ReplaceBRequestBuilder'

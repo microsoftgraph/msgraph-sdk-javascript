@@ -1,6 +1,6 @@
 import {Group} from '../../../../../../../models/microsoft/graph/';
 import {SetsRequestBuilder} from './sets/';
-import {SetRequestBuilder} from './sets/item/';
+import {SetItemRequestBuilder} from './sets/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /sites/{site-id}/termStores/{store-id}/sets/{set-id}/parentGroup  */
@@ -126,12 +126,12 @@ export class ParentGroupRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStores.item.sets.item.parentGroup.sets.item collection
      * @param id Unique identifier of the item
-     * @returns a setRequestBuilder
+     * @returns a setItemRequestBuilder
      */
-    public setsById(id: string) : SetRequestBuilder {
+    public setsById(id: string) : SetItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["set_id1"] = id
-        return new SetRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SetItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

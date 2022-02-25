@@ -1,8 +1,8 @@
 import {IdentityProtectionRoot} from '../models/microsoft/graph/';
 import {RiskDetectionsRequestBuilder} from './riskDetections/';
-import {RiskDetectionRequestBuilder} from './riskDetections/item/';
+import {RiskDetectionItemRequestBuilder} from './riskDetections/item/';
 import {RiskyUsersRequestBuilder} from './riskyUsers/';
-import {RiskyUserRequestBuilder} from './riskyUsers/item/';
+import {RiskyUserItemRequestBuilder} from './riskyUsers/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identityProtection  */
@@ -104,23 +104,23 @@ export class IdentityProtectionRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityProtection.riskDetections.item collection
      * @param id Unique identifier of the item
-     * @returns a riskDetectionRequestBuilder
+     * @returns a riskDetectionItemRequestBuilder
      */
-    public riskDetectionsById(id: string) : RiskDetectionRequestBuilder {
+    public riskDetectionsById(id: string) : RiskDetectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["riskDetection_id"] = id
-        return new RiskDetectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new RiskDetectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityProtection.riskyUsers.item collection
      * @param id Unique identifier of the item
-     * @returns a riskyUserRequestBuilder
+     * @returns a riskyUserItemRequestBuilder
      */
-    public riskyUsersById(id: string) : RiskyUserRequestBuilder {
+    public riskyUsersById(id: string) : RiskyUserItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["riskyUser_id"] = id
-        return new RiskyUserRequestBuilder(urlTplParams, this.requestAdapter);
+        return new RiskyUserItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,1 +1,1 @@
-export * from './TargetedManagedAppPolicyAssignmentRequestBuilder'
+export * from './TargetedManagedAppPolicyAssignmentItemRequestBuilder'

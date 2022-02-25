@@ -1,1 +1,1 @@
-export * from './MailFolderRequestBuilder'
+export * from './MailFolderItemRequestBuilder'

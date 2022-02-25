@@ -1,1 +1,1 @@
-export * from './PrintTaskDefinitionRequestBuilder'
+export * from './PrintTaskDefinitionItemRequestBuilder'

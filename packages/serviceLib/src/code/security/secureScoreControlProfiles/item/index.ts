@@ -1,1 +1,1 @@
-export * from './SecureScoreControlProfileRequestBuilder'
+export * from './SecureScoreControlProfileItemRequestBuilder'

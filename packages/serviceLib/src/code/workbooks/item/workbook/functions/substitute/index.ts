@@ -1,2 +1,2 @@
-export * from './SubstituteRequestBody'
 export * from './SubstituteRequestBuilder'
+export * from './SubstituteRequestBody'

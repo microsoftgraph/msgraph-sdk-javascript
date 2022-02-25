@@ -1,2 +1,2 @@
-export * from './SecondRequestBuilder'
 export * from './SecondRequestBody'
+export * from './SecondRequestBuilder'

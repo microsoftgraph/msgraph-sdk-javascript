@@ -1,2 +1,2 @@
-export * from './MinRequestBuilder'
 export * from './MinRequestBody'
+export * from './MinRequestBuilder'

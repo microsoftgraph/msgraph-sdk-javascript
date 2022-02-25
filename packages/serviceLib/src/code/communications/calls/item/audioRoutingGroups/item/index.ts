@@ -1,1 +1,1 @@
-export * from './AudioRoutingGroupRequestBuilder'
+export * from './AudioRoutingGroupItemRequestBuilder'

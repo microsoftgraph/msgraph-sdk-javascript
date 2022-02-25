@@ -1,1 +1,1 @@
-export * from './SetRequestBuilder'
+export * from './SetItemRequestBuilder'

@@ -1,6 +1,6 @@
 import {Bitlocker} from '../../models/microsoft/graph/';
 import {RecoveryKeysRequestBuilder} from './recoveryKeys/';
-import {BitlockerRecoveryKeyRequestBuilder} from './recoveryKeys/item/';
+import {BitlockerRecoveryKeyItemRequestBuilder} from './recoveryKeys/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /informationProtection/bitlocker  */
@@ -126,12 +126,12 @@ export class BitlockerRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.informationProtection.bitlocker.recoveryKeys.item collection
      * @param id Unique identifier of the item
-     * @returns a bitlockerRecoveryKeyRequestBuilder
+     * @returns a bitlockerRecoveryKeyItemRequestBuilder
      */
-    public recoveryKeysById(id: string) : BitlockerRecoveryKeyRequestBuilder {
+    public recoveryKeysById(id: string) : BitlockerRecoveryKeyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["bitlockerRecoveryKey_id"] = id
-        return new BitlockerRecoveryKeyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new BitlockerRecoveryKeyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,1 +1,1 @@
-export * from './EndpointRequestBuilder'
+export * from './EndpointItemRequestBuilder'

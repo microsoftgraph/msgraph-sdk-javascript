@@ -1,8 +1,8 @@
 import {SolutionsRoot} from '../models/microsoft/graph/';
 import {BookingBusinessesRequestBuilder} from './bookingBusinesses/';
-import {BookingBusinessRequestBuilder} from './bookingBusinesses/item/';
+import {BookingBusinessItemRequestBuilder} from './bookingBusinesses/item/';
 import {BookingCurrenciesRequestBuilder} from './bookingCurrencies/';
-import {BookingCurrencyRequestBuilder} from './bookingCurrencies/item/';
+import {BookingCurrencyItemRequestBuilder} from './bookingCurrencies/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /solutions  */
@@ -22,24 +22,24 @@ export class SolutionsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.solutions.bookingBusinesses.item collection
      * @param id Unique identifier of the item
-     * @returns a bookingBusinessRequestBuilder
+     * @returns a bookingBusinessItemRequestBuilder
      */
-    public bookingBusinessesById(id: string) : BookingBusinessRequestBuilder {
+    public bookingBusinessesById(id: string) : BookingBusinessItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["bookingBusiness_id"] = id
-        return new BookingBusinessRequestBuilder(urlTplParams, this.requestAdapter);
+        return new BookingBusinessItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.solutions.bookingCurrencies.item collection
      * @param id Unique identifier of the item
-     * @returns a bookingCurrencyRequestBuilder
+     * @returns a bookingCurrencyItemRequestBuilder
      */
-    public bookingCurrenciesById(id: string) : BookingCurrencyRequestBuilder {
+    public bookingCurrenciesById(id: string) : BookingCurrencyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["bookingCurrency_id"] = id
-        return new BookingCurrencyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new BookingCurrencyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new SolutionsRequestBuilder and sets the default values.

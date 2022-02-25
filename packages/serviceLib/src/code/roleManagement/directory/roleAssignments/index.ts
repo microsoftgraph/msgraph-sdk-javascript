@@ -1,2 +1,2 @@
-export * from './RoleAssignmentsRequestBuilder'
 export * from './RoleAssignmentsResponse'
+export * from './RoleAssignmentsRequestBuilder'

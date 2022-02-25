@@ -1,1 +1,1 @@
-export * from './CallRecordRequestBuilder'
+export * from './CallRecordItemRequestBuilder'

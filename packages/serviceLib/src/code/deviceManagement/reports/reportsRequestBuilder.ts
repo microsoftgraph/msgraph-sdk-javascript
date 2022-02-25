@@ -1,6 +1,6 @@
 import {DeviceManagementReports} from '../../models/microsoft/graph/';
 import {ExportJobsRequestBuilder} from './exportJobs/';
-import {DeviceManagementExportJobRequestBuilder} from './exportJobs/item/';
+import {DeviceManagementExportJobItemRequestBuilder} from './exportJobs/item/';
 import {GetCachedReportRequestBuilder} from './getCachedReport/';
 import {GetCompliancePolicyNonComplianceReportRequestBuilder} from './getCompliancePolicyNonComplianceReport/';
 import {GetCompliancePolicyNonComplianceSummaryReportRequestBuilder} from './getCompliancePolicyNonComplianceSummaryReport/';
@@ -159,13 +159,13 @@ export class ReportsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.reports.exportJobs.item collection
      * @param id Unique identifier of the item
-     * @returns a deviceManagementExportJobRequestBuilder
+     * @returns a deviceManagementExportJobItemRequestBuilder
      */
-    public exportJobsById(id: string) : DeviceManagementExportJobRequestBuilder {
+    public exportJobsById(id: string) : DeviceManagementExportJobItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["deviceManagementExportJob_id"] = id
-        return new DeviceManagementExportJobRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DeviceManagementExportJobItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Reports singleton

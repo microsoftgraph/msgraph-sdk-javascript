@@ -2,22 +2,12 @@ import {Entity, TeamsApp} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AppCatalogs extends Entity implements Parsable {
-    /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
-    //private _additionalData: Map<string, unknown>;
     private _teamsApps?: TeamsApp[] | undefined;
     /**
      * Instantiates a new appCatalogs and sets the default values.
      */
     public constructor() {
         super();
-        //this._additionalData = new Map<string, unknown>();
-    };
-    /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
-     */
-    public get additionalData() {
-        return undefined;
     };
     /**
      * Gets the teamsApps property value. 
@@ -43,14 +33,6 @@ export class AppCatalogs extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeCollectionOfObjectValues<TeamsApp>("teamsApps", this.teamsApps);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-       // this._additionalData = value;
     };
     /**
      * Sets the teamsApps property value. 

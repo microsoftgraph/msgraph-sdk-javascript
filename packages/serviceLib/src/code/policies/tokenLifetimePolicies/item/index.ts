@@ -1,1 +1,1 @@
-export * from './TokenLifetimePolicyRequestBuilder'
+export * from './TokenLifetimePolicyItemRequestBuilder'

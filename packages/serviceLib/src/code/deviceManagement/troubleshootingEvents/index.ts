@@ -1,2 +1,2 @@
-export * from './TroubleshootingEventsRequestBuilder'
 export * from './TroubleshootingEventsResponse'
+export * from './TroubleshootingEventsRequestBuilder'

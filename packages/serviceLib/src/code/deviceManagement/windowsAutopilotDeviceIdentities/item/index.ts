@@ -1,1 +1,1 @@
-export * from './WindowsAutopilotDeviceIdentityRequestBuilder'
+export * from './WindowsAutopilotDeviceIdentityItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './RiskyUserRequestBuilder'
+export * from './RiskyUserItemRequestBuilder'

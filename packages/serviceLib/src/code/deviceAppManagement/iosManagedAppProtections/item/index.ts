@@ -1,1 +1,1 @@
-export * from './IosManagedAppProtectionRequestBuilder'
+export * from './IosManagedAppProtectionItemRequestBuilder'

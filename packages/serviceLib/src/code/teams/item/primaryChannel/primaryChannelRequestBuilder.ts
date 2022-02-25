@@ -2,13 +2,13 @@ import {Channel} from '../../../models/microsoft/graph/';
 import {CompleteMigrationRequestBuilder} from './completeMigration/';
 import {FilesFolderRequestBuilder} from './filesFolder/';
 import {MembersRequestBuilder} from './members/';
-import {ConversationMemberRequestBuilder} from './members/item/';
+import {ConversationMemberItemRequestBuilder} from './members/item/';
 import {MessagesRequestBuilder} from './messages/';
-import {ChatMessageRequestBuilder} from './messages/item/';
+import {ChatMessageItemRequestBuilder} from './messages/item/';
 import {ProvisionEmailRequestBuilder} from './provisionEmail/';
 import {RemoveEmailRequestBuilder} from './removeEmail/';
 import {TabsRequestBuilder} from './tabs/';
-import {TeamsTabRequestBuilder} from './tabs/item/';
+import {TeamsTabItemRequestBuilder} from './tabs/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /teams/{team-id}/primaryChannel  */
@@ -138,24 +138,24 @@ export class PrimaryChannelRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.teams.item.primaryChannel.members.item collection
      * @param id Unique identifier of the item
-     * @returns a conversationMemberRequestBuilder
+     * @returns a conversationMemberItemRequestBuilder
      */
-    public membersById(id: string) : ConversationMemberRequestBuilder {
+    public membersById(id: string) : ConversationMemberItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["conversationMember_id"] = id
-        return new ConversationMemberRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ConversationMemberItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.primaryChannel.messages.item collection
      * @param id Unique identifier of the item
-     * @returns a chatMessageRequestBuilder
+     * @returns a chatMessageItemRequestBuilder
      */
-    public messagesById(id: string) : ChatMessageRequestBuilder {
+    public messagesById(id: string) : ChatMessageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["chatMessage_id"] = id
-        return new ChatMessageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ChatMessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * The general channel for the team.
@@ -174,12 +174,12 @@ export class PrimaryChannelRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.teams.item.primaryChannel.tabs.item collection
      * @param id Unique identifier of the item
-     * @returns a teamsTabRequestBuilder
+     * @returns a teamsTabItemRequestBuilder
      */
-    public tabsById(id: string) : TeamsTabRequestBuilder {
+    public tabsById(id: string) : TeamsTabItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["teamsTab_id"] = id
-        return new TeamsTabRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TeamsTabItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

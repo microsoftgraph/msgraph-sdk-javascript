@@ -1,1 +1,1 @@
-export * from './PermissionGrantConditionSetRequestBuilder'
+export * from './PermissionGrantConditionSetItemRequestBuilder'

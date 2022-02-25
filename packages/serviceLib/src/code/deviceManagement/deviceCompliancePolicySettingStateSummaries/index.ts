@@ -1,2 +1,2 @@
-export * from './DeviceCompliancePolicySettingStateSummariesRequestBuilder'
 export * from './DeviceCompliancePolicySettingStateSummariesResponse'
+export * from './DeviceCompliancePolicySettingStateSummariesRequestBuilder'

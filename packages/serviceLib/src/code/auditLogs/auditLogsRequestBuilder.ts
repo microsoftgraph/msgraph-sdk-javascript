@@ -1,12 +1,12 @@
 import {AuditLogRoot} from '../models/microsoft/graph/';
 import {DirectoryAuditsRequestBuilder} from './directoryAudits/';
-import {DirectoryAuditRequestBuilder} from './directoryAudits/item/';
+import {DirectoryAuditItemRequestBuilder} from './directoryAudits/item/';
 import {ProvisioningRequestBuilder} from './provisioning/';
-import {ProvisioningObjectSummaryRequestBuilder} from './provisioning/item/';
+import {ProvisioningObjectSummaryItemRequestBuilder} from './provisioning/item/';
 import {RestrictedSignInsRequestBuilder} from './restrictedSignIns/';
-import {RestrictedSignInRequestBuilder} from './restrictedSignIns/item/';
+import {RestrictedSignInItemRequestBuilder} from './restrictedSignIns/item/';
 import {SignInsRequestBuilder} from './signIns/';
-import {SignInRequestBuilder} from './signIns/item/';
+import {SignInItemRequestBuilder} from './signIns/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /auditLogs  */
@@ -83,13 +83,13 @@ export class AuditLogsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.auditLogs.directoryAudits.item collection
      * @param id Unique identifier of the item
-     * @returns a directoryAuditRequestBuilder
+     * @returns a directoryAuditItemRequestBuilder
      */
-    public directoryAuditsById(id: string) : DirectoryAuditRequestBuilder {
+    public directoryAuditsById(id: string) : DirectoryAuditItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["directoryAudit_id"] = id
-        return new DirectoryAuditRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DirectoryAuditItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get auditLogs
@@ -125,34 +125,34 @@ export class AuditLogsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.auditLogs.provisioning.item collection
      * @param id Unique identifier of the item
-     * @returns a provisioningObjectSummaryRequestBuilder
+     * @returns a provisioningObjectSummaryItemRequestBuilder
      */
-    public provisioningById(id: string) : ProvisioningObjectSummaryRequestBuilder {
+    public provisioningById(id: string) : ProvisioningObjectSummaryItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["provisioningObjectSummary_id"] = id
-        return new ProvisioningObjectSummaryRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ProvisioningObjectSummaryItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.auditLogs.restrictedSignIns.item collection
      * @param id Unique identifier of the item
-     * @returns a restrictedSignInRequestBuilder
+     * @returns a restrictedSignInItemRequestBuilder
      */
-    public restrictedSignInsById(id: string) : RestrictedSignInRequestBuilder {
+    public restrictedSignInsById(id: string) : RestrictedSignInItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["restrictedSignIn_id"] = id
-        return new RestrictedSignInRequestBuilder(urlTplParams, this.requestAdapter);
+        return new RestrictedSignInItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.auditLogs.signIns.item collection
      * @param id Unique identifier of the item
-     * @returns a signInRequestBuilder
+     * @returns a signInItemRequestBuilder
      */
-    public signInsById(id: string) : SignInRequestBuilder {
+    public signInsById(id: string) : SignInItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["signIn_id"] = id
-        return new SignInRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SignInItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

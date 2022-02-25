@@ -1,1 +1,1 @@
-export * from './SectionGroupRequestBuilder'
+export * from './SectionGroupItemRequestBuilder'

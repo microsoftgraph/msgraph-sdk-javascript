@@ -1,2 +1,2 @@
-export * from './SetSolidColorRequestBuilder'
 export * from './SetSolidColorRequestBody'
+export * from './SetSolidColorRequestBuilder'

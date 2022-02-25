@@ -1,2 +1,2 @@
-export * from './RemoveGroupRequestBuilder'
 export * from './RemoveGroupRequestBody'
+export * from './RemoveGroupRequestBuilder'

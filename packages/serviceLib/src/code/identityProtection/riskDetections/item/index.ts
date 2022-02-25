@@ -1,1 +1,1 @@
-export * from './RiskDetectionRequestBuilder'
+export * from './RiskDetectionItemRequestBuilder'

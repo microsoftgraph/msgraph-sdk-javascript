@@ -1,2 +1,2 @@
-export * from './GroupSettingsResponse'
 export * from './GroupSettingsRequestBuilder'
+export * from './GroupSettingsResponse'

@@ -1,6 +1,6 @@
 import {AppConsentApprovalRoute} from '../../models/microsoft/graph/';
 import {AppConsentRequestsRequestBuilder} from './appConsentRequests/';
-import {AppConsentRequestRequestBuilder} from './appConsentRequests/item/';
+import {AppConsentRequestItemRequestBuilder} from './appConsentRequests/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identityGovernance/appConsent  */
@@ -17,13 +17,13 @@ export class AppConsentRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.appConsent.appConsentRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a appConsentRequestRequestBuilder
+     * @returns a appConsentRequestItemRequestBuilder
      */
-    public appConsentRequestsById(id: string) : AppConsentRequestRequestBuilder {
+    public appConsentRequestsById(id: string) : AppConsentRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["appConsentRequest_id"] = id
-        return new AppConsentRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AppConsentRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new AppConsentRequestBuilder and sets the default values.

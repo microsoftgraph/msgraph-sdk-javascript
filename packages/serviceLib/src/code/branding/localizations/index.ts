@@ -1,2 +1,2 @@
-export * from './LocalizationsRequestBuilder'
 export * from './LocalizationsResponse'
+export * from './LocalizationsRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './NotificationMessageTemplateRequestBuilder'
+export * from './NotificationMessageTemplateItemRequestBuilder'

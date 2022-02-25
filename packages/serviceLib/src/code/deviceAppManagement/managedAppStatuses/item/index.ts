@@ -1,1 +1,1 @@
-export * from './ManagedAppStatusRequestBuilder'
+export * from './ManagedAppStatusItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './ConditionalAccessPolicyRequestBuilder'
+export * from './ConditionalAccessPolicyItemRequestBuilder'

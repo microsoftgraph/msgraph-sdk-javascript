@@ -1,2 +1,2 @@
-export * from './VarPARequestBody'
 export * from './VarPARequestBuilder'
+export * from './VarPARequestBody'

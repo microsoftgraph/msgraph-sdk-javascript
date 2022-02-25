@@ -1,2 +1,2 @@
-export * from './BitandRequestBody'
 export * from './BitandRequestBuilder'
+export * from './BitandRequestBody'

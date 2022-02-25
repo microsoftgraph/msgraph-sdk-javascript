@@ -1,2 +1,2 @@
-export * from './RiskDetectionsResponse'
 export * from './RiskDetectionsRequestBuilder'
+export * from './RiskDetectionsResponse'

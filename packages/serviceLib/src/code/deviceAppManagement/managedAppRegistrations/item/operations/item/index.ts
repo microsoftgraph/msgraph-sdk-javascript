@@ -1,1 +1,1 @@
-export * from './ManagedAppOperationRequestBuilder'
+export * from './ManagedAppOperationItemRequestBuilder'

@@ -1,16 +1,16 @@
 import {Onenote} from '../../../models/microsoft/graph/';
 import {NotebooksRequestBuilder} from './notebooks/';
-import {NotebookRequestBuilder} from './notebooks/item/';
+import {NotebookItemRequestBuilder} from './notebooks/item/';
 import {OperationsRequestBuilder} from './operations/';
-import {OnenoteOperationRequestBuilder} from './operations/item/';
+import {OnenoteOperationItemRequestBuilder} from './operations/item/';
 import {PagesRequestBuilder} from './pages/';
-import {OnenotePageRequestBuilder} from './pages/item/';
+import {OnenotePageItemRequestBuilder} from './pages/item/';
 import {ResourcesRequestBuilder} from './resources/';
-import {OnenoteResourceRequestBuilder} from './resources/item/';
+import {OnenoteResourceItemRequestBuilder} from './resources/item/';
 import {SectionGroupsRequestBuilder} from './sectionGroups/';
-import {SectionGroupRequestBuilder} from './sectionGroups/item/';
+import {SectionGroupItemRequestBuilder} from './sectionGroups/item/';
 import {SectionsRequestBuilder} from './sections/';
-import {OnenoteSectionRequestBuilder} from './sections/item/';
+import {OnenoteSectionItemRequestBuilder} from './sections/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /groups/{group-id}/onenote  */
@@ -137,35 +137,35 @@ export class OnenoteRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.notebooks.item collection
      * @param id Unique identifier of the item
-     * @returns a notebookRequestBuilder
+     * @returns a notebookItemRequestBuilder
      */
-    public notebooksById(id: string) : NotebookRequestBuilder {
+    public notebooksById(id: string) : NotebookItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["notebook_id"] = id
-        return new NotebookRequestBuilder(urlTplParams, this.requestAdapter);
+        return new NotebookItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.operations.item collection
      * @param id Unique identifier of the item
-     * @returns a onenoteOperationRequestBuilder
+     * @returns a onenoteOperationItemRequestBuilder
      */
-    public operationsById(id: string) : OnenoteOperationRequestBuilder {
+    public operationsById(id: string) : OnenoteOperationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onenoteOperation_id"] = id
-        return new OnenoteOperationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnenoteOperationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.pages.item collection
      * @param id Unique identifier of the item
-     * @returns a onenotePageRequestBuilder
+     * @returns a onenotePageItemRequestBuilder
      */
-    public pagesById(id: string) : OnenotePageRequestBuilder {
+    public pagesById(id: string) : OnenotePageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onenotePage_id"] = id
-        return new OnenotePageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnenotePageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Read-only.
@@ -184,34 +184,34 @@ export class OnenoteRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.resources.item collection
      * @param id Unique identifier of the item
-     * @returns a onenoteResourceRequestBuilder
+     * @returns a onenoteResourceItemRequestBuilder
      */
-    public resourcesById(id: string) : OnenoteResourceRequestBuilder {
+    public resourcesById(id: string) : OnenoteResourceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onenoteResource_id"] = id
-        return new OnenoteResourceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnenoteResourceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.sectionGroups.item collection
      * @param id Unique identifier of the item
-     * @returns a sectionGroupRequestBuilder
+     * @returns a sectionGroupItemRequestBuilder
      */
-    public sectionGroupsById(id: string) : SectionGroupRequestBuilder {
+    public sectionGroupsById(id: string) : SectionGroupItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["sectionGroup_id"] = id
-        return new SectionGroupRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SectionGroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.sections.item collection
      * @param id Unique identifier of the item
-     * @returns a onenoteSectionRequestBuilder
+     * @returns a onenoteSectionItemRequestBuilder
      */
-    public sectionsById(id: string) : OnenoteSectionRequestBuilder {
+    public sectionsById(id: string) : OnenoteSectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onenoteSection_id"] = id
-        return new OnenoteSectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnenoteSectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

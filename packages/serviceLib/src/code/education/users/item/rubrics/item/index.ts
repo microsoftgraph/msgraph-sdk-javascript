@@ -1,1 +1,1 @@
-export * from './EducationRubricRequestBuilder'
+export * from './EducationRubricItemRequestBuilder'

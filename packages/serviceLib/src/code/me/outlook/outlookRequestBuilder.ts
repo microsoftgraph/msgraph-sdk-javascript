@@ -1,6 +1,6 @@
 import {OutlookUser} from '../../models/microsoft/graph/';
 import {MasterCategoriesRequestBuilder} from './masterCategories/';
-import {OutlookCategoryRequestBuilder} from './masterCategories/item/';
+import {OutlookCategoryItemRequestBuilder} from './masterCategories/item/';
 import {SupportedLanguagesRequestBuilder} from './supportedLanguages/';
 import {SupportedTimeZonesRequestBuilder} from './supportedTimeZones/';
 import {SupportedTimeZonesWithTimeZoneStandardRequestBuilder} from './supportedTimeZonesWithTimeZoneStandard/';
@@ -113,13 +113,13 @@ export class OutlookRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.me.outlook.masterCategories.item collection
      * @param id Unique identifier of the item
-     * @returns a outlookCategoryRequestBuilder
+     * @returns a outlookCategoryItemRequestBuilder
      */
-    public masterCategoriesById(id: string) : OutlookCategoryRequestBuilder {
+    public masterCategoriesById(id: string) : OutlookCategoryItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["outlookCategory_id"] = id
-        return new OutlookCategoryRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OutlookCategoryItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Read-only.

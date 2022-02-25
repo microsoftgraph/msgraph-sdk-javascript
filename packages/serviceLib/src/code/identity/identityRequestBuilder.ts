@@ -1,13 +1,13 @@
 import {IdentityContainer} from '../models/microsoft/graph/';
 import {ApiConnectorsRequestBuilder} from './apiConnectors/';
-import {IdentityApiConnectorRequestBuilder} from './apiConnectors/item/';
+import {IdentityApiConnectorItemRequestBuilder} from './apiConnectors/item/';
 import {B2xUserFlowsRequestBuilder} from './b2xUserFlows/';
-import {B2xIdentityUserFlowRequestBuilder} from './b2xUserFlows/item/';
+import {B2xIdentityUserFlowItemRequestBuilder} from './b2xUserFlows/item/';
 import {ConditionalAccessRequestBuilder} from './conditionalAccess/';
 import {IdentityProvidersRequestBuilder} from './identityProviders/';
-import {IdentityProviderBaseRequestBuilder} from './identityProviders/item/';
+import {IdentityProviderBaseItemRequestBuilder} from './identityProviders/item/';
 import {UserFlowAttributesRequestBuilder} from './userFlowAttributes/';
-import {IdentityUserFlowAttributeRequestBuilder} from './userFlowAttributes/item/';
+import {IdentityUserFlowAttributeItemRequestBuilder} from './userFlowAttributes/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identity  */
@@ -36,24 +36,24 @@ export class IdentityRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identity.apiConnectors.item collection
      * @param id Unique identifier of the item
-     * @returns a identityApiConnectorRequestBuilder
+     * @returns a identityApiConnectorItemRequestBuilder
      */
-    public apiConnectorsById(id: string) : IdentityApiConnectorRequestBuilder {
+    public apiConnectorsById(id: string) : IdentityApiConnectorItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["identityApiConnector_id"] = id
-        return new IdentityApiConnectorRequestBuilder(urlTplParams, this.requestAdapter);
+        return new IdentityApiConnectorItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item collection
      * @param id Unique identifier of the item
-     * @returns a b2xIdentityUserFlowRequestBuilder
+     * @returns a b2xIdentityUserFlowItemRequestBuilder
      */
-    public b2xUserFlowsById(id: string) : B2xIdentityUserFlowRequestBuilder {
+    public b2xUserFlowsById(id: string) : B2xIdentityUserFlowItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["b2xIdentityUserFlow_id"] = id
-        return new B2xIdentityUserFlowRequestBuilder(urlTplParams, this.requestAdapter);
+        return new B2xIdentityUserFlowItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new IdentityRequestBuilder and sets the default values.
@@ -126,13 +126,13 @@ export class IdentityRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identity.identityProviders.item collection
      * @param id Unique identifier of the item
-     * @returns a identityProviderBaseRequestBuilder
+     * @returns a identityProviderBaseItemRequestBuilder
      */
-    public identityProvidersById(id: string) : IdentityProviderBaseRequestBuilder {
+    public identityProvidersById(id: string) : IdentityProviderBaseItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["identityProviderBase_id"] = id
-        return new IdentityProviderBaseRequestBuilder(urlTplParams, this.requestAdapter);
+        return new IdentityProviderBaseItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update identity
@@ -151,12 +151,12 @@ export class IdentityRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identity.userFlowAttributes.item collection
      * @param id Unique identifier of the item
-     * @returns a identityUserFlowAttributeRequestBuilder
+     * @returns a identityUserFlowAttributeItemRequestBuilder
      */
-    public userFlowAttributesById(id: string) : IdentityUserFlowAttributeRequestBuilder {
+    public userFlowAttributesById(id: string) : IdentityUserFlowAttributeItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["identityUserFlowAttribute_id"] = id
-        return new IdentityUserFlowAttributeRequestBuilder(urlTplParams, this.requestAdapter);
+        return new IdentityUserFlowAttributeItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

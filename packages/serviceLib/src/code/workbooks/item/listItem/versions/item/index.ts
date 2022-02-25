@@ -1,1 +1,1 @@
-export * from './ListItemVersionRequestBuilder'
+export * from './ListItemVersionItemRequestBuilder'

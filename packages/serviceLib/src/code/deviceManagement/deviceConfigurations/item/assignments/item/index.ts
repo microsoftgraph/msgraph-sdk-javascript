@@ -1,1 +1,1 @@
-export * from './DeviceConfigurationAssignmentRequestBuilder'
+export * from './DeviceConfigurationAssignmentItemRequestBuilder'

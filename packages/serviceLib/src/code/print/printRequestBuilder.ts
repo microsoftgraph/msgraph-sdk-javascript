@@ -1,16 +1,16 @@
 import {Print} from '../models/microsoft/graph/';
 import {ConnectorsRequestBuilder} from './connectors/';
-import {PrintConnectorRequestBuilder} from './connectors/item/';
+import {PrintConnectorItemRequestBuilder} from './connectors/item/';
 import {OperationsRequestBuilder} from './operations/';
-import {PrintOperationRequestBuilder} from './operations/item/';
+import {PrintOperationItemRequestBuilder} from './operations/item/';
 import {PrintersRequestBuilder} from './printers/';
-import {PrinterRequestBuilder} from './printers/item/';
+import {PrinterItemRequestBuilder} from './printers/item/';
 import {ServicesRequestBuilder} from './services/';
-import {PrintServiceRequestBuilder} from './services/item/';
+import {PrintServiceItemRequestBuilder} from './services/item/';
 import {SharesRequestBuilder} from './shares/';
-import {PrinterShareRequestBuilder} from './shares/item/';
+import {PrinterShareItemRequestBuilder} from './shares/item/';
 import {TaskDefinitionsRequestBuilder} from './taskDefinitions/';
-import {PrintTaskDefinitionRequestBuilder} from './taskDefinitions/item/';
+import {PrintTaskDefinitionItemRequestBuilder} from './taskDefinitions/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /print  */
@@ -42,13 +42,13 @@ export class PrintRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.print.connectors.item collection
      * @param id Unique identifier of the item
-     * @returns a printConnectorRequestBuilder
+     * @returns a printConnectorItemRequestBuilder
      */
-    public connectorsById(id: string) : PrintConnectorRequestBuilder {
+    public connectorsById(id: string) : PrintConnectorItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printConnector_id"] = id
-        return new PrintConnectorRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrintConnectorItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new PrintRequestBuilder and sets the default values.
@@ -121,13 +121,13 @@ export class PrintRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.print.operations.item collection
      * @param id Unique identifier of the item
-     * @returns a printOperationRequestBuilder
+     * @returns a printOperationItemRequestBuilder
      */
-    public operationsById(id: string) : PrintOperationRequestBuilder {
+    public operationsById(id: string) : PrintOperationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printOperation_id"] = id
-        return new PrintOperationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrintOperationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update print
@@ -146,45 +146,45 @@ export class PrintRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.print.printers.item collection
      * @param id Unique identifier of the item
-     * @returns a printerRequestBuilder
+     * @returns a printerItemRequestBuilder
      */
-    public printersById(id: string) : PrinterRequestBuilder {
+    public printersById(id: string) : PrinterItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printer_id"] = id
-        return new PrinterRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrinterItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.print.services.item collection
      * @param id Unique identifier of the item
-     * @returns a printServiceRequestBuilder
+     * @returns a printServiceItemRequestBuilder
      */
-    public servicesById(id: string) : PrintServiceRequestBuilder {
+    public servicesById(id: string) : PrintServiceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printService_id"] = id
-        return new PrintServiceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrintServiceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.print.shares.item collection
      * @param id Unique identifier of the item
-     * @returns a printerShareRequestBuilder
+     * @returns a printerShareItemRequestBuilder
      */
-    public sharesById(id: string) : PrinterShareRequestBuilder {
+    public sharesById(id: string) : PrinterShareItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printerShare_id"] = id
-        return new PrinterShareRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrinterShareItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.print.taskDefinitions.item collection
      * @param id Unique identifier of the item
-     * @returns a printTaskDefinitionRequestBuilder
+     * @returns a printTaskDefinitionItemRequestBuilder
      */
-    public taskDefinitionsById(id: string) : PrintTaskDefinitionRequestBuilder {
+    public taskDefinitionsById(id: string) : PrintTaskDefinitionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["printTaskDefinition_id"] = id
-        return new PrintTaskDefinitionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PrintTaskDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

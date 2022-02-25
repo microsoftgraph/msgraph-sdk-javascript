@@ -1,1 +1,1 @@
-export * from './DomainDnsRecordRequestBuilder'
+export * from './DomainDnsRecordItemRequestBuilder'

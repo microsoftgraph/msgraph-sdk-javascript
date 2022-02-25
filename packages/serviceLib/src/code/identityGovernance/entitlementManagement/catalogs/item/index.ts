@@ -1,1 +1,1 @@
-export * from './AccessPackageCatalogRequestBuilder'
+export * from './AccessPackageCatalogItemRequestBuilder'

@@ -1,6 +1,6 @@
 import {Teamwork} from '../models/microsoft/graph/';
 import {WorkforceIntegrationsRequestBuilder} from './workforceIntegrations/';
-import {WorkforceIntegrationRequestBuilder} from './workforceIntegrations/item/';
+import {WorkforceIntegrationItemRequestBuilder} from './workforceIntegrations/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /teamwork  */
@@ -99,12 +99,12 @@ export class TeamworkRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.teamwork.workforceIntegrations.item collection
      * @param id Unique identifier of the item
-     * @returns a workforceIntegrationRequestBuilder
+     * @returns a workforceIntegrationItemRequestBuilder
      */
-    public workforceIntegrationsById(id: string) : WorkforceIntegrationRequestBuilder {
+    public workforceIntegrationsById(id: string) : WorkforceIntegrationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["workforceIntegration_id"] = id
-        return new WorkforceIntegrationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WorkforceIntegrationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

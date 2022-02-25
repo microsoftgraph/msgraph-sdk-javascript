@@ -1,1 +1,1 @@
-export * from './LocalizedNotificationMessageRequestBuilder'
+export * from './LocalizedNotificationMessageItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './PlaceRequestBuilder'
+export * from './PlaceItemRequestBuilder'

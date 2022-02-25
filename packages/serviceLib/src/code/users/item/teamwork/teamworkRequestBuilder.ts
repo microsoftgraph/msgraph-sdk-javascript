@@ -1,6 +1,6 @@
 import {UserTeamwork} from '../../../models/microsoft/graph/';
 import {InstalledAppsRequestBuilder} from './installedApps/';
-import {UserScopeTeamsAppInstallationRequestBuilder} from './installedApps/item/';
+import {UserScopeTeamsAppInstallationItemRequestBuilder} from './installedApps/item/';
 import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
@@ -116,13 +116,13 @@ export class TeamworkRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.teamwork.installedApps.item collection
      * @param id Unique identifier of the item
-     * @returns a userScopeTeamsAppInstallationRequestBuilder
+     * @returns a userScopeTeamsAppInstallationItemRequestBuilder
      */
-    public installedAppsById(id: string) : UserScopeTeamsAppInstallationRequestBuilder {
+    public installedAppsById(id: string) : UserScopeTeamsAppInstallationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["userScopeTeamsAppInstallation_id"] = id
-        return new UserScopeTeamsAppInstallationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UserScopeTeamsAppInstallationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * A container for Microsoft Teams features available for the user. Read-only. Nullable.

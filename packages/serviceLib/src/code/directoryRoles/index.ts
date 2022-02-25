@@ -1,2 +1,2 @@
-export * from './DirectoryRolesResponse'
 export * from './DirectoryRolesRequestBuilder'
+export * from './DirectoryRolesResponse'

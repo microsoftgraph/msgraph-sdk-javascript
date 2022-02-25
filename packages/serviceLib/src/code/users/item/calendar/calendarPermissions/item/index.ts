@@ -1,1 +1,1 @@
-export * from './CalendarPermissionRequestBuilder'
+export * from './CalendarPermissionItemRequestBuilder'

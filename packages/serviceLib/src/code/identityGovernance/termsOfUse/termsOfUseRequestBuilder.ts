@@ -1,8 +1,8 @@
 import {TermsOfUseContainer} from '../../models/microsoft/graph/';
 import {AgreementAcceptancesRequestBuilder} from './agreementAcceptances/';
-import {AgreementAcceptanceRequestBuilder} from './agreementAcceptances/item/';
+import {AgreementAcceptanceItemRequestBuilder} from './agreementAcceptances/item/';
 import {AgreementsRequestBuilder} from './agreements/';
-import {AgreementRequestBuilder} from './agreements/item/';
+import {AgreementItemRequestBuilder} from './agreements/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identityGovernance/termsOfUse  */
@@ -22,24 +22,24 @@ export class TermsOfUseRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.termsOfUse.agreementAcceptances.item collection
      * @param id Unique identifier of the item
-     * @returns a agreementAcceptanceRequestBuilder
+     * @returns a agreementAcceptanceItemRequestBuilder
      */
-    public agreementAcceptancesById(id: string) : AgreementAcceptanceRequestBuilder {
+    public agreementAcceptancesById(id: string) : AgreementAcceptanceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["agreementAcceptance_id"] = id
-        return new AgreementAcceptanceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AgreementAcceptanceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.termsOfUse.agreements.item collection
      * @param id Unique identifier of the item
-     * @returns a agreementRequestBuilder
+     * @returns a agreementItemRequestBuilder
      */
-    public agreementsById(id: string) : AgreementRequestBuilder {
+    public agreementsById(id: string) : AgreementItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["agreement_id"] = id
-        return new AgreementRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AgreementItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new TermsOfUseRequestBuilder and sets the default values.

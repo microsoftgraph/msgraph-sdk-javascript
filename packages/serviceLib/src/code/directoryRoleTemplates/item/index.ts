@@ -1,1 +1,1 @@
-export * from './DirectoryRoleTemplateRequestBuilder'
+export * from './DirectoryRoleTemplateItemRequestBuilder'

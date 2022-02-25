@@ -1,2 +1,2 @@
-export * from './MessageRulesResponse'
 export * from './MessageRulesRequestBuilder'
+export * from './MessageRulesResponse'

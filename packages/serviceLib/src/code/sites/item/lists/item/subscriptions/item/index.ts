@@ -1,1 +1,1 @@
-export * from './SubscriptionRequestBuilder'
+export * from './SubscriptionItemRequestBuilder'

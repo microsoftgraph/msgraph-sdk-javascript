@@ -1,2 +1,2 @@
-export * from './DetectedAppsRequestBuilder'
 export * from './DetectedAppsResponse'
+export * from './DetectedAppsRequestBuilder'

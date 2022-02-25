@@ -1,16 +1,16 @@
 import {WorkbookWorksheet} from '../../../../../../models/microsoft/graph/';
 import {CellWithRowWithColumnRequestBuilder} from './cellWithRowWithColumn/';
 import {ChartsRequestBuilder} from './charts/';
-import {WorkbookChartRequestBuilder} from './charts/item/';
+import {WorkbookChartItemRequestBuilder} from './charts/item/';
 import {NamesRequestBuilder} from './names/';
-import {WorkbookNamedItemRequestBuilder} from './names/item/';
+import {WorkbookNamedItemItemRequestBuilder} from './names/item/';
 import {PivotTablesRequestBuilder} from './pivotTables/';
-import {WorkbookPivotTableRequestBuilder} from './pivotTables/item/';
+import {WorkbookPivotTableItemRequestBuilder} from './pivotTables/item/';
 import {ProtectionRequestBuilder} from './protection/';
 import {RangeRequestBuilder} from './range/';
 import {RangeWithAddressRequestBuilder} from './rangeWithAddress/';
 import {TablesRequestBuilder} from './tables/';
-import {WorkbookTableRequestBuilder} from './tables/item/';
+import {WorkbookTableItemRequestBuilder} from './tables/item/';
 import {UsedRangeRequestBuilder} from './usedRange/';
 import {UsedRangeWithValuesOnlyRequestBuilder} from './usedRangeWithValuesOnly/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
@@ -52,13 +52,13 @@ export class WorksheetRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item.workbook.names.item.worksheet.charts.item collection
      * @param id Unique identifier of the item
-     * @returns a workbookChartRequestBuilder
+     * @returns a workbookChartItemRequestBuilder
      */
-    public chartsById(id: string) : WorkbookChartRequestBuilder {
+    public chartsById(id: string) : WorkbookChartItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["workbookChart_id"] = id
-        return new WorkbookChartRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WorkbookChartItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new WorksheetRequestBuilder and sets the default values.
@@ -158,13 +158,13 @@ export class WorksheetRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item.workbook.names.item.worksheet.names.item collection
      * @param id Unique identifier of the item
-     * @returns a workbookNamedItemRequestBuilder
+     * @returns a workbookNamedItemItemRequestBuilder
      */
-    public namesById(id: string) : WorkbookNamedItemRequestBuilder {
+    public namesById(id: string) : WorkbookNamedItemItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["workbookNamedItem_id1"] = id
-        return new WorkbookNamedItemRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WorkbookNamedItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Returns the worksheet on which the named item is scoped to. Available only if the item is scoped to the worksheet. Read-only.
@@ -183,13 +183,13 @@ export class WorksheetRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item.workbook.names.item.worksheet.pivotTables.item collection
      * @param id Unique identifier of the item
-     * @returns a workbookPivotTableRequestBuilder
+     * @returns a workbookPivotTableItemRequestBuilder
      */
-    public pivotTablesById(id: string) : WorkbookPivotTableRequestBuilder {
+    public pivotTablesById(id: string) : WorkbookPivotTableItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["workbookPivotTable_id"] = id
-        return new WorkbookPivotTableRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WorkbookPivotTableItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Builds and executes requests for operations under /workbooks/{driveItem-id}/workbook/names/{workbookNamedItem-id}/worksheet/microsoft.graph.range()
@@ -210,13 +210,13 @@ export class WorksheetRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item.workbook.names.item.worksheet.tables.item collection
      * @param id Unique identifier of the item
-     * @returns a workbookTableRequestBuilder
+     * @returns a workbookTableItemRequestBuilder
      */
-    public tablesById(id: string) : WorkbookTableRequestBuilder {
+    public tablesById(id: string) : WorkbookTableItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["workbookTable_id"] = id
-        return new WorkbookTableRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WorkbookTableItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Builds and executes requests for operations under /workbooks/{driveItem-id}/workbook/names/{workbookNamedItem-id}/worksheet/microsoft.graph.usedRange()

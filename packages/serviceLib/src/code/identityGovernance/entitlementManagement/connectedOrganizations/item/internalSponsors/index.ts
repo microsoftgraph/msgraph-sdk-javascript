@@ -1,2 +1,2 @@
-export * from './InternalSponsorsResponse'
 export * from './InternalSponsorsRequestBuilder'
+export * from './InternalSponsorsResponse'

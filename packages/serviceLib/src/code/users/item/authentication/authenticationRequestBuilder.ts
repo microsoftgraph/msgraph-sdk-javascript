@@ -1,12 +1,12 @@
 import {Authentication} from '../../../models/microsoft/graph/';
 import {Fido2MethodsRequestBuilder} from './fido2Methods/';
-import {Fido2AuthenticationMethodRequestBuilder} from './fido2Methods/item/';
+import {Fido2AuthenticationMethodItemRequestBuilder} from './fido2Methods/item/';
 import {MethodsRequestBuilder} from './methods/';
-import {AuthenticationMethodRequestBuilder} from './methods/item/';
+import {AuthenticationMethodItemRequestBuilder} from './methods/item/';
 import {MicrosoftAuthenticatorMethodsRequestBuilder} from './microsoftAuthenticatorMethods/';
-import {MicrosoftAuthenticatorAuthenticationMethodRequestBuilder} from './microsoftAuthenticatorMethods/item/';
+import {MicrosoftAuthenticatorAuthenticationMethodItemRequestBuilder} from './microsoftAuthenticatorMethods/item/';
 import {WindowsHelloForBusinessMethodsRequestBuilder} from './windowsHelloForBusinessMethods/';
-import {WindowsHelloForBusinessAuthenticationMethodRequestBuilder} from './windowsHelloForBusinessMethods/item/';
+import {WindowsHelloForBusinessAuthenticationMethodItemRequestBuilder} from './windowsHelloForBusinessMethods/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/authentication  */
@@ -110,13 +110,13 @@ export class AuthenticationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.authentication.fido2Methods.item collection
      * @param id Unique identifier of the item
-     * @returns a fido2AuthenticationMethodRequestBuilder
+     * @returns a fido2AuthenticationMethodItemRequestBuilder
      */
-    public fido2MethodsById(id: string) : Fido2AuthenticationMethodRequestBuilder {
+    public fido2MethodsById(id: string) : Fido2AuthenticationMethodItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["fido2AuthenticationMethod_id"] = id
-        return new Fido2AuthenticationMethodRequestBuilder(urlTplParams, this.requestAdapter);
+        return new Fido2AuthenticationMethodItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get authentication from users
@@ -138,24 +138,24 @@ export class AuthenticationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.authentication.methods.item collection
      * @param id Unique identifier of the item
-     * @returns a authenticationMethodRequestBuilder
+     * @returns a authenticationMethodItemRequestBuilder
      */
-    public methodsById(id: string) : AuthenticationMethodRequestBuilder {
+    public methodsById(id: string) : AuthenticationMethodItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["authenticationMethod_id"] = id
-        return new AuthenticationMethodRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AuthenticationMethodItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.authentication.microsoftAuthenticatorMethods.item collection
      * @param id Unique identifier of the item
-     * @returns a microsoftAuthenticatorAuthenticationMethodRequestBuilder
+     * @returns a microsoftAuthenticatorAuthenticationMethodItemRequestBuilder
      */
-    public microsoftAuthenticatorMethodsById(id: string) : MicrosoftAuthenticatorAuthenticationMethodRequestBuilder {
+    public microsoftAuthenticatorMethodsById(id: string) : MicrosoftAuthenticatorAuthenticationMethodItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["microsoftAuthenticatorAuthenticationMethod_id"] = id
-        return new MicrosoftAuthenticatorAuthenticationMethodRequestBuilder(urlTplParams, this.requestAdapter);
+        return new MicrosoftAuthenticatorAuthenticationMethodItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update the navigation property authentication in users
@@ -174,12 +174,12 @@ export class AuthenticationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.authentication.windowsHelloForBusinessMethods.item collection
      * @param id Unique identifier of the item
-     * @returns a windowsHelloForBusinessAuthenticationMethodRequestBuilder
+     * @returns a windowsHelloForBusinessAuthenticationMethodItemRequestBuilder
      */
-    public windowsHelloForBusinessMethodsById(id: string) : WindowsHelloForBusinessAuthenticationMethodRequestBuilder {
+    public windowsHelloForBusinessMethodsById(id: string) : WindowsHelloForBusinessAuthenticationMethodItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["windowsHelloForBusinessAuthenticationMethod_id"] = id
-        return new WindowsHelloForBusinessAuthenticationMethodRequestBuilder(urlTplParams, this.requestAdapter);
+        return new WindowsHelloForBusinessAuthenticationMethodItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

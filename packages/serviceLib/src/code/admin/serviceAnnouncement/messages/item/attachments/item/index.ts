@@ -1,1 +1,1 @@
-export * from './ServiceAnnouncementAttachmentRequestBuilder'
+export * from './ServiceAnnouncementAttachmentItemRequestBuilder'

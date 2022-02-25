@@ -1,6 +1,6 @@
 import {OrganizationalBranding} from '../models/microsoft/graph/';
 import {LocalizationsRequestBuilder} from './localizations/';
-import {OrganizationalBrandingLocalizationRequestBuilder} from './localizations/item/';
+import {OrganizationalBrandingLocalizationItemRequestBuilder} from './localizations/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /branding  */
@@ -85,13 +85,13 @@ export class BrandingRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.branding.localizations.item collection
      * @param id Unique identifier of the item
-     * @returns a organizationalBrandingLocalizationRequestBuilder
+     * @returns a organizationalBrandingLocalizationItemRequestBuilder
      */
-    public localizationsById(id: string) : OrganizationalBrandingLocalizationRequestBuilder {
+    public localizationsById(id: string) : OrganizationalBrandingLocalizationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["organizationalBrandingLocalization_id"] = id
-        return new OrganizationalBrandingLocalizationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OrganizationalBrandingLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update branding

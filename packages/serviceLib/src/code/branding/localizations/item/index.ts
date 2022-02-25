@@ -1,1 +1,1 @@
-export * from './OrganizationalBrandingLocalizationRequestBuilder'
+export * from './OrganizationalBrandingLocalizationItemRequestBuilder'

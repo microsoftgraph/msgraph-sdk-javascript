@@ -1,6 +1,6 @@
 import {Approval} from '../../../../../../../models/microsoft/graph/';
 import {StagesRequestBuilder} from './stages/';
-import {ApprovalStageRequestBuilder} from './stages/item/';
+import {ApprovalStageItemRequestBuilder} from './stages/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /identityGovernance/appConsent/appConsentRequests/{appConsentRequest-id}/userConsentRequests/{userConsentRequest-id}/approval  */
@@ -126,12 +126,12 @@ export class ApprovalRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.appConsent.appConsentRequests.item.userConsentRequests.item.approval.stages.item collection
      * @param id Unique identifier of the item
-     * @returns a approvalStageRequestBuilder
+     * @returns a approvalStageItemRequestBuilder
      */
-    public stagesById(id: string) : ApprovalStageRequestBuilder {
+    public stagesById(id: string) : ApprovalStageItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["approvalStage_id"] = id
-        return new ApprovalStageRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ApprovalStageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

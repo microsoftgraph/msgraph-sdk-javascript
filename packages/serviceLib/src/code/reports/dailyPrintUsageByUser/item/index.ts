@@ -1,1 +1,1 @@
-export * from './PrintUsageByUserRequestBuilder'
+export * from './PrintUsageByUserItemRequestBuilder'

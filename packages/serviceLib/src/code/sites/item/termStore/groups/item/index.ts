@@ -1,1 +1,1 @@
-export * from './GroupRequestBuilder'
+export * from './GroupItemRequestBuilder'

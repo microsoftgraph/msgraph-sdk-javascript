@@ -1,2 +1,2 @@
-export * from './TrendingRequestBuilder'
 export * from './TrendingResponse'
+export * from './TrendingRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './PriceDiscRequestBody'
 export * from './PriceDiscRequestBuilder'
+export * from './PriceDiscRequestBody'

@@ -1,1 +1,1 @@
-export * from './SettingStateDeviceSummaryRequestBuilder'
+export * from './SettingStateDeviceSummaryItemRequestBuilder'

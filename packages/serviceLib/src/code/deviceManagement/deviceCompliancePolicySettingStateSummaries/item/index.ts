@@ -1,1 +1,1 @@
-export * from './DeviceCompliancePolicySettingStateSummaryRequestBuilder'
+export * from './DeviceCompliancePolicySettingStateSummaryItemRequestBuilder'

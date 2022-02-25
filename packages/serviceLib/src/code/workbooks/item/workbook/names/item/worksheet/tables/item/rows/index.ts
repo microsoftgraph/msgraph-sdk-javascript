@@ -1,2 +1,2 @@
-export * from './RowsResponse'
 export * from './RowsRequestBuilder'
+export * from './RowsResponse'

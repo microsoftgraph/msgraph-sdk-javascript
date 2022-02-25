@@ -1,2 +1,2 @@
-export * from './WipeManagedAppRegistrationsByDeviceTagRequestBody'
 export * from './WipeManagedAppRegistrationsByDeviceTagRequestBuilder'
+export * from './WipeManagedAppRegistrationsByDeviceTagRequestBody'

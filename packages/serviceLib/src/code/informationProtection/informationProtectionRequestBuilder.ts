@@ -1,7 +1,7 @@
 import {InformationProtection} from '../models/microsoft/graph/';
 import {BitlockerRequestBuilder} from './bitlocker/';
 import {ThreatAssessmentRequestsRequestBuilder} from './threatAssessmentRequests/';
-import {ThreatAssessmentRequestRequestBuilder} from './threatAssessmentRequests/item/';
+import {ThreatAssessmentRequestItemRequestBuilder} from './threatAssessmentRequests/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /informationProtection  */
@@ -103,12 +103,12 @@ export class InformationProtectionRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.informationProtection.threatAssessmentRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a threatAssessmentRequestRequestBuilder
+     * @returns a threatAssessmentRequestItemRequestBuilder
      */
-    public threatAssessmentRequestsById(id: string) : ThreatAssessmentRequestRequestBuilder {
+    public threatAssessmentRequestsById(id: string) : ThreatAssessmentRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["threatAssessmentRequest_id"] = id
-        return new ThreatAssessmentRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ThreatAssessmentRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

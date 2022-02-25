@@ -1,11 +1,11 @@
 import {EducationRoot} from '../models/microsoft/graph/';
 import {ClassesRequestBuilder} from './classes/';
-import {EducationClassRequestBuilder} from './classes/item/';
+import {EducationClassItemRequestBuilder} from './classes/item/';
 import {MeRequestBuilder} from './me/';
 import {SchoolsRequestBuilder} from './schools/';
-import {EducationSchoolRequestBuilder} from './schools/item/';
+import {EducationSchoolItemRequestBuilder} from './schools/item/';
 import {UsersRequestBuilder} from './users/';
-import {EducationUserRequestBuilder} from './users/item/';
+import {EducationUserItemRequestBuilder} from './users/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /education  */
@@ -31,13 +31,13 @@ export class EducationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.education.classes.item collection
      * @param id Unique identifier of the item
-     * @returns a educationClassRequestBuilder
+     * @returns a educationClassItemRequestBuilder
      */
-    public classesById(id: string) : EducationClassRequestBuilder {
+    public classesById(id: string) : EducationClassItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["educationClass_id"] = id
-        return new EducationClassRequestBuilder(urlTplParams, this.requestAdapter);
+        return new EducationClassItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new EducationRequestBuilder and sets the default values.
@@ -124,23 +124,23 @@ export class EducationRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.education.schools.item collection
      * @param id Unique identifier of the item
-     * @returns a educationSchoolRequestBuilder
+     * @returns a educationSchoolItemRequestBuilder
      */
-    public schoolsById(id: string) : EducationSchoolRequestBuilder {
+    public schoolsById(id: string) : EducationSchoolItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["educationSchool_id"] = id
-        return new EducationSchoolRequestBuilder(urlTplParams, this.requestAdapter);
+        return new EducationSchoolItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.education.users.item collection
      * @param id Unique identifier of the item
-     * @returns a educationUserRequestBuilder
+     * @returns a educationUserItemRequestBuilder
      */
-    public usersById(id: string) : EducationUserRequestBuilder {
+    public usersById(id: string) : EducationUserItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["educationUser_id"] = id
-        return new EducationUserRequestBuilder(urlTplParams, this.requestAdapter);
+        return new EducationUserItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

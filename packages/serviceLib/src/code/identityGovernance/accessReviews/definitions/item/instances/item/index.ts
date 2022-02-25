@@ -1,1 +1,1 @@
-export * from './AccessReviewInstanceRequestBuilder'
+export * from './AccessReviewInstanceItemRequestBuilder'

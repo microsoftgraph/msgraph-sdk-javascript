@@ -1,1 +1,1 @@
-export * from './DataPolicyOperationRequestBuilder'
+export * from './DataPolicyOperationItemRequestBuilder'

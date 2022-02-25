@@ -1,6 +1,6 @@
 import {PlannerGroup} from '../../../models/microsoft/graph/';
 import {PlansRequestBuilder} from './plans/';
-import {PlannerPlanRequestBuilder} from './plans/item/';
+import {PlannerPlanItemRequestBuilder} from './plans/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /groups/{group-id}/planner  */
@@ -126,12 +126,12 @@ export class PlannerRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.groups.item.planner.plans.item collection
      * @param id Unique identifier of the item
-     * @returns a plannerPlanRequestBuilder
+     * @returns a plannerPlanItemRequestBuilder
      */
-    public plansById(id: string) : PlannerPlanRequestBuilder {
+    public plansById(id: string) : PlannerPlanItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["plannerPlan_id"] = id
-        return new PlannerPlanRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PlannerPlanItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

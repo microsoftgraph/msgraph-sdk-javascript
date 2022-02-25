@@ -1,2 +1,2 @@
-export * from './SendMailRequestBody'
 export * from './SendMailRequestBuilder'
+export * from './SendMailRequestBody'

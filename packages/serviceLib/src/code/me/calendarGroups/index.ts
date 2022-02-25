@@ -1,2 +1,2 @@
-export * from './CalendarGroupsRequestBuilder'
 export * from './CalendarGroupsResponse'
+export * from './CalendarGroupsRequestBuilder'

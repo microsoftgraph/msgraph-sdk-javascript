@@ -1,1 +1,1 @@
-export * from './DetectedAppRequestBuilder'
+export * from './DetectedAppItemRequestBuilder'

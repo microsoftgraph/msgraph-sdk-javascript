@@ -1,2 +1,2 @@
-export * from './Delta'
 export * from './DeltaRequestBuilder'
+export * from './Delta'

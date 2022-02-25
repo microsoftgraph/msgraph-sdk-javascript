@@ -1,1 +1,1 @@
-export * from './RemoteAssistancePartnerRequestBuilder'
+export * from './RemoteAssistancePartnerItemRequestBuilder'

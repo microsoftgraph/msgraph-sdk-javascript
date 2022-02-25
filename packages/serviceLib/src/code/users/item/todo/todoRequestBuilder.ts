@@ -1,6 +1,6 @@
 import {Todo} from '../../../models/microsoft/graph/';
 import {ListsRequestBuilder} from './lists/';
-import {TodoTaskListRequestBuilder} from './lists/item/';
+import {TodoTaskListItemRequestBuilder} from './lists/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/todo  */
@@ -112,13 +112,13 @@ export class TodoRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.todo.lists.item collection
      * @param id Unique identifier of the item
-     * @returns a todoTaskListRequestBuilder
+     * @returns a todoTaskListItemRequestBuilder
      */
-    public listsById(id: string) : TodoTaskListRequestBuilder {
+    public listsById(id: string) : TodoTaskListItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["todoTaskList_id"] = id
-        return new TodoTaskListRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TodoTaskListItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Represents the To Do services available to a user.

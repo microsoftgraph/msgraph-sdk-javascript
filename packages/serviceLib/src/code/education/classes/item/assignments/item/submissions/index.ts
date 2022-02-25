@@ -1,2 +1,2 @@
-export * from './SubmissionsResponse'
 export * from './SubmissionsRequestBuilder'
+export * from './SubmissionsResponse'

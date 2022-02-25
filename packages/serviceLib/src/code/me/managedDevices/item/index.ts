@@ -1,1 +1,1 @@
-export * from './ManagedDeviceRequestBuilder'
+export * from './ManagedDeviceItemRequestBuilder'

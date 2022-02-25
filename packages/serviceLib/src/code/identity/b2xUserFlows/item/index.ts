@@ -1,1 +1,1 @@
-export * from './B2xIdentityUserFlowRequestBuilder'
+export * from './B2xIdentityUserFlowItemRequestBuilder'

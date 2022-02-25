@@ -1,2 +1,2 @@
-export * from './VdbRequestBuilder'
 export * from './VdbRequestBody'
+export * from './VdbRequestBuilder'

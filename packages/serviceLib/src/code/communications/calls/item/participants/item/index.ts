@@ -1,1 +1,1 @@
-export * from './ParticipantRequestBuilder'
+export * from './ParticipantItemRequestBuilder'

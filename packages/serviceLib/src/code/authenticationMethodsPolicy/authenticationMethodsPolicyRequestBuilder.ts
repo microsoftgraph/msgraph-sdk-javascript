@@ -1,6 +1,6 @@
 import {AuthenticationMethodsPolicy} from '../models/microsoft/graph/';
 import {AuthenticationMethodConfigurationsRequestBuilder} from './authenticationMethodConfigurations/';
-import {AuthenticationMethodConfigurationRequestBuilder} from './authenticationMethodConfigurations/item/';
+import {AuthenticationMethodConfigurationItemRequestBuilder} from './authenticationMethodConfigurations/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /authenticationMethodsPolicy  */
@@ -17,13 +17,13 @@ export class AuthenticationMethodsPolicyRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.authenticationMethodsPolicy.authenticationMethodConfigurations.item collection
      * @param id Unique identifier of the item
-     * @returns a authenticationMethodConfigurationRequestBuilder
+     * @returns a authenticationMethodConfigurationItemRequestBuilder
      */
-    public authenticationMethodConfigurationsById(id: string) : AuthenticationMethodConfigurationRequestBuilder {
+    public authenticationMethodConfigurationsById(id: string) : AuthenticationMethodConfigurationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["authenticationMethodConfiguration_id"] = id
-        return new AuthenticationMethodConfigurationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AuthenticationMethodConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new AuthenticationMethodsPolicyRequestBuilder and sets the default values.

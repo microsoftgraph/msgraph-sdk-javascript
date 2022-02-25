@@ -1,1 +1,1 @@
-export * from './BitlockerRecoveryKeyRequestBuilder'
+export * from './BitlockerRecoveryKeyItemRequestBuilder'

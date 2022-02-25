@@ -1,2 +1,2 @@
-export * from './GetComplianceSettingNonComplianceReportRequestBody'
 export * from './GetComplianceSettingNonComplianceReportRequestBuilder'
+export * from './GetComplianceSettingNonComplianceReportRequestBody'

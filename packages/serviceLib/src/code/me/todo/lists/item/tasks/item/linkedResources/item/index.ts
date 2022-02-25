@@ -1,1 +1,1 @@
-export * from './LinkedResourceRequestBuilder'
+export * from './LinkedResourceItemRequestBuilder'

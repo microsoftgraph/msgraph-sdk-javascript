@@ -1,13 +1,13 @@
 import {CloudCommunications} from '../models/microsoft/graph/';
 import {CallRecordsRequestBuilder} from './callRecords/';
-import {CallRecordRequestBuilder} from './callRecords/item/';
+import {CallRecordItemRequestBuilder} from './callRecords/item/';
 import {CallsRequestBuilder} from './calls/';
-import {CallRequestBuilder} from './calls/item/';
+import {CallItemRequestBuilder} from './calls/item/';
 import {GetPresencesByUserIdRequestBuilder} from './getPresencesByUserId/';
 import {OnlineMeetingsRequestBuilder} from './onlineMeetings/';
-import {OnlineMeetingRequestBuilder} from './onlineMeetings/item/';
+import {OnlineMeetingItemRequestBuilder} from './onlineMeetings/item/';
 import {PresencesRequestBuilder} from './presences/';
-import {PresenceRequestBuilder} from './presences/item/';
+import {PresenceItemRequestBuilder} from './presences/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /communications  */
@@ -36,24 +36,24 @@ export class CommunicationsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.communications.callRecords.item collection
      * @param id Unique identifier of the item
-     * @returns a callRecordRequestBuilder
+     * @returns a callRecordItemRequestBuilder
      */
-    public callRecordsById(id: string) : CallRecordRequestBuilder {
+    public callRecordsById(id: string) : CallRecordItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["callRecord_id"] = id
-        return new CallRecordRequestBuilder(urlTplParams, this.requestAdapter);
+        return new CallRecordItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.communications.calls.item collection
      * @param id Unique identifier of the item
-     * @returns a callRequestBuilder
+     * @returns a callItemRequestBuilder
      */
-    public callsById(id: string) : CallRequestBuilder {
+    public callsById(id: string) : CallItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["call_id"] = id
-        return new CallRequestBuilder(urlTplParams, this.requestAdapter);
+        return new CallItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new CommunicationsRequestBuilder and sets the default values.
@@ -126,13 +126,13 @@ export class CommunicationsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.communications.onlineMeetings.item collection
      * @param id Unique identifier of the item
-     * @returns a onlineMeetingRequestBuilder
+     * @returns a onlineMeetingItemRequestBuilder
      */
-    public onlineMeetingsById(id: string) : OnlineMeetingRequestBuilder {
+    public onlineMeetingsById(id: string) : OnlineMeetingItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["onlineMeeting_id"] = id
-        return new OnlineMeetingRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OnlineMeetingItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update communications
@@ -151,12 +151,12 @@ export class CommunicationsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.communications.presences.item collection
      * @param id Unique identifier of the item
-     * @returns a presenceRequestBuilder
+     * @returns a presenceItemRequestBuilder
      */
-    public presencesById(id: string) : PresenceRequestBuilder {
+    public presencesById(id: string) : PresenceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["presence_id"] = id
-        return new PresenceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PresenceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

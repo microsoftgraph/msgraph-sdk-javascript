@@ -1,9 +1,10 @@
 import {OfficeGraphInsights} from '../../../models/microsoft/graph/';
 import {SharedRequestBuilder} from './shared/';
-import {SharedInsightRequestBuilder} from './shared/item/';
+import {SharedInsightItemRequestBuilder} from './shared/item/';
 import {TrendingRequestBuilder} from './trending/';
+import {TrendingItemRequestBuilder} from './trending/item/';
 import {UsedRequestBuilder} from './used/';
-import {UsedInsightRequestBuilder} from './used/item/';
+import {UsedInsightItemRequestBuilder} from './used/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/insights  */
@@ -135,34 +136,34 @@ export class InsightsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.users.item.insights.shared.item collection
      * @param id Unique identifier of the item
-     * @returns a sharedInsightRequestBuilder
+     * @returns a sharedInsightItemRequestBuilder
      */
-    public sharedById(id: string) : SharedInsightRequestBuilder {
+    public sharedById(id: string) : SharedInsightItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["sharedInsight_id"] = id
-        return new SharedInsightRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SharedInsightItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.insights.trending.item collection
      * @param id Unique identifier of the item
-     * @returns a trendingRequestBuilder
+     * @returns a trendingItemRequestBuilder
      */
-    public trendingById(id: string) : TrendingRequestBuilder {
+    public trendingById(id: string) : TrendingItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["trending_id"] = id
-        return new TrendingRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TrendingItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.insights.used.item collection
      * @param id Unique identifier of the item
-     * @returns a usedInsightRequestBuilder
+     * @returns a usedInsightItemRequestBuilder
      */
-    public usedById(id: string) : UsedInsightRequestBuilder {
+    public usedById(id: string) : UsedInsightItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["usedInsight_id"] = id
-        return new UsedInsightRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UsedInsightItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

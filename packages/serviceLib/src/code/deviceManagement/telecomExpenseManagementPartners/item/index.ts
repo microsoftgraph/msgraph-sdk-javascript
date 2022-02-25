@@ -1,1 +1,1 @@
-export * from './TelecomExpenseManagementPartnerRequestBuilder'
+export * from './TelecomExpenseManagementPartnerItemRequestBuilder'

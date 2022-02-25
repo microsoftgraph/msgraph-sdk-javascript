@@ -1,1 +1,1 @@
-export * from './PlannerTaskRequestBuilder'
+export * from './PlannerTaskItemRequestBuilder'

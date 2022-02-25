@@ -1,2 +1,2 @@
-export * from './LookupRequestBuilder'
 export * from './LookupRequestBody'
+export * from './LookupRequestBuilder'

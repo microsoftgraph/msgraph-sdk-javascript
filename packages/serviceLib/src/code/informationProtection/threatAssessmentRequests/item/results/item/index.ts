@@ -1,1 +1,1 @@
-export * from './ThreatAssessmentResultRequestBuilder'
+export * from './ThreatAssessmentResultItemRequestBuilder'

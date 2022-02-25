@@ -1,13 +1,13 @@
 import {List} from '../../../models/microsoft/graph/';
 import {ColumnsRequestBuilder} from './columns/';
-import {ColumnDefinitionRequestBuilder} from './columns/item/';
+import {ColumnDefinitionItemRequestBuilder} from './columns/item/';
 import {ContentTypesRequestBuilder} from './contentTypes/';
-import {ContentTypeRequestBuilder} from './contentTypes/item/';
+import {ContentTypeItemRequestBuilder} from './contentTypes/item/';
 import {DriveRequestBuilder} from './drive/';
 import {ItemsRequestBuilder} from './items/';
-import {ListItemRequestBuilder} from './items/item/';
+import {ListItemItemRequestBuilder} from './items/item/';
 import {SubscriptionsRequestBuilder} from './subscriptions/';
-import {SubscriptionRequestBuilder} from './subscriptions/item/';
+import {SubscriptionItemRequestBuilder} from './subscriptions/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /drives/{drive-id}/list  */
@@ -36,13 +36,13 @@ export class ListRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.drives.item.list.columns.item collection
      * @param id Unique identifier of the item
-     * @returns a columnDefinitionRequestBuilder
+     * @returns a columnDefinitionItemRequestBuilder
      */
-    public columnsById(id: string) : ColumnDefinitionRequestBuilder {
+    public columnsById(id: string) : ColumnDefinitionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["columnDefinition_id"] = id
-        return new ColumnDefinitionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ColumnDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new ListRequestBuilder and sets the default values.
@@ -60,13 +60,13 @@ export class ListRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.drives.item.list.contentTypes.item collection
      * @param id Unique identifier of the item
-     * @returns a contentTypeRequestBuilder
+     * @returns a contentTypeItemRequestBuilder
      */
-    public contentTypesById(id: string) : ContentTypeRequestBuilder {
+    public contentTypesById(id: string) : ContentTypeItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["contentType_id"] = id
-        return new ContentTypeRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ContentTypeItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * For drives in SharePoint, the underlying document library list. Read-only. Nullable.
@@ -153,13 +153,13 @@ export class ListRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.drives.item.list.items.item collection
      * @param id Unique identifier of the item
-     * @returns a listItemRequestBuilder
+     * @returns a listItemItemRequestBuilder
      */
-    public itemsById(id: string) : ListItemRequestBuilder {
+    public itemsById(id: string) : ListItemItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["listItem_id"] = id
-        return new ListItemRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ListItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * For drives in SharePoint, the underlying document library list. Read-only. Nullable.
@@ -178,12 +178,12 @@ export class ListRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.drives.item.list.subscriptions.item collection
      * @param id Unique identifier of the item
-     * @returns a subscriptionRequestBuilder
+     * @returns a subscriptionItemRequestBuilder
      */
-    public subscriptionsById(id: string) : SubscriptionRequestBuilder {
+    public subscriptionsById(id: string) : SubscriptionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["subscription_id"] = id
-        return new SubscriptionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SubscriptionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

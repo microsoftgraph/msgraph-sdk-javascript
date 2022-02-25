@@ -1,1 +1,1 @@
-export * from './AttendanceRecordRequestBuilder'
+export * from './AttendanceRecordItemRequestBuilder'

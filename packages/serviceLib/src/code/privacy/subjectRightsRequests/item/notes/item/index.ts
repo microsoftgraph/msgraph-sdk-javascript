@@ -1,1 +1,1 @@
-export * from './AuthoredNoteRequestBuilder'
+export * from './AuthoredNoteItemRequestBuilder'

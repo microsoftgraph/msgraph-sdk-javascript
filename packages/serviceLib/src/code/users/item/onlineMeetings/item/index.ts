@@ -1,1 +1,1 @@
-export * from './OnlineMeetingRequestBuilder'
+export * from './OnlineMeetingItemRequestBuilder'

@@ -1,23 +1,23 @@
 import {Schedule} from '../../../models/microsoft/graph/';
 import {OfferShiftRequestsRequestBuilder} from './offerShiftRequests/';
-import {OfferShiftRequestRequestBuilder} from './offerShiftRequests/item/';
+import {OfferShiftRequestItemRequestBuilder} from './offerShiftRequests/item/';
 import {OpenShiftChangeRequestsRequestBuilder} from './openShiftChangeRequests/';
-import {OpenShiftChangeRequestRequestBuilder} from './openShiftChangeRequests/item/';
+import {OpenShiftChangeRequestItemRequestBuilder} from './openShiftChangeRequests/item/';
 import {OpenShiftsRequestBuilder} from './openShifts/';
-import {OpenShiftRequestBuilder} from './openShifts/item/';
+import {OpenShiftItemRequestBuilder} from './openShifts/item/';
 import {SchedulingGroupsRequestBuilder} from './schedulingGroups/';
-import {SchedulingGroupRequestBuilder} from './schedulingGroups/item/';
+import {SchedulingGroupItemRequestBuilder} from './schedulingGroups/item/';
 import {ShareRequestBuilder} from './share/';
 import {ShiftsRequestBuilder} from './shifts/';
-import {ShiftRequestBuilder} from './shifts/item/';
+import {ShiftItemRequestBuilder} from './shifts/item/';
 import {SwapShiftsChangeRequestsRequestBuilder} from './swapShiftsChangeRequests/';
-import {SwapShiftsChangeRequestRequestBuilder} from './swapShiftsChangeRequests/item/';
+import {SwapShiftsChangeRequestItemRequestBuilder} from './swapShiftsChangeRequests/item/';
 import {TimeOffReasonsRequestBuilder} from './timeOffReasons/';
-import {TimeOffReasonRequestBuilder} from './timeOffReasons/item/';
+import {TimeOffReasonItemRequestBuilder} from './timeOffReasons/item/';
 import {TimeOffRequestsRequestBuilder} from './timeOffRequests/';
-import {TimeOffRequestRequestBuilder} from './timeOffRequests/item/';
+import {TimeOffRequestItemRequestBuilder} from './timeOffRequests/item/';
 import {TimesOffRequestBuilder} from './timesOff/';
-import {TimeOffRequestBuilder} from './timesOff/item/';
+import {TimeOffItemRequestBuilder} from './timesOff/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /teams/{team-id}/schedule  */
@@ -156,35 +156,35 @@ export class ScheduleRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.offerShiftRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a offerShiftRequestRequestBuilder
+     * @returns a offerShiftRequestItemRequestBuilder
      */
-    public offerShiftRequestsById(id: string) : OfferShiftRequestRequestBuilder {
+    public offerShiftRequestsById(id: string) : OfferShiftRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["offerShiftRequest_id"] = id
-        return new OfferShiftRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OfferShiftRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.openShiftChangeRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a openShiftChangeRequestRequestBuilder
+     * @returns a openShiftChangeRequestItemRequestBuilder
      */
-    public openShiftChangeRequestsById(id: string) : OpenShiftChangeRequestRequestBuilder {
+    public openShiftChangeRequestsById(id: string) : OpenShiftChangeRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["openShiftChangeRequest_id"] = id
-        return new OpenShiftChangeRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OpenShiftChangeRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.openShifts.item collection
      * @param id Unique identifier of the item
-     * @returns a openShiftRequestBuilder
+     * @returns a openShiftItemRequestBuilder
      */
-    public openShiftsById(id: string) : OpenShiftRequestBuilder {
+    public openShiftsById(id: string) : OpenShiftItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["openShift_id"] = id
-        return new OpenShiftRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OpenShiftItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * The schedule of shifts for this team.
@@ -203,67 +203,67 @@ export class ScheduleRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.schedulingGroups.item collection
      * @param id Unique identifier of the item
-     * @returns a schedulingGroupRequestBuilder
+     * @returns a schedulingGroupItemRequestBuilder
      */
-    public schedulingGroupsById(id: string) : SchedulingGroupRequestBuilder {
+    public schedulingGroupsById(id: string) : SchedulingGroupItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["schedulingGroup_id"] = id
-        return new SchedulingGroupRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SchedulingGroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.shifts.item collection
      * @param id Unique identifier of the item
-     * @returns a shiftRequestBuilder
+     * @returns a shiftItemRequestBuilder
      */
-    public shiftsById(id: string) : ShiftRequestBuilder {
+    public shiftsById(id: string) : ShiftItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["shift_id"] = id
-        return new ShiftRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ShiftItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.swapShiftsChangeRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a swapShiftsChangeRequestRequestBuilder
+     * @returns a swapShiftsChangeRequestItemRequestBuilder
      */
-    public swapShiftsChangeRequestsById(id: string) : SwapShiftsChangeRequestRequestBuilder {
+    public swapShiftsChangeRequestsById(id: string) : SwapShiftsChangeRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["swapShiftsChangeRequest_id"] = id
-        return new SwapShiftsChangeRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SwapShiftsChangeRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.timeOffReasons.item collection
      * @param id Unique identifier of the item
-     * @returns a timeOffReasonRequestBuilder
+     * @returns a timeOffReasonItemRequestBuilder
      */
-    public timeOffReasonsById(id: string) : TimeOffReasonRequestBuilder {
+    public timeOffReasonsById(id: string) : TimeOffReasonItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["timeOffReason_id"] = id
-        return new TimeOffReasonRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TimeOffReasonItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.timeOffRequests.item collection
      * @param id Unique identifier of the item
-     * @returns a timeOffRequestRequestBuilder
+     * @returns a timeOffRequestItemRequestBuilder
      */
-    public timeOffRequestsById(id: string) : TimeOffRequestRequestBuilder {
+    public timeOffRequestsById(id: string) : TimeOffRequestItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["timeOffRequest_id"] = id
-        return new TimeOffRequestRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TimeOffRequestItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.timesOff.item collection
      * @param id Unique identifier of the item
-     * @returns a timeOffRequestBuilder
+     * @returns a timeOffItemRequestBuilder
      */
-    public timesOffById(id: string) : TimeOffRequestBuilder {
+    public timesOffById(id: string) : TimeOffItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["timeOff_id"] = id
-        return new TimeOffRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TimeOffItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

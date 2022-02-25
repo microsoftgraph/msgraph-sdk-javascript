@@ -1,1 +1,1 @@
-export * from './UserConsentRequestRequestBuilder'
+export * from './UserConsentRequestItemRequestBuilder'

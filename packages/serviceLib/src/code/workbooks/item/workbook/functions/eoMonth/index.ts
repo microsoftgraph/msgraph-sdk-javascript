@@ -1,2 +1,2 @@
-export * from './EoMonthRequestBody'
 export * from './EoMonthRequestBuilder'
+export * from './EoMonthRequestBody'

@@ -5,7 +5,7 @@ import {FieldsRequestBuilder} from './fields/';
 import {GetActivitiesByIntervalRequestBuilder} from './getActivitiesByInterval/';
 import {GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder} from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval/';
 import {VersionsRequestBuilder} from './versions/';
-import {ListItemVersionRequestBuilder} from './versions/item/';
+import {ListItemVersionItemRequestBuilder} from './versions/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /shares/{sharedDriveItem-id}/listItem  */
@@ -160,12 +160,12 @@ export class ListItemRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.shares.item.listItem.versions.item collection
      * @param id Unique identifier of the item
-     * @returns a listItemVersionRequestBuilder
+     * @returns a listItemVersionItemRequestBuilder
      */
-    public versionsById(id: string) : ListItemVersionRequestBuilder {
+    public versionsById(id: string) : ListItemVersionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["listItemVersion_id"] = id
-        return new ListItemVersionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ListItemVersionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

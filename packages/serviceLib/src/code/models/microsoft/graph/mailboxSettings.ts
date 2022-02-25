@@ -1,4 +1,4 @@
-import {AutomaticRepliesSetting, DelegateMeetingMessageDeliveryOptions, LocaleInfo, WorkingHours} from './index';
+import {AutomaticRepliesSetting, DelegateMeetingMessageDeliveryOptions, LocaleInfo, UserPurpose, WorkingHours} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MailboxSettings implements Parsable {
@@ -18,6 +18,8 @@ export class MailboxSettings implements Parsable {
     private _timeFormat?: string | undefined;
     /** The default time zone for the user's mailbox.  */
     private _timeZone?: string | undefined;
+    /** The purpose of the mailbox. Used to differentiate a mailbox for a single user from a shared mailbox and equipment mailbox in Exchange Online. Read only.  */
+    private _userPurpose?: UserPurpose | undefined;
     /** The days of the week and hours in a specific time zone that the user works.  */
     private _workingHours?: WorkingHours | undefined;
     /**
@@ -83,6 +85,13 @@ export class MailboxSettings implements Parsable {
         return this._timeZone;
     };
     /**
+     * Gets the userPurpose property value. The purpose of the mailbox. Used to differentiate a mailbox for a single user from a shared mailbox and equipment mailbox in Exchange Online. Read only.
+     * @returns a userPurpose
+     */
+    public get userPurpose() {
+        return this._userPurpose;
+    };
+    /**
      * Gets the workingHours property value. The days of the week and hours in a specific time zone that the user works.
      * @returns a workingHours
      */
@@ -102,6 +111,7 @@ export class MailboxSettings implements Parsable {
             ["language", (o, n) => { (o as unknown as MailboxSettings).language = n.getObjectValue<LocaleInfo>(LocaleInfo); }],
             ["timeFormat", (o, n) => { (o as unknown as MailboxSettings).timeFormat = n.getStringValue(); }],
             ["timeZone", (o, n) => { (o as unknown as MailboxSettings).timeZone = n.getStringValue(); }],
+            ["userPurpose", (o, n) => { (o as unknown as MailboxSettings).userPurpose = n.getEnumValue<UserPurpose>(UserPurpose); }],
             ["workingHours", (o, n) => { (o as unknown as MailboxSettings).workingHours = n.getObjectValue<WorkingHours>(WorkingHours); }],
         ]);
     };
@@ -118,6 +128,7 @@ export class MailboxSettings implements Parsable {
         writer.writeObjectValue<LocaleInfo>("language", this.language);
         writer.writeStringValue("timeFormat", this.timeFormat);
         writer.writeStringValue("timeZone", this.timeZone);
+        writer.writeEnumValue<UserPurpose>("userPurpose", this.userPurpose);
         writer.writeObjectValue<WorkingHours>("workingHours", this.workingHours);
         writer.writeAdditionalData(this.additionalData);
     };
@@ -176,6 +187,13 @@ export class MailboxSettings implements Parsable {
      */
     public set timeZone(value: string | undefined) {
         this._timeZone = value;
+    };
+    /**
+     * Sets the userPurpose property value. The purpose of the mailbox. Used to differentiate a mailbox for a single user from a shared mailbox and equipment mailbox in Exchange Online. Read only.
+     * @param value Value to set for the userPurpose property.
+     */
+    public set userPurpose(value: UserPurpose | undefined) {
+        this._userPurpose = value;
     };
     /**
      * Sets the workingHours property value. The days of the week and hours in a specific time zone that the user works.

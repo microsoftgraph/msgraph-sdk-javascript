@@ -1,2 +1,2 @@
-export * from './SegmentsResponse'
 export * from './SegmentsRequestBuilder'
+export * from './SegmentsResponse'

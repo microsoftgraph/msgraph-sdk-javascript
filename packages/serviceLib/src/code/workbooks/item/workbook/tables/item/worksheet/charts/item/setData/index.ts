@@ -1,2 +1,2 @@
-export * from './SetDataRequestBuilder'
 export * from './SetDataRequestBody'
+export * from './SetDataRequestBuilder'

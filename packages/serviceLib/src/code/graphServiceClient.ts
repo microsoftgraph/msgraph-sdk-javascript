@@ -1,77 +1,79 @@
 import {AdminRequestBuilder} from './admin/';
 import {AgreementAcceptancesRequestBuilder} from './agreementAcceptances/';
-import {AgreementAcceptanceRequestBuilder} from './agreementAcceptances/item/';
+import {AgreementAcceptanceItemRequestBuilder} from './agreementAcceptances/item/';
 import {AgreementsRequestBuilder} from './agreements/';
-import {AgreementRequestBuilder} from './agreements/item/';
+import {AgreementItemRequestBuilder} from './agreements/item/';
 import {AppCatalogsRequestBuilder} from './appCatalogs/';
 import {ApplicationsRequestBuilder} from './applications/';
-import {ApplicationRequestBuilder} from './applications/item/';
+import {ApplicationItemRequestBuilder} from './applications/item/';
 import {ApplicationTemplatesRequestBuilder} from './applicationTemplates/';
-import {ApplicationTemplateRequestBuilder} from './applicationTemplates/item/';
+import {ApplicationTemplateItemRequestBuilder} from './applicationTemplates/item/';
 import {AuditLogsRequestBuilder} from './auditLogs/';
 import {AuthenticationMethodConfigurationsRequestBuilder} from './authenticationMethodConfigurations/';
-import {AuthenticationMethodConfigurationRequestBuilder} from './authenticationMethodConfigurations/item/';
+import {AuthenticationMethodConfigurationItemRequestBuilder} from './authenticationMethodConfigurations/item/';
 import {AuthenticationMethodsPolicyRequestBuilder} from './authenticationMethodsPolicy/';
 import {BrandingRequestBuilder} from './branding/';
 import {CertificateBasedAuthConfigurationRequestBuilder} from './certificateBasedAuthConfiguration/';
+import {CertificateBasedAuthConfigurationItemRequestBuilder} from './certificateBasedAuthConfiguration/item/';
 import {ChatsRequestBuilder} from './chats/';
-import {ChatRequestBuilder} from './chats/item/';
+import {ChatItemRequestBuilder} from './chats/item/';
 import {CommunicationsRequestBuilder} from './communications/';
 import {ComplianceRequestBuilder} from './compliance/';
 import {ConnectionsRequestBuilder} from './connections/';
-import {ExternalConnectionRequestBuilder} from './connections/item/';
+import {ExternalConnectionItemRequestBuilder} from './connections/item/';
 import {ContactsRequestBuilder} from './contacts/';
-import {OrgContactRequestBuilder} from './contacts/item/';
+import {OrgContactItemRequestBuilder} from './contacts/item/';
 import {ContractsRequestBuilder} from './contracts/';
-import {ContractRequestBuilder} from './contracts/item/';
+import {ContractItemRequestBuilder} from './contracts/item/';
 import {DataPolicyOperationsRequestBuilder} from './dataPolicyOperations/';
-import {DataPolicyOperationRequestBuilder} from './dataPolicyOperations/item/';
+import {DataPolicyOperationItemRequestBuilder} from './dataPolicyOperations/item/';
 import {DeviceAppManagementRequestBuilder} from './deviceAppManagement/';
 import {DeviceManagementRequestBuilder} from './deviceManagement/';
 import {DevicesRequestBuilder} from './devices/';
-import {DeviceRequestBuilder} from './devices/item/';
+import {DeviceItemRequestBuilder} from './devices/item/';
 import {DirectoryRequestBuilder} from './directory/';
 import {DirectoryObjectsRequestBuilder} from './directoryObjects/';
-import {DirectoryObjectRequestBuilder} from './directoryObjects/item/';
+import {DirectoryObjectItemRequestBuilder} from './directoryObjects/item/';
 import {DirectoryRolesRequestBuilder} from './directoryRoles/';
-import {DirectoryRoleRequestBuilder} from './directoryRoles/item/';
+import {DirectoryRoleItemRequestBuilder} from './directoryRoles/item/';
 import {DirectoryRoleTemplatesRequestBuilder} from './directoryRoleTemplates/';
-import {DirectoryRoleTemplateRequestBuilder} from './directoryRoleTemplates/item/';
+import {DirectoryRoleTemplateItemRequestBuilder} from './directoryRoleTemplates/item/';
 import {DomainDnsRecordsRequestBuilder} from './domainDnsRecords/';
-import {DomainDnsRecordRequestBuilder} from './domainDnsRecords/item/';
+import {DomainDnsRecordItemRequestBuilder} from './domainDnsRecords/item/';
 import {DomainsRequestBuilder} from './domains/';
-import {DomainRequestBuilder} from './domains/item/';
-import {DriveRequestBuilder as idd52882826a9bc89cb164caf0cc23e2cbb893fc35bb678090663056b437c4450} from './drive/';
+import {DomainItemRequestBuilder} from './domains/item/';
+import {DriveRequestBuilder} from './drive/';
 import {DrivesRequestBuilder} from './drives/';
-import {DriveRequestBuilder as ia10b1b090b200a6fc019aaaa448bbaab35f973bd12d5508a5c3720529509cb60} from './drives/item/';
+import {DriveItemRequestBuilder} from './drives/item/';
 import {EducationRequestBuilder} from './education/';
 import {ExternalRequestBuilder} from './external/';
 import {GroupLifecyclePoliciesRequestBuilder} from './groupLifecyclePolicies/';
-import {GroupLifecyclePolicyRequestBuilder} from './groupLifecyclePolicies/item/';
+import {GroupLifecyclePolicyItemRequestBuilder} from './groupLifecyclePolicies/item/';
 import {GroupsRequestBuilder} from './groups/';
-import {GroupRequestBuilder} from './groups/item/';
+import {GroupItemRequestBuilder} from './groups/item/';
 import {GroupSettingsRequestBuilder} from './groupSettings/';
-import {GroupSettingRequestBuilder} from './groupSettings/item/';
+import {GroupSettingItemRequestBuilder} from './groupSettings/item/';
 import {GroupSettingTemplatesRequestBuilder} from './groupSettingTemplates/';
-import {GroupSettingTemplateRequestBuilder} from './groupSettingTemplates/item/';
+import {GroupSettingTemplateItemRequestBuilder} from './groupSettingTemplates/item/';
 import {IdentityRequestBuilder} from './identity/';
 import {IdentityGovernanceRequestBuilder} from './identityGovernance/';
 import {IdentityProtectionRequestBuilder} from './identityProtection/';
 import {IdentityProvidersRequestBuilder} from './identityProviders/';
-import {IdentityProviderRequestBuilder} from './identityProviders/item/';
+import {IdentityProviderItemRequestBuilder} from './identityProviders/item/';
 import {InformationProtectionRequestBuilder} from './informationProtection/';
 import {InvitationsRequestBuilder} from './invitations/';
-import {InvitationRequestBuilder} from './invitations/item/';
+import {InvitationItemRequestBuilder} from './invitations/item/';
 import {LocalizationsRequestBuilder} from './localizations/';
-import {OrganizationalBrandingLocalizationRequestBuilder} from './localizations/item/';
+import {OrganizationalBrandingLocalizationItemRequestBuilder} from './localizations/item/';
 import {MeRequestBuilder} from './me/';
 import {Oauth2PermissionGrantsRequestBuilder} from './oauth2PermissionGrants/';
-import {OAuth2PermissionGrantRequestBuilder} from './oauth2PermissionGrants/item/';
+import {OAuth2PermissionGrantItemRequestBuilder} from './oauth2PermissionGrants/item/';
 import {OrganizationRequestBuilder} from './organization/';
+import {OrganizationItemRequestBuilder} from './organization/item/';
 import {PermissionGrantsRequestBuilder} from './permissionGrants/';
-import {ResourceSpecificPermissionGrantRequestBuilder} from './permissionGrants/item/';
+import {ResourceSpecificPermissionGrantItemRequestBuilder} from './permissionGrants/item/';
 import {PlacesRequestBuilder} from './places/';
-import {PlaceRequestBuilder} from './places/item/';
+import {PlaceItemRequestBuilder} from './places/item/';
 import {PlannerRequestBuilder} from './planner/';
 import {PoliciesRequestBuilder} from './policies/';
 import {PrintRequestBuilder} from './print/';
@@ -79,31 +81,31 @@ import {PrivacyRequestBuilder} from './privacy/';
 import {ReportsRequestBuilder} from './reports/';
 import {RoleManagementRequestBuilder} from './roleManagement/';
 import {SchemaExtensionsRequestBuilder} from './schemaExtensions/';
-import {SchemaExtensionRequestBuilder} from './schemaExtensions/item/';
+import {SchemaExtensionItemRequestBuilder} from './schemaExtensions/item/';
 import {ScopedRoleMembershipsRequestBuilder} from './scopedRoleMemberships/';
-import {ScopedRoleMembershipRequestBuilder} from './scopedRoleMemberships/item/';
+import {ScopedRoleMembershipItemRequestBuilder} from './scopedRoleMemberships/item/';
 import {SearchRequestBuilder} from './search/';
 import {SecurityRequestBuilder} from './security/';
 import {ServicePrincipalsRequestBuilder} from './servicePrincipals/';
-import {ServicePrincipalRequestBuilder} from './servicePrincipals/item/';
+import {ServicePrincipalItemRequestBuilder} from './servicePrincipals/item/';
 import {SharesRequestBuilder} from './shares/';
-import {SharedDriveItemRequestBuilder} from './shares/item/';
+import {SharedDriveItemItemRequestBuilder} from './shares/item/';
 import {SitesRequestBuilder} from './sites/';
-import {SiteRequestBuilder} from './sites/item/';
+import {SiteItemRequestBuilder} from './sites/item/';
 import {SolutionsRequestBuilder} from './solutions/';
 import {SubscribedSkusRequestBuilder} from './subscribedSkus/';
-import {SubscribedSkuRequestBuilder} from './subscribedSkus/item/';
+import {SubscribedSkuItemRequestBuilder} from './subscribedSkus/item/';
 import {SubscriptionsRequestBuilder} from './subscriptions/';
-import {SubscriptionRequestBuilder} from './subscriptions/item/';
+import {SubscriptionItemRequestBuilder} from './subscriptions/item/';
 import {TeamsRequestBuilder} from './teams/';
-import {TeamRequestBuilder} from './teams/item/';
+import {TeamItemRequestBuilder} from './teams/item/';
 import {TeamsTemplatesRequestBuilder} from './teamsTemplates/';
-import {TeamsTemplateRequestBuilder} from './teamsTemplates/item/';
+import {TeamsTemplateItemRequestBuilder} from './teamsTemplates/item/';
 import {TeamworkRequestBuilder} from './teamwork/';
 import {UsersRequestBuilder} from './users/';
-import {UserRequestBuilder} from './users/item/';
+import {UserItemRequestBuilder} from './users/item/';
 import {WorkbooksRequestBuilder} from './workbooks/';
-import {DriveItemRequestBuilder} from './workbooks/item/';
+import {DriveItemItemRequestBuilder} from './workbooks/item/';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, HttpMethod, Parsable, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, RequestInformation, RequestOption, ResponseHandler, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
 
@@ -190,8 +192,8 @@ export class GraphServiceClient {
     public get domains(): DomainsRequestBuilder {
         return new DomainsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    public get drive(): idd52882826a9bc89cb164caf0cc23e2cbb893fc35bb678090663056b437c4450 {
-        return new idd52882826a9bc89cb164caf0cc23e2cbb893fc35bb678090663056b437c4450(this.pathParameters, this.requestAdapter);
+    public get drive(): DriveRequestBuilder {
+        return new DriveRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get drives(): DrivesRequestBuilder {
         return new DrivesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -322,90 +324,90 @@ export class GraphServiceClient {
     /**
      * Gets an item from the MicrosoftGraph.agreementAcceptances.item collection
      * @param id Unique identifier of the item
-     * @returns a agreementAcceptanceRequestBuilder
+     * @returns a agreementAcceptanceItemRequestBuilder
      */
-    public agreementAcceptancesById(id: string) : AgreementAcceptanceRequestBuilder {
+    public agreementAcceptancesById(id: string) : AgreementAcceptanceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["agreementAcceptance_id"] = id
-        return new AgreementAcceptanceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AgreementAcceptanceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.agreements.item collection
      * @param id Unique identifier of the item
-     * @returns a agreementRequestBuilder
+     * @returns a agreementItemRequestBuilder
      */
-    public agreementsById(id: string) : AgreementRequestBuilder {
+    public agreementsById(id: string) : AgreementItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["agreement_id"] = id
-        return new AgreementRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AgreementItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.applications.item collection
      * @param id Unique identifier of the item
-     * @returns a applicationRequestBuilder
+     * @returns a applicationItemRequestBuilder
      */
-    public applicationsById(id: string) : ApplicationRequestBuilder {
+    public applicationsById(id: string) : ApplicationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["application_id"] = id
-        return new ApplicationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ApplicationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.applicationTemplates.item collection
      * @param id Unique identifier of the item
-     * @returns a applicationTemplateRequestBuilder
+     * @returns a applicationTemplateItemRequestBuilder
      */
-    public applicationTemplatesById(id: string) : ApplicationTemplateRequestBuilder {
+    public applicationTemplatesById(id: string) : ApplicationTemplateItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["applicationTemplate_id"] = id
-        return new ApplicationTemplateRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ApplicationTemplateItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.authenticationMethodConfigurations.item collection
      * @param id Unique identifier of the item
-     * @returns a authenticationMethodConfigurationRequestBuilder
+     * @returns a authenticationMethodConfigurationItemRequestBuilder
      */
-    public authenticationMethodConfigurationsById(id: string) : AuthenticationMethodConfigurationRequestBuilder {
+    public authenticationMethodConfigurationsById(id: string) : AuthenticationMethodConfigurationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["authenticationMethodConfiguration_id"] = id
-        return new AuthenticationMethodConfigurationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AuthenticationMethodConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.certificateBasedAuthConfiguration.item collection
      * @param id Unique identifier of the item
-     * @returns a certificateBasedAuthConfigurationRequestBuilder
+     * @returns a certificateBasedAuthConfigurationItemRequestBuilder
      */
-    public certificateBasedAuthConfigurationById(id: string) : CertificateBasedAuthConfigurationRequestBuilder {
+    public certificateBasedAuthConfigurationById(id: string) : CertificateBasedAuthConfigurationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["certificateBasedAuthConfiguration_id"] = id
-        return new CertificateBasedAuthConfigurationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new CertificateBasedAuthConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.chats.item collection
      * @param id Unique identifier of the item
-     * @returns a chatRequestBuilder
+     * @returns a chatItemRequestBuilder
      */
-    public chatsById(id: string) : ChatRequestBuilder {
+    public chatsById(id: string) : ChatItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["chat_id"] = id
-        return new ChatRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ChatItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.connections.item collection
      * @param id Unique identifier of the item
-     * @returns a externalConnectionRequestBuilder
+     * @returns a externalConnectionItemRequestBuilder
      */
-    public connectionsById(id: string) : ExternalConnectionRequestBuilder {
+    public connectionsById(id: string) : ExternalConnectionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["externalConnection_id"] = id
-        return new ExternalConnectionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ExternalConnectionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new GraphServiceClient and sets the default values.
@@ -423,24 +425,24 @@ export class GraphServiceClient {
     /**
      * Gets an item from the MicrosoftGraph.contacts.item collection
      * @param id Unique identifier of the item
-     * @returns a orgContactRequestBuilder
+     * @returns a orgContactItemRequestBuilder
      */
-    public contactsById(id: string) : OrgContactRequestBuilder {
+    public contactsById(id: string) : OrgContactItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["orgContact_id"] = id
-        return new OrgContactRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OrgContactItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.contracts.item collection
      * @param id Unique identifier of the item
-     * @returns a contractRequestBuilder
+     * @returns a contractItemRequestBuilder
      */
-    public contractsById(id: string) : ContractRequestBuilder {
+    public contractsById(id: string) : ContractItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["contract_id"] = id
-        return new ContractRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ContractItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     public createGetRequestInformation(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
@@ -454,90 +456,90 @@ export class GraphServiceClient {
     /**
      * Gets an item from the MicrosoftGraph.dataPolicyOperations.item collection
      * @param id Unique identifier of the item
-     * @returns a dataPolicyOperationRequestBuilder
+     * @returns a dataPolicyOperationItemRequestBuilder
      */
-    public dataPolicyOperationsById(id: string) : DataPolicyOperationRequestBuilder {
+    public dataPolicyOperationsById(id: string) : DataPolicyOperationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["dataPolicyOperation_id"] = id
-        return new DataPolicyOperationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DataPolicyOperationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.devices.item collection
      * @param id Unique identifier of the item
-     * @returns a deviceRequestBuilder
+     * @returns a deviceItemRequestBuilder
      */
-    public devicesById(id: string) : DeviceRequestBuilder {
+    public devicesById(id: string) : DeviceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["device_id"] = id
-        return new DeviceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DeviceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.directoryObjects.item collection
      * @param id Unique identifier of the item
-     * @returns a directoryObjectRequestBuilder
+     * @returns a directoryObjectItemRequestBuilder
      */
-    public directoryObjectsById(id: string) : DirectoryObjectRequestBuilder {
+    public directoryObjectsById(id: string) : DirectoryObjectItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["directoryObject_id"] = id
-        return new DirectoryObjectRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DirectoryObjectItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.directoryRoles.item collection
      * @param id Unique identifier of the item
-     * @returns a directoryRoleRequestBuilder
+     * @returns a directoryRoleItemRequestBuilder
      */
-    public directoryRolesById(id: string) : DirectoryRoleRequestBuilder {
+    public directoryRolesById(id: string) : DirectoryRoleItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["directoryRole_id"] = id
-        return new DirectoryRoleRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DirectoryRoleItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.directoryRoleTemplates.item collection
      * @param id Unique identifier of the item
-     * @returns a directoryRoleTemplateRequestBuilder
+     * @returns a directoryRoleTemplateItemRequestBuilder
      */
-    public directoryRoleTemplatesById(id: string) : DirectoryRoleTemplateRequestBuilder {
+    public directoryRoleTemplatesById(id: string) : DirectoryRoleTemplateItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["directoryRoleTemplate_id"] = id
-        return new DirectoryRoleTemplateRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DirectoryRoleTemplateItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.domainDnsRecords.item collection
      * @param id Unique identifier of the item
-     * @returns a domainDnsRecordRequestBuilder
+     * @returns a domainDnsRecordItemRequestBuilder
      */
-    public domainDnsRecordsById(id: string) : DomainDnsRecordRequestBuilder {
+    public domainDnsRecordsById(id: string) : DomainDnsRecordItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["domainDnsRecord_id"] = id
-        return new DomainDnsRecordRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DomainDnsRecordItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.domains.item collection
      * @param id Unique identifier of the item
-     * @returns a domainRequestBuilder
+     * @returns a domainItemRequestBuilder
      */
-    public domainsById(id: string) : DomainRequestBuilder {
+    public domainsById(id: string) : DomainItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["domain_id"] = id
-        return new DomainRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DomainItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.drives.item collection
      * @param id Unique identifier of the item
-     * @returns a driveRequestBuilder
+     * @returns a driveItemRequestBuilder
      */
-    public drivesById(id: string) : ia10b1b090b200a6fc019aaaa448bbaab35f973bd12d5508a5c3720529509cb60 {
+    public drivesById(id: string) : DriveItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["drive_id"] = id
-        return new ia10b1b090b200a6fc019aaaa448bbaab35f973bd12d5508a5c3720529509cb60(urlTplParams, this.requestAdapter);
+        return new DriveItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
         const requestInfo = this.createGetRequestInformation(
@@ -548,243 +550,243 @@ export class GraphServiceClient {
     /**
      * Gets an item from the MicrosoftGraph.groupLifecyclePolicies.item collection
      * @param id Unique identifier of the item
-     * @returns a groupLifecyclePolicyRequestBuilder
+     * @returns a groupLifecyclePolicyItemRequestBuilder
      */
-    public groupLifecyclePoliciesById(id: string) : GroupLifecyclePolicyRequestBuilder {
+    public groupLifecyclePoliciesById(id: string) : GroupLifecyclePolicyItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["groupLifecyclePolicy_id"] = id
-        return new GroupLifecyclePolicyRequestBuilder(urlTplParams, this.requestAdapter);
+        return new GroupLifecyclePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item collection
      * @param id Unique identifier of the item
-     * @returns a groupRequestBuilder
+     * @returns a groupItemRequestBuilder
      */
-    public groupsById(id: string) : GroupRequestBuilder {
+    public groupsById(id: string) : GroupItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["group_id"] = id
-        return new GroupRequestBuilder(urlTplParams, this.requestAdapter);
+        return new GroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groupSettings.item collection
      * @param id Unique identifier of the item
-     * @returns a groupSettingRequestBuilder
+     * @returns a groupSettingItemRequestBuilder
      */
-    public groupSettingsById(id: string) : GroupSettingRequestBuilder {
+    public groupSettingsById(id: string) : GroupSettingItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["groupSetting_id"] = id
-        return new GroupSettingRequestBuilder(urlTplParams, this.requestAdapter);
+        return new GroupSettingItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groupSettingTemplates.item collection
      * @param id Unique identifier of the item
-     * @returns a groupSettingTemplateRequestBuilder
+     * @returns a groupSettingTemplateItemRequestBuilder
      */
-    public groupSettingTemplatesById(id: string) : GroupSettingTemplateRequestBuilder {
+    public groupSettingTemplatesById(id: string) : GroupSettingTemplateItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["groupSettingTemplate_id"] = id
-        return new GroupSettingTemplateRequestBuilder(urlTplParams, this.requestAdapter);
+        return new GroupSettingTemplateItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityProviders.item collection
      * @param id Unique identifier of the item
-     * @returns a identityProviderRequestBuilder
+     * @returns a identityProviderItemRequestBuilder
      */
-    public identityProvidersById(id: string) : IdentityProviderRequestBuilder {
+    public identityProvidersById(id: string) : IdentityProviderItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["identityProvider_id"] = id
-        return new IdentityProviderRequestBuilder(urlTplParams, this.requestAdapter);
+        return new IdentityProviderItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.invitations.item collection
      * @param id Unique identifier of the item
-     * @returns a invitationRequestBuilder
+     * @returns a invitationItemRequestBuilder
      */
-    public invitationsById(id: string) : InvitationRequestBuilder {
+    public invitationsById(id: string) : InvitationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["invitation_id"] = id
-        return new InvitationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new InvitationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.localizations.item collection
      * @param id Unique identifier of the item
-     * @returns a organizationalBrandingLocalizationRequestBuilder
+     * @returns a organizationalBrandingLocalizationItemRequestBuilder
      */
-    public localizationsById(id: string) : OrganizationalBrandingLocalizationRequestBuilder {
+    public localizationsById(id: string) : OrganizationalBrandingLocalizationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["organizationalBrandingLocalization_id"] = id
-        return new OrganizationalBrandingLocalizationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OrganizationalBrandingLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.oauth2PermissionGrants.item collection
      * @param id Unique identifier of the item
-     * @returns a oAuth2PermissionGrantRequestBuilder
+     * @returns a oAuth2PermissionGrantItemRequestBuilder
      */
-    public oauth2PermissionGrantsById(id: string) : OAuth2PermissionGrantRequestBuilder {
+    public oauth2PermissionGrantsById(id: string) : OAuth2PermissionGrantItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["oAuth2PermissionGrant_id"] = id
-        return new OAuth2PermissionGrantRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OAuth2PermissionGrantItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.organization.item collection
      * @param id Unique identifier of the item
-     * @returns a organizationRequestBuilder
+     * @returns a organizationItemRequestBuilder
      */
-    public organizationById(id: string) : OrganizationRequestBuilder {
+    public organizationById(id: string) : OrganizationItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["organization_id"] = id
-        return new OrganizationRequestBuilder(urlTplParams, this.requestAdapter);
+        return new OrganizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.permissionGrants.item collection
      * @param id Unique identifier of the item
-     * @returns a resourceSpecificPermissionGrantRequestBuilder
+     * @returns a resourceSpecificPermissionGrantItemRequestBuilder
      */
-    public permissionGrantsById(id: string) : ResourceSpecificPermissionGrantRequestBuilder {
+    public permissionGrantsById(id: string) : ResourceSpecificPermissionGrantItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["resourceSpecificPermissionGrant_id"] = id
-        return new ResourceSpecificPermissionGrantRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ResourceSpecificPermissionGrantItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.places.item collection
      * @param id Unique identifier of the item
-     * @returns a placeRequestBuilder
+     * @returns a placeItemRequestBuilder
      */
-    public placesById(id: string) : PlaceRequestBuilder {
+    public placesById(id: string) : PlaceItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["place_id"] = id
-        return new PlaceRequestBuilder(urlTplParams, this.requestAdapter);
+        return new PlaceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.schemaExtensions.item collection
      * @param id Unique identifier of the item
-     * @returns a schemaExtensionRequestBuilder
+     * @returns a schemaExtensionItemRequestBuilder
      */
-    public schemaExtensionsById(id: string) : SchemaExtensionRequestBuilder {
+    public schemaExtensionsById(id: string) : SchemaExtensionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["schemaExtension_id"] = id
-        return new SchemaExtensionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SchemaExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.scopedRoleMemberships.item collection
      * @param id Unique identifier of the item
-     * @returns a scopedRoleMembershipRequestBuilder
+     * @returns a scopedRoleMembershipItemRequestBuilder
      */
-    public scopedRoleMembershipsById(id: string) : ScopedRoleMembershipRequestBuilder {
+    public scopedRoleMembershipsById(id: string) : ScopedRoleMembershipItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["scopedRoleMembership_id"] = id
-        return new ScopedRoleMembershipRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ScopedRoleMembershipItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.servicePrincipals.item collection
      * @param id Unique identifier of the item
-     * @returns a servicePrincipalRequestBuilder
+     * @returns a servicePrincipalItemRequestBuilder
      */
-    public servicePrincipalsById(id: string) : ServicePrincipalRequestBuilder {
+    public servicePrincipalsById(id: string) : ServicePrincipalItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["servicePrincipal_id"] = id
-        return new ServicePrincipalRequestBuilder(urlTplParams, this.requestAdapter);
+        return new ServicePrincipalItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.shares.item collection
      * @param id Unique identifier of the item
-     * @returns a sharedDriveItemRequestBuilder
+     * @returns a sharedDriveItemItemRequestBuilder
      */
-    public sharesById(id: string) : SharedDriveItemRequestBuilder {
+    public sharesById(id: string) : SharedDriveItemItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["sharedDriveItem_id"] = id
-        return new SharedDriveItemRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SharedDriveItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item collection
      * @param id Unique identifier of the item
-     * @returns a siteRequestBuilder
+     * @returns a siteItemRequestBuilder
      */
-    public sitesById(id: string) : SiteRequestBuilder {
+    public sitesById(id: string) : SiteItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["site_id"] = id
-        return new SiteRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SiteItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.subscribedSkus.item collection
      * @param id Unique identifier of the item
-     * @returns a subscribedSkuRequestBuilder
+     * @returns a subscribedSkuItemRequestBuilder
      */
-    public subscribedSkusById(id: string) : SubscribedSkuRequestBuilder {
+    public subscribedSkusById(id: string) : SubscribedSkuItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["subscribedSku_id"] = id
-        return new SubscribedSkuRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SubscribedSkuItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.subscriptions.item collection
      * @param id Unique identifier of the item
-     * @returns a subscriptionRequestBuilder
+     * @returns a subscriptionItemRequestBuilder
      */
-    public subscriptionsById(id: string) : SubscriptionRequestBuilder {
+    public subscriptionsById(id: string) : SubscriptionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["subscription_id"] = id
-        return new SubscriptionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SubscriptionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item collection
      * @param id Unique identifier of the item
-     * @returns a teamRequestBuilder
+     * @returns a teamItemRequestBuilder
      */
-    public teamsById(id: string) : TeamRequestBuilder {
+    public teamsById(id: string) : TeamItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["team_id"] = id
-        return new TeamRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TeamItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.teamsTemplates.item collection
      * @param id Unique identifier of the item
-     * @returns a teamsTemplateRequestBuilder
+     * @returns a teamsTemplateItemRequestBuilder
      */
-    public teamsTemplatesById(id: string) : TeamsTemplateRequestBuilder {
+    public teamsTemplatesById(id: string) : TeamsTemplateItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["teamsTemplate_id"] = id
-        return new TeamsTemplateRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TeamsTemplateItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item collection
      * @param id Unique identifier of the item
-     * @returns a userRequestBuilder
+     * @returns a userItemRequestBuilder
      */
-    public usersById(id: string) : UserRequestBuilder {
+    public usersById(id: string) : UserItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["user_id"] = id
-        return new UserRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UserItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item collection
      * @param id Unique identifier of the item
-     * @returns a driveItemRequestBuilder
+     * @returns a driveItemItemRequestBuilder
      */
-    public workbooksById(id: string) : DriveItemRequestBuilder {
+    public workbooksById(id: string) : DriveItemItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["driveItem_id"] = id
-        return new DriveItemRequestBuilder(urlTplParams, this.requestAdapter);
+        return new DriveItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

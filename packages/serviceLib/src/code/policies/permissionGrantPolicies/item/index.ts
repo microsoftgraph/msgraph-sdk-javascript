@@ -1,1 +1,1 @@
-export * from './PermissionGrantPolicyRequestBuilder'
+export * from './PermissionGrantPolicyItemRequestBuilder'

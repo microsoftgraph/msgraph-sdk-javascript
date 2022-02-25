@@ -1,1 +1,1 @@
-export * from './MdmWindowsInformationProtectionPolicyRequestBuilder'
+export * from './MdmWindowsInformationProtectionPolicyItemRequestBuilder'

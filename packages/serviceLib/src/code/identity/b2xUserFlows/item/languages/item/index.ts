@@ -1,1 +1,1 @@
-export * from './UserFlowLanguageConfigurationRequestBuilder'
+export * from './UserFlowLanguageConfigurationItemRequestBuilder'

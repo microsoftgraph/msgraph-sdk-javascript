@@ -1,8 +1,8 @@
 import {RbacApplication} from '../../models/microsoft/graph/';
 import {RoleAssignmentsRequestBuilder} from './roleAssignments/';
-import {UnifiedRoleAssignmentRequestBuilder} from './roleAssignments/item/';
+import {UnifiedRoleAssignmentItemRequestBuilder} from './roleAssignments/item/';
 import {RoleDefinitionsRequestBuilder} from './roleDefinitions/';
-import {UnifiedRoleDefinitionRequestBuilder} from './roleDefinitions/item/';
+import {UnifiedRoleDefinitionItemRequestBuilder} from './roleDefinitions/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /roleManagement/entitlementManagement  */
@@ -131,23 +131,23 @@ export class EntitlementManagementRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.roleManagement.entitlementManagement.roleAssignments.item collection
      * @param id Unique identifier of the item
-     * @returns a unifiedRoleAssignmentRequestBuilder
+     * @returns a unifiedRoleAssignmentItemRequestBuilder
      */
-    public roleAssignmentsById(id: string) : UnifiedRoleAssignmentRequestBuilder {
+    public roleAssignmentsById(id: string) : UnifiedRoleAssignmentItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["unifiedRoleAssignment_id"] = id
-        return new UnifiedRoleAssignmentRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UnifiedRoleAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.roleManagement.entitlementManagement.roleDefinitions.item collection
      * @param id Unique identifier of the item
-     * @returns a unifiedRoleDefinitionRequestBuilder
+     * @returns a unifiedRoleDefinitionItemRequestBuilder
      */
-    public roleDefinitionsById(id: string) : UnifiedRoleDefinitionRequestBuilder {
+    public roleDefinitionsById(id: string) : UnifiedRoleDefinitionItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["unifiedRoleDefinition_id"] = id
-        return new UnifiedRoleDefinitionRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UnifiedRoleDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

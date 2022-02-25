@@ -1,1 +1,1 @@
-export * from './ConnectedOrganizationRequestBuilder'
+export * from './ConnectedOrganizationItemRequestBuilder'

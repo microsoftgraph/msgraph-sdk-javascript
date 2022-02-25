@@ -1,2 +1,2 @@
-export * from './SendActivityNotificationRequestBody'
 export * from './SendActivityNotificationRequestBuilder'
+export * from './SendActivityNotificationRequestBody'

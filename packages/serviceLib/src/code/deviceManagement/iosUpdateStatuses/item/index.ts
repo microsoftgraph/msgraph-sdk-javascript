@@ -1,1 +1,1 @@
-export * from './IosUpdateDeviceStatusRequestBuilder'
+export * from './IosUpdateDeviceStatusItemRequestBuilder'

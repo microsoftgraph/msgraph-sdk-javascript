@@ -1,1 +1,1 @@
-export * from './OAuth2PermissionGrantRequestBuilder'
+export * from './OAuth2PermissionGrantItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './OwnedObjectsRequestBuilder'
 export * from './OwnedObjectsResponse'
+export * from './OwnedObjectsRequestBuilder'

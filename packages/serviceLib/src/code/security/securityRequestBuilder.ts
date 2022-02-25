@@ -1,10 +1,10 @@
 import {Security} from '../models/microsoft/graph/';
 import {AlertsRequestBuilder} from './alerts/';
-import {AlertRequestBuilder} from './alerts/item/';
+import {AlertItemRequestBuilder} from './alerts/item/';
 import {SecureScoreControlProfilesRequestBuilder} from './secureScoreControlProfiles/';
-import {SecureScoreControlProfileRequestBuilder} from './secureScoreControlProfiles/item/';
+import {SecureScoreControlProfileItemRequestBuilder} from './secureScoreControlProfiles/item/';
 import {SecureScoresRequestBuilder} from './secureScores/';
-import {SecureScoreRequestBuilder} from './secureScores/item/';
+import {SecureScoreItemRequestBuilder} from './secureScores/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /security  */
@@ -27,13 +27,13 @@ export class SecurityRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.security.alerts.item collection
      * @param id Unique identifier of the item
-     * @returns a alertRequestBuilder
+     * @returns a alertItemRequestBuilder
      */
-    public alertsById(id: string) : AlertRequestBuilder {
+    public alertsById(id: string) : AlertItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["alert_id"] = id
-        return new AlertRequestBuilder(urlTplParams, this.requestAdapter);
+        return new AlertItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new SecurityRequestBuilder and sets the default values.
@@ -120,23 +120,23 @@ export class SecurityRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.security.secureScoreControlProfiles.item collection
      * @param id Unique identifier of the item
-     * @returns a secureScoreControlProfileRequestBuilder
+     * @returns a secureScoreControlProfileItemRequestBuilder
      */
-    public secureScoreControlProfilesById(id: string) : SecureScoreControlProfileRequestBuilder {
+    public secureScoreControlProfilesById(id: string) : SecureScoreControlProfileItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["secureScoreControlProfile_id"] = id
-        return new SecureScoreControlProfileRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SecureScoreControlProfileItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.security.secureScores.item collection
      * @param id Unique identifier of the item
-     * @returns a secureScoreRequestBuilder
+     * @returns a secureScoreItemRequestBuilder
      */
-    public secureScoresById(id: string) : SecureScoreRequestBuilder {
+    public secureScoresById(id: string) : SecureScoreItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["secureScore_id"] = id
-        return new SecureScoreRequestBuilder(urlTplParams, this.requestAdapter);
+        return new SecureScoreItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

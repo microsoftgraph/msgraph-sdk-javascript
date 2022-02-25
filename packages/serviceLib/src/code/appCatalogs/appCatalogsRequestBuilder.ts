@@ -1,6 +1,6 @@
 import {AppCatalogs} from '../models/microsoft/graph/';
 import {TeamsAppsRequestBuilder} from './teamsApps/';
-import {TeamsAppRequestBuilder} from './teamsApps/item/';
+import {TeamsAppItemRequestBuilder} from './teamsApps/item/';
 import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /appCatalogs  */
@@ -99,12 +99,12 @@ export class AppCatalogsRequestBuilder {
     /**
      * Gets an item from the MicrosoftGraph.appCatalogs.teamsApps.item collection
      * @param id Unique identifier of the item
-     * @returns a teamsAppRequestBuilder
+     * @returns a teamsAppItemRequestBuilder
      */
-    public teamsAppsById(id: string) : TeamsAppRequestBuilder {
+    public teamsAppsById(id: string) : TeamsAppItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["teamsApp_id"] = id
-        return new TeamsAppRequestBuilder(urlTplParams, this.requestAdapter);
+        return new TeamsAppItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

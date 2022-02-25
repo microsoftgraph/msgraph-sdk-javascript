@@ -1,1 +1,1 @@
-export * from './InferenceClassificationOverrideRequestBuilder'
+export * from './InferenceClassificationOverrideItemRequestBuilder'

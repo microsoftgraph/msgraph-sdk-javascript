@@ -1,1 +1,1 @@
-export * from './HomeRealmDiscoveryPolicyRequestBuilder'
+export * from './HomeRealmDiscoveryPolicyItemRequestBuilder'

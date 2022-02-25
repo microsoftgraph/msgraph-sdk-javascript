@@ -1,1 +1,1 @@
-export * from './PostRequestBuilder'
+export * from './PostItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './TeamsAsyncOperationRequestBuilder'
+export * from './TeamsAsyncOperationItemRequestBuilder'

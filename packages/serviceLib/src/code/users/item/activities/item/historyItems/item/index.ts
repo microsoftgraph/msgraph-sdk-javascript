@@ -1,1 +1,1 @@
-export * from './ActivityHistoryItemRequestBuilder'
+export * from './ActivityHistoryItemItemRequestBuilder'
