@@ -1,2 +1,2 @@
-export * from './AppRoleAssignedToRequestBuilder'
 export * from './AppRoleAssignedToResponse'
+export * from './AppRoleAssignedToRequestBuilder'

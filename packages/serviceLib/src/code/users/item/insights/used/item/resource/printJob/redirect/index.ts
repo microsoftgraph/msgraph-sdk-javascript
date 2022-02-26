@@ -1,2 +1,2 @@
-export * from './RedirectRequestBody'
 export * from './RedirectRequestBuilder'
+export * from './RedirectRequestBody'

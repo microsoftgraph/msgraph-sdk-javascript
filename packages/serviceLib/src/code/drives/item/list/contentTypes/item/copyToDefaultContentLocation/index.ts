@@ -1,2 +1,2 @@
-export * from './CopyToDefaultContentLocationRequestBuilder'
 export * from './CopyToDefaultContentLocationRequestBody'
+export * from './CopyToDefaultContentLocationRequestBuilder'

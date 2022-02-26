@@ -1,2 +1,2 @@
-export * from './MidbRequestBody'
 export * from './MidbRequestBuilder'
+export * from './MidbRequestBody'

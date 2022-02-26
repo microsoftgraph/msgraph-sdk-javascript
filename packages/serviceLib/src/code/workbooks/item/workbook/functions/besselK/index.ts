@@ -1,2 +1,2 @@
-export * from './BesselKRequestBody'
 export * from './BesselKRequestBuilder'
+export * from './BesselKRequestBody'

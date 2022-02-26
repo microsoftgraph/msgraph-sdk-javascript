@@ -1,2 +1,2 @@
-export * from './DproductRequestBuilder'
 export * from './DproductRequestBody'
+export * from './DproductRequestBuilder'

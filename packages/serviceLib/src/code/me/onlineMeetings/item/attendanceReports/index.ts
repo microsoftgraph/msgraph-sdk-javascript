@@ -1,2 +1,2 @@
-export * from './AttendanceReportsResponse'
 export * from './AttendanceReportsRequestBuilder'
+export * from './AttendanceReportsResponse'

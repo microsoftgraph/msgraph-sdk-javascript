@@ -1,2 +1,2 @@
-export * from './WindowsHelloForBusinessMethodsResponse'
 export * from './WindowsHelloForBusinessMethodsRequestBuilder'
+export * from './WindowsHelloForBusinessMethodsResponse'

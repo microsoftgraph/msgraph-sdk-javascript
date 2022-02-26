@@ -1,2 +1,2 @@
-export * from './WindowsInformationProtectionNetworkLearningSummariesResponse'
 export * from './WindowsInformationProtectionNetworkLearningSummariesRequestBuilder'
+export * from './WindowsInformationProtectionNetworkLearningSummariesResponse'

@@ -1,2 +1,2 @@
-export * from './TanhRequestBuilder'
 export * from './TanhRequestBody'
+export * from './TanhRequestBuilder'

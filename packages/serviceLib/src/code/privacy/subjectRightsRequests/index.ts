@@ -1,2 +1,2 @@
-export * from './SubjectRightsRequestsRequestBuilder'
 export * from './SubjectRightsRequestsResponse'
+export * from './SubjectRightsRequestsRequestBuilder'

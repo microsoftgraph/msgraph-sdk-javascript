@@ -1,2 +1,2 @@
-export * from './ApplicationTemplatesResponse'
 export * from './ApplicationTemplatesRequestBuilder'
+export * from './ApplicationTemplatesResponse'

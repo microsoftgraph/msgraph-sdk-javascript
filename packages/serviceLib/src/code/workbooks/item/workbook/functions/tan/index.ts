@@ -1,2 +1,2 @@
-export * from './TanRequestBody'
 export * from './TanRequestBuilder'
+export * from './TanRequestBody'

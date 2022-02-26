@@ -1,2 +1,2 @@
-export * from './UserAttributeAssignmentsResponse'
 export * from './UserAttributeAssignmentsRequestBuilder'
+export * from './UserAttributeAssignmentsResponse'

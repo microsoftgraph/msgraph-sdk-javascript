@@ -1,2 +1,2 @@
-export * from './ImConjugateRequestBuilder'
 export * from './ImConjugateRequestBody'
+export * from './ImConjugateRequestBuilder'

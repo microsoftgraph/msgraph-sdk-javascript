@@ -1,2 +1,2 @@
-export * from './ApplyBottomItemsFilterRequestBuilder'
 export * from './ApplyBottomItemsFilterRequestBody'
+export * from './ApplyBottomItemsFilterRequestBuilder'

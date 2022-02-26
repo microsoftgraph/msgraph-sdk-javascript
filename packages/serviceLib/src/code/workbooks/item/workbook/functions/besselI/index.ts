@@ -1,2 +1,2 @@
-export * from './BesselIRequestBody'
 export * from './BesselIRequestBuilder'
+export * from './BesselIRequestBody'

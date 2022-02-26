@@ -1,2 +1,2 @@
-export * from './InheritsPermissionsFromResponse'
 export * from './InheritsPermissionsFromRequestBuilder'
+export * from './InheritsPermissionsFromResponse'

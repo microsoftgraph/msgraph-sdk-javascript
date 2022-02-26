@@ -1,2 +1,2 @@
-export * from './ProperRequestBuilder'
 export * from './ProperRequestBody'
+export * from './ProperRequestBuilder'

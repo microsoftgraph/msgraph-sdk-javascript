@@ -1,2 +1,2 @@
-export * from './HyperlinkRequestBody'
 export * from './HyperlinkRequestBuilder'
+export * from './HyperlinkRequestBody'

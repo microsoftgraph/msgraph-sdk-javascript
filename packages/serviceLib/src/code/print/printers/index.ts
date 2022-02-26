@@ -1,2 +1,2 @@
-export * from './PrintersResponse'
 export * from './PrintersRequestBuilder'
+export * from './PrintersResponse'

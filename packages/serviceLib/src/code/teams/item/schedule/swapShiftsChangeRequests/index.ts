@@ -1,2 +1,2 @@
-export * from './SwapShiftsChangeRequestsResponse'
 export * from './SwapShiftsChangeRequestsRequestBuilder'
+export * from './SwapShiftsChangeRequestsResponse'

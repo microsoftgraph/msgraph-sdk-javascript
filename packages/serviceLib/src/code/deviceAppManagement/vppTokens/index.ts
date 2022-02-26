@@ -1,2 +1,2 @@
-export * from './VppTokensRequestBuilder'
 export * from './VppTokensResponse'
+export * from './VppTokensRequestBuilder'

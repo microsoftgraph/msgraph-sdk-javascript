@@ -1,2 +1,2 @@
-export * from './CoupNumRequestBuilder'
 export * from './CoupNumRequestBody'
+export * from './CoupNumRequestBuilder'

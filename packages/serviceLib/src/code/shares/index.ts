@@ -1,2 +1,2 @@
-export * from './SharesResponse'
 export * from './SharesRequestBuilder'
+export * from './SharesResponse'

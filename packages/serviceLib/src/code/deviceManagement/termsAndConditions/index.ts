@@ -1,2 +1,2 @@
-export * from './TermsAndConditionsRequestBuilder'
 export * from './TermsAndConditionsResponse'
+export * from './TermsAndConditionsRequestBuilder'

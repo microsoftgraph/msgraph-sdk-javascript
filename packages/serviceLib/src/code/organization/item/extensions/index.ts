@@ -1,2 +1,2 @@
-export * from './ExtensionsResponse'
 export * from './ExtensionsRequestBuilder'
+export * from './ExtensionsResponse'

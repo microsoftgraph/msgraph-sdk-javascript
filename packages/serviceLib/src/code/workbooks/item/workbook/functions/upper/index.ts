@@ -1,2 +1,2 @@
-export * from './UpperRequestBuilder'
 export * from './UpperRequestBody'
+export * from './UpperRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './MemberOfResponse'
 export * from './MemberOfRequestBuilder'
+export * from './MemberOfResponse'

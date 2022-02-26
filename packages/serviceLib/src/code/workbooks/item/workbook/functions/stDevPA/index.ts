@@ -1,2 +1,2 @@
-export * from './StDevPARequestBody'
 export * from './StDevPARequestBuilder'
+export * from './StDevPARequestBody'

@@ -1,2 +1,2 @@
-export * from './ProtectRequestBuilder'
 export * from './ProtectRequestBody'
+export * from './ProtectRequestBuilder'

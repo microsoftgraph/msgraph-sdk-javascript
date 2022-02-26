@@ -1,2 +1,2 @@
-export * from './PresencesRequestBuilder'
 export * from './PresencesResponse'
+export * from './PresencesRequestBuilder'

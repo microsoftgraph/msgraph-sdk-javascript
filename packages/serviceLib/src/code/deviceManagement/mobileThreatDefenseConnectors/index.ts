@@ -1,2 +1,2 @@
-export * from './MobileThreatDefenseConnectorsResponse'
 export * from './MobileThreatDefenseConnectorsRequestBuilder'
+export * from './MobileThreatDefenseConnectorsResponse'

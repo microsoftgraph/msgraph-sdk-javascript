@@ -1,2 +1,2 @@
-export * from './BatchRecordDecisionsRequestBody'
 export * from './BatchRecordDecisionsRequestBuilder'
+export * from './BatchRecordDecisionsRequestBody'

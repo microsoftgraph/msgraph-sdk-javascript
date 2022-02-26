@@ -1,2 +1,2 @@
-export * from './IsLogicalRequestBody'
 export * from './IsLogicalRequestBuilder'
+export * from './IsLogicalRequestBody'

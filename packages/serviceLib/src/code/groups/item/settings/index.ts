@@ -1,2 +1,2 @@
-export * from './SettingsResponse'
 export * from './SettingsRequestBuilder'
+export * from './SettingsResponse'

@@ -1,2 +1,2 @@
-export * from './RoundUpRequestBody'
 export * from './RoundUpRequestBuilder'
+export * from './RoundUpRequestBody'

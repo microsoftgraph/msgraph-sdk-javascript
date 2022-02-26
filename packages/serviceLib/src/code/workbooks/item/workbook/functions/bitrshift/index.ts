@@ -1,2 +1,2 @@
-export * from './BitrshiftRequestBuilder'
 export * from './BitrshiftRequestBody'
+export * from './BitrshiftRequestBuilder'

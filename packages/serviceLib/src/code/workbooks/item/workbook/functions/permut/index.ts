@@ -1,2 +1,2 @@
-export * from './PermutRequestBuilder'
 export * from './PermutRequestBody'
+export * from './PermutRequestBuilder'

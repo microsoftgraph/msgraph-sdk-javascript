@@ -1,2 +1,2 @@
-export * from './ChartsRequestBuilder'
 export * from './ChartsResponse'
+export * from './ChartsRequestBuilder'

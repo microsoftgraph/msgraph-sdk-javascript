@@ -1,2 +1,2 @@
-export * from './InstancesResponse'
 export * from './InstancesRequestBuilder'
+export * from './InstancesResponse'

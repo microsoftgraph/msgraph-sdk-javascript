@@ -1,2 +1,2 @@
-export * from './IsTextRequestBuilder'
 export * from './IsTextRequestBody'
+export * from './IsTextRequestBuilder'

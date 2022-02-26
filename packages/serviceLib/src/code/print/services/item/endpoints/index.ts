@@ -1,2 +1,2 @@
-export * from './EndpointsRequestBuilder'
 export * from './EndpointsResponse'
+export * from './EndpointsRequestBuilder'

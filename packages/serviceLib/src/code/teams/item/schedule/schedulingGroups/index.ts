@@ -1,2 +1,2 @@
-export * from './SchedulingGroupsRequestBuilder'
 export * from './SchedulingGroupsResponse'
+export * from './SchedulingGroupsRequestBuilder'

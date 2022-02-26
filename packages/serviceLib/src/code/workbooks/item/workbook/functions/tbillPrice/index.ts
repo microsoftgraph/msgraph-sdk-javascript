@@ -1,2 +1,2 @@
-export * from './TbillPriceRequestBody'
 export * from './TbillPriceRequestBuilder'
+export * from './TbillPriceRequestBody'

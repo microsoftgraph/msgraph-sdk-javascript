@@ -1,2 +1,2 @@
-export * from './DomainDnsRecordsResponse'
 export * from './DomainDnsRecordsRequestBuilder'
+export * from './DomainDnsRecordsResponse'

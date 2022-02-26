@@ -1,2 +1,2 @@
-export * from './GetDeviceNonComplianceReportRequestBuilder'
 export * from './GetDeviceNonComplianceReportRequestBody'
+export * from './GetDeviceNonComplianceReportRequestBuilder'

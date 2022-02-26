@@ -1,2 +1,2 @@
-export * from './AuthenticationMethodConfigurationsRequestBuilder'
 export * from './AuthenticationMethodConfigurationsResponse'
+export * from './AuthenticationMethodConfigurationsRequestBuilder'

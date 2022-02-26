@@ -1,2 +1,2 @@
-export * from './CosRequestBuilder'
 export * from './CosRequestBody'
+export * from './CosRequestBuilder'

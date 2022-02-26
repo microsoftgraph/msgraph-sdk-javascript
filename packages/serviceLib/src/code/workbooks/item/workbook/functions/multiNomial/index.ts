@@ -1,2 +1,2 @@
-export * from './MultiNomialRequestBuilder'
 export * from './MultiNomialRequestBody'
+export * from './MultiNomialRequestBuilder'

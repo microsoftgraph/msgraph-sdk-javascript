@@ -1,2 +1,2 @@
-export * from './TransferRequestBuilder'
 export * from './TransferRequestBody'
+export * from './TransferRequestBuilder'

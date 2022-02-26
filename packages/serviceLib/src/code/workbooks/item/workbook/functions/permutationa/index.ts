@@ -1,2 +1,2 @@
-export * from './PermutationaRequestBuilder'
 export * from './PermutationaRequestBody'
+export * from './PermutationaRequestBuilder'

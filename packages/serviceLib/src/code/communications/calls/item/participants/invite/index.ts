@@ -1,2 +1,2 @@
-export * from './InviteRequestBody'
 export * from './InviteRequestBuilder'
+export * from './InviteRequestBody'

@@ -1,2 +1,2 @@
-export * from './HistoryResponse'
 export * from './HistoryRequestBuilder'
+export * from './HistoryResponse'

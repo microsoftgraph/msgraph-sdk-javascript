@@ -1,2 +1,2 @@
-export * from './DeltaRequestBuilder'
 export * from './DeltaRequestBody'
+export * from './DeltaRequestBuilder'

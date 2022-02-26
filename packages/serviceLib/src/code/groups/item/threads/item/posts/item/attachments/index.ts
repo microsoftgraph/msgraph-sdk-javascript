@@ -1,2 +1,2 @@
-export * from './AttachmentsResponse'
 export * from './AttachmentsRequestBuilder'
+export * from './AttachmentsResponse'

@@ -1,2 +1,2 @@
-export * from './UnfavoriteRequestBody'
 export * from './UnfavoriteRequestBuilder'
+export * from './UnfavoriteRequestBody'

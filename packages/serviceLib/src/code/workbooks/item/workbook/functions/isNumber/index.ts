@@ -1,2 +1,2 @@
-export * from './IsNumberRequestBuilder'
 export * from './IsNumberRequestBody'
+export * from './IsNumberRequestBuilder'

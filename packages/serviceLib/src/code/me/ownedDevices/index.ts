@@ -1,2 +1,2 @@
-export * from './OwnedDevicesResponse'
 export * from './OwnedDevicesRequestBuilder'
+export * from './OwnedDevicesResponse'

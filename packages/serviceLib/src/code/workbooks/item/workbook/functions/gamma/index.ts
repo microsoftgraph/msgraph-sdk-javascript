@@ -1,2 +1,2 @@
-export * from './GammaRequestBuilder'
 export * from './GammaRequestBody'
+export * from './GammaRequestBuilder'

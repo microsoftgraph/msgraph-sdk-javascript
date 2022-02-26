@@ -1,2 +1,2 @@
-export * from './GetActivitiesByIntervalRequestBuilder'
 export * from './GetActivitiesByInterval'
+export * from './GetActivitiesByIntervalRequestBuilder'

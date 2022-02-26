@@ -1,2 +1,2 @@
-export * from './IntRateRequestBody'
 export * from './IntRateRequestBuilder'
+export * from './IntRateRequestBody'

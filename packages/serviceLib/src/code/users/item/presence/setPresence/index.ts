@@ -1,2 +1,2 @@
-export * from './SetPresenceRequestBody'
 export * from './SetPresenceRequestBuilder'
+export * from './SetPresenceRequestBody'

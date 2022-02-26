@@ -1,2 +1,2 @@
-export * from './NotesResponse'
 export * from './NotesRequestBuilder'
+export * from './NotesResponse'

@@ -1,2 +1,2 @@
-export * from './UserFlowIdentityProvidersRequestBuilder'
 export * from './UserFlowIdentityProvidersResponse'
+export * from './UserFlowIdentityProvidersRequestBuilder'

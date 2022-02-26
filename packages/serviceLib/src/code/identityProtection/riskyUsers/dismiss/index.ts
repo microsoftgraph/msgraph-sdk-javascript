@@ -1,2 +1,2 @@
-export * from './DismissRequestBuilder'
 export * from './DismissRequestBody'
+export * from './DismissRequestBuilder'

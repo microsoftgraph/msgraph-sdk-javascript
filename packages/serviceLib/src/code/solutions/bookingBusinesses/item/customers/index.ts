@@ -1,2 +1,2 @@
-export * from './CustomersRequestBuilder'
 export * from './CustomersResponse'
+export * from './CustomersRequestBuilder'

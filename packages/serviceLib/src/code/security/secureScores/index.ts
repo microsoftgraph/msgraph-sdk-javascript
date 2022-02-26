@@ -1,2 +1,2 @@
-export * from './SecureScoresResponse'
 export * from './SecureScoresRequestBuilder'
+export * from './SecureScoresResponse'

@@ -1,2 +1,2 @@
-export * from './PointsRequestBuilder'
 export * from './PointsResponse'
+export * from './PointsRequestBuilder'

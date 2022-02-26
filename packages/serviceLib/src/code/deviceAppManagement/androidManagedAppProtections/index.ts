@@ -1,2 +1,2 @@
-export * from './AndroidManagedAppProtectionsRequestBuilder'
 export * from './AndroidManagedAppProtectionsResponse'
+export * from './AndroidManagedAppProtectionsRequestBuilder'

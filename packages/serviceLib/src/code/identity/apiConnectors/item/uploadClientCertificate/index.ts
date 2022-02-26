@@ -1,2 +1,2 @@
-export * from './UploadClientCertificateRequestBuilder'
 export * from './UploadClientCertificateRequestBody'
+export * from './UploadClientCertificateRequestBuilder'

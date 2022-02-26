@@ -1,2 +1,2 @@
-export * from './AssignmentsResponse'
 export * from './AssignmentsRequestBuilder'
+export * from './AssignmentsResponse'

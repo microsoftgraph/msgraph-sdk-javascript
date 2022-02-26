@@ -1,2 +1,2 @@
-export * from './FilesResponse'
 export * from './FilesRequestBuilder'
+export * from './FilesResponse'

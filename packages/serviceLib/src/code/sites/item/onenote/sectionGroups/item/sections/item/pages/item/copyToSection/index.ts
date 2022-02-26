@@ -1,2 +1,2 @@
-export * from './CopyToSectionRequestBody'
 export * from './CopyToSectionRequestBuilder'
+export * from './CopyToSectionRequestBody'

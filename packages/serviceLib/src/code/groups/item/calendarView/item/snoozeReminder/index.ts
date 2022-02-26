@@ -1,2 +1,2 @@
-export * from './SnoozeReminderRequestBuilder'
 export * from './SnoozeReminderRequestBody'
+export * from './SnoozeReminderRequestBuilder'

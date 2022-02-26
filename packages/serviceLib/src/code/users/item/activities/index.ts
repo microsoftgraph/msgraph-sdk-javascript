@@ -1,2 +1,2 @@
-export * from './ActivitiesResponse'
 export * from './ActivitiesRequestBuilder'
+export * from './ActivitiesResponse'

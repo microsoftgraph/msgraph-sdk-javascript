@@ -1,2 +1,2 @@
-export * from './TargetedManagedAppConfigurationsRequestBuilder'
 export * from './TargetedManagedAppConfigurationsResponse'
+export * from './TargetedManagedAppConfigurationsRequestBuilder'

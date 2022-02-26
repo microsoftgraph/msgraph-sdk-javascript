@@ -1,2 +1,2 @@
-export * from './PivotTablesRequestBuilder'
 export * from './PivotTablesResponse'
+export * from './PivotTablesRequestBuilder'
