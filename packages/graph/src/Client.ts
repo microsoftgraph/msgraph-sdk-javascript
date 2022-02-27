@@ -15,7 +15,6 @@ import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
 import { ClientOptions } from "./IClientOptions";
-import { validatePolyFilling } from "./ValidatePolyFilling";
 
 export class Client {
 	/**
