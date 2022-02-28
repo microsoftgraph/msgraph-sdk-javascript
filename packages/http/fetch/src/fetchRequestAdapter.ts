@@ -14,7 +14,7 @@ export class FetchRequestAdapter implements RequestAdapter {
      * @param serializationWriterFactory the serialization writer factory to use to serialize request bodies.
      * @param httpClient the http client to use to execute requests.
      */
-    public constructor(public readonly authenticationProvider: AuthenticationProvider, private parseNodeFactory: ParseNodeFactory = ParseNodeFactoryRegistry.defaultInstance, private serializationWriterFactory: SerializationWriterFactory = SerializationWriterFactoryRegistry.defaultInstance, private readonly httpClient: HttpClient = new HttpClient()) {
+    public constructor(public readonly authenticationProvider: AuthenticationProvider, protected parseNodeFactory: ParseNodeFactory = ParseNodeFactoryRegistry.defaultInstance, protected serializationWriterFactory: SerializationWriterFactory = SerializationWriterFactoryRegistry.defaultInstance, protected readonly httpClient: HttpClient = new HttpClient()) {
         if (!authenticationProvider) {
             throw new Error('authentication provider cannot be null');
         }
@@ -157,7 +157,7 @@ export class FetchRequestAdapter implements RequestAdapter {
             BackingStoreFactorySingleton.instance = backingStoreFactory;
         }
     }
-    private getHttpResponseMessage = async (requestInfo: RequestInformation): Promise<Response> => {
+    protected getHttpResponseMessage = async (requestInfo: RequestInformation): Promise<Response> => {
         if (!requestInfo) {
             throw new Error('requestInfo cannot be null');
         }

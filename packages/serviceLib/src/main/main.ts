@@ -3,7 +3,7 @@ import { FetchRequestAdapter } from "@microsoft/kiota-http-fetchlibrary";
 //import { Auth } from "./auth"
 
 import { SimpleAuthenticationProvider } from "@microsoft/microsoft-graph-client";
-import { Message } from "../code/models/microsoft/graph";
+import { Message, User } from "../code/models/microsoft/graph";
 
 
 
@@ -27,7 +27,7 @@ const client = new GraphServiceClient(core);
 async function getME() {
     // GET /users/{id | userPrincipalName}/messages
     const meRequestBuilder = client.me;
-    const me = await meRequestBuilder.get();
+    const me: User= await meRequestBuilder.get( undefined, headers);
     console.log(me);
 }
 
