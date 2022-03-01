@@ -10,20 +10,12 @@
         "packages/http/*",
         "packages/graph",
         "packages/serialization/json/",
-        "packages/graphService",
         "packages/serviceLib"
 
         
     ],
     "scripts": {
-        "compile": "yarn run compile:cjs && yarn run compile:es",
-        "compile:cjs": "tsc -b packages/graph/tsconfig.cjs.json",
-        "compile:es": "tsc -b packages/graph/tsconfig.es.json",
-        "build:cjs": "tsc -b packages/graphService/tsconfig.cjs.json",
-        "build:es": "tsc -b packages/graphService/tsconfig.es.json",
-        "buildTest:cjs": "tsc -b packages/testLibraries/tsconfig.cjs.json",
-        "test": "node ./packages/testLibraries/dist/cjs/testMail.js",
-        "buildFull:cjs": "tsc -b packages/serviceLib/tsconfig.cjs.json",
-        "clean": "rimraf -rf./node_modules"
+        "build": "tsc -b packages/testLibraries/tsconfig.cjs.json",
+        "test": "node ./packages/testLibraries/dist/cjs/test.js"
     }
 }

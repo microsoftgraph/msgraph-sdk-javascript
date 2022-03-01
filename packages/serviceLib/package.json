@@ -1,8 +1,8 @@
 {
-    "name": "serviceLib",
+    "name": "msgraph-javascript-sdk",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "dist/cjs/src/code/graphServiceClient.js",
     "keywords": [],
     "author": "",
     "license": "ISC",

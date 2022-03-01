@@ -108,9 +108,11 @@ import {WorkbooksRequestBuilder} from './workbooks/';
 import {DriveItemItemRequestBuilder} from './workbooks/item/';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, HttpMethod, Parsable, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, RequestInformation, RequestOption, ResponseHandler, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
+import { Client, ClientOptions, GraphRequest } from '@microsoft/microsoft-graph-client';
+import { FetchRequestAdapter } from '@microsoft/kiota-http-fetchlibrary';
 
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
-export class GraphServiceClient {
+export class GraphServiceClient  extends Client{
     public get admin(): AdminRequestBuilder {
         return new AdminRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -413,7 +415,9 @@ export class GraphServiceClient {
      * Instantiates a new GraphServiceClient and sets the default values.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
-    public constructor(requestAdapter: RequestAdapter) {
+    public constructor(clientOptions: ClientOptions) {
+        super(clientOptions);
+        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider)
         if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
@@ -789,4 +793,13 @@ export class GraphServiceClient {
         urlTplParams["driveItem_id"] = id
         return new DriveItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
+
+    public static init(clientOptions: ClientOptions): GraphServiceClient {
+        const client = new GraphServiceClient(clientOptions);
+        return client;
+    }
+
+    public api(path: string): GraphRequest {
+        return super.api(path);
+    }
 }

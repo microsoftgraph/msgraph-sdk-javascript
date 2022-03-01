@@ -20,8 +20,8 @@
         "@microsoft/kiota-serialization-json": [
             "../serialization/json"
         ],
-        "graph-service-library": [
-            "../graph-service-library"
+        "msgraph-javascript-sdk": [
+            "../serviceLib"
         ],
         "@microsoft/microsoft-graph-client": [
             "../graph"
@@ -30,7 +30,7 @@
     "files": [],
     "references": [
         {
-            "path": "../graphService/tsconfig.cjs.json"
+            "path": "../serviceLib/tsconfig.cjs.json"
         },
         {
             "path": "../graph/tsconfig.cjs.json"
