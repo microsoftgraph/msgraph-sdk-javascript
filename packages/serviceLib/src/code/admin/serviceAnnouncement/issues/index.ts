@@ -1,2 +1,2 @@
-export * from './IssuesResponse'
-export * from './IssuesRequestBuilder'
+export * from './issuesResponse'
+export * from './issuesRequestBuilder'

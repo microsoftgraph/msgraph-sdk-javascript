@@ -1,2 +1,2 @@
-export * from './ErfC_PreciseRequestBody'
-export * from './ErfC_PreciseRequestBuilder'
+export * from './erfC_PreciseRequestBody'
+export * from './erfC_PreciseRequestBuilder'

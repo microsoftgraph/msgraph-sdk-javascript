@@ -1,2 +1,2 @@
-export * from './DdbRequestBuilder'
-export * from './DdbRequestBody'
+export * from './ddbRequestBody'
+export * from './ddbRequestBuilder'

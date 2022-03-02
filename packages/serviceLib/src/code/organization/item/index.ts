@@ -1,1 +1,1 @@
-export * from './OrganizationItemRequestBuilder'
+export * from './organizationItemRequestBuilder'

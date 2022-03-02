@@ -1,1 +1,1 @@
-export * from './NowRequestBuilder'
+export * from './nowRequestBuilder'

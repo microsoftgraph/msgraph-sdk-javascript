@@ -1,1 +1,1 @@
-export * from './GetOffice365GroupsActivityFileCountsWithPeriodRequestBuilder'
+export * from './getOffice365GroupsActivityFileCountsWithPeriodRequestBuilder'

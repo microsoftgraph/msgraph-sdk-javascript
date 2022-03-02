@@ -1,1 +1,1 @@
-export * from './DeviceComplianceScheduledActionForRuleItemRequestBuilder'
+export * from './deviceComplianceScheduledActionForRuleItemRequestBuilder'

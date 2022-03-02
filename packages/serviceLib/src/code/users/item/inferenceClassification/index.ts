@@ -1,1 +1,1 @@
-export * from './InferenceClassificationRequestBuilder'
+export * from './inferenceClassificationRequestBuilder'

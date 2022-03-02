@@ -1,2 +1,2 @@
-export * from './ChildFoldersResponse'
-export * from './ChildFoldersRequestBuilder'
+export * from './childFoldersRequestBuilder'
+export * from './childFoldersResponse'

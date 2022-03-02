@@ -1,2 +1,2 @@
-export * from './DevSqRequestBuilder'
-export * from './DevSqRequestBody'
+export * from './devSqRequestBuilder'
+export * from './devSqRequestBody'

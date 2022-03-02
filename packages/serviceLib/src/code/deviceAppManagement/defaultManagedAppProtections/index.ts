@@ -1,2 +1,2 @@
-export * from './DefaultManagedAppProtectionsResponse'
-export * from './DefaultManagedAppProtectionsRequestBuilder'
+export * from './defaultManagedAppProtectionsResponse'
+export * from './defaultManagedAppProtectionsRequestBuilder'

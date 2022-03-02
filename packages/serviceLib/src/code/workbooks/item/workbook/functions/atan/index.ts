@@ -1,2 +1,2 @@
-export * from './AtanRequestBody'
-export * from './AtanRequestBuilder'
+export * from './atanRequestBuilder'
+export * from './atanRequestBody'

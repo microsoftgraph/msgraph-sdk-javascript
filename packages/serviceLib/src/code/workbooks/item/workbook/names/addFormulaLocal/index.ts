@@ -1,2 +1,2 @@
-export * from './AddFormulaLocalRequestBuilder'
-export * from './AddFormulaLocalRequestBody'
+export * from './addFormulaLocalRequestBody'
+export * from './addFormulaLocalRequestBuilder'

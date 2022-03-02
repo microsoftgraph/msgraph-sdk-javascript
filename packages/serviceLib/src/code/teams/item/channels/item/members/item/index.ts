@@ -1,1 +1,1 @@
-export * from './ConversationMemberItemRequestBuilder'
+export * from './conversationMemberItemRequestBuilder'

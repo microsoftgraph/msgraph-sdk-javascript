@@ -1,2 +1,2 @@
-export * from './WindowsDefenderScanRequestBuilder'
-export * from './WindowsDefenderScanRequestBody'
+export * from './windowsDefenderScanRequestBuilder'
+export * from './windowsDefenderScanRequestBody'

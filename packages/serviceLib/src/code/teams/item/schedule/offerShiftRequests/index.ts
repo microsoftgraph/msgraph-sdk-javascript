@@ -1,2 +1,2 @@
-export * from './OfferShiftRequestsRequestBuilder'
-export * from './OfferShiftRequestsResponse'
+export * from './offerShiftRequestsRequestBuilder'
+export * from './offerShiftRequestsResponse'

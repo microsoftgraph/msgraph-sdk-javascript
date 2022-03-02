@@ -1,1 +1,1 @@
-export * from './SchemaRequestBuilder'
+export * from './schemaRequestBuilder'

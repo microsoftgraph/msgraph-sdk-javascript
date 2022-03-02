@@ -1,2 +1,2 @@
-export * from './SumIfRequestBody'
-export * from './SumIfRequestBuilder'
+export * from './sumIfRequestBuilder'
+export * from './sumIfRequestBody'

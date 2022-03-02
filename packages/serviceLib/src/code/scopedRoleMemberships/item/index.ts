@@ -1,1 +1,1 @@
-export * from './ScopedRoleMembershipItemRequestBuilder'
+export * from './scopedRoleMembershipItemRequestBuilder'

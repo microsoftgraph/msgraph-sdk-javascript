@@ -1,2 +1,2 @@
-export * from './CertificateBasedAuthConfigurationResponse'
-export * from './CertificateBasedAuthConfigurationRequestBuilder'
+export * from './certificateBasedAuthConfigurationResponse'
+export * from './certificateBasedAuthConfigurationRequestBuilder'

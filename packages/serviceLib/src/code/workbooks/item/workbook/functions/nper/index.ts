@@ -1,2 +1,2 @@
-export * from './NperRequestBuilder'
-export * from './NperRequestBody'
+export * from './nperRequestBody'
+export * from './nperRequestBuilder'

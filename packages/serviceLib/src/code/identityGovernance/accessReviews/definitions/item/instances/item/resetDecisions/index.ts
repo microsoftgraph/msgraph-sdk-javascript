@@ -1,1 +1,1 @@
-export * from './ResetDecisionsRequestBuilder'
+export * from './resetDecisionsRequestBuilder'

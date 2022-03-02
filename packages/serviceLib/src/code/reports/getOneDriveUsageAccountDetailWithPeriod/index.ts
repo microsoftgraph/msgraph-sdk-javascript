@@ -1,1 +1,1 @@
-export * from './GetOneDriveUsageAccountDetailWithPeriodRequestBuilder'
+export * from './getOneDriveUsageAccountDetailWithPeriodRequestBuilder'

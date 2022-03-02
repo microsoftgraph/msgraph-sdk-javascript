@@ -1,2 +1,2 @@
-export * from './TasksResponse'
-export * from './TasksRequestBuilder'
+export * from './tasksRequestBuilder'
+export * from './tasksResponse'

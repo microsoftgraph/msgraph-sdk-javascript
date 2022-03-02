@@ -1,2 +1,2 @@
-export * from './ParticipantsResponse'
-export * from './ParticipantsRequestBuilder'
+export * from './participantsRequestBuilder'
+export * from './participantsResponse'

@@ -1,1 +1,1 @@
-export * from './StoreItemRequestBuilder'
+export * from './storeItemRequestBuilder'

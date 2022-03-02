@@ -1,2 +1,2 @@
-export * from './IdentityProvidersResponse'
-export * from './IdentityProvidersRequestBuilder'
+export * from './identityProvidersRequestBuilder'
+export * from './identityProvidersResponse'

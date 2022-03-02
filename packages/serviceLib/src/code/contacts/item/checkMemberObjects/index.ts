@@ -1,2 +1,2 @@
-export * from './CheckMemberObjectsRequestBuilder'
-export * from './CheckMemberObjectsRequestBody'
+export * from './checkMemberObjectsRequestBody'
+export * from './checkMemberObjectsRequestBuilder'

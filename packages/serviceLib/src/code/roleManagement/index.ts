@@ -1,1 +1,1 @@
-export * from './RoleManagementRequestBuilder'
+export * from './roleManagementRequestBuilder'

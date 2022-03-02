@@ -1,1 +1,1 @@
-export * from './ServiceUpdateMessageItemRequestBuilder'
+export * from './serviceUpdateMessageItemRequestBuilder'

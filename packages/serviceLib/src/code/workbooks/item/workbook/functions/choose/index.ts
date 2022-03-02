@@ -1,2 +1,2 @@
-export * from './ChooseRequestBuilder'
-export * from './ChooseRequestBody'
+export * from './chooseRequestBody'
+export * from './chooseRequestBuilder'

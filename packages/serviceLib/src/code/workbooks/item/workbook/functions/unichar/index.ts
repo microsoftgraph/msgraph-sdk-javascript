@@ -1,2 +1,2 @@
-export * from './UnicharRequestBuilder'
-export * from './UnicharRequestBody'
+export * from './unicharRequestBody'
+export * from './unicharRequestBuilder'

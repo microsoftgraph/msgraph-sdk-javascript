@@ -1,2 +1,2 @@
-export * from './EffectRequestBuilder'
-export * from './EffectRequestBody'
+export * from './effectRequestBuilder'
+export * from './effectRequestBody'

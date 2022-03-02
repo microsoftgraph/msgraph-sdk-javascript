@@ -1,1 +1,1 @@
-export * from './MinorGridlinesRequestBuilder'
+export * from './minorGridlinesRequestBuilder'

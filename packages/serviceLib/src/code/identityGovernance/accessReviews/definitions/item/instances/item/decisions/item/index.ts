@@ -1,1 +1,1 @@
-export * from './AccessReviewInstanceDecisionItemItemRequestBuilder'
+export * from './accessReviewInstanceDecisionItemItemRequestBuilder'

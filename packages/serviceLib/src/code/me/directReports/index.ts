@@ -1,2 +1,2 @@
-export * from './DirectReportsResponse'
-export * from './DirectReportsRequestBuilder'
+export * from './directReportsResponse'
+export * from './directReportsRequestBuilder'

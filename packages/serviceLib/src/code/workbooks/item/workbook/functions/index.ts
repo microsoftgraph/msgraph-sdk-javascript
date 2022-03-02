@@ -1,1 +1,1 @@
-export * from './FunctionsRequestBuilder'
+export * from './functionsRequestBuilder'

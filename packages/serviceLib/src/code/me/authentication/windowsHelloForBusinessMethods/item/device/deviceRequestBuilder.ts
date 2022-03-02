@@ -23,7 +23,7 @@ export class DeviceRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -38,7 +38,7 @@ export class DeviceRequestBuilder {
         return requestInfo;
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -58,7 +58,7 @@ export class DeviceRequestBuilder {
         return requestInfo;
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +76,7 @@ export class DeviceRequestBuilder {
         return requestInfo;
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -88,7 +88,7 @@ export class DeviceRequestBuilder {
         return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -105,7 +105,7 @@ export class DeviceRequestBuilder {
         return this.requestAdapter?.sendAsync<Device>(requestInfo, Device, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The registered device on which this Windows Hello for Business key resides.
+     * The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param body 
      * @param h Request headers
      * @param o Request options

@@ -1,1 +1,1 @@
-export * from './SeriesAxisRequestBuilder'
+export * from './seriesAxisRequestBuilder'

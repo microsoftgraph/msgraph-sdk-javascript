@@ -1,1 +1,1 @@
-export * from './RemoveAllDevicesFromManagementRequestBuilder'
+export * from './removeAllDevicesFromManagementRequestBuilder'

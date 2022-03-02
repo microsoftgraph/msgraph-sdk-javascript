@@ -1,2 +1,2 @@
-export * from './UsdollarRequestBody'
-export * from './UsdollarRequestBuilder'
+export * from './usdollarRequestBody'
+export * from './usdollarRequestBuilder'

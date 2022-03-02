@@ -1,2 +1,2 @@
-export * from './YearRequestBody'
-export * from './YearRequestBuilder'
+export * from './yearRequestBuilder'
+export * from './yearRequestBody'

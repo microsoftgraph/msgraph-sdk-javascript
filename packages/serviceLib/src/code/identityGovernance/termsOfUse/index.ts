@@ -1,1 +1,1 @@
-export * from './TermsOfUseRequestBuilder'
+export * from './termsOfUseRequestBuilder'

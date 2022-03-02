@@ -1,2 +1,2 @@
-export * from './ChangePasswordRequestBuilder'
-export * from './ChangePasswordRequestBody'
+export * from './changePasswordRequestBody'
+export * from './changePasswordRequestBuilder'

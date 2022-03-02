@@ -1,1 +1,1 @@
-export * from './EntitlementManagementRequestBuilder'
+export * from './entitlementManagementRequestBuilder'

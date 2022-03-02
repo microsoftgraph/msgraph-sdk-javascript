@@ -1,1 +1,1 @@
-export * from './PermissionRequestBuilder'
+export * from './permissionRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './IntersectionWithAnotherRangeRequestBuilder'
+export * from './intersectionWithAnotherRangeRequestBuilder'

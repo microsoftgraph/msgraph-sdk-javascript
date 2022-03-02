@@ -1,1 +1,1 @@
-export * from './VisibleViewRequestBuilder'
+export * from './visibleViewRequestBuilder'

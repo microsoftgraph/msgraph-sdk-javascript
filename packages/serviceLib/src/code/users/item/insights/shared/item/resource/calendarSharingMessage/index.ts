@@ -1,1 +1,1 @@
-export * from './CalendarSharingMessageRequestBuilder'
+export * from './calendarSharingMessageRequestBuilder'

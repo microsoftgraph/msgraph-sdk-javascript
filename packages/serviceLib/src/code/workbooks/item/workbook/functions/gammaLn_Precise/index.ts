@@ -1,2 +1,2 @@
-export * from './GammaLn_PreciseRequestBuilder'
-export * from './GammaLn_PreciseRequestBody'
+export * from './gammaLn_PreciseRequestBody'
+export * from './gammaLn_PreciseRequestBuilder'

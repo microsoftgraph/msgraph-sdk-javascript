@@ -1,1 +1,1 @@
-export * from './DataLabelsRequestBuilder'
+export * from './dataLabelsRequestBuilder'

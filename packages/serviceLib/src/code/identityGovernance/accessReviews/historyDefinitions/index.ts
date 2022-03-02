@@ -1,2 +1,2 @@
-export * from './HistoryDefinitionsResponse'
-export * from './HistoryDefinitionsRequestBuilder'
+export * from './historyDefinitionsResponse'
+export * from './historyDefinitionsRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './SwapShiftsChangeRequestItemRequestBuilder'
+export * from './swapShiftsChangeRequestItemRequestBuilder'

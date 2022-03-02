@@ -1,1 +1,1 @@
-export * from './SoftwareUpdateStatusSummaryRequestBuilder'
+export * from './softwareUpdateStatusSummaryRequestBuilder'

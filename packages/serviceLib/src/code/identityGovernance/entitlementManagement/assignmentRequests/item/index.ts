@@ -1,1 +1,1 @@
-export * from './AccessPackageAssignmentRequestItemRequestBuilder'
+export * from './accessPackageAssignmentRequestItemRequestBuilder'

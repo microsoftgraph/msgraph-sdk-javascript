@@ -1,2 +1,2 @@
-export * from './SpecialRequestBuilder'
-export * from './SpecialResponse'
+export * from './specialRequestBuilder'
+export * from './specialResponse'

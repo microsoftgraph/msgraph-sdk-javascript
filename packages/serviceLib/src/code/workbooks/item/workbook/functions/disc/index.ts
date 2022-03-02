@@ -1,2 +1,2 @@
-export * from './DiscRequestBody'
-export * from './DiscRequestBuilder'
+export * from './discRequestBuilder'
+export * from './discRequestBody'

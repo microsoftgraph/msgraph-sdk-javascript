@@ -1,2 +1,2 @@
-export * from './MobileAppConfigurationsResponse'
-export * from './MobileAppConfigurationsRequestBuilder'
+export * from './mobileAppConfigurationsRequestBuilder'
+export * from './mobileAppConfigurationsResponse'

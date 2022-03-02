@@ -1,1 +1,1 @@
-export * from './ContactItemRequestBuilder'
+export * from './contactItemRequestBuilder'

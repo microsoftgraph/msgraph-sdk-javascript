@@ -1,2 +1,2 @@
-export * from './DeleteRequestBuilder'
-export * from './DeleteRequestBody'
+export * from './deleteRequestBody'
+export * from './deleteRequestBuilder'

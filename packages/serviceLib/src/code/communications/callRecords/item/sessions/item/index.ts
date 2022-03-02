@@ -1,1 +1,1 @@
-export * from './SessionItemRequestBuilder'
+export * from './sessionItemRequestBuilder'

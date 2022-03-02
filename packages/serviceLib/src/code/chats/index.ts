@@ -1,2 +1,2 @@
-export * from './ChatsRequestBuilder'
-export * from './ChatsResponse'
+export * from './chatsRequestBuilder'
+export * from './chatsResponse'

@@ -1,1 +1,1 @@
-export * from './ApplePushNotificationCertificateRequestBuilder'
+export * from './applePushNotificationCertificateRequestBuilder'

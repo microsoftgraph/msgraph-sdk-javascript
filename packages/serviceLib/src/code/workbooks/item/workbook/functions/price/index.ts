@@ -1,2 +1,2 @@
-export * from './PriceRequestBody'
-export * from './PriceRequestBuilder'
+export * from './priceRequestBuilder'
+export * from './priceRequestBody'

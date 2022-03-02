@@ -1,1 +1,1 @@
-export * from './TrendingItemRequestBuilder'
+export * from './trendingItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './ThreatAssessmentRequestsRequestBuilder'
-export * from './ThreatAssessmentRequestsResponse'
+export * from './threatAssessmentRequestsResponse'
+export * from './threatAssessmentRequestsRequestBuilder'

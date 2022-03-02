@@ -1,1 +1,1 @@
-export * from './OffsetRangeWithRowOffsetWithColumnOffsetRequestBuilder'
+export * from './offsetRangeWithRowOffsetWithColumnOffsetRequestBuilder'

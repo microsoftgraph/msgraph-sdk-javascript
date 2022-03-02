@@ -1,2 +1,2 @@
-export * from './DminRequestBody'
-export * from './DminRequestBuilder'
+export * from './dminRequestBuilder'
+export * from './dminRequestBody'

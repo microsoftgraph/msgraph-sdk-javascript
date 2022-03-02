@@ -1,2 +1,2 @@
-export * from './AppointmentsRequestBuilder'
-export * from './AppointmentsResponse'
+export * from './appointmentsRequestBuilder'
+export * from './appointmentsResponse'

@@ -1,1 +1,1 @@
-export * from './ImageWithWidthRequestBuilder'
+export * from './imageWithWidthRequestBuilder'

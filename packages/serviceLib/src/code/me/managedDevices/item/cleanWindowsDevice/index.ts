@@ -1,2 +1,2 @@
-export * from './CleanWindowsDeviceRequestBuilder'
-export * from './CleanWindowsDeviceRequestBody'
+export * from './cleanWindowsDeviceRequestBuilder'
+export * from './cleanWindowsDeviceRequestBody'

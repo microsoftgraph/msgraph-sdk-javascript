@@ -1,1 +1,1 @@
-export * from './ComplianceRequestBuilder'
+export * from './complianceRequestBuilder'

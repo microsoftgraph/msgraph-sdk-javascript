@@ -1,1 +1,1 @@
-export * from './MessageItemRequestBuilder'
+export * from './messageItemRequestBuilder'

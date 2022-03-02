@@ -1,2 +1,2 @@
-export * from './SinhRequestBuilder'
-export * from './SinhRequestBody'
+export * from './sinhRequestBuilder'
+export * from './sinhRequestBody'

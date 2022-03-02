@@ -1,1 +1,1 @@
-export * from './ShiftPreferencesRequestBuilder'
+export * from './shiftPreferencesRequestBuilder'

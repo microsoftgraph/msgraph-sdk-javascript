@@ -1,2 +1,2 @@
-export * from './MonthlyPrintUsageByUserRequestBuilder'
-export * from './MonthlyPrintUsageByUserResponse'
+export * from './monthlyPrintUsageByUserRequestBuilder'
+export * from './monthlyPrintUsageByUserResponse'

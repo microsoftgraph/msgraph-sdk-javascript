@@ -8,6 +8,7 @@
 		"sourceMap": true,
 		"declaration": true,
         "declarationMap": true,
+        "forceConsistentCasingInFileNames": true
     //     "paths": {
     //         "@microsoft/kiota-abstractions": [
     //             "../abstractions"

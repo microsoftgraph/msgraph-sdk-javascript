@@ -1,1 +1,1 @@
-export * from './RelationItemRequestBuilder'
+export * from './relationItemRequestBuilder'

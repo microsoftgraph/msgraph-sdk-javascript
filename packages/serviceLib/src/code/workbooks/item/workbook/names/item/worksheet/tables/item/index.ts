@@ -1,1 +1,1 @@
-export * from './WorkbookTableItemRequestBuilder'
+export * from './workbookTableItemRequestBuilder'

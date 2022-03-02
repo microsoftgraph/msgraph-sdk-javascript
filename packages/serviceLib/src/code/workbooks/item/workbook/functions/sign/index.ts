@@ -1,2 +1,2 @@
-export * from './SignRequestBuilder'
-export * from './SignRequestBody'
+export * from './signRequestBody'
+export * from './signRequestBuilder'

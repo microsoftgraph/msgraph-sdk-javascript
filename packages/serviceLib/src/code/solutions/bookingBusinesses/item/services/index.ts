@@ -1,2 +1,2 @@
-export * from './ServicesRequestBuilder'
-export * from './ServicesResponse'
+export * from './servicesResponse'
+export * from './servicesRequestBuilder'

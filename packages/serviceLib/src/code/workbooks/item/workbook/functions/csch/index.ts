@@ -1,2 +1,2 @@
-export * from './CschRequestBuilder'
-export * from './CschRequestBody'
+export * from './cschRequestBuilder'
+export * from './cschRequestBody'

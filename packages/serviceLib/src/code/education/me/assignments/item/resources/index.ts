@@ -1,2 +1,2 @@
-export * from './ResourcesRequestBuilder'
-export * from './ResourcesResponse'
+export * from './resourcesRequestBuilder'
+export * from './resourcesResponse'

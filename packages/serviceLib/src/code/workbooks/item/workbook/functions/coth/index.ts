@@ -1,2 +1,2 @@
-export * from './CothRequestBody'
-export * from './CothRequestBuilder'
+export * from './cothRequestBody'
+export * from './cothRequestBuilder'

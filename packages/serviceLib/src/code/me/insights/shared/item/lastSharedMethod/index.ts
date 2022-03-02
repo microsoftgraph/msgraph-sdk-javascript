@@ -1,1 +1,1 @@
-export * from './LastSharedMethodRequestBuilder'
+export * from './lastSharedMethodRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './IrrRequestBuilder'
-export * from './IrrRequestBody'
+export * from './irrRequestBuilder'
+export * from './irrRequestBody'

@@ -1,1 +1,1 @@
-export * from './BookingCurrencyItemRequestBuilder'
+export * from './bookingCurrencyItemRequestBuilder'

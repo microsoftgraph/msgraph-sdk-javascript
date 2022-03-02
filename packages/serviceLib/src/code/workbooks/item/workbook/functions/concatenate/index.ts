@@ -1,2 +1,2 @@
-export * from './ConcatenateRequestBuilder'
-export * from './ConcatenateRequestBody'
+export * from './concatenateRequestBuilder'
+export * from './concatenateRequestBody'

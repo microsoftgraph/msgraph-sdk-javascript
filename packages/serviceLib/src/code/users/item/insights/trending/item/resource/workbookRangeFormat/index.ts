@@ -1,1 +1,1 @@
-export * from './WorkbookRangeFormatRequestBuilder'
+export * from './workbookRangeFormatRequestBuilder'

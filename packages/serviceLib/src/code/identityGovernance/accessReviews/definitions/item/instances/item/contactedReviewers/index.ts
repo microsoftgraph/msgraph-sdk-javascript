@@ -1,2 +1,2 @@
-export * from './ContactedReviewersRequestBuilder'
-export * from './ContactedReviewersResponse'
+export * from './contactedReviewersResponse'
+export * from './contactedReviewersRequestBuilder'

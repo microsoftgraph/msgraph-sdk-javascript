@@ -1,1 +1,1 @@
-export * from './CellWithRowWithColumnRequestBuilder'
+export * from './cellWithRowWithColumnRequestBuilder'

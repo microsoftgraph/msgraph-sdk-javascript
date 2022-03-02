@@ -1,1 +1,1 @@
-export * from './EntireRowRequestBuilder'
+export * from './entireRowRequestBuilder'

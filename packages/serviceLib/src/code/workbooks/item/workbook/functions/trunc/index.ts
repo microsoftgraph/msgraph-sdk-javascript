@@ -1,2 +1,2 @@
-export * from './TruncRequestBody'
-export * from './TruncRequestBuilder'
+export * from './truncRequestBuilder'
+export * from './truncRequestBody'

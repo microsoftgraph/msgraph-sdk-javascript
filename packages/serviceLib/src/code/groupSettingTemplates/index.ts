@@ -1,2 +1,2 @@
-export * from './GroupSettingTemplatesResponse'
-export * from './GroupSettingTemplatesRequestBuilder'
+export * from './groupSettingTemplatesRequestBuilder'
+export * from './groupSettingTemplatesResponse'

@@ -1,1 +1,1 @@
-export * from './CategoryAxisRequestBuilder'
+export * from './categoryAxisRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './CountIfRequestBody'
-export * from './CountIfRequestBuilder'
+export * from './countIfRequestBody'
+export * from './countIfRequestBuilder'

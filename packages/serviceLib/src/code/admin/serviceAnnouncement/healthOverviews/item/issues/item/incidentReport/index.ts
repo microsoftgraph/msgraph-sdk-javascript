@@ -1,1 +1,1 @@
-export * from './IncidentReportRequestBuilder'
+export * from './incidentReportRequestBuilder'

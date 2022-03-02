@@ -1,2 +1,2 @@
-export * from './IsErrRequestBody'
-export * from './IsErrRequestBuilder'
+export * from './isErrRequestBuilder'
+export * from './isErrRequestBody'

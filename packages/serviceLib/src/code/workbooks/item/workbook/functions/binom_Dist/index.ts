@@ -1,2 +1,2 @@
-export * from './Binom_DistRequestBuilder'
-export * from './Binom_DistRequestBody'
+export * from './binom_DistRequestBody'
+export * from './binom_DistRequestBuilder'

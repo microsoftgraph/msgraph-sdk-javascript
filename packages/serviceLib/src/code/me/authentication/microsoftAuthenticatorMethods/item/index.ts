@@ -1,1 +1,1 @@
-export * from './MicrosoftAuthenticatorAuthenticationMethodItemRequestBuilder'
+export * from './microsoftAuthenticatorAuthenticationMethodItemRequestBuilder'

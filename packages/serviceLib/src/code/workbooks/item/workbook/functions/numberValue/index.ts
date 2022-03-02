@@ -1,2 +1,2 @@
-export * from './NumberValueRequestBuilder'
-export * from './NumberValueRequestBody'
+export * from './numberValueRequestBuilder'
+export * from './numberValueRequestBody'

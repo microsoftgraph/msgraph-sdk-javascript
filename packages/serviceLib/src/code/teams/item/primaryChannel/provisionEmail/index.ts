@@ -1,1 +1,1 @@
-export * from './ProvisionEmailRequestBuilder'
+export * from './provisionEmailRequestBuilder'

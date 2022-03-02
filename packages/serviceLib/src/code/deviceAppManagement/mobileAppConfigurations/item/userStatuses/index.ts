@@ -1,2 +1,2 @@
-export * from './UserStatusesResponse'
-export * from './UserStatusesRequestBuilder'
+export * from './userStatusesRequestBuilder'
+export * from './userStatusesResponse'

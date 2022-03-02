@@ -1,2 +1,2 @@
-export * from './NetworkDaysRequestBody'
-export * from './NetworkDaysRequestBuilder'
+export * from './networkDaysRequestBuilder'
+export * from './networkDaysRequestBody'

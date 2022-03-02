@@ -1,2 +1,2 @@
-export * from './WindowsInformationProtectionPoliciesResponse'
-export * from './WindowsInformationProtectionPoliciesRequestBuilder'
+export * from './windowsInformationProtectionPoliciesRequestBuilder'
+export * from './windowsInformationProtectionPoliciesResponse'

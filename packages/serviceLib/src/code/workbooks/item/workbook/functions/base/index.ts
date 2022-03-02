@@ -1,2 +1,2 @@
-export * from './BaseRequestBuilder'
-export * from './BaseRequestBody'
+export * from './baseRequestBuilder'
+export * from './baseRequestBody'

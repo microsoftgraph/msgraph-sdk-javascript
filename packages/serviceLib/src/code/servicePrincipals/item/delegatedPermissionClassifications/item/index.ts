@@ -1,1 +1,1 @@
-export * from './DelegatedPermissionClassificationItemRequestBuilder'
+export * from './delegatedPermissionClassificationItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './TargetAppsRequestBody'
-export * from './TargetAppsRequestBuilder'
+export * from './targetAppsRequestBuilder'
+export * from './targetAppsRequestBody'

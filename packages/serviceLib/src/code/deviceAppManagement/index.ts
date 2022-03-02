@@ -1,1 +1,1 @@
-export * from './DeviceAppManagementRequestBuilder'
+export * from './deviceAppManagementRequestBuilder'

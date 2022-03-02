@@ -1,2 +1,2 @@
-export * from './TeamsTemplatesResponse'
-export * from './TeamsTemplatesRequestBuilder'
+export * from './teamsTemplatesRequestBuilder'
+export * from './teamsTemplatesResponse'

@@ -1,1 +1,1 @@
-export * from './SecureScoreItemRequestBuilder'
+export * from './secureScoreItemRequestBuilder'

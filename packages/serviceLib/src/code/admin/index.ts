@@ -1,1 +1,1 @@
-export * from './AdminRequestBuilder'
+export * from './adminRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './IdentityApiConnectorItemRequestBuilder'
+export * from './identityApiConnectorItemRequestBuilder'

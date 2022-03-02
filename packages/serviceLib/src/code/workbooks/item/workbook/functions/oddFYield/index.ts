@@ -1,2 +1,2 @@
-export * from './OddFYieldRequestBody'
-export * from './OddFYieldRequestBuilder'
+export * from './oddFYieldRequestBody'
+export * from './oddFYieldRequestBuilder'

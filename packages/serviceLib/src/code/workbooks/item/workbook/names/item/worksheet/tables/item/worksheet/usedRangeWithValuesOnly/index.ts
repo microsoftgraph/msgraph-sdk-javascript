@@ -1,1 +1,1 @@
-export * from './UsedRangeWithValuesOnlyRequestBuilder'
+export * from './usedRangeWithValuesOnlyRequestBuilder'

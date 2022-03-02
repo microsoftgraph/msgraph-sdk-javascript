@@ -1,2 +1,2 @@
-export * from './OutcomesResponse'
-export * from './OutcomesRequestBuilder'
+export * from './outcomesResponse'
+export * from './outcomesRequestBuilder'

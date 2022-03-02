@@ -1,1 +1,1 @@
-export * from './ParentNotebookRequestBuilder'
+export * from './parentNotebookRequestBuilder'

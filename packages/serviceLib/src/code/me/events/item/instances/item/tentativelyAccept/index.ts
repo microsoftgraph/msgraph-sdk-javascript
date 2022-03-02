@@ -1,2 +1,2 @@
-export * from './TentativelyAcceptRequestBody'
-export * from './TentativelyAcceptRequestBuilder'
+export * from './tentativelyAcceptRequestBody'
+export * from './tentativelyAcceptRequestBuilder'

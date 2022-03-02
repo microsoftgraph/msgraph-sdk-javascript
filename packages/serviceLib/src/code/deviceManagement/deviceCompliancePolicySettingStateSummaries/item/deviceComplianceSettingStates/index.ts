@@ -1,2 +1,2 @@
-export * from './DeviceComplianceSettingStatesRequestBuilder'
-export * from './DeviceComplianceSettingStatesResponse'
+export * from './deviceComplianceSettingStatesResponse'
+export * from './deviceComplianceSettingStatesRequestBuilder'

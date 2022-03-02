@@ -1,2 +1,2 @@
-export * from './SkewRequestBody'
-export * from './SkewRequestBuilder'
+export * from './skewRequestBuilder'
+export * from './skewRequestBody'

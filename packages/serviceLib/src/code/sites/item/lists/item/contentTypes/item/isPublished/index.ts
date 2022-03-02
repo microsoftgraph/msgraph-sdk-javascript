@@ -1,1 +1,1 @@
-export * from './IsPublishedRequestBuilder'
+export * from './isPublishedRequestBuilder'

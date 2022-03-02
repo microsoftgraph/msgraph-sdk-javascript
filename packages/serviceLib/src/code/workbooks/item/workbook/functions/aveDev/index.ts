@@ -1,2 +1,2 @@
-export * from './AveDevRequestBody'
-export * from './AveDevRequestBuilder'
+export * from './aveDevRequestBody'
+export * from './aveDevRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './PpmtRequestBody'
-export * from './PpmtRequestBuilder'
+export * from './ppmtRequestBuilder'
+export * from './ppmtRequestBody'

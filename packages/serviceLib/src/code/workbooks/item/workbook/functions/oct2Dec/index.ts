@@ -1,2 +1,2 @@
-export * from './Oct2DecRequestBuilder'
-export * from './Oct2DecRequestBody'
+export * from './oct2DecRequestBody'
+export * from './oct2DecRequestBuilder'

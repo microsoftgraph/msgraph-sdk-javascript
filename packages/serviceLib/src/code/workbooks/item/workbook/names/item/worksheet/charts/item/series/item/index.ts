@@ -1,1 +1,1 @@
-export * from './WorkbookChartSeriesItemRequestBuilder'
+export * from './workbookChartSeriesItemRequestBuilder'

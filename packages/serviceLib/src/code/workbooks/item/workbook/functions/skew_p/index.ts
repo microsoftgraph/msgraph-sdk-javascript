@@ -1,2 +1,2 @@
-export * from './Skew_pRequestBody'
-export * from './Skew_pRequestBuilder'
+export * from './skew_pRequestBody'
+export * from './skew_pRequestBuilder'

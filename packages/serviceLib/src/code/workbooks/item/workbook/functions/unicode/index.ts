@@ -1,2 +1,2 @@
-export * from './UnicodeRequestBuilder'
-export * from './UnicodeRequestBody'
+export * from './unicodeRequestBody'
+export * from './unicodeRequestBuilder'

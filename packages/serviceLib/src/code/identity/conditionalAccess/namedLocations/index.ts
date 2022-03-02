@@ -1,2 +1,2 @@
-export * from './NamedLocationsResponse'
-export * from './NamedLocationsRequestBuilder'
+export * from './namedLocationsResponse'
+export * from './namedLocationsRequestBuilder'

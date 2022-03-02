@@ -1,2 +1,2 @@
-export * from './TypeRequestBody'
-export * from './TypeRequestBuilder'
+export * from './typeRequestBody'
+export * from './typeRequestBuilder'

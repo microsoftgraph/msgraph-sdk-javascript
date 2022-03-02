@@ -1,2 +1,2 @@
-export * from './FindBRequestBuilder'
-export * from './FindBRequestBody'
+export * from './findBRequestBody'
+export * from './findBRequestBuilder'

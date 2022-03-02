@@ -1,2 +1,2 @@
-export * from './DataPolicyOperationsRequestBuilder'
-export * from './DataPolicyOperationsResponse'
+export * from './dataPolicyOperationsResponse'
+export * from './dataPolicyOperationsRequestBuilder'

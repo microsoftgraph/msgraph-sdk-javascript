@@ -1,1 +1,1 @@
-export * from './VerifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder'
+export * from './verifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder'

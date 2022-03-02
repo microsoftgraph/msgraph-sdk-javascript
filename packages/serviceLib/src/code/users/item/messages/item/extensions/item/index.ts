@@ -1,1 +1,1 @@
-export * from './ExtensionItemRequestBuilder'
+export * from './extensionItemRequestBuilder'

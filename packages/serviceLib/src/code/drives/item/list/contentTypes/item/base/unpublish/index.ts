@@ -1,1 +1,1 @@
-export * from './UnpublishRequestBuilder'
+export * from './unpublishRequestBuilder'

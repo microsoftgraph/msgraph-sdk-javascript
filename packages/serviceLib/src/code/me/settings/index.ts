@@ -1,1 +1,1 @@
-export * from './SettingsRequestBuilder'
+export * from './settingsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './ArabicRequestBody'
-export * from './ArabicRequestBuilder'
+export * from './arabicRequestBuilder'
+export * from './arabicRequestBody'

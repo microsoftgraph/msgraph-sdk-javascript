@@ -1,2 +1,2 @@
-export * from './CommentsResponse'
-export * from './CommentsRequestBuilder'
+export * from './commentsRequestBuilder'
+export * from './commentsResponse'

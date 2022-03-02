@@ -1,2 +1,2 @@
-export * from './CatalogsRequestBuilder'
-export * from './CatalogsResponse'
+export * from './catalogsRequestBuilder'
+export * from './catalogsResponse'

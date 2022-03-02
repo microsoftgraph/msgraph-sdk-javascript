@@ -1,2 +1,2 @@
-export * from './DeviceManagementPartnersRequestBuilder'
-export * from './DeviceManagementPartnersResponse'
+export * from './deviceManagementPartnersResponse'
+export * from './deviceManagementPartnersRequestBuilder'

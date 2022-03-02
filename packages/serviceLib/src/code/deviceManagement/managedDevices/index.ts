@@ -1,2 +1,2 @@
-export * from './ManagedDevicesResponse'
-export * from './ManagedDevicesRequestBuilder'
+export * from './managedDevicesRequestBuilder'
+export * from './managedDevicesResponse'

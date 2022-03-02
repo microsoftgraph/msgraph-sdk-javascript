@@ -1,1 +1,1 @@
-export * from './TeamsAppRequestBuilder'
+export * from './teamsAppRequestBuilder'

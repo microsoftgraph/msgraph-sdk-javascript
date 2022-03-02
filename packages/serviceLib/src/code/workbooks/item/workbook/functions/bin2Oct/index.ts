@@ -1,2 +1,2 @@
-export * from './Bin2OctRequestBuilder'
-export * from './Bin2OctRequestBody'
+export * from './bin2OctRequestBody'
+export * from './bin2OctRequestBuilder'

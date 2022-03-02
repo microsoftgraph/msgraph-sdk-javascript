@@ -27,7 +27,7 @@ export class TeamsTabItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Delete navigation property tabs for chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -42,7 +42,7 @@ export class TeamsTabItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Get tabs from chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -62,7 +62,7 @@ export class TeamsTabItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Update the navigation property tabs in chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +80,7 @@ export class TeamsTabItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Delete navigation property tabs for chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -92,7 +92,7 @@ export class TeamsTabItemRequestBuilder {
         return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Get tabs from chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -109,7 +109,7 @@ export class TeamsTabItemRequestBuilder {
         return this.requestAdapter?.sendAsync<TeamsTab>(requestInfo, TeamsTab, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Update the navigation property tabs in chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param body 
      * @param h Request headers
      * @param o Request options

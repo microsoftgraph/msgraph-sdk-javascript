@@ -1,2 +1,2 @@
-export * from './NpvRequestBuilder'
-export * from './NpvRequestBody'
+export * from './npvRequestBody'
+export * from './npvRequestBuilder'

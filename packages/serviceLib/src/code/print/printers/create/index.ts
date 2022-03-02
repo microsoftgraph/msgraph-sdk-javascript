@@ -1,2 +1,2 @@
-export * from './CreateRequestBuilder'
-export * from './CreateRequestBody'
+export * from './createRequestBody'
+export * from './createRequestBuilder'

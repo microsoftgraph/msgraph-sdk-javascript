@@ -1,2 +1,2 @@
-export * from './SearchWithQRequestBuilder'
-export * from './SearchWithQ'
+export * from './searchWithQRequestBuilder'
+export * from './searchWithQ'

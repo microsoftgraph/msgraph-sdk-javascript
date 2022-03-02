@@ -1,2 +1,2 @@
-export * from './ClassesResponse'
-export * from './ClassesRequestBuilder'
+export * from './classesRequestBuilder'
+export * from './classesResponse'

@@ -1,1 +1,1 @@
-export * from './RowsAboveWithCountRequestBuilder'
+export * from './rowsAboveWithCountRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './Norm_InvRequestBody'
-export * from './Norm_InvRequestBuilder'
+export * from './norm_InvRequestBody'
+export * from './norm_InvRequestBuilder'

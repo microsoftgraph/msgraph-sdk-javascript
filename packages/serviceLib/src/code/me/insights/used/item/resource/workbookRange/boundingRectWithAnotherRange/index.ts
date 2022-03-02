@@ -1,1 +1,1 @@
-export * from './BoundingRectWithAnotherRangeRequestBuilder'
+export * from './boundingRectWithAnotherRangeRequestBuilder'

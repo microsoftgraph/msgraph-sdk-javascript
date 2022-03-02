@@ -1,2 +1,2 @@
-export * from './AcceptRequestBuilder'
-export * from './AcceptRequestBody'
+export * from './acceptRequestBuilder'
+export * from './acceptRequestBody'

@@ -1,1 +1,1 @@
-export * from './AgreementFileVersionItemRequestBuilder'
+export * from './agreementFileVersionItemRequestBuilder'

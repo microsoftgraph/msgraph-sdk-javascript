@@ -1,2 +1,2 @@
-export * from './RowsRequestBody'
-export * from './RowsRequestBuilder'
+export * from './rowsRequestBody'
+export * from './rowsRequestBuilder'

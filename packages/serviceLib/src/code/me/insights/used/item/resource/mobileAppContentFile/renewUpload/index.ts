@@ -1,1 +1,1 @@
-export * from './RenewUploadRequestBuilder'
+export * from './renewUploadRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './AcoshRequestBody'
-export * from './AcoshRequestBuilder'
+export * from './acoshRequestBuilder'
+export * from './acoshRequestBody'

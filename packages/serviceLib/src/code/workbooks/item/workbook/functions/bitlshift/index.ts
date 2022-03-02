@@ -1,2 +1,2 @@
-export * from './BitlshiftRequestBody'
-export * from './BitlshiftRequestBuilder'
+export * from './bitlshiftRequestBody'
+export * from './bitlshiftRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './CreatedOnBehalfOfRequestBuilder'
+export * from './createdOnBehalfOfRequestBuilder'

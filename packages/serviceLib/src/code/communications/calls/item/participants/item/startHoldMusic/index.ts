@@ -1,2 +1,2 @@
-export * from './StartHoldMusicRequestBody'
-export * from './StartHoldMusicRequestBuilder'
+export * from './startHoldMusicRequestBuilder'
+export * from './startHoldMusicRequestBody'

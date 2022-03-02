@@ -1,2 +1,2 @@
-export * from './AsinRequestBuilder'
-export * from './AsinRequestBody'
+export * from './asinRequestBuilder'
+export * from './asinRequestBody'

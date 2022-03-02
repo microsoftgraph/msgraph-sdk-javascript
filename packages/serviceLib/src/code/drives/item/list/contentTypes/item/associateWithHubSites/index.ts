@@ -1,2 +1,2 @@
-export * from './AssociateWithHubSitesRequestBuilder'
-export * from './AssociateWithHubSitesRequestBody'
+export * from './associateWithHubSitesRequestBody'
+export * from './associateWithHubSitesRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './GetSharePointSiteUsageDetailWithPeriodRequestBuilder'
+export * from './getSharePointSiteUsageDetailWithPeriodRequestBuilder'

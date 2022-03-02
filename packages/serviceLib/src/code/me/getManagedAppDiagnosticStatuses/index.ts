@@ -1,2 +1,2 @@
-export * from './GetManagedAppDiagnosticStatusesRequestBuilder'
-export * from './GetManagedAppDiagnosticStatuses'
+export * from './getManagedAppDiagnosticStatuses'
+export * from './getManagedAppDiagnosticStatusesRequestBuilder'

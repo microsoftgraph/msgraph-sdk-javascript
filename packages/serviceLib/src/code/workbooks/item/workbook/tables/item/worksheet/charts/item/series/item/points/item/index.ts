@@ -1,1 +1,1 @@
-export * from './WorkbookChartPointItemRequestBuilder'
+export * from './workbookChartPointItemRequestBuilder'

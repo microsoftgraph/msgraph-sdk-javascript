@@ -1,1 +1,1 @@
-export * from './MobileAppCategoryItemRequestBuilder'
+export * from './mobileAppCategoryItemRequestBuilder'

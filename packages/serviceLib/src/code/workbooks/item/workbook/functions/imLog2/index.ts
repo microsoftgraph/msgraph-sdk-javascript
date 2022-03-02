@@ -1,2 +1,2 @@
-export * from './ImLog2RequestBuilder'
-export * from './ImLog2RequestBody'
+export * from './imLog2RequestBuilder'
+export * from './imLog2RequestBody'

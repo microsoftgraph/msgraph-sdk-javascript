@@ -1,2 +1,2 @@
-export * from './DaverageRequestBuilder'
-export * from './DaverageRequestBody'
+export * from './daverageRequestBuilder'
+export * from './daverageRequestBody'

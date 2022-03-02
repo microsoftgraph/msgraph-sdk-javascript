@@ -1,2 +1,2 @@
-export * from './XirrRequestBuilder'
-export * from './XirrRequestBody'
+export * from './xirrRequestBuilder'
+export * from './xirrRequestBody'

@@ -1,2 +1,2 @@
-export * from './GetRecentNotebooksWithIncludePersonalNotebooksRequestBuilder'
-export * from './GetRecentNotebooksWithIncludePersonalNotebooks'
+export * from './getRecentNotebooksWithIncludePersonalNotebooksRequestBuilder'
+export * from './getRecentNotebooksWithIncludePersonalNotebooks'

@@ -1,1 +1,1 @@
-export * from './DataBodyRangeRequestBuilder'
+export * from './dataBodyRangeRequestBuilder'

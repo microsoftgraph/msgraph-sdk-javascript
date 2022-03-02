@@ -1,1 +1,1 @@
-export * from './AnalyticsRequestBuilder'
+export * from './analyticsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './PowerRequestBody'
-export * from './PowerRequestBuilder'
+export * from './powerRequestBuilder'
+export * from './powerRequestBody'

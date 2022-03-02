@@ -1,2 +1,2 @@
-export * from './RemoteAssistancePartnersRequestBuilder'
-export * from './RemoteAssistancePartnersResponse'
+export * from './remoteAssistancePartnersResponse'
+export * from './remoteAssistancePartnersRequestBuilder'

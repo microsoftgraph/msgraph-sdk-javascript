@@ -1,1 +1,1 @@
-export * from './DeviceInstallStateItemRequestBuilder'
+export * from './deviceInstallStateItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './ResourceOperationItemRequestBuilder'
+export * from './resourceOperationItemRequestBuilder'

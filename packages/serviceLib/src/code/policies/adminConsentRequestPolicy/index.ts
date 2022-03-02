@@ -1,1 +1,1 @@
-export * from './AdminConsentRequestPolicyRequestBuilder'
+export * from './adminConsentRequestPolicyRequestBuilder'

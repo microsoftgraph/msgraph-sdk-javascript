@@ -1,1 +1,1 @@
-export * from './DeviceEnrollmentConfigurationItemRequestBuilder'
+export * from './deviceEnrollmentConfigurationItemRequestBuilder'

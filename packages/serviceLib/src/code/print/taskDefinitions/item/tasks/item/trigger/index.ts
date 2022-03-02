@@ -1,1 +1,1 @@
-export * from './TriggerRequestBuilder'
+export * from './triggerRequestBuilder'

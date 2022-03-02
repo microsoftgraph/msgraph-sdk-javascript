@@ -1,1 +1,1 @@
-export * from './ReapplyFiltersRequestBuilder'
+export * from './reapplyFiltersRequestBuilder'

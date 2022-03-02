@@ -1,2 +1,2 @@
-export * from './ReptRequestBuilder'
-export * from './ReptRequestBody'
+export * from './reptRequestBuilder'
+export * from './reptRequestBody'

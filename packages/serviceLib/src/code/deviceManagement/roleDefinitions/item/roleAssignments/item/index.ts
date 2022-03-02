@@ -1,1 +1,1 @@
-export * from './RoleAssignmentItemRequestBuilder'
+export * from './roleAssignmentItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './SecRequestBody'
-export * from './SecRequestBuilder'
+export * from './secRequestBuilder'
+export * from './secRequestBody'

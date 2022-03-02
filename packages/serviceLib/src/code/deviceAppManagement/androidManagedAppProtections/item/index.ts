@@ -1,1 +1,1 @@
-export * from './AndroidManagedAppProtectionItemRequestBuilder'
+export * from './androidManagedAppProtectionItemRequestBuilder'

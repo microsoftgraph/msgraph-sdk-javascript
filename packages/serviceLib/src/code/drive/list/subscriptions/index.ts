@@ -1,2 +1,2 @@
-export * from './SubscriptionsRequestBuilder'
-export * from './SubscriptionsResponse'
+export * from './subscriptionsResponse'
+export * from './subscriptionsRequestBuilder'

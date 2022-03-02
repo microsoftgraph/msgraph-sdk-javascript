@@ -1,1 +1,1 @@
-export * from './WorkforceIntegrationItemRequestBuilder'
+export * from './workforceIntegrationItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './AuthenticationMethodItemRequestBuilder'
+export * from './authenticationMethodItemRequestBuilder'

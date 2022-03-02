@@ -1,1 +1,1 @@
-export * from './OnenoteRequestBuilder'
+export * from './onenoteRequestBuilder'

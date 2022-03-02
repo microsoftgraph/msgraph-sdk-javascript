@@ -1,2 +1,2 @@
-export * from './LogNorm_DistRequestBuilder'
-export * from './LogNorm_DistRequestBody'
+export * from './logNorm_DistRequestBody'
+export * from './logNorm_DistRequestBuilder'

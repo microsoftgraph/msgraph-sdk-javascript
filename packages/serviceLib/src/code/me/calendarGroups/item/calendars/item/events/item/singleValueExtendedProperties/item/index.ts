@@ -1,1 +1,1 @@
-export * from './SingleValueLegacyExtendedPropertyItemRequestBuilder'
+export * from './singleValueLegacyExtendedPropertyItemRequestBuilder'

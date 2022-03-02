@@ -1,2 +1,2 @@
-export * from './WeekdayRequestBody'
-export * from './WeekdayRequestBuilder'
+export * from './weekdayRequestBuilder'
+export * from './weekdayRequestBody'

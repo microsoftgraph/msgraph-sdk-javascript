@@ -1,2 +1,2 @@
-export * from './GaussRequestBody'
-export * from './GaussRequestBuilder'
+export * from './gaussRequestBody'
+export * from './gaussRequestBuilder'

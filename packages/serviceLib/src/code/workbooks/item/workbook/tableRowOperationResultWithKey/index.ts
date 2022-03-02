@@ -1,1 +1,1 @@
-export * from './TableRowOperationResultWithKeyRequestBuilder'
+export * from './tableRowOperationResultWithKeyRequestBuilder'

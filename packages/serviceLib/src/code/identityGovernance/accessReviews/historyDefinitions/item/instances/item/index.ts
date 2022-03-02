@@ -1,1 +1,1 @@
-export * from './AccessReviewHistoryInstanceItemRequestBuilder'
+export * from './accessReviewHistoryInstanceItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './DeviceConfigurationStatesResponse'
-export * from './DeviceConfigurationStatesRequestBuilder'
+export * from './deviceConfigurationStatesRequestBuilder'
+export * from './deviceConfigurationStatesResponse'

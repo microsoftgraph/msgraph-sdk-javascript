@@ -1,1 +1,1 @@
-export * from './GetYammerDeviceUsageUserCountsWithPeriodRequestBuilder'
+export * from './getYammerDeviceUsageUserCountsWithPeriodRequestBuilder'

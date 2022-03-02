@@ -1,2 +1,2 @@
-export * from './ApplyCellColorFilterRequestBuilder'
-export * from './ApplyCellColorFilterRequestBody'
+export * from './applyCellColorFilterRequestBody'
+export * from './applyCellColorFilterRequestBuilder'

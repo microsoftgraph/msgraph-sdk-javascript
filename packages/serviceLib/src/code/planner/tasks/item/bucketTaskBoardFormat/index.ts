@@ -1,1 +1,1 @@
-export * from './BucketTaskBoardFormatRequestBuilder'
+export * from './bucketTaskBoardFormatRequestBuilder'

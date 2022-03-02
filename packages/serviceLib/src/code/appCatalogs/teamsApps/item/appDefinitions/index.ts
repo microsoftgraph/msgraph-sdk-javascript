@@ -1,2 +1,2 @@
-export * from './AppDefinitionsResponse'
-export * from './AppDefinitionsRequestBuilder'
+export * from './appDefinitionsResponse'
+export * from './appDefinitionsRequestBuilder'

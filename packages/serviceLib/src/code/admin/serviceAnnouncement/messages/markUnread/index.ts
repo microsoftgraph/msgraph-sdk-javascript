@@ -1,2 +1,2 @@
-export * from './MarkUnreadRequestBody'
-export * from './MarkUnreadRequestBuilder'
+export * from './markUnreadRequestBuilder'
+export * from './markUnreadRequestBody'

@@ -1,2 +1,2 @@
-export * from './MasterCategoriesRequestBuilder'
-export * from './MasterCategoriesResponse'
+export * from './masterCategoriesResponse'
+export * from './masterCategoriesRequestBuilder'

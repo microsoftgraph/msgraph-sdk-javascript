@@ -1,1 +1,1 @@
-export * from './LegendRequestBuilder'
+export * from './legendRequestBuilder'

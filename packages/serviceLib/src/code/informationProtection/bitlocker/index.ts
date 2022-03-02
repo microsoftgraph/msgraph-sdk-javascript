@@ -1,1 +1,1 @@
-export * from './BitlockerRequestBuilder'
+export * from './bitlockerRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './ManagedAppStatusesResponse'
-export * from './ManagedAppStatusesRequestBuilder'
+export * from './managedAppStatusesResponse'
+export * from './managedAppStatusesRequestBuilder'

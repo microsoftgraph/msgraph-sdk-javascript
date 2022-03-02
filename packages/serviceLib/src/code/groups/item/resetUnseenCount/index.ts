@@ -1,1 +1,1 @@
-export * from './ResetUnseenCountRequestBuilder'
+export * from './resetUnseenCountRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './MethodsRequestBuilder'
-export * from './MethodsResponse'
+export * from './methodsRequestBuilder'
+export * from './methodsResponse'

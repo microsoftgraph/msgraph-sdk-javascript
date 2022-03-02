@@ -1,1 +1,1 @@
-export * from './ServiceHealthItemRequestBuilder'
+export * from './serviceHealthItemRequestBuilder'

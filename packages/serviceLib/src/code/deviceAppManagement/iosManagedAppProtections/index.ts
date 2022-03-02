@@ -1,2 +1,2 @@
-export * from './IosManagedAppProtectionsResponse'
-export * from './IosManagedAppProtectionsRequestBuilder'
+export * from './iosManagedAppProtectionsResponse'
+export * from './iosManagedAppProtectionsRequestBuilder'

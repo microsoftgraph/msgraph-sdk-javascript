@@ -1,2 +1,2 @@
-export * from './AcosRequestBuilder'
-export * from './AcosRequestBody'
+export * from './acosRequestBody'
+export * from './acosRequestBuilder'

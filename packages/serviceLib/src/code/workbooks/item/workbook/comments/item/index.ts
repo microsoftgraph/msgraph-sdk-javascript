@@ -1,1 +1,1 @@
-export * from './WorkbookCommentItemRequestBuilder'
+export * from './workbookCommentItemRequestBuilder'

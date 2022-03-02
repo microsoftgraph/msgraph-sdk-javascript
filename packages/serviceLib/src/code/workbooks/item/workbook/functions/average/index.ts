@@ -1,2 +1,2 @@
-export * from './AverageRequestBody'
-export * from './AverageRequestBuilder'
+export * from './averageRequestBuilder'
+export * from './averageRequestBody'

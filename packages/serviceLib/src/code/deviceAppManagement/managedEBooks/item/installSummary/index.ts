@@ -1,1 +1,1 @@
-export * from './InstallSummaryRequestBuilder'
+export * from './installSummaryRequestBuilder'

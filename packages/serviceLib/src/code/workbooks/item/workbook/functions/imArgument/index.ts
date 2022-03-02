@@ -1,2 +1,2 @@
-export * from './ImArgumentRequestBody'
-export * from './ImArgumentRequestBuilder'
+export * from './imArgumentRequestBuilder'
+export * from './imArgumentRequestBody'

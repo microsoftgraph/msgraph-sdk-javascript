@@ -1,2 +1,2 @@
-export * from './ExchangeConnectorsRequestBuilder'
-export * from './ExchangeConnectorsResponse'
+export * from './exchangeConnectorsRequestBuilder'
+export * from './exchangeConnectorsResponse'

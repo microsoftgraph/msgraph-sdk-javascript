@@ -1,2 +1,2 @@
-export * from './OrRequestBody'
-export * from './OrRequestBuilder'
+export * from './orRequestBody'
+export * from './orRequestBuilder'

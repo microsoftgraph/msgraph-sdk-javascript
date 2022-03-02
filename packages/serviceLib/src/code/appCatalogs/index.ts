@@ -1,1 +1,1 @@
-export * from './AppCatalogsRequestBuilder'
+export * from './appCatalogsRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './InformationProtectionRequestBuilder'
+export * from './informationProtectionRequestBuilder'

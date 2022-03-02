@@ -1,2 +1,2 @@
-export * from './ContactFoldersRequestBuilder'
-export * from './ContactFoldersResponse'
+export * from './contactFoldersResponse'
+export * from './contactFoldersRequestBuilder'

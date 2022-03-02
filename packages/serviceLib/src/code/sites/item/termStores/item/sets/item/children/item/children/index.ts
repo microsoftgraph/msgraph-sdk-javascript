@@ -1,2 +1,2 @@
-export * from './ChildrenRequestBuilder'
-export * from './ChildrenResponse'
+export * from './childrenRequestBuilder'
+export * from './childrenResponse'

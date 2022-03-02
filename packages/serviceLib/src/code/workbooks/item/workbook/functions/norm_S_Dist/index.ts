@@ -1,2 +1,2 @@
-export * from './Norm_S_DistRequestBuilder'
-export * from './Norm_S_DistRequestBody'
+export * from './norm_S_DistRequestBuilder'
+export * from './norm_S_DistRequestBody'

@@ -1,2 +1,2 @@
-export * from './EventsResponse'
-export * from './EventsRequestBuilder'
+export * from './eventsRequestBuilder'
+export * from './eventsResponse'

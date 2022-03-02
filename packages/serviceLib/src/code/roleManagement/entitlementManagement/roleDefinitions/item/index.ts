@@ -1,1 +1,1 @@
-export * from './UnifiedRoleDefinitionItemRequestBuilder'
+export * from './unifiedRoleDefinitionItemRequestBuilder'

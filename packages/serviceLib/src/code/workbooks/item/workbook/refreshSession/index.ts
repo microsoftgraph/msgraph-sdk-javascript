@@ -1,1 +1,1 @@
-export * from './RefreshSessionRequestBuilder'
+export * from './refreshSessionRequestBuilder'

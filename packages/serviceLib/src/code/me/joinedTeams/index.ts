@@ -1,2 +1,2 @@
-export * from './JoinedTeamsResponse'
-export * from './JoinedTeamsRequestBuilder'
+export * from './joinedTeamsRequestBuilder'
+export * from './joinedTeamsResponse'

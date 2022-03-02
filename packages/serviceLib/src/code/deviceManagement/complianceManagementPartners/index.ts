@@ -1,2 +1,2 @@
-export * from './ComplianceManagementPartnersRequestBuilder'
-export * from './ComplianceManagementPartnersResponse'
+export * from './complianceManagementPartnersResponse'
+export * from './complianceManagementPartnersRequestBuilder'

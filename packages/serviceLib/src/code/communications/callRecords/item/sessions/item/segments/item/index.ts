@@ -1,1 +1,1 @@
-export * from './SegmentItemRequestBuilder'
+export * from './segmentItemRequestBuilder'

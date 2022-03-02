@@ -1,2 +1,2 @@
-export * from './RelationsRequestBuilder'
-export * from './RelationsResponse'
+export * from './relationsRequestBuilder'
+export * from './relationsResponse'

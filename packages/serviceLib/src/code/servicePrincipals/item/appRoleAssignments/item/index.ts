@@ -1,1 +1,1 @@
-export * from './AppRoleAssignmentItemRequestBuilder'
+export * from './appRoleAssignmentItemRequestBuilder'

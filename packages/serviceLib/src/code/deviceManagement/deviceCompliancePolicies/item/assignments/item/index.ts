@@ -1,1 +1,1 @@
-export * from './DeviceCompliancePolicyAssignmentItemRequestBuilder'
+export * from './deviceCompliancePolicyAssignmentItemRequestBuilder'

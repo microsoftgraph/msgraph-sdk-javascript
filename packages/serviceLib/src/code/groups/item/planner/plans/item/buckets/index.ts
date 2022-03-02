@@ -1,2 +1,2 @@
-export * from './BucketsRequestBuilder'
-export * from './BucketsResponse'
+export * from './bucketsRequestBuilder'
+export * from './bucketsResponse'

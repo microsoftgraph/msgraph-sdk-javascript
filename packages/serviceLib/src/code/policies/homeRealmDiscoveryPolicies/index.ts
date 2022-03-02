@@ -1,2 +1,2 @@
-export * from './HomeRealmDiscoveryPoliciesRequestBuilder'
-export * from './HomeRealmDiscoveryPoliciesResponse'
+export * from './homeRealmDiscoveryPoliciesResponse'
+export * from './homeRealmDiscoveryPoliciesRequestBuilder'

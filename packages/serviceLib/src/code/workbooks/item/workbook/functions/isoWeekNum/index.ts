@@ -1,2 +1,2 @@
-export * from './IsoWeekNumRequestBody'
-export * from './IsoWeekNumRequestBuilder'
+export * from './isoWeekNumRequestBuilder'
+export * from './isoWeekNumRequestBody'

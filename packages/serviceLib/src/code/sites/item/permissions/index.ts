@@ -1,2 +1,2 @@
-export * from './PermissionsResponse'
-export * from './PermissionsRequestBuilder'
+export * from './permissionsRequestBuilder'
+export * from './permissionsResponse'

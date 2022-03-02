@@ -1,1 +1,1 @@
-export * from './FontRequestBuilder'
+export * from './fontRequestBuilder'

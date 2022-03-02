@@ -1,2 +1,2 @@
-export * from './ExactRequestBody'
-export * from './ExactRequestBuilder'
+export * from './exactRequestBody'
+export * from './exactRequestBuilder'

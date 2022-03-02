@@ -1,2 +1,2 @@
-export * from './ImLnRequestBuilder'
-export * from './ImLnRequestBody'
+export * from './imLnRequestBody'
+export * from './imLnRequestBuilder'

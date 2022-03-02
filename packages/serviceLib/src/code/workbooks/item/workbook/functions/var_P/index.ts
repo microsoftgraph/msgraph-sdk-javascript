@@ -1,2 +1,2 @@
-export * from './Var_PRequestBuilder'
-export * from './Var_PRequestBody'
+export * from './var_PRequestBuilder'
+export * from './var_PRequestBody'

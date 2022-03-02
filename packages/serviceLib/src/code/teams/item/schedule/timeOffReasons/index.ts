@@ -1,2 +1,2 @@
-export * from './TimeOffReasonsResponse'
-export * from './TimeOffReasonsRequestBuilder'
+export * from './timeOffReasonsRequestBuilder'
+export * from './timeOffReasonsResponse'

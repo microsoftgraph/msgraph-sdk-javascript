@@ -1,1 +1,1 @@
-export * from './ConditionalAccessSettingsRequestBuilder'
+export * from './conditionalAccessSettingsRequestBuilder'

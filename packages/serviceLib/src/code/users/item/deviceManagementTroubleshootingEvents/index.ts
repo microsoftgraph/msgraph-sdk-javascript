@@ -1,2 +1,2 @@
-export * from './DeviceManagementTroubleshootingEventsRequestBuilder'
-export * from './DeviceManagementTroubleshootingEventsResponse'
+export * from './deviceManagementTroubleshootingEventsRequestBuilder'
+export * from './deviceManagementTroubleshootingEventsResponse'

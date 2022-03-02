@@ -1,1 +1,1 @@
-export * from './GenerateDownloadUriRequestBuilder'
+export * from './generateDownloadUriRequestBuilder'

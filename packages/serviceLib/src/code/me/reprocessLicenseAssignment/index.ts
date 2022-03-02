@@ -1,1 +1,1 @@
-export * from './ReprocessLicenseAssignmentRequestBuilder'
+export * from './reprocessLicenseAssignmentRequestBuilder'

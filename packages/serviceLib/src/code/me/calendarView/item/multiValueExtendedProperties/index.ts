@@ -1,2 +1,2 @@
-export * from './MultiValueExtendedPropertiesRequestBuilder'
-export * from './MultiValueExtendedPropertiesResponse'
+export * from './multiValueExtendedPropertiesResponse'
+export * from './multiValueExtendedPropertiesRequestBuilder'

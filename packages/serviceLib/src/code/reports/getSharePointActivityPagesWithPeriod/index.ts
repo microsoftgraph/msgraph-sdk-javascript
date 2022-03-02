@@ -1,1 +1,1 @@
-export * from './GetSharePointActivityPagesWithPeriodRequestBuilder'
+export * from './getSharePointActivityPagesWithPeriodRequestBuilder'

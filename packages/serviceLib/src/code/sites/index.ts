@@ -1,2 +1,2 @@
-export * from './SitesRequestBuilder'
-export * from './SitesResponse'
+export * from './sitesResponse'
+export * from './sitesRequestBuilder'

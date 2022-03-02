@@ -1,2 +1,2 @@
-export * from './UpdateWindowsDeviceAccountRequestBuilder'
-export * from './UpdateWindowsDeviceAccountRequestBody'
+export * from './updateWindowsDeviceAccountRequestBuilder'
+export * from './updateWindowsDeviceAccountRequestBody'

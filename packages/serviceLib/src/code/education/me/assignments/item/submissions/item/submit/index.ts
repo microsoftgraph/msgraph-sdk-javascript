@@ -1,1 +1,1 @@
-export * from './SubmitRequestBuilder'
+export * from './submitRequestBuilder'

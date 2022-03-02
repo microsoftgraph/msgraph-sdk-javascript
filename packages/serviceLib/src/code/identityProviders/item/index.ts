@@ -1,1 +1,1 @@
-export * from './IdentityProviderItemRequestBuilder'
+export * from './identityProviderItemRequestBuilder'

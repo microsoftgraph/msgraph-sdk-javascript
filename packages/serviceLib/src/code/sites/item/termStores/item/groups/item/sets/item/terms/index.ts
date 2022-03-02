@@ -1,2 +1,2 @@
-export * from './TermsResponse'
-export * from './TermsRequestBuilder'
+export * from './termsRequestBuilder'
+export * from './termsResponse'

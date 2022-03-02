@@ -1,2 +1,2 @@
-export * from './OperationsResponse'
-export * from './OperationsRequestBuilder'
+export * from './operationsRequestBuilder'
+export * from './operationsResponse'

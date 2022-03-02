@@ -1,2 +1,2 @@
-export * from './RecoveryKeysRequestBuilder'
-export * from './RecoveryKeysResponse'
+export * from './recoveryKeysRequestBuilder'
+export * from './recoveryKeysResponse'

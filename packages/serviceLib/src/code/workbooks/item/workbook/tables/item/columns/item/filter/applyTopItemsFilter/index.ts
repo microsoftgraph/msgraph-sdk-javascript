@@ -1,2 +1,2 @@
-export * from './ApplyTopItemsFilterRequestBuilder'
-export * from './ApplyTopItemsFilterRequestBody'
+export * from './applyTopItemsFilterRequestBuilder'
+export * from './applyTopItemsFilterRequestBody'

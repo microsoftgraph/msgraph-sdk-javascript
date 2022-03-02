@@ -1,2 +1,2 @@
-export * from './AgreementAcceptancesResponse'
-export * from './AgreementAcceptancesRequestBuilder'
+export * from './agreementAcceptancesRequestBuilder'
+export * from './agreementAcceptancesResponse'

@@ -1,1 +1,1 @@
-export * from './AcceptRecommendationsRequestBuilder'
+export * from './acceptRecommendationsRequestBuilder'

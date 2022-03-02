@@ -1,2 +1,2 @@
-export * from './OddRequestBody'
-export * from './OddRequestBuilder'
+export * from './oddRequestBody'
+export * from './oddRequestBuilder'

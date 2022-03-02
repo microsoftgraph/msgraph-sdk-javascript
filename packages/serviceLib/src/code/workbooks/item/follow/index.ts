@@ -1,1 +1,1 @@
-export * from './FollowRequestBuilder'
+export * from './followRequestBuilder'

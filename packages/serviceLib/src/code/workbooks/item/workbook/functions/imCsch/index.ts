@@ -1,2 +1,2 @@
-export * from './ImCschRequestBody'
-export * from './ImCschRequestBuilder'
+export * from './imCschRequestBuilder'
+export * from './imCschRequestBody'

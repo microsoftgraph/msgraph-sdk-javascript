@@ -1,2 +1,2 @@
-export * from './DvarRequestBody'
-export * from './DvarRequestBuilder'
+export * from './dvarRequestBody'
+export * from './dvarRequestBuilder'

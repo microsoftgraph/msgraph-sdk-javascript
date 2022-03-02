@@ -1,2 +1,2 @@
-export * from './GetReportFiltersRequestBody'
-export * from './GetReportFiltersRequestBuilder'
+export * from './getReportFiltersRequestBuilder'
+export * from './getReportFiltersRequestBody'

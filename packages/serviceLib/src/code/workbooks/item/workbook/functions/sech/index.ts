@@ -1,2 +1,2 @@
-export * from './SechRequestBuilder'
-export * from './SechRequestBody'
+export * from './sechRequestBuilder'
+export * from './sechRequestBody'

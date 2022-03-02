@@ -1,2 +1,2 @@
-export * from './ShareRequestBody'
-export * from './ShareRequestBuilder'
+export * from './shareRequestBody'
+export * from './shareRequestBuilder'

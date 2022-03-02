@@ -1,1 +1,1 @@
-export * from './GetOffice365ActivationCountsRequestBuilder'
+export * from './getOffice365ActivationCountsRequestBuilder'

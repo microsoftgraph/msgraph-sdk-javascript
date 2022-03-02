@@ -1,1 +1,1 @@
-export * from './PoliciesRequestBuilder'
+export * from './policiesRequestBuilder'

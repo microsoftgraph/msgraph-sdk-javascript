@@ -1,2 +1,2 @@
-export * from './Bin2HexRequestBody'
-export * from './Bin2HexRequestBuilder'
+export * from './bin2HexRequestBuilder'
+export * from './bin2HexRequestBody'

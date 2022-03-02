@@ -1,1 +1,1 @@
-export * from './EventItemRequestBuilder'
+export * from './eventItemRequestBuilder'

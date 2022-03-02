@@ -1,1 +1,1 @@
-export * from './UserFlowLanguagePageItemRequestBuilder'
+export * from './userFlowLanguagePageItemRequestBuilder'

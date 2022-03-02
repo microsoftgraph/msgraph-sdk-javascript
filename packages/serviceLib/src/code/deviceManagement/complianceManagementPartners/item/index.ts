@@ -1,1 +1,1 @@
-export * from './ComplianceManagementPartnerItemRequestBuilder'
+export * from './complianceManagementPartnerItemRequestBuilder'

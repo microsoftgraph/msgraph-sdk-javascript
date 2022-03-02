@@ -1,1 +1,1 @@
-export * from './GetByPathWithPathRequestBuilder'
+export * from './getByPathWithPathRequestBuilder'

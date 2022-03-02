@@ -1,1 +1,1 @@
-export * from './PublishRequestBuilder'
+export * from './publishRequestBuilder'

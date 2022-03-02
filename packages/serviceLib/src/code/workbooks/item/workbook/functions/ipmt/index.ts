@@ -1,2 +1,2 @@
-export * from './IpmtRequestBody'
-export * from './IpmtRequestBuilder'
+export * from './ipmtRequestBuilder'
+export * from './ipmtRequestBody'

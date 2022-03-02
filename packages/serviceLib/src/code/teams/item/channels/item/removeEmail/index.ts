@@ -1,1 +1,1 @@
-export * from './RemoveEmailRequestBuilder'
+export * from './removeEmailRequestBuilder'

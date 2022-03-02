@@ -1,2 +1,2 @@
-export * from './WorksheetsResponse'
-export * from './WorksheetsRequestBuilder'
+export * from './worksheetsResponse'
+export * from './worksheetsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './RadiansRequestBody'
-export * from './RadiansRequestBuilder'
+export * from './radiansRequestBody'
+export * from './radiansRequestBuilder'

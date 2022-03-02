@@ -1,2 +1,2 @@
-export * from './AcceptedSendersResponse'
-export * from './AcceptedSendersRequestBuilder'
+export * from './acceptedSendersResponse'
+export * from './acceptedSendersRequestBuilder'

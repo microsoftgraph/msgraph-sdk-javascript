@@ -1,2 +1,2 @@
-export * from './HlookupRequestBody'
-export * from './HlookupRequestBuilder'
+export * from './hlookupRequestBody'
+export * from './hlookupRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './MinuteRequestBody'
-export * from './MinuteRequestBuilder'
+export * from './minuteRequestBody'
+export * from './minuteRequestBuilder'

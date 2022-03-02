@@ -1,2 +1,2 @@
-export * from './GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder'
-export * from './GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval'
+export * from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder'
+export * from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval'

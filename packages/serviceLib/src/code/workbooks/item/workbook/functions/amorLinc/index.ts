@@ -1,2 +1,2 @@
-export * from './AmorLincRequestBuilder'
-export * from './AmorLincRequestBody'
+export * from './amorLincRequestBuilder'
+export * from './amorLincRequestBody'

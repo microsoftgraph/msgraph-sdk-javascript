@@ -1,1 +1,1 @@
-export * from './DetailsRequestBuilder'
+export * from './detailsRequestBuilder'

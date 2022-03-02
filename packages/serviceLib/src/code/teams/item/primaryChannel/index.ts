@@ -1,1 +1,1 @@
-export * from './PrimaryChannelRequestBuilder'
+export * from './primaryChannelRequestBuilder'

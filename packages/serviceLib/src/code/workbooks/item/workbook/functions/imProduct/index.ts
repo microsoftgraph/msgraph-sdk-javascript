@@ -1,2 +1,2 @@
-export * from './ImProductRequestBuilder'
-export * from './ImProductRequestBody'
+export * from './imProductRequestBody'
+export * from './imProductRequestBuilder'

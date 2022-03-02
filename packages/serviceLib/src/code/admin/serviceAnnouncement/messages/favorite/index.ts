@@ -1,2 +1,2 @@
-export * from './FavoriteRequestBuilder'
-export * from './FavoriteRequestBody'
+export * from './favoriteRequestBuilder'
+export * from './favoriteRequestBody'

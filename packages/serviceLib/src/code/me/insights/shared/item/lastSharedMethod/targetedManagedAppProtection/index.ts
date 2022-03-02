@@ -1,1 +1,1 @@
-export * from './TargetedManagedAppProtectionRequestBuilder'
+export * from './targetedManagedAppProtectionRequestBuilder'

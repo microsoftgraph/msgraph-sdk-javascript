@@ -1,1 +1,1 @@
-export * from './FromTermRequestBuilder'
+export * from './fromTermRequestBuilder'

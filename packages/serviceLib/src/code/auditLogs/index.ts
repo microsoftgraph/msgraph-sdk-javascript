@@ -1,1 +1,1 @@
-export * from './AuditLogsRequestBuilder'
+export * from './auditLogsRequestBuilder'

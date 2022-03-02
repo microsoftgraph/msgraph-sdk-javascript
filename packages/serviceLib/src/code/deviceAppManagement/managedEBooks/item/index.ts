@@ -1,1 +1,1 @@
-export * from './ManagedEBookItemRequestBuilder'
+export * from './managedEBookItemRequestBuilder'

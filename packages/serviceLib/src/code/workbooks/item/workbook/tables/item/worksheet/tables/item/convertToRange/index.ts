@@ -1,1 +1,1 @@
-export * from './ConvertToRangeRequestBuilder'
+export * from './convertToRangeRequestBuilder'

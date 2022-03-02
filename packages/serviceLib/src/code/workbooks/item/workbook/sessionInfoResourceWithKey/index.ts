@@ -1,1 +1,1 @@
-export * from './SessionInfoResourceWithKeyRequestBuilder'
+export * from './sessionInfoResourceWithKeyRequestBuilder'

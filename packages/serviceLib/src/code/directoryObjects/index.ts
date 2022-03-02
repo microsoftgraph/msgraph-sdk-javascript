@@ -1,2 +1,2 @@
-export * from './DirectoryObjectsRequestBuilder'
-export * from './DirectoryObjectsResponse'
+export * from './directoryObjectsResponse'
+export * from './directoryObjectsRequestBuilder'

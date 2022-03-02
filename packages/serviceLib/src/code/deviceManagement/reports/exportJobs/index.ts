@@ -1,2 +1,2 @@
-export * from './ExportJobsResponse'
-export * from './ExportJobsRequestBuilder'
+export * from './exportJobsResponse'
+export * from './exportJobsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './LocalizedNotificationMessagesResponse'
-export * from './LocalizedNotificationMessagesRequestBuilder'
+export * from './localizedNotificationMessagesRequestBuilder'
+export * from './localizedNotificationMessagesResponse'

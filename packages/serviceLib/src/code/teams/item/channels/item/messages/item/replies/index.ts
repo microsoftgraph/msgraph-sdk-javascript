@@ -1,2 +1,2 @@
-export * from './RepliesRequestBuilder'
-export * from './RepliesResponse'
+export * from './repliesResponse'
+export * from './repliesRequestBuilder'

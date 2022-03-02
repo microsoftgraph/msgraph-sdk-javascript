@@ -1,2 +1,2 @@
-export * from './TimeRequestBody'
-export * from './TimeRequestBuilder'
+export * from './timeRequestBuilder'
+export * from './timeRequestBody'

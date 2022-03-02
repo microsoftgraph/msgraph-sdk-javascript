@@ -1,2 +1,2 @@
-export * from './TaskTriggersResponse'
-export * from './TaskTriggersRequestBuilder'
+export * from './taskTriggersRequestBuilder'
+export * from './taskTriggersResponse'

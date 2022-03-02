@@ -1,2 +1,2 @@
-export * from './FollowingResponse'
-export * from './FollowingRequestBuilder'
+export * from './followingResponse'
+export * from './followingRequestBuilder'

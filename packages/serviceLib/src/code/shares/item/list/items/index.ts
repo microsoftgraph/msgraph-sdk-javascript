@@ -1,2 +1,2 @@
-export * from './ItemsRequestBuilder'
-export * from './ItemsResponse'
+export * from './itemsResponse'
+export * from './itemsRequestBuilder'

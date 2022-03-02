@@ -1,1 +1,1 @@
-export * from './WorkbookRangeViewRequestBuilder'
+export * from './workbookRangeViewRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './InvitationItemRequestBuilder'
+export * from './invitationItemRequestBuilder'

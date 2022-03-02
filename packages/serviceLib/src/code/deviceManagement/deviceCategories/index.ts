@@ -1,2 +1,2 @@
-export * from './DeviceCategoriesRequestBuilder'
-export * from './DeviceCategoriesResponse'
+export * from './deviceCategoriesRequestBuilder'
+export * from './deviceCategoriesResponse'

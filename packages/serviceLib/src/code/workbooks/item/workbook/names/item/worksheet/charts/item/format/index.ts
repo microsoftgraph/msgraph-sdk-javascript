@@ -1,1 +1,1 @@
-export * from './FormatRequestBuilder'
+export * from './formatRequestBuilder'

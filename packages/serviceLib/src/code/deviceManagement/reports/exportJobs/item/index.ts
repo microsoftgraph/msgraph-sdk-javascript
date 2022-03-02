@@ -1,1 +1,1 @@
-export * from './DeviceManagementExportJobItemRequestBuilder'
+export * from './deviceManagementExportJobItemRequestBuilder'

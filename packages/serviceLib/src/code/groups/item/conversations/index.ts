@@ -1,2 +1,2 @@
-export * from './ConversationsResponse'
-export * from './ConversationsRequestBuilder'
+export * from './conversationsResponse'
+export * from './conversationsRequestBuilder'

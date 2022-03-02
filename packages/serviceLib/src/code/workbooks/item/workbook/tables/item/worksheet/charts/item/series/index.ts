@@ -1,2 +1,2 @@
-export * from './SeriesResponse'
-export * from './SeriesRequestBuilder'
+export * from './seriesRequestBuilder'
+export * from './seriesResponse'

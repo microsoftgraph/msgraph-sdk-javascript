@@ -1,2 +1,2 @@
-export * from './CalendarPermissionsRequestBuilder'
-export * from './CalendarPermissionsResponse'
+export * from './calendarPermissionsRequestBuilder'
+export * from './calendarPermissionsResponse'

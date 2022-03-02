@@ -1,2 +1,2 @@
-export * from './RestrictedSignInsResponse'
-export * from './RestrictedSignInsRequestBuilder'
+export * from './restrictedSignInsRequestBuilder'
+export * from './restrictedSignInsResponse'

@@ -1,2 +1,2 @@
-export * from './ErfCRequestBuilder'
-export * from './ErfCRequestBody'
+export * from './erfCRequestBody'
+export * from './erfCRequestBuilder'

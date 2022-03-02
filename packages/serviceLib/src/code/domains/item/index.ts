@@ -1,1 +1,1 @@
-export * from './DomainItemRequestBuilder'
+export * from './domainItemRequestBuilder'

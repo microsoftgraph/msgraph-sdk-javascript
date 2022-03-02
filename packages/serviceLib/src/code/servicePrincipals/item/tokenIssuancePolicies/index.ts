@@ -1,2 +1,2 @@
-export * from './TokenIssuancePoliciesRequestBuilder'
-export * from './TokenIssuancePoliciesResponse'
+export * from './tokenIssuancePoliciesRequestBuilder'
+export * from './tokenIssuancePoliciesResponse'

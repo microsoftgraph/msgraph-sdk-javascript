@@ -1,1 +1,1 @@
-export * from './AlertItemRequestBuilder'
+export * from './alertItemRequestBuilder'

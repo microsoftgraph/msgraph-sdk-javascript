@@ -1,2 +1,2 @@
-export * from './AccessPackagesResponse'
-export * from './AccessPackagesRequestBuilder'
+export * from './accessPackagesRequestBuilder'
+export * from './accessPackagesResponse'

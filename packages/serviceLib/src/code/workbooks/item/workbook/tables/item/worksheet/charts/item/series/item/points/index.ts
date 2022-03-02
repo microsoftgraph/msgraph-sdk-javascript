@@ -1,2 +1,2 @@
-export * from './PointsResponse'
-export * from './PointsRequestBuilder'
+export * from './pointsResponse'
+export * from './pointsRequestBuilder'

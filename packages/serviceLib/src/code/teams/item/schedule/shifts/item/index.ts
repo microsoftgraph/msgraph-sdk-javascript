@@ -1,1 +1,1 @@
-export * from './ShiftItemRequestBuilder'
+export * from './shiftItemRequestBuilder'

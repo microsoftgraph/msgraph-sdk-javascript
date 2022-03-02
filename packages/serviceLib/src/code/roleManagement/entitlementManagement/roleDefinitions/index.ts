@@ -1,2 +1,2 @@
-export * from './RoleDefinitionsRequestBuilder'
-export * from './RoleDefinitionsResponse'
+export * from './roleDefinitionsResponse'
+export * from './roleDefinitionsRequestBuilder'

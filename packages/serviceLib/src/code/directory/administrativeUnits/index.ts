@@ -1,2 +1,2 @@
-export * from './AdministrativeUnitsRequestBuilder'
-export * from './AdministrativeUnitsResponse'
+export * from './administrativeUnitsResponse'
+export * from './administrativeUnitsRequestBuilder'

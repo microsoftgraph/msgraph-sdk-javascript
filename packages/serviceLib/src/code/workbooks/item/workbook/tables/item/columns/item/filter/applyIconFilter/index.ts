@@ -1,2 +1,2 @@
-export * from './ApplyIconFilterRequestBuilder'
-export * from './ApplyIconFilterRequestBody'
+export * from './applyIconFilterRequestBuilder'
+export * from './applyIconFilterRequestBody'

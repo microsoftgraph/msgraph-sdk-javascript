@@ -1,1 +1,1 @@
-export * from './SyncLicensesRequestBuilder'
+export * from './syncLicensesRequestBuilder'

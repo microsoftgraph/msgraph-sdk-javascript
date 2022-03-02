@@ -1,3 +1,3 @@
-export * from './RefRequestBuilder'
-export * from './RefResponse'
-export * from './Ref'
+export * from './refRequestBuilder'
+export * from './refResponse'
+export * from './ref'

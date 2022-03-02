@@ -1,2 +1,2 @@
-export * from './CumIPmtRequestBody'
-export * from './CumIPmtRequestBuilder'
+export * from './cumIPmtRequestBody'
+export * from './cumIPmtRequestBuilder'

@@ -30,21 +30,21 @@ async function getME() {
     console.log(me);
 }
 
-post().catch((e) => console.log(e));
+// post().catch((e) => console.log(e));
 
-async function post() {
-    // GET /users/{id | userPrincipalName}/messages
-    const userRequestBuilder = client.usersById("813956a3-4a30-4596-914f-bfd86a657a09");
-    const messagesRequestBuilder = userRequestBuilder.messages;
-    const message = new Message();
-    message.subject = "test subject";
+// async function post() {
+//     // GET /users/{id | userPrincipalName}/messages
+//     const userRequestBuilder = client.usersById("813956a3-4a30-4596-914f-bfd86a657a09");
+//     const messagesRequestBuilder = userRequestBuilder.messages;
+//     const message = new Message();
+//     message.subject = "test subject";
    
-   // itemBody.content = JSON.stringify({});
-    const post = await messagesRequestBuilder.post(message);
+//    // itemBody.content = JSON.stringify({});
+//     const post = await messagesRequestBuilder.post(message);
 
 
-    console.log((await (post)).subject);
-}
+//     console.log((await (post)).subject);
+// }
 
 
 // async function post() {

@@ -1,2 +1,2 @@
-export * from './IsNARequestBuilder'
-export * from './IsNARequestBody'
+export * from './isNARequestBuilder'
+export * from './isNARequestBody'

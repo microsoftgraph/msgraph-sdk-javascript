@@ -1,2 +1,2 @@
-export * from './Erf_PreciseRequestBody'
-export * from './Erf_PreciseRequestBuilder'
+export * from './erf_PreciseRequestBody'
+export * from './erf_PreciseRequestBuilder'

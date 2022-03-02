@@ -1,1 +1,1 @@
-export * from './ValueAxisRequestBuilder'
+export * from './valueAxisRequestBuilder'

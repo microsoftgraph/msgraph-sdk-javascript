@@ -1,2 +1,2 @@
-export * from './TrimRequestBody'
-export * from './TrimRequestBuilder'
+export * from './trimRequestBuilder'
+export * from './trimRequestBody'

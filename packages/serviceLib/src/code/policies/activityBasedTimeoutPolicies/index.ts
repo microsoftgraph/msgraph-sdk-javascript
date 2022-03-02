@@ -1,2 +1,2 @@
-export * from './ActivityBasedTimeoutPoliciesResponse'
-export * from './ActivityBasedTimeoutPoliciesRequestBuilder'
+export * from './activityBasedTimeoutPoliciesResponse'
+export * from './activityBasedTimeoutPoliciesRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './MuteRequestBuilder'
-export * from './MuteRequestBody'
+export * from './muteRequestBuilder'
+export * from './muteRequestBody'

@@ -1,1 +1,1 @@
-export * from './TimeOffRequestItemRequestBuilder'
+export * from './timeOffRequestItemRequestBuilder'

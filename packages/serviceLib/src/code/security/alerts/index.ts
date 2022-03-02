@@ -1,2 +1,2 @@
-export * from './AlertsResponse'
-export * from './AlertsRequestBuilder'
+export * from './alertsResponse'
+export * from './alertsRequestBuilder'

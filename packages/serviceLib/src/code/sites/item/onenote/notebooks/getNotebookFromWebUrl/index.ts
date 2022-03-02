@@ -1,2 +1,2 @@
-export * from './GetNotebookFromWebUrlRequestBody'
-export * from './GetNotebookFromWebUrlRequestBuilder'
+export * from './getNotebookFromWebUrlRequestBuilder'
+export * from './getNotebookFromWebUrlRequestBody'

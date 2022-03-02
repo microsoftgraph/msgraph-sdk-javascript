@@ -1,1 +1,1 @@
-export * from './BotRequestBuilder'
+export * from './botRequestBuilder'

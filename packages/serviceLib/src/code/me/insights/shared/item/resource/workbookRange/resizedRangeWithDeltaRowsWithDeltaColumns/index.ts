@@ -1,1 +1,1 @@
-export * from './ResizedRangeWithDeltaRowsWithDeltaColumnsRequestBuilder'
+export * from './resizedRangeWithDeltaRowsWithDeltaColumnsRequestBuilder'

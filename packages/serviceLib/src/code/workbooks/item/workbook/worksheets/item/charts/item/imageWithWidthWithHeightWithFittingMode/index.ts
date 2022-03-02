@@ -1,1 +1,1 @@
-export * from './ImageWithWidthWithHeightWithFittingModeRequestBuilder'
+export * from './imageWithWidthWithHeightWithFittingModeRequestBuilder'

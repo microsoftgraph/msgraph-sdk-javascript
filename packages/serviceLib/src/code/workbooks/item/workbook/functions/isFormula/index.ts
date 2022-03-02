@@ -1,2 +1,2 @@
-export * from './IsFormulaRequestBody'
-export * from './IsFormulaRequestBuilder'
+export * from './isFormulaRequestBuilder'
+export * from './isFormulaRequestBody'

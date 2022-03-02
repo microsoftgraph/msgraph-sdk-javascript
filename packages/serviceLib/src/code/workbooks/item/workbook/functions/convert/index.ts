@@ -1,2 +1,2 @@
-export * from './ConvertRequestBody'
-export * from './ConvertRequestBuilder'
+export * from './convertRequestBody'
+export * from './convertRequestBuilder'

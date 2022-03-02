@@ -1,1 +1,1 @@
-export * from './TodoTaskItemRequestBuilder'
+export * from './todoTaskItemRequestBuilder'

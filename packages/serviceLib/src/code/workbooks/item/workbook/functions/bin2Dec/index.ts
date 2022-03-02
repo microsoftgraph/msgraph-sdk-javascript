@@ -1,2 +1,2 @@
-export * from './Bin2DecRequestBody'
-export * from './Bin2DecRequestBuilder'
+export * from './bin2DecRequestBuilder'
+export * from './bin2DecRequestBody'

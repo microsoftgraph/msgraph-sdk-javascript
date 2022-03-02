@@ -1,1 +1,1 @@
-export * from './ProgressTaskBoardFormatRequestBuilder'
+export * from './progressTaskBoardFormatRequestBuilder'

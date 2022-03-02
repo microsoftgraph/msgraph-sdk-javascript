@@ -1,1 +1,1 @@
-export * from './PrintTaskTriggerItemRequestBuilder'
+export * from './printTaskTriggerItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './LogRequestBody'
-export * from './LogRequestBuilder'
+export * from './logRequestBody'
+export * from './logRequestBuilder'

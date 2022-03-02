@@ -1,2 +1,2 @@
-export * from './ImTanRequestBuilder'
-export * from './ImTanRequestBody'
+export * from './imTanRequestBody'
+export * from './imTanRequestBuilder'

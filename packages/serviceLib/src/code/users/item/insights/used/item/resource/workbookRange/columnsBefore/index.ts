@@ -1,1 +1,1 @@
-export * from './ColumnsBeforeRequestBuilder'
+export * from './columnsBeforeRequestBuilder'

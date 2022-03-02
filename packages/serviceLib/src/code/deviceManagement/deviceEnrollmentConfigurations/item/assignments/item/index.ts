@@ -1,1 +1,1 @@
-export * from './EnrollmentConfigurationAssignmentItemRequestBuilder'
+export * from './enrollmentConfigurationAssignmentItemRequestBuilder'

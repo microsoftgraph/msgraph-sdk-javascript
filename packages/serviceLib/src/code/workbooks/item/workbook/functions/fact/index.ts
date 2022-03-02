@@ -1,2 +1,2 @@
-export * from './FactRequestBody'
-export * from './FactRequestBuilder'
+export * from './factRequestBody'
+export * from './factRequestBuilder'

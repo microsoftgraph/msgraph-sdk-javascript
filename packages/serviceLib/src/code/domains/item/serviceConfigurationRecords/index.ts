@@ -1,2 +1,2 @@
-export * from './ServiceConfigurationRecordsRequestBuilder'
-export * from './ServiceConfigurationRecordsResponse'
+export * from './serviceConfigurationRecordsResponse'
+export * from './serviceConfigurationRecordsRequestBuilder'

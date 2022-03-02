@@ -1,2 +1,2 @@
-export * from './MirrRequestBody'
-export * from './MirrRequestBuilder'
+export * from './mirrRequestBody'
+export * from './mirrRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './AreasRequestBuilder'
-export * from './AreasRequestBody'
+export * from './areasRequestBody'
+export * from './areasRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './ImSqrtRequestBuilder'
-export * from './ImSqrtRequestBody'
+export * from './imSqrtRequestBuilder'
+export * from './imSqrtRequestBody'

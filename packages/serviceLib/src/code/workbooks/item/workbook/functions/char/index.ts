@@ -1,2 +1,2 @@
-export * from './CharRequestBody'
-export * from './CharRequestBuilder'
+export * from './charRequestBody'
+export * from './charRequestBuilder'

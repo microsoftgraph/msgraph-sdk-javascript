@@ -1,1 +1,1 @@
-export * from './SolutionsRequestBuilder'
+export * from './solutionsRequestBuilder'

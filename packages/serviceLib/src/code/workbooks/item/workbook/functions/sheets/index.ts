@@ -1,2 +1,2 @@
-export * from './SheetsRequestBody'
-export * from './SheetsRequestBuilder'
+export * from './sheetsRequestBody'
+export * from './sheetsRequestBuilder'

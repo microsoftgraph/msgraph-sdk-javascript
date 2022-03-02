@@ -1,1 +1,1 @@
-export * from './BookingBusinessItemRequestBuilder'
+export * from './bookingBusinessItemRequestBuilder'

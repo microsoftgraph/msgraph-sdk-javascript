@@ -1,1 +1,1 @@
-export * from './AttendeeReportRequestBuilder'
+export * from './attendeeReportRequestBuilder'

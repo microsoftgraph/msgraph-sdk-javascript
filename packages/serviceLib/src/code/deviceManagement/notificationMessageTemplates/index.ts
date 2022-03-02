@@ -1,2 +1,2 @@
-export * from './NotificationMessageTemplatesResponse'
-export * from './NotificationMessageTemplatesRequestBuilder'
+export * from './notificationMessageTemplatesResponse'
+export * from './notificationMessageTemplatesRequestBuilder'

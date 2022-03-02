@@ -1,1 +1,1 @@
-export * from './RootRequestBuilder'
+export * from './rootRequestBuilder'

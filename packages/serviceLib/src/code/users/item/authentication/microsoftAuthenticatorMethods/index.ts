@@ -1,2 +1,2 @@
-export * from './MicrosoftAuthenticatorMethodsRequestBuilder'
-export * from './MicrosoftAuthenticatorMethodsResponse'
+export * from './microsoftAuthenticatorMethodsRequestBuilder'
+export * from './microsoftAuthenticatorMethodsResponse'

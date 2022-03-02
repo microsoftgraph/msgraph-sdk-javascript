@@ -1,2 +1,2 @@
-export * from './CoupNcdRequestBody'
-export * from './CoupNcdRequestBuilder'
+export * from './coupNcdRequestBuilder'
+export * from './coupNcdRequestBody'

@@ -1,2 +1,2 @@
-export * from './UpdateDevicePropertiesRequestBody'
-export * from './UpdateDevicePropertiesRequestBuilder'
+export * from './updateDevicePropertiesRequestBody'
+export * from './updateDevicePropertiesRequestBuilder'

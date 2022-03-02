@@ -1,2 +1,2 @@
-export * from './Ceiling_MathRequestBody'
-export * from './Ceiling_MathRequestBuilder'
+export * from './ceiling_MathRequestBody'
+export * from './ceiling_MathRequestBuilder'

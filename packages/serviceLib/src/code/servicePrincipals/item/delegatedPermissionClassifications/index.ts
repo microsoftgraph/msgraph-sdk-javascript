@@ -1,2 +1,2 @@
-export * from './DelegatedPermissionClassificationsRequestBuilder'
-export * from './DelegatedPermissionClassificationsResponse'
+export * from './delegatedPermissionClassificationsRequestBuilder'
+export * from './delegatedPermissionClassificationsResponse'

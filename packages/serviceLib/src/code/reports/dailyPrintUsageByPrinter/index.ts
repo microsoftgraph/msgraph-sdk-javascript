@@ -1,2 +1,2 @@
-export * from './DailyPrintUsageByPrinterResponse'
-export * from './DailyPrintUsageByPrinterRequestBuilder'
+export * from './dailyPrintUsageByPrinterRequestBuilder'
+export * from './dailyPrintUsageByPrinterResponse'

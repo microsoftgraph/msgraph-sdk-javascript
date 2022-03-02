@@ -1,2 +1,2 @@
-export * from './IsEvenRequestBuilder'
-export * from './IsEvenRequestBody'
+export * from './isEvenRequestBody'
+export * from './isEvenRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './TemplateRequestBuilder'
+export * from './templateRequestBuilder'

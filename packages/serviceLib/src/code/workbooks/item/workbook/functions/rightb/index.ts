@@ -1,2 +1,2 @@
-export * from './RightbRequestBuilder'
-export * from './RightbRequestBody'
+export * from './rightbRequestBuilder'
+export * from './rightbRequestBody'

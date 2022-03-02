@@ -1,1 +1,1 @@
-export * from './IdentitySecurityDefaultsEnforcementPolicyRequestBuilder'
+export * from './identitySecurityDefaultsEnforcementPolicyRequestBuilder'

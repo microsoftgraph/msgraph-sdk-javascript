@@ -1,2 +1,2 @@
-export * from './AddKeyRequestBuilder'
-export * from './KeyCredentialRequestBody'
+export * from './keyCredentialRequestBody'
+export * from './addKeyRequestBuilder'

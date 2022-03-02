@@ -1,1 +1,1 @@
-export * from './LastCellRequestBuilder'
+export * from './lastCellRequestBuilder'

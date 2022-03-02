@@ -1,1 +1,1 @@
-export * from './AccessReviewReviewerItemRequestBuilder'
+export * from './accessReviewReviewerItemRequestBuilder'

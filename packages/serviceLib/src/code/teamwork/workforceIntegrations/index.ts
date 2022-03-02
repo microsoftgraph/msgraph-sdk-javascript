@@ -1,2 +1,2 @@
-export * from './WorkforceIntegrationsResponse'
-export * from './WorkforceIntegrationsRequestBuilder'
+export * from './workforceIntegrationsResponse'
+export * from './workforceIntegrationsRequestBuilder'

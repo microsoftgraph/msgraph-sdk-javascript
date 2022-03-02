@@ -1,2 +1,2 @@
-export * from './T_Dist_RTRequestBuilder'
-export * from './T_Dist_RTRequestBody'
+export * from './t_Dist_RTRequestBuilder'
+export * from './t_Dist_RTRequestBody'

@@ -1,1 +1,1 @@
-export * from './ReminderViewWithStartDateTimeWithEndDateTimeRequestBuilder'
+export * from './reminderViewWithStartDateTimeWithEndDateTimeRequestBuilder'

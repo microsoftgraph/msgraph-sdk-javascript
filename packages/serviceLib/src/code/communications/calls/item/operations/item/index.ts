@@ -1,1 +1,1 @@
-export * from './CommsOperationItemRequestBuilder'
+export * from './commsOperationItemRequestBuilder'

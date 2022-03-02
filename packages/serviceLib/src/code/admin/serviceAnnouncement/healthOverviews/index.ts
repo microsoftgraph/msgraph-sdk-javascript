@@ -1,2 +1,2 @@
-export * from './HealthOverviewsRequestBuilder'
-export * from './HealthOverviewsResponse'
+export * from './healthOverviewsResponse'
+export * from './healthOverviewsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './VersionsResponse'
-export * from './VersionsRequestBuilder'
+export * from './versionsResponse'
+export * from './versionsRequestBuilder'

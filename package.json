@@ -16,6 +16,7 @@
     ],
     "scripts": {
         "build": "tsc -b packages/testLibraries/tsconfig.cjs.json",
-        "test": "node ./packages/testLibraries/dist/cjs/test.js"
+        "test": "node ./packages/testLibraries/dist/cjs/test.js",
+        "test2": "node ./packages/testLibraries/dist/cjs/testMini.js"
     }
-}
+} 

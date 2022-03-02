@@ -1,2 +1,2 @@
-export * from './SubscribedSkusRequestBuilder'
-export * from './SubscribedSkusResponse'
+export * from './subscribedSkusRequestBuilder'
+export * from './subscribedSkusResponse'

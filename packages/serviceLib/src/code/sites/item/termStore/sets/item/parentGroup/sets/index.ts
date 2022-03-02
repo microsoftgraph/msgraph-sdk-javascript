@@ -1,2 +1,2 @@
-export * from './SetsResponse'
-export * from './SetsRequestBuilder'
+export * from './setsResponse'
+export * from './setsRequestBuilder'

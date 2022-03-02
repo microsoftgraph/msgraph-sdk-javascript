@@ -1,1 +1,1 @@
-export * from './ApplyDecisionsRequestBuilder'
+export * from './applyDecisionsRequestBuilder'

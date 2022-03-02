@@ -1,2 +1,2 @@
-export * from './VarARequestBody'
-export * from './VarARequestBuilder'
+export * from './varARequestBuilder'
+export * from './varARequestBody'

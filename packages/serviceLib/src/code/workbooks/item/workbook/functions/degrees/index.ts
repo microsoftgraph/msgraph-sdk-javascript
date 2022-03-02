@@ -1,2 +1,2 @@
-export * from './DegreesRequestBuilder'
-export * from './DegreesRequestBody'
+export * from './degreesRequestBody'
+export * from './degreesRequestBuilder'

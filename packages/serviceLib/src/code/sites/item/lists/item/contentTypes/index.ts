@@ -1,2 +1,2 @@
-export * from './ContentTypesRequestBuilder'
-export * from './ContentTypesResponse'
+export * from './contentTypesResponse'
+export * from './contentTypesRequestBuilder'

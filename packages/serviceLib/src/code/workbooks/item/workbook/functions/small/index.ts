@@ -1,2 +1,2 @@
-export * from './SmallRequestBody'
-export * from './SmallRequestBuilder'
+export * from './smallRequestBody'
+export * from './smallRequestBuilder'

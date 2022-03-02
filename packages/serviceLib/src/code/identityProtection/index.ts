@@ -1,1 +1,1 @@
-export * from './IdentityProtectionRequestBuilder'
+export * from './identityProtectionRequestBuilder'

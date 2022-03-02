@@ -1,1 +1,1 @@
-export * from './AutofitColumnsRequestBuilder'
+export * from './autofitColumnsRequestBuilder'

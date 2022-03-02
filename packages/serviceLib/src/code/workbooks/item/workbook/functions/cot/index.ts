@@ -1,2 +1,2 @@
-export * from './CotRequestBody'
-export * from './CotRequestBuilder'
+export * from './cotRequestBuilder'
+export * from './cotRequestBody'

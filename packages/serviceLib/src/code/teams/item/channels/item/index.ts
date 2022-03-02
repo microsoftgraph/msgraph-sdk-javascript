@@ -1,1 +1,1 @@
-export * from './ChannelItemRequestBuilder'
+export * from './channelItemRequestBuilder'

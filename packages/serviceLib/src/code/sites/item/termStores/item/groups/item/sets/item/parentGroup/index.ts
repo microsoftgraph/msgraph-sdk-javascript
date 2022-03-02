@@ -1,1 +1,1 @@
-export * from './ParentGroupRequestBuilder'
+export * from './parentGroupRequestBuilder'

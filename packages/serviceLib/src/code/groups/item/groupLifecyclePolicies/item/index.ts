@@ -1,1 +1,1 @@
-export * from './GroupLifecyclePolicyItemRequestBuilder'
+export * from './groupLifecyclePolicyItemRequestBuilder'

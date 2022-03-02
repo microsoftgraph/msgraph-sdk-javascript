@@ -1,1 +1,1 @@
-export * from './PrivacyRequestBuilder'
+export * from './privacyRequestBuilder'

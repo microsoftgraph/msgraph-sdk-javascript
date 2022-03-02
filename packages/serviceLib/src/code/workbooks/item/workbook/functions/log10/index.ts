@@ -1,2 +1,2 @@
-export * from './Log10RequestBuilder'
-export * from './Log10RequestBody'
+export * from './log10RequestBody'
+export * from './log10RequestBuilder'

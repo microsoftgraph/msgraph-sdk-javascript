@@ -1,2 +1,2 @@
-export * from './GetEffectivePermissionsWithScopeRequestBuilder'
-export * from './GetEffectivePermissionsWithScope'
+export * from './getEffectivePermissionsWithScopeRequestBuilder'
+export * from './getEffectivePermissionsWithScope'

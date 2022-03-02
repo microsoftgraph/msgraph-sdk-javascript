@@ -1,2 +1,2 @@
-export * from './BundlesResponse'
-export * from './BundlesRequestBuilder'
+export * from './bundlesRequestBuilder'
+export * from './bundlesResponse'

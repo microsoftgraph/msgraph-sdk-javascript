@@ -1,1 +1,1 @@
-export * from './GetSharePointActivityFileCountsWithPeriodRequestBuilder'
+export * from './getSharePointActivityFileCountsWithPeriodRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './AddTokenSigningCertificateRequestBuilder'
-export * from './SelfSignedCertificateRequestBody'
+export * from './addTokenSigningCertificateRequestBuilder'
+export * from './selfSignedCertificateRequestBody'

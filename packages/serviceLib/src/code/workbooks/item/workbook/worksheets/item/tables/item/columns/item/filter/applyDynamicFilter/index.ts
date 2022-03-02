@@ -1,2 +1,2 @@
-export * from './ApplyDynamicFilterRequestBuilder'
-export * from './ApplyDynamicFilterRequestBody'
+export * from './applyDynamicFilterRequestBody'
+export * from './applyDynamicFilterRequestBuilder'

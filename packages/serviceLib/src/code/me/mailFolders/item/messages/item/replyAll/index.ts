@@ -1,2 +1,2 @@
-export * from './ReplyAllRequestBuilder'
-export * from './ReplyAllRequestBody'
+export * from './replyAllRequestBody'
+export * from './replyAllRequestBuilder'

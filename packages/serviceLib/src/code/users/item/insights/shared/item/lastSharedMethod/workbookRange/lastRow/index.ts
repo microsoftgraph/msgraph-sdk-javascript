@@ -1,1 +1,1 @@
-export * from './LastRowRequestBuilder'
+export * from './lastRowRequestBuilder'

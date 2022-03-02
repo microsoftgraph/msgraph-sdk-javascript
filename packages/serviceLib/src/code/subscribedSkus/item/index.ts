@@ -1,1 +1,1 @@
-export * from './SubscribedSkuItemRequestBuilder'
+export * from './subscribedSkuItemRequestBuilder'

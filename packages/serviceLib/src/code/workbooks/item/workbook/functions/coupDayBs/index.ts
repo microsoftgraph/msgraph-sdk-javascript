@@ -1,2 +1,2 @@
-export * from './CoupDayBsRequestBuilder'
-export * from './CoupDayBsRequestBody'
+export * from './coupDayBsRequestBody'
+export * from './coupDayBsRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './UnmergeRequestBuilder'
+export * from './unmergeRequestBuilder'

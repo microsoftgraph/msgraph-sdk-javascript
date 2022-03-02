@@ -1,1 +1,1 @@
-export * from './GetOffice365ActivationsUserDetailRequestBuilder'
+export * from './getOffice365ActivationsUserDetailRequestBuilder'

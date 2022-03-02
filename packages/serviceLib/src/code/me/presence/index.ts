@@ -1,1 +1,1 @@
-export * from './PresenceRequestBuilder'
+export * from './presenceRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './DirectoryObjectItemRequestBuilder'
+export * from './directoryObjectItemRequestBuilder'

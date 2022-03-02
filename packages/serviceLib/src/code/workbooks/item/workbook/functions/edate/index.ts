@@ -1,2 +1,2 @@
-export * from './EdateRequestBody'
-export * from './EdateRequestBuilder'
+export * from './edateRequestBuilder'
+export * from './edateRequestBody'

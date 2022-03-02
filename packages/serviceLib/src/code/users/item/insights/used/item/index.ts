@@ -1,1 +1,1 @@
-export * from './UsedInsightItemRequestBuilder'
+export * from './usedInsightItemRequestBuilder'

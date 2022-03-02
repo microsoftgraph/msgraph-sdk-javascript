@@ -1,2 +1,2 @@
-export * from './CalendarsResponse'
-export * from './CalendarsRequestBuilder'
+export * from './calendarsResponse'
+export * from './calendarsRequestBuilder'

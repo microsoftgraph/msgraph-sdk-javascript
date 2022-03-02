@@ -1,2 +1,2 @@
-export * from './SectionGroupsRequestBuilder'
-export * from './SectionGroupsResponse'
+export * from './sectionGroupsRequestBuilder'
+export * from './sectionGroupsResponse'

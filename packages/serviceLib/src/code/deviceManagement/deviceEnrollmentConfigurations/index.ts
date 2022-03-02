@@ -1,2 +1,2 @@
-export * from './DeviceEnrollmentConfigurationsRequestBuilder'
-export * from './DeviceEnrollmentConfigurationsResponse'
+export * from './deviceEnrollmentConfigurationsRequestBuilder'
+export * from './deviceEnrollmentConfigurationsResponse'

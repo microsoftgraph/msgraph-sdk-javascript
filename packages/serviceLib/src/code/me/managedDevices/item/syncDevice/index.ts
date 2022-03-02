@@ -1,1 +1,1 @@
-export * from './SyncDeviceRequestBuilder'
+export * from './syncDeviceRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './QuotientRequestBuilder'
-export * from './QuotientRequestBody'
+export * from './quotientRequestBuilder'
+export * from './quotientRequestBody'

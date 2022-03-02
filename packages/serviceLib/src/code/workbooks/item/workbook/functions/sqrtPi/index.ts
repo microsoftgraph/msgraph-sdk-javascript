@@ -1,2 +1,2 @@
-export * from './SqrtPiRequestBody'
-export * from './SqrtPiRequestBuilder'
+export * from './sqrtPiRequestBody'
+export * from './sqrtPiRequestBuilder'

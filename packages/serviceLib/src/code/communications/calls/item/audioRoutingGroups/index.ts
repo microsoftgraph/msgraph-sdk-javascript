@@ -1,2 +1,2 @@
-export * from './AudioRoutingGroupsResponse'
-export * from './AudioRoutingGroupsRequestBuilder'
+export * from './audioRoutingGroupsResponse'
+export * from './audioRoutingGroupsRequestBuilder'

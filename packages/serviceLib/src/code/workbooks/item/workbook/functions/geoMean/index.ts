@@ -1,2 +1,2 @@
-export * from './GeoMeanRequestBody'
-export * from './GeoMeanRequestBuilder'
+export * from './geoMeanRequestBody'
+export * from './geoMeanRequestBuilder'

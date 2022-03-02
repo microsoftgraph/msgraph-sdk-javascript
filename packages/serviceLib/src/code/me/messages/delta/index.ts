@@ -1,1 +1,1 @@
-export * from './DeltaRequestBuilder'
+export * from './deltaRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './SharedDriveItemItemRequestBuilder'
+export * from './sharedDriveItemItemRequestBuilder'

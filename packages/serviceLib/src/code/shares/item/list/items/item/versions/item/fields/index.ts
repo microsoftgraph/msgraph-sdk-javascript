@@ -1,1 +1,1 @@
-export * from './FieldsRequestBuilder'
+export * from './fieldsRequestBuilder'

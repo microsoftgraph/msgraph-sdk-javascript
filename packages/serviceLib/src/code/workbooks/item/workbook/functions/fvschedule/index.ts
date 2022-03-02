@@ -1,2 +1,2 @@
-export * from './FvscheduleRequestBody'
-export * from './FvscheduleRequestBuilder'
+export * from './fvscheduleRequestBody'
+export * from './fvscheduleRequestBuilder'

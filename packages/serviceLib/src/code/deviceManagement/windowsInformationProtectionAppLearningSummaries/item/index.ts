@@ -1,1 +1,1 @@
-export * from './WindowsInformationProtectionAppLearningSummaryItemRequestBuilder'
+export * from './windowsInformationProtectionAppLearningSummaryItemRequestBuilder'

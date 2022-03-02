@@ -1,1 +1,1 @@
-export * from './AssignedToTaskBoardFormatRequestBuilder'
+export * from './assignedToTaskBoardFormatRequestBuilder'

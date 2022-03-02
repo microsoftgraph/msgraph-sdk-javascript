@@ -1,2 +1,2 @@
-export * from './RemoveKeyRequestBody'
-export * from './RemoveKeyRequestBuilder'
+export * from './removeKeyRequestBuilder'
+export * from './removeKeyRequestBody'

@@ -1,1 +1,1 @@
-export * from './UnassignUserFromDeviceRequestBuilder'
+export * from './unassignUserFromDeviceRequestBuilder'

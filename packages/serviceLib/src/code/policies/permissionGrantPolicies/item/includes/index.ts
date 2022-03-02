@@ -1,2 +1,2 @@
-export * from './IncludesResponse'
-export * from './IncludesRequestBuilder'
+export * from './includesRequestBuilder'
+export * from './includesResponse'

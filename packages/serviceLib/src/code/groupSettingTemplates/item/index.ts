@@ -1,1 +1,1 @@
-export * from './GroupSettingTemplateItemRequestBuilder'
+export * from './groupSettingTemplateItemRequestBuilder'

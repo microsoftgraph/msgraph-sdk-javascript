@@ -1,2 +1,2 @@
-export * from './KurtRequestBody'
-export * from './KurtRequestBuilder'
+export * from './kurtRequestBuilder'
+export * from './kurtRequestBody'

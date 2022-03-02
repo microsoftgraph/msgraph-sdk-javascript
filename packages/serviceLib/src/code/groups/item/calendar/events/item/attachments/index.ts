@@ -1,2 +1,2 @@
-export * from './AttachmentsRequestBuilder'
-export * from './AttachmentsResponse'
+export * from './attachmentsRequestBuilder'
+export * from './attachmentsResponse'

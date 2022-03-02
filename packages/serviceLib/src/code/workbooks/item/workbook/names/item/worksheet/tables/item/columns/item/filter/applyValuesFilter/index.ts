@@ -1,2 +1,2 @@
-export * from './ApplyValuesFilterRequestBuilder'
-export * from './ApplyValuesFilterRequestBody'
+export * from './applyValuesFilterRequestBuilder'
+export * from './applyValuesFilterRequestBody'

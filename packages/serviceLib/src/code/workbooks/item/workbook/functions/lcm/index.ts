@@ -1,2 +1,2 @@
-export * from './LcmRequestBody'
-export * from './LcmRequestBuilder'
+export * from './lcmRequestBody'
+export * from './lcmRequestBuilder'

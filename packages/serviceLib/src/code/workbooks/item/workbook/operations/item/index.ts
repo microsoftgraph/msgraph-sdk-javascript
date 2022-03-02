@@ -1,1 +1,1 @@
-export * from './WorkbookOperationItemRequestBuilder'
+export * from './workbookOperationItemRequestBuilder'

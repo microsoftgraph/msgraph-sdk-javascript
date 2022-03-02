@@ -1,1 +1,1 @@
-export * from './AxesRequestBuilder'
+export * from './axesRequestBuilder'

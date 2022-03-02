@@ -1,2 +1,2 @@
-export * from './MaxARequestBody'
-export * from './MaxARequestBuilder'
+export * from './maxARequestBody'
+export * from './maxARequestBuilder'

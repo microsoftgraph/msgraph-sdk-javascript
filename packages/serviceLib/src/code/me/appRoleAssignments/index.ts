@@ -1,2 +1,2 @@
-export * from './AppRoleAssignmentsResponse'
-export * from './AppRoleAssignmentsRequestBuilder'
+export * from './appRoleAssignmentsResponse'
+export * from './appRoleAssignmentsRequestBuilder'

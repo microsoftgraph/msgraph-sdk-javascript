@@ -1,1 +1,1 @@
-export * from './GetSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder'
+export * from './getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder'

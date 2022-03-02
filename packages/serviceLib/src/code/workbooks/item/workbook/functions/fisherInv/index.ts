@@ -1,2 +1,2 @@
-export * from './FisherInvRequestBody'
-export * from './FisherInvRequestBuilder'
+export * from './fisherInvRequestBody'
+export * from './fisherInvRequestBuilder'

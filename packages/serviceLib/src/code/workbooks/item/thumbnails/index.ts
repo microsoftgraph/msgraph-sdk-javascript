@@ -1,2 +1,2 @@
-export * from './ThumbnailsRequestBuilder'
-export * from './ThumbnailsResponse'
+export * from './thumbnailsResponse'
+export * from './thumbnailsRequestBuilder'

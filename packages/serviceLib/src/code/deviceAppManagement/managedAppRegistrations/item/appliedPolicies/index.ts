@@ -1,2 +1,2 @@
-export * from './AppliedPoliciesResponse'
-export * from './AppliedPoliciesRequestBuilder'
+export * from './appliedPoliciesRequestBuilder'
+export * from './appliedPoliciesResponse'

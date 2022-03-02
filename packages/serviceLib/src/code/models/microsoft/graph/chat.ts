@@ -16,6 +16,7 @@ export class Chat extends Entity implements Parsable {
     private _messages?: ChatMessage[] | undefined;
     /** Represents details about an online meeting. If the chat isn't associated with an online meeting, the property is empty. Read-only.  */
     private _onlineMeetingInfo?: TeamworkOnlineMeetingInfo | undefined;
+    /** A collection of all the tabs in the chat. Nullable.  */
     private _tabs?: TeamsTab[] | undefined;
     /** The identifier of the tenant in which the chat was created. Read-only.  */
     private _tenantId?: string | undefined;
@@ -79,7 +80,7 @@ export class Chat extends Entity implements Parsable {
         return this._onlineMeetingInfo;
     };
     /**
-     * Gets the tabs property value. 
+     * Gets the tabs property value. A collection of all the tabs in the chat. Nullable.
      * @returns a teamsTab
      */
     public get tabs() {
@@ -194,7 +195,7 @@ export class Chat extends Entity implements Parsable {
         this._onlineMeetingInfo = value;
     };
     /**
-     * Sets the tabs property value. 
+     * Sets the tabs property value. A collection of all the tabs in the chat. Nullable.
      * @param value Value to set for the tabs property.
      */
     public set tabs(value: TeamsTab[] | undefined) {

@@ -1,1 +1,1 @@
-export * from './AutofitRowsRequestBuilder'
+export * from './autofitRowsRequestBuilder'

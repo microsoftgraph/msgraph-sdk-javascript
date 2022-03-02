@@ -1,2 +1,2 @@
-export * from './TimeOffRequestsRequestBuilder'
-export * from './TimeOffRequestsResponse'
+export * from './timeOffRequestsRequestBuilder'
+export * from './timeOffRequestsResponse'

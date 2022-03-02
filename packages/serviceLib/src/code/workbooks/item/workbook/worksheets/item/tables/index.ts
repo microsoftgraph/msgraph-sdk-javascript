@@ -1,2 +1,2 @@
-export * from './TablesResponse'
-export * from './TablesRequestBuilder'
+export * from './tablesRequestBuilder'
+export * from './tablesResponse'

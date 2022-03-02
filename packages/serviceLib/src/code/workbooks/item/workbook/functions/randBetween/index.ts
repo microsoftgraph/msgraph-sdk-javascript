@@ -1,2 +1,2 @@
-export * from './RandBetweenRequestBuilder'
-export * from './RandBetweenRequestBody'
+export * from './randBetweenRequestBody'
+export * from './randBetweenRequestBuilder'

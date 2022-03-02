@@ -1,2 +1,2 @@
-export * from './ManagedEBooksRequestBuilder'
-export * from './ManagedEBooksResponse'
+export * from './managedEBooksRequestBuilder'
+export * from './managedEBooksResponse'

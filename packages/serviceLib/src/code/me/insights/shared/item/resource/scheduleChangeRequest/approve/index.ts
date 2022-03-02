@@ -1,2 +1,2 @@
-export * from './ApproveRequestBuilder'
-export * from './ApproveRequestBody'
+export * from './approveRequestBody'
+export * from './approveRequestBuilder'

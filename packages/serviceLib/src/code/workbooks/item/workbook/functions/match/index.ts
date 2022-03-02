@@ -1,2 +1,2 @@
-export * from './MatchRequestBody'
-export * from './MatchRequestBuilder'
+export * from './matchRequestBody'
+export * from './matchRequestBuilder'

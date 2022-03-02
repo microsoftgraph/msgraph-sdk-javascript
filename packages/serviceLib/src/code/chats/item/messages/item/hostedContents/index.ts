@@ -1,2 +1,2 @@
-export * from './HostedContentsResponse'
-export * from './HostedContentsRequestBuilder'
+export * from './hostedContentsRequestBuilder'
+export * from './hostedContentsResponse'

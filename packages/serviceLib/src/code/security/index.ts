@@ -1,1 +1,1 @@
-export * from './SecurityRequestBuilder'
+export * from './securityRequestBuilder'

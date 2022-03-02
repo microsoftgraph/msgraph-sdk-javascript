@@ -1,1 +1,1 @@
-export * from './PlaceItemRequestBuilder'
+export * from './placeItemRequestBuilder'

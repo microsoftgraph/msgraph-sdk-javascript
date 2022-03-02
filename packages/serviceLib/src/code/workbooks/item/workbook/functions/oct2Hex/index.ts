@@ -1,2 +1,2 @@
-export * from './Oct2HexRequestBody'
-export * from './Oct2HexRequestBuilder'
+export * from './oct2HexRequestBody'
+export * from './oct2HexRequestBuilder'

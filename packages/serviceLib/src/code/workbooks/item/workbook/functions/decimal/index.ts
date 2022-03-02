@@ -1,2 +1,2 @@
-export * from './DecimalRequestBody'
-export * from './DecimalRequestBuilder'
+export * from './decimalRequestBody'
+export * from './decimalRequestBuilder'

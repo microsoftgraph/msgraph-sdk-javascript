@@ -1,1 +1,1 @@
-export * from './ActivityRequestBuilder'
+export * from './activityRequestBuilder'

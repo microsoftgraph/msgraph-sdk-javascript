@@ -1,2 +1,2 @@
-export * from './RestoreRequestBuilder'
-export * from './RestoreRequestBody'
+export * from './restoreRequestBody'
+export * from './restoreRequestBuilder'

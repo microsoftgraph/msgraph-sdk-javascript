@@ -1,3 +1,3 @@
-export * from './ImportRequestBody'
-export * from './ImportRequestBuilder'
-export * from './Import_escaped'
+export * from './import_escaped'
+export * from './importRequestBuilder'
+export * from './importRequestBody'

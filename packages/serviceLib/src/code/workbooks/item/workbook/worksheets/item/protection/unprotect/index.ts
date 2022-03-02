@@ -1,1 +1,1 @@
-export * from './UnprotectRequestBuilder'
+export * from './unprotectRequestBuilder'

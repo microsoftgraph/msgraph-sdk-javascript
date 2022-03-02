@@ -1,2 +1,2 @@
-export * from './TelecomExpenseManagementPartnersResponse'
-export * from './TelecomExpenseManagementPartnersRequestBuilder'
+export * from './telecomExpenseManagementPartnersRequestBuilder'
+export * from './telecomExpenseManagementPartnersResponse'

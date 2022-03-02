@@ -1,1 +1,1 @@
-export * from './GetMailboxUsageStorageWithPeriodRequestBuilder'
+export * from './getMailboxUsageStorageWithPeriodRequestBuilder'

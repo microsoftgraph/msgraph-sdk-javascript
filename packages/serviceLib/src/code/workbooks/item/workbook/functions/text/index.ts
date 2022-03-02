@@ -1,2 +1,2 @@
-export * from './TextRequestBody'
-export * from './TextRequestBuilder'
+export * from './textRequestBuilder'
+export * from './textRequestBody'

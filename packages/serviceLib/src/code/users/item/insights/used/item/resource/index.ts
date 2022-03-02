@@ -1,1 +1,1 @@
-export * from './ResourceRequestBuilder'
+export * from './resourceRequestBuilder'

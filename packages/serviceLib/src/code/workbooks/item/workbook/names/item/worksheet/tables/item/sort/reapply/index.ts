@@ -1,1 +1,1 @@
-export * from './ReapplyRequestBuilder'
+export * from './reapplyRequestBuilder'

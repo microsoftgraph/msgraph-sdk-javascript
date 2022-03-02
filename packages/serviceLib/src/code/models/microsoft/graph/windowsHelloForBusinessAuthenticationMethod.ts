@@ -4,7 +4,7 @@ import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstrac
 export class WindowsHelloForBusinessAuthenticationMethod extends AuthenticationMethod implements Parsable {
     /** The date and time that this Windows Hello for Business key was registered.  */
     private _createdDateTime?: Date | undefined;
-    /** The registered device on which this Windows Hello for Business key resides.  */
+    /** The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.  */
     private _device?: Device | undefined;
     /** The name of the device on which Windows Hello for Business is registered  */
     private _displayName?: string | undefined;
@@ -24,7 +24,7 @@ export class WindowsHelloForBusinessAuthenticationMethod extends AuthenticationM
         return this._createdDateTime;
     };
     /**
-     * Gets the device property value. The registered device on which this Windows Hello for Business key resides.
+     * Gets the device property value. The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @returns a device
      */
     public get device() {
@@ -76,7 +76,7 @@ export class WindowsHelloForBusinessAuthenticationMethod extends AuthenticationM
         this._createdDateTime = value;
     };
     /**
-     * Sets the device property value. The registered device on which this Windows Hello for Business key resides.
+     * Sets the device property value. The registered device on which this Windows Hello for Business key resides. Supports $expand. When you get a user's Windows Hello for Business registration information, this property is returned only on a single GET and when you specify ?$expand. For example, GET /users/admin@contoso.com/authentication/windowsHelloForBusinessMethods/_jpuR-TGZtk6aQCLF3BQjA2?$expand=device.
      * @param value Value to set for the device property.
      */
     public set device(value: Device | undefined) {

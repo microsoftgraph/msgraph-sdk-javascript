@@ -1,3 +1,3 @@
-export * from './AddRequestBuilder'
-export * from './AddRequestBody'
-export * from './Add'
+export * from './add'
+export * from './addRequestBuilder'
+export * from './addRequestBody'

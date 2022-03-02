@@ -1,2 +1,2 @@
-export * from './ApplyFontColorFilterRequestBody'
-export * from './ApplyFontColorFilterRequestBuilder'
+export * from './applyFontColorFilterRequestBody'
+export * from './applyFontColorFilterRequestBuilder'

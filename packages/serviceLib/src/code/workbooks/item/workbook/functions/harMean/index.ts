@@ -1,2 +1,2 @@
-export * from './HarMeanRequestBuilder'
-export * from './HarMeanRequestBody'
+export * from './harMeanRequestBody'
+export * from './harMeanRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './RestrictedSignInItemRequestBuilder'
+export * from './restrictedSignInItemRequestBuilder'

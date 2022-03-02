@@ -1,2 +1,2 @@
-export * from './ServicePrincipalsResponse'
-export * from './ServicePrincipalsRequestBuilder'
+export * from './servicePrincipalsRequestBuilder'
+export * from './servicePrincipalsResponse'

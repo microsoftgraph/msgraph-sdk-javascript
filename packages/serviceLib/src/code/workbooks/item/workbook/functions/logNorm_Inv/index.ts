@@ -1,2 +1,2 @@
-export * from './LogNorm_InvRequestBuilder'
-export * from './LogNorm_InvRequestBody'
+export * from './logNorm_InvRequestBuilder'
+export * from './logNorm_InvRequestBody'

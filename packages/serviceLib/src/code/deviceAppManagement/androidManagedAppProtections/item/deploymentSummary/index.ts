@@ -1,1 +1,1 @@
-export * from './DeploymentSummaryRequestBuilder'
+export * from './deploymentSummaryRequestBuilder'

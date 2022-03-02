@@ -1,2 +1,2 @@
-export * from './CreatedObjectsResponse'
-export * from './CreatedObjectsRequestBuilder'
+export * from './createdObjectsResponse'
+export * from './createdObjectsRequestBuilder'

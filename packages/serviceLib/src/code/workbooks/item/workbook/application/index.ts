@@ -1,1 +1,1 @@
-export * from './ApplicationRequestBuilder'
+export * from './applicationRequestBuilder'

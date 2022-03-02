@@ -1,1 +1,1 @@
-export * from './UnsubscribeByMailRequestBuilder'
+export * from './unsubscribeByMailRequestBuilder'

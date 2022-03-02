@@ -1,2 +1,2 @@
-export * from './YearFracRequestBody'
-export * from './YearFracRequestBuilder'
+export * from './yearFracRequestBuilder'
+export * from './yearFracRequestBody'

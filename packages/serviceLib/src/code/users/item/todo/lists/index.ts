@@ -1,2 +1,2 @@
-export * from './ListsRequestBuilder'
-export * from './ListsResponse'
+export * from './listsResponse'
+export * from './listsRequestBuilder'

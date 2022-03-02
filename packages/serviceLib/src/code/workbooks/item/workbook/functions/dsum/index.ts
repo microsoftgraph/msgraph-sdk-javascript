@@ -1,2 +1,2 @@
-export * from './DsumRequestBody'
-export * from './DsumRequestBuilder'
+export * from './dsumRequestBuilder'
+export * from './dsumRequestBody'

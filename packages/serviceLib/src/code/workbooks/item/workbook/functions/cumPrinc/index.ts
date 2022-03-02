@@ -1,2 +1,2 @@
-export * from './CumPrincRequestBody'
-export * from './CumPrincRequestBuilder'
+export * from './cumPrincRequestBuilder'
+export * from './cumPrincRequestBody'

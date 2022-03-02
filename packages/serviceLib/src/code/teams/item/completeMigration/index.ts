@@ -1,1 +1,1 @@
-export * from './CompleteMigrationRequestBuilder'
+export * from './completeMigrationRequestBuilder'

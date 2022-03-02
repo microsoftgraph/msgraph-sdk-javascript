@@ -1,1 +1,1 @@
-export * from './MobileThreatDefenseConnectorItemRequestBuilder'
+export * from './mobileThreatDefenseConnectorItemRequestBuilder'

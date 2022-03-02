@@ -1,2 +1,2 @@
-export * from './CopyNotebookRequestBody'
-export * from './CopyNotebookRequestBuilder'
+export * from './copyNotebookRequestBody'
+export * from './copyNotebookRequestBuilder'

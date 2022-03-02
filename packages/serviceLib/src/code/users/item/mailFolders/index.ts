@@ -1,2 +1,2 @@
-export * from './MailFoldersResponse'
-export * from './MailFoldersRequestBuilder'
+export * from './mailFoldersResponse'
+export * from './mailFoldersRequestBuilder'

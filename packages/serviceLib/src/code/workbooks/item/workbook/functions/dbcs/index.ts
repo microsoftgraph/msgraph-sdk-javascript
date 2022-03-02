@@ -1,2 +1,2 @@
-export * from './DbcsRequestBody'
-export * from './DbcsRequestBuilder'
+export * from './dbcsRequestBuilder'
+export * from './dbcsRequestBody'

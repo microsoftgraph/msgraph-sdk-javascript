@@ -1,1 +1,1 @@
-export * from './TeamsTemplateItemRequestBuilder'
+export * from './teamsTemplateItemRequestBuilder'

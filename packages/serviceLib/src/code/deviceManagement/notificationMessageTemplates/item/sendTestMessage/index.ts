@@ -1,1 +1,1 @@
-export * from './SendTestMessageRequestBuilder'
+export * from './sendTestMessageRequestBuilder'

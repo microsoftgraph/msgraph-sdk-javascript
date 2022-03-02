@@ -1,1 +1,1 @@
-export * from './ContentRequestBuilder'
+export * from './contentRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './PrinterItemRequestBuilder'
+export * from './printerItemRequestBuilder'

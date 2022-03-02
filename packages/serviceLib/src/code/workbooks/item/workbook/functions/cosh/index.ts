@@ -1,2 +1,2 @@
-export * from './CoshRequestBody'
-export * from './CoshRequestBuilder'
+export * from './coshRequestBody'
+export * from './coshRequestBuilder'

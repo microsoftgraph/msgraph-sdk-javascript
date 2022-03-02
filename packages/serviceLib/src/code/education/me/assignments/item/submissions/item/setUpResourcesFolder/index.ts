@@ -1,1 +1,1 @@
-export * from './SetUpResourcesFolderRequestBuilder'
+export * from './setUpResourcesFolderRequestBuilder'

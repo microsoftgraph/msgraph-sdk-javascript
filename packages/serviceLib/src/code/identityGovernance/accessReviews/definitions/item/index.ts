@@ -1,1 +1,1 @@
-export * from './AccessReviewScheduleDefinitionItemRequestBuilder'
+export * from './accessReviewScheduleDefinitionItemRequestBuilder'

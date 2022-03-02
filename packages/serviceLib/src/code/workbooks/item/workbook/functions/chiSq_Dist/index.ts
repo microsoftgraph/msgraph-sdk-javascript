@@ -1,2 +1,2 @@
-export * from './ChiSq_DistRequestBuilder'
-export * from './ChiSq_DistRequestBody'
+export * from './chiSq_DistRequestBody'
+export * from './chiSq_DistRequestBuilder'

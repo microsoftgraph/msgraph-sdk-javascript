@@ -1,2 +1,2 @@
-export * from './TaskDefinitionsResponse'
-export * from './TaskDefinitionsRequestBuilder'
+export * from './taskDefinitionsRequestBuilder'
+export * from './taskDefinitionsResponse'

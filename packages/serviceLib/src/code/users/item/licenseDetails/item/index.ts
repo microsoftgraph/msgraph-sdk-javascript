@@ -1,1 +1,1 @@
-export * from './LicenseDetailsItemRequestBuilder'
+export * from './licenseDetailsItemRequestBuilder'

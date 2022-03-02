@@ -1,1 +1,1 @@
-export * from './GetUserIdsWithFlaggedAppRegistrationRequestBuilder'
+export * from './getUserIdsWithFlaggedAppRegistrationRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './GetSharePointSiteUsageStorageWithPeriodRequestBuilder'
+export * from './getSharePointSiteUsageStorageWithPeriodRequestBuilder'

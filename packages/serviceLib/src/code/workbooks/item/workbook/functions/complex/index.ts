@@ -1,2 +1,2 @@
-export * from './ComplexRequestBody'
-export * from './ComplexRequestBuilder'
+export * from './complexRequestBuilder'
+export * from './complexRequestBody'

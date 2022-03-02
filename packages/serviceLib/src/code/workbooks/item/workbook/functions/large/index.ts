@@ -1,2 +1,2 @@
-export * from './LargeRequestBody'
-export * from './LargeRequestBuilder'
+export * from './largeRequestBody'
+export * from './largeRequestBuilder'

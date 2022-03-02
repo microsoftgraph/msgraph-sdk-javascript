@@ -1,2 +1,2 @@
-export * from './Confidence_NormRequestBuilder'
-export * from './Confidence_NormRequestBody'
+export * from './confidence_NormRequestBody'
+export * from './confidence_NormRequestBuilder'

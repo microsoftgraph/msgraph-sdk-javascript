@@ -1,1 +1,1 @@
-export * from './SharedInsightItemRequestBuilder'
+export * from './sharedInsightItemRequestBuilder'

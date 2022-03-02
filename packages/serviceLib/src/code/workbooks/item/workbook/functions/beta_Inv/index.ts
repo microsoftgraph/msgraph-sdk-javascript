@@ -1,2 +1,2 @@
-export * from './Beta_InvRequestBody'
-export * from './Beta_InvRequestBuilder'
+export * from './beta_InvRequestBuilder'
+export * from './beta_InvRequestBody'

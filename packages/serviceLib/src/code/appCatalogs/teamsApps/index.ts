@@ -1,2 +1,2 @@
-export * from './TeamsAppsResponse'
-export * from './TeamsAppsRequestBuilder'
+export * from './teamsAppsResponse'
+export * from './teamsAppsRequestBuilder'

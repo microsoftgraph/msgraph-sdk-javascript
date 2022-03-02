@@ -1,2 +1,2 @@
-export * from './OrganizationRequestBuilder'
-export * from './OrganizationResponse'
+export * from './organizationRequestBuilder'
+export * from './organizationResponse'

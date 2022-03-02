@@ -1,2 +1,2 @@
-export * from './MdurationRequestBody'
-export * from './MdurationRequestBuilder'
+export * from './mdurationRequestBuilder'
+export * from './mdurationRequestBody'

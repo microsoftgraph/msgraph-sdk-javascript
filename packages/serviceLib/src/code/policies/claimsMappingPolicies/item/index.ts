@@ -1,1 +1,1 @@
-export * from './ClaimsMappingPolicyItemRequestBuilder'
+export * from './claimsMappingPolicyItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './PdurationRequestBuilder'
-export * from './PdurationRequestBody'
+export * from './pdurationRequestBuilder'
+export * from './pdurationRequestBody'

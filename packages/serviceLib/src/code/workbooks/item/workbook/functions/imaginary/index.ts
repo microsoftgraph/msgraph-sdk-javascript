@@ -1,2 +1,2 @@
-export * from './ImaginaryRequestBody'
-export * from './ImaginaryRequestBuilder'
+export * from './imaginaryRequestBuilder'
+export * from './imaginaryRequestBody'

@@ -1,1 +1,1 @@
-export * from './PersonItemRequestBuilder'
+export * from './personItemRequestBuilder'

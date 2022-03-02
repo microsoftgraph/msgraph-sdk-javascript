@@ -1,2 +1,2 @@
-export * from './PhiRequestBody'
-export * from './PhiRequestBuilder'
+export * from './phiRequestBody'
+export * from './phiRequestBuilder'

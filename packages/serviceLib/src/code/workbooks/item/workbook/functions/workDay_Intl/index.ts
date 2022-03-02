@@ -1,2 +1,2 @@
-export * from './WorkDay_IntlRequestBody'
-export * from './WorkDay_IntlRequestBuilder'
+export * from './workDay_IntlRequestBuilder'
+export * from './workDay_IntlRequestBody'

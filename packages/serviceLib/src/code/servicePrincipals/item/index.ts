@@ -1,1 +1,1 @@
-export * from './ServicePrincipalItemRequestBuilder'
+export * from './servicePrincipalItemRequestBuilder'

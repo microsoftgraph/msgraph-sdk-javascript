@@ -1,1 +1,1 @@
-export * from './GetOneDriveUsageFileCountsWithPeriodRequestBuilder'
+export * from './getOneDriveUsageFileCountsWithPeriodRequestBuilder'

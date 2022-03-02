@@ -1,2 +1,2 @@
-export * from './DeclineRequestBuilder'
-export * from './DeclineRequestBody'
+export * from './declineRequestBody'
+export * from './declineRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './AuthenticationFlowsPolicyRequestBuilder'
+export * from './authenticationFlowsPolicyRequestBuilder'

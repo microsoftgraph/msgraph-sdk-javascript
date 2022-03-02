@@ -1,2 +1,2 @@
-export * from './Fido2MethodsRequestBuilder'
-export * from './Fido2MethodsResponse'
+export * from './fido2MethodsRequestBuilder'
+export * from './fido2MethodsResponse'

@@ -1,2 +1,2 @@
-export * from './ImPowerRequestBody'
-export * from './ImPowerRequestBuilder'
+export * from './imPowerRequestBody'
+export * from './imPowerRequestBuilder'

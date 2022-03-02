@@ -1,1 +1,1 @@
-export * from './OutlookCategoryItemRequestBuilder'
+export * from './outlookCategoryItemRequestBuilder'

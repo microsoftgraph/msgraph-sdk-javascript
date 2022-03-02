@@ -1,1 +1,1 @@
-export * from './BeginOnboardingRequestBuilder'
+export * from './beginOnboardingRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './OwnersResponse'
-export * from './OwnersRequestBuilder'
+export * from './ownersRequestBuilder'
+export * from './ownersResponse'

@@ -1,1 +1,1 @@
-export * from './OnenoteResourceItemRequestBuilder'
+export * from './onenoteResourceItemRequestBuilder'

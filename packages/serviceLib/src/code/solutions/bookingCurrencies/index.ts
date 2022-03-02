@@ -1,2 +1,2 @@
-export * from './BookingCurrenciesResponse'
-export * from './BookingCurrenciesRequestBuilder'
+export * from './bookingCurrenciesRequestBuilder'
+export * from './bookingCurrenciesResponse'

@@ -1,2 +1,2 @@
-export * from './GcdRequestBuilder'
-export * from './GcdRequestBody'
+export * from './gcdRequestBuilder'
+export * from './gcdRequestBody'

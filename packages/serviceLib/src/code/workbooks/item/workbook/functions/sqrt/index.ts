@@ -1,2 +1,2 @@
-export * from './SqrtRequestBody'
-export * from './SqrtRequestBuilder'
+export * from './sqrtRequestBuilder'
+export * from './sqrtRequestBody'

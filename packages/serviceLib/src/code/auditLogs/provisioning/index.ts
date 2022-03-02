@@ -1,2 +1,2 @@
-export * from './ProvisioningResponse'
-export * from './ProvisioningRequestBuilder'
+export * from './provisioningResponse'
+export * from './provisioningRequestBuilder'

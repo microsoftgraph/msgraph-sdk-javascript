@@ -1,2 +1,2 @@
-export * from './ConnectorsRequestBuilder'
-export * from './ConnectorsResponse'
+export * from './connectorsRequestBuilder'
+export * from './connectorsResponse'

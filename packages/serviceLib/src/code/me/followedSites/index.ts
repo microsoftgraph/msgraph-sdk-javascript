@@ -1,2 +1,2 @@
-export * from './FollowedSitesResponse'
-export * from './FollowedSitesRequestBuilder'
+export * from './followedSitesResponse'
+export * from './followedSitesRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './ScheduledActionConfigurationsResponse'
-export * from './ScheduledActionConfigurationsRequestBuilder'
+export * from './scheduledActionConfigurationsRequestBuilder'
+export * from './scheduledActionConfigurationsResponse'

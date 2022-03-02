@@ -1,2 +1,2 @@
-export * from './SumSqRequestBuilder'
-export * from './SumSqRequestBody'
+export * from './sumSqRequestBody'
+export * from './sumSqRequestBuilder'

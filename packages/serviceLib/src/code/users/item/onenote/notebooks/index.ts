@@ -1,2 +1,2 @@
-export * from './NotebooksRequestBuilder'
-export * from './NotebooksResponse'
+export * from './notebooksResponse'
+export * from './notebooksRequestBuilder'

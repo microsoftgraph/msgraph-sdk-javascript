@@ -1,2 +1,2 @@
-export * from './ImDivRequestBuilder'
-export * from './ImDivRequestBody'
+export * from './imDivRequestBody'
+export * from './imDivRequestBuilder'

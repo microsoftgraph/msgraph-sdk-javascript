@@ -1,2 +1,2 @@
-export * from './ImSinRequestBody'
-export * from './ImSinRequestBuilder'
+export * from './imSinRequestBuilder'
+export * from './imSinRequestBody'

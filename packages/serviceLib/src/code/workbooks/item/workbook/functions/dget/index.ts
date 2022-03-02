@@ -1,2 +1,2 @@
-export * from './DgetRequestBody'
-export * from './DgetRequestBuilder'
+export * from './dgetRequestBuilder'
+export * from './dgetRequestBody'

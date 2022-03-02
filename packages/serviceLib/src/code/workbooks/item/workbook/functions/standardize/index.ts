@@ -1,2 +1,2 @@
-export * from './StandardizeRequestBody'
-export * from './StandardizeRequestBuilder'
+export * from './standardizeRequestBuilder'
+export * from './standardizeRequestBody'

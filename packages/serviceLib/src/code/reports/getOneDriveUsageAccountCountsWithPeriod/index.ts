@@ -1,1 +1,1 @@
-export * from './GetOneDriveUsageAccountCountsWithPeriodRequestBuilder'
+export * from './getOneDriveUsageAccountCountsWithPeriodRequestBuilder'

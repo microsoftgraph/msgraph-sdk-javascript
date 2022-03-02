@@ -1,1 +1,1 @@
-export * from './GetOrderRequestBuilder'
+export * from './getOrderRequestBuilder'

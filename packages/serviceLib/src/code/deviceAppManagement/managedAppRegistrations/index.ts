@@ -1,2 +1,2 @@
-export * from './ManagedAppRegistrationsRequestBuilder'
-export * from './ManagedAppRegistrationsResponse'
+export * from './managedAppRegistrationsResponse'
+export * from './managedAppRegistrationsRequestBuilder'

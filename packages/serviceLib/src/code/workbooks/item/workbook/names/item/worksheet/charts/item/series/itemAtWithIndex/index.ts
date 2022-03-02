@@ -1,1 +1,1 @@
-export * from './ItemAtWithIndexRequestBuilder'
+export * from './itemAtWithIndexRequestBuilder'

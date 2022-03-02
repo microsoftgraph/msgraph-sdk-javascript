@@ -1,2 +1,2 @@
-export * from './MessagesRequestBuilder'
-export * from './MessagesResponse'
+export * from './messagesResponse'
+export * from './messagesRequestBuilder'

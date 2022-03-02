@@ -1,1 +1,1 @@
-export * from './GetSkypeForBusinessActivityUserDetailWithDateRequestBuilder'
+export * from './getSkypeForBusinessActivityUserDetailWithDateRequestBuilder'

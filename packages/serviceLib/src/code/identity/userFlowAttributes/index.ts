@@ -1,2 +1,2 @@
-export * from './UserFlowAttributesRequestBuilder'
-export * from './UserFlowAttributesResponse'
+export * from './userFlowAttributesRequestBuilder'
+export * from './userFlowAttributesResponse'

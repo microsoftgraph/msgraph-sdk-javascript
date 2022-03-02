@@ -8,7 +8,7 @@
     "license": "ISC",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "clean": "rimraf -r ./dist ./node_modules"
+        "clean": "rimraf -rf ./dist ./node_modules"
     },
     "dependencies": {
         "@microsoft/kiota-abstractions": "*",

@@ -1,1 +1,1 @@
-export * from './DefinitionRequestBuilder'
+export * from './definitionRequestBuilder'

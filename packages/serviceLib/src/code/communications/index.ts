@@ -1,1 +1,1 @@
-export * from './CommunicationsRequestBuilder'
+export * from './communicationsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './SessionsResponse'
-export * from './SessionsRequestBuilder'
+export * from './sessionsRequestBuilder'
+export * from './sessionsResponse'

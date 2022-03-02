@@ -1,1 +1,1 @@
-export * from './InReplyToRequestBuilder'
+export * from './inReplyToRequestBuilder'

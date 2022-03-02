@@ -1,2 +1,2 @@
-export * from './Binom_InvRequestBody'
-export * from './Binom_InvRequestBuilder'
+export * from './binom_InvRequestBody'
+export * from './binom_InvRequestBuilder'

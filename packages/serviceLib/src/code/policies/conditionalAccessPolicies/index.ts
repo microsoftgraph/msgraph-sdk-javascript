@@ -1,2 +1,2 @@
-export * from './ConditionalAccessPoliciesRequestBuilder'
-export * from './ConditionalAccessPoliciesResponse'
+export * from './conditionalAccessPoliciesRequestBuilder'
+export * from './conditionalAccessPoliciesResponse'

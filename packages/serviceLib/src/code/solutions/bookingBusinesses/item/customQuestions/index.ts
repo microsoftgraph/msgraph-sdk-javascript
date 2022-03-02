@@ -1,2 +1,2 @@
-export * from './CustomQuestionsRequestBuilder'
-export * from './CustomQuestionsResponse'
+export * from './customQuestionsResponse'
+export * from './customQuestionsRequestBuilder'

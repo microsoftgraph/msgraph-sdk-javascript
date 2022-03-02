@@ -1,1 +1,1 @@
-export * from './ExternalRequestBuilder'
+export * from './externalRequestBuilder'

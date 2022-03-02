@@ -1,1 +1,1 @@
-export * from './ExternalItemItemRequestBuilder'
+export * from './externalItemItemRequestBuilder'

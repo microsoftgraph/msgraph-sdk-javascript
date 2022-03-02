@@ -1,2 +1,2 @@
-export * from './LinkedResourcesResponse'
-export * from './LinkedResourcesRequestBuilder'
+export * from './linkedResourcesRequestBuilder'
+export * from './linkedResourcesResponse'

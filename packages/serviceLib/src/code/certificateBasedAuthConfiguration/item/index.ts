@@ -1,1 +1,1 @@
-export * from './CertificateBasedAuthConfigurationItemRequestBuilder'
+export * from './certificateBasedAuthConfigurationItemRequestBuilder'

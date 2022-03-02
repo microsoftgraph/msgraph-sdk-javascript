@@ -1,1 +1,1 @@
-export * from './IdentityGovernanceRequestBuilder'
+export * from './identityGovernanceRequestBuilder'

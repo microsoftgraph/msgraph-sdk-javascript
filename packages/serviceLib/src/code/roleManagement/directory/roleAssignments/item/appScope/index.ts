@@ -1,1 +1,1 @@
-export * from './AppScopeRequestBuilder'
+export * from './appScopeRequestBuilder'

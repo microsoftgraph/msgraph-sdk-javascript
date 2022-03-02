@@ -1,2 +1,2 @@
-export * from './RubricsRequestBuilder'
-export * from './RubricsResponse'
+export * from './rubricsResponse'
+export * from './rubricsRequestBuilder'

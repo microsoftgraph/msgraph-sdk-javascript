@@ -1,1 +1,1 @@
-export * from './BrandingRequestBuilder'
+export * from './brandingRequestBuilder'

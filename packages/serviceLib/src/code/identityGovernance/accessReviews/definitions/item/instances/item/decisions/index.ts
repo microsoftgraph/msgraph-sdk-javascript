@@ -1,2 +1,2 @@
-export * from './DecisionsResponse'
-export * from './DecisionsRequestBuilder'
+export * from './decisionsResponse'
+export * from './decisionsRequestBuilder'

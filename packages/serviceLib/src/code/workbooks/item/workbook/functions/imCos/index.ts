@@ -1,2 +1,2 @@
-export * from './ImCosRequestBody'
-export * from './ImCosRequestBuilder'
+export * from './imCosRequestBuilder'
+export * from './imCosRequestBody'

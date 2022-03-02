@@ -1,1 +1,1 @@
-export * from './CalendarItemRequestBuilder'
+export * from './calendarItemRequestBuilder'

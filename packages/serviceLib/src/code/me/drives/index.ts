@@ -1,2 +1,2 @@
-export * from './DrivesResponse'
-export * from './DrivesRequestBuilder'
+export * from './drivesRequestBuilder'
+export * from './drivesResponse'

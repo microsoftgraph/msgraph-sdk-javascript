@@ -1,2 +1,2 @@
-export * from './PercentRank_IncRequestBuilder'
-export * from './PercentRank_IncRequestBody'
+export * from './percentRank_IncRequestBuilder'
+export * from './percentRank_IncRequestBody'

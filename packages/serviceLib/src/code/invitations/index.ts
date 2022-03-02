@@ -1,2 +1,2 @@
-export * from './InvitationsRequestBuilder'
-export * from './InvitationsResponse'
+export * from './invitationsRequestBuilder'
+export * from './invitationsResponse'

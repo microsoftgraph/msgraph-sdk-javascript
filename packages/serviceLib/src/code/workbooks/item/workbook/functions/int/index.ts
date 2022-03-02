@@ -1,2 +1,2 @@
-export * from './IntRequestBody'
-export * from './IntRequestBuilder'
+export * from './intRequestBody'
+export * from './intRequestBuilder'

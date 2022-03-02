@@ -1,2 +1,2 @@
-export * from './UnmuteRequestBuilder'
-export * from './UnmuteRequestBody'
+export * from './unmuteRequestBody'
+export * from './unmuteRequestBuilder'

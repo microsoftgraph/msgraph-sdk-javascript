@@ -1,2 +1,2 @@
-export * from './PhotosResponse'
-export * from './PhotosRequestBuilder'
+export * from './photosResponse'
+export * from './photosRequestBuilder'

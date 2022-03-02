@@ -1,2 +1,2 @@
-export * from './B2xUserFlowsRequestBuilder'
-export * from './B2xUserFlowsResponse'
+export * from './b2xUserFlowsResponse'
+export * from './b2xUserFlowsRequestBuilder'

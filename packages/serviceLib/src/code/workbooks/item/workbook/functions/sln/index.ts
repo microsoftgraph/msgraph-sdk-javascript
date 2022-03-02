@@ -1,2 +1,2 @@
-export * from './SlnRequestBody'
-export * from './SlnRequestBuilder'
+export * from './slnRequestBody'
+export * from './slnRequestBuilder'

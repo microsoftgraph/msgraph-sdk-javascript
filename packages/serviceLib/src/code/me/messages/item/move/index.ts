@@ -1,2 +1,2 @@
-export * from './MoveRequestBody'
-export * from './MoveRequestBuilder'
+export * from './moveRequestBuilder'
+export * from './moveRequestBody'

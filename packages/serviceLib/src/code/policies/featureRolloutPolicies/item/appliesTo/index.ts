@@ -1,2 +1,2 @@
-export * from './AppliesToResponse'
-export * from './AppliesToRequestBuilder'
+export * from './appliesToResponse'
+export * from './appliesToRequestBuilder'

@@ -1,3 +1,3 @@
-export * from './RemoveRequestBuilder'
-export * from './Remove'
-export * from './RemoveRequestBody'
+export * from './removeRequestBody'
+export * from './remove'
+export * from './removeRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './LanguagesResponse'
-export * from './LanguagesRequestBuilder'
+export * from './languagesRequestBuilder'
+export * from './languagesResponse'

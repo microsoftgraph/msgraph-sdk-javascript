@@ -1,2 +1,2 @@
-export * from './CoupPcdRequestBuilder'
-export * from './CoupPcdRequestBody'
+export * from './coupPcdRequestBuilder'
+export * from './coupPcdRequestBody'

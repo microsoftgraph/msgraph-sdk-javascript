@@ -1,1 +1,1 @@
-export * from './TotalRowRangeRequestBuilder'
+export * from './totalRowRangeRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './CalendarViewResponse'
-export * from './CalendarViewRequestBuilder'
+export * from './calendarViewRequestBuilder'
+export * from './calendarViewResponse'

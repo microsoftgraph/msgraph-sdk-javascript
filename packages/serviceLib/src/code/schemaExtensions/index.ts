@@ -1,2 +1,2 @@
-export * from './SchemaExtensionsResponse'
-export * from './SchemaExtensionsRequestBuilder'
+export * from './schemaExtensionsResponse'
+export * from './schemaExtensionsRequestBuilder'

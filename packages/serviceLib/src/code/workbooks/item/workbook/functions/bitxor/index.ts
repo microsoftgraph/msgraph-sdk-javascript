@@ -1,2 +1,2 @@
-export * from './BitxorRequestBuilder'
-export * from './BitxorRequestBody'
+export * from './bitxorRequestBody'
+export * from './bitxorRequestBuilder'

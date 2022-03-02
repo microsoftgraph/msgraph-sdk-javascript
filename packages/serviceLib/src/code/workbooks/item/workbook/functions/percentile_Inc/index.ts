@@ -1,2 +1,2 @@
-export * from './Percentile_IncRequestBody'
-export * from './Percentile_IncRequestBuilder'
+export * from './percentile_IncRequestBody'
+export * from './percentile_IncRequestBuilder'

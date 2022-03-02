@@ -1,3 +1,3 @@
-export * from './Grant'
-export * from './GrantRequestBuilder'
-export * from './GrantRequestBody'
+export * from './grantRequestBody'
+export * from './grant'
+export * from './grantRequestBuilder'

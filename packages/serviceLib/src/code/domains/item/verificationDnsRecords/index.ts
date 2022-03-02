@@ -1,2 +1,2 @@
-export * from './VerificationDnsRecordsRequestBuilder'
-export * from './VerificationDnsRecordsResponse'
+export * from './verificationDnsRecordsResponse'
+export * from './verificationDnsRecordsRequestBuilder'

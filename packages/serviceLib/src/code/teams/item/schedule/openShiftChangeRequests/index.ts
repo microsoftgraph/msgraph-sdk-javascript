@@ -1,2 +1,2 @@
-export * from './OpenShiftChangeRequestsResponse'
-export * from './OpenShiftChangeRequestsRequestBuilder'
+export * from './openShiftChangeRequestsResponse'
+export * from './openShiftChangeRequestsRequestBuilder'

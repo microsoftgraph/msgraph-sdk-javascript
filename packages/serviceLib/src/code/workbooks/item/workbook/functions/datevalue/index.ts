@@ -1,2 +1,2 @@
-export * from './DatevalueRequestBuilder'
-export * from './DatevalueRequestBody'
+export * from './datevalueRequestBody'
+export * from './datevalueRequestBuilder'

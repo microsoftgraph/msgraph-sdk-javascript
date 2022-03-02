@@ -1,1 +1,1 @@
-export * from './ColumnLinkItemRequestBuilder'
+export * from './columnLinkItemRequestBuilder'

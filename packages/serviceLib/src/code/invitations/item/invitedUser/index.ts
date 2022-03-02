@@ -1,1 +1,1 @@
-export * from './InvitedUserRequestBuilder'
+export * from './invitedUserRequestBuilder'

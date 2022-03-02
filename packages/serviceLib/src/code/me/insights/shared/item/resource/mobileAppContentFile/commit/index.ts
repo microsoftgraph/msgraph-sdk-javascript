@@ -1,2 +1,2 @@
-export * from './CommitRequestBody'
-export * from './CommitRequestBuilder'
+export * from './commitRequestBody'
+export * from './commitRequestBuilder'

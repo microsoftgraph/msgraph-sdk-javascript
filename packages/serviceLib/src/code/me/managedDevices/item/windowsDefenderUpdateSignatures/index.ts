@@ -1,1 +1,1 @@
-export * from './WindowsDefenderUpdateSignaturesRequestBuilder'
+export * from './windowsDefenderUpdateSignaturesRequestBuilder'

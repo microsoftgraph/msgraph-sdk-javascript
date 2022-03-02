@@ -1,2 +1,2 @@
-export * from './ApiConnectorsResponse'
-export * from './ApiConnectorsRequestBuilder'
+export * from './apiConnectorsRequestBuilder'
+export * from './apiConnectorsResponse'

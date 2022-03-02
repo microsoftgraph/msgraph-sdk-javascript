@@ -1,2 +1,2 @@
-export * from './YieldDiscRequestBody'
-export * from './YieldDiscRequestBuilder'
+export * from './yieldDiscRequestBody'
+export * from './yieldDiscRequestBuilder'

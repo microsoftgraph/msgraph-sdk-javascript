@@ -1,1 +1,1 @@
-export * from './DirectoryAuditItemRequestBuilder'
+export * from './directoryAuditItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder'
+export * from './managedDeviceMobileAppConfigurationUserStatusItemRequestBuilder'

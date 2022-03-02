@@ -1,2 +1,2 @@
-export * from './FeatureRolloutPoliciesResponse'
-export * from './FeatureRolloutPoliciesRequestBuilder'
+export * from './featureRolloutPoliciesResponse'
+export * from './featureRolloutPoliciesRequestBuilder'

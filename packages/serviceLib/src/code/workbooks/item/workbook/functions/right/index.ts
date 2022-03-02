@@ -1,2 +1,2 @@
-export * from './RightRequestBody'
-export * from './RightRequestBuilder'
+export * from './rightRequestBuilder'
+export * from './rightRequestBody'

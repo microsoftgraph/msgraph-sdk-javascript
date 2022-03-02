@@ -1,2 +1,2 @@
-export * from './LnRequestBuilder'
-export * from './LnRequestBody'
+export * from './lnRequestBuilder'
+export * from './lnRequestBody'

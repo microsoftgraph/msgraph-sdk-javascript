@@ -1,2 +1,2 @@
-export * from './Confidence_TRequestBody'
-export * from './Confidence_TRequestBuilder'
+export * from './confidence_TRequestBody'
+export * from './confidence_TRequestBuilder'

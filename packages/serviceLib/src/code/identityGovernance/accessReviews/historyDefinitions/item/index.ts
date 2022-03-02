@@ -1,1 +1,1 @@
-export * from './AccessReviewHistoryDefinitionItemRequestBuilder'
+export * from './accessReviewHistoryDefinitionItemRequestBuilder'

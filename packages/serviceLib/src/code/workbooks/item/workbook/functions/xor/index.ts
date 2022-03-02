@@ -1,2 +1,2 @@
-export * from './XorRequestBody'
-export * from './XorRequestBuilder'
+export * from './xorRequestBuilder'
+export * from './xorRequestBody'

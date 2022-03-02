@@ -1,1 +1,1 @@
-export * from './AssignmentDefaultsRequestBuilder'
+export * from './assignmentDefaultsRequestBuilder'

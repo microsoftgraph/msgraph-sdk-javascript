@@ -1,1 +1,1 @@
-export * from './FilesFolderRequestBuilder'
+export * from './filesFolderRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './AllowedGroupsResponse'
-export * from './AllowedGroupsRequestBuilder'
+export * from './allowedGroupsRequestBuilder'
+export * from './allowedGroupsResponse'

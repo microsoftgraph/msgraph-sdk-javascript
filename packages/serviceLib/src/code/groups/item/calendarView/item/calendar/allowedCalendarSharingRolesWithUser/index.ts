@@ -1,1 +1,1 @@
-export * from './AllowedCalendarSharingRolesWithUserRequestBuilder'
+export * from './allowedCalendarSharingRolesWithUserRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './GetByIdsRequestBuilder'
-export * from './GetByIdsRequestBody'
+export * from './getByIdsRequestBuilder'
+export * from './getByIdsRequestBody'

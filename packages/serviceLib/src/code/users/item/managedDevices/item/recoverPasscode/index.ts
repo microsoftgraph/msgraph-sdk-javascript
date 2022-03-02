@@ -1,1 +1,1 @@
-export * from './RecoverPasscodeRequestBuilder'
+export * from './recoverPasscodeRequestBuilder'

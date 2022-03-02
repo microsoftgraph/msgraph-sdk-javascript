@@ -1,2 +1,2 @@
-export * from './Hex2DecRequestBody'
-export * from './Hex2DecRequestBuilder'
+export * from './hex2DecRequestBody'
+export * from './hex2DecRequestBuilder'

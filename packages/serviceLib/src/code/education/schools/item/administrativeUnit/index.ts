@@ -1,1 +1,1 @@
-export * from './AdministrativeUnitRequestBuilder'
+export * from './administrativeUnitRequestBuilder'

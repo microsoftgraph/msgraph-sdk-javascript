@@ -1,2 +1,2 @@
-export * from './ThreadsRequestBuilder'
-export * from './ThreadsResponse'
+export * from './threadsResponse'
+export * from './threadsRequestBuilder'

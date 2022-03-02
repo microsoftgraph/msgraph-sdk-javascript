@@ -1,2 +1,2 @@
-export * from './RiskyUsersRequestBuilder'
-export * from './RiskyUsersResponse'
+export * from './riskyUsersResponse'
+export * from './riskyUsersRequestBuilder'

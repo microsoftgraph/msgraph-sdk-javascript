@@ -1,2 +1,2 @@
-export * from './QueryRequestBody'
-export * from './QueryRequestBuilder'
+export * from './queryRequestBody'
+export * from './queryRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './CloseSessionRequestBuilder'
+export * from './closeSessionRequestBuilder'

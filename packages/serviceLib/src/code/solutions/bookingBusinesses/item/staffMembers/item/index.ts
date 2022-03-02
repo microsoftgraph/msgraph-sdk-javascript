@@ -1,1 +1,1 @@
-export * from './BookingStaffMemberBaseItemRequestBuilder'
+export * from './bookingStaffMemberBaseItemRequestBuilder'

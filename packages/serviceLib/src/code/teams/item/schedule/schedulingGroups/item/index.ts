@@ -1,1 +1,1 @@
-export * from './SchedulingGroupItemRequestBuilder'
+export * from './schedulingGroupItemRequestBuilder'

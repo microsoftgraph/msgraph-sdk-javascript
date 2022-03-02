@@ -1,2 +1,2 @@
-export * from './TabsResponse'
-export * from './TabsRequestBuilder'
+export * from './tabsResponse'
+export * from './tabsRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './SinRequestBuilder'
-export * from './SinRequestBody'
+export * from './sinRequestBuilder'
+export * from './sinRequestBody'

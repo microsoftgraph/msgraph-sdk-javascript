@@ -1,2 +1,2 @@
-export * from './MergeRequestBuilder'
-export * from './MergeRequestBody'
+export * from './mergeRequestBuilder'
+export * from './mergeRequestBody'

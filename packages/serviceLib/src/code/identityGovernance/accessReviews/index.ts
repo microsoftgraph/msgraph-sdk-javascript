@@ -1,1 +1,1 @@
-export * from './AccessReviewsRequestBuilder'
+export * from './accessReviewsRequestBuilder'

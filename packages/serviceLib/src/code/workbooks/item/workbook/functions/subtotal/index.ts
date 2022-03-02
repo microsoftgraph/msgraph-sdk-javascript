@@ -1,2 +1,2 @@
-export * from './SubtotalRequestBody'
-export * from './SubtotalRequestBuilder'
+export * from './subtotalRequestBody'
+export * from './subtotalRequestBuilder'

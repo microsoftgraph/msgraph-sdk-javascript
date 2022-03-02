@@ -1,2 +1,2 @@
-export * from './AppConsentRequestsRequestBuilder'
-export * from './AppConsentRequestsResponse'
+export * from './appConsentRequestsRequestBuilder'
+export * from './appConsentRequestsResponse'

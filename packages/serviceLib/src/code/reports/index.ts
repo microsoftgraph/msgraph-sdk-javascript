@@ -1,1 +1,1 @@
-export * from './ReportsRequestBuilder'
+export * from './reportsRequestBuilder'

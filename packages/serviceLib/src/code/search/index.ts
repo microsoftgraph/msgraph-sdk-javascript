@@ -1,1 +1,1 @@
-export * from './SearchRequestBuilder'
+export * from './searchRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './SyncRequestBuilder'
-export * from './SyncRequestBody'
+export * from './syncRequestBuilder'
+export * from './syncRequestBody'

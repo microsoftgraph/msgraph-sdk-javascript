@@ -1,2 +1,2 @@
-export * from './TransitiveMembersRequestBuilder'
-export * from './TransitiveMembersResponse'
+export * from './transitiveMembersResponse'
+export * from './transitiveMembersRequestBuilder'

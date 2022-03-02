@@ -1,2 +1,2 @@
-export * from './VlookupRequestBuilder'
-export * from './VlookupRequestBody'
+export * from './vlookupRequestBuilder'
+export * from './vlookupRequestBody'

@@ -1,1 +1,1 @@
-export * from './ChatMessageHostedContentItemRequestBuilder'
+export * from './chatMessageHostedContentItemRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './UserStatusOverviewRequestBuilder'
+export * from './userStatusOverviewRequestBuilder'

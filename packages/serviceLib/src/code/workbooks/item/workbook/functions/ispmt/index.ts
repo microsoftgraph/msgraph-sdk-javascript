@@ -1,2 +1,2 @@
-export * from './IspmtRequestBuilder'
-export * from './IspmtRequestBody'
+export * from './ispmtRequestBuilder'
+export * from './ispmtRequestBody'

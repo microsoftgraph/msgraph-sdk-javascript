@@ -1,1 +1,1 @@
-export * from './ParentSectionRequestBuilder'
+export * from './parentSectionRequestBuilder'

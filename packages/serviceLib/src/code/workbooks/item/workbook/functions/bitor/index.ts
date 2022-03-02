@@ -1,2 +1,2 @@
-export * from './BitorRequestBuilder'
-export * from './BitorRequestBody'
+export * from './bitorRequestBuilder'
+export * from './bitorRequestBody'

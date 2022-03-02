@@ -1,2 +1,2 @@
-export * from './CallRecordsResponse'
-export * from './CallRecordsRequestBuilder'
+export * from './callRecordsResponse'
+export * from './callRecordsRequestBuilder'

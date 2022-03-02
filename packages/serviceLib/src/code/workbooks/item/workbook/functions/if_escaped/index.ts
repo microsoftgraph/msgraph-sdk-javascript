@@ -1,2 +1,2 @@
-export * from './IfRequestBody'
-export * from './IfRequestBuilder'
+export * from './ifRequestBody'
+export * from './ifRequestBuilder'

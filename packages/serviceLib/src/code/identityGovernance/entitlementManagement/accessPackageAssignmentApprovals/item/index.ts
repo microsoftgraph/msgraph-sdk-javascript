@@ -1,1 +1,1 @@
-export * from './ApprovalItemRequestBuilder'
+export * from './approvalItemRequestBuilder'

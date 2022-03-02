@@ -1,1 +1,1 @@
-export * from './NamedLocationItemRequestBuilder'
+export * from './namedLocationItemRequestBuilder'

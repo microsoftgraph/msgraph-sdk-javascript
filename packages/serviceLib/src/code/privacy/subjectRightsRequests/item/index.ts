@@ -1,1 +1,1 @@
-export * from './SubjectRightsRequestItemRequestBuilder'
+export * from './subjectRightsRequestItemRequestBuilder'

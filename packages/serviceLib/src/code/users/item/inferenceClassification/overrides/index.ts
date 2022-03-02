@@ -1,2 +1,2 @@
-export * from './OverridesResponse'
-export * from './OverridesRequestBuilder'
+export * from './overridesResponse'
+export * from './overridesRequestBuilder'

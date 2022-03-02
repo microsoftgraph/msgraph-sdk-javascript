@@ -1,2 +1,2 @@
-export * from './CountARequestBuilder'
-export * from './CountARequestBody'
+export * from './countARequestBody'
+export * from './countARequestBuilder'

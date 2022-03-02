@@ -1,2 +1,2 @@
-export * from './DirectoryAuditsRequestBuilder'
-export * from './DirectoryAuditsResponse'
+export * from './directoryAuditsRequestBuilder'
+export * from './directoryAuditsResponse'

@@ -1,2 +1,2 @@
-export * from './ShiftsResponse'
-export * from './ShiftsRequestBuilder'
+export * from './shiftsRequestBuilder'
+export * from './shiftsResponse'

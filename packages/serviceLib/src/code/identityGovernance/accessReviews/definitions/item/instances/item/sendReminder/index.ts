@@ -1,1 +1,1 @@
-export * from './SendReminderRequestBuilder'
+export * from './sendReminderRequestBuilder'

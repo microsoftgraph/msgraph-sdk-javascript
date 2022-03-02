@@ -1,1 +1,1 @@
-export * from './ManagedAppRegistrationItemRequestBuilder'
+export * from './managedAppRegistrationItemRequestBuilder'

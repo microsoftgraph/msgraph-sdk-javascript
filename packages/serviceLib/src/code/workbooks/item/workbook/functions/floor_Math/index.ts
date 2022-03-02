@@ -1,2 +1,2 @@
-export * from './Floor_MathRequestBody'
-export * from './Floor_MathRequestBuilder'
+export * from './floor_MathRequestBuilder'
+export * from './floor_MathRequestBody'

@@ -1,2 +1,2 @@
-export * from './T_Dist_2TRequestBody'
-export * from './T_Dist_2TRequestBuilder'
+export * from './t_Dist_2TRequestBody'
+export * from './t_Dist_2TRequestBuilder'

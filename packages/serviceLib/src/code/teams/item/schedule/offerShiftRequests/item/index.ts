@@ -1,1 +1,1 @@
-export * from './OfferShiftRequestItemRequestBuilder'
+export * from './offerShiftRequestItemRequestBuilder'

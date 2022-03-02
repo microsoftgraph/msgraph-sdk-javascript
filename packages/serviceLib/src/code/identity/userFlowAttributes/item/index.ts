@@ -1,1 +1,1 @@
-export * from './IdentityUserFlowAttributeItemRequestBuilder'
+export * from './identityUserFlowAttributeItemRequestBuilder'

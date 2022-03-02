@@ -1,1 +1,1 @@
-export * from './GetYammerActivityUserCountsWithPeriodRequestBuilder'
+export * from './getYammerActivityUserCountsWithPeriodRequestBuilder'

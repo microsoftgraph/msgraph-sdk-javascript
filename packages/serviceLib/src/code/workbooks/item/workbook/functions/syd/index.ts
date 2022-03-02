@@ -1,2 +1,2 @@
-export * from './SydRequestBuilder'
-export * from './SydRequestBody'
+export * from './sydRequestBuilder'
+export * from './sydRequestBody'

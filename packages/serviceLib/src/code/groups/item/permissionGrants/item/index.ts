@@ -1,1 +1,1 @@
-export * from './ResourceSpecificPermissionGrantItemRequestBuilder'
+export * from './resourceSpecificPermissionGrantItemRequestBuilder'

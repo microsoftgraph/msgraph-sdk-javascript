@@ -1,2 +1,2 @@
-export * from './ImSinhRequestBody'
-export * from './ImSinhRequestBuilder'
+export * from './imSinhRequestBody'
+export * from './imSinhRequestBuilder'

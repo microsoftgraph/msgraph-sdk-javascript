@@ -1,2 +1,2 @@
-export * from './ScopedRoleMembersRequestBuilder'
-export * from './ScopedRoleMembersResponse'
+export * from './scopedRoleMembersResponse'
+export * from './scopedRoleMembersRequestBuilder'

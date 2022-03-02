@@ -1,2 +1,2 @@
-export * from './IosUpdateStatusesResponse'
-export * from './IosUpdateStatusesRequestBuilder'
+export * from './iosUpdateStatusesResponse'
+export * from './iosUpdateStatusesRequestBuilder'

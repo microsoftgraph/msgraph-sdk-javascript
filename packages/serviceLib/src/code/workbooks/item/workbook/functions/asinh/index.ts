@@ -1,2 +1,2 @@
-export * from './AsinhRequestBuilder'
-export * from './AsinhRequestBody'
+export * from './asinhRequestBuilder'
+export * from './asinhRequestBody'

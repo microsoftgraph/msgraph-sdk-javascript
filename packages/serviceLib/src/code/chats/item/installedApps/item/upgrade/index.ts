@@ -1,1 +1,1 @@
-export * from './UpgradeRequestBuilder'
+export * from './upgradeRequestBuilder'

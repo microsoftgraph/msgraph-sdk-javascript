@@ -1,2 +1,2 @@
-export * from './TokenLifetimePoliciesRequestBuilder'
-export * from './TokenLifetimePoliciesResponse'
+export * from './tokenLifetimePoliciesRequestBuilder'
+export * from './tokenLifetimePoliciesResponse'

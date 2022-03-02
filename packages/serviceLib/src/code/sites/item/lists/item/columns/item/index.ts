@@ -1,1 +1,1 @@
-export * from './ColumnDefinitionItemRequestBuilder'
+export * from './columnDefinitionItemRequestBuilder'

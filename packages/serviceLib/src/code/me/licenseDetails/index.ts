@@ -1,2 +1,2 @@
-export * from './LicenseDetailsRequestBuilder'
-export * from './LicenseDetailsResponse'
+export * from './licenseDetailsRequestBuilder'
+export * from './licenseDetailsResponse'

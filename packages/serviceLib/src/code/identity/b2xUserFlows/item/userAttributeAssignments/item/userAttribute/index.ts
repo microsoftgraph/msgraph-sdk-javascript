@@ -1,1 +1,1 @@
-export * from './UserAttributeRequestBuilder'
+export * from './userAttributeRequestBuilder'

@@ -1,1 +1,1 @@
-export * from './LogoRequestBuilder'
+export * from './logoRequestBuilder'

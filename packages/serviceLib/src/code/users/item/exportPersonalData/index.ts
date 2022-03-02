@@ -1,2 +1,2 @@
-export * from './ExportPersonalDataRequestBody'
-export * from './ExportPersonalDataRequestBuilder'
+export * from './exportPersonalDataRequestBuilder'
+export * from './exportPersonalDataRequestBody'

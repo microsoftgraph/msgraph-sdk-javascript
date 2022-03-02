@@ -1,2 +1,2 @@
-export * from './SetOrderRequestBody'
-export * from './SetOrderRequestBuilder'
+export * from './setOrderRequestBody'
+export * from './setOrderRequestBuilder'

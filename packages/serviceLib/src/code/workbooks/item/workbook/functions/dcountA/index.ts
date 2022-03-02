@@ -1,2 +1,2 @@
-export * from './DcountARequestBuilder'
-export * from './DcountARequestBody'
+export * from './dcountARequestBuilder'
+export * from './dcountARequestBody'

@@ -1,2 +1,2 @@
-export * from './MobileAppsResponse'
-export * from './MobileAppsRequestBuilder'
+export * from './mobileAppsResponse'
+export * from './mobileAppsRequestBuilder'

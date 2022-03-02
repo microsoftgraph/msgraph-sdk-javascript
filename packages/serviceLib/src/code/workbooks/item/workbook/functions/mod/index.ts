@@ -1,2 +1,2 @@
-export * from './ModRequestBody'
-export * from './ModRequestBuilder'
+export * from './modRequestBuilder'
+export * from './modRequestBody'

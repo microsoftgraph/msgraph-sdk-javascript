@@ -1,2 +1,2 @@
-export * from './Rank_AvgRequestBody'
-export * from './Rank_AvgRequestBuilder'
+export * from './rank_AvgRequestBody'
+export * from './rank_AvgRequestBuilder'

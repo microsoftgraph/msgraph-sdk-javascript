@@ -1,2 +1,2 @@
-export * from './PagesRequestBuilder'
-export * from './PagesResponse'
+export * from './pagesResponse'
+export * from './pagesRequestBuilder'

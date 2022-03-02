@@ -1,2 +1,2 @@
-export * from './SetPriorityRequestBody'
-export * from './SetPriorityRequestBuilder'
+export * from './setPriorityRequestBody'
+export * from './setPriorityRequestBuilder'

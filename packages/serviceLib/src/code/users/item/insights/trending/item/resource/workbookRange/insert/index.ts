@@ -1,2 +1,2 @@
-export * from './InsertRequestBuilder'
-export * from './InsertRequestBody'
+export * from './insertRequestBody'
+export * from './insertRequestBuilder'

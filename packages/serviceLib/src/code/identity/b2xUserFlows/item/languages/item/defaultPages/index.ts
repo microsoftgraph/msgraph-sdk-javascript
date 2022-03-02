@@ -1,2 +1,2 @@
-export * from './DefaultPagesResponse'
-export * from './DefaultPagesRequestBuilder'
+export * from './defaultPagesRequestBuilder'
+export * from './defaultPagesResponse'

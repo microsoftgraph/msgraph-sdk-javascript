@@ -1,2 +1,2 @@
-export * from './OddFPriceRequestBody'
-export * from './OddFPriceRequestBuilder'
+export * from './oddFPriceRequestBuilder'
+export * from './oddFPriceRequestBody'

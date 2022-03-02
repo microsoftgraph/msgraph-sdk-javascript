@@ -1,1 +1,1 @@
-export * from './VerifyRequestBuilder'
+export * from './verifyRequestBuilder'

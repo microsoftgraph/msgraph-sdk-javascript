@@ -1,2 +1,2 @@
-export * from './MembersWithLicenseErrorsResponse'
-export * from './MembersWithLicenseErrorsRequestBuilder'
+export * from './membersWithLicenseErrorsRequestBuilder'
+export * from './membersWithLicenseErrorsResponse'

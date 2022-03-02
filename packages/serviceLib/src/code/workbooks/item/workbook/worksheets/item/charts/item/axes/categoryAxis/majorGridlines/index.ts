@@ -1,1 +1,1 @@
-export * from './MajorGridlinesRequestBuilder'
+export * from './majorGridlinesRequestBuilder'

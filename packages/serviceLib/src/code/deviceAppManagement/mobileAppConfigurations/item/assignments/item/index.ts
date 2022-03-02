@@ -1,1 +1,1 @@
-export * from './ManagedDeviceMobileAppConfigurationAssignmentItemRequestBuilder'
+export * from './managedDeviceMobileAppConfigurationAssignmentItemRequestBuilder'

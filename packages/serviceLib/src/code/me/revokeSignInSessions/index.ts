@@ -1,1 +1,1 @@
-export * from './RevokeSignInSessionsRequestBuilder'
+export * from './revokeSignInSessionsRequestBuilder'

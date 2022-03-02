@@ -1,2 +1,2 @@
-export * from './DaysRequestBuilder'
-export * from './DaysRequestBody'
+export * from './daysRequestBody'
+export * from './daysRequestBuilder'

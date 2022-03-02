@@ -1,1 +1,1 @@
-export * from './GetSharePointActivityUserDetailWithDateRequestBuilder'
+export * from './getSharePointActivityUserDetailWithDateRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './CombinaRequestBody'
-export * from './CombinaRequestBuilder'
+export * from './combinaRequestBody'
+export * from './combinaRequestBuilder'

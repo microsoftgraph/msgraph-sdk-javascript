@@ -1,1 +1,1 @@
-export * from './TeamsAppItemRequestBuilder'
+export * from './teamsAppItemRequestBuilder'

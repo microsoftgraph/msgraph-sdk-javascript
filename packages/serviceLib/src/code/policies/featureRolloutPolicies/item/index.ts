@@ -1,1 +1,1 @@
-export * from './FeatureRolloutPolicyItemRequestBuilder'
+export * from './featureRolloutPolicyItemRequestBuilder'

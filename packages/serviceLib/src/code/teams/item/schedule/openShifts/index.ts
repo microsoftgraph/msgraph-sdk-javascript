@@ -1,2 +1,2 @@
-export * from './OpenShiftsResponse'
-export * from './OpenShiftsRequestBuilder'
+export * from './openShiftsRequestBuilder'
+export * from './openShiftsResponse'

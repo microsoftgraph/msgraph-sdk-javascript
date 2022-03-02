@@ -1,1 +1,1 @@
-export * from './TitleRequestBuilder'
+export * from './titleRequestBuilder'

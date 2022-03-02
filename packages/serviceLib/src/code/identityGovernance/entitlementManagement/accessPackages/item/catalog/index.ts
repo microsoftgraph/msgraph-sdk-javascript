@@ -1,1 +1,1 @@
-export * from './CatalogRequestBuilder'
+export * from './catalogRequestBuilder'

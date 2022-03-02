@@ -1,2 +1,2 @@
-export * from './NRequestBuilder'
-export * from './NRequestBody'
+export * from './nRequestBuilder'
+export * from './nRequestBody'

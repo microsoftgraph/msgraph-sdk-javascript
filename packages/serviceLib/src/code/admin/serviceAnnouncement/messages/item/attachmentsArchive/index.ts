@@ -1,1 +1,1 @@
-export * from './AttachmentsArchiveRequestBuilder'
+export * from './attachmentsArchiveRequestBuilder'

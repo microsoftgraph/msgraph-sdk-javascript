@@ -1,2 +1,2 @@
-export * from './DeletedItemsResponse'
-export * from './DeletedItemsRequestBuilder'
+export * from './deletedItemsResponse'
+export * from './deletedItemsRequestBuilder'

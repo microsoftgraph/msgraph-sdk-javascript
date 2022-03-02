@@ -1,1 +1,1 @@
-export * from './OutlookRequestBuilder'
+export * from './outlookRequestBuilder'

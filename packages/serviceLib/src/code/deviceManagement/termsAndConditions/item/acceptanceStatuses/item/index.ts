@@ -1,1 +1,1 @@
-export * from './TermsAndConditionsAcceptanceStatusItemRequestBuilder'
+export * from './termsAndConditionsAcceptanceStatusItemRequestBuilder'

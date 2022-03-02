@@ -1,2 +1,2 @@
-export * from './Gamma_DistRequestBody'
-export * from './Gamma_DistRequestBuilder'
+export * from './gamma_DistRequestBody'
+export * from './gamma_DistRequestBuilder'

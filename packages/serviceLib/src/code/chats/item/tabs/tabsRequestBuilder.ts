@@ -24,7 +24,7 @@ export class TabsRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Get tabs from chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -50,7 +50,7 @@ export class TabsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Create new navigation property to tabs for chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -68,7 +68,7 @@ export class TabsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Get tabs from chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -91,7 +91,7 @@ export class TabsRequestBuilder {
         return this.requestAdapter?.sendAsync<TabsResponse>(requestInfo, TabsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Create new navigation property to tabs for chats
+     * A collection of all the tabs in the chat. Nullable.
      * @param body 
      * @param h Request headers
      * @param o Request options

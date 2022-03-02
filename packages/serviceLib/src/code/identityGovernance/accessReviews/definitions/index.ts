@@ -1,2 +1,2 @@
-export * from './DefinitionsResponse'
-export * from './DefinitionsRequestBuilder'
+export * from './definitionsResponse'
+export * from './definitionsRequestBuilder'

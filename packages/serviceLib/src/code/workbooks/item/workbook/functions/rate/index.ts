@@ -1,2 +1,2 @@
-export * from './RateRequestBuilder'
-export * from './RateRequestBody'
+export * from './rateRequestBuilder'
+export * from './rateRequestBody'

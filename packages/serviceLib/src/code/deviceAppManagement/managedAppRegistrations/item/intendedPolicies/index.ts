@@ -1,2 +1,2 @@
-export * from './IntendedPoliciesRequestBuilder'
-export * from './IntendedPoliciesResponse'
+export * from './intendedPoliciesRequestBuilder'
+export * from './intendedPoliciesResponse'

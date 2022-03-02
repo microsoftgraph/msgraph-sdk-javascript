@@ -1,1 +1,1 @@
-export * from './AddFavoriteRequestBuilder'
+export * from './addFavoriteRequestBuilder'

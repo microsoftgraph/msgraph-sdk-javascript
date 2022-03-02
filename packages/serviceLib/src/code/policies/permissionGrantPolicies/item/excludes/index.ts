@@ -1,2 +1,2 @@
-export * from './ExcludesRequestBuilder'
-export * from './ExcludesResponse'
+export * from './excludesResponse'
+export * from './excludesRequestBuilder'

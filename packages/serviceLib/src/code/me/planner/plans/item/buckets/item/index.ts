@@ -1,1 +1,1 @@
-export * from './PlannerBucketItemRequestBuilder'
+export * from './plannerBucketItemRequestBuilder'

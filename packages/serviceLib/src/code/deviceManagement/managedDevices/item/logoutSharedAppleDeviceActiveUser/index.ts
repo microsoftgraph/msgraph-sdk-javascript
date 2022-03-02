@@ -1,1 +1,1 @@
-export * from './LogoutSharedAppleDeviceActiveUserRequestBuilder'
+export * from './logoutSharedAppleDeviceActiveUserRequestBuilder'

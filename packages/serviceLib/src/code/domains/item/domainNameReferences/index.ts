@@ -1,2 +1,2 @@
-export * from './DomainNameReferencesResponse'
-export * from './DomainNameReferencesRequestBuilder'
+export * from './domainNameReferencesResponse'
+export * from './domainNameReferencesRequestBuilder'

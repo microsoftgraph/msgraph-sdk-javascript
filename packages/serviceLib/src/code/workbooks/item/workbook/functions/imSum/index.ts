@@ -1,2 +1,2 @@
-export * from './ImSumRequestBuilder'
-export * from './ImSumRequestBody'
+export * from './imSumRequestBody'
+export * from './imSumRequestBuilder'

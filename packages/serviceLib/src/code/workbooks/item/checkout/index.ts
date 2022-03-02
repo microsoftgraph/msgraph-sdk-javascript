@@ -1,1 +1,1 @@
-export * from './CheckoutRequestBuilder'
+export * from './checkoutRequestBuilder'

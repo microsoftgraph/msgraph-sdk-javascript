@@ -1,1 +1,1 @@
-export * from './RangeRequestBuilder'
+export * from './rangeRequestBuilder'

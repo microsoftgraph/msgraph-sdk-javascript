@@ -1,2 +1,2 @@
-export * from './ColumnsRequestBuilder'
-export * from './ColumnsResponse'
+export * from './columnsResponse'
+export * from './columnsRequestBuilder'

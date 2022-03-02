@@ -1,2 +1,2 @@
-export * from './Quartile_ExcRequestBody'
-export * from './Quartile_ExcRequestBuilder'
+export * from './quartile_ExcRequestBody'
+export * from './quartile_ExcRequestBuilder'

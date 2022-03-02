@@ -1,2 +1,2 @@
-export * from './AccrIntMRequestBuilder'
-export * from './AccrIntMRequestBody'
+export * from './accrIntMRequestBody'
+export * from './accrIntMRequestBuilder'

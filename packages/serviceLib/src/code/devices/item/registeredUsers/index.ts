@@ -1,2 +1,2 @@
-export * from './RegisteredUsersRequestBuilder'
-export * from './RegisteredUsersResponse'
+export * from './registeredUsersResponse'
+export * from './registeredUsersRequestBuilder'

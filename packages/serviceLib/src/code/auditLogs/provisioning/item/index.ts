@@ -1,1 +1,1 @@
-export * from './ProvisioningObjectSummaryItemRequestBuilder'
+export * from './provisioningObjectSummaryItemRequestBuilder'

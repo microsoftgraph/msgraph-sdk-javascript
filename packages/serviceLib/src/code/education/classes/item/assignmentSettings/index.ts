@@ -1,1 +1,1 @@
-export * from './AssignmentSettingsRequestBuilder'
+export * from './assignmentSettingsRequestBuilder'

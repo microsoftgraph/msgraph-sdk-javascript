@@ -1,2 +1,2 @@
-export * from './SchoolsRequestBuilder'
-export * from './SchoolsResponse'
+export * from './schoolsResponse'
+export * from './schoolsRequestBuilder'

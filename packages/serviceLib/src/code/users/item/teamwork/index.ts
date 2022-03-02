@@ -1,1 +1,1 @@
-export * from './TeamworkRequestBuilder'
+export * from './teamworkRequestBuilder'

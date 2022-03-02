@@ -1,1 +1,1 @@
-export * from './DeviceComplianceUserStatusItemRequestBuilder'
+export * from './deviceComplianceUserStatusItemRequestBuilder'

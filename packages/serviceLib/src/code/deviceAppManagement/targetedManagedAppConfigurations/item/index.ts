@@ -1,1 +1,1 @@
-export * from './TargetedManagedAppConfigurationItemRequestBuilder'
+export * from './targetedManagedAppConfigurationItemRequestBuilder'

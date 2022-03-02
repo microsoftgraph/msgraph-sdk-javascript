@@ -1,2 +1,2 @@
-export * from './UpdateRecordingStatusRequestBuilder'
-export * from './UpdateRecordingStatusRequestBody'
+export * from './updateRecordingStatusRequestBuilder'
+export * from './updateRecordingStatusRequestBody'

@@ -1,2 +1,2 @@
-export * from './DirectoryRoleTemplatesRequestBuilder'
-export * from './DirectoryRoleTemplatesResponse'
+export * from './directoryRoleTemplatesRequestBuilder'
+export * from './directoryRoleTemplatesResponse'

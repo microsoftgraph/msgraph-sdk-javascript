@@ -1,2 +1,2 @@
-export * from './TbillEqRequestBody'
-export * from './TbillEqRequestBuilder'
+export * from './tbillEqRequestBody'
+export * from './tbillEqRequestBuilder'

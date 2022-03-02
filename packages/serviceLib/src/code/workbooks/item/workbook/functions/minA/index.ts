@@ -1,2 +1,2 @@
-export * from './MinARequestBody'
-export * from './MinARequestBuilder'
+export * from './minARequestBuilder'
+export * from './minARequestBody'

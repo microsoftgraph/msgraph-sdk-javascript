@@ -1,2 +1,2 @@
-export * from './FixedRequestBody'
-export * from './FixedRequestBuilder'
+export * from './fixedRequestBody'
+export * from './fixedRequestBuilder'

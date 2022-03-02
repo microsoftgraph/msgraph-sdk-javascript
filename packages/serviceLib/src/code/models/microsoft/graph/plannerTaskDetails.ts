@@ -4,7 +4,7 @@ import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstrac
 export class PlannerTaskDetails extends Entity implements Parsable {
     /** The collection of checklist items on the task.  */
     private _checklist?: PlannerChecklistItems | undefined;
-    /** Description of the task  */
+    /** Description of the task.  */
     private _description?: string | undefined;
     /** This sets the type of preview that shows up on the task. The possible values are: automatic, noPreview, checklist, description, reference. When set to automatic the displayed preview is chosen by the app viewing the task.  */
     private _previewType?: PlannerPreviewType | undefined;
@@ -24,7 +24,7 @@ export class PlannerTaskDetails extends Entity implements Parsable {
         return this._checklist;
     };
     /**
-     * Gets the description property value. Description of the task
+     * Gets the description property value. Description of the task.
      * @returns a string
      */
     public get description() {
@@ -76,7 +76,7 @@ export class PlannerTaskDetails extends Entity implements Parsable {
         this._checklist = value;
     };
     /**
-     * Sets the description property value. Description of the task
+     * Sets the description property value. Description of the task.
      * @param value Value to set for the description property.
      */
     public set description(value: string | undefined) {

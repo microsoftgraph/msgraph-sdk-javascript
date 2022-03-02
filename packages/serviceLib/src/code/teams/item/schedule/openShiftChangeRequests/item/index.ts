@@ -1,1 +1,1 @@
-export * from './OpenShiftChangeRequestItemRequestBuilder'
+export * from './openShiftChangeRequestItemRequestBuilder'

@@ -1,2 +1,2 @@
-export * from './DstDevPRequestBuilder'
-export * from './DstDevPRequestBody'
+export * from './dstDevPRequestBuilder'
+export * from './dstDevPRequestBody'

@@ -1,1 +1,1 @@
-export * from './SortRequestBuilder'
+export * from './sortRequestBuilder'

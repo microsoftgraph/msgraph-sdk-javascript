@@ -1,2 +1,2 @@
-export * from './OnlineMeetingsRequestBuilder'
-export * from './OnlineMeetingsResponse'
+export * from './onlineMeetingsRequestBuilder'
+export * from './onlineMeetingsResponse'

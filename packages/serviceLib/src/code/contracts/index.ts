@@ -1,2 +1,2 @@
-export * from './ContractsResponse'
-export * from './ContractsRequestBuilder'
+export * from './contractsResponse'
+export * from './contractsRequestBuilder'

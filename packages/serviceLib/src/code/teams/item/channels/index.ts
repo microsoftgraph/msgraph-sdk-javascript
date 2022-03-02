@@ -1,2 +1,2 @@
-export * from './ChannelsResponse'
-export * from './ChannelsRequestBuilder'
+export * from './channelsResponse'
+export * from './channelsRequestBuilder'

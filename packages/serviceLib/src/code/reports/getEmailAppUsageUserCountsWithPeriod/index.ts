@@ -1,1 +1,1 @@
-export * from './GetEmailAppUsageUserCountsWithPeriodRequestBuilder'
+export * from './getEmailAppUsageUserCountsWithPeriodRequestBuilder'

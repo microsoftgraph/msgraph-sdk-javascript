@@ -1,2 +1,2 @@
-export * from './TaughtClassesResponse'
-export * from './TaughtClassesRequestBuilder'
+export * from './taughtClassesRequestBuilder'
+export * from './taughtClassesResponse'
