@@ -8,7 +8,7 @@ export class Attachment extends Entity implements Parsable {
     private _isInline?: boolean | undefined;
     /** The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z  */
     private _lastModifiedDateTime?: Date | undefined;
-    /** The display name of the attachment. This does not need to be the actual file name.  */
+    /** The attachment's file name.  */
     private _name?: string | undefined;
     /** The length of the attachment in bytes.  */
     private _size?: number | undefined;
@@ -26,32 +26,11 @@ export class Attachment extends Entity implements Parsable {
         return this._contentType;
     };
     /**
-     * Gets the isInline property value. true if the attachment is an inline attachment; otherwise, false.
-     * @returns a boolean
+     * Sets the contentType property value. The MIME type.
+     * @param value Value to set for the contentType property.
      */
-    public get isInline() {
-        return this._isInline;
-    };
-    /**
-     * Gets the lastModifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @returns a Date
-     */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the name property value. The display name of the attachment. This does not need to be the actual file name.
-     * @returns a string
-     */
-    public get name() {
-        return this._name;
-    };
-    /**
-     * Gets the size property value. The length of the attachment in bytes.
-     * @returns a integer
-     */
-    public get size() {
-        return this._size;
+    public set contentType(value: string | undefined) {
+        this._contentType = value;
     };
     /**
      * The deserialization information for the current model
@@ -67,6 +46,48 @@ export class Attachment extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the isInline property value. true if the attachment is an inline attachment; otherwise, false.
+     * @returns a boolean
+     */
+    public get isInline() {
+        return this._isInline;
+    };
+    /**
+     * Sets the isInline property value. true if the attachment is an inline attachment; otherwise, false.
+     * @param value Value to set for the isInline property.
+     */
+    public set isInline(value: boolean | undefined) {
+        this._isInline = value;
+    };
+    /**
+     * Gets the lastModifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
+     * Gets the name property value. The attachment's file name.
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
+     * Sets the name property value. The attachment's file name.
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -80,32 +101,11 @@ export class Attachment extends Entity implements Parsable {
         writer.writeNumberValue("size", this.size);
     };
     /**
-     * Sets the contentType property value. The MIME type.
-     * @param value Value to set for the contentType property.
+     * Gets the size property value. The length of the attachment in bytes.
+     * @returns a integer
      */
-    public set contentType(value: string | undefined) {
-        this._contentType = value;
-    };
-    /**
-     * Sets the isInline property value. true if the attachment is an inline attachment; otherwise, false.
-     * @param value Value to set for the isInline property.
-     */
-    public set isInline(value: boolean | undefined) {
-        this._isInline = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the name property value. The display name of the attachment. This does not need to be the actual file name.
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get size() {
+        return this._size;
     };
     /**
      * Sets the size property value. The length of the attachment in bytes.

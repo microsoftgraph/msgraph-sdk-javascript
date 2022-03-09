@@ -1,13 +1,14 @@
-import {UserRequestBuilder} from './users/item/userRequestBuilder';
+import {UserItemRequestBuilder} from './users/item/userItemRequestBuilder';
 import {UsersRequestBuilder} from './users/usersRequestBuilder';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
 import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 
-import {Client, GraphRequest, ClientOptions} from "@microsoft/microsoft-graph-client"
+import {Client, GraphRequest, ClientOptions} from "@microsoft/microsoft-graph-client";
+import { ServiceClientOptions, GraphBaseClient } from '@microsoft/microsoft-graph-client';
 
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
-export class GraphServiceClient extends Client{
+export class GraphServiceClient  extends GraphBaseClient{
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -21,10 +22,10 @@ export class GraphServiceClient extends Client{
      * Instantiates a new GraphServiceClient and sets the default values.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
-    public constructor(clientOptions: ClientOptions) {
+     public constructor(clientOptions: ServiceClientOptions) {
         super(clientOptions);
-        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider)
-        if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
+        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider)    ;
+            if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
@@ -35,22 +36,20 @@ export class GraphServiceClient extends Client{
     /**
      * Gets an item from the MicrosoftGraph.users.item collection
      * @param id Unique identifier of the item
-     * @returns a userRequestBuilder
+     * @returns a userItemRequestBuilder
      */
-    public usersById(id: string) : UserRequestBuilder {
+    public usersById(id: string) : UserItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["user_id"] = id
-        return new UserRequestBuilder(urlTplParams, this.requestAdapter);
+        return new UserItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
+    // public static init(clientOptions: ClientOptions): GraphServiceClient {
+    //     const client = new GraphServiceClient(clientOptions);
+    //     return client;
+    // }
 
-    public static init(clientOptions: ClientOptions): GraphServiceClient {
-        const client = new GraphServiceClient(clientOptions);
-        return client;
-    }
-
-    public api(path: string): GraphRequest {
-        return super.api(path);
-    }
+    // public api(path: string): GraphRequest {
+    //     return super.api(path);
+    // }
 }
-

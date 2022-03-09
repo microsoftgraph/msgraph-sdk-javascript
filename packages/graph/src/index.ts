@@ -10,7 +10,6 @@ export { RetryHandler, RedirectHandler} from "@microsoft/kiota-http-fetchlibrary
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
-export { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 export { Middleware } from "./middleware/IMiddleware";
 
 export { TelemetryHandler } from "./middleware/TelemetryHandler";
@@ -35,7 +34,7 @@ export { GraphError } from "./GraphError";
 export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
 
-export { ClientOptions } from "./IClientOptions";
+export { ClientOptions, ServiceClientOptions } from "./IClientOptions";
 export { Context } from "./IContext";
 export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
@@ -43,3 +42,5 @@ export { GraphRequestCallback } from "./IGraphRequestCallback";
 export { ResponseType } from "./ResponseType";
 export {SimpleAuthenticationProvider} from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
 export {SimpleAccessTokenProvider} from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
+
+export {GraphBaseClient} from "./requestBuilderUtils/GraphBaseClient";

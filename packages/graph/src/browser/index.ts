@@ -11,7 +11,6 @@
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
-export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
 export { Middleware } from "../middleware/IMiddleware";
 export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 export { RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";

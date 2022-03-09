@@ -30,3 +30,8 @@ export interface ClientOptions {
 	middleware?: Middleware | Middleware[];
     customFetch?: (input: string, init?: RequestInit) => Promise<Response>;
 }
+
+export interface ServiceClientOptions extends ClientOptions {
+    sdkVersion?: string;
+
+}

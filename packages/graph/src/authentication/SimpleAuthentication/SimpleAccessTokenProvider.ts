@@ -11,9 +11,6 @@
 
 import { AccessTokenProvider, AllowedHostsValidator } from "@microsoft/kiota-abstractions";
 
-import { GraphClientError } from "../../GraphClientError";
-import { AuthProviderCallback } from "./IAuthProviderCallback";
-
 /**
  * @class
  * Class representing CustomAuthenticationProvider
