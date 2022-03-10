@@ -15,4 +15,7 @@ export * from "../middlewares/customFetchHandler";
 export * from "../middlewares/retryHandler";
 export * from "../middlewares/options/retryHandlerOptions";
 export * from "../middlewares/browser/middlewareFactory";
+export * from "../middlewares/browser/defaultFetchHandler";
+export * from "../middlewares/telemetryHandler";
+
 export * from "../utils/headersUtil";

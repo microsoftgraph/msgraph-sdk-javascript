@@ -1,6 +1,8 @@
+import {createMultiValueLegacyExtendedPropertyFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createMultiValueLegacyExtendedPropertyFromDiscriminatorValue';
 import {MultiValueLegacyExtendedProperty} from '../../../../../models/microsoft/graph/multiValueLegacyExtendedProperty';
+import {createMultiValueExtendedPropertiesResponseFromDiscriminatorValue} from './createMultiValueExtendedPropertiesResponseFromDiscriminatorValue';
 import {MultiValueExtendedPropertiesResponse} from './multiValueExtendedPropertiesResponse';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/multiValueExtendedProperties  */
 export class MultiValueExtendedPropertiesRequestBuilder {
@@ -39,7 +41,7 @@ export class MultiValueExtendedPropertiesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
@@ -56,7 +58,7 @@ export class MultiValueExtendedPropertiesRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createPostRequestInformation(body: MultiValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createPostRequestInformation(body: MultiValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
@@ -84,11 +86,11 @@ export class MultiValueExtendedPropertiesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MultiValueExtendedPropertiesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MultiValueExtendedPropertiesResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MultiValueExtendedPropertiesResponse>(requestInfo, MultiValueExtendedPropertiesResponse, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<MultiValueExtendedPropertiesResponse>(requestInfo, createMultiValueExtendedPropertiesResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of multi-value extended properties defined for the mailFolder. Read-only. Nullable.
@@ -98,11 +100,11 @@ export class MultiValueExtendedPropertiesRequestBuilder {
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      * @returns a Promise of MultiValueLegacyExtendedProperty
      */
-    public post(body: MultiValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MultiValueLegacyExtendedProperty | undefined> {
+    public post(body: MultiValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MultiValueLegacyExtendedProperty | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo, MultiValueLegacyExtendedProperty, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<MultiValueLegacyExtendedProperty>(requestInfo, createMultiValueLegacyExtendedPropertyFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

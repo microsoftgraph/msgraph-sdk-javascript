@@ -14,6 +14,7 @@ import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
+import { getDefaultMiddlewareChain } from "./HttpClientFactory";
 import { ClientOptions } from "./IClientOptions";
 
 export class Client {
@@ -31,9 +32,9 @@ export class Client {
 	 * @private
 	 * A member which holds the HTTPClient instance
 	 */
-	private httpClient: HttpClient;
+	protected httpClient: HttpClient;
 
-    private authProvider:AuthenticationProvider
+    protected authProvider:AuthenticationProvider
 
 	/**
 	 * @public
@@ -67,9 +68,10 @@ export class Client {
 		}
         this.authProvider = clientOptions.authProvider;
         if (!clientOptions.middleware) {
-			httpClient = new HttpClient();
+         
+			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions)));
 		} else  {
-			httpClient = new HttpClient(...[].concat(clientOptions.middleware));
+			httpClient = new HttpClient(...[].concat(clientOptions.middleware, clientOptions.customFetch));
 		}
 		this.httpClient = httpClient;
 	}

@@ -1,4 +1,4 @@
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/messages/{message-id}/$value  */
 export class ContentRequestBuilder {
@@ -27,7 +27,7 @@ export class ContentRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createGetRequestInformation(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createGetRequestInformation(h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
@@ -43,7 +43,7 @@ export class ContentRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createPutRequestInformation(body: ArrayBuffer, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createPutRequestInformation(body: ArrayBuffer, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
@@ -61,11 +61,11 @@ export class ContentRequestBuilder {
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      * @returns a Promise of ArrayBuffer
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update media content for the navigation property messages in users
@@ -74,11 +74,11 @@ export class ContentRequestBuilder {
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      */
-    public put(body: ArrayBuffer, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public put(body: ArrayBuffer, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPutRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

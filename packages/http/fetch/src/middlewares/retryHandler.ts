@@ -84,7 +84,7 @@ export class RetryHandler implements Middleware {
 		const method = options.method;
 		const isPutPatchOrPost: boolean = method === HttpMethod.PUT || method === HttpMethod.PATCH || method === HttpMethod.POST;
 		if (isPutPatchOrPost) {
-			const isStream = getRequestHeader(options, "content-type") === "application/octet-stream";
+			const isStream = getRequestHeader(options as RequestInit, "content-type") === "application/octet-stream";
 			if (isStream) {
 				return false;
 			}
@@ -154,7 +154,7 @@ export class RetryHandler implements Middleware {
 		const response = await this.next.execute(url, requestInit as RequestInit, requestOptions);
 		if (retryAttempts < this.options.maxRetries && this.isRetry(response) && this.isBuffered(url, requestInit) && this.options.shouldRetry(this.options.delay, retryAttempts, url, requestInit as FetchRequestInit, response)) {
 			++retryAttempts;
-			setRequestHeader(requestInit, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
+			setRequestHeader(requestInit as RequestInit, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
 			const delay = this.getDelay(response, retryAttempts, this.options.delay);
 			await this.sleep(delay);
 			return await this.executeWithRetry(url, requestInit, retryAttempts, requestOptions);

@@ -1,6 +1,8 @@
+import {createSingleValueLegacyExtendedPropertyFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createSingleValueLegacyExtendedPropertyFromDiscriminatorValue';
 import {SingleValueLegacyExtendedProperty} from '../../../../../models/microsoft/graph/singleValueLegacyExtendedProperty';
+import {createSingleValueExtendedPropertiesResponseFromDiscriminatorValue} from './createSingleValueExtendedPropertiesResponseFromDiscriminatorValue';
 import {SingleValueExtendedPropertiesResponse} from './singleValueExtendedPropertiesResponse';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/singleValueExtendedProperties  */
 export class SingleValueExtendedPropertiesRequestBuilder {
@@ -39,7 +41,7 @@ export class SingleValueExtendedPropertiesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
@@ -56,7 +58,7 @@ export class SingleValueExtendedPropertiesRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createPostRequestInformation(body: SingleValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createPostRequestInformation(body: SingleValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
@@ -84,11 +86,11 @@ export class SingleValueExtendedPropertiesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SingleValueExtendedPropertiesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SingleValueExtendedPropertiesResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<SingleValueExtendedPropertiesResponse>(requestInfo, SingleValueExtendedPropertiesResponse, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<SingleValueExtendedPropertiesResponse>(requestInfo, createSingleValueExtendedPropertiesResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of single-value extended properties defined for the mailFolder. Read-only. Nullable.
@@ -98,11 +100,11 @@ export class SingleValueExtendedPropertiesRequestBuilder {
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      * @returns a Promise of SingleValueLegacyExtendedProperty
      */
-    public post(body: SingleValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SingleValueLegacyExtendedProperty | undefined> {
+    public post(body: SingleValueLegacyExtendedProperty | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SingleValueLegacyExtendedProperty | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo, SingleValueLegacyExtendedProperty, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<SingleValueLegacyExtendedProperty>(requestInfo, createSingleValueLegacyExtendedPropertyFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

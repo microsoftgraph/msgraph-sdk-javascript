@@ -1,7 +1,8 @@
+import {createInferenceClassificationFromDiscriminatorValue} from '../../../models/microsoft/graph/createInferenceClassificationFromDiscriminatorValue';
 import {InferenceClassification} from '../../../models/microsoft/graph/inferenceClassification';
-import {InferenceClassificationOverrideRequestBuilder} from './overrides/item/inferenceClassificationOverrideRequestBuilder';
+import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/item/inferenceClassificationOverrideItemRequestBuilder';
 import {OverridesRequestBuilder} from './overrides/overridesRequestBuilder';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /users/{user-id}/inferenceClassification  */
 export class InferenceClassificationRequestBuilder {
@@ -33,7 +34,7 @@ export class InferenceClassificationRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createDeleteRequestInformation(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createDeleteRequestInformation(h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
@@ -51,7 +52,7 @@ export class InferenceClassificationRequestBuilder {
      */
     public createGetRequestInformation(q?: {
                     select?: string[]
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
@@ -68,7 +69,7 @@ export class InferenceClassificationRequestBuilder {
      * @param o Request options
      * @returns a RequestInformation
      */
-    public createPatchRequestInformation(body: InferenceClassification | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createPatchRequestInformation(body: InferenceClassification | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined) : RequestInformation {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
@@ -85,11 +86,11 @@ export class InferenceClassificationRequestBuilder {
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      */
-    public delete(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public delete(h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
@@ -101,22 +102,22 @@ export class InferenceClassificationRequestBuilder {
      */
     public get(q?: {
                     select?: string[]
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<InferenceClassification | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<InferenceClassification | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo, InferenceClassification, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo, createInferenceClassificationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.inferenceClassification.overrides.item collection
      * @param id Unique identifier of the item
-     * @returns a inferenceClassificationOverrideRequestBuilder
+     * @returns a inferenceClassificationOverrideItemRequestBuilder
      */
-    public overridesById(id: string) : InferenceClassificationOverrideRequestBuilder {
+    public overridesById(id: string) : InferenceClassificationOverrideItemRequestBuilder {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["inferenceClassificationOverride_id"] = id
-        return new InferenceClassificationOverrideRequestBuilder(urlTplParams, this.requestAdapter);
+        return new InferenceClassificationOverrideItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
@@ -125,11 +126,11 @@ export class InferenceClassificationRequestBuilder {
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
      */
-    public patch(body: InferenceClassification | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public patch(body: InferenceClassification | undefined, h?: Record<string, string> | undefined, o?: Record<string, RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

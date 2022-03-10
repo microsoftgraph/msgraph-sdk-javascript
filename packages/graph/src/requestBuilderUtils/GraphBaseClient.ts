@@ -1,15 +1,15 @@
 import { Client } from "../Client";
 import { GraphRequest } from "../GraphRequest";
-import { ClientOptions, ServiceClientOptions } from "../IClientOptions";
+import { ClientOptions } from "../IClientOptions";
 
-export type StaticThis<T> = { new (clientOptions:ServiceClientOptions): T };
+export type StaticThis<T> = { new (clientOptions:ClientOptions): T };
 
 export class GraphBaseClient extends Client {
-    constructor(clientOptions: ServiceClientOptions){
+    constructor(clientOptions: ClientOptions){
         super(clientOptions);
     }
 
-    static init<T extends GraphBaseClient>(this: StaticThis<T>, clientOptions: ServiceClientOptions) {
+    static init<T extends GraphBaseClient>(this: StaticThis<T>, clientOptions: ClientOptions) {
         const that = new this(clientOptions);
 
         console.log("calls this");

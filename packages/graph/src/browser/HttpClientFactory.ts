@@ -1,18 +1,31 @@
-import { Middleware, RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+import { CustomFetchHandler, Middleware, RedirectHandler, RetryHandler, RetryHandlerOptions, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+import { TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+import { DefaultFetchHandler } from "@microsoft/kiota-http-fetchlibrary";
+import { ClientOptions } from "../IClientOptions";
+import { getGraphTelemetryConfigurator, GraphTelemetry } from "../middleware/TelemetryConfiguration";
 
 
-export function getGraphMiddlewareswithTelemetry() {
-   
-		// Browsers handles redirection automatically and do not require the redirectionHandler
+export function getDefaultMiddlewareChain( clientOptions: ClientOptions): Middleware[] {
+	
 
 		const middlewareArray: Middleware[] = [];
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		middlewareArray.push(retryHandler);
-		if (customFetch) {
-			middlewareArray.push(new CustomFetchHandler(customFetch));
+        const telemetryHandlerOptions: TelemetryHandlerOptions = getGraphTelemetryConfigurator({
+            customHosts: clientOptions.customHosts,
+            SDKNameWithVersion: clientOptions.SDKNameWithVersion,
+        } as GraphTelemetry);
+        const telemetryHandler = new TelemetryHandler(telemetryHandlerOptions);
+
+        middlewareArray.push(telemetryHandler);
+
+        
+		if (clientOptions.customFetch) {
+			middlewareArray.push(new CustomFetchHandler(clientOptions.customFetch));
 		} else {
-			middlewareArray.push(new CustomFetchHandler(fetch as any));
+			middlewareArray.push(new DefaultFetchHandler());
 		}
+
+       
 		return middlewareArray;
-    throw new Error("Function not implemented.");
 }

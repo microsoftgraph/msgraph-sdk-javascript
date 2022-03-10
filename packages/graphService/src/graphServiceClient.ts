@@ -4,8 +4,8 @@ import {enableBackingStoreForSerializationWriterFactory, getPathParameters, Pars
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
 import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 
-import {Client, GraphRequest, ClientOptions} from "@microsoft/microsoft-graph-client";
-import { ServiceClientOptions, GraphBaseClient } from '@microsoft/microsoft-graph-client';
+import { ClientOptions } from "@microsoft/microsoft-graph-client";
+import { GraphBaseClient } from '@microsoft/microsoft-graph-client';
 
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
 export class GraphServiceClient  extends GraphBaseClient{
@@ -22,9 +22,11 @@ export class GraphServiceClient  extends GraphBaseClient{
      * Instantiates a new GraphServiceClient and sets the default values.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
-     public constructor(clientOptions: ServiceClientOptions) {
+     public constructor(clientOptions: ClientOptions) {
+        clientOptions.SDKNameWithVersion = "ServiceLibraryVersion";
         super(clientOptions);
-        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider)    ;
+        // change to this.authprovider
+        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider, undefined, undefined, this.httpClient);    ;
             if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
         this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";

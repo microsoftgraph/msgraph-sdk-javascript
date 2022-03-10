@@ -34,7 +34,9 @@ export { GraphError } from "./GraphError";
 export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
 
-export { ClientOptions, ServiceClientOptions } from "./IClientOptions";
+
+
+export { ClientOptions } from "./IClientOptions";
 export { Context } from "./IContext";
 export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";

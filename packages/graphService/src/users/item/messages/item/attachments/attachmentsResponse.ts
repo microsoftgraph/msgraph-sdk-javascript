@@ -1,4 +1,5 @@
 import {Attachment} from '../../../../../models/microsoft/graph/attachment';
+import {createAttachmentFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAttachmentFromDiscriminatorValue';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AttachmentsResponse implements Parsable {
@@ -7,17 +8,34 @@ export class AttachmentsResponse implements Parsable {
     private _nextLink?: string | undefined;
     private _value?: Attachment[] | undefined;
     /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Instantiates a new attachmentsResponse and sets the default values.
      */
     public constructor() {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["@odata.nextLink", (o, n) => { (o as unknown as AttachmentsResponse).nextLink = n.getStringValue(); }],
+            ["value", (o, n) => { (o as unknown as AttachmentsResponse).value = n.getCollectionOfObjectValues<Attachment>(createAttachmentFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the @odata.nextLink property value. 
@@ -27,21 +45,11 @@ export class AttachmentsResponse implements Parsable {
         return this._nextLink;
     };
     /**
-     * Gets the value property value. 
-     * @returns a attachment
+     * Sets the @odata.nextLink property value. 
+     * @param value Value to set for the nextLink property.
      */
-    public get value() {
-        return this._value;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["@odata.nextLink", (o, n) => { (o as unknown as AttachmentsResponse).nextLink = n.getStringValue(); }],
-            ["value", (o, n) => { (o as unknown as AttachmentsResponse).value = n.getCollectionOfObjectValues<Attachment>(Attachment); }],
-        ]);
+    public set nextLink(value: string | undefined) {
+        this._nextLink = value;
     };
     /**
      * Serializes information the current object
@@ -54,18 +62,11 @@ export class AttachmentsResponse implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the value property value. 
+     * @returns a attachment
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the @odata.nextLink property value. 
-     * @param value Value to set for the nextLink property.
-     */
-    public set nextLink(value: string | undefined) {
-        this._nextLink = value;
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. 

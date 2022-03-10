@@ -11,13 +11,6 @@ export class SingleValueLegacyExtendedProperty extends Entity implements Parsabl
         super();
     };
     /**
-     * Gets the value property value. A property value.
-     * @returns a string
-     */
-    public get value() {
-        return this._value;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,6 +27,13 @@ export class SingleValueLegacyExtendedProperty extends Entity implements Parsabl
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("value", this.value);
+    };
+    /**
+     * Gets the value property value. A property value.
+     * @returns a string
+     */
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. A property value.

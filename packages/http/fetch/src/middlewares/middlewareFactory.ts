@@ -9,8 +9,8 @@
  * @module MiddlewareFactory
  */
 
- import fetch from "node-fetch";
 import { CustomFetchHandler } from "./customFetchHandler";
+import { DefaultFetchHandler } from "./defaultFetchHandler";
 import { Middleware } from "./middleware";
 import { RedirectHandlerOptions } from "./options/redirectHandlerOptions";
 import { RetryHandlerOptions } from "./options/retryHandlerOptions";
@@ -38,7 +38,7 @@ export class MiddlewareFactory {
 		if (customFetch) {
 			middlewareArray.push(new CustomFetchHandler(customFetch));
 		} else {
-			middlewareArray.push(new CustomFetchHandler(fetch));
+			middlewareArray.push(new DefaultFetchHandler());
 		}
 
 		return middlewareArray;
