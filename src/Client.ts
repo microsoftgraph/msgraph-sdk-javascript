@@ -76,7 +76,7 @@ export class Client {
 		const hostSetWithGraphandCustomHosts = appendGraphAndCustomHosts(allowedHosts);
 		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
 		if (!clientOptions.middleware) {
-			httpClient = HTTPClientFactory.createWithDefaultMiddleware();
+			httpClient = HTTPClientFactory.createWithDefaultMiddleware(this.authProvider);
 		} else {
 			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
 		}
@@ -90,6 +90,6 @@ export class Client {
 	 * @returns The graph request instance
 	 */
 	public api(path: string): GraphRequest {
-		return new GraphRequest(this.httpClient, this.authProvider, this.config, path);
+		return new GraphRequest(this.httpClient, this.config, path);
 	}
 }

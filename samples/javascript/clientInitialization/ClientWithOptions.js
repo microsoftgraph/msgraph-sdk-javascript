@@ -5,17 +5,14 @@
  * -------------------------------------------------------------------------------------------
  */
 
-const { Client } = require("@microsoft/microsoft-graph-client");
+const { Client, SimpleAuthenticationProvider } = require("@microsoft/microsoft-graph-client");
 require("isomorphic-fetch");
-
-const error = "error throw by the authentication handler";
-
 const client = Client.init({
 	defaultVersion: "v1.0",
 	debugLogging: true,
-	authProvider: (done) => {
-		done(error, "ACCESS_TOKEN");
-	},
+	authProvider: new SimpleAuthenticationProvider(async () => {
+        return "ACCESS_TOKEN";
+    }, ["scope1", "scope2"]),
 });
 
 client

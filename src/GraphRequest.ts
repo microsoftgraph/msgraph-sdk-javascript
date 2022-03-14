@@ -65,8 +65,6 @@ export class GraphRequest {
 	 */
 	private httpClient: HTTPClient;
 
-	private authenticationProvider: BaseBearerTokenAuthenticationProvider;
-
 	/**
 	 * @private
 	 * A member variable to hold client options
@@ -111,9 +109,8 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HTTPClient, authProvider: BaseBearerTokenAuthenticationProvider, config: ClientOptions, path: string) {
+	public constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
-		this.authenticationProvider = authProvider;
 		this.config = config;
 		this.urlComponents = {
 			host: this.config.baseUrl,
@@ -373,14 +370,6 @@ export class GraphRequest {
 		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
         const customHosts = this.config?.customHosts;
-		const requestInfo = new RequestInformation();
-
-		requestInfo.URL = request as string;
-		requestInfo.headers = options.headers as Record<string, string>;
-		console.log(options.headers);
-
-		await this.authenticationProvider.authenticateRequest(requestInfo);
-		// options.headers = requestInfo.headers;
 		try {
 			const context: Context = await this.httpClient.sendRequest({
 				request,

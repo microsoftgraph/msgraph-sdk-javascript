@@ -8,8 +8,10 @@
 /**
  * @module HTTPClientFactory
  */
+import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
 
 import { HTTPClient } from "./HTTPClient";
+import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
 import { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
 import { Middleware } from "./middleware/IMiddleware";
 import { RedirectHandlerOptions } from "./middleware/options/RedirectHandlerOptions";
@@ -45,21 +47,23 @@ export class HTTPClientFactory {
 	 * 		* The best place for AuthenticationHandler is in the starting of the pipeline, because every other handler might have to work for multiple times for a request but the auth token for
 	 * 		  them will remain same. For example, Retry and Redirect handlers might be working multiple times for a request based on the response but their auth token would remain same.
 	 */
-	public static createWithDefaultMiddleware(): HTTPClient {
-	
+	public static createWithDefaultMiddleware(authenticationProvider: BaseBearerTokenAuthenticationProvider): HTTPClient {
+		const authenticationHandler = new AuthenticationHandler(authenticationProvider.accessTokenProvider);
 		const retryHandler = new RetryHandler(new RetryHandlerOptions());
 		const telemetryHandler = new TelemetryHandler();
 		const httpMessageHandler = new HTTPMessageHandler();
 
+		authenticationHandler.setNext(retryHandler);
 		if (isNodeEnvironment()) {
 			const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
+
 			retryHandler.setNext(redirectHandler);
 			redirectHandler.setNext(telemetryHandler);
 		} else {
 			retryHandler.setNext(telemetryHandler);
 		}
 		telemetryHandler.setNext(httpMessageHandler);
-		return HTTPClientFactory.createWithMiddleware(retryHandler);
+		return HTTPClientFactory.createWithMiddleware(authenticationHandler);
 	}
 
 	/**
