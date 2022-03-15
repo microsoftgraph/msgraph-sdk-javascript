@@ -10,7 +10,6 @@
  */
 
 import { CustomFetchHandler } from "../customFetchHandler";
-import { DefaultFetchHandler } from "./defaultFetchHandler";
 import { Middleware } from "../middleware";
 import { RetryHandlerOptions } from "../options/retryHandlerOptions";
 import { RetryHandler } from "../retryHandler";
@@ -36,7 +35,7 @@ export class MiddlewareFactory {
 		if (customFetch) {
 			middlewareArray.push(new CustomFetchHandler(customFetch));
 		} else {
-			middlewareArray.push(new DefaultFetchHandler());
+			middlewareArray.push(new CustomFetchHandler(fetch));
 		}
 		return middlewareArray;
 	}

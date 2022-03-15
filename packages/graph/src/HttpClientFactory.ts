@@ -1,13 +1,13 @@
+import fetch from "node-fetch";
+
 import { CustomFetchHandler, Middleware, RedirectHandler, RetryHandler, RetryHandlerOptions, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 import { TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
-import { DefaultFetchHandler } from "@microsoft/kiota-http-fetchlibrary";
+
 import { ClientOptions } from "./IClientOptions";
 import { getGraphTelemetryConfigurator, GraphTelemetry } from "./middleware/TelemetryConfiguration";
 
 
 export function getDefaultMiddlewareChain( clientOptions: ClientOptions): Middleware[] {
-	
-
 		const middlewareArray: Middleware[] = [];
         const redirectHandler = new RedirectHandler();
         middlewareArray.push(redirectHandler);
@@ -25,7 +25,7 @@ export function getDefaultMiddlewareChain( clientOptions: ClientOptions): Middle
 		if (clientOptions.customFetch) {
 			middlewareArray.push(new CustomFetchHandler(clientOptions.customFetch));
 		} else {
-			middlewareArray.push(new DefaultFetchHandler());
+			middlewareArray.push(new CustomFetchHandler(fetch));
 		}
 
        

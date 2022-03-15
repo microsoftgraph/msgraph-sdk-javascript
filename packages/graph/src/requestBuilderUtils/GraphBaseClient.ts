@@ -1,7 +1,6 @@
 import { Client } from "../Client";
 import { GraphRequest } from "../GraphRequest";
 import { ClientOptions } from "../IClientOptions";
-
 export type StaticThis<T> = { new (clientOptions:ClientOptions): T };
 
 export class GraphBaseClient extends Client {

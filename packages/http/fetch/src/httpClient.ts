@@ -13,7 +13,7 @@ export class HttpClient {
      * If middlewares param is undefined, the httpClient instance will use the default array of middlewares.
      * Set middlewares to `null` if you do not wish to use middlewares.
      * If custom fetch is undefined, the httpClient instance uses the `DefaultFetchHandler`
-     * @param {(request: FetchRequestInfo, init?: FetchRequestInit) => Promise < Response >} custom fetch function - a Fetch API implementation
+     * @param {(request: string, init?: RequestInit) => Promise < Response >} custom fetch function - a Fetch API implementation
      *
      */
     public constructor(private customFetch?: (request: string, init?: RequestInit) => Promise<Response>, ...middlewares: Middleware[]) {

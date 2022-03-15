@@ -17,7 +17,7 @@ export * from "./middlewares/options/redirectHandlerOptions";
 export * from "./middlewares/options/retryHandlerOptions";
 export * from "./middlewares/options/telemetryHandlerOptions";
 export * from "./middlewares/telemetryHandler";
-export * from "./middlewares/defaultFetchHandler"
+
 export * from "./middlewares/middlewareFactory";
 export * from "./utils/headersUtil";
 export * from "./utils/fetchDefinitions";

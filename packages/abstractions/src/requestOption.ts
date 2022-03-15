@@ -1,2 +1,4 @@
 /** Represents a request option. */
-export interface RequestOption {}
+export interface RequestOption {
+    getKey?():string;
+}
