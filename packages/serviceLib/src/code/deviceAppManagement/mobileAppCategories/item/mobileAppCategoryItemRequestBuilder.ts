@@ -1,7 +1,10 @@
 import {MobileAppCategory} from '../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMobileAppCategoryFromDiscriminatorValue} from '../../../models/microsoft/graph/createMobileAppCategoryFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/mobileAppCategories/{mobileAppCategory-id}  */
+/** Provides operations to manage the mobileAppCategories property of the microsoft.graph.deviceAppManagement entity.  */
 export class MobileAppCategoryItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class MobileAppCategoryItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The mobile app categories.
+     * Delete navigation property mobileAppCategories for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class MobileAppCategoryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The mobile app categories.
+     * Update the navigation property mobileAppCategories in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class MobileAppCategoryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The mobile app categories.
+     * Delete navigation property mobileAppCategories for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class MobileAppCategoryItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The mobile app categories.
@@ -102,10 +109,14 @@ export class MobileAppCategoryItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MobileAppCategory>(requestInfo, MobileAppCategory, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MobileAppCategory>(requestInfo, createMobileAppCategoryFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The mobile app categories.
+     * Update the navigation property mobileAppCategories in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class MobileAppCategoryItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,5 +1,6 @@
 import {Entity, PublicError} from '../';
-import {ConnectionOperationStatus} from './index';
+import {createPublicErrorFromDiscriminatorValue} from '../createPublicErrorFromDiscriminatorValue';
+import {ConnectionOperationStatus} from './connectionOperationStatus';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ConnectionOperation extends Entity implements Parsable {
@@ -21,11 +22,11 @@ export class ConnectionOperation extends Entity implements Parsable {
         return this._error_escaped;
     };
     /**
-     * Gets the status property value. Indicates the status of the asynchronous operation. Possible values are: unspecified, inprogress, completed, failed, unknownFutureValue.
-     * @returns a connectionOperationStatus
+     * Sets the error property value. If status is failed, provides more information about the error that caused the failure.
+     * @param value Value to set for the error_escaped property.
      */
-    public get status() {
-        return this._status;
+    public set error_escaped(value: PublicError | undefined) {
+        this._error_escaped = value;
     };
     /**
      * The deserialization information for the current model
@@ -33,7 +34,7 @@ export class ConnectionOperation extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["error", (o, n) => { (o as unknown as ConnectionOperation).error_escaped = n.getObjectValue<PublicError>(PublicError); }],
+            ["error", (o, n) => { (o as unknown as ConnectionOperation).error_escaped = n.getObjectValue<PublicError>(createPublicErrorFromDiscriminatorValue); }],
             ["status", (o, n) => { (o as unknown as ConnectionOperation).status = n.getEnumValue<ConnectionOperationStatus>(ConnectionOperationStatus); }],
         ]);
     };
@@ -48,11 +49,11 @@ export class ConnectionOperation extends Entity implements Parsable {
         writer.writeEnumValue<ConnectionOperationStatus>("status", this.status);
     };
     /**
-     * Sets the error property value. If status is failed, provides more information about the error that caused the failure.
-     * @param value Value to set for the error_escaped property.
+     * Gets the status property value. Indicates the status of the asynchronous operation. Possible values are: unspecified, inprogress, completed, failed, unknownFutureValue.
+     * @returns a connectionOperationStatus
      */
-    public set error_escaped(value: PublicError | undefined) {
-        this._error_escaped = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Indicates the status of the asynchronous operation. Possible values are: unspecified, inprogress, completed, failed, unknownFutureValue.

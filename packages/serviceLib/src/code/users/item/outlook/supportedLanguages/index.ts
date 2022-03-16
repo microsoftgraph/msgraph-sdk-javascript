@@ -1,1 +1,1 @@
-export * from './SupportedLanguagesRequestBuilder'
+export * from './supportedLanguagesResponse'

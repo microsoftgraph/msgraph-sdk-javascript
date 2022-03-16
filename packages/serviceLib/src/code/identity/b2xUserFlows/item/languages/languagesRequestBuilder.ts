@@ -1,9 +1,16 @@
-import {UserFlowLanguageConfiguration} from '../../../../models/microsoft/graph/';
-import {LanguagesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {UserFlowLanguageConfiguration, UserFlowLanguageConfigurationCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createUserFlowLanguageConfigurationCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUserFlowLanguageConfigurationCollectionResponseFromDiscriminatorValue';
+import {createUserFlowLanguageConfigurationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUserFlowLanguageConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}/languages  */
+/** Provides operations to manage the languages property of the microsoft.graph.b2xIdentityUserFlow entity.  */
 export class LanguagesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class LanguagesRequestBuilder {
         return requestInfo;
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Create new navigation property to languages for identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class LanguagesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of LanguagesResponse
+     * @returns a Promise of UserFlowLanguageConfigurationCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class LanguagesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<LanguagesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<UserFlowLanguageConfigurationCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<LanguagesResponse>(requestInfo, LanguagesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserFlowLanguageConfigurationCollectionResponse>(requestInfo, createUserFlowLanguageConfigurationCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Create new navigation property to languages for identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class LanguagesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<UserFlowLanguageConfiguration>(requestInfo, UserFlowLanguageConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserFlowLanguageConfiguration>(requestInfo, createUserFlowLanguageConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

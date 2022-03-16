@@ -1,6 +1,8 @@
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGetTeamsDeviceUsageDistributionUserCountsWithPeriodResponseFromDiscriminatorValue} from './createGetTeamsDeviceUsageDistributionUserCountsWithPeriodResponseFromDiscriminatorValue';
+import {GetTeamsDeviceUsageDistributionUserCountsWithPeriodResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /reports/microsoft.graph.getTeamsDeviceUsageDistributionUserCounts(period='{period}')  */
+/** Provides operations to call the getTeamsDeviceUsageDistributionUserCounts method.  */
 export class GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -11,7 +13,7 @@ export class GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
     /**
      * Instantiates a new GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
-     * @param period Usage: period={period}
+     * @param period Usage: period='{period}'
      * @param requestAdapter The request adapter to use to execute the requests.
      */
     public constructor(pathParameters: Record<string, unknown> | string | undefined, requestAdapter: RequestAdapter, period?: string | undefined) {
@@ -43,12 +45,12 @@ export class GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ArrayBuffer
+     * @returns a Promise of GetTeamsDeviceUsageDistributionUserCountsWithPeriodResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetTeamsDeviceUsageDistributionUserCountsWithPeriodResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<GetTeamsDeviceUsageDistributionUserCountsWithPeriodResponse>(requestInfo, createGetTeamsDeviceUsageDistributionUserCountsWithPeriodResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

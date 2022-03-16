@@ -1,7 +1,8 @@
-import {PrintJobProcessingState, PrintJobStateDetail} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {PrintJobProcessingState} from './printJobProcessingState';
+import {PrintJobStateDetail} from './printJobStateDetail';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PrintJobStatus implements Parsable {
+export class PrintJobStatus implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** A human-readable description of the print job's current processing state. Read-only.  */
@@ -13,17 +14,24 @@ export class PrintJobStatus implements Parsable {
     /** The print job's current processing state. Valid values are described in the following table. Read-only.  */
     private _state?: PrintJobProcessingState | undefined;
     /**
-     * Instantiates a new printJobStatus and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new printJobStatus and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the description property value. A human-readable description of the print job's current processing state. Read-only.
@@ -33,6 +41,13 @@ export class PrintJobStatus implements Parsable {
         return this._description;
     };
     /**
+     * Sets the description property value. A human-readable description of the print job's current processing state. Read-only.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
      * Gets the details property value. Additional details for print job state. Valid values are described in the following table. Read-only.
      * @returns a printJobStateDetail
      */
@@ -40,18 +55,11 @@ export class PrintJobStatus implements Parsable {
         return this._details;
     };
     /**
-     * Gets the isAcquiredByPrinter property value. True if the job was acknowledged by a printer; false otherwise. Read-only.
-     * @returns a boolean
+     * Sets the details property value. Additional details for print job state. Valid values are described in the following table. Read-only.
+     * @param value Value to set for the details property.
      */
-    public get isAcquiredByPrinter() {
-        return this._isAcquiredByPrinter;
-    };
-    /**
-     * Gets the state property value. The print job's current processing state. Valid values are described in the following table. Read-only.
-     * @returns a printJobProcessingState
-     */
-    public get state() {
-        return this._state;
+    public set details(value: PrintJobStateDetail[] | undefined) {
+        this._details = value;
     };
     /**
      * The deserialization information for the current model
@@ -66,6 +74,20 @@ export class PrintJobStatus implements Parsable {
         ]);
     };
     /**
+     * Gets the isAcquiredByPrinter property value. True if the job was acknowledged by a printer; false otherwise. Read-only.
+     * @returns a boolean
+     */
+    public get isAcquiredByPrinter() {
+        return this._isAcquiredByPrinter;
+    };
+    /**
+     * Sets the isAcquiredByPrinter property value. True if the job was acknowledged by a printer; false otherwise. Read-only.
+     * @param value Value to set for the isAcquiredByPrinter property.
+     */
+    public set isAcquiredByPrinter(value: boolean | undefined) {
+        this._isAcquiredByPrinter = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -78,32 +100,11 @@ export class PrintJobStatus implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the state property value. The print job's current processing state. Valid values are described in the following table. Read-only.
+     * @returns a printJobProcessingState
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the description property value. A human-readable description of the print job's current processing state. Read-only.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the details property value. Additional details for print job state. Valid values are described in the following table. Read-only.
-     * @param value Value to set for the details property.
-     */
-    public set details(value: PrintJobStateDetail[] | undefined) {
-        this._details = value;
-    };
-    /**
-     * Sets the isAcquiredByPrinter property value. True if the job was acknowledged by a printer; false otherwise. Read-only.
-     * @param value Value to set for the isAcquiredByPrinter property.
-     */
-    public set isAcquiredByPrinter(value: boolean | undefined) {
-        this._isAcquiredByPrinter = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. The print job's current processing state. Valid values are described in the following table. Read-only.

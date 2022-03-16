@@ -1,12 +1,15 @@
 import {Notebook} from '../../../../../models/microsoft/graph/';
-import {CopyNotebookRequestBuilder} from './copyNotebook/';
-import {SectionGroupsRequestBuilder} from './sectionGroups/';
-import {SectionGroupItemRequestBuilder} from './sectionGroups/item/';
-import {SectionsRequestBuilder} from './sections/';
-import {OnenoteSectionItemRequestBuilder} from './sections/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createNotebookFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createNotebookFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CopyNotebookRequestBuilder} from './copyNotebook/copyNotebookRequestBuilder';
+import {SectionGroupItemRequestBuilder} from './sectionGroups/item/sectionGroupItemRequestBuilder';
+import {SectionGroupsRequestBuilder} from './sectionGroups/sectionGroupsRequestBuilder';
+import {OnenoteSectionItemRequestBuilder} from './sections/item/onenoteSectionItemRequestBuilder';
+import {SectionsRequestBuilder} from './sections/sectionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/onenote/notebooks/{notebook-id}  */
+/** Provides operations to manage the notebooks property of the microsoft.graph.onenote entity.  */
 export class NotebookItemRequestBuilder {
     public get copyNotebook(): CopyNotebookRequestBuilder {
         return new CopyNotebookRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -37,7 +40,7 @@ export class NotebookItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.
+     * Delete navigation property notebooks for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -72,7 +75,7 @@ export class NotebookItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.
+     * Update the navigation property notebooks in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -90,7 +93,7 @@ export class NotebookItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.
+     * Delete navigation property notebooks for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -99,7 +102,11 @@ export class NotebookItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.
@@ -116,10 +123,14 @@ export class NotebookItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Notebook>(requestInfo, Notebook, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Notebook>(requestInfo, createNotebookFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.
+     * Update the navigation property notebooks in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -130,7 +141,11 @@ export class NotebookItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.onenote.notebooks.item.sectionGroups.item collection

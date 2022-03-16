@@ -1,9 +1,16 @@
-import {UnifiedRoleDefinition} from '../../../models/microsoft/graph/';
-import {RoleDefinitionsResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {UnifiedRoleDefinition, UnifiedRoleDefinitionCollectionResponse} from '../../../models/microsoft/graph/';
+import {createUnifiedRoleDefinitionCollectionResponseFromDiscriminatorValue} from '../../../models/microsoft/graph/createUnifiedRoleDefinitionCollectionResponseFromDiscriminatorValue';
+import {createUnifiedRoleDefinitionFromDiscriminatorValue} from '../../../models/microsoft/graph/createUnifiedRoleDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /roleManagement/directory/roleDefinitions  */
+/** Provides operations to manage the roleDefinitions property of the microsoft.graph.rbacApplication entity.  */
 export class RoleDefinitionsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class RoleDefinitionsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Create new navigation property to roleDefinitions for roleManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class RoleDefinitionsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of RoleDefinitionsResponse
+     * @returns a Promise of UnifiedRoleDefinitionCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class RoleDefinitionsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<RoleDefinitionsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<UnifiedRoleDefinitionCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<RoleDefinitionsResponse>(requestInfo, RoleDefinitionsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UnifiedRoleDefinitionCollectionResponse>(requestInfo, createUnifiedRoleDefinitionCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Create new navigation property to roleDefinitions for roleManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class RoleDefinitionsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<UnifiedRoleDefinition>(requestInfo, UnifiedRoleDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UnifiedRoleDefinition>(requestInfo, createUnifiedRoleDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

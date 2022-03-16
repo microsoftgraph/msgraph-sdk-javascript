@@ -1,3 +1,4 @@
+/** Provides operations to manage the informationProtection singleton.  */
 export enum ThreatCategory {
     Undefined = "undefined",
     Spam = "spam",

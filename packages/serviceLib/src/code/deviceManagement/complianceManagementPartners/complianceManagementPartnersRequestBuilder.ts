@@ -1,9 +1,16 @@
-import {ComplianceManagementPartner} from '../../models/microsoft/graph/';
-import {ComplianceManagementPartnersResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {ComplianceManagementPartner, ComplianceManagementPartnerCollectionResponse} from '../../models/microsoft/graph/';
+import {createComplianceManagementPartnerCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createComplianceManagementPartnerCollectionResponseFromDiscriminatorValue';
+import {createComplianceManagementPartnerFromDiscriminatorValue} from '../../models/microsoft/graph/createComplianceManagementPartnerFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/complianceManagementPartners  */
+/** Provides operations to manage the complianceManagementPartners property of the microsoft.graph.deviceManagement entity.  */
 export class ComplianceManagementPartnersRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class ComplianceManagementPartnersRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of Compliance Management Partners configured by the tenant.
+     * Create new navigation property to complianceManagementPartners for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class ComplianceManagementPartnersRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ComplianceManagementPartnersResponse
+     * @returns a Promise of ComplianceManagementPartnerCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class ComplianceManagementPartnersRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ComplianceManagementPartnersResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ComplianceManagementPartnerCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ComplianceManagementPartnersResponse>(requestInfo, ComplianceManagementPartnersResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ComplianceManagementPartnerCollectionResponse>(requestInfo, createComplianceManagementPartnerCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of Compliance Management Partners configured by the tenant.
+     * Create new navigation property to complianceManagementPartners for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class ComplianceManagementPartnersRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<ComplianceManagementPartner>(requestInfo, ComplianceManagementPartner, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ComplianceManagementPartner>(requestInfo, createComplianceManagementPartnerFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

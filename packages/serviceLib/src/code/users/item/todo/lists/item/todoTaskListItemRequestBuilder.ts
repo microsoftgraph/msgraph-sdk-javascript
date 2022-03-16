@@ -1,11 +1,14 @@
 import {TodoTaskList} from '../../../../../models/microsoft/graph/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {TasksRequestBuilder} from './tasks/';
-import {TodoTaskItemRequestBuilder} from './tasks/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTodoTaskListFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createTodoTaskListFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {TodoTaskItemRequestBuilder} from './tasks/item/todoTaskItemRequestBuilder';
+import {TasksRequestBuilder} from './tasks/tasksRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/todo/lists/{todoTaskList-id}  */
+/** Provides operations to manage the lists property of the microsoft.graph.todo entity.  */
 export class TodoTaskListItemRequestBuilder {
     public get extensions(): ExtensionsRequestBuilder {
         return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class TodoTaskListItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The task lists in the users mailbox.
+     * Delete navigation property lists for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class TodoTaskListItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The task lists in the users mailbox.
+     * Update the navigation property lists in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class TodoTaskListItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The task lists in the users mailbox.
+     * Delete navigation property lists for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class TodoTaskListItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.todo.lists.item.extensions.item collection
@@ -123,10 +130,14 @@ export class TodoTaskListItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TodoTaskList>(requestInfo, TodoTaskList, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TodoTaskList>(requestInfo, createTodoTaskListFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The task lists in the users mailbox.
+     * Update the navigation property lists in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,7 +148,11 @@ export class TodoTaskListItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.todo.lists.item.tasks.item collection

@@ -1,17 +1,20 @@
 import {Channel} from '../../../models/microsoft/graph/';
-import {CompleteMigrationRequestBuilder} from './completeMigration/';
-import {FilesFolderRequestBuilder} from './filesFolder/';
-import {MembersRequestBuilder} from './members/';
-import {ConversationMemberItemRequestBuilder} from './members/item/';
-import {MessagesRequestBuilder} from './messages/';
-import {ChatMessageItemRequestBuilder} from './messages/item/';
-import {ProvisionEmailRequestBuilder} from './provisionEmail/';
-import {RemoveEmailRequestBuilder} from './removeEmail/';
-import {TabsRequestBuilder} from './tabs/';
-import {TeamsTabItemRequestBuilder} from './tabs/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createChannelFromDiscriminatorValue} from '../../../models/microsoft/graph/createChannelFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CompleteMigrationRequestBuilder} from './completeMigration/completeMigrationRequestBuilder';
+import {FilesFolderRequestBuilder} from './filesFolder/filesFolderRequestBuilder';
+import {ConversationMemberItemRequestBuilder} from './members/item/conversationMemberItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {ChatMessageItemRequestBuilder} from './messages/item/chatMessageItemRequestBuilder';
+import {MessagesRequestBuilder} from './messages/messagesRequestBuilder';
+import {ProvisionEmailRequestBuilder} from './provisionEmail/provisionEmailRequestBuilder';
+import {RemoveEmailRequestBuilder} from './removeEmail/removeEmailRequestBuilder';
+import {TeamsTabItemRequestBuilder} from './tabs/item/teamsTabItemRequestBuilder';
+import {TabsRequestBuilder} from './tabs/tabsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/primaryChannel  */
+/** Provides operations to manage the primaryChannel property of the microsoft.graph.team entity.  */
 export class PrimaryChannelRequestBuilder {
     public get completeMigration(): CompleteMigrationRequestBuilder {
         return new CompleteMigrationRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -54,7 +57,7 @@ export class PrimaryChannelRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The general channel for the team.
+     * Delete navigation property primaryChannel for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -89,7 +92,7 @@ export class PrimaryChannelRequestBuilder {
         return requestInfo;
     };
     /**
-     * The general channel for the team.
+     * Update the navigation property primaryChannel in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -107,7 +110,7 @@ export class PrimaryChannelRequestBuilder {
         return requestInfo;
     };
     /**
-     * The general channel for the team.
+     * Delete navigation property primaryChannel for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -116,7 +119,11 @@ export class PrimaryChannelRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The general channel for the team.
@@ -133,7 +140,11 @@ export class PrimaryChannelRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Channel>(requestInfo, Channel, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Channel>(requestInfo, createChannelFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.primaryChannel.members.item collection
@@ -158,7 +169,7 @@ export class PrimaryChannelRequestBuilder {
         return new ChatMessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The general channel for the team.
+     * Update the navigation property primaryChannel in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -169,7 +180,11 @@ export class PrimaryChannelRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.primaryChannel.tabs.item collection

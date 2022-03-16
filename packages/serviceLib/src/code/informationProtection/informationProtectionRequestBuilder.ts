@@ -1,10 +1,13 @@
 import {InformationProtection} from '../models/microsoft/graph/';
-import {BitlockerRequestBuilder} from './bitlocker/';
-import {ThreatAssessmentRequestsRequestBuilder} from './threatAssessmentRequests/';
-import {ThreatAssessmentRequestItemRequestBuilder} from './threatAssessmentRequests/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createInformationProtectionFromDiscriminatorValue} from '../models/microsoft/graph/createInformationProtectionFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BitlockerRequestBuilder} from './bitlocker/bitlockerRequestBuilder';
+import {ThreatAssessmentRequestItemRequestBuilder} from './threatAssessmentRequests/item/threatAssessmentRequestItemRequestBuilder';
+import {ThreatAssessmentRequestsRequestBuilder} from './threatAssessmentRequests/threatAssessmentRequestsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /informationProtection  */
+/** Provides operations to manage the informationProtection singleton.  */
 export class InformationProtectionRequestBuilder {
     public get bitlocker(): BitlockerRequestBuilder {
         return new BitlockerRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -84,7 +87,11 @@ export class InformationProtectionRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<InformationProtection>(requestInfo, InformationProtection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<InformationProtection>(requestInfo, createInformationProtectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update informationProtection
@@ -98,7 +105,11 @@ export class InformationProtectionRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.informationProtection.threatAssessmentRequests.item collection

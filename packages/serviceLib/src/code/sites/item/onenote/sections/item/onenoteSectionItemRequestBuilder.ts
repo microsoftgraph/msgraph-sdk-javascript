@@ -1,13 +1,16 @@
 import {OnenoteSection} from '../../../../../models/microsoft/graph/';
-import {CopyToNotebookRequestBuilder} from './copyToNotebook/';
-import {CopyToSectionGroupRequestBuilder} from './copyToSectionGroup/';
-import {PagesRequestBuilder} from './pages/';
-import {OnenotePageItemRequestBuilder} from './pages/item/';
-import {ParentNotebookRequestBuilder} from './parentNotebook/';
-import {ParentSectionGroupRequestBuilder} from './parentSectionGroup/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOnenoteSectionFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createOnenoteSectionFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CopyToNotebookRequestBuilder} from './copyToNotebook/copyToNotebookRequestBuilder';
+import {CopyToSectionGroupRequestBuilder} from './copyToSectionGroup/copyToSectionGroupRequestBuilder';
+import {OnenotePageItemRequestBuilder} from './pages/item/onenotePageItemRequestBuilder';
+import {PagesRequestBuilder} from './pages/pagesRequestBuilder';
+import {ParentNotebookRequestBuilder} from './parentNotebook/parentNotebookRequestBuilder';
+import {ParentSectionGroupRequestBuilder} from './parentSectionGroup/parentSectionGroupRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/onenote/sections/{onenoteSection-id}  */
+/** Provides operations to manage the sections property of the microsoft.graph.onenote entity.  */
 export class OnenoteSectionItemRequestBuilder {
     public get copyToNotebook(): CopyToNotebookRequestBuilder {
         return new CopyToNotebookRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -44,7 +47,7 @@ export class OnenoteSectionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The sections in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Delete navigation property sections for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -79,7 +82,7 @@ export class OnenoteSectionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The sections in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Update the navigation property sections in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -97,7 +100,7 @@ export class OnenoteSectionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The sections in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Delete navigation property sections for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -106,7 +109,11 @@ export class OnenoteSectionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The sections in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
@@ -123,7 +130,11 @@ export class OnenoteSectionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<OnenoteSection>(requestInfo, OnenoteSection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<OnenoteSection>(requestInfo, createOnenoteSectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.onenote.sections.item.pages.item collection
@@ -137,7 +148,7 @@ export class OnenoteSectionItemRequestBuilder {
         return new OnenotePageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The sections in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Update the navigation property sections in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -148,6 +159,10 @@ export class OnenoteSectionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

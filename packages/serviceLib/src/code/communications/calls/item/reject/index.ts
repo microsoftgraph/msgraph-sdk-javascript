@@ -1,2 +1,1 @@
-export * from './RejectRequestBuilder'
-export * from './RejectRequestBody'
+export * from './rejectRequestBody'

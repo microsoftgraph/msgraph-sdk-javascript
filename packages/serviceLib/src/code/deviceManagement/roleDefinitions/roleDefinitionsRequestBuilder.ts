@@ -1,9 +1,16 @@
-import {RoleDefinition} from '../../models/microsoft/graph/';
-import {RoleDefinitionsResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {RoleDefinition, RoleDefinitionCollectionResponse} from '../../models/microsoft/graph/';
+import {createRoleDefinitionCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createRoleDefinitionCollectionResponseFromDiscriminatorValue';
+import {createRoleDefinitionFromDiscriminatorValue} from '../../models/microsoft/graph/createRoleDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/roleDefinitions  */
+/** Provides operations to manage the roleDefinitions property of the microsoft.graph.deviceManagement entity.  */
 export class RoleDefinitionsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class RoleDefinitionsRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Role Definitions.
+     * Create new navigation property to roleDefinitions for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class RoleDefinitionsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of RoleDefinitionsResponse
+     * @returns a Promise of RoleDefinitionCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class RoleDefinitionsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<RoleDefinitionsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<RoleDefinitionCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<RoleDefinitionsResponse>(requestInfo, RoleDefinitionsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<RoleDefinitionCollectionResponse>(requestInfo, createRoleDefinitionCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The Role Definitions.
+     * Create new navigation property to roleDefinitions for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class RoleDefinitionsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<RoleDefinition>(requestInfo, RoleDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<RoleDefinition>(requestInfo, createRoleDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

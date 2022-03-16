@@ -1,15 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ForceDeleteRequestBody implements Parsable {
+/** Provides operations to call the forceDelete method.  */
+export class ForceDeleteRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _disableUserAccounts?: boolean | undefined;
-    /**
-     * Instantiates a new forceDeleteRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -18,11 +13,31 @@ export class ForceDeleteRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new forceDeleteRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the disableUserAccounts property value. 
      * @returns a boolean
      */
     public get disableUserAccounts() {
         return this._disableUserAccounts;
+    };
+    /**
+     * Sets the disableUserAccounts property value. 
+     * @param value Value to set for the disableUserAccounts property.
+     */
+    public set disableUserAccounts(value: boolean | undefined) {
+        this._disableUserAccounts = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,19 +56,5 @@ export class ForceDeleteRequestBody implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeBooleanValue("disableUserAccounts", this.disableUserAccounts);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the disableUserAccounts property value. 
-     * @param value Value to set for the disableUserAccounts property.
-     */
-    public set disableUserAccounts(value: boolean | undefined) {
-        this._disableUserAccounts = value;
     };
 }

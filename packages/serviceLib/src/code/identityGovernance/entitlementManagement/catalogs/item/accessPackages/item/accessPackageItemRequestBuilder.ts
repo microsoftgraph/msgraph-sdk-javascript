@@ -1,10 +1,18 @@
 import {AccessPackage} from '../../../../../../models/microsoft/graph/';
-import {CatalogRequestBuilder} from './catalog/';
-import {GetApplicablePolicyRequirementsRequestBuilder} from './getApplicablePolicyRequirements/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAccessPackageFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createAccessPackageFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignmentPoliciesRequestBuilder} from './assignmentPolicies/assignmentPoliciesRequestBuilder';
+import {AccessPackageAssignmentPolicyItemRequestBuilder} from './assignmentPolicies/item/accessPackageAssignmentPolicyItemRequestBuilder';
+import {CatalogRequestBuilder} from './catalog/catalogRequestBuilder';
+import {GetApplicablePolicyRequirementsRequestBuilder} from './getApplicablePolicyRequirements/getApplicablePolicyRequirementsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/catalogs/{accessPackageCatalog-id}/accessPackages/{accessPackage-id}  */
+/** Provides operations to manage the accessPackages property of the microsoft.graph.accessPackageCatalog entity.  */
 export class AccessPackageItemRequestBuilder {
+    public get assignmentPolicies(): AssignmentPoliciesRequestBuilder {
+        return new AssignmentPoliciesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get catalog(): CatalogRequestBuilder {
         return new CatalogRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -17,6 +25,17 @@ export class AccessPackageItemRequestBuilder {
     private readonly requestAdapter: RequestAdapter;
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.catalogs.item.accessPackages.item.assignmentPolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a accessPackageAssignmentPolicyItemRequestBuilder
+     */
+    public assignmentPoliciesById(id: string) : AccessPackageAssignmentPolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["accessPackageAssignmentPolicy_id"] = id
+        return new AccessPackageAssignmentPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new AccessPackageItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -31,7 +50,7 @@ export class AccessPackageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Delete navigation property accessPackages for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +85,7 @@ export class AccessPackageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Update the navigation property accessPackages in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +103,7 @@ export class AccessPackageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Delete navigation property accessPackages for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +112,11 @@ export class AccessPackageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The access packages in this catalog. Read-only. Nullable.
@@ -110,10 +133,14 @@ export class AccessPackageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessPackage>(requestInfo, AccessPackage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackage>(requestInfo, createAccessPackageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Update the navigation property accessPackages in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +151,10 @@ export class AccessPackageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

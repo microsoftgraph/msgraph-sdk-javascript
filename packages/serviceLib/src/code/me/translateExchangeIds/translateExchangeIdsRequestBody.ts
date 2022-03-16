@@ -1,18 +1,13 @@
-import {ExchangeIdFormat} from '../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ExchangeIdFormat} from '../../models/microsoft/graph/exchangeIdFormat';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TranslateExchangeIdsRequestBody implements Parsable {
+/** Provides operations to call the translateExchangeIds method.  */
+export class TranslateExchangeIdsRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _inputIds?: string[] | undefined;
     private _sourceIdType?: ExchangeIdFormat | undefined;
     private _targetIdType?: ExchangeIdFormat | undefined;
-    /**
-     * Instantiates a new translateExchangeIdsRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -21,25 +16,17 @@ export class TranslateExchangeIdsRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the inputIds property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get inputIds() {
-        return this._inputIds;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the sourceIdType property value. 
-     * @returns a exchangeIdFormat
+     * Instantiates a new translateExchangeIdsRequestBody and sets the default values.
      */
-    public get sourceIdType() {
-        return this._sourceIdType;
-    };
-    /**
-     * Gets the targetIdType property value. 
-     * @returns a exchangeIdFormat
-     */
-    public get targetIdType() {
-        return this._targetIdType;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -53,6 +40,20 @@ export class TranslateExchangeIdsRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the inputIds property value. 
+     * @returns a string
+     */
+    public get inputIds() {
+        return this._inputIds;
+    };
+    /**
+     * Sets the inputIds property value. 
+     * @param value Value to set for the InputIds property.
+     */
+    public set inputIds(value: string[] | undefined) {
+        this._inputIds = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -64,18 +65,11 @@ export class TranslateExchangeIdsRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sourceIdType property value. 
+     * @returns a exchangeIdFormat
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the inputIds property value. 
-     * @param value Value to set for the InputIds property.
-     */
-    public set inputIds(value: string[] | undefined) {
-        this._inputIds = value;
+    public get sourceIdType() {
+        return this._sourceIdType;
     };
     /**
      * Sets the sourceIdType property value. 
@@ -83,6 +77,13 @@ export class TranslateExchangeIdsRequestBody implements Parsable {
      */
     public set sourceIdType(value: ExchangeIdFormat | undefined) {
         this._sourceIdType = value;
+    };
+    /**
+     * Gets the targetIdType property value. 
+     * @returns a exchangeIdFormat
+     */
+    public get targetIdType() {
+        return this._targetIdType;
     };
     /**
      * Sets the targetIdType property value. 

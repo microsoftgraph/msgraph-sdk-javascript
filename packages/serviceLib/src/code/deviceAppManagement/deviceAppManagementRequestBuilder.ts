@@ -1,36 +1,39 @@
 import {DeviceAppManagement} from '../models/microsoft/graph/';
-import {AndroidManagedAppProtectionsRequestBuilder} from './androidManagedAppProtections/';
-import {AndroidManagedAppProtectionItemRequestBuilder} from './androidManagedAppProtections/item/';
-import {DefaultManagedAppProtectionsRequestBuilder} from './defaultManagedAppProtections/';
-import {DefaultManagedAppProtectionItemRequestBuilder} from './defaultManagedAppProtections/item/';
-import {IosManagedAppProtectionsRequestBuilder} from './iosManagedAppProtections/';
-import {IosManagedAppProtectionItemRequestBuilder} from './iosManagedAppProtections/item/';
-import {ManagedAppPoliciesRequestBuilder} from './managedAppPolicies/';
-import {ManagedAppPolicyItemRequestBuilder} from './managedAppPolicies/item/';
-import {ManagedAppRegistrationsRequestBuilder} from './managedAppRegistrations/';
-import {ManagedAppRegistrationItemRequestBuilder} from './managedAppRegistrations/item/';
-import {ManagedAppStatusesRequestBuilder} from './managedAppStatuses/';
-import {ManagedAppStatusItemRequestBuilder} from './managedAppStatuses/item/';
-import {ManagedEBooksRequestBuilder} from './managedEBooks/';
-import {ManagedEBookItemRequestBuilder} from './managedEBooks/item/';
-import {MdmWindowsInformationProtectionPoliciesRequestBuilder} from './mdmWindowsInformationProtectionPolicies/';
-import {MdmWindowsInformationProtectionPolicyItemRequestBuilder} from './mdmWindowsInformationProtectionPolicies/item/';
-import {MobileAppCategoriesRequestBuilder} from './mobileAppCategories/';
-import {MobileAppCategoryItemRequestBuilder} from './mobileAppCategories/item/';
-import {MobileAppConfigurationsRequestBuilder} from './mobileAppConfigurations/';
-import {ManagedDeviceMobileAppConfigurationItemRequestBuilder} from './mobileAppConfigurations/item/';
-import {MobileAppsRequestBuilder} from './mobileApps/';
-import {MobileAppItemRequestBuilder} from './mobileApps/item/';
-import {SyncMicrosoftStoreForBusinessAppsRequestBuilder} from './syncMicrosoftStoreForBusinessApps/';
-import {TargetedManagedAppConfigurationsRequestBuilder} from './targetedManagedAppConfigurations/';
-import {TargetedManagedAppConfigurationItemRequestBuilder} from './targetedManagedAppConfigurations/item/';
-import {VppTokensRequestBuilder} from './vppTokens/';
-import {VppTokenItemRequestBuilder} from './vppTokens/item/';
-import {WindowsInformationProtectionPoliciesRequestBuilder} from './windowsInformationProtectionPolicies/';
-import {WindowsInformationProtectionPolicyItemRequestBuilder} from './windowsInformationProtectionPolicies/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceAppManagementFromDiscriminatorValue} from '../models/microsoft/graph/createDeviceAppManagementFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AndroidManagedAppProtectionsRequestBuilder} from './androidManagedAppProtections/androidManagedAppProtectionsRequestBuilder';
+import {AndroidManagedAppProtectionItemRequestBuilder} from './androidManagedAppProtections/item/androidManagedAppProtectionItemRequestBuilder';
+import {DefaultManagedAppProtectionsRequestBuilder} from './defaultManagedAppProtections/defaultManagedAppProtectionsRequestBuilder';
+import {DefaultManagedAppProtectionItemRequestBuilder} from './defaultManagedAppProtections/item/defaultManagedAppProtectionItemRequestBuilder';
+import {IosManagedAppProtectionsRequestBuilder} from './iosManagedAppProtections/iosManagedAppProtectionsRequestBuilder';
+import {IosManagedAppProtectionItemRequestBuilder} from './iosManagedAppProtections/item/iosManagedAppProtectionItemRequestBuilder';
+import {ManagedAppPolicyItemRequestBuilder} from './managedAppPolicies/item/managedAppPolicyItemRequestBuilder';
+import {ManagedAppPoliciesRequestBuilder} from './managedAppPolicies/managedAppPoliciesRequestBuilder';
+import {ManagedAppRegistrationItemRequestBuilder} from './managedAppRegistrations/item/managedAppRegistrationItemRequestBuilder';
+import {ManagedAppRegistrationsRequestBuilder} from './managedAppRegistrations/managedAppRegistrationsRequestBuilder';
+import {ManagedAppStatusItemRequestBuilder} from './managedAppStatuses/item/managedAppStatusItemRequestBuilder';
+import {ManagedAppStatusesRequestBuilder} from './managedAppStatuses/managedAppStatusesRequestBuilder';
+import {ManagedEBookItemRequestBuilder} from './managedEBooks/item/managedEBookItemRequestBuilder';
+import {ManagedEBooksRequestBuilder} from './managedEBooks/managedEBooksRequestBuilder';
+import {MdmWindowsInformationProtectionPolicyItemRequestBuilder} from './mdmWindowsInformationProtectionPolicies/item/mdmWindowsInformationProtectionPolicyItemRequestBuilder';
+import {MdmWindowsInformationProtectionPoliciesRequestBuilder} from './mdmWindowsInformationProtectionPolicies/mdmWindowsInformationProtectionPoliciesRequestBuilder';
+import {MobileAppCategoryItemRequestBuilder} from './mobileAppCategories/item/mobileAppCategoryItemRequestBuilder';
+import {MobileAppCategoriesRequestBuilder} from './mobileAppCategories/mobileAppCategoriesRequestBuilder';
+import {ManagedDeviceMobileAppConfigurationItemRequestBuilder} from './mobileAppConfigurations/item/managedDeviceMobileAppConfigurationItemRequestBuilder';
+import {MobileAppConfigurationsRequestBuilder} from './mobileAppConfigurations/mobileAppConfigurationsRequestBuilder';
+import {MobileAppItemRequestBuilder} from './mobileApps/item/mobileAppItemRequestBuilder';
+import {MobileAppsRequestBuilder} from './mobileApps/mobileAppsRequestBuilder';
+import {SyncMicrosoftStoreForBusinessAppsRequestBuilder} from './syncMicrosoftStoreForBusinessApps/syncMicrosoftStoreForBusinessAppsRequestBuilder';
+import {TargetedManagedAppConfigurationItemRequestBuilder} from './targetedManagedAppConfigurations/item/targetedManagedAppConfigurationItemRequestBuilder';
+import {TargetedManagedAppConfigurationsRequestBuilder} from './targetedManagedAppConfigurations/targetedManagedAppConfigurationsRequestBuilder';
+import {VppTokenItemRequestBuilder} from './vppTokens/item/vppTokenItemRequestBuilder';
+import {VppTokensRequestBuilder} from './vppTokens/vppTokensRequestBuilder';
+import {WindowsInformationProtectionPolicyItemRequestBuilder} from './windowsInformationProtectionPolicies/item/windowsInformationProtectionPolicyItemRequestBuilder';
+import {WindowsInformationProtectionPoliciesRequestBuilder} from './windowsInformationProtectionPolicies/windowsInformationProtectionPoliciesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement  */
+/** Provides operations to manage the deviceAppManagement singleton.  */
 export class DeviceAppManagementRequestBuilder {
     public get androidManagedAppProtections(): AndroidManagedAppProtectionsRequestBuilder {
         return new AndroidManagedAppProtectionsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -171,7 +174,11 @@ export class DeviceAppManagementRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceAppManagement>(requestInfo, DeviceAppManagement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceAppManagement>(requestInfo, createDeviceAppManagementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.iosManagedAppProtections.item collection
@@ -284,7 +291,11 @@ export class DeviceAppManagementRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.targetedManagedAppConfigurations.item collection

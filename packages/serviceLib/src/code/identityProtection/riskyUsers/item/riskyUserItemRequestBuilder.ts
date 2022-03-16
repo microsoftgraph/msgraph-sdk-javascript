@@ -1,9 +1,12 @@
 import {RiskyUser} from '../../../models/microsoft/graph/';
-import {HistoryRequestBuilder} from './history/';
-import {RiskyUserHistoryItemItemRequestBuilder} from './history/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createRiskyUserFromDiscriminatorValue} from '../../../models/microsoft/graph/createRiskyUserFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {HistoryRequestBuilder} from './history/historyRequestBuilder';
+import {RiskyUserHistoryItemItemRequestBuilder} from './history/item/riskyUserHistoryItemItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityProtection/riskyUsers/{riskyUser-id}  */
+/** Provides operations to manage the riskyUsers property of the microsoft.graph.identityProtectionRoot entity.  */
 export class RiskyUserItemRequestBuilder {
     public get history(): HistoryRequestBuilder {
         return new HistoryRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class RiskyUserItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Users that are flagged as at-risk by Azure AD Identity Protection.
+     * Delete navigation property riskyUsers for identityProtection
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class RiskyUserItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Users that are flagged as at-risk by Azure AD Identity Protection.
+     * Update the navigation property riskyUsers in identityProtection
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class RiskyUserItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Users that are flagged as at-risk by Azure AD Identity Protection.
+     * Delete navigation property riskyUsers for identityProtection
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class RiskyUserItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Users that are flagged as at-risk by Azure AD Identity Protection.
@@ -107,7 +114,11 @@ export class RiskyUserItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<RiskyUser>(requestInfo, RiskyUser, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<RiskyUser>(requestInfo, createRiskyUserFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityProtection.riskyUsers.item.history.item collection
@@ -121,7 +132,7 @@ export class RiskyUserItemRequestBuilder {
         return new RiskyUserHistoryItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Users that are flagged as at-risk by Azure AD Identity Protection.
+     * Update the navigation property riskyUsers in identityProtection
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class RiskyUserItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

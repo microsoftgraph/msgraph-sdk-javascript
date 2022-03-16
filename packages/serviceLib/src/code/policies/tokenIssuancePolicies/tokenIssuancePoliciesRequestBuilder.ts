@@ -1,9 +1,16 @@
-import {TokenIssuancePolicy} from '../../models/microsoft/graph/';
-import {TokenIssuancePoliciesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {TokenIssuancePolicy, TokenIssuancePolicyCollectionResponse} from '../../models/microsoft/graph/';
+import {createTokenIssuancePolicyCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createTokenIssuancePolicyCollectionResponseFromDiscriminatorValue';
+import {createTokenIssuancePolicyFromDiscriminatorValue} from '../../models/microsoft/graph/createTokenIssuancePolicyFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /policies/tokenIssuancePolicies  */
+/** Provides operations to manage the tokenIssuancePolicies property of the microsoft.graph.policyRoot entity.  */
 export class TokenIssuancePoliciesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class TokenIssuancePoliciesRequestBuilder {
         return requestInfo;
     };
     /**
-     * The policy that specifies the characteristics of SAML tokens issued by Azure AD.
+     * Create new navigation property to tokenIssuancePolicies for policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class TokenIssuancePoliciesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of TokenIssuancePoliciesResponse
+     * @returns a Promise of TokenIssuancePolicyCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class TokenIssuancePoliciesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<TokenIssuancePoliciesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<TokenIssuancePolicyCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TokenIssuancePoliciesResponse>(requestInfo, TokenIssuancePoliciesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TokenIssuancePolicyCollectionResponse>(requestInfo, createTokenIssuancePolicyCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The policy that specifies the characteristics of SAML tokens issued by Azure AD.
+     * Create new navigation property to tokenIssuancePolicies for policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class TokenIssuancePoliciesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<TokenIssuancePolicy>(requestInfo, TokenIssuancePolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TokenIssuancePolicy>(requestInfo, createTokenIssuancePolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

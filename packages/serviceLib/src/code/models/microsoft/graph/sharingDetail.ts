@@ -1,7 +1,9 @@
+import {createInsightIdentityFromDiscriminatorValue} from './createInsightIdentityFromDiscriminatorValue';
+import {createResourceReferenceFromDiscriminatorValue} from './createResourceReferenceFromDiscriminatorValue';
 import {InsightIdentity, ResourceReference} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SharingDetail implements Parsable {
+export class SharingDetail implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The user who shared the document.  */
@@ -14,12 +16,6 @@ export class SharingDetail implements Parsable {
     /** Determines the way the document was shared, can be by a 'Link', 'Attachment', 'Group', 'Site'.  */
     private _sharingType?: string | undefined;
     /**
-     * Instantiates a new sharingDetail and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -27,39 +23,17 @@ export class SharingDetail implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the sharedBy property value. The user who shared the document.
-     * @returns a insightIdentity
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get sharedBy() {
-        return this._sharedBy;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the sharedDateTime property value. The date and time the file was last shared. The timestamp represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
-     * @returns a Date
+     * Instantiates a new sharingDetail and sets the default values.
      */
-    public get sharedDateTime() {
-        return this._sharedDateTime;
-    };
-    /**
-     * Gets the sharingReference property value. 
-     * @returns a resourceReference
-     */
-    public get sharingReference() {
-        return this._sharingReference;
-    };
-    /**
-     * Gets the sharingSubject property value. The subject with which the document was shared.
-     * @returns a string
-     */
-    public get sharingSubject() {
-        return this._sharingSubject;
-    };
-    /**
-     * Gets the sharingType property value. Determines the way the document was shared, can be by a 'Link', 'Attachment', 'Group', 'Site'.
-     * @returns a string
-     */
-    public get sharingType() {
-        return this._sharingType;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -67,9 +41,9 @@ export class SharingDetail implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["sharedBy", (o, n) => { (o as unknown as SharingDetail).sharedBy = n.getObjectValue<InsightIdentity>(InsightIdentity); }],
+            ["sharedBy", (o, n) => { (o as unknown as SharingDetail).sharedBy = n.getObjectValue<InsightIdentity>(createInsightIdentityFromDiscriminatorValue); }],
             ["sharedDateTime", (o, n) => { (o as unknown as SharingDetail).sharedDateTime = n.getDateValue(); }],
-            ["sharingReference", (o, n) => { (o as unknown as SharingDetail).sharingReference = n.getObjectValue<ResourceReference>(ResourceReference); }],
+            ["sharingReference", (o, n) => { (o as unknown as SharingDetail).sharingReference = n.getObjectValue<ResourceReference>(createResourceReferenceFromDiscriminatorValue); }],
             ["sharingSubject", (o, n) => { (o as unknown as SharingDetail).sharingSubject = n.getStringValue(); }],
             ["sharingType", (o, n) => { (o as unknown as SharingDetail).sharingType = n.getStringValue(); }],
         ]);
@@ -88,11 +62,11 @@ export class SharingDetail implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sharedBy property value. The user who shared the document.
+     * @returns a insightIdentity
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get sharedBy() {
+        return this._sharedBy;
     };
     /**
      * Sets the sharedBy property value. The user who shared the document.
@@ -102,11 +76,25 @@ export class SharingDetail implements Parsable {
         this._sharedBy = value;
     };
     /**
+     * Gets the sharedDateTime property value. The date and time the file was last shared. The timestamp represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
+     * @returns a Date
+     */
+    public get sharedDateTime() {
+        return this._sharedDateTime;
+    };
+    /**
      * Sets the sharedDateTime property value. The date and time the file was last shared. The timestamp represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
      * @param value Value to set for the sharedDateTime property.
      */
     public set sharedDateTime(value: Date | undefined) {
         this._sharedDateTime = value;
+    };
+    /**
+     * Gets the sharingReference property value. 
+     * @returns a resourceReference
+     */
+    public get sharingReference() {
+        return this._sharingReference;
     };
     /**
      * Sets the sharingReference property value. 
@@ -116,11 +104,25 @@ export class SharingDetail implements Parsable {
         this._sharingReference = value;
     };
     /**
+     * Gets the sharingSubject property value. The subject with which the document was shared.
+     * @returns a string
+     */
+    public get sharingSubject() {
+        return this._sharingSubject;
+    };
+    /**
      * Sets the sharingSubject property value. The subject with which the document was shared.
      * @param value Value to set for the sharingSubject property.
      */
     public set sharingSubject(value: string | undefined) {
         this._sharingSubject = value;
+    };
+    /**
+     * Gets the sharingType property value. Determines the way the document was shared, can be by a 'Link', 'Attachment', 'Group', 'Site'.
+     * @returns a string
+     */
+    public get sharingType() {
+        return this._sharingType;
     };
     /**
      * Sets the sharingType property value. Determines the way the document was shared, can be by a 'Link', 'Attachment', 'Group', 'Site'.

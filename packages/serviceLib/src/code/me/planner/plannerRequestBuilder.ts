@@ -1,11 +1,14 @@
 import {PlannerUser} from '../../models/microsoft/graph/';
-import {PlansRequestBuilder} from './plans/';
-import {PlannerPlanItemRequestBuilder} from './plans/item/';
-import {TasksRequestBuilder} from './tasks/';
-import {PlannerTaskItemRequestBuilder} from './tasks/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPlannerUserFromDiscriminatorValue} from '../../models/microsoft/graph/createPlannerUserFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {PlannerPlanItemRequestBuilder} from './plans/item/plannerPlanItemRequestBuilder';
+import {PlansRequestBuilder} from './plans/plansRequestBuilder';
+import {PlannerTaskItemRequestBuilder} from './tasks/item/plannerTaskItemRequestBuilder';
+import {TasksRequestBuilder} from './tasks/tasksRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/planner  */
+/** Provides operations to manage the planner property of the microsoft.graph.user entity.  */
 export class PlannerRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -33,7 +36,7 @@ export class PlannerRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Entry-point to the Planner resource that might exist for a user. Read-only.
+     * Delete navigation property planner for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class PlannerRequestBuilder {
         return requestInfo;
     };
     /**
-     * Entry-point to the Planner resource that might exist for a user. Read-only.
+     * Update the navigation property planner in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class PlannerRequestBuilder {
         return requestInfo;
     };
     /**
-     * Entry-point to the Planner resource that might exist for a user. Read-only.
+     * Delete navigation property planner for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Entry-point to the Planner resource that might exist for a user. Read-only.
@@ -112,10 +119,14 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PlannerUser>(requestInfo, PlannerUser, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PlannerUser>(requestInfo, createPlannerUserFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Entry-point to the Planner resource that might exist for a user. Read-only.
+     * Update the navigation property planner in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -126,7 +137,11 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.me.planner.plans.item collection

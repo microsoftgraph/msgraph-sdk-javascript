@@ -1,9 +1,16 @@
-import {WindowsInformationProtectionPolicy} from '../../models/microsoft/graph/';
-import {WindowsInformationProtectionPoliciesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {WindowsInformationProtectionPolicy, WindowsInformationProtectionPolicyCollectionResponse} from '../../models/microsoft/graph/';
+import {createWindowsInformationProtectionPolicyCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createWindowsInformationProtectionPolicyCollectionResponseFromDiscriminatorValue';
+import {createWindowsInformationProtectionPolicyFromDiscriminatorValue} from '../../models/microsoft/graph/createWindowsInformationProtectionPolicyFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/windowsInformationProtectionPolicies  */
+/** Provides operations to manage the windowsInformationProtectionPolicies property of the microsoft.graph.deviceAppManagement entity.  */
 export class WindowsInformationProtectionPoliciesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class WindowsInformationProtectionPoliciesRequestBuilder {
         return requestInfo;
     };
     /**
-     * Windows information protection for apps running on devices which are not MDM enrolled.
+     * Create new navigation property to windowsInformationProtectionPolicies for deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class WindowsInformationProtectionPoliciesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of WindowsInformationProtectionPoliciesResponse
+     * @returns a Promise of WindowsInformationProtectionPolicyCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class WindowsInformationProtectionPoliciesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<WindowsInformationProtectionPoliciesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<WindowsInformationProtectionPolicyCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<WindowsInformationProtectionPoliciesResponse>(requestInfo, WindowsInformationProtectionPoliciesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<WindowsInformationProtectionPolicyCollectionResponse>(requestInfo, createWindowsInformationProtectionPolicyCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Windows information protection for apps running on devices which are not MDM enrolled.
+     * Create new navigation property to windowsInformationProtectionPolicies for deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class WindowsInformationProtectionPoliciesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<WindowsInformationProtectionPolicy>(requestInfo, WindowsInformationProtectionPolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<WindowsInformationProtectionPolicy>(requestInfo, createWindowsInformationProtectionPolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

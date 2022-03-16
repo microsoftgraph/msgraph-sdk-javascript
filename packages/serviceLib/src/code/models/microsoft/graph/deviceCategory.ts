@@ -20,11 +20,25 @@ export class DeviceCategory extends Entity implements Parsable {
         return this._description;
     };
     /**
+     * Sets the description property value. Optional description for the device category.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
      * Gets the displayName property value. Display name for the device category.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. Display name for the device category.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,19 +59,5 @@ export class DeviceCategory extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeStringValue("description", this.description);
         writer.writeStringValue("displayName", this.displayName);
-    };
-    /**
-     * Sets the description property value. Optional description for the device category.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. Display name for the device category.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
     };
 }

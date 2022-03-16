@@ -1,3 +1,4 @@
+/** Provides operations to manage the identityContainer singleton.  */
 export enum IdentityUserFlowAttributeDataType {
     String = "string",
     Boolean = "boolean",

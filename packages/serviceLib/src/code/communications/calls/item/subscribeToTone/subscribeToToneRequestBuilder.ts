@@ -1,8 +1,9 @@
 import {SubscribeToToneOperation} from '../../../../models/microsoft/graph/';
+import {createSubscribeToToneOperationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createSubscribeToToneOperationFromDiscriminatorValue';
 import {SubscribeToToneRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}/microsoft.graph.subscribeToTone  */
+/** Provides operations to call the subscribeToTone method.  */
 export class SubscribeToToneRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -47,13 +48,13 @@ export class SubscribeToToneRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of SubscribeToToneResponse
+     * @returns a Promise of SubscribeToToneOperation
      */
     public post(body: SubscribeToToneRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SubscribeToToneOperation | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<SubscribeToToneOperation>(requestInfo, SubscribeToToneOperation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<SubscribeToToneOperation>(requestInfo, createSubscribeToToneOperationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

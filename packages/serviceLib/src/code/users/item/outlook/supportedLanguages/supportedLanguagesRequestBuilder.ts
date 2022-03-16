@@ -1,7 +1,8 @@
-import {LocaleInfo} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSupportedLanguagesResponseFromDiscriminatorValue} from './createSupportedLanguagesResponseFromDiscriminatorValue';
+import {SupportedLanguagesResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/outlook/microsoft.graph.supportedLanguages()  */
+/** Provides operations to call the supportedLanguages method.  */
 export class SupportedLanguagesRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -42,12 +43,12 @@ export class SupportedLanguagesRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of LocaleInfo
+     * @returns a Promise of SupportedLanguagesResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<LocaleInfo[] | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SupportedLanguagesResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendCollectionAsync<LocaleInfo>(requestInfo, LocaleInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<SupportedLanguagesResponse>(requestInfo, createSupportedLanguagesResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

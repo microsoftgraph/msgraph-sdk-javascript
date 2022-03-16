@@ -1,9 +1,16 @@
-import {PrintUsageByPrinter} from '../../models/microsoft/graph/';
-import {DailyPrintUsageByPrinterResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {PrintUsageByPrinter, PrintUsageByPrinterCollectionResponse} from '../../models/microsoft/graph/';
+import {createPrintUsageByPrinterCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createPrintUsageByPrinterCollectionResponseFromDiscriminatorValue';
+import {createPrintUsageByPrinterFromDiscriminatorValue} from '../../models/microsoft/graph/createPrintUsageByPrinterFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /reports/dailyPrintUsageByPrinter  */
+/** Provides operations to manage the dailyPrintUsageByPrinter property of the microsoft.graph.reportRoot entity.  */
 export class DailyPrintUsageByPrinterRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -73,7 +80,7 @@ export class DailyPrintUsageByPrinterRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of DailyPrintUsageByPrinterResponse
+     * @returns a Promise of PrintUsageByPrinterCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,11 +91,15 @@ export class DailyPrintUsageByPrinterRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<DailyPrintUsageByPrinterResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<PrintUsageByPrinterCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DailyPrintUsageByPrinterResponse>(requestInfo, DailyPrintUsageByPrinterResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintUsageByPrinterCollectionResponse>(requestInfo, createPrintUsageByPrinterCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Create new navigation property to dailyPrintUsageByPrinter for reports
@@ -103,6 +114,10 @@ export class DailyPrintUsageByPrinterRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintUsageByPrinter>(requestInfo, PrintUsageByPrinter, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintUsageByPrinter>(requestInfo, createPrintUsageByPrinterFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

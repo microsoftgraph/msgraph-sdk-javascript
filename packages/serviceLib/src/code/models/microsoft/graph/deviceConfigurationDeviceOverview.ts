@@ -17,17 +17,24 @@ export class DeviceConfigurationDeviceOverview extends Entity implements Parsabl
     /** Number of succeeded devices  */
     private _successCount?: number | undefined;
     /**
-     * Instantiates a new deviceConfigurationDeviceOverview and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the configurationVersion property value. Version of the policy for that overview
      * @returns a integer
      */
     public get configurationVersion() {
         return this._configurationVersion;
+    };
+    /**
+     * Sets the configurationVersion property value. Version of the policy for that overview
+     * @param value Value to set for the configurationVersion property.
+     */
+    public set configurationVersion(value: number | undefined) {
+        this._configurationVersion = value;
+    };
+    /**
+     * Instantiates a new deviceConfigurationDeviceOverview and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the errorCount property value. Number of error devices
@@ -37,6 +44,13 @@ export class DeviceConfigurationDeviceOverview extends Entity implements Parsabl
         return this._errorCount;
     };
     /**
+     * Sets the errorCount property value. Number of error devices
+     * @param value Value to set for the errorCount property.
+     */
+    public set errorCount(value: number | undefined) {
+        this._errorCount = value;
+    };
+    /**
      * Gets the failedCount property value. Number of failed devices
      * @returns a integer
      */
@@ -44,32 +58,11 @@ export class DeviceConfigurationDeviceOverview extends Entity implements Parsabl
         return this._failedCount;
     };
     /**
-     * Gets the lastUpdateDateTime property value. Last update time
-     * @returns a Date
+     * Sets the failedCount property value. Number of failed devices
+     * @param value Value to set for the failedCount property.
      */
-    public get lastUpdateDateTime() {
-        return this._lastUpdateDateTime;
-    };
-    /**
-     * Gets the notApplicableCount property value. Number of not applicable devices
-     * @returns a integer
-     */
-    public get notApplicableCount() {
-        return this._notApplicableCount;
-    };
-    /**
-     * Gets the pendingCount property value. Number of pending devices
-     * @returns a integer
-     */
-    public get pendingCount() {
-        return this._pendingCount;
-    };
-    /**
-     * Gets the successCount property value. Number of succeeded devices
-     * @returns a integer
-     */
-    public get successCount() {
-        return this._successCount;
+    public set failedCount(value: number | undefined) {
+        this._failedCount = value;
     };
     /**
      * The deserialization information for the current model
@@ -87,6 +80,48 @@ export class DeviceConfigurationDeviceOverview extends Entity implements Parsabl
         ]);
     };
     /**
+     * Gets the lastUpdateDateTime property value. Last update time
+     * @returns a Date
+     */
+    public get lastUpdateDateTime() {
+        return this._lastUpdateDateTime;
+    };
+    /**
+     * Sets the lastUpdateDateTime property value. Last update time
+     * @param value Value to set for the lastUpdateDateTime property.
+     */
+    public set lastUpdateDateTime(value: Date | undefined) {
+        this._lastUpdateDateTime = value;
+    };
+    /**
+     * Gets the notApplicableCount property value. Number of not applicable devices
+     * @returns a integer
+     */
+    public get notApplicableCount() {
+        return this._notApplicableCount;
+    };
+    /**
+     * Sets the notApplicableCount property value. Number of not applicable devices
+     * @param value Value to set for the notApplicableCount property.
+     */
+    public set notApplicableCount(value: number | undefined) {
+        this._notApplicableCount = value;
+    };
+    /**
+     * Gets the pendingCount property value. Number of pending devices
+     * @returns a integer
+     */
+    public get pendingCount() {
+        return this._pendingCount;
+    };
+    /**
+     * Sets the pendingCount property value. Number of pending devices
+     * @param value Value to set for the pendingCount property.
+     */
+    public set pendingCount(value: number | undefined) {
+        this._pendingCount = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -102,46 +137,11 @@ export class DeviceConfigurationDeviceOverview extends Entity implements Parsabl
         writer.writeNumberValue("successCount", this.successCount);
     };
     /**
-     * Sets the configurationVersion property value. Version of the policy for that overview
-     * @param value Value to set for the configurationVersion property.
+     * Gets the successCount property value. Number of succeeded devices
+     * @returns a integer
      */
-    public set configurationVersion(value: number | undefined) {
-        this._configurationVersion = value;
-    };
-    /**
-     * Sets the errorCount property value. Number of error devices
-     * @param value Value to set for the errorCount property.
-     */
-    public set errorCount(value: number | undefined) {
-        this._errorCount = value;
-    };
-    /**
-     * Sets the failedCount property value. Number of failed devices
-     * @param value Value to set for the failedCount property.
-     */
-    public set failedCount(value: number | undefined) {
-        this._failedCount = value;
-    };
-    /**
-     * Sets the lastUpdateDateTime property value. Last update time
-     * @param value Value to set for the lastUpdateDateTime property.
-     */
-    public set lastUpdateDateTime(value: Date | undefined) {
-        this._lastUpdateDateTime = value;
-    };
-    /**
-     * Sets the notApplicableCount property value. Number of not applicable devices
-     * @param value Value to set for the notApplicableCount property.
-     */
-    public set notApplicableCount(value: number | undefined) {
-        this._notApplicableCount = value;
-    };
-    /**
-     * Sets the pendingCount property value. Number of pending devices
-     * @param value Value to set for the pendingCount property.
-     */
-    public set pendingCount(value: number | undefined) {
-        this._pendingCount = value;
+    public get successCount() {
+        return this._successCount;
     };
     /**
      * Sets the successCount property value. Number of succeeded devices

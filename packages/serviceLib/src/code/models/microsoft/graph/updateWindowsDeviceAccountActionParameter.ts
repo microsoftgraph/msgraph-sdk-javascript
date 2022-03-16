@@ -1,7 +1,8 @@
+import {createWindowsDeviceAccountFromDiscriminatorValue} from './createWindowsDeviceAccountFromDiscriminatorValue';
 import {WindowsDeviceAccount} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
+export class UpdateWindowsDeviceAccountActionParameter implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Not yet documented  */
@@ -17,17 +18,18 @@ export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
     /** Not yet documented  */
     private _sessionInitiationProtocalAddress?: string | undefined;
     /**
-     * Instantiates a new updateWindowsDeviceAccountActionParameter and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the calendarSyncEnabled property value. Not yet documented
@@ -37,11 +39,31 @@ export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
         return this._calendarSyncEnabled;
     };
     /**
+     * Sets the calendarSyncEnabled property value. Not yet documented
+     * @param value Value to set for the calendarSyncEnabled property.
+     */
+    public set calendarSyncEnabled(value: boolean | undefined) {
+        this._calendarSyncEnabled = value;
+    };
+    /**
+     * Instantiates a new updateWindowsDeviceAccountActionParameter and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the deviceAccount property value. Not yet documented
      * @returns a windowsDeviceAccount
      */
     public get deviceAccount() {
         return this._deviceAccount;
+    };
+    /**
+     * Sets the deviceAccount property value. Not yet documented
+     * @param value Value to set for the deviceAccount property.
+     */
+    public set deviceAccount(value: WindowsDeviceAccount | undefined) {
+        this._deviceAccount = value;
     };
     /**
      * Gets the deviceAccountEmail property value. Not yet documented
@@ -51,11 +73,39 @@ export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
         return this._deviceAccountEmail;
     };
     /**
+     * Sets the deviceAccountEmail property value. Not yet documented
+     * @param value Value to set for the deviceAccountEmail property.
+     */
+    public set deviceAccountEmail(value: string | undefined) {
+        this._deviceAccountEmail = value;
+    };
+    /**
      * Gets the exchangeServer property value. Not yet documented
      * @returns a string
      */
     public get exchangeServer() {
         return this._exchangeServer;
+    };
+    /**
+     * Sets the exchangeServer property value. Not yet documented
+     * @param value Value to set for the exchangeServer property.
+     */
+    public set exchangeServer(value: string | undefined) {
+        this._exchangeServer = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["calendarSyncEnabled", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).calendarSyncEnabled = n.getBooleanValue(); }],
+            ["deviceAccount", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).deviceAccount = n.getObjectValue<WindowsDeviceAccount>(createWindowsDeviceAccountFromDiscriminatorValue); }],
+            ["deviceAccountEmail", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).deviceAccountEmail = n.getStringValue(); }],
+            ["exchangeServer", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).exchangeServer = n.getStringValue(); }],
+            ["passwordRotationEnabled", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).passwordRotationEnabled = n.getBooleanValue(); }],
+            ["sessionInitiationProtocalAddress", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).sessionInitiationProtocalAddress = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the passwordRotationEnabled property value. Not yet documented
@@ -65,25 +115,11 @@ export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
         return this._passwordRotationEnabled;
     };
     /**
-     * Gets the sessionInitiationProtocalAddress property value. Not yet documented
-     * @returns a string
+     * Sets the passwordRotationEnabled property value. Not yet documented
+     * @param value Value to set for the passwordRotationEnabled property.
      */
-    public get sessionInitiationProtocalAddress() {
-        return this._sessionInitiationProtocalAddress;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["calendarSyncEnabled", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).calendarSyncEnabled = n.getBooleanValue(); }],
-            ["deviceAccount", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).deviceAccount = n.getObjectValue<WindowsDeviceAccount>(WindowsDeviceAccount); }],
-            ["deviceAccountEmail", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).deviceAccountEmail = n.getStringValue(); }],
-            ["exchangeServer", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).exchangeServer = n.getStringValue(); }],
-            ["passwordRotationEnabled", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).passwordRotationEnabled = n.getBooleanValue(); }],
-            ["sessionInitiationProtocalAddress", (o, n) => { (o as unknown as UpdateWindowsDeviceAccountActionParameter).sessionInitiationProtocalAddress = n.getStringValue(); }],
-        ]);
+    public set passwordRotationEnabled(value: boolean | undefined) {
+        this._passwordRotationEnabled = value;
     };
     /**
      * Serializes information the current object
@@ -100,46 +136,11 @@ export class UpdateWindowsDeviceAccountActionParameter implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sessionInitiationProtocalAddress property value. Not yet documented
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the calendarSyncEnabled property value. Not yet documented
-     * @param value Value to set for the calendarSyncEnabled property.
-     */
-    public set calendarSyncEnabled(value: boolean | undefined) {
-        this._calendarSyncEnabled = value;
-    };
-    /**
-     * Sets the deviceAccount property value. Not yet documented
-     * @param value Value to set for the deviceAccount property.
-     */
-    public set deviceAccount(value: WindowsDeviceAccount | undefined) {
-        this._deviceAccount = value;
-    };
-    /**
-     * Sets the deviceAccountEmail property value. Not yet documented
-     * @param value Value to set for the deviceAccountEmail property.
-     */
-    public set deviceAccountEmail(value: string | undefined) {
-        this._deviceAccountEmail = value;
-    };
-    /**
-     * Sets the exchangeServer property value. Not yet documented
-     * @param value Value to set for the exchangeServer property.
-     */
-    public set exchangeServer(value: string | undefined) {
-        this._exchangeServer = value;
-    };
-    /**
-     * Sets the passwordRotationEnabled property value. Not yet documented
-     * @param value Value to set for the passwordRotationEnabled property.
-     */
-    public set passwordRotationEnabled(value: boolean | undefined) {
-        this._passwordRotationEnabled = value;
+    public get sessionInitiationProtocalAddress() {
+        return this._sessionInitiationProtocalAddress;
     };
     /**
      * Sets the sessionInitiationProtocalAddress property value. Not yet documented

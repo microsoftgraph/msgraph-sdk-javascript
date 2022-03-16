@@ -1,16 +1,19 @@
 import {List} from '../../../../models/microsoft/graph/';
-import {ColumnsRequestBuilder} from './columns/';
-import {ColumnDefinitionItemRequestBuilder} from './columns/item/';
-import {ContentTypesRequestBuilder} from './contentTypes/';
-import {ContentTypeItemRequestBuilder} from './contentTypes/item/';
-import {DriveRequestBuilder} from './drive/';
-import {ItemsRequestBuilder} from './items/';
-import {ListItemItemRequestBuilder} from './items/item/';
-import {SubscriptionsRequestBuilder} from './subscriptions/';
-import {SubscriptionItemRequestBuilder} from './subscriptions/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createListFromDiscriminatorValue} from '../../../../models/microsoft/graph/createListFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ColumnsRequestBuilder} from './columns/columnsRequestBuilder';
+import {ColumnDefinitionItemRequestBuilder} from './columns/item/columnDefinitionItemRequestBuilder';
+import {ContentTypesRequestBuilder} from './contentTypes/contentTypesRequestBuilder';
+import {ContentTypeItemRequestBuilder} from './contentTypes/item/contentTypeItemRequestBuilder';
+import {DriveRequestBuilder} from './drive/driveRequestBuilder';
+import {ListItemItemRequestBuilder} from './items/item/listItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {SubscriptionItemRequestBuilder} from './subscriptions/item/subscriptionItemRequestBuilder';
+import {SubscriptionsRequestBuilder} from './subscriptions/subscriptionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/lists/{list-id}  */
+/** Provides operations to manage the lists property of the microsoft.graph.site entity.  */
 export class ListItemRequestBuilder {
     public get columns(): ColumnsRequestBuilder {
         return new ColumnsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -69,7 +72,7 @@ export class ListItemRequestBuilder {
         return new ContentTypeItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The collection of lists under this site.
+     * Delete navigation property lists for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -104,7 +107,7 @@ export class ListItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of lists under this site.
+     * Update the navigation property lists in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -122,7 +125,7 @@ export class ListItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of lists under this site.
+     * Delete navigation property lists for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -131,7 +134,11 @@ export class ListItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of lists under this site.
@@ -148,7 +155,11 @@ export class ListItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<List>(requestInfo, List, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<List>(requestInfo, createListFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.lists.item.items.item collection
@@ -162,7 +173,7 @@ export class ListItemRequestBuilder {
         return new ListItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The collection of lists under this site.
+     * Update the navigation property lists in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -173,7 +184,11 @@ export class ListItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.lists.item.subscriptions.item collection

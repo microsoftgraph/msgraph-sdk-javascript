@@ -1,8 +1,9 @@
 import {StartHoldMusicOperation} from '../../../../../../models/microsoft/graph/';
+import {createStartHoldMusicOperationFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createStartHoldMusicOperationFromDiscriminatorValue';
 import {StartHoldMusicRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}/participants/{participant-id}/microsoft.graph.startHoldMusic  */
+/** Provides operations to call the startHoldMusic method.  */
 export class StartHoldMusicRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -47,13 +48,13 @@ export class StartHoldMusicRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of StartHoldMusicResponse
+     * @returns a Promise of StartHoldMusicOperation
      */
     public post(body: StartHoldMusicRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<StartHoldMusicOperation | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<StartHoldMusicOperation>(requestInfo, StartHoldMusicOperation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<StartHoldMusicOperation>(requestInfo, createStartHoldMusicOperationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

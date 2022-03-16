@@ -1,3 +1,5 @@
+import {createWorkbookChartFontFromDiscriminatorValue} from './createWorkbookChartFontFromDiscriminatorValue';
+import {createWorkbookChartLineFormatFromDiscriminatorValue} from './createWorkbookChartLineFormatFromDiscriminatorValue';
 import {Entity, WorkbookChartFont, WorkbookChartLineFormat} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -20,11 +22,11 @@ export class WorkbookChartAxisFormat extends Entity implements Parsable {
         return this._font;
     };
     /**
-     * Gets the line property value. Represents chart line formatting. Read-only.
-     * @returns a workbookChartLineFormat
+     * Sets the font property value. Represents the font attributes (font name, font size, color, etc.) for a chart axis element. Read-only.
+     * @param value Value to set for the font property.
      */
-    public get line() {
-        return this._line;
+    public set font(value: WorkbookChartFont | undefined) {
+        this._font = value;
     };
     /**
      * The deserialization information for the current model
@@ -32,9 +34,23 @@ export class WorkbookChartAxisFormat extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["font", (o, n) => { (o as unknown as WorkbookChartAxisFormat).font = n.getObjectValue<WorkbookChartFont>(WorkbookChartFont); }],
-            ["line", (o, n) => { (o as unknown as WorkbookChartAxisFormat).line = n.getObjectValue<WorkbookChartLineFormat>(WorkbookChartLineFormat); }],
+            ["font", (o, n) => { (o as unknown as WorkbookChartAxisFormat).font = n.getObjectValue<WorkbookChartFont>(createWorkbookChartFontFromDiscriminatorValue); }],
+            ["line", (o, n) => { (o as unknown as WorkbookChartAxisFormat).line = n.getObjectValue<WorkbookChartLineFormat>(createWorkbookChartLineFormatFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the line property value. Represents chart line formatting. Read-only.
+     * @returns a workbookChartLineFormat
+     */
+    public get line() {
+        return this._line;
+    };
+    /**
+     * Sets the line property value. Represents chart line formatting. Read-only.
+     * @param value Value to set for the line property.
+     */
+    public set line(value: WorkbookChartLineFormat | undefined) {
+        this._line = value;
     };
     /**
      * Serializes information the current object
@@ -45,19 +61,5 @@ export class WorkbookChartAxisFormat extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeObjectValue<WorkbookChartFont>("font", this.font);
         writer.writeObjectValue<WorkbookChartLineFormat>("line", this.line);
-    };
-    /**
-     * Sets the font property value. Represents the font attributes (font name, font size, color, etc.) for a chart axis element. Read-only.
-     * @param value Value to set for the font property.
-     */
-    public set font(value: WorkbookChartFont | undefined) {
-        this._font = value;
-    };
-    /**
-     * Sets the line property value. Represents chart line formatting. Read-only.
-     * @param value Value to set for the line property.
-     */
-    public set line(value: WorkbookChartLineFormat | undefined) {
-        this._line = value;
     };
 }

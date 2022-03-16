@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ListInfo implements Parsable {
+export class ListInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** If true, indicates that content types are enabled for this list.  */
@@ -10,17 +10,24 @@ export class ListInfo implements Parsable {
     /** An enumerated value that represents the base list template used in creating the list. Possible values include documentLibrary, genericList, task, survey, announcements, contacts, and more.  */
     private _template?: string | undefined;
     /**
-     * Instantiates a new listInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new listInfo and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the contentTypesEnabled property value. If true, indicates that content types are enabled for this list.
@@ -30,18 +37,11 @@ export class ListInfo implements Parsable {
         return this._contentTypesEnabled;
     };
     /**
-     * Gets the hidden property value. If true, indicates that the list is not normally visible in the SharePoint user experience.
-     * @returns a boolean
+     * Sets the contentTypesEnabled property value. If true, indicates that content types are enabled for this list.
+     * @param value Value to set for the contentTypesEnabled property.
      */
-    public get hidden() {
-        return this._hidden;
-    };
-    /**
-     * Gets the template property value. An enumerated value that represents the base list template used in creating the list. Possible values include documentLibrary, genericList, task, survey, announcements, contacts, and more.
-     * @returns a string
-     */
-    public get template() {
-        return this._template;
+    public set contentTypesEnabled(value: boolean | undefined) {
+        this._contentTypesEnabled = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +55,20 @@ export class ListInfo implements Parsable {
         ]);
     };
     /**
+     * Gets the hidden property value. If true, indicates that the list is not normally visible in the SharePoint user experience.
+     * @returns a boolean
+     */
+    public get hidden() {
+        return this._hidden;
+    };
+    /**
+     * Sets the hidden property value. If true, indicates that the list is not normally visible in the SharePoint user experience.
+     * @param value Value to set for the hidden property.
+     */
+    public set hidden(value: boolean | undefined) {
+        this._hidden = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,25 +80,11 @@ export class ListInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the template property value. An enumerated value that represents the base list template used in creating the list. Possible values include documentLibrary, genericList, task, survey, announcements, contacts, and more.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the contentTypesEnabled property value. If true, indicates that content types are enabled for this list.
-     * @param value Value to set for the contentTypesEnabled property.
-     */
-    public set contentTypesEnabled(value: boolean | undefined) {
-        this._contentTypesEnabled = value;
-    };
-    /**
-     * Sets the hidden property value. If true, indicates that the list is not normally visible in the SharePoint user experience.
-     * @param value Value to set for the hidden property.
-     */
-    public set hidden(value: boolean | undefined) {
-        this._hidden = value;
+    public get template() {
+        return this._template;
     };
     /**
      * Sets the template property value. An enumerated value that represents the base list template used in creating the list. Possible values include documentLibrary, genericList, task, survey, announcements, contacts, and more.

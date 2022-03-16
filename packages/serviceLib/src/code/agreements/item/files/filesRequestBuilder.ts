@@ -1,9 +1,16 @@
-import {AgreementFileLocalization} from '../../../models/microsoft/graph/';
-import {FilesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {AgreementFileLocalization, AgreementFileLocalizationCollectionResponse} from '../../../models/microsoft/graph/';
+import {createAgreementFileLocalizationCollectionResponseFromDiscriminatorValue} from '../../../models/microsoft/graph/createAgreementFileLocalizationCollectionResponseFromDiscriminatorValue';
+import {createAgreementFileLocalizationFromDiscriminatorValue} from '../../../models/microsoft/graph/createAgreementFileLocalizationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /agreements/{agreement-id}/files  */
+/** Provides operations to manage the files property of the microsoft.graph.agreement entity.  */
 export class FilesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -24,7 +31,7 @@ export class FilesRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead.
+     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead. Supports $expand.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -50,7 +57,7 @@ export class FilesRequestBuilder {
         return requestInfo;
     };
     /**
-     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead.
+     * Create new navigation property to files for agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -68,12 +75,12 @@ export class FilesRequestBuilder {
         return requestInfo;
     };
     /**
-     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead.
+     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead. Supports $expand.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of FilesResponse
+     * @returns a Promise of AgreementFileLocalizationCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class FilesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<FilesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AgreementFileLocalizationCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<FilesResponse>(requestInfo, FilesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AgreementFileLocalizationCollectionResponse>(requestInfo, createAgreementFileLocalizationCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * PDFs linked to this agreement. This property is in the process of being deprecated. Use the  file property instead.
+     * Create new navigation property to files for agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class FilesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<AgreementFileLocalization>(requestInfo, AgreementFileLocalization, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AgreementFileLocalization>(requestInfo, createAgreementFileLocalizationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,7 +1,10 @@
 import {Person} from '../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPersonFromDiscriminatorValue} from '../../../models/microsoft/graph/createPersonFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/people/{person-id}  */
+/** Provides operations to manage the people property of the microsoft.graph.user entity.  */
 export class PersonItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class PersonItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * People that are relevant to the user. Read-only. Nullable.
+     * Delete navigation property people for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -57,7 +60,7 @@ export class PersonItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * People that are relevant to the user. Read-only. Nullable.
+     * Update the navigation property people in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -75,7 +78,7 @@ export class PersonItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * People that are relevant to the user. Read-only. Nullable.
+     * Delete navigation property people for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -84,7 +87,11 @@ export class PersonItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * People that are relevant to the user. Read-only. Nullable.
@@ -100,10 +107,14 @@ export class PersonItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Person>(requestInfo, Person, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Person>(requestInfo, createPersonFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * People that are relevant to the user. Read-only. Nullable.
+     * Update the navigation property people in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,6 +125,10 @@ export class PersonItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

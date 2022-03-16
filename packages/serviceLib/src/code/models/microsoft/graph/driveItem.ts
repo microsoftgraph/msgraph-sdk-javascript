@@ -1,3 +1,31 @@
+import {createAudioFromDiscriminatorValue} from './createAudioFromDiscriminatorValue';
+import {createBundleFromDiscriminatorValue} from './createBundleFromDiscriminatorValue';
+import {createDeletedFromDiscriminatorValue} from './createDeletedFromDiscriminatorValue';
+import {createDriveItemFromDiscriminatorValue} from './createDriveItemFromDiscriminatorValue';
+import {createDriveItemVersionFromDiscriminatorValue} from './createDriveItemVersionFromDiscriminatorValue';
+import {createFileFromDiscriminatorValue} from './createFileFromDiscriminatorValue';
+import {createFileSystemInfoFromDiscriminatorValue} from './createFileSystemInfoFromDiscriminatorValue';
+import {createFolderFromDiscriminatorValue} from './createFolderFromDiscriminatorValue';
+import {createGeoCoordinatesFromDiscriminatorValue} from './createGeoCoordinatesFromDiscriminatorValue';
+import {createImageFromDiscriminatorValue} from './createImageFromDiscriminatorValue';
+import {createItemAnalyticsFromDiscriminatorValue} from './createItemAnalyticsFromDiscriminatorValue';
+import {createListItemFromDiscriminatorValue} from './createListItemFromDiscriminatorValue';
+import {createMalwareFromDiscriminatorValue} from './createMalwareFromDiscriminatorValue';
+import {createPackageFromDiscriminatorValue} from './createPackageFromDiscriminatorValue';
+import {createPendingOperationsFromDiscriminatorValue} from './createPendingOperationsFromDiscriminatorValue';
+import {createPermissionFromDiscriminatorValue} from './createPermissionFromDiscriminatorValue';
+import {createPhotoFromDiscriminatorValue} from './createPhotoFromDiscriminatorValue';
+import {createPublicationFacetFromDiscriminatorValue} from './createPublicationFacetFromDiscriminatorValue';
+import {createRemoteItemFromDiscriminatorValue} from './createRemoteItemFromDiscriminatorValue';
+import {createRootFromDiscriminatorValue} from './createRootFromDiscriminatorValue';
+import {createSearchResultFromDiscriminatorValue} from './createSearchResultFromDiscriminatorValue';
+import {createSharedFromDiscriminatorValue} from './createSharedFromDiscriminatorValue';
+import {createSharepointIdsFromDiscriminatorValue} from './createSharepointIdsFromDiscriminatorValue';
+import {createSpecialFolderFromDiscriminatorValue} from './createSpecialFolderFromDiscriminatorValue';
+import {createSubscriptionFromDiscriminatorValue} from './createSubscriptionFromDiscriminatorValue';
+import {createThumbnailSetFromDiscriminatorValue} from './createThumbnailSetFromDiscriminatorValue';
+import {createVideoFromDiscriminatorValue} from './createVideoFromDiscriminatorValue';
+import {createWorkbookFromDiscriminatorValue} from './createWorkbookFromDiscriminatorValue';
 import {Audio, BaseItem, Bundle, Deleted, DriveItemVersion, File, FileSystemInfo, Folder, GeoCoordinates, Image, ItemAnalytics, ListItem, Malware, Package, PendingOperations, Permission, Photo, PublicationFacet, RemoteItem, Root, SearchResult, Shared, SharepointIds, SpecialFolder, Subscription, ThumbnailSet, Video, Workbook} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -66,17 +94,18 @@ export class DriveItem extends BaseItem implements Parsable {
     /** For files that are Excel spreadsheets, accesses the workbook API to work with the spreadsheet's contents. Nullable.  */
     private _workbook?: Workbook | undefined;
     /**
-     * Instantiates a new driveItem and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the analytics property value. Analytics about the view activities that took place on this item.
      * @returns a itemAnalytics
      */
     public get analytics() {
         return this._analytics;
+    };
+    /**
+     * Sets the analytics property value. Analytics about the view activities that took place on this item.
+     * @param value Value to set for the analytics property.
+     */
+    public set analytics(value: ItemAnalytics | undefined) {
+        this._analytics = value;
     };
     /**
      * Gets the audio property value. Audio metadata, if the item is an audio file. Read-only. Only on OneDrive Personal.
@@ -86,11 +115,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._audio;
     };
     /**
+     * Sets the audio property value. Audio metadata, if the item is an audio file. Read-only. Only on OneDrive Personal.
+     * @param value Value to set for the audio property.
+     */
+    public set audio(value: Audio | undefined) {
+        this._audio = value;
+    };
+    /**
      * Gets the bundle property value. 
      * @returns a bundle
      */
     public get bundle() {
         return this._bundle;
+    };
+    /**
+     * Sets the bundle property value. 
+     * @param value Value to set for the bundle property.
+     */
+    public set bundle(value: Bundle | undefined) {
+        this._bundle = value;
     };
     /**
      * Gets the children property value. Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
@@ -100,11 +143,31 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._children;
     };
     /**
+     * Sets the children property value. Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
+     * @param value Value to set for the children property.
+     */
+    public set children(value: DriveItem[] | undefined) {
+        this._children = value;
+    };
+    /**
+     * Instantiates a new driveItem and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the content property value. The content stream, if the item represents a file.
      * @returns a binary
      */
     public get content() {
         return this._content;
+    };
+    /**
+     * Sets the content property value. The content stream, if the item represents a file.
+     * @param value Value to set for the content property.
+     */
+    public set content(value: string | undefined) {
+        this._content = value;
     };
     /**
      * Gets the cTag property value. An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
@@ -114,11 +177,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._cTag;
     };
     /**
+     * Sets the cTag property value. An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
+     * @param value Value to set for the cTag property.
+     */
+    public set cTag(value: string | undefined) {
+        this._cTag = value;
+    };
+    /**
      * Gets the deleted property value. Information about the deleted state of the item. Read-only.
      * @returns a deleted
      */
     public get deleted() {
         return this._deleted;
+    };
+    /**
+     * Sets the deleted property value. Information about the deleted state of the item. Read-only.
+     * @param value Value to set for the deleted property.
+     */
+    public set deleted(value: Deleted | undefined) {
+        this._deleted = value;
     };
     /**
      * Gets the file property value. File metadata, if the item is a file. Read-only.
@@ -128,11 +205,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._file;
     };
     /**
+     * Sets the file property value. File metadata, if the item is a file. Read-only.
+     * @param value Value to set for the file property.
+     */
+    public set file(value: File | undefined) {
+        this._file = value;
+    };
+    /**
      * Gets the fileSystemInfo property value. File system information on client. Read-write.
      * @returns a fileSystemInfo
      */
     public get fileSystemInfo() {
         return this._fileSystemInfo;
+    };
+    /**
+     * Sets the fileSystemInfo property value. File system information on client. Read-write.
+     * @param value Value to set for the fileSystemInfo property.
+     */
+    public set fileSystemInfo(value: FileSystemInfo | undefined) {
+        this._fileSystemInfo = value;
     };
     /**
      * Gets the folder property value. Folder metadata, if the item is a folder. Read-only.
@@ -142,11 +233,65 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._folder;
     };
     /**
+     * Sets the folder property value. Folder metadata, if the item is a folder. Read-only.
+     * @param value Value to set for the folder property.
+     */
+    public set folder(value: Folder | undefined) {
+        this._folder = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["analytics", (o, n) => { (o as unknown as DriveItem).analytics = n.getObjectValue<ItemAnalytics>(createItemAnalyticsFromDiscriminatorValue); }],
+            ["audio", (o, n) => { (o as unknown as DriveItem).audio = n.getObjectValue<Audio>(createAudioFromDiscriminatorValue); }],
+            ["bundle", (o, n) => { (o as unknown as DriveItem).bundle = n.getObjectValue<Bundle>(createBundleFromDiscriminatorValue); }],
+            ["children", (o, n) => { (o as unknown as DriveItem).children = n.getCollectionOfObjectValues<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["content", (o, n) => { (o as unknown as DriveItem).content = n.getStringValue(); }],
+            ["cTag", (o, n) => { (o as unknown as DriveItem).cTag = n.getStringValue(); }],
+            ["deleted", (o, n) => { (o as unknown as DriveItem).deleted = n.getObjectValue<Deleted>(createDeletedFromDiscriminatorValue); }],
+            ["file", (o, n) => { (o as unknown as DriveItem).file = n.getObjectValue<File>(createFileFromDiscriminatorValue); }],
+            ["fileSystemInfo", (o, n) => { (o as unknown as DriveItem).fileSystemInfo = n.getObjectValue<FileSystemInfo>(createFileSystemInfoFromDiscriminatorValue); }],
+            ["folder", (o, n) => { (o as unknown as DriveItem).folder = n.getObjectValue<Folder>(createFolderFromDiscriminatorValue); }],
+            ["image", (o, n) => { (o as unknown as DriveItem).image = n.getObjectValue<Image>(createImageFromDiscriminatorValue); }],
+            ["listItem", (o, n) => { (o as unknown as DriveItem).listItem = n.getObjectValue<ListItem>(createListItemFromDiscriminatorValue); }],
+            ["location", (o, n) => { (o as unknown as DriveItem).location = n.getObjectValue<GeoCoordinates>(createGeoCoordinatesFromDiscriminatorValue); }],
+            ["malware", (o, n) => { (o as unknown as DriveItem).malware = n.getObjectValue<Malware>(createMalwareFromDiscriminatorValue); }],
+            ["package", (o, n) => { (o as unknown as DriveItem).package = n.getObjectValue<Package>(createPackageFromDiscriminatorValue); }],
+            ["pendingOperations", (o, n) => { (o as unknown as DriveItem).pendingOperations = n.getObjectValue<PendingOperations>(createPendingOperationsFromDiscriminatorValue); }],
+            ["permissions", (o, n) => { (o as unknown as DriveItem).permissions = n.getCollectionOfObjectValues<Permission>(createPermissionFromDiscriminatorValue); }],
+            ["photo", (o, n) => { (o as unknown as DriveItem).photo = n.getObjectValue<Photo>(createPhotoFromDiscriminatorValue); }],
+            ["publication", (o, n) => { (o as unknown as DriveItem).publication = n.getObjectValue<PublicationFacet>(createPublicationFacetFromDiscriminatorValue); }],
+            ["remoteItem", (o, n) => { (o as unknown as DriveItem).remoteItem = n.getObjectValue<RemoteItem>(createRemoteItemFromDiscriminatorValue); }],
+            ["root", (o, n) => { (o as unknown as DriveItem).root = n.getObjectValue<Root>(createRootFromDiscriminatorValue); }],
+            ["searchResult", (o, n) => { (o as unknown as DriveItem).searchResult = n.getObjectValue<SearchResult>(createSearchResultFromDiscriminatorValue); }],
+            ["shared", (o, n) => { (o as unknown as DriveItem).shared = n.getObjectValue<Shared>(createSharedFromDiscriminatorValue); }],
+            ["sharepointIds", (o, n) => { (o as unknown as DriveItem).sharepointIds = n.getObjectValue<SharepointIds>(createSharepointIdsFromDiscriminatorValue); }],
+            ["size", (o, n) => { (o as unknown as DriveItem).size = n.getNumberValue(); }],
+            ["specialFolder", (o, n) => { (o as unknown as DriveItem).specialFolder = n.getObjectValue<SpecialFolder>(createSpecialFolderFromDiscriminatorValue); }],
+            ["subscriptions", (o, n) => { (o as unknown as DriveItem).subscriptions = n.getCollectionOfObjectValues<Subscription>(createSubscriptionFromDiscriminatorValue); }],
+            ["thumbnails", (o, n) => { (o as unknown as DriveItem).thumbnails = n.getCollectionOfObjectValues<ThumbnailSet>(createThumbnailSetFromDiscriminatorValue); }],
+            ["versions", (o, n) => { (o as unknown as DriveItem).versions = n.getCollectionOfObjectValues<DriveItemVersion>(createDriveItemVersionFromDiscriminatorValue); }],
+            ["video", (o, n) => { (o as unknown as DriveItem).video = n.getObjectValue<Video>(createVideoFromDiscriminatorValue); }],
+            ["webDavUrl", (o, n) => { (o as unknown as DriveItem).webDavUrl = n.getStringValue(); }],
+            ["workbook", (o, n) => { (o as unknown as DriveItem).workbook = n.getObjectValue<Workbook>(createWorkbookFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the image property value. Image metadata, if the item is an image. Read-only.
      * @returns a image
      */
     public get image() {
         return this._image;
+    };
+    /**
+     * Sets the image property value. Image metadata, if the item is an image. Read-only.
+     * @param value Value to set for the image property.
+     */
+    public set image(value: Image | undefined) {
+        this._image = value;
     };
     /**
      * Gets the listItem property value. For drives in SharePoint, the associated document library list item. Read-only. Nullable.
@@ -156,11 +301,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._listItem;
     };
     /**
+     * Sets the listItem property value. For drives in SharePoint, the associated document library list item. Read-only. Nullable.
+     * @param value Value to set for the listItem property.
+     */
+    public set listItem(value: ListItem | undefined) {
+        this._listItem = value;
+    };
+    /**
      * Gets the location property value. Location metadata, if the item has location data. Read-only.
      * @returns a geoCoordinates
      */
     public get location() {
         return this._location;
+    };
+    /**
+     * Sets the location property value. Location metadata, if the item has location data. Read-only.
+     * @param value Value to set for the location property.
+     */
+    public set location(value: GeoCoordinates | undefined) {
+        this._location = value;
     };
     /**
      * Gets the malware property value. Malware metadata, if the item was detected to contain malware. Read-only.
@@ -170,11 +329,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._malware;
     };
     /**
+     * Sets the malware property value. Malware metadata, if the item was detected to contain malware. Read-only.
+     * @param value Value to set for the malware property.
+     */
+    public set malware(value: Malware | undefined) {
+        this._malware = value;
+    };
+    /**
      * Gets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
      * @returns a package
      */
     public get package() {
         return this._package;
+    };
+    /**
+     * Sets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
+     * @param value Value to set for the package property.
+     */
+    public set package(value: Package | undefined) {
+        this._package = value;
     };
     /**
      * Gets the pendingOperations property value. If present, indicates that one or more operations that might affect the state of the driveItem are pending completion. Read-only.
@@ -184,11 +357,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._pendingOperations;
     };
     /**
+     * Sets the pendingOperations property value. If present, indicates that one or more operations that might affect the state of the driveItem are pending completion. Read-only.
+     * @param value Value to set for the pendingOperations property.
+     */
+    public set pendingOperations(value: PendingOperations | undefined) {
+        this._pendingOperations = value;
+    };
+    /**
      * Gets the permissions property value. The set of permissions for the item. Read-only. Nullable.
      * @returns a permission
      */
     public get permissions() {
         return this._permissions;
+    };
+    /**
+     * Sets the permissions property value. The set of permissions for the item. Read-only. Nullable.
+     * @param value Value to set for the permissions property.
+     */
+    public set permissions(value: Permission[] | undefined) {
+        this._permissions = value;
     };
     /**
      * Gets the photo property value. Photo metadata, if the item is a photo. Read-only.
@@ -198,11 +385,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._photo;
     };
     /**
+     * Sets the photo property value. Photo metadata, if the item is a photo. Read-only.
+     * @param value Value to set for the photo property.
+     */
+    public set photo(value: Photo | undefined) {
+        this._photo = value;
+    };
+    /**
      * Gets the publication property value. Provides information about the published or checked-out state of an item, in locations that support such actions. This property is not returned by default. Read-only.
      * @returns a publicationFacet
      */
     public get publication() {
         return this._publication;
+    };
+    /**
+     * Sets the publication property value. Provides information about the published or checked-out state of an item, in locations that support such actions. This property is not returned by default. Read-only.
+     * @param value Value to set for the publication property.
+     */
+    public set publication(value: PublicationFacet | undefined) {
+        this._publication = value;
     };
     /**
      * Gets the remoteItem property value. Remote item data, if the item is shared from a drive other than the one being accessed. Read-only.
@@ -212,11 +413,25 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._remoteItem;
     };
     /**
+     * Sets the remoteItem property value. Remote item data, if the item is shared from a drive other than the one being accessed. Read-only.
+     * @param value Value to set for the remoteItem property.
+     */
+    public set remoteItem(value: RemoteItem | undefined) {
+        this._remoteItem = value;
+    };
+    /**
      * Gets the root property value. If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.
      * @returns a root
      */
     public get root() {
         return this._root;
+    };
+    /**
+     * Sets the root property value. If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.
+     * @param value Value to set for the root property.
+     */
+    public set root(value: Root | undefined) {
+        this._root = value;
     };
     /**
      * Gets the searchResult property value. Search metadata, if the item is from a search result. Read-only.
@@ -226,114 +441,11 @@ export class DriveItem extends BaseItem implements Parsable {
         return this._searchResult;
     };
     /**
-     * Gets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
-     * @returns a shared
+     * Sets the searchResult property value. Search metadata, if the item is from a search result. Read-only.
+     * @param value Value to set for the searchResult property.
      */
-    public get shared() {
-        return this._shared;
-    };
-    /**
-     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
-     * @returns a sharepointIds
-     */
-    public get sharepointIds() {
-        return this._sharepointIds;
-    };
-    /**
-     * Gets the size property value. Size of the item in bytes. Read-only.
-     * @returns a int64
-     */
-    public get size() {
-        return this._size;
-    };
-    /**
-     * Gets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
-     * @returns a specialFolder
-     */
-    public get specialFolder() {
-        return this._specialFolder;
-    };
-    /**
-     * Gets the subscriptions property value. The set of subscriptions on the item. Only supported on the root of a drive.
-     * @returns a subscription
-     */
-    public get subscriptions() {
-        return this._subscriptions;
-    };
-    /**
-     * Gets the thumbnails property value. Collection containing [ThumbnailSet][] objects associated with the item. For more info, see [getting thumbnails][]. Read-only. Nullable.
-     * @returns a thumbnailSet
-     */
-    public get thumbnails() {
-        return this._thumbnails;
-    };
-    /**
-     * Gets the versions property value. The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
-     * @returns a driveItemVersion
-     */
-    public get versions() {
-        return this._versions;
-    };
-    /**
-     * Gets the video property value. Video metadata, if the item is a video. Read-only.
-     * @returns a video
-     */
-    public get video() {
-        return this._video;
-    };
-    /**
-     * Gets the webDavUrl property value. WebDAV compatible URL for the item.
-     * @returns a string
-     */
-    public get webDavUrl() {
-        return this._webDavUrl;
-    };
-    /**
-     * Gets the workbook property value. For files that are Excel spreadsheets, accesses the workbook API to work with the spreadsheet's contents. Nullable.
-     * @returns a workbook
-     */
-    public get workbook() {
-        return this._workbook;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["analytics", (o, n) => { (o as unknown as DriveItem).analytics = n.getObjectValue<ItemAnalytics>(ItemAnalytics); }],
-            ["audio", (o, n) => { (o as unknown as DriveItem).audio = n.getObjectValue<Audio>(Audio); }],
-            ["bundle", (o, n) => { (o as unknown as DriveItem).bundle = n.getObjectValue<Bundle>(Bundle); }],
-            ["children", (o, n) => { (o as unknown as DriveItem).children = n.getCollectionOfObjectValues<DriveItem>(DriveItem); }],
-            ["content", (o, n) => { (o as unknown as DriveItem).content = n.getStringValue(); }],
-            ["cTag", (o, n) => { (o as unknown as DriveItem).cTag = n.getStringValue(); }],
-            ["deleted", (o, n) => { (o as unknown as DriveItem).deleted = n.getObjectValue<Deleted>(Deleted); }],
-            ["file", (o, n) => { (o as unknown as DriveItem).file = n.getObjectValue<File>(File); }],
-            ["fileSystemInfo", (o, n) => { (o as unknown as DriveItem).fileSystemInfo = n.getObjectValue<FileSystemInfo>(FileSystemInfo); }],
-            ["folder", (o, n) => { (o as unknown as DriveItem).folder = n.getObjectValue<Folder>(Folder); }],
-            ["image", (o, n) => { (o as unknown as DriveItem).image = n.getObjectValue<Image>(Image); }],
-            ["listItem", (o, n) => { (o as unknown as DriveItem).listItem = n.getObjectValue<ListItem>(ListItem); }],
-            ["location", (o, n) => { (o as unknown as DriveItem).location = n.getObjectValue<GeoCoordinates>(GeoCoordinates); }],
-            ["malware", (o, n) => { (o as unknown as DriveItem).malware = n.getObjectValue<Malware>(Malware); }],
-            ["package", (o, n) => { (o as unknown as DriveItem).package = n.getObjectValue<Package>(Package); }],
-            ["pendingOperations", (o, n) => { (o as unknown as DriveItem).pendingOperations = n.getObjectValue<PendingOperations>(PendingOperations); }],
-            ["permissions", (o, n) => { (o as unknown as DriveItem).permissions = n.getCollectionOfObjectValues<Permission>(Permission); }],
-            ["photo", (o, n) => { (o as unknown as DriveItem).photo = n.getObjectValue<Photo>(Photo); }],
-            ["publication", (o, n) => { (o as unknown as DriveItem).publication = n.getObjectValue<PublicationFacet>(PublicationFacet); }],
-            ["remoteItem", (o, n) => { (o as unknown as DriveItem).remoteItem = n.getObjectValue<RemoteItem>(RemoteItem); }],
-            ["root", (o, n) => { (o as unknown as DriveItem).root = n.getObjectValue<Root>(Root); }],
-            ["searchResult", (o, n) => { (o as unknown as DriveItem).searchResult = n.getObjectValue<SearchResult>(SearchResult); }],
-            ["shared", (o, n) => { (o as unknown as DriveItem).shared = n.getObjectValue<Shared>(Shared); }],
-            ["sharepointIds", (o, n) => { (o as unknown as DriveItem).sharepointIds = n.getObjectValue<SharepointIds>(SharepointIds); }],
-            ["size", (o, n) => { (o as unknown as DriveItem).size = n.getNumberValue(); }],
-            ["specialFolder", (o, n) => { (o as unknown as DriveItem).specialFolder = n.getObjectValue<SpecialFolder>(SpecialFolder); }],
-            ["subscriptions", (o, n) => { (o as unknown as DriveItem).subscriptions = n.getCollectionOfObjectValues<Subscription>(Subscription); }],
-            ["thumbnails", (o, n) => { (o as unknown as DriveItem).thumbnails = n.getCollectionOfObjectValues<ThumbnailSet>(ThumbnailSet); }],
-            ["versions", (o, n) => { (o as unknown as DriveItem).versions = n.getCollectionOfObjectValues<DriveItemVersion>(DriveItemVersion); }],
-            ["video", (o, n) => { (o as unknown as DriveItem).video = n.getObjectValue<Video>(Video); }],
-            ["webDavUrl", (o, n) => { (o as unknown as DriveItem).webDavUrl = n.getStringValue(); }],
-            ["workbook", (o, n) => { (o as unknown as DriveItem).workbook = n.getObjectValue<Workbook>(Workbook); }],
-        ]);
+    public set searchResult(value: SearchResult | undefined) {
+        this._searchResult = value;
     };
     /**
      * Serializes information the current object
@@ -376,158 +488,11 @@ export class DriveItem extends BaseItem implements Parsable {
         writer.writeObjectValue<Workbook>("workbook", this.workbook);
     };
     /**
-     * Sets the analytics property value. Analytics about the view activities that took place on this item.
-     * @param value Value to set for the analytics property.
+     * Gets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
+     * @returns a shared
      */
-    public set analytics(value: ItemAnalytics | undefined) {
-        this._analytics = value;
-    };
-    /**
-     * Sets the audio property value. Audio metadata, if the item is an audio file. Read-only. Only on OneDrive Personal.
-     * @param value Value to set for the audio property.
-     */
-    public set audio(value: Audio | undefined) {
-        this._audio = value;
-    };
-    /**
-     * Sets the bundle property value. 
-     * @param value Value to set for the bundle property.
-     */
-    public set bundle(value: Bundle | undefined) {
-        this._bundle = value;
-    };
-    /**
-     * Sets the children property value. Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable.
-     * @param value Value to set for the children property.
-     */
-    public set children(value: DriveItem[] | undefined) {
-        this._children = value;
-    };
-    /**
-     * Sets the content property value. The content stream, if the item represents a file.
-     * @param value Value to set for the content property.
-     */
-    public set content(value: string | undefined) {
-        this._content = value;
-    };
-    /**
-     * Sets the cTag property value. An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only.
-     * @param value Value to set for the cTag property.
-     */
-    public set cTag(value: string | undefined) {
-        this._cTag = value;
-    };
-    /**
-     * Sets the deleted property value. Information about the deleted state of the item. Read-only.
-     * @param value Value to set for the deleted property.
-     */
-    public set deleted(value: Deleted | undefined) {
-        this._deleted = value;
-    };
-    /**
-     * Sets the file property value. File metadata, if the item is a file. Read-only.
-     * @param value Value to set for the file property.
-     */
-    public set file(value: File | undefined) {
-        this._file = value;
-    };
-    /**
-     * Sets the fileSystemInfo property value. File system information on client. Read-write.
-     * @param value Value to set for the fileSystemInfo property.
-     */
-    public set fileSystemInfo(value: FileSystemInfo | undefined) {
-        this._fileSystemInfo = value;
-    };
-    /**
-     * Sets the folder property value. Folder metadata, if the item is a folder. Read-only.
-     * @param value Value to set for the folder property.
-     */
-    public set folder(value: Folder | undefined) {
-        this._folder = value;
-    };
-    /**
-     * Sets the image property value. Image metadata, if the item is an image. Read-only.
-     * @param value Value to set for the image property.
-     */
-    public set image(value: Image | undefined) {
-        this._image = value;
-    };
-    /**
-     * Sets the listItem property value. For drives in SharePoint, the associated document library list item. Read-only. Nullable.
-     * @param value Value to set for the listItem property.
-     */
-    public set listItem(value: ListItem | undefined) {
-        this._listItem = value;
-    };
-    /**
-     * Sets the location property value. Location metadata, if the item has location data. Read-only.
-     * @param value Value to set for the location property.
-     */
-    public set location(value: GeoCoordinates | undefined) {
-        this._location = value;
-    };
-    /**
-     * Sets the malware property value. Malware metadata, if the item was detected to contain malware. Read-only.
-     * @param value Value to set for the malware property.
-     */
-    public set malware(value: Malware | undefined) {
-        this._malware = value;
-    };
-    /**
-     * Sets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
-     * @param value Value to set for the package property.
-     */
-    public set package(value: Package | undefined) {
-        this._package = value;
-    };
-    /**
-     * Sets the pendingOperations property value. If present, indicates that one or more operations that might affect the state of the driveItem are pending completion. Read-only.
-     * @param value Value to set for the pendingOperations property.
-     */
-    public set pendingOperations(value: PendingOperations | undefined) {
-        this._pendingOperations = value;
-    };
-    /**
-     * Sets the permissions property value. The set of permissions for the item. Read-only. Nullable.
-     * @param value Value to set for the permissions property.
-     */
-    public set permissions(value: Permission[] | undefined) {
-        this._permissions = value;
-    };
-    /**
-     * Sets the photo property value. Photo metadata, if the item is a photo. Read-only.
-     * @param value Value to set for the photo property.
-     */
-    public set photo(value: Photo | undefined) {
-        this._photo = value;
-    };
-    /**
-     * Sets the publication property value. Provides information about the published or checked-out state of an item, in locations that support such actions. This property is not returned by default. Read-only.
-     * @param value Value to set for the publication property.
-     */
-    public set publication(value: PublicationFacet | undefined) {
-        this._publication = value;
-    };
-    /**
-     * Sets the remoteItem property value. Remote item data, if the item is shared from a drive other than the one being accessed. Read-only.
-     * @param value Value to set for the remoteItem property.
-     */
-    public set remoteItem(value: RemoteItem | undefined) {
-        this._remoteItem = value;
-    };
-    /**
-     * Sets the root property value. If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive.
-     * @param value Value to set for the root property.
-     */
-    public set root(value: Root | undefined) {
-        this._root = value;
-    };
-    /**
-     * Sets the searchResult property value. Search metadata, if the item is from a search result. Read-only.
-     * @param value Value to set for the searchResult property.
-     */
-    public set searchResult(value: SearchResult | undefined) {
-        this._searchResult = value;
+    public get shared() {
+        return this._shared;
     };
     /**
      * Sets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
@@ -537,11 +502,25 @@ export class DriveItem extends BaseItem implements Parsable {
         this._shared = value;
     };
     /**
+     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
+     * @returns a sharepointIds
+     */
+    public get sharepointIds() {
+        return this._sharepointIds;
+    };
+    /**
      * Sets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
      * @param value Value to set for the sharepointIds property.
      */
     public set sharepointIds(value: SharepointIds | undefined) {
         this._sharepointIds = value;
+    };
+    /**
+     * Gets the size property value. Size of the item in bytes. Read-only.
+     * @returns a int64
+     */
+    public get size() {
+        return this._size;
     };
     /**
      * Sets the size property value. Size of the item in bytes. Read-only.
@@ -551,11 +530,25 @@ export class DriveItem extends BaseItem implements Parsable {
         this._size = value;
     };
     /**
+     * Gets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
+     * @returns a specialFolder
+     */
+    public get specialFolder() {
+        return this._specialFolder;
+    };
+    /**
      * Sets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
      * @param value Value to set for the specialFolder property.
      */
     public set specialFolder(value: SpecialFolder | undefined) {
         this._specialFolder = value;
+    };
+    /**
+     * Gets the subscriptions property value. The set of subscriptions on the item. Only supported on the root of a drive.
+     * @returns a subscription
+     */
+    public get subscriptions() {
+        return this._subscriptions;
     };
     /**
      * Sets the subscriptions property value. The set of subscriptions on the item. Only supported on the root of a drive.
@@ -565,11 +558,25 @@ export class DriveItem extends BaseItem implements Parsable {
         this._subscriptions = value;
     };
     /**
+     * Gets the thumbnails property value. Collection containing [ThumbnailSet][] objects associated with the item. For more info, see [getting thumbnails][]. Read-only. Nullable.
+     * @returns a thumbnailSet
+     */
+    public get thumbnails() {
+        return this._thumbnails;
+    };
+    /**
      * Sets the thumbnails property value. Collection containing [ThumbnailSet][] objects associated with the item. For more info, see [getting thumbnails][]. Read-only. Nullable.
      * @param value Value to set for the thumbnails property.
      */
     public set thumbnails(value: ThumbnailSet[] | undefined) {
         this._thumbnails = value;
+    };
+    /**
+     * Gets the versions property value. The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
+     * @returns a driveItemVersion
+     */
+    public get versions() {
+        return this._versions;
     };
     /**
      * Sets the versions property value. The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
@@ -579,6 +586,13 @@ export class DriveItem extends BaseItem implements Parsable {
         this._versions = value;
     };
     /**
+     * Gets the video property value. Video metadata, if the item is a video. Read-only.
+     * @returns a video
+     */
+    public get video() {
+        return this._video;
+    };
+    /**
      * Sets the video property value. Video metadata, if the item is a video. Read-only.
      * @param value Value to set for the video property.
      */
@@ -586,11 +600,25 @@ export class DriveItem extends BaseItem implements Parsable {
         this._video = value;
     };
     /**
+     * Gets the webDavUrl property value. WebDAV compatible URL for the item.
+     * @returns a string
+     */
+    public get webDavUrl() {
+        return this._webDavUrl;
+    };
+    /**
      * Sets the webDavUrl property value. WebDAV compatible URL for the item.
      * @param value Value to set for the webDavUrl property.
      */
     public set webDavUrl(value: string | undefined) {
         this._webDavUrl = value;
+    };
+    /**
+     * Gets the workbook property value. For files that are Excel spreadsheets, accesses the workbook API to work with the spreadsheet's contents. Nullable.
+     * @returns a workbook
+     */
+    public get workbook() {
+        return this._workbook;
     };
     /**
      * Sets the workbook property value. For files that are Excel spreadsheets, accesses the workbook API to work with the spreadsheet's contents. Nullable.

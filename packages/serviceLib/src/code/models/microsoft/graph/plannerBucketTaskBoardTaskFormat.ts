@@ -11,13 +11,6 @@ export class PlannerBucketTaskBoardTaskFormat extends Entity implements Parsable
         super();
     };
     /**
-     * Gets the orderHint property value. Hint used to order tasks in the Bucket view of the Task Board. The format is defined as outlined here.
-     * @returns a string
-     */
-    public get orderHint() {
-        return this._orderHint;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +20,11 @@ export class PlannerBucketTaskBoardTaskFormat extends Entity implements Parsable
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the orderHint property value. Hint used to order tasks in the Bucket view of the Task Board. The format is defined as outlined here.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeStringValue("orderHint", this.orderHint);
+    public get orderHint() {
+        return this._orderHint;
     };
     /**
      * Sets the orderHint property value. Hint used to order tasks in the Bucket view of the Task Board. The format is defined as outlined here.
@@ -41,5 +32,14 @@ export class PlannerBucketTaskBoardTaskFormat extends Entity implements Parsable
      */
     public set orderHint(value: string | undefined) {
         this._orderHint = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeStringValue("orderHint", this.orderHint);
     };
 }

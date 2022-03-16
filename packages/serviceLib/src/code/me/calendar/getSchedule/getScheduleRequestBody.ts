@@ -1,7 +1,9 @@
 import {DateTimeTimeZone} from '../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createDateTimeTimeZoneFromDiscriminatorValue} from '../../../models/microsoft/graph/createDateTimeTimeZoneFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class GetScheduleRequestBody implements Parsable {
+/** Provides operations to call the getSchedule method.  */
+export class GetScheduleRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _availabilityViewInterval?: number | undefined;
@@ -9,17 +11,18 @@ export class GetScheduleRequestBody implements Parsable {
     private _schedules?: string[] | undefined;
     private _startTime?: DateTimeTimeZone | undefined;
     /**
-     * Instantiates a new getScheduleRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the availabilityViewInterval property value. 
@@ -29,11 +32,43 @@ export class GetScheduleRequestBody implements Parsable {
         return this._availabilityViewInterval;
     };
     /**
+     * Sets the availabilityViewInterval property value. 
+     * @param value Value to set for the AvailabilityViewInterval property.
+     */
+    public set availabilityViewInterval(value: number | undefined) {
+        this._availabilityViewInterval = value;
+    };
+    /**
+     * Instantiates a new getScheduleRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the endTime property value. 
      * @returns a dateTimeTimeZone
      */
     public get endTime() {
         return this._endTime;
+    };
+    /**
+     * Sets the endTime property value. 
+     * @param value Value to set for the EndTime property.
+     */
+    public set endTime(value: DateTimeTimeZone | undefined) {
+        this._endTime = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["availabilityViewInterval", (o, n) => { (o as unknown as GetScheduleRequestBody).availabilityViewInterval = n.getNumberValue(); }],
+            ["endTime", (o, n) => { (o as unknown as GetScheduleRequestBody).endTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+            ["schedules", (o, n) => { (o as unknown as GetScheduleRequestBody).schedules = n.getCollectionOfPrimitiveValues<string>(); }],
+            ["startTime", (o, n) => { (o as unknown as GetScheduleRequestBody).startTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the schedules property value. 
@@ -43,23 +78,11 @@ export class GetScheduleRequestBody implements Parsable {
         return this._schedules;
     };
     /**
-     * Gets the startTime property value. 
-     * @returns a dateTimeTimeZone
+     * Sets the schedules property value. 
+     * @param value Value to set for the Schedules property.
      */
-    public get startTime() {
-        return this._startTime;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["availabilityViewInterval", (o, n) => { (o as unknown as GetScheduleRequestBody).availabilityViewInterval = n.getNumberValue(); }],
-            ["endTime", (o, n) => { (o as unknown as GetScheduleRequestBody).endTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-            ["schedules", (o, n) => { (o as unknown as GetScheduleRequestBody).schedules = n.getCollectionOfPrimitiveValues<string>(); }],
-            ["startTime", (o, n) => { (o as unknown as GetScheduleRequestBody).startTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-        ]);
+    public set schedules(value: string[] | undefined) {
+        this._schedules = value;
     };
     /**
      * Serializes information the current object
@@ -74,32 +97,11 @@ export class GetScheduleRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startTime property value. 
+     * @returns a dateTimeTimeZone
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the availabilityViewInterval property value. 
-     * @param value Value to set for the AvailabilityViewInterval property.
-     */
-    public set availabilityViewInterval(value: number | undefined) {
-        this._availabilityViewInterval = value;
-    };
-    /**
-     * Sets the endTime property value. 
-     * @param value Value to set for the EndTime property.
-     */
-    public set endTime(value: DateTimeTimeZone | undefined) {
-        this._endTime = value;
-    };
-    /**
-     * Sets the schedules property value. 
-     * @param value Value to set for the Schedules property.
-     */
-    public set schedules(value: string[] | undefined) {
-        this._schedules = value;
+    public get startTime() {
+        return this._startTime;
     };
     /**
      * Sets the startTime property value. 

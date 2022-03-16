@@ -1,3 +1,5 @@
+import {createPlannerCategoryDescriptionsFromDiscriminatorValue} from './createPlannerCategoryDescriptionsFromDiscriminatorValue';
+import {createPlannerUserIdsFromDiscriminatorValue} from './createPlannerUserIdsFromDiscriminatorValue';
 import {Entity, PlannerCategoryDescriptions, PlannerUserIds} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -7,12 +9,6 @@ export class PlannerPlanDetails extends Entity implements Parsable {
     /** Set of user ids that this plan is shared with. If you are leveraging Microsoft 365 groups, use the Groups API to manage group membership to share the group's plan. You can also add existing members of the group to this collection though it is not required for them to access the plan owned by the group.  */
     private _sharedWith?: PlannerUserIds | undefined;
     /**
-     * Instantiates a new plannerPlanDetails and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the categoryDescriptions property value. An object that specifies the descriptions of the six categories that can be associated with tasks in the plan
      * @returns a plannerCategoryDescriptions
      */
@@ -20,11 +16,17 @@ export class PlannerPlanDetails extends Entity implements Parsable {
         return this._categoryDescriptions;
     };
     /**
-     * Gets the sharedWith property value. Set of user ids that this plan is shared with. If you are leveraging Microsoft 365 groups, use the Groups API to manage group membership to share the group's plan. You can also add existing members of the group to this collection though it is not required for them to access the plan owned by the group.
-     * @returns a plannerUserIds
+     * Sets the categoryDescriptions property value. An object that specifies the descriptions of the six categories that can be associated with tasks in the plan
+     * @param value Value to set for the categoryDescriptions property.
      */
-    public get sharedWith() {
-        return this._sharedWith;
+    public set categoryDescriptions(value: PlannerCategoryDescriptions | undefined) {
+        this._categoryDescriptions = value;
+    };
+    /**
+     * Instantiates a new plannerPlanDetails and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -32,8 +34,8 @@ export class PlannerPlanDetails extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["categoryDescriptions", (o, n) => { (o as unknown as PlannerPlanDetails).categoryDescriptions = n.getObjectValue<PlannerCategoryDescriptions>(PlannerCategoryDescriptions); }],
-            ["sharedWith", (o, n) => { (o as unknown as PlannerPlanDetails).sharedWith = n.getObjectValue<PlannerUserIds>(PlannerUserIds); }],
+            ["categoryDescriptions", (o, n) => { (o as unknown as PlannerPlanDetails).categoryDescriptions = n.getObjectValue<PlannerCategoryDescriptions>(createPlannerCategoryDescriptionsFromDiscriminatorValue); }],
+            ["sharedWith", (o, n) => { (o as unknown as PlannerPlanDetails).sharedWith = n.getObjectValue<PlannerUserIds>(createPlannerUserIdsFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -47,11 +49,11 @@ export class PlannerPlanDetails extends Entity implements Parsable {
         writer.writeObjectValue<PlannerUserIds>("sharedWith", this.sharedWith);
     };
     /**
-     * Sets the categoryDescriptions property value. An object that specifies the descriptions of the six categories that can be associated with tasks in the plan
-     * @param value Value to set for the categoryDescriptions property.
+     * Gets the sharedWith property value. Set of user ids that this plan is shared with. If you are leveraging Microsoft 365 groups, use the Groups API to manage group membership to share the group's plan. You can also add existing members of the group to this collection though it is not required for them to access the plan owned by the group.
+     * @returns a plannerUserIds
      */
-    public set categoryDescriptions(value: PlannerCategoryDescriptions | undefined) {
-        this._categoryDescriptions = value;
+    public get sharedWith() {
+        return this._sharedWith;
     };
     /**
      * Sets the sharedWith property value. Set of user ids that this plan is shared with. If you are leveraging Microsoft 365 groups, use the Groups API to manage group membership to share the group's plan. You can also add existing members of the group to this collection though it is not required for them to access the plan owned by the group.

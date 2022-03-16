@@ -1,7 +1,10 @@
 import {TeamsAsyncOperation} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTeamsAsyncOperationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createTeamsAsyncOperationFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/operations/{teamsAsyncOperation-id}  */
+/** Provides operations to manage the operations property of the microsoft.graph.team entity.  */
 export class TeamsAsyncOperationItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class TeamsAsyncOperationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The async operations that ran or are running on this team.
+     * Delete navigation property operations for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class TeamsAsyncOperationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The async operations that ran or are running on this team.
+     * Update the navigation property operations in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class TeamsAsyncOperationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The async operations that ran or are running on this team.
+     * Delete navigation property operations for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class TeamsAsyncOperationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The async operations that ran or are running on this team.
@@ -102,10 +109,14 @@ export class TeamsAsyncOperationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TeamsAsyncOperation>(requestInfo, TeamsAsyncOperation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TeamsAsyncOperation>(requestInfo, createTeamsAsyncOperationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The async operations that ran or are running on this team.
+     * Update the navigation property operations in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class TeamsAsyncOperationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

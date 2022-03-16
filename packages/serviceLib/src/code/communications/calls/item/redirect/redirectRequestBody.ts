@@ -1,24 +1,27 @@
 import {InvitationParticipantInfo} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createInvitationParticipantInfoFromDiscriminatorValue} from '../../../../models/microsoft/graph/createInvitationParticipantInfoFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class RedirectRequestBody implements Parsable {
+/** Provides operations to call the redirect method.  */
+export class RedirectRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _callbackUri?: string | undefined;
     private _targets?: InvitationParticipantInfo[] | undefined;
     private _timeout?: number | undefined;
     /**
-     * Instantiates a new redirectRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the callbackUri property value. 
@@ -28,18 +31,17 @@ export class RedirectRequestBody implements Parsable {
         return this._callbackUri;
     };
     /**
-     * Gets the targets property value. 
-     * @returns a invitationParticipantInfo
+     * Sets the callbackUri property value. 
+     * @param value Value to set for the callbackUri property.
      */
-    public get targets() {
-        return this._targets;
+    public set callbackUri(value: string | undefined) {
+        this._callbackUri = value;
     };
     /**
-     * Gets the timeout property value. 
-     * @returns a integer
+     * Instantiates a new redirectRequestBody and sets the default values.
      */
-    public get timeout() {
-        return this._timeout;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -48,7 +50,7 @@ export class RedirectRequestBody implements Parsable {
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["callbackUri", (o, n) => { (o as unknown as RedirectRequestBody).callbackUri = n.getStringValue(); }],
-            ["targets", (o, n) => { (o as unknown as RedirectRequestBody).targets = n.getCollectionOfObjectValues<InvitationParticipantInfo>(InvitationParticipantInfo); }],
+            ["targets", (o, n) => { (o as unknown as RedirectRequestBody).targets = n.getCollectionOfObjectValues<InvitationParticipantInfo>(createInvitationParticipantInfoFromDiscriminatorValue); }],
             ["timeout", (o, n) => { (o as unknown as RedirectRequestBody).timeout = n.getNumberValue(); }],
         ]);
     };
@@ -64,18 +66,11 @@ export class RedirectRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the targets property value. 
+     * @returns a invitationParticipantInfo
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the callbackUri property value. 
-     * @param value Value to set for the callbackUri property.
-     */
-    public set callbackUri(value: string | undefined) {
-        this._callbackUri = value;
+    public get targets() {
+        return this._targets;
     };
     /**
      * Sets the targets property value. 
@@ -83,6 +78,13 @@ export class RedirectRequestBody implements Parsable {
      */
     public set targets(value: InvitationParticipantInfo[] | undefined) {
         this._targets = value;
+    };
+    /**
+     * Gets the timeout property value. 
+     * @returns a integer
+     */
+    public get timeout() {
+        return this._timeout;
     };
     /**
      * Sets the timeout property value. 

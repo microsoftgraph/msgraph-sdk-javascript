@@ -22,6 +22,13 @@ export class ServiceAnnouncementAttachment extends Entity implements Parsable {
         return this._content;
     };
     /**
+     * Sets the content property value. The attachment content.
+     * @param value Value to set for the content property.
+     */
+    public set content(value: string | undefined) {
+        this._content = value;
+    };
+    /**
      * Gets the contentType property value. 
      * @returns a string
      */
@@ -29,25 +36,11 @@ export class ServiceAnnouncementAttachment extends Entity implements Parsable {
         return this._contentType;
     };
     /**
-     * Gets the lastModifiedDateTime property value. 
-     * @returns a Date
+     * Sets the contentType property value. 
+     * @param value Value to set for the contentType property.
      */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the name property value. 
-     * @returns a string
-     */
-    public get name() {
-        return this._name;
-    };
-    /**
-     * Gets the size property value. 
-     * @returns a integer
-     */
-    public get size() {
-        return this._size;
+    public set contentType(value: string | undefined) {
+        this._contentType = value;
     };
     /**
      * The deserialization information for the current model
@@ -63,6 +56,34 @@ export class ServiceAnnouncementAttachment extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the lastModifiedDateTime property value. 
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. 
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
+     * Gets the name property value. 
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
+     * Sets the name property value. 
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -76,32 +97,11 @@ export class ServiceAnnouncementAttachment extends Entity implements Parsable {
         writer.writeNumberValue("size", this.size);
     };
     /**
-     * Sets the content property value. The attachment content.
-     * @param value Value to set for the content property.
+     * Gets the size property value. 
+     * @returns a integer
      */
-    public set content(value: string | undefined) {
-        this._content = value;
-    };
-    /**
-     * Sets the contentType property value. 
-     * @param value Value to set for the contentType property.
-     */
-    public set contentType(value: string | undefined) {
-        this._contentType = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. 
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the name property value. 
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get size() {
+        return this._size;
     };
     /**
      * Sets the size property value. 

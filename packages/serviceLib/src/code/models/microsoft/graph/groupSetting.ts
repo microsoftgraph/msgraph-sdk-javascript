@@ -1,12 +1,13 @@
+import {createSettingValueFromDiscriminatorValue} from './createSettingValueFromDiscriminatorValue';
 import {Entity, SettingValue} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class GroupSetting extends Entity implements Parsable {
     /** Display name of this group of settings, which comes from the associated template.  */
     private _displayName?: string | undefined;
-    /** Unique identifier for the template used to create this group of settings. Read-only.  */
+    /** Unique identifier for the tenant-level groupSettingTemplates object that's been customized for this group-level settings object. Read-only.  */
     private _templateId?: string | undefined;
-    /** Collection of name value pairs. Must contain and set all the settings defined in the template.  */
+    /** Collection of name-value pairs corresponding to the name and defaultValue properties in the referenced groupSettingTemplates object.  */
     private _values?: SettingValue[] | undefined;
     /**
      * Instantiates a new groupSetting and sets the default values.
@@ -22,18 +23,11 @@ export class GroupSetting extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the templateId property value. Unique identifier for the template used to create this group of settings. Read-only.
-     * @returns a string
+     * Sets the displayName property value. Display name of this group of settings, which comes from the associated template.
+     * @param value Value to set for the displayName property.
      */
-    public get templateId() {
-        return this._templateId;
-    };
-    /**
-     * Gets the values property value. Collection of name value pairs. Must contain and set all the settings defined in the template.
-     * @returns a settingValue
-     */
-    public get values() {
-        return this._values;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -43,7 +37,7 @@ export class GroupSetting extends Entity implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["displayName", (o, n) => { (o as unknown as GroupSetting).displayName = n.getStringValue(); }],
             ["templateId", (o, n) => { (o as unknown as GroupSetting).templateId = n.getStringValue(); }],
-            ["values", (o, n) => { (o as unknown as GroupSetting).values = n.getCollectionOfObjectValues<SettingValue>(SettingValue); }],
+            ["values", (o, n) => { (o as unknown as GroupSetting).values = n.getCollectionOfObjectValues<SettingValue>(createSettingValueFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -58,21 +52,28 @@ export class GroupSetting extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<SettingValue>("values", this.values);
     };
     /**
-     * Sets the displayName property value. Display name of this group of settings, which comes from the associated template.
-     * @param value Value to set for the displayName property.
+     * Gets the templateId property value. Unique identifier for the tenant-level groupSettingTemplates object that's been customized for this group-level settings object. Read-only.
+     * @returns a string
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get templateId() {
+        return this._templateId;
     };
     /**
-     * Sets the templateId property value. Unique identifier for the template used to create this group of settings. Read-only.
+     * Sets the templateId property value. Unique identifier for the tenant-level groupSettingTemplates object that's been customized for this group-level settings object. Read-only.
      * @param value Value to set for the templateId property.
      */
     public set templateId(value: string | undefined) {
         this._templateId = value;
     };
     /**
-     * Sets the values property value. Collection of name value pairs. Must contain and set all the settings defined in the template.
+     * Gets the values property value. Collection of name-value pairs corresponding to the name and defaultValue properties in the referenced groupSettingTemplates object.
+     * @returns a settingValue
+     */
+    public get values() {
+        return this._values;
+    };
+    /**
+     * Sets the values property value. Collection of name-value pairs corresponding to the name and defaultValue properties in the referenced groupSettingTemplates object.
      * @param value Value to set for the values property.
      */
     public set values(value: SettingValue[] | undefined) {

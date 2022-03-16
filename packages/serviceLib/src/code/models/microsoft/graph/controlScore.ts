@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ControlScore implements Parsable {
+export class ControlScore implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Control action category (Identity, Data, Device, Apps, Infrastructure).  */
@@ -12,17 +12,24 @@ export class ControlScore implements Parsable {
     /** Tenant achieved score for the control (it varies day by day depending on tenant operations on the control).  */
     private _score?: number | undefined;
     /**
-     * Instantiates a new controlScore and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new controlScore and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the controlCategory property value. Control action category (Identity, Data, Device, Apps, Infrastructure).
@@ -32,11 +39,25 @@ export class ControlScore implements Parsable {
         return this._controlCategory;
     };
     /**
+     * Sets the controlCategory property value. Control action category (Identity, Data, Device, Apps, Infrastructure).
+     * @param value Value to set for the controlCategory property.
+     */
+    public set controlCategory(value: string | undefined) {
+        this._controlCategory = value;
+    };
+    /**
      * Gets the controlName property value. Control unique name.
      * @returns a string
      */
     public get controlName() {
         return this._controlName;
+    };
+    /**
+     * Sets the controlName property value. Control unique name.
+     * @param value Value to set for the controlName property.
+     */
+    public set controlName(value: string | undefined) {
+        this._controlName = value;
     };
     /**
      * Gets the description property value. Description of the control.
@@ -46,11 +67,11 @@ export class ControlScore implements Parsable {
         return this._description;
     };
     /**
-     * Gets the score property value. Tenant achieved score for the control (it varies day by day depending on tenant operations on the control).
-     * @returns a double
+     * Sets the description property value. Description of the control.
+     * @param value Value to set for the description property.
      */
-    public get score() {
-        return this._score;
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * The deserialization information for the current model
@@ -65,6 +86,20 @@ export class ControlScore implements Parsable {
         ]);
     };
     /**
+     * Gets the score property value. Tenant achieved score for the control (it varies day by day depending on tenant operations on the control).
+     * @returns a double
+     */
+    public get score() {
+        return this._score;
+    };
+    /**
+     * Sets the score property value. Tenant achieved score for the control (it varies day by day depending on tenant operations on the control).
+     * @param value Value to set for the score property.
+     */
+    public set score(value: number | undefined) {
+        this._score = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -75,40 +110,5 @@ export class ControlScore implements Parsable {
         writer.writeStringValue("description", this.description);
         writer.writeNumberValue("score", this.score);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the controlCategory property value. Control action category (Identity, Data, Device, Apps, Infrastructure).
-     * @param value Value to set for the controlCategory property.
-     */
-    public set controlCategory(value: string | undefined) {
-        this._controlCategory = value;
-    };
-    /**
-     * Sets the controlName property value. Control unique name.
-     * @param value Value to set for the controlName property.
-     */
-    public set controlName(value: string | undefined) {
-        this._controlName = value;
-    };
-    /**
-     * Sets the description property value. Description of the control.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the score property value. Tenant achieved score for the control (it varies day by day depending on tenant operations on the control).
-     * @param value Value to set for the score property.
-     */
-    public set score(value: number | undefined) {
-        this._score = value;
     };
 }

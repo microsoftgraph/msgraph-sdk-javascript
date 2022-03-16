@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Thumbnail implements Parsable {
+export class Thumbnail implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The content stream for the thumbnail.  */
@@ -14,17 +14,24 @@ export class Thumbnail implements Parsable {
     /** The width of the thumbnail, in pixels.  */
     private _width?: number | undefined;
     /**
-     * Instantiates a new thumbnail and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new thumbnail and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the content property value. The content stream for the thumbnail.
@@ -34,32 +41,11 @@ export class Thumbnail implements Parsable {
         return this._content;
     };
     /**
-     * Gets the height property value. The height of the thumbnail, in pixels.
-     * @returns a integer
+     * Sets the content property value. The content stream for the thumbnail.
+     * @param value Value to set for the content property.
      */
-    public get height() {
-        return this._height;
-    };
-    /**
-     * Gets the sourceItemId property value. The unique identifier of the item that provided the thumbnail. This is only available when a folder thumbnail is requested.
-     * @returns a string
-     */
-    public get sourceItemId() {
-        return this._sourceItemId;
-    };
-    /**
-     * Gets the url property value. The URL used to fetch the thumbnail content.
-     * @returns a string
-     */
-    public get url() {
-        return this._url;
-    };
-    /**
-     * Gets the width property value. The width of the thumbnail, in pixels.
-     * @returns a integer
-     */
-    public get width() {
-        return this._width;
+    public set content(value: string | undefined) {
+        this._content = value;
     };
     /**
      * The deserialization information for the current model
@@ -75,6 +61,20 @@ export class Thumbnail implements Parsable {
         ]);
     };
     /**
+     * Gets the height property value. The height of the thumbnail, in pixels.
+     * @returns a integer
+     */
+    public get height() {
+        return this._height;
+    };
+    /**
+     * Sets the height property value. The height of the thumbnail, in pixels.
+     * @param value Value to set for the height property.
+     */
+    public set height(value: number | undefined) {
+        this._height = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -88,25 +88,11 @@ export class Thumbnail implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sourceItemId property value. The unique identifier of the item that provided the thumbnail. This is only available when a folder thumbnail is requested.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the content property value. The content stream for the thumbnail.
-     * @param value Value to set for the content property.
-     */
-    public set content(value: string | undefined) {
-        this._content = value;
-    };
-    /**
-     * Sets the height property value. The height of the thumbnail, in pixels.
-     * @param value Value to set for the height property.
-     */
-    public set height(value: number | undefined) {
-        this._height = value;
+    public get sourceItemId() {
+        return this._sourceItemId;
     };
     /**
      * Sets the sourceItemId property value. The unique identifier of the item that provided the thumbnail. This is only available when a folder thumbnail is requested.
@@ -116,11 +102,25 @@ export class Thumbnail implements Parsable {
         this._sourceItemId = value;
     };
     /**
+     * Gets the url property value. The URL used to fetch the thumbnail content.
+     * @returns a string
+     */
+    public get url() {
+        return this._url;
+    };
+    /**
      * Sets the url property value. The URL used to fetch the thumbnail content.
      * @param value Value to set for the url property.
      */
     public set url(value: string | undefined) {
         this._url = value;
+    };
+    /**
+     * Gets the width property value. The width of the thumbnail, in pixels.
+     * @returns a integer
+     */
+    public get width() {
+        return this._width;
     };
     /**
      * Sets the width property value. The width of the thumbnail, in pixels.

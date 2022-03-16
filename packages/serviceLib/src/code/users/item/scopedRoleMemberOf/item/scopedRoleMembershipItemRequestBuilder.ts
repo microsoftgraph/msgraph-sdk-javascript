@@ -1,7 +1,10 @@
 import {ScopedRoleMembership} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createScopedRoleMembershipFromDiscriminatorValue} from '../../../../models/microsoft/graph/createScopedRoleMembershipFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/scopedRoleMemberOf/{scopedRoleMembership-id}  */
+/** Provides operations to manage the scopedRoleMemberOf property of the microsoft.graph.user entity.  */
 export class ScopedRoleMembershipItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class ScopedRoleMembershipItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The scoped-role administrative unit memberships for this user. Read-only. Nullable.
+     * Delete navigation property scopedRoleMemberOf for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class ScopedRoleMembershipItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The scoped-role administrative unit memberships for this user. Read-only. Nullable.
+     * Update the navigation property scopedRoleMemberOf in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class ScopedRoleMembershipItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The scoped-role administrative unit memberships for this user. Read-only. Nullable.
+     * Delete navigation property scopedRoleMemberOf for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class ScopedRoleMembershipItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The scoped-role administrative unit memberships for this user. Read-only. Nullable.
@@ -102,10 +109,14 @@ export class ScopedRoleMembershipItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ScopedRoleMembership>(requestInfo, ScopedRoleMembership, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ScopedRoleMembership>(requestInfo, createScopedRoleMembershipFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The scoped-role administrative unit memberships for this user. Read-only. Nullable.
+     * Update the navigation property scopedRoleMemberOf in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class ScopedRoleMembershipItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

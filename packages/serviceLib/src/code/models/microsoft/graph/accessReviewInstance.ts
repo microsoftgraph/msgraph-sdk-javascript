@@ -1,3 +1,7 @@
+import {createAccessReviewInstanceDecisionItemFromDiscriminatorValue} from './createAccessReviewInstanceDecisionItemFromDiscriminatorValue';
+import {createAccessReviewReviewerFromDiscriminatorValue} from './createAccessReviewReviewerFromDiscriminatorValue';
+import {createAccessReviewReviewerScopeFromDiscriminatorValue} from './createAccessReviewReviewerScopeFromDiscriminatorValue';
+import {createAccessReviewScopeFromDiscriminatorValue} from './createAccessReviewScopeFromDiscriminatorValue';
 import {AccessReviewInstanceDecisionItem, AccessReviewReviewer, AccessReviewReviewerScope, AccessReviewScope, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -32,11 +36,25 @@ export class AccessReviewInstance extends Entity implements Parsable {
         return this._contactedReviewers;
     };
     /**
+     * Sets the contactedReviewers property value. Returns the collection of reviewers who were contacted to complete this review. While the reviewers and fallbackReviewers properties of the accessReviewScheduleDefinition might specify group owners or managers as reviewers, contactedReviewers returns their individual identities. Supports $select. Read-only.
+     * @param value Value to set for the contactedReviewers property.
+     */
+    public set contactedReviewers(value: AccessReviewReviewer[] | undefined) {
+        this._contactedReviewers = value;
+    };
+    /**
      * Gets the decisions property value. Each principal reviewed in an accessReviewInstance has a decision item representing if they were approved, denied, or not yet reviewed.
      * @returns a accessReviewInstanceDecisionItem
      */
     public get decisions() {
         return this._decisions;
+    };
+    /**
+     * Sets the decisions property value. Each principal reviewed in an accessReviewInstance has a decision item representing if they were approved, denied, or not yet reviewed.
+     * @param value Value to set for the decisions property.
+     */
+    public set decisions(value: AccessReviewInstanceDecisionItem[] | undefined) {
+        this._decisions = value;
     };
     /**
      * Gets the endDateTime property value. DateTime when review instance is scheduled to end.The DatetimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
@@ -46,11 +64,41 @@ export class AccessReviewInstance extends Entity implements Parsable {
         return this._endDateTime;
     };
     /**
+     * Sets the endDateTime property value. DateTime when review instance is scheduled to end.The DatetimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
+     * @param value Value to set for the endDateTime property.
+     */
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
+    };
+    /**
      * Gets the fallbackReviewers property value. This collection of reviewer scopes is used to define the list of fallback reviewers. These fallback reviewers will be notified to take action if no users are found from the list of reviewers specified. This could occur when either the group owner is specified as the reviewer but the group owner does not exist, or manager is specified as reviewer but a user's manager does not exist. Supports $select.
      * @returns a accessReviewReviewerScope
      */
     public get fallbackReviewers() {
         return this._fallbackReviewers;
+    };
+    /**
+     * Sets the fallbackReviewers property value. This collection of reviewer scopes is used to define the list of fallback reviewers. These fallback reviewers will be notified to take action if no users are found from the list of reviewers specified. This could occur when either the group owner is specified as the reviewer but the group owner does not exist, or manager is specified as reviewer but a user's manager does not exist. Supports $select.
+     * @param value Value to set for the fallbackReviewers property.
+     */
+    public set fallbackReviewers(value: AccessReviewReviewerScope[] | undefined) {
+        this._fallbackReviewers = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["contactedReviewers", (o, n) => { (o as unknown as AccessReviewInstance).contactedReviewers = n.getCollectionOfObjectValues<AccessReviewReviewer>(createAccessReviewReviewerFromDiscriminatorValue); }],
+            ["decisions", (o, n) => { (o as unknown as AccessReviewInstance).decisions = n.getCollectionOfObjectValues<AccessReviewInstanceDecisionItem>(createAccessReviewInstanceDecisionItemFromDiscriminatorValue); }],
+            ["endDateTime", (o, n) => { (o as unknown as AccessReviewInstance).endDateTime = n.getDateValue(); }],
+            ["fallbackReviewers", (o, n) => { (o as unknown as AccessReviewInstance).fallbackReviewers = n.getCollectionOfObjectValues<AccessReviewReviewerScope>(createAccessReviewReviewerScopeFromDiscriminatorValue); }],
+            ["reviewers", (o, n) => { (o as unknown as AccessReviewInstance).reviewers = n.getCollectionOfObjectValues<AccessReviewReviewerScope>(createAccessReviewReviewerScopeFromDiscriminatorValue); }],
+            ["scope", (o, n) => { (o as unknown as AccessReviewInstance).scope = n.getObjectValue<AccessReviewScope>(createAccessReviewScopeFromDiscriminatorValue); }],
+            ["startDateTime", (o, n) => { (o as unknown as AccessReviewInstance).startDateTime = n.getDateValue(); }],
+            ["status", (o, n) => { (o as unknown as AccessReviewInstance).status = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the reviewers property value. This collection of access review scopes is used to define who the reviewers are. Supports $select. For examples of options for assigning reviewers, see Assign reviewers to your access review definition using the Microsoft Graph API.
@@ -60,6 +108,13 @@ export class AccessReviewInstance extends Entity implements Parsable {
         return this._reviewers;
     };
     /**
+     * Sets the reviewers property value. This collection of access review scopes is used to define who the reviewers are. Supports $select. For examples of options for assigning reviewers, see Assign reviewers to your access review definition using the Microsoft Graph API.
+     * @param value Value to set for the reviewers property.
+     */
+    public set reviewers(value: AccessReviewReviewerScope[] | undefined) {
+        this._reviewers = value;
+    };
+    /**
      * Gets the scope property value. Created based on scope and instanceEnumerationScope at the accessReviewScheduleDefinition level. Defines the scope of users reviewed in a group. Supports $select and $filter (contains only). Read-only.
      * @returns a accessReviewScope
      */
@@ -67,34 +122,11 @@ export class AccessReviewInstance extends Entity implements Parsable {
         return this._scope;
     };
     /**
-     * Gets the startDateTime property value. DateTime when review instance is scheduled to start. May be in the future. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
-     * @returns a Date
+     * Sets the scope property value. Created based on scope and instanceEnumerationScope at the accessReviewScheduleDefinition level. Defines the scope of users reviewed in a group. Supports $select and $filter (contains only). Read-only.
+     * @param value Value to set for the scope property.
      */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the status property value. Specifies the status of an accessReview. Possible values: Initializing, NotStarted, Starting, InProgress, Completing, Completed, AutoReviewing, and AutoReviewed. Supports $select, $orderby, and $filter (eq only). Read-only.
-     * @returns a string
-     */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["contactedReviewers", (o, n) => { (o as unknown as AccessReviewInstance).contactedReviewers = n.getCollectionOfObjectValues<AccessReviewReviewer>(AccessReviewReviewer); }],
-            ["decisions", (o, n) => { (o as unknown as AccessReviewInstance).decisions = n.getCollectionOfObjectValues<AccessReviewInstanceDecisionItem>(AccessReviewInstanceDecisionItem); }],
-            ["endDateTime", (o, n) => { (o as unknown as AccessReviewInstance).endDateTime = n.getDateValue(); }],
-            ["fallbackReviewers", (o, n) => { (o as unknown as AccessReviewInstance).fallbackReviewers = n.getCollectionOfObjectValues<AccessReviewReviewerScope>(AccessReviewReviewerScope); }],
-            ["reviewers", (o, n) => { (o as unknown as AccessReviewInstance).reviewers = n.getCollectionOfObjectValues<AccessReviewReviewerScope>(AccessReviewReviewerScope); }],
-            ["scope", (o, n) => { (o as unknown as AccessReviewInstance).scope = n.getObjectValue<AccessReviewScope>(AccessReviewScope); }],
-            ["startDateTime", (o, n) => { (o as unknown as AccessReviewInstance).startDateTime = n.getDateValue(); }],
-            ["status", (o, n) => { (o as unknown as AccessReviewInstance).status = n.getStringValue(); }],
-        ]);
+    public set scope(value: AccessReviewScope | undefined) {
+        this._scope = value;
     };
     /**
      * Serializes information the current object
@@ -113,46 +145,11 @@ export class AccessReviewInstance extends Entity implements Parsable {
         writer.writeStringValue("status", this.status);
     };
     /**
-     * Sets the contactedReviewers property value. Returns the collection of reviewers who were contacted to complete this review. While the reviewers and fallbackReviewers properties of the accessReviewScheduleDefinition might specify group owners or managers as reviewers, contactedReviewers returns their individual identities. Supports $select. Read-only.
-     * @param value Value to set for the contactedReviewers property.
+     * Gets the startDateTime property value. DateTime when review instance is scheduled to start. May be in the future. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
+     * @returns a Date
      */
-    public set contactedReviewers(value: AccessReviewReviewer[] | undefined) {
-        this._contactedReviewers = value;
-    };
-    /**
-     * Sets the decisions property value. Each principal reviewed in an accessReviewInstance has a decision item representing if they were approved, denied, or not yet reviewed.
-     * @param value Value to set for the decisions property.
-     */
-    public set decisions(value: AccessReviewInstanceDecisionItem[] | undefined) {
-        this._decisions = value;
-    };
-    /**
-     * Sets the endDateTime property value. DateTime when review instance is scheduled to end.The DatetimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the fallbackReviewers property value. This collection of reviewer scopes is used to define the list of fallback reviewers. These fallback reviewers will be notified to take action if no users are found from the list of reviewers specified. This could occur when either the group owner is specified as the reviewer but the group owner does not exist, or manager is specified as reviewer but a user's manager does not exist. Supports $select.
-     * @param value Value to set for the fallbackReviewers property.
-     */
-    public set fallbackReviewers(value: AccessReviewReviewerScope[] | undefined) {
-        this._fallbackReviewers = value;
-    };
-    /**
-     * Sets the reviewers property value. This collection of access review scopes is used to define who the reviewers are. Supports $select. For examples of options for assigning reviewers, see Assign reviewers to your access review definition using the Microsoft Graph API.
-     * @param value Value to set for the reviewers property.
-     */
-    public set reviewers(value: AccessReviewReviewerScope[] | undefined) {
-        this._reviewers = value;
-    };
-    /**
-     * Sets the scope property value. Created based on scope and instanceEnumerationScope at the accessReviewScheduleDefinition level. Defines the scope of users reviewed in a group. Supports $select and $filter (contains only). Read-only.
-     * @param value Value to set for the scope property.
-     */
-    public set scope(value: AccessReviewScope | undefined) {
-        this._scope = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. DateTime when review instance is scheduled to start. May be in the future. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Supports $select. Read-only.
@@ -160,6 +157,13 @@ export class AccessReviewInstance extends Entity implements Parsable {
      */
     public set startDateTime(value: Date | undefined) {
         this._startDateTime = value;
+    };
+    /**
+     * Gets the status property value. Specifies the status of an accessReview. Possible values: Initializing, NotStarted, Starting, InProgress, Completing, Completed, AutoReviewing, and AutoReviewed. Supports $select, $orderby, and $filter (eq only). Read-only.
+     * @returns a string
+     */
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Specifies the status of an accessReview. Possible values: Initializing, NotStarted, Starting, InProgress, Completing, Completed, AutoReviewing, and AutoReviewed. Supports $select, $orderby, and $filter (eq only). Read-only.

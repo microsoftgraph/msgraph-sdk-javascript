@@ -1,9 +1,12 @@
 import {AppConsentRequest} from '../../../../models/microsoft/graph/';
-import {UserConsentRequestsRequestBuilder} from './userConsentRequests/';
-import {UserConsentRequestItemRequestBuilder} from './userConsentRequests/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAppConsentRequestFromDiscriminatorValue} from '../../../../models/microsoft/graph/createAppConsentRequestFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {UserConsentRequestItemRequestBuilder} from './userConsentRequests/item/userConsentRequestItemRequestBuilder';
+import {UserConsentRequestsRequestBuilder} from './userConsentRequests/userConsentRequestsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/appConsent/appConsentRequests/{appConsentRequest-id}  */
+/** Provides operations to manage the appConsentRequests property of the microsoft.graph.appConsentApprovalRoute entity.  */
 export class AppConsentRequestItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -28,7 +31,7 @@ export class AppConsentRequestItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of userConsentRequest objects for a specific application.
+     * Delete navigation property appConsentRequests for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class AppConsentRequestItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of userConsentRequest objects for a specific application.
+     * Update the navigation property appConsentRequests in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class AppConsentRequestItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of userConsentRequest objects for a specific application.
+     * Delete navigation property appConsentRequests for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class AppConsentRequestItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of userConsentRequest objects for a specific application.
@@ -107,10 +114,14 @@ export class AppConsentRequestItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AppConsentRequest>(requestInfo, AppConsentRequest, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AppConsentRequest>(requestInfo, createAppConsentRequestFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of userConsentRequest objects for a specific application.
+     * Update the navigation property appConsentRequests in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -121,7 +132,11 @@ export class AppConsentRequestItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.appConsent.appConsentRequests.item.userConsentRequests.item collection

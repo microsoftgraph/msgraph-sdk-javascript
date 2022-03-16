@@ -1,1 +1,1 @@
-export * from './SetMobileDeviceManagementAuthorityRequestBuilder'
+export * from './setMobileDeviceManagementAuthorityResponse'

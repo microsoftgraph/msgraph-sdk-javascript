@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ConditionalAccessApplications implements Parsable {
+export class ConditionalAccessApplications implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The list of application IDs explicitly excluded from the policy.  */
@@ -12,17 +12,24 @@ export class ConditionalAccessApplications implements Parsable {
     /** User actions to include. Supported values are urn:user:registersecurityinfo and urn:user:registerdevice  */
     private _includeUserActions?: string[] | undefined;
     /**
-     * Instantiates a new conditionalAccessApplications and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new conditionalAccessApplications and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the excludeApplications property value. The list of application IDs explicitly excluded from the policy.
@@ -32,25 +39,11 @@ export class ConditionalAccessApplications implements Parsable {
         return this._excludeApplications;
     };
     /**
-     * Gets the includeApplications property value. The list of application IDs the policy applies to, unless explicitly excluded (in excludeApplications). Can also be set to All.
-     * @returns a string
+     * Sets the excludeApplications property value. The list of application IDs explicitly excluded from the policy.
+     * @param value Value to set for the excludeApplications property.
      */
-    public get includeApplications() {
-        return this._includeApplications;
-    };
-    /**
-     * Gets the includeAuthenticationContextClassReferences property value. Authentication context class references include. Supported values are c1 through c25.
-     * @returns a string
-     */
-    public get includeAuthenticationContextClassReferences() {
-        return this._includeAuthenticationContextClassReferences;
-    };
-    /**
-     * Gets the includeUserActions property value. User actions to include. Supported values are urn:user:registersecurityinfo and urn:user:registerdevice
-     * @returns a string
-     */
-    public get includeUserActions() {
-        return this._includeUserActions;
+    public set excludeApplications(value: string[] | undefined) {
+        this._excludeApplications = value;
     };
     /**
      * The deserialization information for the current model
@@ -65,6 +58,48 @@ export class ConditionalAccessApplications implements Parsable {
         ]);
     };
     /**
+     * Gets the includeApplications property value. The list of application IDs the policy applies to, unless explicitly excluded (in excludeApplications). Can also be set to All.
+     * @returns a string
+     */
+    public get includeApplications() {
+        return this._includeApplications;
+    };
+    /**
+     * Sets the includeApplications property value. The list of application IDs the policy applies to, unless explicitly excluded (in excludeApplications). Can also be set to All.
+     * @param value Value to set for the includeApplications property.
+     */
+    public set includeApplications(value: string[] | undefined) {
+        this._includeApplications = value;
+    };
+    /**
+     * Gets the includeAuthenticationContextClassReferences property value. Authentication context class references include. Supported values are c1 through c25.
+     * @returns a string
+     */
+    public get includeAuthenticationContextClassReferences() {
+        return this._includeAuthenticationContextClassReferences;
+    };
+    /**
+     * Sets the includeAuthenticationContextClassReferences property value. Authentication context class references include. Supported values are c1 through c25.
+     * @param value Value to set for the includeAuthenticationContextClassReferences property.
+     */
+    public set includeAuthenticationContextClassReferences(value: string[] | undefined) {
+        this._includeAuthenticationContextClassReferences = value;
+    };
+    /**
+     * Gets the includeUserActions property value. User actions to include. Supported values are urn:user:registersecurityinfo and urn:user:registerdevice
+     * @returns a string
+     */
+    public get includeUserActions() {
+        return this._includeUserActions;
+    };
+    /**
+     * Sets the includeUserActions property value. User actions to include. Supported values are urn:user:registersecurityinfo and urn:user:registerdevice
+     * @param value Value to set for the includeUserActions property.
+     */
+    public set includeUserActions(value: string[] | undefined) {
+        this._includeUserActions = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -75,40 +110,5 @@ export class ConditionalAccessApplications implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("includeAuthenticationContextClassReferences", this.includeAuthenticationContextClassReferences);
         writer.writeCollectionOfPrimitiveValues<string>("includeUserActions", this.includeUserActions);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the excludeApplications property value. The list of application IDs explicitly excluded from the policy.
-     * @param value Value to set for the excludeApplications property.
-     */
-    public set excludeApplications(value: string[] | undefined) {
-        this._excludeApplications = value;
-    };
-    /**
-     * Sets the includeApplications property value. The list of application IDs the policy applies to, unless explicitly excluded (in excludeApplications). Can also be set to All.
-     * @param value Value to set for the includeApplications property.
-     */
-    public set includeApplications(value: string[] | undefined) {
-        this._includeApplications = value;
-    };
-    /**
-     * Sets the includeAuthenticationContextClassReferences property value. Authentication context class references include. Supported values are c1 through c25.
-     * @param value Value to set for the includeAuthenticationContextClassReferences property.
-     */
-    public set includeAuthenticationContextClassReferences(value: string[] | undefined) {
-        this._includeAuthenticationContextClassReferences = value;
-    };
-    /**
-     * Sets the includeUserActions property value. User actions to include. Supported values are urn:user:registersecurityinfo and urn:user:registerdevice
-     * @param value Value to set for the includeUserActions property.
-     */
-    public set includeUserActions(value: string[] | undefined) {
-        this._includeUserActions = value;
     };
 }

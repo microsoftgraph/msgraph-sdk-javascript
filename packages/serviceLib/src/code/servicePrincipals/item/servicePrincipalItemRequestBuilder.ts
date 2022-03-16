@@ -1,35 +1,48 @@
 import {ServicePrincipal} from '../../models/microsoft/graph/';
-import {AddKeyRequestBuilder} from './addKey/';
-import {AddPasswordRequestBuilder} from './addPassword/';
-import {AddTokenSigningCertificateRequestBuilder} from './addTokenSigningCertificate/';
-import {AppRoleAssignedToRequestBuilder} from './appRoleAssignedTo/';
-import {AppRoleAssignmentItemRequestBuilder as i2ffe12ad48a6c37736bee492c2536b2eafa0ed5fb255205fd180ea0d5d60e027} from './appRoleAssignedTo/item/';
-import {AppRoleAssignmentsRequestBuilder} from './appRoleAssignments/';
-import {AppRoleAssignmentItemRequestBuilder as i0eff7d9c1cf783747a709f2957d65be7ec32db1607d1463f4947661244f94bc2} from './appRoleAssignments/item/';
-import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
-import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
-import {ClaimsMappingPoliciesRequestBuilder} from './claimsMappingPolicies/';
-import {CreatedObjectsRequestBuilder} from './createdObjects/';
-import {DelegatedPermissionClassificationsRequestBuilder} from './delegatedPermissionClassifications/';
-import {DelegatedPermissionClassificationItemRequestBuilder} from './delegatedPermissionClassifications/item/';
-import {EndpointsRequestBuilder} from './endpoints/';
-import {EndpointItemRequestBuilder} from './endpoints/item/';
-import {GetMemberGroupsRequestBuilder} from './getMemberGroups/';
-import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
-import {HomeRealmDiscoveryPoliciesRequestBuilder} from './homeRealmDiscoveryPolicies/';
-import {MemberOfRequestBuilder} from './memberOf/';
-import {Oauth2PermissionGrantsRequestBuilder} from './oauth2PermissionGrants/';
-import {OwnedObjectsRequestBuilder} from './ownedObjects/';
-import {OwnersRequestBuilder} from './owners/';
-import {RemoveKeyRequestBuilder} from './removeKey/';
-import {RemovePasswordRequestBuilder} from './removePassword/';
-import {RestoreRequestBuilder} from './restore/';
-import {TokenIssuancePoliciesRequestBuilder} from './tokenIssuancePolicies/';
-import {TokenLifetimePoliciesRequestBuilder} from './tokenLifetimePolicies/';
-import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createServicePrincipalFromDiscriminatorValue} from '../../models/microsoft/graph/createServicePrincipalFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AddKeyRequestBuilder} from './addKey/addKeyRequestBuilder';
+import {AddPasswordRequestBuilder} from './addPassword/addPasswordRequestBuilder';
+import {AddTokenSigningCertificateRequestBuilder} from './addTokenSigningCertificate/addTokenSigningCertificateRequestBuilder';
+import {AppRoleAssignedToRequestBuilder} from './appRoleAssignedTo/appRoleAssignedToRequestBuilder';
+import {AppRoleAssignmentItemRequestBuilder as i2ffe12ad48a6c37736bee492c2536b2eafa0ed5fb255205fd180ea0d5d60e027} from './appRoleAssignedTo/item/appRoleAssignmentItemRequestBuilder';
+import {AppRoleAssignmentsRequestBuilder} from './appRoleAssignments/appRoleAssignmentsRequestBuilder';
+import {AppRoleAssignmentItemRequestBuilder as i0eff7d9c1cf783747a709f2957d65be7ec32db1607d1463f4947661244f94bc2} from './appRoleAssignments/item/appRoleAssignmentItemRequestBuilder';
+import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/checkMemberGroupsRequestBuilder';
+import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/checkMemberObjectsRequestBuilder';
+import {ClaimsMappingPoliciesRequestBuilder} from './claimsMappingPolicies/claimsMappingPoliciesRequestBuilder';
+import {ClaimsMappingPolicyItemRequestBuilder} from './claimsMappingPolicies/item/claimsMappingPolicyItemRequestBuilder';
+import {CreatedObjectsRequestBuilder} from './createdObjects/createdObjectsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as id0f419ba2af0eea378feefad8f5b20198c7344f82ac59b6fd8fbafacb7581cc6} from './createdObjects/item/directoryObjectItemRequestBuilder';
+import {DelegatedPermissionClassificationsRequestBuilder} from './delegatedPermissionClassifications/delegatedPermissionClassificationsRequestBuilder';
+import {DelegatedPermissionClassificationItemRequestBuilder} from './delegatedPermissionClassifications/item/delegatedPermissionClassificationItemRequestBuilder';
+import {EndpointsRequestBuilder} from './endpoints/endpointsRequestBuilder';
+import {EndpointItemRequestBuilder} from './endpoints/item/endpointItemRequestBuilder';
+import {GetMemberGroupsRequestBuilder} from './getMemberGroups/getMemberGroupsRequestBuilder';
+import {GetMemberObjectsRequestBuilder} from './getMemberObjects/getMemberObjectsRequestBuilder';
+import {HomeRealmDiscoveryPoliciesRequestBuilder} from './homeRealmDiscoveryPolicies/homeRealmDiscoveryPoliciesRequestBuilder';
+import {HomeRealmDiscoveryPolicyItemRequestBuilder} from './homeRealmDiscoveryPolicies/item/homeRealmDiscoveryPolicyItemRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as ide012bfc3a7e4138ec4038d6d0c62cd6e73a1861415b3aae770644faa7815f53} from './memberOf/item/directoryObjectItemRequestBuilder';
+import {MemberOfRequestBuilder} from './memberOf/memberOfRequestBuilder';
+import {OAuth2PermissionGrantItemRequestBuilder} from './oauth2PermissionGrants/item/oAuth2PermissionGrantItemRequestBuilder';
+import {Oauth2PermissionGrantsRequestBuilder} from './oauth2PermissionGrants/oauth2PermissionGrantsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as id7348b2fc60ca717a88cf3d90bffbac33273833d2577a71eb0bb85acbdceb23c} from './ownedObjects/item/directoryObjectItemRequestBuilder';
+import {OwnedObjectsRequestBuilder} from './ownedObjects/ownedObjectsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i9966bb709202f5d6bbde5c99f7c9562165ad440a5ae3d0e79c9517577de7fd48} from './owners/item/directoryObjectItemRequestBuilder';
+import {OwnersRequestBuilder} from './owners/ownersRequestBuilder';
+import {RemoveKeyRequestBuilder} from './removeKey/removeKeyRequestBuilder';
+import {RemovePasswordRequestBuilder} from './removePassword/removePasswordRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {TokenIssuancePolicyItemRequestBuilder} from './tokenIssuancePolicies/item/tokenIssuancePolicyItemRequestBuilder';
+import {TokenIssuancePoliciesRequestBuilder} from './tokenIssuancePolicies/tokenIssuancePoliciesRequestBuilder';
+import {TokenLifetimePolicyItemRequestBuilder} from './tokenLifetimePolicies/item/tokenLifetimePolicyItemRequestBuilder';
+import {TokenLifetimePoliciesRequestBuilder} from './tokenLifetimePolicies/tokenLifetimePoliciesRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i88b45eb3623578a3111d5566c71c0d4f55200b7bd5d6337931ef5aa7920492c3} from './transitiveMemberOf/item/directoryObjectItemRequestBuilder';
+import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/transitiveMemberOfRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /servicePrincipals/{servicePrincipal-id}  */
+/** Provides operations to manage the collection of servicePrincipal entities.  */
 export class ServicePrincipalItemRequestBuilder {
     public get addKey(): AddKeyRequestBuilder {
         return new AddKeyRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -132,6 +145,17 @@ export class ServicePrincipalItemRequestBuilder {
         return new i0eff7d9c1cf783747a709f2957d65be7ec32db1607d1463f4947661244f94bc2(urlTplParams, this.requestAdapter);
     };
     /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.claimsMappingPolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a claimsMappingPolicyItemRequestBuilder
+     */
+    public claimsMappingPoliciesById(id: string) : ClaimsMappingPolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["claimsMappingPolicy_id"] = id
+        return new ClaimsMappingPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Instantiates a new ServicePrincipalItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
@@ -158,6 +182,17 @@ export class ServicePrincipalItemRequestBuilder {
         if(h) requestInfo.headers = h;
         o && requestInfo.addRequestOptions(o);
         return requestInfo;
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.createdObjects.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public createdObjectsById(id: string) : id0f419ba2af0eea378feefad8f5b20198c7344f82ac59b6fd8fbafacb7581cc6 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new id0f419ba2af0eea378feefad8f5b20198c7344f82ac59b6fd8fbafacb7581cc6(urlTplParams, this.requestAdapter);
     };
     /**
      * Get entity from servicePrincipals by key
@@ -218,7 +253,11 @@ export class ServicePrincipalItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.servicePrincipals.item.endpoints.item collection
@@ -246,7 +285,66 @@ export class ServicePrincipalItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ServicePrincipal>(requestInfo, ServicePrincipal, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ServicePrincipal>(requestInfo, createServicePrincipalFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.homeRealmDiscoveryPolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a homeRealmDiscoveryPolicyItemRequestBuilder
+     */
+    public homeRealmDiscoveryPoliciesById(id: string) : HomeRealmDiscoveryPolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["homeRealmDiscoveryPolicy_id"] = id
+        return new HomeRealmDiscoveryPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.memberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public memberOfById(id: string) : ide012bfc3a7e4138ec4038d6d0c62cd6e73a1861415b3aae770644faa7815f53 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new ide012bfc3a7e4138ec4038d6d0c62cd6e73a1861415b3aae770644faa7815f53(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.oauth2PermissionGrants.item collection
+     * @param id Unique identifier of the item
+     * @returns a oAuth2PermissionGrantItemRequestBuilder
+     */
+    public oauth2PermissionGrantsById(id: string) : OAuth2PermissionGrantItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["oAuth2PermissionGrant_id"] = id
+        return new OAuth2PermissionGrantItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.ownedObjects.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public ownedObjectsById(id: string) : id7348b2fc60ca717a88cf3d90bffbac33273833d2577a71eb0bb85acbdceb23c {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new id7348b2fc60ca717a88cf3d90bffbac33273833d2577a71eb0bb85acbdceb23c(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.owners.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public ownersById(id: string) : i9966bb709202f5d6bbde5c99f7c9562165ad440a5ae3d0e79c9517577de7fd48 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i9966bb709202f5d6bbde5c99f7c9562165ad440a5ae3d0e79c9517577de7fd48(urlTplParams, this.requestAdapter);
     };
     /**
      * Update entity in servicePrincipals
@@ -260,6 +358,43 @@ export class ServicePrincipalItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.tokenIssuancePolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a tokenIssuancePolicyItemRequestBuilder
+     */
+    public tokenIssuancePoliciesById(id: string) : TokenIssuancePolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["tokenIssuancePolicy_id"] = id
+        return new TokenIssuancePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.tokenLifetimePolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a tokenLifetimePolicyItemRequestBuilder
+     */
+    public tokenLifetimePoliciesById(id: string) : TokenLifetimePolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["tokenLifetimePolicy_id"] = id
+        return new TokenLifetimePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.servicePrincipals.item.transitiveMemberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public transitiveMemberOfById(id: string) : i88b45eb3623578a3111d5566c71c0d4f55200b7bd5d6337931ef5aa7920492c3 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i88b45eb3623578a3111d5566c71c0d4f55200b7bd5d6337931ef5aa7920492c3(urlTplParams, this.requestAdapter);
     };
 }

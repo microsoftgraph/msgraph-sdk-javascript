@@ -1,3 +1,4 @@
+/** Provides operations to manage the privacy singleton.  */
 export enum SubjectRightsRequestStageStatus {
     NotStarted = "notStarted",
     Current = "current",

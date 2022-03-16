@@ -1,7 +1,8 @@
 import {Site} from '../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSiteFromDiscriminatorValue} from '../../../models/microsoft/graph/createSiteFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/microsoft.graph.getByPath(path='{path}')  */
+/** Provides operations to call the getByPath method.  */
 export class GetByPathWithPathRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -11,7 +12,7 @@ export class GetByPathWithPathRequestBuilder {
     private readonly urlTemplate: string;
     /**
      * Instantiates a new GetByPathWithPathRequestBuilder and sets the default values.
-     * @param path Usage: path={path}
+     * @param path Usage: path='{path}'
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
@@ -44,12 +45,12 @@ export class GetByPathWithPathRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of GetByPathWithPathResponse
+     * @returns a Promise of Site
      */
     public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<Site | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendAsync<Site>(requestInfo, Site, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<Site>(requestInfo, createSiteFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

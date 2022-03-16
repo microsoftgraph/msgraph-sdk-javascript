@@ -1,7 +1,9 @@
-import {GroupType, ModifiedProperty} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createModifiedPropertyFromDiscriminatorValue} from './createModifiedPropertyFromDiscriminatorValue';
+import {GroupType} from './groupType';
+import {ModifiedProperty} from './index';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TargetResource implements Parsable {
+export class TargetResource implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Indicates the visible name defined for the resource. Typically specified when the resource is created.  */
@@ -17,17 +19,24 @@ export class TargetResource implements Parsable {
     /** When type is set to User, this includes the user name that initiated the action; null for other types.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new targetResource and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new targetResource and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the displayName property value. Indicates the visible name defined for the resource. Typically specified when the resource is created.
@@ -37,39 +46,11 @@ export class TargetResource implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the groupType property value. When type is set to Group, this indicates the group type. Possible values are: unifiedGroups, azureAD, and unknownFutureValue
-     * @returns a groupType
+     * Sets the displayName property value. Indicates the visible name defined for the resource. Typically specified when the resource is created.
+     * @param value Value to set for the displayName property.
      */
-    public get groupType() {
-        return this._groupType;
-    };
-    /**
-     * Gets the id property value. Indicates the unique ID of the resource.
-     * @returns a string
-     */
-    public get id() {
-        return this._id;
-    };
-    /**
-     * Gets the modifiedProperties property value. Indicates name, old value and new value of each attribute that changed. Property values depend on the operation type.
-     * @returns a modifiedProperty
-     */
-    public get modifiedProperties() {
-        return this._modifiedProperties;
-    };
-    /**
-     * Gets the type property value. Describes the resource type.  Example values include Application, Group, ServicePrincipal, and User.
-     * @returns a string
-     */
-    public get type() {
-        return this._type;
-    };
-    /**
-     * Gets the userPrincipalName property value. When type is set to User, this includes the user name that initiated the action; null for other types.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -80,10 +61,52 @@ export class TargetResource implements Parsable {
             ["displayName", (o, n) => { (o as unknown as TargetResource).displayName = n.getStringValue(); }],
             ["groupType", (o, n) => { (o as unknown as TargetResource).groupType = n.getEnumValue<GroupType>(GroupType); }],
             ["id", (o, n) => { (o as unknown as TargetResource).id = n.getStringValue(); }],
-            ["modifiedProperties", (o, n) => { (o as unknown as TargetResource).modifiedProperties = n.getCollectionOfObjectValues<ModifiedProperty>(ModifiedProperty); }],
+            ["modifiedProperties", (o, n) => { (o as unknown as TargetResource).modifiedProperties = n.getCollectionOfObjectValues<ModifiedProperty>(createModifiedPropertyFromDiscriminatorValue); }],
             ["type", (o, n) => { (o as unknown as TargetResource).type = n.getStringValue(); }],
             ["userPrincipalName", (o, n) => { (o as unknown as TargetResource).userPrincipalName = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the groupType property value. When type is set to Group, this indicates the group type. Possible values are: unifiedGroups, azureAD, and unknownFutureValue
+     * @returns a groupType
+     */
+    public get groupType() {
+        return this._groupType;
+    };
+    /**
+     * Sets the groupType property value. When type is set to Group, this indicates the group type. Possible values are: unifiedGroups, azureAD, and unknownFutureValue
+     * @param value Value to set for the groupType property.
+     */
+    public set groupType(value: GroupType | undefined) {
+        this._groupType = value;
+    };
+    /**
+     * Gets the id property value. Indicates the unique ID of the resource.
+     * @returns a string
+     */
+    public get id() {
+        return this._id;
+    };
+    /**
+     * Sets the id property value. Indicates the unique ID of the resource.
+     * @param value Value to set for the id property.
+     */
+    public set id(value: string | undefined) {
+        this._id = value;
+    };
+    /**
+     * Gets the modifiedProperties property value. Indicates name, old value and new value of each attribute that changed. Property values depend on the operation type.
+     * @returns a modifiedProperty
+     */
+    public get modifiedProperties() {
+        return this._modifiedProperties;
+    };
+    /**
+     * Sets the modifiedProperties property value. Indicates name, old value and new value of each attribute that changed. Property values depend on the operation type.
+     * @param value Value to set for the modifiedProperties property.
+     */
+    public set modifiedProperties(value: ModifiedProperty[] | undefined) {
+        this._modifiedProperties = value;
     };
     /**
      * Serializes information the current object
@@ -100,39 +123,11 @@ export class TargetResource implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the type property value. Describes the resource type.  Example values include Application, Group, ServicePrincipal, and User.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the displayName property value. Indicates the visible name defined for the resource. Typically specified when the resource is created.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the groupType property value. When type is set to Group, this indicates the group type. Possible values are: unifiedGroups, azureAD, and unknownFutureValue
-     * @param value Value to set for the groupType property.
-     */
-    public set groupType(value: GroupType | undefined) {
-        this._groupType = value;
-    };
-    /**
-     * Sets the id property value. Indicates the unique ID of the resource.
-     * @param value Value to set for the id property.
-     */
-    public set id(value: string | undefined) {
-        this._id = value;
-    };
-    /**
-     * Sets the modifiedProperties property value. Indicates name, old value and new value of each attribute that changed. Property values depend on the operation type.
-     * @param value Value to set for the modifiedProperties property.
-     */
-    public set modifiedProperties(value: ModifiedProperty[] | undefined) {
-        this._modifiedProperties = value;
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. Describes the resource type.  Example values include Application, Group, ServicePrincipal, and User.
@@ -140,6 +135,13 @@ export class TargetResource implements Parsable {
      */
     public set type(value: string | undefined) {
         this._type = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. When type is set to User, this includes the user name that initiated the action; null for other types.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. When type is set to User, this includes the user name that initiated the action; null for other types.

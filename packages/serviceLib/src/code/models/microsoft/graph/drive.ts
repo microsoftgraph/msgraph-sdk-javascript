@@ -1,3 +1,9 @@
+import {createDriveItemFromDiscriminatorValue} from './createDriveItemFromDiscriminatorValue';
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
+import {createListFromDiscriminatorValue} from './createListFromDiscriminatorValue';
+import {createQuotaFromDiscriminatorValue} from './createQuotaFromDiscriminatorValue';
+import {createSharepointIdsFromDiscriminatorValue} from './createSharepointIdsFromDiscriminatorValue';
+import {createSystemFacetFromDiscriminatorValue} from './createSystemFacetFromDiscriminatorValue';
 import {BaseItem, DriveItem, IdentitySet, List, Quota, SharepointIds, SystemFacet} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -24,17 +30,24 @@ export class Drive extends BaseItem implements Parsable {
     /** If present, indicates that this is a system-managed drive. Read-only.  */
     private _system?: SystemFacet | undefined;
     /**
-     * Instantiates a new drive and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the bundles property value. Collection of [bundles][bundle] (albums and multi-select-shared sets of items). Only in personal OneDrive.
      * @returns a driveItem
      */
     public get bundles() {
         return this._bundles;
+    };
+    /**
+     * Sets the bundles property value. Collection of [bundles][bundle] (albums and multi-select-shared sets of items). Only in personal OneDrive.
+     * @param value Value to set for the bundles property.
+     */
+    public set bundles(value: DriveItem[] | undefined) {
+        this._bundles = value;
+    };
+    /**
+     * Instantiates a new drive and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the driveType property value. Describes the type of drive represented by this resource. OneDrive personal drives will return personal. OneDrive for Business will return business. SharePoint document libraries will return documentLibrary. Read-only.
@@ -44,11 +57,44 @@ export class Drive extends BaseItem implements Parsable {
         return this._driveType;
     };
     /**
+     * Sets the driveType property value. Describes the type of drive represented by this resource. OneDrive personal drives will return personal. OneDrive for Business will return business. SharePoint document libraries will return documentLibrary. Read-only.
+     * @param value Value to set for the driveType property.
+     */
+    public set driveType(value: string | undefined) {
+        this._driveType = value;
+    };
+    /**
      * Gets the following property value. The list of items the user is following. Only in OneDrive for Business.
      * @returns a driveItem
      */
     public get following() {
         return this._following;
+    };
+    /**
+     * Sets the following property value. The list of items the user is following. Only in OneDrive for Business.
+     * @param value Value to set for the following property.
+     */
+    public set following(value: DriveItem[] | undefined) {
+        this._following = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["bundles", (o, n) => { (o as unknown as Drive).bundles = n.getCollectionOfObjectValues<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["driveType", (o, n) => { (o as unknown as Drive).driveType = n.getStringValue(); }],
+            ["following", (o, n) => { (o as unknown as Drive).following = n.getCollectionOfObjectValues<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["items", (o, n) => { (o as unknown as Drive).items = n.getCollectionOfObjectValues<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["list", (o, n) => { (o as unknown as Drive).list = n.getObjectValue<List>(createListFromDiscriminatorValue); }],
+            ["owner", (o, n) => { (o as unknown as Drive).owner = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["quota", (o, n) => { (o as unknown as Drive).quota = n.getObjectValue<Quota>(createQuotaFromDiscriminatorValue); }],
+            ["root", (o, n) => { (o as unknown as Drive).root = n.getObjectValue<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["sharePointIds", (o, n) => { (o as unknown as Drive).sharePointIds = n.getObjectValue<SharepointIds>(createSharepointIdsFromDiscriminatorValue); }],
+            ["special", (o, n) => { (o as unknown as Drive).special = n.getCollectionOfObjectValues<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["system", (o, n) => { (o as unknown as Drive).system = n.getObjectValue<SystemFacet>(createSystemFacetFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the items property value. All items contained in the drive. Read-only. Nullable.
@@ -58,11 +104,25 @@ export class Drive extends BaseItem implements Parsable {
         return this._items;
     };
     /**
+     * Sets the items property value. All items contained in the drive. Read-only. Nullable.
+     * @param value Value to set for the items property.
+     */
+    public set items(value: DriveItem[] | undefined) {
+        this._items = value;
+    };
+    /**
      * Gets the list property value. For drives in SharePoint, the underlying document library list. Read-only. Nullable.
      * @returns a list
      */
     public get list() {
         return this._list;
+    };
+    /**
+     * Sets the list property value. For drives in SharePoint, the underlying document library list. Read-only. Nullable.
+     * @param value Value to set for the list property.
+     */
+    public set list(value: List | undefined) {
+        this._list = value;
     };
     /**
      * Gets the owner property value. Optional. The user account that owns the drive. Read-only.
@@ -72,11 +132,25 @@ export class Drive extends BaseItem implements Parsable {
         return this._owner;
     };
     /**
+     * Sets the owner property value. Optional. The user account that owns the drive. Read-only.
+     * @param value Value to set for the owner property.
+     */
+    public set owner(value: IdentitySet | undefined) {
+        this._owner = value;
+    };
+    /**
      * Gets the quota property value. Optional. Information about the drive's storage space quota. Read-only.
      * @returns a quota
      */
     public get quota() {
         return this._quota;
+    };
+    /**
+     * Sets the quota property value. Optional. Information about the drive's storage space quota. Read-only.
+     * @param value Value to set for the quota property.
+     */
+    public set quota(value: Quota | undefined) {
+        this._quota = value;
     };
     /**
      * Gets the root property value. The root folder of the drive. Read-only.
@@ -86,44 +160,11 @@ export class Drive extends BaseItem implements Parsable {
         return this._root;
     };
     /**
-     * Gets the sharePointIds property value. 
-     * @returns a sharepointIds
+     * Sets the root property value. The root folder of the drive. Read-only.
+     * @param value Value to set for the root property.
      */
-    public get sharePointIds() {
-        return this._sharePointIds;
-    };
-    /**
-     * Gets the special property value. Collection of common folders available in OneDrive. Read-only. Nullable.
-     * @returns a driveItem
-     */
-    public get special() {
-        return this._special;
-    };
-    /**
-     * Gets the system property value. If present, indicates that this is a system-managed drive. Read-only.
-     * @returns a systemFacet
-     */
-    public get system() {
-        return this._system;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["bundles", (o, n) => { (o as unknown as Drive).bundles = n.getCollectionOfObjectValues<DriveItem>(DriveItem); }],
-            ["driveType", (o, n) => { (o as unknown as Drive).driveType = n.getStringValue(); }],
-            ["following", (o, n) => { (o as unknown as Drive).following = n.getCollectionOfObjectValues<DriveItem>(DriveItem); }],
-            ["items", (o, n) => { (o as unknown as Drive).items = n.getCollectionOfObjectValues<DriveItem>(DriveItem); }],
-            ["list", (o, n) => { (o as unknown as Drive).list = n.getObjectValue<List>(List); }],
-            ["owner", (o, n) => { (o as unknown as Drive).owner = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["quota", (o, n) => { (o as unknown as Drive).quota = n.getObjectValue<Quota>(Quota); }],
-            ["root", (o, n) => { (o as unknown as Drive).root = n.getObjectValue<DriveItem>(DriveItem); }],
-            ["sharePointIds", (o, n) => { (o as unknown as Drive).sharePointIds = n.getObjectValue<SharepointIds>(SharepointIds); }],
-            ["special", (o, n) => { (o as unknown as Drive).special = n.getCollectionOfObjectValues<DriveItem>(DriveItem); }],
-            ["system", (o, n) => { (o as unknown as Drive).system = n.getObjectValue<SystemFacet>(SystemFacet); }],
-        ]);
+    public set root(value: DriveItem | undefined) {
+        this._root = value;
     };
     /**
      * Serializes information the current object
@@ -145,60 +186,11 @@ export class Drive extends BaseItem implements Parsable {
         writer.writeObjectValue<SystemFacet>("system", this.system);
     };
     /**
-     * Sets the bundles property value. Collection of [bundles][bundle] (albums and multi-select-shared sets of items). Only in personal OneDrive.
-     * @param value Value to set for the bundles property.
+     * Gets the sharePointIds property value. 
+     * @returns a sharepointIds
      */
-    public set bundles(value: DriveItem[] | undefined) {
-        this._bundles = value;
-    };
-    /**
-     * Sets the driveType property value. Describes the type of drive represented by this resource. OneDrive personal drives will return personal. OneDrive for Business will return business. SharePoint document libraries will return documentLibrary. Read-only.
-     * @param value Value to set for the driveType property.
-     */
-    public set driveType(value: string | undefined) {
-        this._driveType = value;
-    };
-    /**
-     * Sets the following property value. The list of items the user is following. Only in OneDrive for Business.
-     * @param value Value to set for the following property.
-     */
-    public set following(value: DriveItem[] | undefined) {
-        this._following = value;
-    };
-    /**
-     * Sets the items property value. All items contained in the drive. Read-only. Nullable.
-     * @param value Value to set for the items property.
-     */
-    public set items(value: DriveItem[] | undefined) {
-        this._items = value;
-    };
-    /**
-     * Sets the list property value. For drives in SharePoint, the underlying document library list. Read-only. Nullable.
-     * @param value Value to set for the list property.
-     */
-    public set list(value: List | undefined) {
-        this._list = value;
-    };
-    /**
-     * Sets the owner property value. Optional. The user account that owns the drive. Read-only.
-     * @param value Value to set for the owner property.
-     */
-    public set owner(value: IdentitySet | undefined) {
-        this._owner = value;
-    };
-    /**
-     * Sets the quota property value. Optional. Information about the drive's storage space quota. Read-only.
-     * @param value Value to set for the quota property.
-     */
-    public set quota(value: Quota | undefined) {
-        this._quota = value;
-    };
-    /**
-     * Sets the root property value. The root folder of the drive. Read-only.
-     * @param value Value to set for the root property.
-     */
-    public set root(value: DriveItem | undefined) {
-        this._root = value;
+    public get sharePointIds() {
+        return this._sharePointIds;
     };
     /**
      * Sets the sharePointIds property value. 
@@ -208,11 +200,25 @@ export class Drive extends BaseItem implements Parsable {
         this._sharePointIds = value;
     };
     /**
+     * Gets the special property value. Collection of common folders available in OneDrive. Read-only. Nullable.
+     * @returns a driveItem
+     */
+    public get special() {
+        return this._special;
+    };
+    /**
      * Sets the special property value. Collection of common folders available in OneDrive. Read-only. Nullable.
      * @param value Value to set for the special property.
      */
     public set special(value: DriveItem[] | undefined) {
         this._special = value;
+    };
+    /**
+     * Gets the system property value. If present, indicates that this is a system-managed drive. Read-only.
+     * @returns a systemFacet
+     */
+    public get system() {
+        return this._system;
     };
     /**
      * Sets the system property value. If present, indicates that this is a system-managed drive. Read-only.

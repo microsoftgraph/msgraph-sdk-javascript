@@ -1,9 +1,12 @@
 import {Approval} from '../../../../models/microsoft/graph/';
-import {StagesRequestBuilder} from './stages/';
-import {ApprovalStageItemRequestBuilder} from './stages/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createApprovalFromDiscriminatorValue} from '../../../../models/microsoft/graph/createApprovalFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ApprovalStageItemRequestBuilder} from './stages/item/approvalStageItemRequestBuilder';
+import {StagesRequestBuilder} from './stages/stagesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/accessPackageAssignmentApprovals/{approval-id}  */
+/** Provides operations to manage the accessPackageAssignmentApprovals property of the microsoft.graph.entitlementManagement entity.  */
 export class ApprovalItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -43,7 +46,7 @@ export class ApprovalItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Get accessPackageAssignmentApprovals from identityGovernance
+     * Approval stages for assignment requests.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -90,10 +93,14 @@ export class ApprovalItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Get accessPackageAssignmentApprovals from identityGovernance
+     * Approval stages for assignment requests.
      * @param h Request headers
      * @param o Request options
      * @param q Request query parameters
@@ -107,7 +114,11 @@ export class ApprovalItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Approval>(requestInfo, Approval, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Approval>(requestInfo, createApprovalFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update the navigation property accessPackageAssignmentApprovals in identityGovernance
@@ -121,7 +132,11 @@ export class ApprovalItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.accessPackageAssignmentApprovals.item.stages.item collection

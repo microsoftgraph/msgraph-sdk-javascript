@@ -1,14 +1,17 @@
 import {EducationRoot} from '../models/microsoft/graph/';
-import {ClassesRequestBuilder} from './classes/';
-import {EducationClassItemRequestBuilder} from './classes/item/';
-import {MeRequestBuilder} from './me/';
-import {SchoolsRequestBuilder} from './schools/';
-import {EducationSchoolItemRequestBuilder} from './schools/item/';
-import {UsersRequestBuilder} from './users/';
-import {EducationUserItemRequestBuilder} from './users/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEducationRootFromDiscriminatorValue} from '../models/microsoft/graph/createEducationRootFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ClassesRequestBuilder} from './classes/classesRequestBuilder';
+import {EducationClassItemRequestBuilder} from './classes/item/educationClassItemRequestBuilder';
+import {MeRequestBuilder} from './me/meRequestBuilder';
+import {EducationSchoolItemRequestBuilder} from './schools/item/educationSchoolItemRequestBuilder';
+import {SchoolsRequestBuilder} from './schools/schoolsRequestBuilder';
+import {EducationUserItemRequestBuilder} from './users/item/educationUserItemRequestBuilder';
+import {UsersRequestBuilder} from './users/usersRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /education  */
+/** Provides operations to manage the educationRoot singleton.  */
 export class EducationRequestBuilder {
     public get classes(): ClassesRequestBuilder {
         return new ClassesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -105,7 +108,11 @@ export class EducationRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<EducationRoot>(requestInfo, EducationRoot, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<EducationRoot>(requestInfo, createEducationRootFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update education
@@ -119,7 +126,11 @@ export class EducationRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.education.schools.item collection

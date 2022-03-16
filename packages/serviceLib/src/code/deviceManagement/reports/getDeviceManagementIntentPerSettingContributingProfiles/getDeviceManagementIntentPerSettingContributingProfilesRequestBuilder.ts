@@ -1,7 +1,8 @@
-import {GetDeviceManagementIntentPerSettingContributingProfilesRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGetDeviceManagementIntentPerSettingContributingProfilesResponseFromDiscriminatorValue} from './createGetDeviceManagementIntentPerSettingContributingProfilesResponseFromDiscriminatorValue';
+import {GetDeviceManagementIntentPerSettingContributingProfilesRequestBody, GetDeviceManagementIntentPerSettingContributingProfilesResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/reports/microsoft.graph.getDeviceManagementIntentPerSettingContributingProfiles  */
+/** Provides operations to call the getDeviceManagementIntentPerSettingContributingProfiles method.  */
 export class GetDeviceManagementIntentPerSettingContributingProfilesRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -46,13 +47,13 @@ export class GetDeviceManagementIntentPerSettingContributingProfilesRequestBuild
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ArrayBuffer
+     * @returns a Promise of GetDeviceManagementIntentPerSettingContributingProfilesResponse
      */
-    public post(body: GetDeviceManagementIntentPerSettingContributingProfilesRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
+    public post(body: GetDeviceManagementIntentPerSettingContributingProfilesRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetDeviceManagementIntentPerSettingContributingProfilesResponse | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<GetDeviceManagementIntentPerSettingContributingProfilesResponse>(requestInfo, createGetDeviceManagementIntentPerSettingContributingProfilesResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

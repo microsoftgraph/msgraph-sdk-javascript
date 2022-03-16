@@ -1,15 +1,10 @@
+import {createAppConsentRequestFromDiscriminatorValue} from './createAppConsentRequestFromDiscriminatorValue';
 import {AppConsentRequest, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AppConsentApprovalRoute extends Entity implements Parsable {
     /** A collection of userConsentRequest objects for a specific application.  */
     private _appConsentRequests?: AppConsentRequest[] | undefined;
-    /**
-     * Instantiates a new appConsentApprovalRoute and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
     /**
      * Gets the appConsentRequests property value. A collection of userConsentRequest objects for a specific application.
      * @returns a appConsentRequest
@@ -18,12 +13,25 @@ export class AppConsentApprovalRoute extends Entity implements Parsable {
         return this._appConsentRequests;
     };
     /**
+     * Sets the appConsentRequests property value. A collection of userConsentRequest objects for a specific application.
+     * @param value Value to set for the appConsentRequests property.
+     */
+    public set appConsentRequests(value: AppConsentRequest[] | undefined) {
+        this._appConsentRequests = value;
+    };
+    /**
+     * Instantiates a new appConsentApprovalRoute and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["appConsentRequests", (o, n) => { (o as unknown as AppConsentApprovalRoute).appConsentRequests = n.getCollectionOfObjectValues<AppConsentRequest>(AppConsentRequest); }],
+            ["appConsentRequests", (o, n) => { (o as unknown as AppConsentApprovalRoute).appConsentRequests = n.getCollectionOfObjectValues<AppConsentRequest>(createAppConsentRequestFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -34,12 +42,5 @@ export class AppConsentApprovalRoute extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeCollectionOfObjectValues<AppConsentRequest>("appConsentRequests", this.appConsentRequests);
-    };
-    /**
-     * Sets the appConsentRequests property value. A collection of userConsentRequest objects for a specific application.
-     * @param value Value to set for the appConsentRequests property.
-     */
-    public set appConsentRequests(value: AppConsentRequest[] | undefined) {
-        this._appConsentRequests = value;
     };
 }

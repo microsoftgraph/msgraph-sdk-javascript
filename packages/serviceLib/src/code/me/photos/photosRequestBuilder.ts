@@ -1,9 +1,16 @@
-import {ProfilePhoto} from '../../models/microsoft/graph/';
-import {PhotosResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {ProfilePhoto, ProfilePhotoCollectionResponse} from '../../models/microsoft/graph/';
+import {createProfilePhotoCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createProfilePhotoCollectionResponseFromDiscriminatorValue';
+import {createProfilePhotoFromDiscriminatorValue} from '../../models/microsoft/graph/createProfilePhotoFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/photos  */
+/** Provides operations to manage the photos property of the microsoft.graph.user entity.  */
 export class PhotosRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -48,7 +55,7 @@ export class PhotosRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable.
+     * Create new navigation property to photos for me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -71,7 +78,7 @@ export class PhotosRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of PhotosResponse
+     * @returns a Promise of ProfilePhotoCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -80,14 +87,18 @@ export class PhotosRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<PhotosResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ProfilePhotoCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PhotosResponse>(requestInfo, PhotosResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ProfilePhotoCollectionResponse>(requestInfo, createProfilePhotoCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Read-only. Nullable.
+     * Create new navigation property to photos for me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -99,6 +110,10 @@ export class PhotosRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<ProfilePhoto>(requestInfo, ProfilePhoto, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ProfilePhoto>(requestInfo, createProfilePhotoFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

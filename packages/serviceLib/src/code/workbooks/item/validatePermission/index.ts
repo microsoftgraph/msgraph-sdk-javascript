@@ -1,2 +1,1 @@
-export * from './ValidatePermissionRequestBody'
-export * from './ValidatePermissionRequestBuilder'
+export * from './validatePermissionRequestBody'

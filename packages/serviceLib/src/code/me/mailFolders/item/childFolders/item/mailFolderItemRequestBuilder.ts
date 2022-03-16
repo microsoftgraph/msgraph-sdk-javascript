@@ -1,20 +1,43 @@
 import {MailFolder} from '../../../../../models/microsoft/graph/';
-import {CopyRequestBuilder} from './copy/';
-import {MoveRequestBuilder} from './move/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMailFolderFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createMailFolderFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CopyRequestBuilder} from './copy/copyRequestBuilder';
+import {MessageRuleItemRequestBuilder} from './messageRules/item/messageRuleItemRequestBuilder';
+import {MessageRulesRequestBuilder} from './messageRules/messageRulesRequestBuilder';
+import {MessageItemRequestBuilder} from './messages/item/messageItemRequestBuilder';
+import {MessagesRequestBuilder} from './messages/messagesRequestBuilder';
+import {MoveRequestBuilder} from './move/moveRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/mailFolders/{mailFolder-id}/childFolders/{mailFolder-id1}  */
+/** Provides operations to manage the childFolders property of the microsoft.graph.mailFolder entity.  */
 export class MailFolderItemRequestBuilder {
     public get copy(): CopyRequestBuilder {
         return new CopyRequestBuilder(this.pathParameters, this.requestAdapter);
     }
+    public get messageRules(): MessageRulesRequestBuilder {
+        return new MessageRulesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get messages(): MessagesRequestBuilder {
+        return new MessagesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get move(): MoveRequestBuilder {
         return new MoveRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get multiValueExtendedProperties(): MultiValueExtendedPropertiesRequestBuilder {
+        return new MultiValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get singleValueExtendedProperties(): SingleValueExtendedPropertiesRequestBuilder {
+        return new SingleValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
@@ -31,7 +54,7 @@ export class MailFolderItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of child folders in the mailFolder.
+     * Delete navigation property childFolders for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +89,7 @@ export class MailFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of child folders in the mailFolder.
+     * Update the navigation property childFolders in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +107,7 @@ export class MailFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of child folders in the mailFolder.
+     * Delete navigation property childFolders for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +116,11 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of child folders in the mailFolder.
@@ -110,10 +137,47 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, MailFolder, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, createMailFolderFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of child folders in the mailFolder.
+     * Gets an item from the MicrosoftGraph.me.mailFolders.item.childFolders.item.messageRules.item collection
+     * @param id Unique identifier of the item
+     * @returns a messageRuleItemRequestBuilder
+     */
+    public messageRulesById(id: string) : MessageRuleItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["messageRule_id"] = id
+        return new MessageRuleItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.mailFolders.item.childFolders.item.messages.item collection
+     * @param id Unique identifier of the item
+     * @returns a messageItemRequestBuilder
+     */
+    public messagesById(id: string) : MessageItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["message_id"] = id
+        return new MessageItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.mailFolders.item.childFolders.item.multiValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a multiValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["multiValueLegacyExtendedProperty_id"] = id
+        return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property childFolders in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +188,21 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.mailFolders.item.childFolders.item.singleValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a singleValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["singleValueLegacyExtendedProperty_id"] = id
+        return new SingleValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

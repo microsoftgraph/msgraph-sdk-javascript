@@ -1,7 +1,10 @@
 import {PlannerAssignedToTaskBoardTaskFormat} from '../../../../../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPlannerAssignedToTaskBoardTaskFormatFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/createPlannerAssignedToTaskBoardTaskFormatFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/planner/plans/{plannerPlan-id}/buckets/{plannerBucket-id}/tasks/{plannerTask-id}/assignedToTaskBoardFormat  */
+/** Provides operations to manage the assignedToTaskBoardFormat property of the microsoft.graph.plannerTask entity.  */
 export class AssignedToTaskBoardFormatRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Read-only. Nullable. Used to render the task correctly in the task board view when grouped by assignedTo.
+     * Delete navigation property assignedToTaskBoardFormat for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable. Used to render the task correctly in the task board view when grouped by assignedTo.
+     * Update the navigation property assignedToTaskBoardFormat in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable. Used to render the task correctly in the task board view when grouped by assignedTo.
+     * Delete navigation property assignedToTaskBoardFormat for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Read-only. Nullable. Used to render the task correctly in the task board view when grouped by assignedTo.
@@ -102,10 +109,14 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PlannerAssignedToTaskBoardTaskFormat>(requestInfo, PlannerAssignedToTaskBoardTaskFormat, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PlannerAssignedToTaskBoardTaskFormat>(requestInfo, createPlannerAssignedToTaskBoardTaskFormatFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Read-only. Nullable. Used to render the task correctly in the task board view when grouped by assignedTo.
+     * Update the navigation property assignedToTaskBoardFormat in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class AssignedToTaskBoardFormatRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

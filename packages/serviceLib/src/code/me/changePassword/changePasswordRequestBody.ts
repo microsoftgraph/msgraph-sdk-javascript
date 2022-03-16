@@ -1,22 +1,30 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ChangePasswordRequestBody implements Parsable {
+/** Provides operations to call the changePassword method.  */
+export class ChangePasswordRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _currentPassword?: string | undefined;
     private _newPassword?: string | undefined;
-    /**
-     * Instantiates a new changePasswordRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new changePasswordRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the currentPassword property value. 
@@ -26,11 +34,11 @@ export class ChangePasswordRequestBody implements Parsable {
         return this._currentPassword;
     };
     /**
-     * Gets the newPassword property value. 
-     * @returns a string
+     * Sets the currentPassword property value. 
+     * @param value Value to set for the currentPassword property.
      */
-    public get newPassword() {
-        return this._newPassword;
+    public set currentPassword(value: string | undefined) {
+        this._currentPassword = value;
     };
     /**
      * The deserialization information for the current model
@@ -43,6 +51,20 @@ export class ChangePasswordRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the newPassword property value. 
+     * @returns a string
+     */
+    public get newPassword() {
+        return this._newPassword;
+    };
+    /**
+     * Sets the newPassword property value. 
+     * @param value Value to set for the newPassword property.
+     */
+    public set newPassword(value: string | undefined) {
+        this._newPassword = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -51,26 +73,5 @@ export class ChangePasswordRequestBody implements Parsable {
         writer.writeStringValue("currentPassword", this.currentPassword);
         writer.writeStringValue("newPassword", this.newPassword);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the currentPassword property value. 
-     * @param value Value to set for the currentPassword property.
-     */
-    public set currentPassword(value: string | undefined) {
-        this._currentPassword = value;
-    };
-    /**
-     * Sets the newPassword property value. 
-     * @param value Value to set for the newPassword property.
-     */
-    public set newPassword(value: string | undefined) {
-        this._newPassword = value;
     };
 }

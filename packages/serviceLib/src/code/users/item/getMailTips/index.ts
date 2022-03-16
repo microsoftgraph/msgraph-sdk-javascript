@@ -1,2 +1,2 @@
-export * from './GetMailTipsRequestBuilder'
-export * from './GetMailTipsRequestBody'
+export * from './getMailTipsResponse'
+export * from './getMailTipsRequestBody'

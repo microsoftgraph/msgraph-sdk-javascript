@@ -20,11 +20,11 @@ export class PrintServiceEndpoint extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the uri property value. The URI that can be used to access the service.
-     * @returns a string
+     * Sets the displayName property value. A human-readable display name for the endpoint.
+     * @param value Value to set for the displayName property.
      */
-    public get uri() {
-        return this._uri;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -47,11 +47,11 @@ export class PrintServiceEndpoint extends Entity implements Parsable {
         writer.writeStringValue("uri", this.uri);
     };
     /**
-     * Sets the displayName property value. A human-readable display name for the endpoint.
-     * @param value Value to set for the displayName property.
+     * Gets the uri property value. The URI that can be used to access the service.
+     * @returns a string
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get uri() {
+        return this._uri;
     };
     /**
      * Sets the uri property value. The URI that can be used to access the service.

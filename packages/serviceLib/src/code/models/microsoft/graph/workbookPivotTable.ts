@@ -1,3 +1,4 @@
+import {createWorkbookWorksheetFromDiscriminatorValue} from './createWorkbookWorksheetFromDiscriminatorValue';
 import {Entity, WorkbookWorksheet} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -13,6 +14,16 @@ export class WorkbookPivotTable extends Entity implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["name", (o, n) => { (o as unknown as WorkbookPivotTable).name = n.getStringValue(); }],
+            ["worksheet", (o, n) => { (o as unknown as WorkbookPivotTable).worksheet = n.getObjectValue<WorkbookWorksheet>(createWorkbookWorksheetFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the name property value. Name of the PivotTable.
      * @returns a string
      */
@@ -20,21 +31,11 @@ export class WorkbookPivotTable extends Entity implements Parsable {
         return this._name;
     };
     /**
-     * Gets the worksheet property value. The worksheet containing the current PivotTable. Read-only.
-     * @returns a workbookWorksheet
+     * Sets the name property value. Name of the PivotTable.
+     * @param value Value to set for the name property.
      */
-    public get worksheet() {
-        return this._worksheet;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["name", (o, n) => { (o as unknown as WorkbookPivotTable).name = n.getStringValue(); }],
-            ["worksheet", (o, n) => { (o as unknown as WorkbookPivotTable).worksheet = n.getObjectValue<WorkbookWorksheet>(WorkbookWorksheet); }],
-        ]);
+    public set name(value: string | undefined) {
+        this._name = value;
     };
     /**
      * Serializes information the current object
@@ -47,11 +48,11 @@ export class WorkbookPivotTable extends Entity implements Parsable {
         writer.writeObjectValue<WorkbookWorksheet>("worksheet", this.worksheet);
     };
     /**
-     * Sets the name property value. Name of the PivotTable.
-     * @param value Value to set for the name property.
+     * Gets the worksheet property value. The worksheet containing the current PivotTable. Read-only.
+     * @returns a workbookWorksheet
      */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get worksheet() {
+        return this._worksheet;
     };
     /**
      * Sets the worksheet property value. The worksheet containing the current PivotTable. Read-only.

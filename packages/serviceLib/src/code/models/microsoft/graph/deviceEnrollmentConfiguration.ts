@@ -1,3 +1,4 @@
+import {createEnrollmentConfigurationAssignmentFromDiscriminatorValue} from './createEnrollmentConfigurationAssignmentFromDiscriminatorValue';
 import {EnrollmentConfigurationAssignment, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -17,17 +18,24 @@ export class DeviceEnrollmentConfiguration extends Entity implements Parsable {
     /** The version of the device enrollment configuration  */
     private _version?: number | undefined;
     /**
-     * Instantiates a new deviceEnrollmentConfiguration and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the assignments property value. The list of group assignments for the device configuration profile
      * @returns a enrollmentConfigurationAssignment
      */
     public get assignments() {
         return this._assignments;
+    };
+    /**
+     * Sets the assignments property value. The list of group assignments for the device configuration profile
+     * @param value Value to set for the assignments property.
+     */
+    public set assignments(value: EnrollmentConfigurationAssignment[] | undefined) {
+        this._assignments = value;
+    };
+    /**
+     * Instantiates a new deviceEnrollmentConfiguration and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdDateTime property value. Created date time in UTC of the device enrollment configuration
@@ -37,11 +45,25 @@ export class DeviceEnrollmentConfiguration extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. Created date time in UTC of the device enrollment configuration
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the description property value. The description of the device enrollment configuration
      * @returns a string
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. The description of the device enrollment configuration
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. The display name of the device enrollment configuration
@@ -51,11 +73,40 @@ export class DeviceEnrollmentConfiguration extends Entity implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. The display name of the device enrollment configuration
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["assignments", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).assignments = n.getCollectionOfObjectValues<EnrollmentConfigurationAssignment>(createEnrollmentConfigurationAssignmentFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).createdDateTime = n.getDateValue(); }],
+            ["description", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).description = n.getStringValue(); }],
+            ["displayName", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).displayName = n.getStringValue(); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).lastModifiedDateTime = n.getDateValue(); }],
+            ["priority", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).priority = n.getNumberValue(); }],
+            ["version", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).version = n.getNumberValue(); }],
+        ]);
+    };
+    /**
      * Gets the lastModifiedDateTime property value. Last modified date time in UTC of the device enrollment configuration
      * @returns a Date
      */
     public get lastModifiedDateTime() {
         return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. Last modified date time in UTC of the device enrollment configuration
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
     };
     /**
      * Gets the priority property value. Priority is used when a user exists in multiple groups that are assigned enrollment configuration. Users are subject only to the configuration with the lowest priority value.
@@ -65,26 +116,11 @@ export class DeviceEnrollmentConfiguration extends Entity implements Parsable {
         return this._priority;
     };
     /**
-     * Gets the version property value. The version of the device enrollment configuration
-     * @returns a integer
+     * Sets the priority property value. Priority is used when a user exists in multiple groups that are assigned enrollment configuration. Users are subject only to the configuration with the lowest priority value.
+     * @param value Value to set for the priority property.
      */
-    public get version() {
-        return this._version;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["assignments", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).assignments = n.getCollectionOfObjectValues<EnrollmentConfigurationAssignment>(EnrollmentConfigurationAssignment); }],
-            ["createdDateTime", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).createdDateTime = n.getDateValue(); }],
-            ["description", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).description = n.getStringValue(); }],
-            ["displayName", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).displayName = n.getStringValue(); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).lastModifiedDateTime = n.getDateValue(); }],
-            ["priority", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).priority = n.getNumberValue(); }],
-            ["version", (o, n) => { (o as unknown as DeviceEnrollmentConfiguration).version = n.getNumberValue(); }],
-        ]);
+    public set priority(value: number | undefined) {
+        this._priority = value;
     };
     /**
      * Serializes information the current object
@@ -102,46 +138,11 @@ export class DeviceEnrollmentConfiguration extends Entity implements Parsable {
         writer.writeNumberValue("version", this.version);
     };
     /**
-     * Sets the assignments property value. The list of group assignments for the device configuration profile
-     * @param value Value to set for the assignments property.
+     * Gets the version property value. The version of the device enrollment configuration
+     * @returns a integer
      */
-    public set assignments(value: EnrollmentConfigurationAssignment[] | undefined) {
-        this._assignments = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Created date time in UTC of the device enrollment configuration
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the description property value. The description of the device enrollment configuration
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. The display name of the device enrollment configuration
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Last modified date time in UTC of the device enrollment configuration
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the priority property value. Priority is used when a user exists in multiple groups that are assigned enrollment configuration. Users are subject only to the configuration with the lowest priority value.
-     * @param value Value to set for the priority property.
-     */
-    public set priority(value: number | undefined) {
-        this._priority = value;
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. The version of the device enrollment configuration

@@ -1,8 +1,11 @@
 import {VppToken} from '../../../models/microsoft/graph/';
-import {SyncLicensesRequestBuilder} from './syncLicenses/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createVppTokenFromDiscriminatorValue} from '../../../models/microsoft/graph/createVppTokenFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {SyncLicensesRequestBuilder} from './syncLicenses/syncLicensesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/vppTokens/{vppToken-id}  */
+/** Provides operations to manage the vppTokens property of the microsoft.graph.deviceAppManagement entity.  */
 export class VppTokenItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -27,7 +30,7 @@ export class VppTokenItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * List of Vpp tokens for this organization.
+     * Delete navigation property vppTokens for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class VppTokenItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of Vpp tokens for this organization.
+     * Update the navigation property vppTokens in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class VppTokenItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of Vpp tokens for this organization.
+     * Delete navigation property vppTokens for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class VppTokenItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * List of Vpp tokens for this organization.
@@ -106,10 +113,14 @@ export class VppTokenItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<VppToken>(requestInfo, VppToken, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<VppToken>(requestInfo, createVppTokenFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * List of Vpp tokens for this organization.
+     * Update the navigation property vppTokens in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class VppTokenItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

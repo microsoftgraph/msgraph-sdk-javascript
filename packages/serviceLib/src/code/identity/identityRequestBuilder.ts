@@ -1,16 +1,19 @@
 import {IdentityContainer} from '../models/microsoft/graph/';
-import {ApiConnectorsRequestBuilder} from './apiConnectors/';
-import {IdentityApiConnectorItemRequestBuilder} from './apiConnectors/item/';
-import {B2xUserFlowsRequestBuilder} from './b2xUserFlows/';
-import {B2xIdentityUserFlowItemRequestBuilder} from './b2xUserFlows/item/';
-import {ConditionalAccessRequestBuilder} from './conditionalAccess/';
-import {IdentityProvidersRequestBuilder} from './identityProviders/';
-import {IdentityProviderBaseItemRequestBuilder} from './identityProviders/item/';
-import {UserFlowAttributesRequestBuilder} from './userFlowAttributes/';
-import {IdentityUserFlowAttributeItemRequestBuilder} from './userFlowAttributes/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createIdentityContainerFromDiscriminatorValue} from '../models/microsoft/graph/createIdentityContainerFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ApiConnectorsRequestBuilder} from './apiConnectors/apiConnectorsRequestBuilder';
+import {IdentityApiConnectorItemRequestBuilder} from './apiConnectors/item/identityApiConnectorItemRequestBuilder';
+import {B2xUserFlowsRequestBuilder} from './b2xUserFlows/b2xUserFlowsRequestBuilder';
+import {B2xIdentityUserFlowItemRequestBuilder} from './b2xUserFlows/item/b2xIdentityUserFlowItemRequestBuilder';
+import {ConditionalAccessRequestBuilder} from './conditionalAccess/conditionalAccessRequestBuilder';
+import {IdentityProvidersRequestBuilder} from './identityProviders/identityProvidersRequestBuilder';
+import {IdentityProviderBaseItemRequestBuilder} from './identityProviders/item/identityProviderBaseItemRequestBuilder';
+import {IdentityUserFlowAttributeItemRequestBuilder} from './userFlowAttributes/item/identityUserFlowAttributeItemRequestBuilder';
+import {UserFlowAttributesRequestBuilder} from './userFlowAttributes/userFlowAttributesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity  */
+/** Provides operations to manage the identityContainer singleton.  */
 export class IdentityRequestBuilder {
     public get apiConnectors(): ApiConnectorsRequestBuilder {
         return new ApiConnectorsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -121,7 +124,11 @@ export class IdentityRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<IdentityContainer>(requestInfo, IdentityContainer, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<IdentityContainer>(requestInfo, createIdentityContainerFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.identityProviders.item collection
@@ -146,7 +153,11 @@ export class IdentityRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.userFlowAttributes.item collection

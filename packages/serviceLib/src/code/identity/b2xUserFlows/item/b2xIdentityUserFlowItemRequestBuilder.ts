@@ -1,13 +1,18 @@
 import {B2xIdentityUserFlow} from '../../../models/microsoft/graph/';
-import {IdentityProvidersRequestBuilder} from './identityProviders/';
-import {LanguagesRequestBuilder} from './languages/';
-import {UserFlowLanguageConfigurationItemRequestBuilder} from './languages/item/';
-import {UserAttributeAssignmentsRequestBuilder} from './userAttributeAssignments/';
-import {IdentityUserFlowAttributeAssignmentItemRequestBuilder} from './userAttributeAssignments/item/';
-import {UserFlowIdentityProvidersRequestBuilder} from './userFlowIdentityProviders/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createB2xIdentityUserFlowFromDiscriminatorValue} from '../../../models/microsoft/graph/createB2xIdentityUserFlowFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {IdentityProvidersRequestBuilder} from './identityProviders/identityProvidersRequestBuilder';
+import {IdentityProviderItemRequestBuilder} from './identityProviders/item/identityProviderItemRequestBuilder';
+import {UserFlowLanguageConfigurationItemRequestBuilder} from './languages/item/userFlowLanguageConfigurationItemRequestBuilder';
+import {LanguagesRequestBuilder} from './languages/languagesRequestBuilder';
+import {IdentityUserFlowAttributeAssignmentItemRequestBuilder} from './userAttributeAssignments/item/identityUserFlowAttributeAssignmentItemRequestBuilder';
+import {UserAttributeAssignmentsRequestBuilder} from './userAttributeAssignments/userAttributeAssignmentsRequestBuilder';
+import {IdentityProviderBaseItemRequestBuilder} from './userFlowIdentityProviders/item/identityProviderBaseItemRequestBuilder';
+import {UserFlowIdentityProvidersRequestBuilder} from './userFlowIdentityProviders/userFlowIdentityProvidersRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}  */
+/** Provides operations to manage the b2xUserFlows property of the microsoft.graph.identityContainer entity.  */
 export class B2xIdentityUserFlowItemRequestBuilder {
     public get identityProviders(): IdentityProvidersRequestBuilder {
         return new IdentityProvidersRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -41,7 +46,7 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents entry point for B2X/self-service sign-up identity userflows.
+     * Delete navigation property b2xUserFlows for identity
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -76,7 +81,7 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents entry point for B2X/self-service sign-up identity userflows.
+     * Update the navigation property b2xUserFlows in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -94,7 +99,7 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents entry point for B2X/self-service sign-up identity userflows.
+     * Delete navigation property b2xUserFlows for identity
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -103,7 +108,11 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Represents entry point for B2X/self-service sign-up identity userflows.
@@ -120,7 +129,22 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<B2xIdentityUserFlow>(requestInfo, B2xIdentityUserFlow, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<B2xIdentityUserFlow>(requestInfo, createB2xIdentityUserFlowFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item.identityProviders.item collection
+     * @param id Unique identifier of the item
+     * @returns a identityProviderItemRequestBuilder
+     */
+    public identityProvidersById(id: string) : IdentityProviderItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["identityProvider_id"] = id
+        return new IdentityProviderItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item.languages.item collection
@@ -134,7 +158,7 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         return new UserFlowLanguageConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Represents entry point for B2X/self-service sign-up identity userflows.
+     * Update the navigation property b2xUserFlows in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -145,7 +169,11 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item.userAttributeAssignments.item collection
@@ -157,5 +185,16 @@ export class B2xIdentityUserFlowItemRequestBuilder {
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["identityUserFlowAttributeAssignment_id"] = id
         return new IdentityUserFlowAttributeAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item.userFlowIdentityProviders.item collection
+     * @param id Unique identifier of the item
+     * @returns a identityProviderBaseItemRequestBuilder
+     */
+    public userFlowIdentityProvidersById(id: string) : IdentityProviderBaseItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["identityProviderBase_id"] = id
+        return new IdentityProviderBaseItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

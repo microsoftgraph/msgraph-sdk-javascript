@@ -1,9 +1,12 @@
 import {PrintService} from '../../../models/microsoft/graph/';
-import {EndpointsRequestBuilder} from './endpoints/';
-import {PrintServiceEndpointItemRequestBuilder} from './endpoints/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrintServiceFromDiscriminatorValue} from '../../../models/microsoft/graph/createPrintServiceFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {EndpointsRequestBuilder} from './endpoints/endpointsRequestBuilder';
+import {PrintServiceEndpointItemRequestBuilder} from './endpoints/item/printServiceEndpointItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/services/{printService-id}  */
+/** Provides operations to manage the services property of the microsoft.graph.print entity.  */
 export class PrintServiceItemRequestBuilder {
     public get endpoints(): EndpointsRequestBuilder {
         return new EndpointsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class PrintServiceItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of available Universal Print service endpoints.
+     * Delete navigation property services for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class PrintServiceItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of available Universal Print service endpoints.
+     * Update the navigation property services in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class PrintServiceItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of available Universal Print service endpoints.
+     * Delete navigation property services for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class PrintServiceItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.print.services.item.endpoints.item collection
@@ -118,10 +125,14 @@ export class PrintServiceItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintService>(requestInfo, PrintService, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintService>(requestInfo, createPrintServiceFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of available Universal Print service endpoints.
+     * Update the navigation property services in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class PrintServiceItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

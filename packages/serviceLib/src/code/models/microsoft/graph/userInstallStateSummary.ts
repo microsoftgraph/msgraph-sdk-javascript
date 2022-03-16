@@ -1,3 +1,4 @@
+import {createDeviceInstallStateFromDiscriminatorValue} from './createDeviceInstallStateFromDiscriminatorValue';
 import {DeviceInstallState, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -26,11 +27,38 @@ export class UserInstallStateSummary extends Entity implements Parsable {
         return this._deviceStates;
     };
     /**
+     * Sets the deviceStates property value. The install state of the eBook.
+     * @param value Value to set for the deviceStates property.
+     */
+    public set deviceStates(value: DeviceInstallState[] | undefined) {
+        this._deviceStates = value;
+    };
+    /**
      * Gets the failedDeviceCount property value. Failed Device Count.
      * @returns a integer
      */
     public get failedDeviceCount() {
         return this._failedDeviceCount;
+    };
+    /**
+     * Sets the failedDeviceCount property value. Failed Device Count.
+     * @param value Value to set for the failedDeviceCount property.
+     */
+    public set failedDeviceCount(value: number | undefined) {
+        this._failedDeviceCount = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["deviceStates", (o, n) => { (o as unknown as UserInstallStateSummary).deviceStates = n.getCollectionOfObjectValues<DeviceInstallState>(createDeviceInstallStateFromDiscriminatorValue); }],
+            ["failedDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).failedDeviceCount = n.getNumberValue(); }],
+            ["installedDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).installedDeviceCount = n.getNumberValue(); }],
+            ["notInstalledDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).notInstalledDeviceCount = n.getNumberValue(); }],
+            ["userName", (o, n) => { (o as unknown as UserInstallStateSummary).userName = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the installedDeviceCount property value. Installed Device Count.
@@ -40,6 +68,13 @@ export class UserInstallStateSummary extends Entity implements Parsable {
         return this._installedDeviceCount;
     };
     /**
+     * Sets the installedDeviceCount property value. Installed Device Count.
+     * @param value Value to set for the installedDeviceCount property.
+     */
+    public set installedDeviceCount(value: number | undefined) {
+        this._installedDeviceCount = value;
+    };
+    /**
      * Gets the notInstalledDeviceCount property value. Not installed device count.
      * @returns a integer
      */
@@ -47,24 +82,11 @@ export class UserInstallStateSummary extends Entity implements Parsable {
         return this._notInstalledDeviceCount;
     };
     /**
-     * Gets the userName property value. User name.
-     * @returns a string
+     * Sets the notInstalledDeviceCount property value. Not installed device count.
+     * @param value Value to set for the notInstalledDeviceCount property.
      */
-    public get userName() {
-        return this._userName;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["deviceStates", (o, n) => { (o as unknown as UserInstallStateSummary).deviceStates = n.getCollectionOfObjectValues<DeviceInstallState>(DeviceInstallState); }],
-            ["failedDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).failedDeviceCount = n.getNumberValue(); }],
-            ["installedDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).installedDeviceCount = n.getNumberValue(); }],
-            ["notInstalledDeviceCount", (o, n) => { (o as unknown as UserInstallStateSummary).notInstalledDeviceCount = n.getNumberValue(); }],
-            ["userName", (o, n) => { (o as unknown as UserInstallStateSummary).userName = n.getStringValue(); }],
-        ]);
+    public set notInstalledDeviceCount(value: number | undefined) {
+        this._notInstalledDeviceCount = value;
     };
     /**
      * Serializes information the current object
@@ -80,32 +102,11 @@ export class UserInstallStateSummary extends Entity implements Parsable {
         writer.writeStringValue("userName", this.userName);
     };
     /**
-     * Sets the deviceStates property value. The install state of the eBook.
-     * @param value Value to set for the deviceStates property.
+     * Gets the userName property value. User name.
+     * @returns a string
      */
-    public set deviceStates(value: DeviceInstallState[] | undefined) {
-        this._deviceStates = value;
-    };
-    /**
-     * Sets the failedDeviceCount property value. Failed Device Count.
-     * @param value Value to set for the failedDeviceCount property.
-     */
-    public set failedDeviceCount(value: number | undefined) {
-        this._failedDeviceCount = value;
-    };
-    /**
-     * Sets the installedDeviceCount property value. Installed Device Count.
-     * @param value Value to set for the installedDeviceCount property.
-     */
-    public set installedDeviceCount(value: number | undefined) {
-        this._installedDeviceCount = value;
-    };
-    /**
-     * Sets the notInstalledDeviceCount property value. Not installed device count.
-     * @param value Value to set for the notInstalledDeviceCount property.
-     */
-    public set notInstalledDeviceCount(value: number | undefined) {
-        this._notInstalledDeviceCount = value;
+    public get userName() {
+        return this._userName;
     };
     /**
      * Sets the userName property value. User name.

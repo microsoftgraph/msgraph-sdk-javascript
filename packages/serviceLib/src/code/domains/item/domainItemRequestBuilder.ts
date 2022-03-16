@@ -1,14 +1,18 @@
 import {Domain} from '../../models/microsoft/graph/';
-import {DomainNameReferencesRequestBuilder} from './domainNameReferences/';
-import {ForceDeleteRequestBuilder} from './forceDelete/';
-import {ServiceConfigurationRecordsRequestBuilder} from './serviceConfigurationRecords/';
-import {DomainDnsRecordItemRequestBuilder as i9e944a8b71752a37a61b9edc4219412bd62c7c751fee16ccacdcdd13bb97ee01} from './serviceConfigurationRecords/item/';
-import {VerificationDnsRecordsRequestBuilder} from './verificationDnsRecords/';
-import {DomainDnsRecordItemRequestBuilder as ibbb466aceebf9f679884b817c0e08b48a9bae65fdd1c47864beb21085d3a77da} from './verificationDnsRecords/item/';
-import {VerifyRequestBuilder} from './verify/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDomainFromDiscriminatorValue} from '../../models/microsoft/graph/createDomainFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DomainNameReferencesRequestBuilder} from './domainNameReferences/domainNameReferencesRequestBuilder';
+import {DirectoryObjectItemRequestBuilder} from './domainNameReferences/item/directoryObjectItemRequestBuilder';
+import {ForceDeleteRequestBuilder} from './forceDelete/forceDeleteRequestBuilder';
+import {DomainDnsRecordItemRequestBuilder as i9e944a8b71752a37a61b9edc4219412bd62c7c751fee16ccacdcdd13bb97ee01} from './serviceConfigurationRecords/item/domainDnsRecordItemRequestBuilder';
+import {ServiceConfigurationRecordsRequestBuilder} from './serviceConfigurationRecords/serviceConfigurationRecordsRequestBuilder';
+import {DomainDnsRecordItemRequestBuilder as ibbb466aceebf9f679884b817c0e08b48a9bae65fdd1c47864beb21085d3a77da} from './verificationDnsRecords/item/domainDnsRecordItemRequestBuilder';
+import {VerificationDnsRecordsRequestBuilder} from './verificationDnsRecords/verificationDnsRecordsRequestBuilder';
+import {VerifyRequestBuilder} from './verify/verifyRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /domains/{domain-id}  */
+/** Provides operations to manage the collection of domain entities.  */
 export class DomainItemRequestBuilder {
     public get domainNameReferences(): DomainNameReferencesRequestBuilder {
         return new DomainNameReferencesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -107,7 +111,22 @@ export class DomainItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.domains.item.domainNameReferences.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public domainNameReferencesById(id: string) : DirectoryObjectItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new DirectoryObjectItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Get entity from domains by key
@@ -124,7 +143,11 @@ export class DomainItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Domain>(requestInfo, Domain, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Domain>(requestInfo, createDomainFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update entity in domains
@@ -138,7 +161,11 @@ export class DomainItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.domains.item.serviceConfigurationRecords.item collection

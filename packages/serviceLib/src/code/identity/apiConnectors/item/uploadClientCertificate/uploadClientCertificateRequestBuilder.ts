@@ -1,8 +1,9 @@
 import {IdentityApiConnector} from '../../../../models/microsoft/graph/';
+import {createIdentityApiConnectorFromDiscriminatorValue} from '../../../../models/microsoft/graph/createIdentityApiConnectorFromDiscriminatorValue';
 import {UploadClientCertificateRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/apiConnectors/{identityApiConnector-id}/microsoft.graph.uploadClientCertificate  */
+/** Provides operations to call the uploadClientCertificate method.  */
 export class UploadClientCertificateRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -47,13 +48,13 @@ export class UploadClientCertificateRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of UploadClientCertificateResponse
+     * @returns a Promise of IdentityApiConnector
      */
     public post(body: UploadClientCertificateRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<IdentityApiConnector | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<IdentityApiConnector>(requestInfo, IdentityApiConnector, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<IdentityApiConnector>(requestInfo, createIdentityApiConnectorFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

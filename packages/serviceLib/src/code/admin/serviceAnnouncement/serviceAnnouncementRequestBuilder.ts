@@ -1,13 +1,16 @@
 import {ServiceAnnouncement} from '../../models/microsoft/graph/';
-import {HealthOverviewsRequestBuilder} from './healthOverviews/';
-import {ServiceHealthItemRequestBuilder} from './healthOverviews/item/';
-import {IssuesRequestBuilder} from './issues/';
-import {ServiceHealthIssueItemRequestBuilder} from './issues/item/';
-import {MessagesRequestBuilder} from './messages/';
-import {ServiceUpdateMessageItemRequestBuilder} from './messages/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createServiceAnnouncementFromDiscriminatorValue} from '../../models/microsoft/graph/createServiceAnnouncementFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {HealthOverviewsRequestBuilder} from './healthOverviews/healthOverviewsRequestBuilder';
+import {ServiceHealthItemRequestBuilder} from './healthOverviews/item/serviceHealthItemRequestBuilder';
+import {IssuesRequestBuilder} from './issues/issuesRequestBuilder';
+import {ServiceHealthIssueItemRequestBuilder} from './issues/item/serviceHealthIssueItemRequestBuilder';
+import {ServiceUpdateMessageItemRequestBuilder} from './messages/item/serviceUpdateMessageItemRequestBuilder';
+import {MessagesRequestBuilder} from './messages/messagesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /admin/serviceAnnouncement  */
+/** Provides operations to manage the serviceAnnouncement property of the microsoft.graph.admin entity.  */
 export class ServiceAnnouncementRequestBuilder {
     public get healthOverviews(): HealthOverviewsRequestBuilder {
         return new HealthOverviewsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -38,7 +41,7 @@ export class ServiceAnnouncementRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A container for service communications resources. Read-only.
+     * Delete navigation property serviceAnnouncement for admin
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -73,7 +76,7 @@ export class ServiceAnnouncementRequestBuilder {
         return requestInfo;
     };
     /**
-     * A container for service communications resources. Read-only.
+     * Update the navigation property serviceAnnouncement in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -91,7 +94,7 @@ export class ServiceAnnouncementRequestBuilder {
         return requestInfo;
     };
     /**
-     * A container for service communications resources. Read-only.
+     * Delete navigation property serviceAnnouncement for admin
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -100,7 +103,11 @@ export class ServiceAnnouncementRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A container for service communications resources. Read-only.
@@ -117,7 +124,11 @@ export class ServiceAnnouncementRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ServiceAnnouncement>(requestInfo, ServiceAnnouncement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ServiceAnnouncement>(requestInfo, createServiceAnnouncementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.admin.serviceAnnouncement.healthOverviews.item collection
@@ -153,7 +164,7 @@ export class ServiceAnnouncementRequestBuilder {
         return new ServiceUpdateMessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * A container for service communications resources. Read-only.
+     * Update the navigation property serviceAnnouncement in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -164,6 +175,10 @@ export class ServiceAnnouncementRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

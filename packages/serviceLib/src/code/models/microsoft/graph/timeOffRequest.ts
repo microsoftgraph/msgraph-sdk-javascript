@@ -22,18 +22,11 @@ export class TimeOffRequest extends ScheduleChangeRequest implements Parsable {
         return this._endDateTime;
     };
     /**
-     * Gets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @returns a Date
+     * Sets the endDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @param value Value to set for the endDateTime property.
      */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the timeOffReasonId property value. The reason for the time off.
-     * @returns a string
-     */
-    public get timeOffReasonId() {
-        return this._timeOffReasonId;
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -58,11 +51,11 @@ export class TimeOffRequest extends ScheduleChangeRequest implements Parsable {
         writer.writeStringValue("timeOffReasonId", this.timeOffReasonId);
     };
     /**
-     * Sets the endDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @param value Value to set for the endDateTime property.
+     * Gets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @returns a Date
      */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
@@ -70,6 +63,13 @@ export class TimeOffRequest extends ScheduleChangeRequest implements Parsable {
      */
     public set startDateTime(value: Date | undefined) {
         this._startDateTime = value;
+    };
+    /**
+     * Gets the timeOffReasonId property value. The reason for the time off.
+     * @returns a string
+     */
+    public get timeOffReasonId() {
+        return this._timeOffReasonId;
     };
     /**
      * Sets the timeOffReasonId property value. The reason for the time off.

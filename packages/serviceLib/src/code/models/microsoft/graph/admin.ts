@@ -1,17 +1,12 @@
+import {createServiceAnnouncementFromDiscriminatorValue} from './createServiceAnnouncementFromDiscriminatorValue';
 import {ServiceAnnouncement} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Admin implements Parsable {
+export class Admin implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** A container for service communications resources. Read-only.  */
     private _serviceAnnouncement?: ServiceAnnouncement | undefined;
-    /**
-     * Instantiates a new Admin and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -20,11 +15,17 @@ export class Admin implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the serviceAnnouncement property value. A container for service communications resources. Read-only.
-     * @returns a serviceAnnouncement
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get serviceAnnouncement() {
-        return this._serviceAnnouncement;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new Admin and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -32,7 +33,7 @@ export class Admin implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["serviceAnnouncement", (o, n) => { (o as unknown as Admin).serviceAnnouncement = n.getObjectValue<ServiceAnnouncement>(ServiceAnnouncement); }],
+            ["serviceAnnouncement", (o, n) => { (o as unknown as Admin).serviceAnnouncement = n.getObjectValue<ServiceAnnouncement>(createServiceAnnouncementFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -45,11 +46,11 @@ export class Admin implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the serviceAnnouncement property value. A container for service communications resources. Read-only.
+     * @returns a serviceAnnouncement
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get serviceAnnouncement() {
+        return this._serviceAnnouncement;
     };
     /**
      * Sets the serviceAnnouncement property value. A container for service communications resources. Read-only.

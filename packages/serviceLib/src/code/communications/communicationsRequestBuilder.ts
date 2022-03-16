@@ -1,16 +1,19 @@
 import {CloudCommunications} from '../models/microsoft/graph/';
-import {CallRecordsRequestBuilder} from './callRecords/';
-import {CallRecordItemRequestBuilder} from './callRecords/item/';
-import {CallsRequestBuilder} from './calls/';
-import {CallItemRequestBuilder} from './calls/item/';
-import {GetPresencesByUserIdRequestBuilder} from './getPresencesByUserId/';
-import {OnlineMeetingsRequestBuilder} from './onlineMeetings/';
-import {OnlineMeetingItemRequestBuilder} from './onlineMeetings/item/';
-import {PresencesRequestBuilder} from './presences/';
-import {PresenceItemRequestBuilder} from './presences/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createCloudCommunicationsFromDiscriminatorValue} from '../models/microsoft/graph/createCloudCommunicationsFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CallRecordsRequestBuilder} from './callRecords/callRecordsRequestBuilder';
+import {CallRecordItemRequestBuilder} from './callRecords/item/callRecordItemRequestBuilder';
+import {CallsRequestBuilder} from './calls/callsRequestBuilder';
+import {CallItemRequestBuilder} from './calls/item/callItemRequestBuilder';
+import {GetPresencesByUserIdRequestBuilder} from './getPresencesByUserId/getPresencesByUserIdRequestBuilder';
+import {OnlineMeetingItemRequestBuilder} from './onlineMeetings/item/onlineMeetingItemRequestBuilder';
+import {OnlineMeetingsRequestBuilder} from './onlineMeetings/onlineMeetingsRequestBuilder';
+import {PresenceItemRequestBuilder} from './presences/item/presenceItemRequestBuilder';
+import {PresencesRequestBuilder} from './presences/presencesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications  */
+/** Provides operations to manage the cloudCommunications singleton.  */
 export class CommunicationsRequestBuilder {
     public get callRecords(): CallRecordsRequestBuilder {
         return new CallRecordsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -121,7 +124,11 @@ export class CommunicationsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<CloudCommunications>(requestInfo, CloudCommunications, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<CloudCommunications>(requestInfo, createCloudCommunicationsFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.communications.onlineMeetings.item collection
@@ -146,7 +153,11 @@ export class CommunicationsRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.communications.presences.item collection

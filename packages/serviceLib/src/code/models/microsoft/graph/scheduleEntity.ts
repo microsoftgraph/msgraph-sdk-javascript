@@ -1,24 +1,31 @@
-import {ScheduleEntityTheme} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ScheduleEntityTheme} from './scheduleEntityTheme';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ScheduleEntity implements Parsable {
+export class ScheduleEntity implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _endDateTime?: Date | undefined;
     private _startDateTime?: Date | undefined;
     private _theme?: ScheduleEntityTheme | undefined;
     /**
-     * Instantiates a new scheduleEntity and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new scheduleEntity and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the endDateTime property value. 
@@ -28,18 +35,11 @@ export class ScheduleEntity implements Parsable {
         return this._endDateTime;
     };
     /**
-     * Gets the startDateTime property value. 
-     * @returns a Date
+     * Sets the endDateTime property value. 
+     * @param value Value to set for the endDateTime property.
      */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the theme property value. 
-     * @returns a scheduleEntityTheme
-     */
-    public get theme() {
-        return this._theme;
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -64,18 +64,11 @@ export class ScheduleEntity implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startDateTime property value. 
+     * @returns a Date
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the endDateTime property value. 
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. 
@@ -83,6 +76,13 @@ export class ScheduleEntity implements Parsable {
      */
     public set startDateTime(value: Date | undefined) {
         this._startDateTime = value;
+    };
+    /**
+     * Gets the theme property value. 
+     * @returns a scheduleEntityTheme
+     */
+    public get theme() {
+        return this._theme;
     };
     /**
      * Sets the theme property value. 

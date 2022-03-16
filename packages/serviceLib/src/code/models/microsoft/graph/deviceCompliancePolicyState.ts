@@ -1,4 +1,7 @@
-import {ComplianceStatus, DeviceCompliancePolicySettingState, Entity, PolicyPlatformType} from './index';
+import {ComplianceStatus} from './complianceStatus';
+import {createDeviceCompliancePolicySettingStateFromDiscriminatorValue} from './createDeviceCompliancePolicySettingStateFromDiscriminatorValue';
+import {DeviceCompliancePolicySettingState, Entity} from './index';
+import {PolicyPlatformType} from './policyPlatformType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class DeviceCompliancePolicyState extends Entity implements Parsable {
@@ -27,39 +30,11 @@ export class DeviceCompliancePolicyState extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the platformType property value. Platform type that the policy applies to
-     * @returns a policyPlatformType
+     * Sets the displayName property value. The name of the policy for this policyBase
+     * @param value Value to set for the displayName property.
      */
-    public get platformType() {
-        return this._platformType;
-    };
-    /**
-     * Gets the settingCount property value. Count of how many setting a policy holds
-     * @returns a integer
-     */
-    public get settingCount() {
-        return this._settingCount;
-    };
-    /**
-     * Gets the settingStates property value. 
-     * @returns a deviceCompliancePolicySettingState
-     */
-    public get settingStates() {
-        return this._settingStates;
-    };
-    /**
-     * Gets the state property value. The compliance state of the policy
-     * @returns a complianceStatus
-     */
-    public get state() {
-        return this._state;
-    };
-    /**
-     * Gets the version property value. The version of the policy
-     * @returns a integer
-     */
-    public get version() {
-        return this._version;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -70,10 +45,24 @@ export class DeviceCompliancePolicyState extends Entity implements Parsable {
             ["displayName", (o, n) => { (o as unknown as DeviceCompliancePolicyState).displayName = n.getStringValue(); }],
             ["platformType", (o, n) => { (o as unknown as DeviceCompliancePolicyState).platformType = n.getEnumValue<PolicyPlatformType>(PolicyPlatformType); }],
             ["settingCount", (o, n) => { (o as unknown as DeviceCompliancePolicyState).settingCount = n.getNumberValue(); }],
-            ["settingStates", (o, n) => { (o as unknown as DeviceCompliancePolicyState).settingStates = n.getCollectionOfObjectValues<DeviceCompliancePolicySettingState>(DeviceCompliancePolicySettingState); }],
+            ["settingStates", (o, n) => { (o as unknown as DeviceCompliancePolicyState).settingStates = n.getCollectionOfObjectValues<DeviceCompliancePolicySettingState>(createDeviceCompliancePolicySettingStateFromDiscriminatorValue); }],
             ["state", (o, n) => { (o as unknown as DeviceCompliancePolicyState).state = n.getEnumValue<ComplianceStatus>(ComplianceStatus); }],
             ["version", (o, n) => { (o as unknown as DeviceCompliancePolicyState).version = n.getNumberValue(); }],
         ]);
+    };
+    /**
+     * Gets the platformType property value. Platform type that the policy applies to
+     * @returns a policyPlatformType
+     */
+    public get platformType() {
+        return this._platformType;
+    };
+    /**
+     * Sets the platformType property value. Platform type that the policy applies to
+     * @param value Value to set for the platformType property.
+     */
+    public set platformType(value: PolicyPlatformType | undefined) {
+        this._platformType = value;
     };
     /**
      * Serializes information the current object
@@ -90,18 +79,11 @@ export class DeviceCompliancePolicyState extends Entity implements Parsable {
         writer.writeNumberValue("version", this.version);
     };
     /**
-     * Sets the displayName property value. The name of the policy for this policyBase
-     * @param value Value to set for the displayName property.
+     * Gets the settingCount property value. Count of how many setting a policy holds
+     * @returns a integer
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the platformType property value. Platform type that the policy applies to
-     * @param value Value to set for the platformType property.
-     */
-    public set platformType(value: PolicyPlatformType | undefined) {
-        this._platformType = value;
+    public get settingCount() {
+        return this._settingCount;
     };
     /**
      * Sets the settingCount property value. Count of how many setting a policy holds
@@ -111,6 +93,13 @@ export class DeviceCompliancePolicyState extends Entity implements Parsable {
         this._settingCount = value;
     };
     /**
+     * Gets the settingStates property value. 
+     * @returns a deviceCompliancePolicySettingState
+     */
+    public get settingStates() {
+        return this._settingStates;
+    };
+    /**
      * Sets the settingStates property value. 
      * @param value Value to set for the settingStates property.
      */
@@ -118,11 +107,25 @@ export class DeviceCompliancePolicyState extends Entity implements Parsable {
         this._settingStates = value;
     };
     /**
+     * Gets the state property value. The compliance state of the policy
+     * @returns a complianceStatus
+     */
+    public get state() {
+        return this._state;
+    };
+    /**
      * Sets the state property value. The compliance state of the policy
      * @param value Value to set for the state property.
      */
     public set state(value: ComplianceStatus | undefined) {
         this._state = value;
+    };
+    /**
+     * Gets the version property value. The version of the policy
+     * @returns a integer
+     */
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. The version of the policy

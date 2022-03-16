@@ -1,2 +1,1 @@
-export * from './CheckGrantedPermissionsForAppRequestBuilder'
-export * from './CheckGrantedPermissionsForApp'
+export * from './checkGrantedPermissionsForAppResponse'

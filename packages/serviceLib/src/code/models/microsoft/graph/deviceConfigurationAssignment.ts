@@ -1,3 +1,4 @@
+import {createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue} from './createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue';
 import {DeviceAndAppManagementAssignmentTarget, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -11,19 +12,12 @@ export class DeviceConfigurationAssignment extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the target property value. The assignment target for the device configuration.
-     * @returns a deviceAndAppManagementAssignmentTarget
-     */
-    public get target() {
-        return this._target;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["target", (o, n) => { (o as unknown as DeviceConfigurationAssignment).target = n.getObjectValue<DeviceAndAppManagementAssignmentTarget>(DeviceAndAppManagementAssignmentTarget); }],
+            ["target", (o, n) => { (o as unknown as DeviceConfigurationAssignment).target = n.getObjectValue<DeviceAndAppManagementAssignmentTarget>(createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -34,6 +28,13 @@ export class DeviceConfigurationAssignment extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeObjectValue<DeviceAndAppManagementAssignmentTarget>("target", this.target);
+    };
+    /**
+     * Gets the target property value. The assignment target for the device configuration.
+     * @returns a deviceAndAppManagementAssignmentTarget
+     */
+    public get target() {
+        return this._target;
     };
     /**
      * Sets the target property value. The assignment target for the device configuration.

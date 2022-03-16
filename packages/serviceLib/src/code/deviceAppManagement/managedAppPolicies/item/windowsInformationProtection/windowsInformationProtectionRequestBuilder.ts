@@ -1,4 +1,4 @@
-import {AssignRequestBuilder} from './assign/';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
 import {getPathParameters, RequestAdapter} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /deviceAppManagement/managedAppPolicies/{managedAppPolicy-id}/microsoft.graph.windowsInformationProtection  */

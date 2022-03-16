@@ -1,7 +1,10 @@
 import {DeviceCompliancePolicyDeviceStateSummary} from '../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceCompliancePolicyDeviceStateSummaryFromDiscriminatorValue} from '../../models/microsoft/graph/createDeviceCompliancePolicyDeviceStateSummaryFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/deviceCompliancePolicyDeviceStateSummary  */
+/** Provides operations to manage the deviceCompliancePolicyDeviceStateSummary property of the microsoft.graph.deviceManagement entity.  */
 export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The device compliance state summary for this account.
+     * Delete navigation property deviceCompliancePolicyDeviceStateSummary for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device compliance state summary for this account.
+     * Update the navigation property deviceCompliancePolicyDeviceStateSummary in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device compliance state summary for this account.
+     * Delete navigation property deviceCompliancePolicyDeviceStateSummary for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The device compliance state summary for this account.
@@ -102,10 +109,14 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceCompliancePolicyDeviceStateSummary>(requestInfo, DeviceCompliancePolicyDeviceStateSummary, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceCompliancePolicyDeviceStateSummary>(requestInfo, createDeviceCompliancePolicyDeviceStateSummaryFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The device compliance state summary for this account.
+     * Update the navigation property deviceCompliancePolicyDeviceStateSummary in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class DeviceCompliancePolicyDeviceStateSummaryRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

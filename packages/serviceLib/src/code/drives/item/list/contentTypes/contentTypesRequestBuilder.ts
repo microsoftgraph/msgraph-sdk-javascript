@@ -1,12 +1,19 @@
-import {ContentType} from '../../../../models/microsoft/graph/';
-import {AddCopyRequestBuilder} from './addCopy/';
-import {ContentTypesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {ContentType, ContentTypeCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createContentTypeCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createContentTypeCollectionResponseFromDiscriminatorValue';
+import {createContentTypeFromDiscriminatorValue} from '../../../../models/microsoft/graph/createContentTypeFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AddCopyRequestBuilder} from './addCopy/addCopyRequestBuilder';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /drives/{drive-id}/list/contentTypes  */
+/** Provides operations to manage the contentTypes property of the microsoft.graph.list entity.  */
 export class ContentTypesRequestBuilder {
     public get addCopy(): AddCopyRequestBuilder {
         return new AddCopyRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -54,7 +61,7 @@ export class ContentTypesRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of content types present in this list.
+     * Create new navigation property to contentTypes for drives
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -77,7 +84,7 @@ export class ContentTypesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ContentTypesResponse
+     * @returns a Promise of ContentTypeCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -88,14 +95,18 @@ export class ContentTypesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ContentTypesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ContentTypeCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ContentTypesResponse>(requestInfo, ContentTypesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ContentTypeCollectionResponse>(requestInfo, createContentTypeCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of content types present in this list.
+     * Create new navigation property to contentTypes for drives
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -107,6 +118,10 @@ export class ContentTypesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, ContentType, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, createContentTypeFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

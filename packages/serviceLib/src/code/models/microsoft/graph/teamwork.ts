@@ -1,6 +1,8 @@
+import {createWorkforceIntegrationFromDiscriminatorValue} from './createWorkforceIntegrationFromDiscriminatorValue';
 import {Entity, WorkforceIntegration} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
+/** Provides operations to manage the teamwork singleton.  */
 export class Teamwork extends Entity implements Parsable {
     /** A workforce integration with shifts.  */
     private _workforceIntegrations?: WorkforceIntegration[] | undefined;
@@ -11,19 +13,12 @@ export class Teamwork extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the workforceIntegrations property value. A workforce integration with shifts.
-     * @returns a workforceIntegration
-     */
-    public get workforceIntegrations() {
-        return this._workforceIntegrations;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["workforceIntegrations", (o, n) => { (o as unknown as Teamwork).workforceIntegrations = n.getCollectionOfObjectValues<WorkforceIntegration>(WorkforceIntegration); }],
+            ["workforceIntegrations", (o, n) => { (o as unknown as Teamwork).workforceIntegrations = n.getCollectionOfObjectValues<WorkforceIntegration>(createWorkforceIntegrationFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -34,6 +29,13 @@ export class Teamwork extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeCollectionOfObjectValues<WorkforceIntegration>("workforceIntegrations", this.workforceIntegrations);
+    };
+    /**
+     * Gets the workforceIntegrations property value. A workforce integration with shifts.
+     * @returns a workforceIntegration
+     */
+    public get workforceIntegrations() {
+        return this._workforceIntegrations;
     };
     /**
      * Sets the workforceIntegrations property value. A workforce integration with shifts.

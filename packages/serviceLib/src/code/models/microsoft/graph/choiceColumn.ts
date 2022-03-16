@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ChoiceColumn implements Parsable {
+export class ChoiceColumn implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** If true, allows custom values that aren't in the configured choices.  */
@@ -10,17 +10,18 @@ export class ChoiceColumn implements Parsable {
     /** How the choices are to be presented in the UX. Must be one of checkBoxes, dropDownMenu, or radioButtons  */
     private _displayAs?: string | undefined;
     /**
-     * Instantiates a new choiceColumn and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowTextEntry property value. If true, allows custom values that aren't in the configured choices.
@@ -30,6 +31,13 @@ export class ChoiceColumn implements Parsable {
         return this._allowTextEntry;
     };
     /**
+     * Sets the allowTextEntry property value. If true, allows custom values that aren't in the configured choices.
+     * @param value Value to set for the allowTextEntry property.
+     */
+    public set allowTextEntry(value: boolean | undefined) {
+        this._allowTextEntry = value;
+    };
+    /**
      * Gets the choices property value. The list of values available for this column.
      * @returns a string
      */
@@ -37,11 +45,31 @@ export class ChoiceColumn implements Parsable {
         return this._choices;
     };
     /**
+     * Sets the choices property value. The list of values available for this column.
+     * @param value Value to set for the choices property.
+     */
+    public set choices(value: string[] | undefined) {
+        this._choices = value;
+    };
+    /**
+     * Instantiates a new choiceColumn and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the displayAs property value. How the choices are to be presented in the UX. Must be one of checkBoxes, dropDownMenu, or radioButtons
      * @returns a string
      */
     public get displayAs() {
         return this._displayAs;
+    };
+    /**
+     * Sets the displayAs property value. How the choices are to be presented in the UX. Must be one of checkBoxes, dropDownMenu, or radioButtons
+     * @param value Value to set for the displayAs property.
+     */
+    public set displayAs(value: string | undefined) {
+        this._displayAs = value;
     };
     /**
      * The deserialization information for the current model
@@ -64,33 +92,5 @@ export class ChoiceColumn implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("choices", this.choices);
         writer.writeStringValue("displayAs", this.displayAs);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowTextEntry property value. If true, allows custom values that aren't in the configured choices.
-     * @param value Value to set for the allowTextEntry property.
-     */
-    public set allowTextEntry(value: boolean | undefined) {
-        this._allowTextEntry = value;
-    };
-    /**
-     * Sets the choices property value. The list of values available for this column.
-     * @param value Value to set for the choices property.
-     */
-    public set choices(value: string[] | undefined) {
-        this._choices = value;
-    };
-    /**
-     * Sets the displayAs property value. How the choices are to be presented in the UX. Must be one of checkBoxes, dropDownMenu, or radioButtons
-     * @param value Value to set for the displayAs property.
-     */
-    public set displayAs(value: string | undefined) {
-        this._displayAs = value;
     };
 }

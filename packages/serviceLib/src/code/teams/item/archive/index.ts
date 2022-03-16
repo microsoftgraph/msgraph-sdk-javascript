@@ -1,2 +1,1 @@
-export * from './ArchiveRequestBody'
-export * from './ArchiveRequestBuilder'
+export * from './archiveRequestBody'

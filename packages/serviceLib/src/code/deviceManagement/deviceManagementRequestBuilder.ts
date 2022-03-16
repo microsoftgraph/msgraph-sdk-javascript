@@ -1,64 +1,67 @@
 import {DeviceManagement} from '../models/microsoft/graph/';
-import {ApplePushNotificationCertificateRequestBuilder} from './applePushNotificationCertificate/';
-import {ComplianceManagementPartnersRequestBuilder} from './complianceManagementPartners/';
-import {ComplianceManagementPartnerItemRequestBuilder} from './complianceManagementPartners/item/';
-import {ConditionalAccessSettingsRequestBuilder} from './conditionalAccessSettings/';
-import {DetectedAppsRequestBuilder} from './detectedApps/';
-import {DetectedAppItemRequestBuilder} from './detectedApps/item/';
-import {DeviceCategoriesRequestBuilder} from './deviceCategories/';
-import {DeviceCategoryItemRequestBuilder} from './deviceCategories/item/';
-import {DeviceCompliancePoliciesRequestBuilder} from './deviceCompliancePolicies/';
-import {DeviceCompliancePolicyItemRequestBuilder} from './deviceCompliancePolicies/item/';
-import {DeviceCompliancePolicyDeviceStateSummaryRequestBuilder} from './deviceCompliancePolicyDeviceStateSummary/';
-import {DeviceCompliancePolicySettingStateSummariesRequestBuilder} from './deviceCompliancePolicySettingStateSummaries/';
-import {DeviceCompliancePolicySettingStateSummaryItemRequestBuilder} from './deviceCompliancePolicySettingStateSummaries/item/';
-import {DeviceConfigurationDeviceStateSummariesRequestBuilder} from './deviceConfigurationDeviceStateSummaries/';
-import {DeviceConfigurationsRequestBuilder} from './deviceConfigurations/';
-import {DeviceConfigurationItemRequestBuilder} from './deviceConfigurations/item/';
-import {DeviceEnrollmentConfigurationsRequestBuilder} from './deviceEnrollmentConfigurations/';
-import {DeviceEnrollmentConfigurationItemRequestBuilder} from './deviceEnrollmentConfigurations/item/';
-import {DeviceManagementPartnersRequestBuilder} from './deviceManagementPartners/';
-import {DeviceManagementPartnerItemRequestBuilder} from './deviceManagementPartners/item/';
-import {ExchangeConnectorsRequestBuilder} from './exchangeConnectors/';
-import {DeviceManagementExchangeConnectorItemRequestBuilder} from './exchangeConnectors/item/';
-import {GetEffectivePermissionsWithScopeRequestBuilder} from './getEffectivePermissionsWithScope/';
-import {ImportedWindowsAutopilotDeviceIdentitiesRequestBuilder} from './importedWindowsAutopilotDeviceIdentities/';
-import {ImportedWindowsAutopilotDeviceIdentityItemRequestBuilder} from './importedWindowsAutopilotDeviceIdentities/item/';
-import {IosUpdateStatusesRequestBuilder} from './iosUpdateStatuses/';
-import {IosUpdateDeviceStatusItemRequestBuilder} from './iosUpdateStatuses/item/';
-import {ManagedDeviceOverviewRequestBuilder} from './managedDeviceOverview/';
-import {ManagedDevicesRequestBuilder} from './managedDevices/';
-import {ManagedDeviceItemRequestBuilder} from './managedDevices/item/';
-import {MobileThreatDefenseConnectorsRequestBuilder} from './mobileThreatDefenseConnectors/';
-import {MobileThreatDefenseConnectorItemRequestBuilder} from './mobileThreatDefenseConnectors/item/';
-import {NotificationMessageTemplatesRequestBuilder} from './notificationMessageTemplates/';
-import {NotificationMessageTemplateItemRequestBuilder} from './notificationMessageTemplates/item/';
-import {RemoteAssistancePartnersRequestBuilder} from './remoteAssistancePartners/';
-import {RemoteAssistancePartnerItemRequestBuilder} from './remoteAssistancePartners/item/';
-import {ReportsRequestBuilder} from './reports/';
-import {ResourceOperationsRequestBuilder} from './resourceOperations/';
-import {ResourceOperationItemRequestBuilder} from './resourceOperations/item/';
-import {RoleAssignmentsRequestBuilder} from './roleAssignments/';
-import {DeviceAndAppManagementRoleAssignmentItemRequestBuilder} from './roleAssignments/item/';
-import {RoleDefinitionsRequestBuilder} from './roleDefinitions/';
-import {RoleDefinitionItemRequestBuilder} from './roleDefinitions/item/';
-import {SoftwareUpdateStatusSummaryRequestBuilder} from './softwareUpdateStatusSummary/';
-import {TelecomExpenseManagementPartnersRequestBuilder} from './telecomExpenseManagementPartners/';
-import {TelecomExpenseManagementPartnerItemRequestBuilder} from './telecomExpenseManagementPartners/item/';
-import {TermsAndConditionsRequestBuilder} from './termsAndConditions/';
-import {TermsAndConditionsItemRequestBuilder} from './termsAndConditions/item/';
-import {TroubleshootingEventsRequestBuilder} from './troubleshootingEvents/';
-import {DeviceManagementTroubleshootingEventItemRequestBuilder} from './troubleshootingEvents/item/';
-import {VerifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder} from './verifyWindowsEnrollmentAutoDiscoveryWithDomainName/';
-import {WindowsAutopilotDeviceIdentitiesRequestBuilder} from './windowsAutopilotDeviceIdentities/';
-import {WindowsAutopilotDeviceIdentityItemRequestBuilder} from './windowsAutopilotDeviceIdentities/item/';
-import {WindowsInformationProtectionAppLearningSummariesRequestBuilder} from './windowsInformationProtectionAppLearningSummaries/';
-import {WindowsInformationProtectionAppLearningSummaryItemRequestBuilder} from './windowsInformationProtectionAppLearningSummaries/item/';
-import {WindowsInformationProtectionNetworkLearningSummariesRequestBuilder} from './windowsInformationProtectionNetworkLearningSummaries/';
-import {WindowsInformationProtectionNetworkLearningSummaryItemRequestBuilder} from './windowsInformationProtectionNetworkLearningSummaries/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceManagementFromDiscriminatorValue} from '../models/microsoft/graph/createDeviceManagementFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ApplePushNotificationCertificateRequestBuilder} from './applePushNotificationCertificate/applePushNotificationCertificateRequestBuilder';
+import {ComplianceManagementPartnersRequestBuilder} from './complianceManagementPartners/complianceManagementPartnersRequestBuilder';
+import {ComplianceManagementPartnerItemRequestBuilder} from './complianceManagementPartners/item/complianceManagementPartnerItemRequestBuilder';
+import {ConditionalAccessSettingsRequestBuilder} from './conditionalAccessSettings/conditionalAccessSettingsRequestBuilder';
+import {DetectedAppsRequestBuilder} from './detectedApps/detectedAppsRequestBuilder';
+import {DetectedAppItemRequestBuilder} from './detectedApps/item/detectedAppItemRequestBuilder';
+import {DeviceCategoriesRequestBuilder} from './deviceCategories/deviceCategoriesRequestBuilder';
+import {DeviceCategoryItemRequestBuilder} from './deviceCategories/item/deviceCategoryItemRequestBuilder';
+import {DeviceCompliancePoliciesRequestBuilder} from './deviceCompliancePolicies/deviceCompliancePoliciesRequestBuilder';
+import {DeviceCompliancePolicyItemRequestBuilder} from './deviceCompliancePolicies/item/deviceCompliancePolicyItemRequestBuilder';
+import {DeviceCompliancePolicyDeviceStateSummaryRequestBuilder} from './deviceCompliancePolicyDeviceStateSummary/deviceCompliancePolicyDeviceStateSummaryRequestBuilder';
+import {DeviceCompliancePolicySettingStateSummariesRequestBuilder} from './deviceCompliancePolicySettingStateSummaries/deviceCompliancePolicySettingStateSummariesRequestBuilder';
+import {DeviceCompliancePolicySettingStateSummaryItemRequestBuilder} from './deviceCompliancePolicySettingStateSummaries/item/deviceCompliancePolicySettingStateSummaryItemRequestBuilder';
+import {DeviceConfigurationDeviceStateSummariesRequestBuilder} from './deviceConfigurationDeviceStateSummaries/deviceConfigurationDeviceStateSummariesRequestBuilder';
+import {DeviceConfigurationsRequestBuilder} from './deviceConfigurations/deviceConfigurationsRequestBuilder';
+import {DeviceConfigurationItemRequestBuilder} from './deviceConfigurations/item/deviceConfigurationItemRequestBuilder';
+import {DeviceEnrollmentConfigurationsRequestBuilder} from './deviceEnrollmentConfigurations/deviceEnrollmentConfigurationsRequestBuilder';
+import {DeviceEnrollmentConfigurationItemRequestBuilder} from './deviceEnrollmentConfigurations/item/deviceEnrollmentConfigurationItemRequestBuilder';
+import {DeviceManagementPartnersRequestBuilder} from './deviceManagementPartners/deviceManagementPartnersRequestBuilder';
+import {DeviceManagementPartnerItemRequestBuilder} from './deviceManagementPartners/item/deviceManagementPartnerItemRequestBuilder';
+import {ExchangeConnectorsRequestBuilder} from './exchangeConnectors/exchangeConnectorsRequestBuilder';
+import {DeviceManagementExchangeConnectorItemRequestBuilder} from './exchangeConnectors/item/deviceManagementExchangeConnectorItemRequestBuilder';
+import {GetEffectivePermissionsWithScopeRequestBuilder} from './getEffectivePermissionsWithScope/getEffectivePermissionsWithScopeRequestBuilder';
+import {ImportedWindowsAutopilotDeviceIdentitiesRequestBuilder} from './importedWindowsAutopilotDeviceIdentities/importedWindowsAutopilotDeviceIdentitiesRequestBuilder';
+import {ImportedWindowsAutopilotDeviceIdentityItemRequestBuilder} from './importedWindowsAutopilotDeviceIdentities/item/importedWindowsAutopilotDeviceIdentityItemRequestBuilder';
+import {IosUpdateStatusesRequestBuilder} from './iosUpdateStatuses/iosUpdateStatusesRequestBuilder';
+import {IosUpdateDeviceStatusItemRequestBuilder} from './iosUpdateStatuses/item/iosUpdateDeviceStatusItemRequestBuilder';
+import {ManagedDeviceOverviewRequestBuilder} from './managedDeviceOverview/managedDeviceOverviewRequestBuilder';
+import {ManagedDeviceItemRequestBuilder} from './managedDevices/item/managedDeviceItemRequestBuilder';
+import {ManagedDevicesRequestBuilder} from './managedDevices/managedDevicesRequestBuilder';
+import {MobileThreatDefenseConnectorItemRequestBuilder} from './mobileThreatDefenseConnectors/item/mobileThreatDefenseConnectorItemRequestBuilder';
+import {MobileThreatDefenseConnectorsRequestBuilder} from './mobileThreatDefenseConnectors/mobileThreatDefenseConnectorsRequestBuilder';
+import {NotificationMessageTemplateItemRequestBuilder} from './notificationMessageTemplates/item/notificationMessageTemplateItemRequestBuilder';
+import {NotificationMessageTemplatesRequestBuilder} from './notificationMessageTemplates/notificationMessageTemplatesRequestBuilder';
+import {RemoteAssistancePartnerItemRequestBuilder} from './remoteAssistancePartners/item/remoteAssistancePartnerItemRequestBuilder';
+import {RemoteAssistancePartnersRequestBuilder} from './remoteAssistancePartners/remoteAssistancePartnersRequestBuilder';
+import {ReportsRequestBuilder} from './reports/reportsRequestBuilder';
+import {ResourceOperationItemRequestBuilder} from './resourceOperations/item/resourceOperationItemRequestBuilder';
+import {ResourceOperationsRequestBuilder} from './resourceOperations/resourceOperationsRequestBuilder';
+import {DeviceAndAppManagementRoleAssignmentItemRequestBuilder} from './roleAssignments/item/deviceAndAppManagementRoleAssignmentItemRequestBuilder';
+import {RoleAssignmentsRequestBuilder} from './roleAssignments/roleAssignmentsRequestBuilder';
+import {RoleDefinitionItemRequestBuilder} from './roleDefinitions/item/roleDefinitionItemRequestBuilder';
+import {RoleDefinitionsRequestBuilder} from './roleDefinitions/roleDefinitionsRequestBuilder';
+import {SoftwareUpdateStatusSummaryRequestBuilder} from './softwareUpdateStatusSummary/softwareUpdateStatusSummaryRequestBuilder';
+import {TelecomExpenseManagementPartnerItemRequestBuilder} from './telecomExpenseManagementPartners/item/telecomExpenseManagementPartnerItemRequestBuilder';
+import {TelecomExpenseManagementPartnersRequestBuilder} from './telecomExpenseManagementPartners/telecomExpenseManagementPartnersRequestBuilder';
+import {TermsAndConditionsItemRequestBuilder} from './termsAndConditions/item/termsAndConditionsItemRequestBuilder';
+import {TermsAndConditionsRequestBuilder} from './termsAndConditions/termsAndConditionsRequestBuilder';
+import {DeviceManagementTroubleshootingEventItemRequestBuilder} from './troubleshootingEvents/item/deviceManagementTroubleshootingEventItemRequestBuilder';
+import {TroubleshootingEventsRequestBuilder} from './troubleshootingEvents/troubleshootingEventsRequestBuilder';
+import {VerifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder} from './verifyWindowsEnrollmentAutoDiscoveryWithDomainName/verifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder';
+import {WindowsAutopilotDeviceIdentityItemRequestBuilder} from './windowsAutopilotDeviceIdentities/item/windowsAutopilotDeviceIdentityItemRequestBuilder';
+import {WindowsAutopilotDeviceIdentitiesRequestBuilder} from './windowsAutopilotDeviceIdentities/windowsAutopilotDeviceIdentitiesRequestBuilder';
+import {WindowsInformationProtectionAppLearningSummaryItemRequestBuilder} from './windowsInformationProtectionAppLearningSummaries/item/windowsInformationProtectionAppLearningSummaryItemRequestBuilder';
+import {WindowsInformationProtectionAppLearningSummariesRequestBuilder} from './windowsInformationProtectionAppLearningSummaries/windowsInformationProtectionAppLearningSummariesRequestBuilder';
+import {WindowsInformationProtectionNetworkLearningSummaryItemRequestBuilder} from './windowsInformationProtectionNetworkLearningSummaries/item/windowsInformationProtectionNetworkLearningSummaryItemRequestBuilder';
+import {WindowsInformationProtectionNetworkLearningSummariesRequestBuilder} from './windowsInformationProtectionNetworkLearningSummaries/windowsInformationProtectionNetworkLearningSummariesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement  */
+/** Provides operations to manage the deviceManagement singleton.  */
 export class DeviceManagementRequestBuilder {
     public get applePushNotificationCertificate(): ApplePushNotificationCertificateRequestBuilder {
         return new ApplePushNotificationCertificateRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -324,11 +327,15 @@ export class DeviceManagementRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceManagement>(requestInfo, DeviceManagement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceManagement>(requestInfo, createDeviceManagementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /deviceManagement/microsoft.graph.getEffectivePermissions(scope='{scope}')
-     * @param scope Usage: scope={scope}
+     * Provides operations to call the getEffectivePermissions method.
+     * @param scope Usage: scope='{scope}'
      * @returns a getEffectivePermissionsWithScopeRequestBuilder
      */
     public getEffectivePermissionsWithScope(scope: string | undefined) : GetEffectivePermissionsWithScopeRequestBuilder {
@@ -402,7 +409,11 @@ export class DeviceManagementRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.remoteAssistancePartners.item collection
@@ -482,8 +493,8 @@ export class DeviceManagementRequestBuilder {
         return new DeviceManagementTroubleshootingEventItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /deviceManagement/microsoft.graph.verifyWindowsEnrollmentAutoDiscovery(domainName='{domainName}')
-     * @param domainName Usage: domainName={domainName}
+     * Provides operations to call the verifyWindowsEnrollmentAutoDiscovery method.
+     * @param domainName Usage: domainName='{domainName}'
      * @returns a verifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder
      */
     public verifyWindowsEnrollmentAutoDiscoveryWithDomainName(domainName: string | undefined) : VerifyWindowsEnrollmentAutoDiscoveryWithDomainNameRequestBuilder {

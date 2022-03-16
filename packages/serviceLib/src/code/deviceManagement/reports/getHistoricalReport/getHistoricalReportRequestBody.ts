@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class GetHistoricalReportRequestBody implements Parsable {
+/** Provides operations to call the getHistoricalReport method.  */
+export class GetHistoricalReportRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _filter?: string | undefined;
@@ -12,17 +13,24 @@ export class GetHistoricalReportRequestBody implements Parsable {
     private _skip?: number | undefined;
     private _top?: number | undefined;
     /**
-     * Instantiates a new getHistoricalReportRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new getHistoricalReportRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the filter property value. 
@@ -32,53 +40,11 @@ export class GetHistoricalReportRequestBody implements Parsable {
         return this._filter;
     };
     /**
-     * Gets the groupBy property value. 
-     * @returns a string
+     * Sets the filter property value. 
+     * @param value Value to set for the filter property.
      */
-    public get groupBy() {
-        return this._groupBy;
-    };
-    /**
-     * Gets the name property value. 
-     * @returns a string
-     */
-    public get name() {
-        return this._name;
-    };
-    /**
-     * Gets the orderBy property value. 
-     * @returns a string
-     */
-    public get orderBy() {
-        return this._orderBy;
-    };
-    /**
-     * Gets the search property value. 
-     * @returns a string
-     */
-    public get search() {
-        return this._search;
-    };
-    /**
-     * Gets the select property value. 
-     * @returns a string
-     */
-    public get select() {
-        return this._select;
-    };
-    /**
-     * Gets the skip property value. 
-     * @returns a integer
-     */
-    public get skip() {
-        return this._skip;
-    };
-    /**
-     * Gets the top property value. 
-     * @returns a integer
-     */
-    public get top() {
-        return this._top;
+    public set filter(value: string | undefined) {
+        this._filter = value;
     };
     /**
      * The deserialization information for the current model
@@ -97,6 +63,76 @@ export class GetHistoricalReportRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the groupBy property value. 
+     * @returns a string
+     */
+    public get groupBy() {
+        return this._groupBy;
+    };
+    /**
+     * Sets the groupBy property value. 
+     * @param value Value to set for the groupBy property.
+     */
+    public set groupBy(value: string[] | undefined) {
+        this._groupBy = value;
+    };
+    /**
+     * Gets the name property value. 
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
+     * Sets the name property value. 
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
+     * Gets the orderBy property value. 
+     * @returns a string
+     */
+    public get orderBy() {
+        return this._orderBy;
+    };
+    /**
+     * Sets the orderBy property value. 
+     * @param value Value to set for the orderBy property.
+     */
+    public set orderBy(value: string[] | undefined) {
+        this._orderBy = value;
+    };
+    /**
+     * Gets the search property value. 
+     * @returns a string
+     */
+    public get search() {
+        return this._search;
+    };
+    /**
+     * Sets the search property value. 
+     * @param value Value to set for the search property.
+     */
+    public set search(value: string | undefined) {
+        this._search = value;
+    };
+    /**
+     * Gets the select property value. 
+     * @returns a string
+     */
+    public get select() {
+        return this._select;
+    };
+    /**
+     * Sets the select property value. 
+     * @param value Value to set for the select property.
+     */
+    public set select(value: string[] | undefined) {
+        this._select = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -113,53 +149,11 @@ export class GetHistoricalReportRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the skip property value. 
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the filter property value. 
-     * @param value Value to set for the filter property.
-     */
-    public set filter(value: string | undefined) {
-        this._filter = value;
-    };
-    /**
-     * Sets the groupBy property value. 
-     * @param value Value to set for the groupBy property.
-     */
-    public set groupBy(value: string[] | undefined) {
-        this._groupBy = value;
-    };
-    /**
-     * Sets the name property value. 
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
-    };
-    /**
-     * Sets the orderBy property value. 
-     * @param value Value to set for the orderBy property.
-     */
-    public set orderBy(value: string[] | undefined) {
-        this._orderBy = value;
-    };
-    /**
-     * Sets the search property value. 
-     * @param value Value to set for the search property.
-     */
-    public set search(value: string | undefined) {
-        this._search = value;
-    };
-    /**
-     * Sets the select property value. 
-     * @param value Value to set for the select property.
-     */
-    public set select(value: string[] | undefined) {
-        this._select = value;
+    public get skip() {
+        return this._skip;
     };
     /**
      * Sets the skip property value. 
@@ -167,6 +161,13 @@ export class GetHistoricalReportRequestBody implements Parsable {
      */
     public set skip(value: number | undefined) {
         this._skip = value;
+    };
+    /**
+     * Gets the top property value. 
+     * @returns a integer
+     */
+    public get top() {
+        return this._top;
     };
     /**
      * Sets the top property value. 

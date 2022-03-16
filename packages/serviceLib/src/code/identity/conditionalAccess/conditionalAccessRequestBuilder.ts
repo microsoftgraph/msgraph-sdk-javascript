@@ -1,11 +1,14 @@
 import {ConditionalAccessRoot} from '../../models/microsoft/graph/';
-import {NamedLocationsRequestBuilder} from './namedLocations/';
-import {NamedLocationItemRequestBuilder} from './namedLocations/item/';
-import {PoliciesRequestBuilder} from './policies/';
-import {ConditionalAccessPolicyItemRequestBuilder} from './policies/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createConditionalAccessRootFromDiscriminatorValue} from '../../models/microsoft/graph/createConditionalAccessRootFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {NamedLocationItemRequestBuilder} from './namedLocations/item/namedLocationItemRequestBuilder';
+import {NamedLocationsRequestBuilder} from './namedLocations/namedLocationsRequestBuilder';
+import {ConditionalAccessPolicyItemRequestBuilder} from './policies/item/conditionalAccessPolicyItemRequestBuilder';
+import {PoliciesRequestBuilder} from './policies/policiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/conditionalAccess  */
+/** Provides operations to manage the conditionalAccess property of the microsoft.graph.identityContainer entity.  */
 export class ConditionalAccessRequestBuilder {
     public get namedLocations(): NamedLocationsRequestBuilder {
         return new NamedLocationsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class ConditionalAccessRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * the entry point for the Conditional Access (CA) object model.
+     * Delete navigation property conditionalAccess for identity
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class ConditionalAccessRequestBuilder {
         return requestInfo;
     };
     /**
-     * the entry point for the Conditional Access (CA) object model.
+     * Update the navigation property conditionalAccess in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class ConditionalAccessRequestBuilder {
         return requestInfo;
     };
     /**
-     * the entry point for the Conditional Access (CA) object model.
+     * Delete navigation property conditionalAccess for identity
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class ConditionalAccessRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * the entry point for the Conditional Access (CA) object model.
@@ -112,7 +119,11 @@ export class ConditionalAccessRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ConditionalAccessRoot>(requestInfo, ConditionalAccessRoot, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ConditionalAccessRoot>(requestInfo, createConditionalAccessRootFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.conditionalAccess.namedLocations.item collection
@@ -126,7 +137,7 @@ export class ConditionalAccessRequestBuilder {
         return new NamedLocationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * the entry point for the Conditional Access (CA) object model.
+     * Update the navigation property conditionalAccess in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,7 +148,11 @@ export class ConditionalAccessRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.conditionalAccess.policies.item collection

@@ -1,18 +1,65 @@
 import {DriveItem} from '../../../models/microsoft/graph/';
-import {ContentRequestBuilder} from './content/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDriveItemFromDiscriminatorValue} from '../../../models/microsoft/graph/createDriveItemFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AnalyticsRequestBuilder} from './analytics/analyticsRequestBuilder';
+import {ChildrenRequestBuilder} from './children/childrenRequestBuilder';
+import {DriveItemItemRequestBuilder as ib6e715c4f97b19982b76bb0d7b1a765cf2decd40dca0f3a6ab46120058d9cc1d} from './children/item/driveItemItemRequestBuilder';
+import {ContentRequestBuilder} from './content/contentRequestBuilder';
+import {ListItemRequestBuilder} from './listItem/listItemRequestBuilder';
+import {PermissionItemRequestBuilder} from './permissions/item/permissionItemRequestBuilder';
+import {PermissionsRequestBuilder} from './permissions/permissionsRequestBuilder';
+import {SubscriptionItemRequestBuilder} from './subscriptions/item/subscriptionItemRequestBuilder';
+import {SubscriptionsRequestBuilder} from './subscriptions/subscriptionsRequestBuilder';
+import {ThumbnailSetItemRequestBuilder} from './thumbnails/item/thumbnailSetItemRequestBuilder';
+import {ThumbnailsRequestBuilder} from './thumbnails/thumbnailsRequestBuilder';
+import {DriveItemVersionItemRequestBuilder} from './versions/item/driveItemVersionItemRequestBuilder';
+import {VersionsRequestBuilder} from './versions/versionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /drive/following/{driveItem-id}  */
+/** Provides operations to manage the following property of the microsoft.graph.drive entity.  */
 export class DriveItemItemRequestBuilder {
+    public get analytics(): AnalyticsRequestBuilder {
+        return new AnalyticsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get children(): ChildrenRequestBuilder {
+        return new ChildrenRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
     }
+    public get listItem(): ListItemRequestBuilder {
+        return new ListItemRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
+    public get permissions(): PermissionsRequestBuilder {
+        return new PermissionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get subscriptions(): SubscriptionsRequestBuilder {
+        return new SubscriptionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get thumbnails(): ThumbnailsRequestBuilder {
+        return new ThumbnailsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    public get versions(): VersionsRequestBuilder {
+        return new VersionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    /**
+     * Gets an item from the MicrosoftGraph.drive.following.item.children.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public childrenById(id: string) : ib6e715c4f97b19982b76bb0d7b1a765cf2decd40dca0f3a6ab46120058d9cc1d {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id1"] = id
+        return new ib6e715c4f97b19982b76bb0d7b1a765cf2decd40dca0f3a6ab46120058d9cc1d(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new DriveItemItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -27,7 +74,7 @@ export class DriveItemItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of items the user is following. Only in OneDrive for Business.
+     * Delete navigation property following for drive
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +109,7 @@ export class DriveItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of items the user is following. Only in OneDrive for Business.
+     * Update the navigation property following in drive
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +127,7 @@ export class DriveItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of items the user is following. Only in OneDrive for Business.
+     * Delete navigation property following for drive
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +136,11 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of items the user is following. Only in OneDrive for Business.
@@ -106,10 +157,14 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DriveItem>(requestInfo, DriveItem, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DriveItem>(requestInfo, createDriveItemFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of items the user is following. Only in OneDrive for Business.
+     * Update the navigation property following in drive
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +175,54 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.drive.following.item.permissions.item collection
+     * @param id Unique identifier of the item
+     * @returns a permissionItemRequestBuilder
+     */
+    public permissionsById(id: string) : PermissionItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["permission_id"] = id
+        return new PermissionItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.drive.following.item.subscriptions.item collection
+     * @param id Unique identifier of the item
+     * @returns a subscriptionItemRequestBuilder
+     */
+    public subscriptionsById(id: string) : SubscriptionItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["subscription_id"] = id
+        return new SubscriptionItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.drive.following.item.thumbnails.item collection
+     * @param id Unique identifier of the item
+     * @returns a thumbnailSetItemRequestBuilder
+     */
+    public thumbnailsById(id: string) : ThumbnailSetItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["thumbnailSet_id"] = id
+        return new ThumbnailSetItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.drive.following.item.versions.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemVersionItemRequestBuilder
+     */
+    public versionsById(id: string) : DriveItemVersionItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItemVersion_id"] = id
+        return new DriveItemVersionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,4 +1,5 @@
-import {ConditionalAccessSessionControl, SigninFrequencyType} from './index';
+import {ConditionalAccessSessionControl} from './index';
+import {SigninFrequencyType} from './signinFrequencyType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class SignInFrequencySessionControl extends ConditionalAccessSessionControl implements Parsable {
@@ -11,20 +12,6 @@ export class SignInFrequencySessionControl extends ConditionalAccessSessionContr
      */
     public constructor() {
         super();
-    };
-    /**
-     * Gets the type property value. Possible values are: days, hours.
-     * @returns a signinFrequencyType
-     */
-    public get type() {
-        return this._type;
-    };
-    /**
-     * Gets the value property value. The number of days or hours.
-     * @returns a integer
-     */
-    public get value() {
-        return this._value;
     };
     /**
      * The deserialization information for the current model
@@ -47,11 +34,25 @@ export class SignInFrequencySessionControl extends ConditionalAccessSessionContr
         writer.writeNumberValue("value", this.value);
     };
     /**
+     * Gets the type property value. Possible values are: days, hours.
+     * @returns a signinFrequencyType
+     */
+    public get type() {
+        return this._type;
+    };
+    /**
      * Sets the type property value. Possible values are: days, hours.
      * @param value Value to set for the type property.
      */
     public set type(value: SigninFrequencyType | undefined) {
         this._type = value;
+    };
+    /**
+     * Gets the value property value. The number of days or hours.
+     * @returns a integer
+     */
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. The number of days or hours.

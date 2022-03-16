@@ -1,7 +1,8 @@
-import {GetApplicableContentTypesForListWithListId} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGetApplicableContentTypesForListWithListIdResponseFromDiscriminatorValue} from './createGetApplicableContentTypesForListWithListIdResponseFromDiscriminatorValue';
+import {GetApplicableContentTypesForListWithListIdResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/microsoft.graph.getApplicableContentTypesForList(listId='{listId}')  */
+/** Provides operations to call the getApplicableContentTypesForList method.  */
 export class GetApplicableContentTypesForListWithListIdRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -11,7 +12,7 @@ export class GetApplicableContentTypesForListWithListIdRequestBuilder {
     private readonly urlTemplate: string;
     /**
      * Instantiates a new GetApplicableContentTypesForListWithListIdRequestBuilder and sets the default values.
-     * @param listId Usage: listId={listId}
+     * @param listId Usage: listId='{listId}'
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
@@ -44,12 +45,12 @@ export class GetApplicableContentTypesForListWithListIdRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of GetApplicableContentTypesForListWithListId
+     * @returns a Promise of GetApplicableContentTypesForListWithListIdResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetApplicableContentTypesForListWithListId[] | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetApplicableContentTypesForListWithListIdResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendCollectionAsync<GetApplicableContentTypesForListWithListId>(requestInfo, GetApplicableContentTypesForListWithListId, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<GetApplicableContentTypesForListWithListIdResponse>(requestInfo, createGetApplicableContentTypesForListWithListIdResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

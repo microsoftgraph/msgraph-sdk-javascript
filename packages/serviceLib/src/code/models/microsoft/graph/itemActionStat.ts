@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ItemActionStat implements Parsable {
+export class ItemActionStat implements AdditionalDataHolder, Parsable {
     /** The number of times the action took place. Read-only.  */
     private _actionCount?: number | undefined;
     /** The number of distinct actors that performed the action. Read-only.  */
@@ -8,17 +8,18 @@ export class ItemActionStat implements Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /**
-     * Instantiates a new itemActionStat and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the actionCount property value. The number of times the action took place. Read-only.
      * @returns a integer
      */
     public get actionCount() {
         return this._actionCount;
+    };
+    /**
+     * Sets the actionCount property value. The number of times the action took place. Read-only.
+     * @param value Value to set for the actionCount property.
+     */
+    public set actionCount(value: number | undefined) {
+        this._actionCount = value;
     };
     /**
      * Gets the actorCount property value. The number of distinct actors that performed the action. Read-only.
@@ -28,11 +29,31 @@ export class ItemActionStat implements Parsable {
         return this._actorCount;
     };
     /**
+     * Sets the actorCount property value. The number of distinct actors that performed the action. Read-only.
+     * @param value Value to set for the actorCount property.
+     */
+    public set actorCount(value: number | undefined) {
+        this._actorCount = value;
+    };
+    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new itemActionStat and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -53,26 +74,5 @@ export class ItemActionStat implements Parsable {
         writer.writeNumberValue("actionCount", this.actionCount);
         writer.writeNumberValue("actorCount", this.actorCount);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the actionCount property value. The number of times the action took place. Read-only.
-     * @param value Value to set for the actionCount property.
-     */
-    public set actionCount(value: number | undefined) {
-        this._actionCount = value;
-    };
-    /**
-     * Sets the actorCount property value. The number of distinct actors that performed the action. Read-only.
-     * @param value Value to set for the actorCount property.
-     */
-    public set actorCount(value: number | undefined) {
-        this._actorCount = value;
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
     };
 }

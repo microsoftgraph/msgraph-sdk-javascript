@@ -11,13 +11,6 @@ export class EducationAssignmentSettings extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the submissionAnimationDisabled property value. Indicates whether turn-in celebration animation will be shown. A value of true indicates that the animation will not be shown. Default value is false.
-     * @returns a boolean
-     */
-    public get submissionAnimationDisabled() {
-        return this._submissionAnimationDisabled;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,6 +27,13 @@ export class EducationAssignmentSettings extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeBooleanValue("submissionAnimationDisabled", this.submissionAnimationDisabled);
+    };
+    /**
+     * Gets the submissionAnimationDisabled property value. Indicates whether turn-in celebration animation will be shown. A value of true indicates that the animation will not be shown. Default value is false.
+     * @returns a boolean
+     */
+    public get submissionAnimationDisabled() {
+        return this._submissionAnimationDisabled;
     };
     /**
      * Sets the submissionAnimationDisabled property value. Indicates whether turn-in celebration animation will be shown. A value of true indicates that the animation will not be shown. Default value is false.

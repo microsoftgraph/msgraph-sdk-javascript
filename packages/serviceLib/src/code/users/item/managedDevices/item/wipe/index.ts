@@ -1,2 +1,1 @@
-export * from './WipeRequestBuilder'
-export * from './WipeRequestBody'
+export * from './wipeRequestBody'

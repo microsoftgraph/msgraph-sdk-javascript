@@ -1,9 +1,16 @@
-import {SettingStateDeviceSummary} from '../../../../models/microsoft/graph/';
-import {DeviceSettingStateSummariesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {SettingStateDeviceSummary, SettingStateDeviceSummaryCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createSettingStateDeviceSummaryCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createSettingStateDeviceSummaryCollectionResponseFromDiscriminatorValue';
+import {createSettingStateDeviceSummaryFromDiscriminatorValue} from '../../../../models/microsoft/graph/createSettingStateDeviceSummaryFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/deviceConfigurations/{deviceConfiguration-id}/deviceSettingStateSummaries  */
+/** Provides operations to manage the deviceSettingStateSummaries property of the microsoft.graph.deviceConfiguration entity.  */
 export class DeviceSettingStateSummariesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class DeviceSettingStateSummariesRequestBuilder {
         return requestInfo;
     };
     /**
-     * Device Configuration Setting State Device Summary
+     * Create new navigation property to deviceSettingStateSummaries for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class DeviceSettingStateSummariesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of DeviceSettingStateSummariesResponse
+     * @returns a Promise of SettingStateDeviceSummaryCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class DeviceSettingStateSummariesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<DeviceSettingStateSummariesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<SettingStateDeviceSummaryCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceSettingStateSummariesResponse>(requestInfo, DeviceSettingStateSummariesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SettingStateDeviceSummaryCollectionResponse>(requestInfo, createSettingStateDeviceSummaryCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Device Configuration Setting State Device Summary
+     * Create new navigation property to deviceSettingStateSummaries for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class DeviceSettingStateSummariesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<SettingStateDeviceSummary>(requestInfo, SettingStateDeviceSummary, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SettingStateDeviceSummary>(requestInfo, createSettingStateDeviceSummaryFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

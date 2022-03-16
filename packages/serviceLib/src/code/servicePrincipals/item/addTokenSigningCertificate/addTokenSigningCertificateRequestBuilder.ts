@@ -1,8 +1,9 @@
 import {SelfSignedCertificate} from '../../../models/microsoft/graph/';
+import {createSelfSignedCertificateFromDiscriminatorValue} from '../../../models/microsoft/graph/createSelfSignedCertificateFromDiscriminatorValue';
 import {SelfSignedCertificateRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /servicePrincipals/{servicePrincipal-id}/microsoft.graph.addTokenSigningCertificate  */
+/** Provides operations to call the addTokenSigningCertificate method.  */
 export class AddTokenSigningCertificateRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -54,6 +55,6 @@ export class AddTokenSigningCertificateRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<SelfSignedCertificate>(requestInfo, SelfSignedCertificate, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<SelfSignedCertificate>(requestInfo, createSelfSignedCertificateFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,9 +1,12 @@
 import {InferenceClassification} from '../../../models/microsoft/graph/';
-import {OverridesRequestBuilder} from './overrides/';
-import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createInferenceClassificationFromDiscriminatorValue} from '../../../models/microsoft/graph/createInferenceClassificationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InferenceClassificationOverrideItemRequestBuilder} from './overrides/item/inferenceClassificationOverrideItemRequestBuilder';
+import {OverridesRequestBuilder} from './overrides/overridesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/inferenceClassification  */
+/** Provides operations to manage the inferenceClassification property of the microsoft.graph.user entity.  */
 export class InferenceClassificationRequestBuilder {
     public get overrides(): OverridesRequestBuilder {
         return new OverridesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class InferenceClassificationRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
+     * Delete navigation property inferenceClassification for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class InferenceClassificationRequestBuilder {
         return requestInfo;
     };
     /**
-     * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
+     * Update the navigation property inferenceClassification in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class InferenceClassificationRequestBuilder {
         return requestInfo;
     };
     /**
-     * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
+     * Delete navigation property inferenceClassification for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class InferenceClassificationRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
@@ -105,7 +112,11 @@ export class InferenceClassificationRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo, InferenceClassification, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<InferenceClassification>(requestInfo, createInferenceClassificationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.inferenceClassification.overrides.item collection
@@ -119,7 +130,7 @@ export class InferenceClassificationRequestBuilder {
         return new InferenceClassificationOverrideItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance.
+     * Update the navigation property inferenceClassification in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -130,6 +141,10 @@ export class InferenceClassificationRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

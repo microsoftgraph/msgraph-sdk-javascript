@@ -11,13 +11,6 @@ export class SwapShiftsChangeRequest extends OfferShiftRequest implements Parsab
         super();
     };
     /**
-     * Gets the recipientShiftId property value. ShiftId for the recipient user with whom the request is to swap.
-     * @returns a string
-     */
-    public get recipientShiftId() {
-        return this._recipientShiftId;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +20,11 @@ export class SwapShiftsChangeRequest extends OfferShiftRequest implements Parsab
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the recipientShiftId property value. ShiftId for the recipient user with whom the request is to swap.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeStringValue("recipientShiftId", this.recipientShiftId);
+    public get recipientShiftId() {
+        return this._recipientShiftId;
     };
     /**
      * Sets the recipientShiftId property value. ShiftId for the recipient user with whom the request is to swap.
@@ -41,5 +32,14 @@ export class SwapShiftsChangeRequest extends OfferShiftRequest implements Parsab
      */
     public set recipientShiftId(value: string | undefined) {
         this._recipientShiftId = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeStringValue("recipientShiftId", this.recipientShiftId);
     };
 }

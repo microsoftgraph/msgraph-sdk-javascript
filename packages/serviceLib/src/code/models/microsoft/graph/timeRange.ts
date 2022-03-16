@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter, TimeOnly} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter, TimeOnly} from '@microsoft/kiota-abstractions';
 
-export class TimeRange implements Parsable {
+export class TimeRange implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** End time for the time range.  */
@@ -8,17 +8,24 @@ export class TimeRange implements Parsable {
     /** Start time for the time range.  */
     private _startTime?: TimeOnly | undefined;
     /**
-     * Instantiates a new timeRange and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new timeRange and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the endTime property value. End time for the time range.
@@ -28,11 +35,11 @@ export class TimeRange implements Parsable {
         return this._endTime;
     };
     /**
-     * Gets the startTime property value. Start time for the time range.
-     * @returns a TimeOnly
+     * Sets the endTime property value. End time for the time range.
+     * @param value Value to set for the endTime property.
      */
-    public get startTime() {
-        return this._startTime;
+    public set endTime(value: TimeOnly | undefined) {
+        this._endTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class TimeRange implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startTime property value. Start time for the time range.
+     * @returns a TimeOnly
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the endTime property value. End time for the time range.
-     * @param value Value to set for the endTime property.
-     */
-    public set endTime(value: TimeOnly | undefined) {
-        this._endTime = value;
+    public get startTime() {
+        return this._startTime;
     };
     /**
      * Sets the startTime property value. Start time for the time range.

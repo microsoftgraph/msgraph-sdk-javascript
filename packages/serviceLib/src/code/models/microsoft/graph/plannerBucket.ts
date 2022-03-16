@@ -1,3 +1,4 @@
+import {createPlannerTaskFromDiscriminatorValue} from './createPlannerTaskFromDiscriminatorValue';
 import {Entity, PlannerTask} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -17,11 +18,30 @@ export class PlannerBucket extends Entity implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["name", (o, n) => { (o as unknown as PlannerBucket).name = n.getStringValue(); }],
+            ["orderHint", (o, n) => { (o as unknown as PlannerBucket).orderHint = n.getStringValue(); }],
+            ["planId", (o, n) => { (o as unknown as PlannerBucket).planId = n.getStringValue(); }],
+            ["tasks", (o, n) => { (o as unknown as PlannerBucket).tasks = n.getCollectionOfObjectValues<PlannerTask>(createPlannerTaskFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the name property value. Name of the bucket.
      * @returns a string
      */
     public get name() {
         return this._name;
+    };
+    /**
+     * Sets the name property value. Name of the bucket.
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
     };
     /**
      * Gets the orderHint property value. Hint used to order items of this type in a list view. The format is defined as outlined here.
@@ -31,6 +51,13 @@ export class PlannerBucket extends Entity implements Parsable {
         return this._orderHint;
     };
     /**
+     * Sets the orderHint property value. Hint used to order items of this type in a list view. The format is defined as outlined here.
+     * @param value Value to set for the orderHint property.
+     */
+    public set orderHint(value: string | undefined) {
+        this._orderHint = value;
+    };
+    /**
      * Gets the planId property value. Plan ID to which the bucket belongs.
      * @returns a string
      */
@@ -38,23 +65,11 @@ export class PlannerBucket extends Entity implements Parsable {
         return this._planId;
     };
     /**
-     * Gets the tasks property value. Read-only. Nullable. The collection of tasks in the bucket.
-     * @returns a plannerTask
+     * Sets the planId property value. Plan ID to which the bucket belongs.
+     * @param value Value to set for the planId property.
      */
-    public get tasks() {
-        return this._tasks;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["name", (o, n) => { (o as unknown as PlannerBucket).name = n.getStringValue(); }],
-            ["orderHint", (o, n) => { (o as unknown as PlannerBucket).orderHint = n.getStringValue(); }],
-            ["planId", (o, n) => { (o as unknown as PlannerBucket).planId = n.getStringValue(); }],
-            ["tasks", (o, n) => { (o as unknown as PlannerBucket).tasks = n.getCollectionOfObjectValues<PlannerTask>(PlannerTask); }],
-        ]);
+    public set planId(value: string | undefined) {
+        this._planId = value;
     };
     /**
      * Serializes information the current object
@@ -69,25 +84,11 @@ export class PlannerBucket extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<PlannerTask>("tasks", this.tasks);
     };
     /**
-     * Sets the name property value. Name of the bucket.
-     * @param value Value to set for the name property.
+     * Gets the tasks property value. Read-only. Nullable. The collection of tasks in the bucket.
+     * @returns a plannerTask
      */
-    public set name(value: string | undefined) {
-        this._name = value;
-    };
-    /**
-     * Sets the orderHint property value. Hint used to order items of this type in a list view. The format is defined as outlined here.
-     * @param value Value to set for the orderHint property.
-     */
-    public set orderHint(value: string | undefined) {
-        this._orderHint = value;
-    };
-    /**
-     * Sets the planId property value. Plan ID to which the bucket belongs.
-     * @param value Value to set for the planId property.
-     */
-    public set planId(value: string | undefined) {
-        this._planId = value;
+    public get tasks() {
+        return this._tasks;
     };
     /**
      * Sets the tasks property value. Read-only. Nullable. The collection of tasks in the bucket.

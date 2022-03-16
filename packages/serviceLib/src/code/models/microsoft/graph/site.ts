@@ -1,5 +1,19 @@
+import {createBaseItemFromDiscriminatorValue} from './createBaseItemFromDiscriminatorValue';
+import {createColumnDefinitionFromDiscriminatorValue} from './createColumnDefinitionFromDiscriminatorValue';
+import {createContentTypeFromDiscriminatorValue} from './createContentTypeFromDiscriminatorValue';
+import {createDriveFromDiscriminatorValue} from './createDriveFromDiscriminatorValue';
+import {createItemAnalyticsFromDiscriminatorValue} from './createItemAnalyticsFromDiscriminatorValue';
+import {createListFromDiscriminatorValue} from './createListFromDiscriminatorValue';
+import {createOnenoteFromDiscriminatorValue} from './createOnenoteFromDiscriminatorValue';
+import {createPermissionFromDiscriminatorValue} from './createPermissionFromDiscriminatorValue';
+import {createPublicErrorFromDiscriminatorValue} from './createPublicErrorFromDiscriminatorValue';
+import {createRootFromDiscriminatorValue} from './createRootFromDiscriminatorValue';
+import {createSharepointIdsFromDiscriminatorValue} from './createSharepointIdsFromDiscriminatorValue';
+import {createSiteCollectionFromDiscriminatorValue} from './createSiteCollectionFromDiscriminatorValue';
+import {createSiteFromDiscriminatorValue} from './createSiteFromDiscriminatorValue';
 import {BaseItem, ColumnDefinition, ContentType, Drive, ItemAnalytics, List, Onenote, Permission, PublicError, Root, SharepointIds, SiteCollection} from './index';
 import {Store} from './termStore/';
+import {createStoreFromDiscriminatorValue} from './termStore/createStoreFromDiscriminatorValue';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Site extends BaseItem implements Parsable {
@@ -39,17 +53,18 @@ export class Site extends BaseItem implements Parsable {
     /** The collection of termStores under this site.  */
     private _termStores?: Store[] | undefined;
     /**
-     * Instantiates a new site and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the analytics property value. Analytics about the view activities that took place in this site.
      * @returns a itemAnalytics
      */
     public get analytics() {
         return this._analytics;
+    };
+    /**
+     * Sets the analytics property value. Analytics about the view activities that took place in this site.
+     * @param value Value to set for the analytics property.
+     */
+    public set analytics(value: ItemAnalytics | undefined) {
+        this._analytics = value;
     };
     /**
      * Gets the columns property value. The collection of column definitions reusable across lists under this site.
@@ -59,11 +74,31 @@ export class Site extends BaseItem implements Parsable {
         return this._columns;
     };
     /**
+     * Sets the columns property value. The collection of column definitions reusable across lists under this site.
+     * @param value Value to set for the columns property.
+     */
+    public set columns(value: ColumnDefinition[] | undefined) {
+        this._columns = value;
+    };
+    /**
+     * Instantiates a new site and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the contentTypes property value. The collection of content types defined for this site.
      * @returns a contentType
      */
     public get contentTypes() {
         return this._contentTypes;
+    };
+    /**
+     * Sets the contentTypes property value. The collection of content types defined for this site.
+     * @param value Value to set for the contentTypes property.
+     */
+    public set contentTypes(value: ContentType[] | undefined) {
+        this._contentTypes = value;
     };
     /**
      * Gets the displayName property value. The full title for the site. Read-only.
@@ -73,11 +108,25 @@ export class Site extends BaseItem implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. The full title for the site. Read-only.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the drive property value. The default drive (document library) for this site.
      * @returns a drive
      */
     public get drive() {
         return this._drive;
+    };
+    /**
+     * Sets the drive property value. The default drive (document library) for this site.
+     * @param value Value to set for the drive property.
+     */
+    public set drive(value: Drive | undefined) {
+        this._drive = value;
     };
     /**
      * Gets the drives property value. The collection of drives (document libraries) under this site.
@@ -87,11 +136,25 @@ export class Site extends BaseItem implements Parsable {
         return this._drives;
     };
     /**
+     * Sets the drives property value. The collection of drives (document libraries) under this site.
+     * @param value Value to set for the drives property.
+     */
+    public set drives(value: Drive[] | undefined) {
+        this._drives = value;
+    };
+    /**
      * Gets the error property value. 
      * @returns a publicError
      */
     public get error_escaped() {
         return this._error_escaped;
+    };
+    /**
+     * Sets the error property value. 
+     * @param value Value to set for the error_escaped property.
+     */
+    public set error_escaped(value: PublicError | undefined) {
+        this._error_escaped = value;
     };
     /**
      * Gets the externalColumns property value. The collection of column definitions available in the site that are referenced from the sites in the parent hierarchy of the current site.
@@ -101,11 +164,51 @@ export class Site extends BaseItem implements Parsable {
         return this._externalColumns;
     };
     /**
+     * Sets the externalColumns property value. The collection of column definitions available in the site that are referenced from the sites in the parent hierarchy of the current site.
+     * @param value Value to set for the externalColumns property.
+     */
+    public set externalColumns(value: ColumnDefinition[] | undefined) {
+        this._externalColumns = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["analytics", (o, n) => { (o as unknown as Site).analytics = n.getObjectValue<ItemAnalytics>(createItemAnalyticsFromDiscriminatorValue); }],
+            ["columns", (o, n) => { (o as unknown as Site).columns = n.getCollectionOfObjectValues<ColumnDefinition>(createColumnDefinitionFromDiscriminatorValue); }],
+            ["contentTypes", (o, n) => { (o as unknown as Site).contentTypes = n.getCollectionOfObjectValues<ContentType>(createContentTypeFromDiscriminatorValue); }],
+            ["displayName", (o, n) => { (o as unknown as Site).displayName = n.getStringValue(); }],
+            ["drive", (o, n) => { (o as unknown as Site).drive = n.getObjectValue<Drive>(createDriveFromDiscriminatorValue); }],
+            ["drives", (o, n) => { (o as unknown as Site).drives = n.getCollectionOfObjectValues<Drive>(createDriveFromDiscriminatorValue); }],
+            ["error", (o, n) => { (o as unknown as Site).error_escaped = n.getObjectValue<PublicError>(createPublicErrorFromDiscriminatorValue); }],
+            ["externalColumns", (o, n) => { (o as unknown as Site).externalColumns = n.getCollectionOfObjectValues<ColumnDefinition>(createColumnDefinitionFromDiscriminatorValue); }],
+            ["items", (o, n) => { (o as unknown as Site).items = n.getCollectionOfObjectValues<BaseItem>(createBaseItemFromDiscriminatorValue); }],
+            ["lists", (o, n) => { (o as unknown as Site).lists = n.getCollectionOfObjectValues<List>(createListFromDiscriminatorValue); }],
+            ["onenote", (o, n) => { (o as unknown as Site).onenote = n.getObjectValue<Onenote>(createOnenoteFromDiscriminatorValue); }],
+            ["permissions", (o, n) => { (o as unknown as Site).permissions = n.getCollectionOfObjectValues<Permission>(createPermissionFromDiscriminatorValue); }],
+            ["root", (o, n) => { (o as unknown as Site).root = n.getObjectValue<Root>(createRootFromDiscriminatorValue); }],
+            ["sharepointIds", (o, n) => { (o as unknown as Site).sharepointIds = n.getObjectValue<SharepointIds>(createSharepointIdsFromDiscriminatorValue); }],
+            ["siteCollection", (o, n) => { (o as unknown as Site).siteCollection = n.getObjectValue<SiteCollection>(createSiteCollectionFromDiscriminatorValue); }],
+            ["sites", (o, n) => { (o as unknown as Site).sites = n.getCollectionOfObjectValues<Site>(createSiteFromDiscriminatorValue); }],
+            ["termStore", (o, n) => { (o as unknown as Site).termStore = n.getObjectValue<Store>(createStoreFromDiscriminatorValue); }],
+            ["termStores", (o, n) => { (o as unknown as Site).termStores = n.getCollectionOfObjectValues<Store>(createStoreFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the items property value. Used to address any item contained in this site. This collection can't be enumerated.
      * @returns a baseItem
      */
     public get items() {
         return this._items;
+    };
+    /**
+     * Sets the items property value. Used to address any item contained in this site. This collection can't be enumerated.
+     * @param value Value to set for the items property.
+     */
+    public set items(value: BaseItem[] | undefined) {
+        this._items = value;
     };
     /**
      * Gets the lists property value. The collection of lists under this site.
@@ -115,11 +218,25 @@ export class Site extends BaseItem implements Parsable {
         return this._lists;
     };
     /**
+     * Sets the lists property value. The collection of lists under this site.
+     * @param value Value to set for the lists property.
+     */
+    public set lists(value: List[] | undefined) {
+        this._lists = value;
+    };
+    /**
      * Gets the onenote property value. Calls the OneNote service for notebook related operations.
      * @returns a onenote
      */
     public get onenote() {
         return this._onenote;
+    };
+    /**
+     * Sets the onenote property value. Calls the OneNote service for notebook related operations.
+     * @param value Value to set for the onenote property.
+     */
+    public set onenote(value: Onenote | undefined) {
+        this._onenote = value;
     };
     /**
      * Gets the permissions property value. The permissions associated with the site. Nullable.
@@ -129,6 +246,13 @@ export class Site extends BaseItem implements Parsable {
         return this._permissions;
     };
     /**
+     * Sets the permissions property value. The permissions associated with the site. Nullable.
+     * @param value Value to set for the permissions property.
+     */
+    public set permissions(value: Permission[] | undefined) {
+        this._permissions = value;
+    };
+    /**
      * Gets the root property value. If present, indicates that this is the root site in the site collection. Read-only.
      * @returns a root
      */
@@ -136,65 +260,11 @@ export class Site extends BaseItem implements Parsable {
         return this._root;
     };
     /**
-     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
-     * @returns a sharepointIds
+     * Sets the root property value. If present, indicates that this is the root site in the site collection. Read-only.
+     * @param value Value to set for the root property.
      */
-    public get sharepointIds() {
-        return this._sharepointIds;
-    };
-    /**
-     * Gets the siteCollection property value. Provides details about the site's site collection. Available only on the root site. Read-only.
-     * @returns a siteCollection
-     */
-    public get siteCollection() {
-        return this._siteCollection;
-    };
-    /**
-     * Gets the sites property value. The collection of the sub-sites under this site.
-     * @returns a site
-     */
-    public get sites() {
-        return this._sites;
-    };
-    /**
-     * Gets the termStore property value. The default termStore under this site.
-     * @returns a store
-     */
-    public get termStore() {
-        return this._termStore;
-    };
-    /**
-     * Gets the termStores property value. The collection of termStores under this site.
-     * @returns a store
-     */
-    public get termStores() {
-        return this._termStores;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["analytics", (o, n) => { (o as unknown as Site).analytics = n.getObjectValue<ItemAnalytics>(ItemAnalytics); }],
-            ["columns", (o, n) => { (o as unknown as Site).columns = n.getCollectionOfObjectValues<ColumnDefinition>(ColumnDefinition); }],
-            ["contentTypes", (o, n) => { (o as unknown as Site).contentTypes = n.getCollectionOfObjectValues<ContentType>(ContentType); }],
-            ["displayName", (o, n) => { (o as unknown as Site).displayName = n.getStringValue(); }],
-            ["drive", (o, n) => { (o as unknown as Site).drive = n.getObjectValue<Drive>(Drive); }],
-            ["drives", (o, n) => { (o as unknown as Site).drives = n.getCollectionOfObjectValues<Drive>(Drive); }],
-            ["error", (o, n) => { (o as unknown as Site).error_escaped = n.getObjectValue<PublicError>(PublicError); }],
-            ["externalColumns", (o, n) => { (o as unknown as Site).externalColumns = n.getCollectionOfObjectValues<ColumnDefinition>(ColumnDefinition); }],
-            ["items", (o, n) => { (o as unknown as Site).items = n.getCollectionOfObjectValues<BaseItem>(BaseItem); }],
-            ["lists", (o, n) => { (o as unknown as Site).lists = n.getCollectionOfObjectValues<List>(List); }],
-            ["onenote", (o, n) => { (o as unknown as Site).onenote = n.getObjectValue<Onenote>(Onenote); }],
-            ["permissions", (o, n) => { (o as unknown as Site).permissions = n.getCollectionOfObjectValues<Permission>(Permission); }],
-            ["root", (o, n) => { (o as unknown as Site).root = n.getObjectValue<Root>(Root); }],
-            ["sharepointIds", (o, n) => { (o as unknown as Site).sharepointIds = n.getObjectValue<SharepointIds>(SharepointIds); }],
-            ["siteCollection", (o, n) => { (o as unknown as Site).siteCollection = n.getObjectValue<SiteCollection>(SiteCollection); }],
-            ["sites", (o, n) => { (o as unknown as Site).sites = n.getCollectionOfObjectValues<Site>(Site); }],
-            ["termStore", (o, n) => { (o as unknown as Site).termStore = n.getObjectValue<Store>(Store); }],
-            ["termStores", (o, n) => { (o as unknown as Site).termStores = n.getCollectionOfObjectValues<Store>(Store); }],
-        ]);
+    public set root(value: Root | undefined) {
+        this._root = value;
     };
     /**
      * Serializes information the current object
@@ -223,95 +293,11 @@ export class Site extends BaseItem implements Parsable {
         writer.writeCollectionOfObjectValues<Store>("termStores", this.termStores);
     };
     /**
-     * Sets the analytics property value. Analytics about the view activities that took place in this site.
-     * @param value Value to set for the analytics property.
+     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
+     * @returns a sharepointIds
      */
-    public set analytics(value: ItemAnalytics | undefined) {
-        this._analytics = value;
-    };
-    /**
-     * Sets the columns property value. The collection of column definitions reusable across lists under this site.
-     * @param value Value to set for the columns property.
-     */
-    public set columns(value: ColumnDefinition[] | undefined) {
-        this._columns = value;
-    };
-    /**
-     * Sets the contentTypes property value. The collection of content types defined for this site.
-     * @param value Value to set for the contentTypes property.
-     */
-    public set contentTypes(value: ContentType[] | undefined) {
-        this._contentTypes = value;
-    };
-    /**
-     * Sets the displayName property value. The full title for the site. Read-only.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the drive property value. The default drive (document library) for this site.
-     * @param value Value to set for the drive property.
-     */
-    public set drive(value: Drive | undefined) {
-        this._drive = value;
-    };
-    /**
-     * Sets the drives property value. The collection of drives (document libraries) under this site.
-     * @param value Value to set for the drives property.
-     */
-    public set drives(value: Drive[] | undefined) {
-        this._drives = value;
-    };
-    /**
-     * Sets the error property value. 
-     * @param value Value to set for the error_escaped property.
-     */
-    public set error_escaped(value: PublicError | undefined) {
-        this._error_escaped = value;
-    };
-    /**
-     * Sets the externalColumns property value. The collection of column definitions available in the site that are referenced from the sites in the parent hierarchy of the current site.
-     * @param value Value to set for the externalColumns property.
-     */
-    public set externalColumns(value: ColumnDefinition[] | undefined) {
-        this._externalColumns = value;
-    };
-    /**
-     * Sets the items property value. Used to address any item contained in this site. This collection can't be enumerated.
-     * @param value Value to set for the items property.
-     */
-    public set items(value: BaseItem[] | undefined) {
-        this._items = value;
-    };
-    /**
-     * Sets the lists property value. The collection of lists under this site.
-     * @param value Value to set for the lists property.
-     */
-    public set lists(value: List[] | undefined) {
-        this._lists = value;
-    };
-    /**
-     * Sets the onenote property value. Calls the OneNote service for notebook related operations.
-     * @param value Value to set for the onenote property.
-     */
-    public set onenote(value: Onenote | undefined) {
-        this._onenote = value;
-    };
-    /**
-     * Sets the permissions property value. The permissions associated with the site. Nullable.
-     * @param value Value to set for the permissions property.
-     */
-    public set permissions(value: Permission[] | undefined) {
-        this._permissions = value;
-    };
-    /**
-     * Sets the root property value. If present, indicates that this is the root site in the site collection. Read-only.
-     * @param value Value to set for the root property.
-     */
-    public set root(value: Root | undefined) {
-        this._root = value;
+    public get sharepointIds() {
+        return this._sharepointIds;
     };
     /**
      * Sets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
@@ -321,11 +307,25 @@ export class Site extends BaseItem implements Parsable {
         this._sharepointIds = value;
     };
     /**
+     * Gets the siteCollection property value. Provides details about the site's site collection. Available only on the root site. Read-only.
+     * @returns a siteCollection
+     */
+    public get siteCollection() {
+        return this._siteCollection;
+    };
+    /**
      * Sets the siteCollection property value. Provides details about the site's site collection. Available only on the root site. Read-only.
      * @param value Value to set for the siteCollection property.
      */
     public set siteCollection(value: SiteCollection | undefined) {
         this._siteCollection = value;
+    };
+    /**
+     * Gets the sites property value. The collection of the sub-sites under this site.
+     * @returns a site
+     */
+    public get sites() {
+        return this._sites;
     };
     /**
      * Sets the sites property value. The collection of the sub-sites under this site.
@@ -335,11 +335,25 @@ export class Site extends BaseItem implements Parsable {
         this._sites = value;
     };
     /**
+     * Gets the termStore property value. The default termStore under this site.
+     * @returns a store
+     */
+    public get termStore() {
+        return this._termStore;
+    };
+    /**
      * Sets the termStore property value. The default termStore under this site.
      * @param value Value to set for the termStore property.
      */
     public set termStore(value: Store | undefined) {
         this._termStore = value;
+    };
+    /**
+     * Gets the termStores property value. The collection of termStores under this site.
+     * @returns a store
+     */
+    public get termStores() {
+        return this._termStores;
     };
     /**
      * Sets the termStores property value. The collection of termStores under this site.

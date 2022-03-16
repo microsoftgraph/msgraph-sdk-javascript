@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PersonType implements Parsable {
+export class PersonType implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The type of data source, such as Person.  */
@@ -8,17 +8,18 @@ export class PersonType implements Parsable {
     /** The secondary type of data source, such as OrganizationUser.  */
     private _subclass?: string | undefined;
     /**
-     * Instantiates a new personType and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the class property value. The type of data source, such as Person.
@@ -28,11 +29,17 @@ export class PersonType implements Parsable {
         return this._class_escaped;
     };
     /**
-     * Gets the subclass property value. The secondary type of data source, such as OrganizationUser.
-     * @returns a string
+     * Sets the class property value. The type of data source, such as Person.
+     * @param value Value to set for the class_escaped property.
      */
-    public get subclass() {
-        return this._subclass;
+    public set class_escaped(value: string | undefined) {
+        this._class_escaped = value;
+    };
+    /**
+     * Instantiates a new personType and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class PersonType implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the subclass property value. The secondary type of data source, such as OrganizationUser.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the class property value. The type of data source, such as Person.
-     * @param value Value to set for the class_escaped property.
-     */
-    public set class_escaped(value: string | undefined) {
-        this._class_escaped = value;
+    public get subclass() {
+        return this._subclass;
     };
     /**
      * Sets the subclass property value. The secondary type of data source, such as OrganizationUser.

@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ResultInfo implements Parsable {
+export class ResultInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The result code.  */
@@ -10,17 +10,18 @@ export class ResultInfo implements Parsable {
     /** The result sub-code.  */
     private _subcode?: number | undefined;
     /**
-     * Instantiates a new resultInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the code property value. The result code.
@@ -30,18 +31,17 @@ export class ResultInfo implements Parsable {
         return this._code;
     };
     /**
-     * Gets the message property value. The message.
-     * @returns a string
+     * Sets the code property value. The result code.
+     * @param value Value to set for the code property.
      */
-    public get message() {
-        return this._message;
+    public set code(value: number | undefined) {
+        this._code = value;
     };
     /**
-     * Gets the subcode property value. The result sub-code.
-     * @returns a integer
+     * Instantiates a new resultInfo and sets the default values.
      */
-    public get subcode() {
-        return this._subcode;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +55,20 @@ export class ResultInfo implements Parsable {
         ]);
     };
     /**
+     * Gets the message property value. The message.
+     * @returns a string
+     */
+    public get message() {
+        return this._message;
+    };
+    /**
+     * Sets the message property value. The message.
+     * @param value Value to set for the message property.
+     */
+    public set message(value: string | undefined) {
+        this._message = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,25 +80,11 @@ export class ResultInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the subcode property value. The result sub-code.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the code property value. The result code.
-     * @param value Value to set for the code property.
-     */
-    public set code(value: number | undefined) {
-        this._code = value;
-    };
-    /**
-     * Sets the message property value. The message.
-     * @param value Value to set for the message property.
-     */
-    public set message(value: string | undefined) {
-        this._message = value;
+    public get subcode() {
+        return this._subcode;
     };
     /**
      * Sets the subcode property value. The result sub-code.

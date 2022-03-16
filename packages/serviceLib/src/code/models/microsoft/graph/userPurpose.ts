@@ -1,3 +1,4 @@
+/** Provides operations to manage the collection of drive entities.  */
 export enum UserPurpose {
     User = "user",
     Linked = "linked",

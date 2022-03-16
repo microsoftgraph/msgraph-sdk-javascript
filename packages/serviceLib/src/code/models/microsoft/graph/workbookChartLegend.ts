@@ -1,3 +1,4 @@
+import {createWorkbookChartLegendFormatFromDiscriminatorValue} from './createWorkbookChartLegendFormatFromDiscriminatorValue';
 import {Entity, WorkbookChartLegendFormat} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -24,11 +25,37 @@ export class WorkbookChartLegend extends Entity implements Parsable {
         return this._format;
     };
     /**
+     * Sets the format property value. Represents the formatting of a chart legend, which includes fill and font formatting. Read-only.
+     * @param value Value to set for the format property.
+     */
+    public set format(value: WorkbookChartLegendFormat | undefined) {
+        this._format = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["format", (o, n) => { (o as unknown as WorkbookChartLegend).format = n.getObjectValue<WorkbookChartLegendFormat>(createWorkbookChartLegendFormatFromDiscriminatorValue); }],
+            ["overlay", (o, n) => { (o as unknown as WorkbookChartLegend).overlay = n.getBooleanValue(); }],
+            ["position", (o, n) => { (o as unknown as WorkbookChartLegend).position = n.getStringValue(); }],
+            ["visible", (o, n) => { (o as unknown as WorkbookChartLegend).visible = n.getBooleanValue(); }],
+        ]);
+    };
+    /**
      * Gets the overlay property value. Boolean value for whether the chart legend should overlap with the main body of the chart.
      * @returns a boolean
      */
     public get overlay() {
         return this._overlay;
+    };
+    /**
+     * Sets the overlay property value. Boolean value for whether the chart legend should overlap with the main body of the chart.
+     * @param value Value to set for the overlay property.
+     */
+    public set overlay(value: boolean | undefined) {
+        this._overlay = value;
     };
     /**
      * Gets the position property value. Represents the position of the legend on the chart. The possible values are: Top, Bottom, Left, Right, Corner, Custom.
@@ -38,23 +65,11 @@ export class WorkbookChartLegend extends Entity implements Parsable {
         return this._position;
     };
     /**
-     * Gets the visible property value. A boolean value the represents the visibility of a ChartLegend object.
-     * @returns a boolean
+     * Sets the position property value. Represents the position of the legend on the chart. The possible values are: Top, Bottom, Left, Right, Corner, Custom.
+     * @param value Value to set for the position property.
      */
-    public get visible() {
-        return this._visible;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["format", (o, n) => { (o as unknown as WorkbookChartLegend).format = n.getObjectValue<WorkbookChartLegendFormat>(WorkbookChartLegendFormat); }],
-            ["overlay", (o, n) => { (o as unknown as WorkbookChartLegend).overlay = n.getBooleanValue(); }],
-            ["position", (o, n) => { (o as unknown as WorkbookChartLegend).position = n.getStringValue(); }],
-            ["visible", (o, n) => { (o as unknown as WorkbookChartLegend).visible = n.getBooleanValue(); }],
-        ]);
+    public set position(value: string | undefined) {
+        this._position = value;
     };
     /**
      * Serializes information the current object
@@ -69,25 +84,11 @@ export class WorkbookChartLegend extends Entity implements Parsable {
         writer.writeBooleanValue("visible", this.visible);
     };
     /**
-     * Sets the format property value. Represents the formatting of a chart legend, which includes fill and font formatting. Read-only.
-     * @param value Value to set for the format property.
+     * Gets the visible property value. A boolean value the represents the visibility of a ChartLegend object.
+     * @returns a boolean
      */
-    public set format(value: WorkbookChartLegendFormat | undefined) {
-        this._format = value;
-    };
-    /**
-     * Sets the overlay property value. Boolean value for whether the chart legend should overlap with the main body of the chart.
-     * @param value Value to set for the overlay property.
-     */
-    public set overlay(value: boolean | undefined) {
-        this._overlay = value;
-    };
-    /**
-     * Sets the position property value. Represents the position of the legend on the chart. The possible values are: Top, Bottom, Left, Right, Corner, Custom.
-     * @param value Value to set for the position property.
-     */
-    public set position(value: string | undefined) {
-        this._position = value;
+    public get visible() {
+        return this._visible;
     };
     /**
      * Sets the visible property value. A boolean value the represents the visibility of a ChartLegend object.

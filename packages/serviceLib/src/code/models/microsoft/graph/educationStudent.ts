@@ -1,7 +1,7 @@
-import {EducationGender} from './index';
-import {DateOnly, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {EducationGender} from './educationGender';
+import {AdditionalDataHolder, DateOnly, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class EducationStudent implements Parsable {
+export class EducationStudent implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Birth date of the student.  */
@@ -17,17 +17,18 @@ export class EducationStudent implements Parsable {
     /** Student Number.  */
     private _studentNumber?: string | undefined;
     /**
-     * Instantiates a new educationStudent and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the birthDate property value. Birth date of the student.
@@ -37,11 +38,31 @@ export class EducationStudent implements Parsable {
         return this._birthDate;
     };
     /**
+     * Sets the birthDate property value. Birth date of the student.
+     * @param value Value to set for the birthDate property.
+     */
+    public set birthDate(value: DateOnly | undefined) {
+        this._birthDate = value;
+    };
+    /**
+     * Instantiates a new educationStudent and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the externalId property value. ID of the student in the source system.
      * @returns a string
      */
     public get externalId() {
         return this._externalId;
+    };
+    /**
+     * Sets the externalId property value. ID of the student in the source system.
+     * @param value Value to set for the externalId property.
+     */
+    public set externalId(value: string | undefined) {
+        this._externalId = value;
     };
     /**
      * Gets the gender property value. The possible values are: female, male, other, unknownFutureValue.
@@ -51,25 +72,11 @@ export class EducationStudent implements Parsable {
         return this._gender;
     };
     /**
-     * Gets the grade property value. Current grade level of the student.
-     * @returns a string
+     * Sets the gender property value. The possible values are: female, male, other, unknownFutureValue.
+     * @param value Value to set for the gender property.
      */
-    public get grade() {
-        return this._grade;
-    };
-    /**
-     * Gets the graduationYear property value. Year the student is graduating from the school.
-     * @returns a string
-     */
-    public get graduationYear() {
-        return this._graduationYear;
-    };
-    /**
-     * Gets the studentNumber property value. Student Number.
-     * @returns a string
-     */
-    public get studentNumber() {
-        return this._studentNumber;
+    public set gender(value: EducationGender | undefined) {
+        this._gender = value;
     };
     /**
      * The deserialization information for the current model
@@ -86,6 +93,34 @@ export class EducationStudent implements Parsable {
         ]);
     };
     /**
+     * Gets the grade property value. Current grade level of the student.
+     * @returns a string
+     */
+    public get grade() {
+        return this._grade;
+    };
+    /**
+     * Sets the grade property value. Current grade level of the student.
+     * @param value Value to set for the grade property.
+     */
+    public set grade(value: string | undefined) {
+        this._grade = value;
+    };
+    /**
+     * Gets the graduationYear property value. Year the student is graduating from the school.
+     * @returns a string
+     */
+    public get graduationYear() {
+        return this._graduationYear;
+    };
+    /**
+     * Sets the graduationYear property value. Year the student is graduating from the school.
+     * @param value Value to set for the graduationYear property.
+     */
+    public set graduationYear(value: string | undefined) {
+        this._graduationYear = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -100,46 +135,11 @@ export class EducationStudent implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the studentNumber property value. Student Number.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the birthDate property value. Birth date of the student.
-     * @param value Value to set for the birthDate property.
-     */
-    public set birthDate(value: DateOnly | undefined) {
-        this._birthDate = value;
-    };
-    /**
-     * Sets the externalId property value. ID of the student in the source system.
-     * @param value Value to set for the externalId property.
-     */
-    public set externalId(value: string | undefined) {
-        this._externalId = value;
-    };
-    /**
-     * Sets the gender property value. The possible values are: female, male, other, unknownFutureValue.
-     * @param value Value to set for the gender property.
-     */
-    public set gender(value: EducationGender | undefined) {
-        this._gender = value;
-    };
-    /**
-     * Sets the grade property value. Current grade level of the student.
-     * @param value Value to set for the grade property.
-     */
-    public set grade(value: string | undefined) {
-        this._grade = value;
-    };
-    /**
-     * Sets the graduationYear property value. Year the student is graduating from the school.
-     * @param value Value to set for the graduationYear property.
-     */
-    public set graduationYear(value: string | undefined) {
-        this._graduationYear = value;
+    public get studentNumber() {
+        return this._studentNumber;
     };
     /**
      * Sets the studentNumber property value. Student Number.

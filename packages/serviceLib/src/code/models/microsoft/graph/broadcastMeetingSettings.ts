@@ -1,7 +1,7 @@
-import {BroadcastMeetingAudience} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {BroadcastMeetingAudience} from './broadcastMeetingAudience';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class BroadcastMeetingSettings implements Parsable {
+export class BroadcastMeetingSettings implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Defines who can join the Teams live event. Possible values are listed in the following table.  */
@@ -15,17 +15,18 @@ export class BroadcastMeetingSettings implements Parsable {
     /** Indicates whether video on demand is enabled for this Teams live event. Default value is false.  */
     private _isVideoOnDemandEnabled?: boolean | undefined;
     /**
-     * Instantiates a new broadcastMeetingSettings and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowedAudience property value. Defines who can join the Teams live event. Possible values are listed in the following table.
@@ -35,32 +36,17 @@ export class BroadcastMeetingSettings implements Parsable {
         return this._allowedAudience;
     };
     /**
-     * Gets the isAttendeeReportEnabled property value. Indicates whether attendee report is enabled for this Teams live event. Default value is false.
-     * @returns a boolean
+     * Sets the allowedAudience property value. Defines who can join the Teams live event. Possible values are listed in the following table.
+     * @param value Value to set for the allowedAudience property.
      */
-    public get isAttendeeReportEnabled() {
-        return this._isAttendeeReportEnabled;
+    public set allowedAudience(value: BroadcastMeetingAudience | undefined) {
+        this._allowedAudience = value;
     };
     /**
-     * Gets the isQuestionAndAnswerEnabled property value. Indicates whether Q&A is enabled for this Teams live event. Default value is false.
-     * @returns a boolean
+     * Instantiates a new broadcastMeetingSettings and sets the default values.
      */
-    public get isQuestionAndAnswerEnabled() {
-        return this._isQuestionAndAnswerEnabled;
-    };
-    /**
-     * Gets the isRecordingEnabled property value. Indicates whether recording is enabled for this Teams live event. Default value is false.
-     * @returns a boolean
-     */
-    public get isRecordingEnabled() {
-        return this._isRecordingEnabled;
-    };
-    /**
-     * Gets the isVideoOnDemandEnabled property value. Indicates whether video on demand is enabled for this Teams live event. Default value is false.
-     * @returns a boolean
-     */
-    public get isVideoOnDemandEnabled() {
-        return this._isVideoOnDemandEnabled;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -76,6 +62,62 @@ export class BroadcastMeetingSettings implements Parsable {
         ]);
     };
     /**
+     * Gets the isAttendeeReportEnabled property value. Indicates whether attendee report is enabled for this Teams live event. Default value is false.
+     * @returns a boolean
+     */
+    public get isAttendeeReportEnabled() {
+        return this._isAttendeeReportEnabled;
+    };
+    /**
+     * Sets the isAttendeeReportEnabled property value. Indicates whether attendee report is enabled for this Teams live event. Default value is false.
+     * @param value Value to set for the isAttendeeReportEnabled property.
+     */
+    public set isAttendeeReportEnabled(value: boolean | undefined) {
+        this._isAttendeeReportEnabled = value;
+    };
+    /**
+     * Gets the isQuestionAndAnswerEnabled property value. Indicates whether Q&A is enabled for this Teams live event. Default value is false.
+     * @returns a boolean
+     */
+    public get isQuestionAndAnswerEnabled() {
+        return this._isQuestionAndAnswerEnabled;
+    };
+    /**
+     * Sets the isQuestionAndAnswerEnabled property value. Indicates whether Q&A is enabled for this Teams live event. Default value is false.
+     * @param value Value to set for the isQuestionAndAnswerEnabled property.
+     */
+    public set isQuestionAndAnswerEnabled(value: boolean | undefined) {
+        this._isQuestionAndAnswerEnabled = value;
+    };
+    /**
+     * Gets the isRecordingEnabled property value. Indicates whether recording is enabled for this Teams live event. Default value is false.
+     * @returns a boolean
+     */
+    public get isRecordingEnabled() {
+        return this._isRecordingEnabled;
+    };
+    /**
+     * Sets the isRecordingEnabled property value. Indicates whether recording is enabled for this Teams live event. Default value is false.
+     * @param value Value to set for the isRecordingEnabled property.
+     */
+    public set isRecordingEnabled(value: boolean | undefined) {
+        this._isRecordingEnabled = value;
+    };
+    /**
+     * Gets the isVideoOnDemandEnabled property value. Indicates whether video on demand is enabled for this Teams live event. Default value is false.
+     * @returns a boolean
+     */
+    public get isVideoOnDemandEnabled() {
+        return this._isVideoOnDemandEnabled;
+    };
+    /**
+     * Sets the isVideoOnDemandEnabled property value. Indicates whether video on demand is enabled for this Teams live event. Default value is false.
+     * @param value Value to set for the isVideoOnDemandEnabled property.
+     */
+    public set isVideoOnDemandEnabled(value: boolean | undefined) {
+        this._isVideoOnDemandEnabled = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -87,47 +129,5 @@ export class BroadcastMeetingSettings implements Parsable {
         writer.writeBooleanValue("isRecordingEnabled", this.isRecordingEnabled);
         writer.writeBooleanValue("isVideoOnDemandEnabled", this.isVideoOnDemandEnabled);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowedAudience property value. Defines who can join the Teams live event. Possible values are listed in the following table.
-     * @param value Value to set for the allowedAudience property.
-     */
-    public set allowedAudience(value: BroadcastMeetingAudience | undefined) {
-        this._allowedAudience = value;
-    };
-    /**
-     * Sets the isAttendeeReportEnabled property value. Indicates whether attendee report is enabled for this Teams live event. Default value is false.
-     * @param value Value to set for the isAttendeeReportEnabled property.
-     */
-    public set isAttendeeReportEnabled(value: boolean | undefined) {
-        this._isAttendeeReportEnabled = value;
-    };
-    /**
-     * Sets the isQuestionAndAnswerEnabled property value. Indicates whether Q&A is enabled for this Teams live event. Default value is false.
-     * @param value Value to set for the isQuestionAndAnswerEnabled property.
-     */
-    public set isQuestionAndAnswerEnabled(value: boolean | undefined) {
-        this._isQuestionAndAnswerEnabled = value;
-    };
-    /**
-     * Sets the isRecordingEnabled property value. Indicates whether recording is enabled for this Teams live event. Default value is false.
-     * @param value Value to set for the isRecordingEnabled property.
-     */
-    public set isRecordingEnabled(value: boolean | undefined) {
-        this._isRecordingEnabled = value;
-    };
-    /**
-     * Sets the isVideoOnDemandEnabled property value. Indicates whether video on demand is enabled for this Teams live event. Default value is false.
-     * @param value Value to set for the isVideoOnDemandEnabled property.
-     */
-    public set isVideoOnDemandEnabled(value: boolean | undefined) {
-        this._isVideoOnDemandEnabled = value;
     };
 }

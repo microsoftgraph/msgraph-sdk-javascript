@@ -1,2 +1,1 @@
-export * from './LogTeleconferenceDeviceQualityRequestBody'
-export * from './LogTeleconferenceDeviceQualityRequestBuilder'
+export * from './logTeleconferenceDeviceQualityRequestBody'

@@ -1,9 +1,12 @@
 import {AgreementFile} from '../../../models/microsoft/graph/';
-import {LocalizationsRequestBuilder} from './localizations/';
-import {AgreementFileLocalizationItemRequestBuilder} from './localizations/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAgreementFileFromDiscriminatorValue} from '../../../models/microsoft/graph/createAgreementFileFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AgreementFileLocalizationItemRequestBuilder} from './localizations/item/agreementFileLocalizationItemRequestBuilder';
+import {LocalizationsRequestBuilder} from './localizations/localizationsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /agreements/{agreement-id}/file  */
+/** Provides operations to manage the file property of the microsoft.graph.agreement entity.  */
 export class FileRequestBuilder {
     public get localizations(): LocalizationsRequestBuilder {
         return new LocalizationsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class FileRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Default PDF linked to this agreement.
+     * Delete navigation property file for agreements
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class FileRequestBuilder {
         return requestInfo;
     };
     /**
-     * Default PDF linked to this agreement.
+     * Update the navigation property file in agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class FileRequestBuilder {
         return requestInfo;
     };
     /**
-     * Default PDF linked to this agreement.
+     * Delete navigation property file for agreements
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class FileRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Default PDF linked to this agreement.
@@ -107,7 +114,11 @@ export class FileRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AgreementFile>(requestInfo, AgreementFile, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AgreementFile>(requestInfo, createAgreementFileFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.agreements.item.file.localizations.item collection
@@ -121,7 +132,7 @@ export class FileRequestBuilder {
         return new AgreementFileLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Default PDF linked to this agreement.
+     * Update the navigation property file in agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class FileRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

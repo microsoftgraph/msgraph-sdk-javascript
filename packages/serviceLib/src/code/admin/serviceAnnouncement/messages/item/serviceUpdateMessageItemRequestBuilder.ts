@@ -1,10 +1,13 @@
 import {ServiceUpdateMessage} from '../../../../models/microsoft/graph/';
-import {AttachmentsRequestBuilder} from './attachments/';
-import {ServiceAnnouncementAttachmentItemRequestBuilder} from './attachments/item/';
-import {AttachmentsArchiveRequestBuilder} from './attachmentsArchive/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createServiceUpdateMessageFromDiscriminatorValue} from '../../../../models/microsoft/graph/createServiceUpdateMessageFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
+import {ServiceAnnouncementAttachmentItemRequestBuilder} from './attachments/item/serviceAnnouncementAttachmentItemRequestBuilder';
+import {AttachmentsArchiveRequestBuilder} from './attachmentsArchive/attachmentsArchiveRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /admin/serviceAnnouncement/messages/{serviceUpdateMessage-id}  */
+/** Provides operations to manage the messages property of the microsoft.graph.serviceAnnouncement entity.  */
 export class ServiceUpdateMessageItemRequestBuilder {
     public get attachments(): AttachmentsRequestBuilder {
         return new AttachmentsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -43,7 +46,7 @@ export class ServiceUpdateMessageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of service messages for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Delete navigation property messages for admin
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -78,7 +81,7 @@ export class ServiceUpdateMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of service messages for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Update the navigation property messages in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -96,7 +99,7 @@ export class ServiceUpdateMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of service messages for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Delete navigation property messages for admin
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -105,7 +108,11 @@ export class ServiceUpdateMessageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of service messages for tenant. This property is a contained navigation property, it is nullable and readonly.
@@ -122,10 +129,14 @@ export class ServiceUpdateMessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ServiceUpdateMessage>(requestInfo, ServiceUpdateMessage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ServiceUpdateMessage>(requestInfo, createServiceUpdateMessageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of service messages for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Update the navigation property messages in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,6 +147,10 @@ export class ServiceUpdateMessageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

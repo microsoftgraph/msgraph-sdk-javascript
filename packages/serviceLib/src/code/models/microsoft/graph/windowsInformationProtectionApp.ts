@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class WindowsInformationProtectionApp implements Parsable {
+/** App for Windows information protection  */
+export class WindowsInformationProtectionApp implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** If true, app is denied protection or exemption.  */
@@ -14,17 +15,24 @@ export class WindowsInformationProtectionApp implements Parsable {
     /** The publisher name  */
     private _publisherName?: string | undefined;
     /**
-     * Instantiates a new windowsInformationProtectionApp and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new windowsInformationProtectionApp and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the denied property value. If true, app is denied protection or exemption.
@@ -34,11 +42,25 @@ export class WindowsInformationProtectionApp implements Parsable {
         return this._denied;
     };
     /**
+     * Sets the denied property value. If true, app is denied protection or exemption.
+     * @param value Value to set for the denied property.
+     */
+    public set denied(value: boolean | undefined) {
+        this._denied = value;
+    };
+    /**
      * Gets the description property value. The app's description.
      * @returns a string
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. The app's description.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. App display name.
@@ -48,18 +70,11 @@ export class WindowsInformationProtectionApp implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the productName property value. The product name.
-     * @returns a string
+     * Sets the displayName property value. App display name.
+     * @param value Value to set for the displayName property.
      */
-    public get productName() {
-        return this._productName;
-    };
-    /**
-     * Gets the publisherName property value. The publisher name
-     * @returns a string
-     */
-    public get publisherName() {
-        return this._publisherName;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -75,6 +90,34 @@ export class WindowsInformationProtectionApp implements Parsable {
         ]);
     };
     /**
+     * Gets the productName property value. The product name.
+     * @returns a string
+     */
+    public get productName() {
+        return this._productName;
+    };
+    /**
+     * Sets the productName property value. The product name.
+     * @param value Value to set for the productName property.
+     */
+    public set productName(value: string | undefined) {
+        this._productName = value;
+    };
+    /**
+     * Gets the publisherName property value. The publisher name
+     * @returns a string
+     */
+    public get publisherName() {
+        return this._publisherName;
+    };
+    /**
+     * Sets the publisherName property value. The publisher name
+     * @param value Value to set for the publisherName property.
+     */
+    public set publisherName(value: string | undefined) {
+        this._publisherName = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -86,47 +129,5 @@ export class WindowsInformationProtectionApp implements Parsable {
         writer.writeStringValue("productName", this.productName);
         writer.writeStringValue("publisherName", this.publisherName);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the denied property value. If true, app is denied protection or exemption.
-     * @param value Value to set for the denied property.
-     */
-    public set denied(value: boolean | undefined) {
-        this._denied = value;
-    };
-    /**
-     * Sets the description property value. The app's description.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. App display name.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the productName property value. The product name.
-     * @param value Value to set for the productName property.
-     */
-    public set productName(value: string | undefined) {
-        this._productName = value;
-    };
-    /**
-     * Sets the publisherName property value. The publisher name
-     * @param value Value to set for the publisherName property.
-     */
-    public set publisherName(value: string | undefined) {
-        this._publisherName = value;
     };
 }

@@ -21,17 +21,18 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
     /** Device Unkown count for the setting  */
     private _unknownDeviceCount?: number | undefined;
     /**
-     * Instantiates a new settingStateDeviceSummary and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the compliantDeviceCount property value. Device Compliant count for the setting
      * @returns a integer
      */
     public get compliantDeviceCount() {
         return this._compliantDeviceCount;
+    };
+    /**
+     * Sets the compliantDeviceCount property value. Device Compliant count for the setting
+     * @param value Value to set for the compliantDeviceCount property.
+     */
+    public set compliantDeviceCount(value: number | undefined) {
+        this._compliantDeviceCount = value;
     };
     /**
      * Gets the conflictDeviceCount property value. Device conflict error count for the setting
@@ -41,6 +42,19 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
         return this._conflictDeviceCount;
     };
     /**
+     * Sets the conflictDeviceCount property value. Device conflict error count for the setting
+     * @param value Value to set for the conflictDeviceCount property.
+     */
+    public set conflictDeviceCount(value: number | undefined) {
+        this._conflictDeviceCount = value;
+    };
+    /**
+     * Instantiates a new settingStateDeviceSummary and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the errorDeviceCount property value. Device error count for the setting
      * @returns a integer
      */
@@ -48,46 +62,11 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
         return this._errorDeviceCount;
     };
     /**
-     * Gets the instancePath property value. Name of the InstancePath for the setting
-     * @returns a string
+     * Sets the errorDeviceCount property value. Device error count for the setting
+     * @param value Value to set for the errorDeviceCount property.
      */
-    public get instancePath() {
-        return this._instancePath;
-    };
-    /**
-     * Gets the nonCompliantDeviceCount property value. Device NonCompliant count for the setting
-     * @returns a integer
-     */
-    public get nonCompliantDeviceCount() {
-        return this._nonCompliantDeviceCount;
-    };
-    /**
-     * Gets the notApplicableDeviceCount property value. Device Not Applicable count for the setting
-     * @returns a integer
-     */
-    public get notApplicableDeviceCount() {
-        return this._notApplicableDeviceCount;
-    };
-    /**
-     * Gets the remediatedDeviceCount property value. Device Compliant count for the setting
-     * @returns a integer
-     */
-    public get remediatedDeviceCount() {
-        return this._remediatedDeviceCount;
-    };
-    /**
-     * Gets the settingName property value. Name of the setting
-     * @returns a string
-     */
-    public get settingName() {
-        return this._settingName;
-    };
-    /**
-     * Gets the unknownDeviceCount property value. Device Unkown count for the setting
-     * @returns a integer
-     */
-    public get unknownDeviceCount() {
-        return this._unknownDeviceCount;
+    public set errorDeviceCount(value: number | undefined) {
+        this._errorDeviceCount = value;
     };
     /**
      * The deserialization information for the current model
@@ -107,6 +86,62 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the instancePath property value. Name of the InstancePath for the setting
+     * @returns a string
+     */
+    public get instancePath() {
+        return this._instancePath;
+    };
+    /**
+     * Sets the instancePath property value. Name of the InstancePath for the setting
+     * @param value Value to set for the instancePath property.
+     */
+    public set instancePath(value: string | undefined) {
+        this._instancePath = value;
+    };
+    /**
+     * Gets the nonCompliantDeviceCount property value. Device NonCompliant count for the setting
+     * @returns a integer
+     */
+    public get nonCompliantDeviceCount() {
+        return this._nonCompliantDeviceCount;
+    };
+    /**
+     * Sets the nonCompliantDeviceCount property value. Device NonCompliant count for the setting
+     * @param value Value to set for the nonCompliantDeviceCount property.
+     */
+    public set nonCompliantDeviceCount(value: number | undefined) {
+        this._nonCompliantDeviceCount = value;
+    };
+    /**
+     * Gets the notApplicableDeviceCount property value. Device Not Applicable count for the setting
+     * @returns a integer
+     */
+    public get notApplicableDeviceCount() {
+        return this._notApplicableDeviceCount;
+    };
+    /**
+     * Sets the notApplicableDeviceCount property value. Device Not Applicable count for the setting
+     * @param value Value to set for the notApplicableDeviceCount property.
+     */
+    public set notApplicableDeviceCount(value: number | undefined) {
+        this._notApplicableDeviceCount = value;
+    };
+    /**
+     * Gets the remediatedDeviceCount property value. Device Compliant count for the setting
+     * @returns a integer
+     */
+    public get remediatedDeviceCount() {
+        return this._remediatedDeviceCount;
+    };
+    /**
+     * Sets the remediatedDeviceCount property value. Device Compliant count for the setting
+     * @param value Value to set for the remediatedDeviceCount property.
+     */
+    public set remediatedDeviceCount(value: number | undefined) {
+        this._remediatedDeviceCount = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -124,53 +159,11 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
         writer.writeNumberValue("unknownDeviceCount", this.unknownDeviceCount);
     };
     /**
-     * Sets the compliantDeviceCount property value. Device Compliant count for the setting
-     * @param value Value to set for the compliantDeviceCount property.
+     * Gets the settingName property value. Name of the setting
+     * @returns a string
      */
-    public set compliantDeviceCount(value: number | undefined) {
-        this._compliantDeviceCount = value;
-    };
-    /**
-     * Sets the conflictDeviceCount property value. Device conflict error count for the setting
-     * @param value Value to set for the conflictDeviceCount property.
-     */
-    public set conflictDeviceCount(value: number | undefined) {
-        this._conflictDeviceCount = value;
-    };
-    /**
-     * Sets the errorDeviceCount property value. Device error count for the setting
-     * @param value Value to set for the errorDeviceCount property.
-     */
-    public set errorDeviceCount(value: number | undefined) {
-        this._errorDeviceCount = value;
-    };
-    /**
-     * Sets the instancePath property value. Name of the InstancePath for the setting
-     * @param value Value to set for the instancePath property.
-     */
-    public set instancePath(value: string | undefined) {
-        this._instancePath = value;
-    };
-    /**
-     * Sets the nonCompliantDeviceCount property value. Device NonCompliant count for the setting
-     * @param value Value to set for the nonCompliantDeviceCount property.
-     */
-    public set nonCompliantDeviceCount(value: number | undefined) {
-        this._nonCompliantDeviceCount = value;
-    };
-    /**
-     * Sets the notApplicableDeviceCount property value. Device Not Applicable count for the setting
-     * @param value Value to set for the notApplicableDeviceCount property.
-     */
-    public set notApplicableDeviceCount(value: number | undefined) {
-        this._notApplicableDeviceCount = value;
-    };
-    /**
-     * Sets the remediatedDeviceCount property value. Device Compliant count for the setting
-     * @param value Value to set for the remediatedDeviceCount property.
-     */
-    public set remediatedDeviceCount(value: number | undefined) {
-        this._remediatedDeviceCount = value;
+    public get settingName() {
+        return this._settingName;
     };
     /**
      * Sets the settingName property value. Name of the setting
@@ -178,6 +171,13 @@ export class SettingStateDeviceSummary extends Entity implements Parsable {
      */
     public set settingName(value: string | undefined) {
         this._settingName = value;
+    };
+    /**
+     * Gets the unknownDeviceCount property value. Device Unkown count for the setting
+     * @returns a integer
+     */
+    public get unknownDeviceCount() {
+        return this._unknownDeviceCount;
     };
     /**
      * Sets the unknownDeviceCount property value. Device Unkown count for the setting

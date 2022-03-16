@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SelfSignedCertificate implements Parsable {
+export class SelfSignedCertificate implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _customKeyIdentifier?: string | undefined;
@@ -13,17 +13,24 @@ export class SelfSignedCertificate implements Parsable {
     private _type?: string | undefined;
     private _usage?: string | undefined;
     /**
-     * Instantiates a new SelfSignedCertificate and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new SelfSignedCertificate and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the customKeyIdentifier property value. 
@@ -33,11 +40,25 @@ export class SelfSignedCertificate implements Parsable {
         return this._customKeyIdentifier;
     };
     /**
+     * Sets the customKeyIdentifier property value. 
+     * @param value Value to set for the customKeyIdentifier property.
+     */
+    public set customKeyIdentifier(value: string | undefined) {
+        this._customKeyIdentifier = value;
+    };
+    /**
      * Gets the displayName property value. 
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. 
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * Gets the endDateTime property value. 
@@ -47,46 +68,11 @@ export class SelfSignedCertificate implements Parsable {
         return this._endDateTime;
     };
     /**
-     * Gets the key property value. 
-     * @returns a binary
+     * Sets the endDateTime property value. 
+     * @param value Value to set for the endDateTime property.
      */
-    public get key() {
-        return this._key;
-    };
-    /**
-     * Gets the keyId property value. 
-     * @returns a string
-     */
-    public get keyId() {
-        return this._keyId;
-    };
-    /**
-     * Gets the startDateTime property value. 
-     * @returns a Date
-     */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the thumbprint property value. 
-     * @returns a string
-     */
-    public get thumbprint() {
-        return this._thumbprint;
-    };
-    /**
-     * Gets the type property value. 
-     * @returns a string
-     */
-    public get type() {
-        return this._type;
-    };
-    /**
-     * Gets the usage property value. 
-     * @returns a string
-     */
-    public get usage() {
-        return this._usage;
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -106,6 +92,34 @@ export class SelfSignedCertificate implements Parsable {
         ]);
     };
     /**
+     * Gets the key property value. 
+     * @returns a binary
+     */
+    public get key() {
+        return this._key;
+    };
+    /**
+     * Sets the key property value. 
+     * @param value Value to set for the key property.
+     */
+    public set key(value: string | undefined) {
+        this._key = value;
+    };
+    /**
+     * Gets the keyId property value. 
+     * @returns a string
+     */
+    public get keyId() {
+        return this._keyId;
+    };
+    /**
+     * Sets the keyId property value. 
+     * @param value Value to set for the keyId property.
+     */
+    public set keyId(value: string | undefined) {
+        this._keyId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -123,46 +137,11 @@ export class SelfSignedCertificate implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startDateTime property value. 
+     * @returns a Date
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the customKeyIdentifier property value. 
-     * @param value Value to set for the customKeyIdentifier property.
-     */
-    public set customKeyIdentifier(value: string | undefined) {
-        this._customKeyIdentifier = value;
-    };
-    /**
-     * Sets the displayName property value. 
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the endDateTime property value. 
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the key property value. 
-     * @param value Value to set for the key property.
-     */
-    public set key(value: string | undefined) {
-        this._key = value;
-    };
-    /**
-     * Sets the keyId property value. 
-     * @param value Value to set for the keyId property.
-     */
-    public set keyId(value: string | undefined) {
-        this._keyId = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. 
@@ -172,6 +151,13 @@ export class SelfSignedCertificate implements Parsable {
         this._startDateTime = value;
     };
     /**
+     * Gets the thumbprint property value. 
+     * @returns a string
+     */
+    public get thumbprint() {
+        return this._thumbprint;
+    };
+    /**
      * Sets the thumbprint property value. 
      * @param value Value to set for the thumbprint property.
      */
@@ -179,11 +165,25 @@ export class SelfSignedCertificate implements Parsable {
         this._thumbprint = value;
     };
     /**
+     * Gets the type property value. 
+     * @returns a string
+     */
+    public get type() {
+        return this._type;
+    };
+    /**
      * Sets the type property value. 
      * @param value Value to set for the type property.
      */
     public set type(value: string | undefined) {
         this._type = value;
+    };
+    /**
+     * Gets the usage property value. 
+     * @returns a string
+     */
+    public get usage() {
+        return this._usage;
     };
     /**
      * Sets the usage property value. 

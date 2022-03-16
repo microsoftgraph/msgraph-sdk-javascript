@@ -1,25 +1,28 @@
 import {Event} from '../../../../../../../../models/microsoft/graph/';
-import {AcceptRequestBuilder} from './accept/';
-import {AttachmentsRequestBuilder} from './attachments/';
-import {AttachmentItemRequestBuilder} from './attachments/item/';
-import {CalendarRequestBuilder} from './calendar/';
-import {CancelRequestBuilder} from './cancel/';
-import {DeclineRequestBuilder} from './decline/';
-import {DismissReminderRequestBuilder} from './dismissReminder/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {ForwardRequestBuilder} from './forward/';
-import {InstancesRequestBuilder} from './instances/';
-import {EventItemRequestBuilder as i7b81d2a371565806d5c36a0e009aad43e97145b9ceeafdf24ee78e0d595df6fb} from './instances/item/';
-import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/';
-import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/';
-import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/';
-import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/';
-import {SnoozeReminderRequestBuilder} from './snoozeReminder/';
-import {TentativelyAcceptRequestBuilder} from './tentativelyAccept/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEventFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/createEventFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AcceptRequestBuilder} from './accept/acceptRequestBuilder';
+import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
+import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
+import {CalendarRequestBuilder} from './calendar/calendarRequestBuilder';
+import {CancelRequestBuilder} from './cancel/cancelRequestBuilder';
+import {DeclineRequestBuilder} from './decline/declineRequestBuilder';
+import {DismissReminderRequestBuilder} from './dismissReminder/dismissReminderRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {ForwardRequestBuilder} from './forward/forwardRequestBuilder';
+import {InstancesRequestBuilder} from './instances/instancesRequestBuilder';
+import {EventItemRequestBuilder as i7b81d2a371565806d5c36a0e009aad43e97145b9ceeafdf24ee78e0d595df6fb} from './instances/item/eventItemRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {SnoozeReminderRequestBuilder} from './snoozeReminder/snoozeReminderRequestBuilder';
+import {TentativelyAcceptRequestBuilder} from './tentativelyAccept/tentativelyAcceptRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/calendarGroups/{calendarGroup-id}/calendars/{calendar-id}/events/{event-id}  */
+/** Provides operations to manage the events property of the microsoft.graph.calendar entity.  */
 export class EventItemRequestBuilder {
     public get accept(): AcceptRequestBuilder {
         return new AcceptRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -91,7 +94,7 @@ export class EventItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The events in the calendar. Navigation property. Read-only.
+     * Delete navigation property events for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -125,7 +128,7 @@ export class EventItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The events in the calendar. Navigation property. Read-only.
+     * Update the navigation property events in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -143,7 +146,7 @@ export class EventItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The events in the calendar. Navigation property. Read-only.
+     * Delete navigation property events for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -152,7 +155,11 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendarGroups.item.calendars.item.events.item.extensions.item collection
@@ -179,7 +186,11 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Event>(requestInfo, Event, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Event>(requestInfo, createEventFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendarGroups.item.calendars.item.events.item.instances.item collection
@@ -204,7 +215,7 @@ export class EventItemRequestBuilder {
         return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The events in the calendar. Navigation property. Read-only.
+     * Update the navigation property events in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -215,7 +226,11 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.calendarGroups.item.calendars.item.events.item.singleValueExtendedProperties.item collection

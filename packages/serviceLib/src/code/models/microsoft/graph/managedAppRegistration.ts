@@ -1,4 +1,8 @@
-import {Entity, ManagedAppFlaggedReason, ManagedAppOperation, ManagedAppPolicy, MobileAppIdentifier} from './index';
+import {createManagedAppOperationFromDiscriminatorValue} from './createManagedAppOperationFromDiscriminatorValue';
+import {createManagedAppPolicyFromDiscriminatorValue} from './createManagedAppPolicyFromDiscriminatorValue';
+import {createMobileAppIdentifierFromDiscriminatorValue} from './createMobileAppIdentifierFromDiscriminatorValue';
+import {Entity, ManagedAppOperation, ManagedAppPolicy, MobileAppIdentifier} from './index';
+import {ManagedAppFlaggedReason} from './managedAppFlaggedReason';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ManagedAppRegistration extends Entity implements Parsable {
@@ -33,17 +37,18 @@ export class ManagedAppRegistration extends Entity implements Parsable {
     /** Version of the entity.  */
     private _version?: string | undefined;
     /**
-     * Instantiates a new managedAppRegistration and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the appIdentifier property value. The app package Identifier
      * @returns a mobileAppIdentifier
      */
     public get appIdentifier() {
         return this._appIdentifier;
+    };
+    /**
+     * Sets the appIdentifier property value. The app package Identifier
+     * @param value Value to set for the appIdentifier property.
+     */
+    public set appIdentifier(value: MobileAppIdentifier | undefined) {
+        this._appIdentifier = value;
     };
     /**
      * Gets the applicationVersion property value. App version
@@ -53,11 +58,31 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._applicationVersion;
     };
     /**
+     * Sets the applicationVersion property value. App version
+     * @param value Value to set for the applicationVersion property.
+     */
+    public set applicationVersion(value: string | undefined) {
+        this._applicationVersion = value;
+    };
+    /**
      * Gets the appliedPolicies property value. Zero or more policys already applied on the registered app when it last synchronized with managment service.
      * @returns a managedAppPolicy
      */
     public get appliedPolicies() {
         return this._appliedPolicies;
+    };
+    /**
+     * Sets the appliedPolicies property value. Zero or more policys already applied on the registered app when it last synchronized with managment service.
+     * @param value Value to set for the appliedPolicies property.
+     */
+    public set appliedPolicies(value: ManagedAppPolicy[] | undefined) {
+        this._appliedPolicies = value;
+    };
+    /**
+     * Instantiates a new managedAppRegistration and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdDateTime property value. Date and time of creation
@@ -67,11 +92,25 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. Date and time of creation
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the deviceName property value. Host device name
      * @returns a string
      */
     public get deviceName() {
         return this._deviceName;
+    };
+    /**
+     * Sets the deviceName property value. Host device name
+     * @param value Value to set for the deviceName property.
+     */
+    public set deviceName(value: string | undefined) {
+        this._deviceName = value;
     };
     /**
      * Gets the deviceTag property value. App management SDK generated tag, which helps relate apps hosted on the same device. Not guaranteed to relate apps in all conditions.
@@ -81,11 +120,25 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._deviceTag;
     };
     /**
+     * Sets the deviceTag property value. App management SDK generated tag, which helps relate apps hosted on the same device. Not guaranteed to relate apps in all conditions.
+     * @param value Value to set for the deviceTag property.
+     */
+    public set deviceTag(value: string | undefined) {
+        this._deviceTag = value;
+    };
+    /**
      * Gets the deviceType property value. Host device type
      * @returns a string
      */
     public get deviceType() {
         return this._deviceType;
+    };
+    /**
+     * Sets the deviceType property value. Host device type
+     * @param value Value to set for the deviceType property.
+     */
+    public set deviceType(value: string | undefined) {
+        this._deviceType = value;
     };
     /**
      * Gets the flaggedReasons property value. Zero or more reasons an app registration is flagged. E.g. app running on rooted device
@@ -95,11 +148,48 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._flaggedReasons;
     };
     /**
+     * Sets the flaggedReasons property value. Zero or more reasons an app registration is flagged. E.g. app running on rooted device
+     * @param value Value to set for the flaggedReasons property.
+     */
+    public set flaggedReasons(value: ManagedAppFlaggedReason[] | undefined) {
+        this._flaggedReasons = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["appIdentifier", (o, n) => { (o as unknown as ManagedAppRegistration).appIdentifier = n.getObjectValue<MobileAppIdentifier>(createMobileAppIdentifierFromDiscriminatorValue); }],
+            ["applicationVersion", (o, n) => { (o as unknown as ManagedAppRegistration).applicationVersion = n.getStringValue(); }],
+            ["appliedPolicies", (o, n) => { (o as unknown as ManagedAppRegistration).appliedPolicies = n.getCollectionOfObjectValues<ManagedAppPolicy>(createManagedAppPolicyFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as ManagedAppRegistration).createdDateTime = n.getDateValue(); }],
+            ["deviceName", (o, n) => { (o as unknown as ManagedAppRegistration).deviceName = n.getStringValue(); }],
+            ["deviceTag", (o, n) => { (o as unknown as ManagedAppRegistration).deviceTag = n.getStringValue(); }],
+            ["deviceType", (o, n) => { (o as unknown as ManagedAppRegistration).deviceType = n.getStringValue(); }],
+            ["flaggedReasons", (o, n) => { (o as unknown as ManagedAppRegistration).flaggedReasons = n.getEnumValues<ManagedAppFlaggedReason>(ManagedAppFlaggedReason); }],
+            ["intendedPolicies", (o, n) => { (o as unknown as ManagedAppRegistration).intendedPolicies = n.getCollectionOfObjectValues<ManagedAppPolicy>(createManagedAppPolicyFromDiscriminatorValue); }],
+            ["lastSyncDateTime", (o, n) => { (o as unknown as ManagedAppRegistration).lastSyncDateTime = n.getDateValue(); }],
+            ["managementSdkVersion", (o, n) => { (o as unknown as ManagedAppRegistration).managementSdkVersion = n.getStringValue(); }],
+            ["operations", (o, n) => { (o as unknown as ManagedAppRegistration).operations = n.getCollectionOfObjectValues<ManagedAppOperation>(createManagedAppOperationFromDiscriminatorValue); }],
+            ["platformVersion", (o, n) => { (o as unknown as ManagedAppRegistration).platformVersion = n.getStringValue(); }],
+            ["userId", (o, n) => { (o as unknown as ManagedAppRegistration).userId = n.getStringValue(); }],
+            ["version", (o, n) => { (o as unknown as ManagedAppRegistration).version = n.getStringValue(); }],
+        ]);
+    };
+    /**
      * Gets the intendedPolicies property value. Zero or more policies admin intended for the app as of now.
      * @returns a managedAppPolicy
      */
     public get intendedPolicies() {
         return this._intendedPolicies;
+    };
+    /**
+     * Sets the intendedPolicies property value. Zero or more policies admin intended for the app as of now.
+     * @param value Value to set for the intendedPolicies property.
+     */
+    public set intendedPolicies(value: ManagedAppPolicy[] | undefined) {
+        this._intendedPolicies = value;
     };
     /**
      * Gets the lastSyncDateTime property value. Date and time of last the app synced with management service.
@@ -109,11 +199,25 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._lastSyncDateTime;
     };
     /**
+     * Sets the lastSyncDateTime property value. Date and time of last the app synced with management service.
+     * @param value Value to set for the lastSyncDateTime property.
+     */
+    public set lastSyncDateTime(value: Date | undefined) {
+        this._lastSyncDateTime = value;
+    };
+    /**
      * Gets the managementSdkVersion property value. App management SDK version
      * @returns a string
      */
     public get managementSdkVersion() {
         return this._managementSdkVersion;
+    };
+    /**
+     * Sets the managementSdkVersion property value. App management SDK version
+     * @param value Value to set for the managementSdkVersion property.
+     */
+    public set managementSdkVersion(value: string | undefined) {
+        this._managementSdkVersion = value;
     };
     /**
      * Gets the operations property value. Zero or more long running operations triggered on the app registration.
@@ -123,6 +227,13 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._operations;
     };
     /**
+     * Sets the operations property value. Zero or more long running operations triggered on the app registration.
+     * @param value Value to set for the operations property.
+     */
+    public set operations(value: ManagedAppOperation[] | undefined) {
+        this._operations = value;
+    };
+    /**
      * Gets the platformVersion property value. Operating System version
      * @returns a string
      */
@@ -130,41 +241,11 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         return this._platformVersion;
     };
     /**
-     * Gets the userId property value. The user Id to who this app registration belongs.
-     * @returns a string
+     * Sets the platformVersion property value. Operating System version
+     * @param value Value to set for the platformVersion property.
      */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * Gets the version property value. Version of the entity.
-     * @returns a string
-     */
-    public get version() {
-        return this._version;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["appIdentifier", (o, n) => { (o as unknown as ManagedAppRegistration).appIdentifier = n.getObjectValue<MobileAppIdentifier>(MobileAppIdentifier); }],
-            ["applicationVersion", (o, n) => { (o as unknown as ManagedAppRegistration).applicationVersion = n.getStringValue(); }],
-            ["appliedPolicies", (o, n) => { (o as unknown as ManagedAppRegistration).appliedPolicies = n.getCollectionOfObjectValues<ManagedAppPolicy>(ManagedAppPolicy); }],
-            ["createdDateTime", (o, n) => { (o as unknown as ManagedAppRegistration).createdDateTime = n.getDateValue(); }],
-            ["deviceName", (o, n) => { (o as unknown as ManagedAppRegistration).deviceName = n.getStringValue(); }],
-            ["deviceTag", (o, n) => { (o as unknown as ManagedAppRegistration).deviceTag = n.getStringValue(); }],
-            ["deviceType", (o, n) => { (o as unknown as ManagedAppRegistration).deviceType = n.getStringValue(); }],
-            ["flaggedReasons", (o, n) => { (o as unknown as ManagedAppRegistration).flaggedReasons = n.getEnumValues<ManagedAppFlaggedReason>(ManagedAppFlaggedReason); }],
-            ["intendedPolicies", (o, n) => { (o as unknown as ManagedAppRegistration).intendedPolicies = n.getCollectionOfObjectValues<ManagedAppPolicy>(ManagedAppPolicy); }],
-            ["lastSyncDateTime", (o, n) => { (o as unknown as ManagedAppRegistration).lastSyncDateTime = n.getDateValue(); }],
-            ["managementSdkVersion", (o, n) => { (o as unknown as ManagedAppRegistration).managementSdkVersion = n.getStringValue(); }],
-            ["operations", (o, n) => { (o as unknown as ManagedAppRegistration).operations = n.getCollectionOfObjectValues<ManagedAppOperation>(ManagedAppOperation); }],
-            ["platformVersion", (o, n) => { (o as unknown as ManagedAppRegistration).platformVersion = n.getStringValue(); }],
-            ["userId", (o, n) => { (o as unknown as ManagedAppRegistration).userId = n.getStringValue(); }],
-            ["version", (o, n) => { (o as unknown as ManagedAppRegistration).version = n.getStringValue(); }],
-        ]);
+    public set platformVersion(value: string | undefined) {
+        this._platformVersion = value;
     };
     /**
      * Serializes information the current object
@@ -190,95 +271,11 @@ export class ManagedAppRegistration extends Entity implements Parsable {
         writer.writeStringValue("version", this.version);
     };
     /**
-     * Sets the appIdentifier property value. The app package Identifier
-     * @param value Value to set for the appIdentifier property.
+     * Gets the userId property value. The user Id to who this app registration belongs.
+     * @returns a string
      */
-    public set appIdentifier(value: MobileAppIdentifier | undefined) {
-        this._appIdentifier = value;
-    };
-    /**
-     * Sets the applicationVersion property value. App version
-     * @param value Value to set for the applicationVersion property.
-     */
-    public set applicationVersion(value: string | undefined) {
-        this._applicationVersion = value;
-    };
-    /**
-     * Sets the appliedPolicies property value. Zero or more policys already applied on the registered app when it last synchronized with managment service.
-     * @param value Value to set for the appliedPolicies property.
-     */
-    public set appliedPolicies(value: ManagedAppPolicy[] | undefined) {
-        this._appliedPolicies = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Date and time of creation
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the deviceName property value. Host device name
-     * @param value Value to set for the deviceName property.
-     */
-    public set deviceName(value: string | undefined) {
-        this._deviceName = value;
-    };
-    /**
-     * Sets the deviceTag property value. App management SDK generated tag, which helps relate apps hosted on the same device. Not guaranteed to relate apps in all conditions.
-     * @param value Value to set for the deviceTag property.
-     */
-    public set deviceTag(value: string | undefined) {
-        this._deviceTag = value;
-    };
-    /**
-     * Sets the deviceType property value. Host device type
-     * @param value Value to set for the deviceType property.
-     */
-    public set deviceType(value: string | undefined) {
-        this._deviceType = value;
-    };
-    /**
-     * Sets the flaggedReasons property value. Zero or more reasons an app registration is flagged. E.g. app running on rooted device
-     * @param value Value to set for the flaggedReasons property.
-     */
-    public set flaggedReasons(value: ManagedAppFlaggedReason[] | undefined) {
-        this._flaggedReasons = value;
-    };
-    /**
-     * Sets the intendedPolicies property value. Zero or more policies admin intended for the app as of now.
-     * @param value Value to set for the intendedPolicies property.
-     */
-    public set intendedPolicies(value: ManagedAppPolicy[] | undefined) {
-        this._intendedPolicies = value;
-    };
-    /**
-     * Sets the lastSyncDateTime property value. Date and time of last the app synced with management service.
-     * @param value Value to set for the lastSyncDateTime property.
-     */
-    public set lastSyncDateTime(value: Date | undefined) {
-        this._lastSyncDateTime = value;
-    };
-    /**
-     * Sets the managementSdkVersion property value. App management SDK version
-     * @param value Value to set for the managementSdkVersion property.
-     */
-    public set managementSdkVersion(value: string | undefined) {
-        this._managementSdkVersion = value;
-    };
-    /**
-     * Sets the operations property value. Zero or more long running operations triggered on the app registration.
-     * @param value Value to set for the operations property.
-     */
-    public set operations(value: ManagedAppOperation[] | undefined) {
-        this._operations = value;
-    };
-    /**
-     * Sets the platformVersion property value. Operating System version
-     * @param value Value to set for the platformVersion property.
-     */
-    public set platformVersion(value: string | undefined) {
-        this._platformVersion = value;
+    public get userId() {
+        return this._userId;
     };
     /**
      * Sets the userId property value. The user Id to who this app registration belongs.
@@ -286,6 +283,13 @@ export class ManagedAppRegistration extends Entity implements Parsable {
      */
     public set userId(value: string | undefined) {
         this._userId = value;
+    };
+    /**
+     * Gets the version property value. Version of the entity.
+     * @returns a string
+     */
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. Version of the entity.

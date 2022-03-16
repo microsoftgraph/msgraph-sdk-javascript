@@ -1,18 +1,21 @@
 import {EducationSubmission} from '../../../../../../../models/microsoft/graph/';
-import {OutcomesRequestBuilder} from './outcomes/';
-import {EducationOutcomeItemRequestBuilder} from './outcomes/item/';
-import {ReassignRequestBuilder} from './reassign/';
-import {ResourcesRequestBuilder} from './resources/';
-import {EducationSubmissionResourceItemRequestBuilder as ib60bf22fc12d369fdfe0cab518e44ea08ff762f370ee1b8cbdc0379e0abe559f} from './resources/item/';
-import {ReturnRequestBuilder} from './return_escaped/';
-import {SetUpResourcesFolderRequestBuilder} from './setUpResourcesFolder/';
-import {SubmitRequestBuilder} from './submit/';
-import {SubmittedResourcesRequestBuilder} from './submittedResources/';
-import {EducationSubmissionResourceItemRequestBuilder as i7c07df6e3be61b9f0eedbe8bbe208ff531da28c8dc95f021f1853067e67c6be8} from './submittedResources/item/';
-import {UnsubmitRequestBuilder} from './unsubmit/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEducationSubmissionFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/createEducationSubmissionFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {EducationOutcomeItemRequestBuilder} from './outcomes/item/educationOutcomeItemRequestBuilder';
+import {OutcomesRequestBuilder} from './outcomes/outcomesRequestBuilder';
+import {ReassignRequestBuilder} from './reassign/reassignRequestBuilder';
+import {EducationSubmissionResourceItemRequestBuilder as ib60bf22fc12d369fdfe0cab518e44ea08ff762f370ee1b8cbdc0379e0abe559f} from './resources/item/educationSubmissionResourceItemRequestBuilder';
+import {ResourcesRequestBuilder} from './resources/resourcesRequestBuilder';
+import {ReturnRequestBuilder} from './return_escaped/returnRequestBuilder';
+import {SetUpResourcesFolderRequestBuilder} from './setUpResourcesFolder/setUpResourcesFolderRequestBuilder';
+import {SubmitRequestBuilder} from './submit/submitRequestBuilder';
+import {EducationSubmissionResourceItemRequestBuilder as i7c07df6e3be61b9f0eedbe8bbe208ff531da28c8dc95f021f1853067e67c6be8} from './submittedResources/item/educationSubmissionResourceItemRequestBuilder';
+import {SubmittedResourcesRequestBuilder} from './submittedResources/submittedResourcesRequestBuilder';
+import {UnsubmitRequestBuilder} from './unsubmit/unsubmitRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /education/classes/{educationClass-id}/assignments/{educationAssignment-id}/submissions/{educationSubmission-id}  */
+/** Provides operations to manage the submissions property of the microsoft.graph.educationAssignment entity.  */
 export class EducationSubmissionItemRequestBuilder {
     public get outcomes(): OutcomesRequestBuilder {
         return new OutcomesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -58,7 +61,7 @@ export class EducationSubmissionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Once published, there is a submission object for each student representing their work and grade.  Read-only. Nullable.
+     * Delete navigation property submissions for education
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -93,7 +96,7 @@ export class EducationSubmissionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Once published, there is a submission object for each student representing their work and grade.  Read-only. Nullable.
+     * Update the navigation property submissions in education
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -111,7 +114,7 @@ export class EducationSubmissionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Once published, there is a submission object for each student representing their work and grade.  Read-only. Nullable.
+     * Delete navigation property submissions for education
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -120,7 +123,11 @@ export class EducationSubmissionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Once published, there is a submission object for each student representing their work and grade.  Read-only. Nullable.
@@ -137,7 +144,11 @@ export class EducationSubmissionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<EducationSubmission>(requestInfo, EducationSubmission, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<EducationSubmission>(requestInfo, createEducationSubmissionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.education.classes.item.assignments.item.submissions.item.outcomes.item collection
@@ -151,7 +162,7 @@ export class EducationSubmissionItemRequestBuilder {
         return new EducationOutcomeItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Once published, there is a submission object for each student representing their work and grade.  Read-only. Nullable.
+     * Update the navigation property submissions in education
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -162,7 +173,11 @@ export class EducationSubmissionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.education.classes.item.assignments.item.submissions.item.resources.item collection

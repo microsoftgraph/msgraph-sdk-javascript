@@ -1,11 +1,18 @@
-import {IdentityUserFlowAttributeAssignment} from '../../../../models/microsoft/graph/';
-import {GetOrderRequestBuilder} from './getOrder/';
-import {UserAttributeAssignmentsResponse} from './index';
-import {SetOrderRequestBuilder} from './setOrder/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {IdentityUserFlowAttributeAssignment, IdentityUserFlowAttributeAssignmentCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createIdentityUserFlowAttributeAssignmentCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createIdentityUserFlowAttributeAssignmentCollectionResponseFromDiscriminatorValue';
+import {createIdentityUserFlowAttributeAssignmentFromDiscriminatorValue} from '../../../../models/microsoft/graph/createIdentityUserFlowAttributeAssignmentFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {GetOrderRequestBuilder} from './getOrder/getOrderRequestBuilder';
+import {SetOrderRequestBuilder} from './setOrder/setOrderRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}/userAttributeAssignments  */
+/** Provides operations to manage the userAttributeAssignments property of the microsoft.graph.b2xIdentityUserFlow entity.  */
 export class UserAttributeAssignmentsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -55,7 +62,7 @@ export class UserAttributeAssignmentsRequestBuilder {
         return requestInfo;
     };
     /**
-     * The user attribute assignments included in the user flow.
+     * Create new navigation property to userAttributeAssignments for identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -78,7 +85,7 @@ export class UserAttributeAssignmentsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of UserAttributeAssignmentsResponse
+     * @returns a Promise of IdentityUserFlowAttributeAssignmentCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -89,21 +96,25 @@ export class UserAttributeAssignmentsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<UserAttributeAssignmentsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<IdentityUserFlowAttributeAssignmentCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserAttributeAssignmentsResponse>(requestInfo, UserAttributeAssignmentsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<IdentityUserFlowAttributeAssignmentCollectionResponse>(requestInfo, createIdentityUserFlowAttributeAssignmentCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}/userAttributeAssignments/microsoft.graph.getOrder()
+     * Provides operations to call the getOrder method.
      * @returns a getOrderRequestBuilder
      */
     public getOrder() : GetOrderRequestBuilder {
         return new GetOrderRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * The user attribute assignments included in the user flow.
+     * Create new navigation property to userAttributeAssignments for identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -115,6 +126,10 @@ export class UserAttributeAssignmentsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<IdentityUserFlowAttributeAssignment>(requestInfo, IdentityUserFlowAttributeAssignment, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<IdentityUserFlowAttributeAssignment>(requestInfo, createIdentityUserFlowAttributeAssignmentFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,11 +1,27 @@
 import {Message} from '../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createMessageFromDiscriminatorValue} from '../../../models/microsoft/graph/createMessageFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SendMailRequestBody implements Parsable {
+/** Provides operations to call the sendMail method.  */
+export class SendMailRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _message?: Message | undefined;
     private _saveToSentItems?: boolean | undefined;
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
     /**
      * Instantiates a new sendMailRequestBody and sets the default values.
      */
@@ -13,11 +29,14 @@ export class SendMailRequestBody implements Parsable {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["message", (o, n) => { (o as unknown as SendMailRequestBody).message = n.getObjectValue<Message>(createMessageFromDiscriminatorValue); }],
+            ["saveToSentItems", (o, n) => { (o as unknown as SendMailRequestBody).saveToSentItems = n.getBooleanValue(); }],
+        ]);
     };
     /**
      * Gets the message property value. 
@@ -27,6 +46,13 @@ export class SendMailRequestBody implements Parsable {
         return this._message;
     };
     /**
+     * Sets the message property value. 
+     * @param value Value to set for the Message property.
+     */
+    public set message(value: Message | undefined) {
+        this._message = value;
+    };
+    /**
      * Gets the saveToSentItems property value. 
      * @returns a boolean
      */
@@ -34,14 +60,11 @@ export class SendMailRequestBody implements Parsable {
         return this._saveToSentItems;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the saveToSentItems property value. 
+     * @param value Value to set for the SaveToSentItems property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["message", (o, n) => { (o as unknown as SendMailRequestBody).message = n.getObjectValue<Message>(Message); }],
-            ["saveToSentItems", (o, n) => { (o as unknown as SendMailRequestBody).saveToSentItems = n.getBooleanValue(); }],
-        ]);
+    public set saveToSentItems(value: boolean | undefined) {
+        this._saveToSentItems = value;
     };
     /**
      * Serializes information the current object
@@ -52,26 +75,5 @@ export class SendMailRequestBody implements Parsable {
         writer.writeObjectValue<Message>("message", this.message);
         writer.writeBooleanValue("saveToSentItems", this.saveToSentItems);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the message property value. 
-     * @param value Value to set for the Message property.
-     */
-    public set message(value: Message | undefined) {
-        this._message = value;
-    };
-    /**
-     * Sets the saveToSentItems property value. 
-     * @param value Value to set for the SaveToSentItems property.
-     */
-    public set saveToSentItems(value: boolean | undefined) {
-        this._saveToSentItems = value;
     };
 }

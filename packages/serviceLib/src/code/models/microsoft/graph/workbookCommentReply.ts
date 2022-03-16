@@ -20,11 +20,25 @@ export class WorkbookCommentReply extends Entity implements Parsable {
         return this._content;
     };
     /**
+     * Sets the content property value. The content of a comment reply.
+     * @param value Value to set for the content property.
+     */
+    public set content(value: string | undefined) {
+        this._content = value;
+    };
+    /**
      * Gets the contentType property value. Indicates the type for the comment reply.
      * @returns a string
      */
     public get contentType() {
         return this._contentType;
+    };
+    /**
+     * Sets the contentType property value. Indicates the type for the comment reply.
+     * @param value Value to set for the contentType property.
+     */
+    public set contentType(value: string | undefined) {
+        this._contentType = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,19 +59,5 @@ export class WorkbookCommentReply extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeStringValue("content", this.content);
         writer.writeStringValue("contentType", this.contentType);
-    };
-    /**
-     * Sets the content property value. The content of a comment reply.
-     * @param value Value to set for the content property.
-     */
-    public set content(value: string | undefined) {
-        this._content = value;
-    };
-    /**
-     * Sets the contentType property value. Indicates the type for the comment reply.
-     * @param value Value to set for the contentType property.
-     */
-    public set contentType(value: string | undefined) {
-        this._contentType = value;
     };
 }

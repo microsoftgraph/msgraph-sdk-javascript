@@ -1,8 +1,11 @@
 import {ServiceAnnouncementAttachment} from '../../../../../../models/microsoft/graph/';
-import {ContentRequestBuilder} from './content/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createServiceAnnouncementAttachmentFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createServiceAnnouncementAttachmentFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ContentRequestBuilder} from './content/contentRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /admin/serviceAnnouncement/messages/{serviceUpdateMessage-id}/attachments/{serviceAnnouncementAttachment-id}  */
+/** Provides operations to manage the attachments property of the microsoft.graph.serviceUpdateMessage entity.  */
 export class ServiceAnnouncementAttachmentItemRequestBuilder {
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of serviceAnnouncementAttachments.
+     * Delete navigation property attachments for admin
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of serviceAnnouncementAttachments.
+     * Update the navigation property attachments in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of serviceAnnouncementAttachments.
+     * Delete navigation property attachments for admin
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of serviceAnnouncementAttachments.
@@ -106,10 +113,14 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ServiceAnnouncementAttachment>(requestInfo, ServiceAnnouncementAttachment, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ServiceAnnouncementAttachment>(requestInfo, createServiceAnnouncementAttachmentFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of serviceAnnouncementAttachments.
+     * Update the navigation property attachments in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class ServiceAnnouncementAttachmentItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

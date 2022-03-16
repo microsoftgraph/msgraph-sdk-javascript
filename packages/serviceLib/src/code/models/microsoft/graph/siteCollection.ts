@@ -1,7 +1,8 @@
+import {createRootFromDiscriminatorValue} from './createRootFromDiscriminatorValue';
 import {Root} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SiteCollection implements Parsable {
+export class SiteCollection implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The geographic region code for where this site collection resides. Read-only.  */
@@ -11,17 +12,24 @@ export class SiteCollection implements Parsable {
     /** If present, indicates that this is a root site collection in SharePoint. Read-only.  */
     private _root?: Root | undefined;
     /**
-     * Instantiates a new siteCollection and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new siteCollection and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the dataLocationCode property value. The geographic region code for where this site collection resides. Read-only.
@@ -31,18 +39,11 @@ export class SiteCollection implements Parsable {
         return this._dataLocationCode;
     };
     /**
-     * Gets the hostname property value. The hostname for the site collection. Read-only.
-     * @returns a string
+     * Sets the dataLocationCode property value. The geographic region code for where this site collection resides. Read-only.
+     * @param value Value to set for the dataLocationCode property.
      */
-    public get hostname() {
-        return this._hostname;
-    };
-    /**
-     * Gets the root property value. If present, indicates that this is a root site collection in SharePoint. Read-only.
-     * @returns a root
-     */
-    public get root() {
-        return this._root;
+    public set dataLocationCode(value: string | undefined) {
+        this._dataLocationCode = value;
     };
     /**
      * The deserialization information for the current model
@@ -52,8 +53,36 @@ export class SiteCollection implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["dataLocationCode", (o, n) => { (o as unknown as SiteCollection).dataLocationCode = n.getStringValue(); }],
             ["hostname", (o, n) => { (o as unknown as SiteCollection).hostname = n.getStringValue(); }],
-            ["root", (o, n) => { (o as unknown as SiteCollection).root = n.getObjectValue<Root>(Root); }],
+            ["root", (o, n) => { (o as unknown as SiteCollection).root = n.getObjectValue<Root>(createRootFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the hostname property value. The hostname for the site collection. Read-only.
+     * @returns a string
+     */
+    public get hostname() {
+        return this._hostname;
+    };
+    /**
+     * Sets the hostname property value. The hostname for the site collection. Read-only.
+     * @param value Value to set for the hostname property.
+     */
+    public set hostname(value: string | undefined) {
+        this._hostname = value;
+    };
+    /**
+     * Gets the root property value. If present, indicates that this is a root site collection in SharePoint. Read-only.
+     * @returns a root
+     */
+    public get root() {
+        return this._root;
+    };
+    /**
+     * Sets the root property value. If present, indicates that this is a root site collection in SharePoint. Read-only.
+     * @param value Value to set for the root property.
+     */
+    public set root(value: Root | undefined) {
+        this._root = value;
     };
     /**
      * Serializes information the current object
@@ -65,33 +94,5 @@ export class SiteCollection implements Parsable {
         writer.writeStringValue("hostname", this.hostname);
         writer.writeObjectValue<Root>("root", this.root);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the dataLocationCode property value. The geographic region code for where this site collection resides. Read-only.
-     * @param value Value to set for the dataLocationCode property.
-     */
-    public set dataLocationCode(value: string | undefined) {
-        this._dataLocationCode = value;
-    };
-    /**
-     * Sets the hostname property value. The hostname for the site collection. Read-only.
-     * @param value Value to set for the hostname property.
-     */
-    public set hostname(value: string | undefined) {
-        this._hostname = value;
-    };
-    /**
-     * Sets the root property value. If present, indicates that this is a root site collection in SharePoint. Read-only.
-     * @param value Value to set for the root property.
-     */
-    public set root(value: Root | undefined) {
-        this._root = value;
     };
 }

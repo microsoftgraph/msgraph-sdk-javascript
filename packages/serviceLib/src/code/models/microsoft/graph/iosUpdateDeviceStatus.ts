@@ -1,4 +1,6 @@
-import {ComplianceStatus, Entity, IosUpdatesInstallStatus} from './index';
+import {ComplianceStatus} from './complianceStatus';
+import {Entity} from './index';
+import {IosUpdatesInstallStatus} from './iosUpdatesInstallStatus';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class IosUpdateDeviceStatus extends Entity implements Parsable {
@@ -25,17 +27,24 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
     /** UserPrincipalName.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new iosUpdateDeviceStatus and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires
      * @returns a Date
      */
     public get complianceGracePeriodExpirationDateTime() {
         return this._complianceGracePeriodExpirationDateTime;
+    };
+    /**
+     * Sets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires
+     * @param value Value to set for the complianceGracePeriodExpirationDateTime property.
+     */
+    public set complianceGracePeriodExpirationDateTime(value: Date | undefined) {
+        this._complianceGracePeriodExpirationDateTime = value;
+    };
+    /**
+     * Instantiates a new iosUpdateDeviceStatus and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the deviceDisplayName property value. Device name of the DevicePolicyStatus.
@@ -45,11 +54,25 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         return this._deviceDisplayName;
     };
     /**
+     * Sets the deviceDisplayName property value. Device name of the DevicePolicyStatus.
+     * @param value Value to set for the deviceDisplayName property.
+     */
+    public set deviceDisplayName(value: string | undefined) {
+        this._deviceDisplayName = value;
+    };
+    /**
      * Gets the deviceId property value. The device id that is being reported.
      * @returns a string
      */
     public get deviceId() {
         return this._deviceId;
+    };
+    /**
+     * Sets the deviceId property value. The device id that is being reported.
+     * @param value Value to set for the deviceId property.
+     */
+    public set deviceId(value: string | undefined) {
+        this._deviceId = value;
     };
     /**
      * Gets the deviceModel property value. The device model that is being reported
@@ -59,53 +82,11 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         return this._deviceModel;
     };
     /**
-     * Gets the installStatus property value. The installation status of the policy report. Possible values are: success, available, idle, unknown, downloading, downloadFailed, downloadRequiresComputer, downloadInsufficientSpace, downloadInsufficientPower, downloadInsufficientNetwork, installing, installInsufficientSpace, installInsufficientPower, installPhoneCallInProgress, installFailed, notSupportedOperation, sharedDeviceUserLoggedInError, deviceOsHigherThanDesiredOsVersion.
-     * @returns a iosUpdatesInstallStatus
+     * Sets the deviceModel property value. The device model that is being reported
+     * @param value Value to set for the deviceModel property.
      */
-    public get installStatus() {
-        return this._installStatus;
-    };
-    /**
-     * Gets the lastReportedDateTime property value. Last modified date time of the policy report.
-     * @returns a Date
-     */
-    public get lastReportedDateTime() {
-        return this._lastReportedDateTime;
-    };
-    /**
-     * Gets the osVersion property value. The device version that is being reported.
-     * @returns a string
-     */
-    public get osVersion() {
-        return this._osVersion;
-    };
-    /**
-     * Gets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
-     * @returns a complianceStatus
-     */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * Gets the userId property value. The User id that is being reported.
-     * @returns a string
-     */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * Gets the userName property value. The User Name that is being reported
-     * @returns a string
-     */
-    public get userName() {
-        return this._userName;
-    };
-    /**
-     * Gets the userPrincipalName property value. UserPrincipalName.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set deviceModel(value: string | undefined) {
+        this._deviceModel = value;
     };
     /**
      * The deserialization information for the current model
@@ -127,6 +108,48 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the installStatus property value. The installation status of the policy report. Possible values are: success, available, idle, unknown, downloading, downloadFailed, downloadRequiresComputer, downloadInsufficientSpace, downloadInsufficientPower, downloadInsufficientNetwork, installing, installInsufficientSpace, installInsufficientPower, installPhoneCallInProgress, installFailed, notSupportedOperation, sharedDeviceUserLoggedInError, deviceOsHigherThanDesiredOsVersion.
+     * @returns a iosUpdatesInstallStatus
+     */
+    public get installStatus() {
+        return this._installStatus;
+    };
+    /**
+     * Sets the installStatus property value. The installation status of the policy report. Possible values are: success, available, idle, unknown, downloading, downloadFailed, downloadRequiresComputer, downloadInsufficientSpace, downloadInsufficientPower, downloadInsufficientNetwork, installing, installInsufficientSpace, installInsufficientPower, installPhoneCallInProgress, installFailed, notSupportedOperation, sharedDeviceUserLoggedInError, deviceOsHigherThanDesiredOsVersion.
+     * @param value Value to set for the installStatus property.
+     */
+    public set installStatus(value: IosUpdatesInstallStatus | undefined) {
+        this._installStatus = value;
+    };
+    /**
+     * Gets the lastReportedDateTime property value. Last modified date time of the policy report.
+     * @returns a Date
+     */
+    public get lastReportedDateTime() {
+        return this._lastReportedDateTime;
+    };
+    /**
+     * Sets the lastReportedDateTime property value. Last modified date time of the policy report.
+     * @param value Value to set for the lastReportedDateTime property.
+     */
+    public set lastReportedDateTime(value: Date | undefined) {
+        this._lastReportedDateTime = value;
+    };
+    /**
+     * Gets the osVersion property value. The device version that is being reported.
+     * @returns a string
+     */
+    public get osVersion() {
+        return this._osVersion;
+    };
+    /**
+     * Sets the osVersion property value. The device version that is being reported.
+     * @param value Value to set for the osVersion property.
+     */
+    public set osVersion(value: string | undefined) {
+        this._osVersion = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -146,53 +169,11 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires
-     * @param value Value to set for the complianceGracePeriodExpirationDateTime property.
+     * Gets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
+     * @returns a complianceStatus
      */
-    public set complianceGracePeriodExpirationDateTime(value: Date | undefined) {
-        this._complianceGracePeriodExpirationDateTime = value;
-    };
-    /**
-     * Sets the deviceDisplayName property value. Device name of the DevicePolicyStatus.
-     * @param value Value to set for the deviceDisplayName property.
-     */
-    public set deviceDisplayName(value: string | undefined) {
-        this._deviceDisplayName = value;
-    };
-    /**
-     * Sets the deviceId property value. The device id that is being reported.
-     * @param value Value to set for the deviceId property.
-     */
-    public set deviceId(value: string | undefined) {
-        this._deviceId = value;
-    };
-    /**
-     * Sets the deviceModel property value. The device model that is being reported
-     * @param value Value to set for the deviceModel property.
-     */
-    public set deviceModel(value: string | undefined) {
-        this._deviceModel = value;
-    };
-    /**
-     * Sets the installStatus property value. The installation status of the policy report. Possible values are: success, available, idle, unknown, downloading, downloadFailed, downloadRequiresComputer, downloadInsufficientSpace, downloadInsufficientPower, downloadInsufficientNetwork, installing, installInsufficientSpace, installInsufficientPower, installPhoneCallInProgress, installFailed, notSupportedOperation, sharedDeviceUserLoggedInError, deviceOsHigherThanDesiredOsVersion.
-     * @param value Value to set for the installStatus property.
-     */
-    public set installStatus(value: IosUpdatesInstallStatus | undefined) {
-        this._installStatus = value;
-    };
-    /**
-     * Sets the lastReportedDateTime property value. Last modified date time of the policy report.
-     * @param value Value to set for the lastReportedDateTime property.
-     */
-    public set lastReportedDateTime(value: Date | undefined) {
-        this._lastReportedDateTime = value;
-    };
-    /**
-     * Sets the osVersion property value. The device version that is being reported.
-     * @param value Value to set for the osVersion property.
-     */
-    public set osVersion(value: string | undefined) {
-        this._osVersion = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
@@ -202,6 +183,13 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         this._status = value;
     };
     /**
+     * Gets the userId property value. The User id that is being reported.
+     * @returns a string
+     */
+    public get userId() {
+        return this._userId;
+    };
+    /**
      * Sets the userId property value. The User id that is being reported.
      * @param value Value to set for the userId property.
      */
@@ -209,11 +197,25 @@ export class IosUpdateDeviceStatus extends Entity implements Parsable {
         this._userId = value;
     };
     /**
+     * Gets the userName property value. The User Name that is being reported
+     * @returns a string
+     */
+    public get userName() {
+        return this._userName;
+    };
+    /**
      * Sets the userName property value. The User Name that is being reported
      * @param value Value to set for the userName property.
      */
     public set userName(value: string | undefined) {
         this._userName = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. UserPrincipalName.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. UserPrincipalName.

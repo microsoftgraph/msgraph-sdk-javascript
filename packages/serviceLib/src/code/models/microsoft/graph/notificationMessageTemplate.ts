@@ -1,4 +1,6 @@
-import {Entity, LocalizedNotificationMessage, NotificationTemplateBrandingOptions} from './index';
+import {createLocalizedNotificationMessageFromDiscriminatorValue} from './createLocalizedNotificationMessageFromDiscriminatorValue';
+import {Entity, LocalizedNotificationMessage} from './index';
+import {NotificationTemplateBrandingOptions} from './notificationTemplateBrandingOptions';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class NotificationMessageTemplate extends Entity implements Parsable {
@@ -13,17 +15,24 @@ export class NotificationMessageTemplate extends Entity implements Parsable {
     /** The list of localized messages for this Notification Message Template.  */
     private _localizedNotificationMessages?: LocalizedNotificationMessage[] | undefined;
     /**
-     * Instantiates a new notificationMessageTemplate and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the brandingOptions property value. The Message Template Branding Options. Branding is defined in the Intune Admin Console. Possible values are: none, includeCompanyLogo, includeCompanyName, includeContactInformation.
      * @returns a notificationTemplateBrandingOptions
      */
     public get brandingOptions() {
         return this._brandingOptions;
+    };
+    /**
+     * Sets the brandingOptions property value. The Message Template Branding Options. Branding is defined in the Intune Admin Console. Possible values are: none, includeCompanyLogo, includeCompanyName, includeContactInformation.
+     * @param value Value to set for the brandingOptions property.
+     */
+    public set brandingOptions(value: NotificationTemplateBrandingOptions | undefined) {
+        this._brandingOptions = value;
+    };
+    /**
+     * Instantiates a new notificationMessageTemplate and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the defaultLocale property value. The default locale to fallback onto when the requested locale is not available.
@@ -33,6 +42,13 @@ export class NotificationMessageTemplate extends Entity implements Parsable {
         return this._defaultLocale;
     };
     /**
+     * Sets the defaultLocale property value. The default locale to fallback onto when the requested locale is not available.
+     * @param value Value to set for the defaultLocale property.
+     */
+    public set defaultLocale(value: string | undefined) {
+        this._defaultLocale = value;
+    };
+    /**
      * Gets the displayName property value. Display name for the Notification Message Template.
      * @returns a string
      */
@@ -40,18 +56,11 @@ export class NotificationMessageTemplate extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the lastModifiedDateTime property value. DateTime the object was last modified.
-     * @returns a Date
+     * Sets the displayName property value. Display name for the Notification Message Template.
+     * @param value Value to set for the displayName property.
      */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the localizedNotificationMessages property value. The list of localized messages for this Notification Message Template.
-     * @returns a localizedNotificationMessage
-     */
-    public get localizedNotificationMessages() {
-        return this._localizedNotificationMessages;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -63,8 +72,36 @@ export class NotificationMessageTemplate extends Entity implements Parsable {
             ["defaultLocale", (o, n) => { (o as unknown as NotificationMessageTemplate).defaultLocale = n.getStringValue(); }],
             ["displayName", (o, n) => { (o as unknown as NotificationMessageTemplate).displayName = n.getStringValue(); }],
             ["lastModifiedDateTime", (o, n) => { (o as unknown as NotificationMessageTemplate).lastModifiedDateTime = n.getDateValue(); }],
-            ["localizedNotificationMessages", (o, n) => { (o as unknown as NotificationMessageTemplate).localizedNotificationMessages = n.getCollectionOfObjectValues<LocalizedNotificationMessage>(LocalizedNotificationMessage); }],
+            ["localizedNotificationMessages", (o, n) => { (o as unknown as NotificationMessageTemplate).localizedNotificationMessages = n.getCollectionOfObjectValues<LocalizedNotificationMessage>(createLocalizedNotificationMessageFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the lastModifiedDateTime property value. DateTime the object was last modified.
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. DateTime the object was last modified.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
+     * Gets the localizedNotificationMessages property value. The list of localized messages for this Notification Message Template.
+     * @returns a localizedNotificationMessage
+     */
+    public get localizedNotificationMessages() {
+        return this._localizedNotificationMessages;
+    };
+    /**
+     * Sets the localizedNotificationMessages property value. The list of localized messages for this Notification Message Template.
+     * @param value Value to set for the localizedNotificationMessages property.
+     */
+    public set localizedNotificationMessages(value: LocalizedNotificationMessage[] | undefined) {
+        this._localizedNotificationMessages = value;
     };
     /**
      * Serializes information the current object
@@ -78,40 +115,5 @@ export class NotificationMessageTemplate extends Entity implements Parsable {
         writer.writeStringValue("displayName", this.displayName);
         writer.writeDateValue("lastModifiedDateTime", this.lastModifiedDateTime);
         writer.writeCollectionOfObjectValues<LocalizedNotificationMessage>("localizedNotificationMessages", this.localizedNotificationMessages);
-    };
-    /**
-     * Sets the brandingOptions property value. The Message Template Branding Options. Branding is defined in the Intune Admin Console. Possible values are: none, includeCompanyLogo, includeCompanyName, includeContactInformation.
-     * @param value Value to set for the brandingOptions property.
-     */
-    public set brandingOptions(value: NotificationTemplateBrandingOptions | undefined) {
-        this._brandingOptions = value;
-    };
-    /**
-     * Sets the defaultLocale property value. The default locale to fallback onto when the requested locale is not available.
-     * @param value Value to set for the defaultLocale property.
-     */
-    public set defaultLocale(value: string | undefined) {
-        this._defaultLocale = value;
-    };
-    /**
-     * Sets the displayName property value. Display name for the Notification Message Template.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. DateTime the object was last modified.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the localizedNotificationMessages property value. The list of localized messages for this Notification Message Template.
-     * @param value Value to set for the localizedNotificationMessages property.
-     */
-    public set localizedNotificationMessages(value: LocalizedNotificationMessage[] | undefined) {
-        this._localizedNotificationMessages = value;
     };
 }

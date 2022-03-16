@@ -1,2 +1,1 @@
-export * from './GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTime'
-export * from './GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder'
+export * from './getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeResponse'

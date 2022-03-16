@@ -1,3 +1,4 @@
+/** Provides operations to call the query method.  */
 export enum EntityType {
     Event = "event",
     Message = "message",

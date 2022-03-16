@@ -1,3 +1,5 @@
+import {createPlannerPlanFromDiscriminatorValue} from './createPlannerPlanFromDiscriminatorValue';
+import {createPlannerTaskFromDiscriminatorValue} from './createPlannerTaskFromDiscriminatorValue';
 import {Entity, PlannerPlan, PlannerTask} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -13,6 +15,16 @@ export class PlannerUser extends Entity implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["plans", (o, n) => { (o as unknown as PlannerUser).plans = n.getCollectionOfObjectValues<PlannerPlan>(createPlannerPlanFromDiscriminatorValue); }],
+            ["tasks", (o, n) => { (o as unknown as PlannerUser).tasks = n.getCollectionOfObjectValues<PlannerTask>(createPlannerTaskFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the plans property value. Read-only. Nullable. Returns the plannerTasks assigned to the user.
      * @returns a plannerPlan
      */
@@ -20,21 +32,11 @@ export class PlannerUser extends Entity implements Parsable {
         return this._plans;
     };
     /**
-     * Gets the tasks property value. Read-only. Nullable. Returns the plannerPlans shared with the user.
-     * @returns a plannerTask
+     * Sets the plans property value. Read-only. Nullable. Returns the plannerTasks assigned to the user.
+     * @param value Value to set for the plans property.
      */
-    public get tasks() {
-        return this._tasks;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["plans", (o, n) => { (o as unknown as PlannerUser).plans = n.getCollectionOfObjectValues<PlannerPlan>(PlannerPlan); }],
-            ["tasks", (o, n) => { (o as unknown as PlannerUser).tasks = n.getCollectionOfObjectValues<PlannerTask>(PlannerTask); }],
-        ]);
+    public set plans(value: PlannerPlan[] | undefined) {
+        this._plans = value;
     };
     /**
      * Serializes information the current object
@@ -47,11 +49,11 @@ export class PlannerUser extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<PlannerTask>("tasks", this.tasks);
     };
     /**
-     * Sets the plans property value. Read-only. Nullable. Returns the plannerTasks assigned to the user.
-     * @param value Value to set for the plans property.
+     * Gets the tasks property value. Read-only. Nullable. Returns the plannerPlans shared with the user.
+     * @returns a plannerTask
      */
-    public set plans(value: PlannerPlan[] | undefined) {
-        this._plans = value;
+    public get tasks() {
+        return this._tasks;
     };
     /**
      * Sets the tasks property value. Read-only. Nullable. Returns the plannerPlans shared with the user.

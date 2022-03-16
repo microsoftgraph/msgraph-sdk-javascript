@@ -1,10 +1,13 @@
 import {WindowsAutopilotDeviceIdentity} from '../../../models/microsoft/graph/';
-import {AssignUserToDeviceRequestBuilder} from './assignUserToDevice/';
-import {UnassignUserFromDeviceRequestBuilder} from './unassignUserFromDevice/';
-import {UpdateDevicePropertiesRequestBuilder} from './updateDeviceProperties/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createWindowsAutopilotDeviceIdentityFromDiscriminatorValue} from '../../../models/microsoft/graph/createWindowsAutopilotDeviceIdentityFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignUserToDeviceRequestBuilder} from './assignUserToDevice/assignUserToDeviceRequestBuilder';
+import {UnassignUserFromDeviceRequestBuilder} from './unassignUserFromDevice/unassignUserFromDeviceRequestBuilder';
+import {UpdateDevicePropertiesRequestBuilder} from './updateDeviceProperties/updateDevicePropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/windowsAutopilotDeviceIdentities/{windowsAutopilotDeviceIdentity-id}  */
+/** Provides operations to manage the windowsAutopilotDeviceIdentities property of the microsoft.graph.deviceManagement entity.  */
 export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
     public get assignUserToDevice(): AssignUserToDeviceRequestBuilder {
         return new AssignUserToDeviceRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -35,7 +38,7 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The Windows autopilot device identities contained collection.
+     * Delete navigation property windowsAutopilotDeviceIdentities for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -70,7 +73,7 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Windows autopilot device identities contained collection.
+     * Update the navigation property windowsAutopilotDeviceIdentities in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -88,7 +91,7 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Windows autopilot device identities contained collection.
+     * Delete navigation property windowsAutopilotDeviceIdentities for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -97,7 +100,11 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The Windows autopilot device identities contained collection.
@@ -114,10 +121,14 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<WindowsAutopilotDeviceIdentity>(requestInfo, WindowsAutopilotDeviceIdentity, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<WindowsAutopilotDeviceIdentity>(requestInfo, createWindowsAutopilotDeviceIdentityFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The Windows autopilot device identities contained collection.
+     * Update the navigation property windowsAutopilotDeviceIdentities in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -128,6 +139,10 @@ export class WindowsAutopilotDeviceIdentityItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

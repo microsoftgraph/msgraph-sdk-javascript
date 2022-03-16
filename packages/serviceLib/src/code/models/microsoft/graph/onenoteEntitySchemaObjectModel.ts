@@ -18,6 +18,13 @@ export class OnenoteEntitySchemaObjectModel extends OnenoteEntityBaseModel imple
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The date and time when the page was created. The timestamp represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,12 +41,5 @@ export class OnenoteEntitySchemaObjectModel extends OnenoteEntityBaseModel imple
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeDateValue("createdDateTime", this.createdDateTime);
-    };
-    /**
-     * Sets the createdDateTime property value. The date and time when the page was created. The timestamp represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
     };
 }

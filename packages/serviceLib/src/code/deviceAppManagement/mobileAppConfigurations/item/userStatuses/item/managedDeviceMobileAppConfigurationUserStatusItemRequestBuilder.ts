@@ -1,7 +1,10 @@
 import {ManagedDeviceMobileAppConfigurationUserStatus} from '../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedDeviceMobileAppConfigurationUserStatusFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createManagedDeviceMobileAppConfigurationUserStatusFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/mobileAppConfigurations/{managedDeviceMobileAppConfiguration-id}/userStatuses/{managedDeviceMobileAppConfigurationUserStatus-id}  */
+/** Provides operations to manage the userStatuses property of the microsoft.graph.managedDeviceMobileAppConfiguration entity.  */
 export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * List of ManagedDeviceMobileAppConfigurationUserStatus.
+     * Delete navigation property userStatuses for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of ManagedDeviceMobileAppConfigurationUserStatus.
+     * Update the navigation property userStatuses in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of ManagedDeviceMobileAppConfigurationUserStatus.
+     * Delete navigation property userStatuses for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * List of ManagedDeviceMobileAppConfigurationUserStatus.
@@ -102,10 +109,14 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedDeviceMobileAppConfigurationUserStatus>(requestInfo, ManagedDeviceMobileAppConfigurationUserStatus, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedDeviceMobileAppConfigurationUserStatus>(requestInfo, createManagedDeviceMobileAppConfigurationUserStatusFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * List of ManagedDeviceMobileAppConfigurationUserStatus.
+     * Update the navigation property userStatuses in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

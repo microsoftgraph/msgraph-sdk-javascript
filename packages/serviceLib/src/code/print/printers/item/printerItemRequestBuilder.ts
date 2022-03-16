@@ -1,12 +1,17 @@
 import {Printer} from '../../../models/microsoft/graph/';
-import {ConnectorsRequestBuilder} from './connectors/';
-import {RestoreFactoryDefaultsRequestBuilder} from './restoreFactoryDefaults/';
-import {SharesRequestBuilder} from './shares/';
-import {TaskTriggersRequestBuilder} from './taskTriggers/';
-import {PrintTaskTriggerItemRequestBuilder} from './taskTriggers/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrinterFromDiscriminatorValue} from '../../../models/microsoft/graph/createPrinterFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ConnectorsRequestBuilder} from './connectors/connectorsRequestBuilder';
+import {PrintConnectorItemRequestBuilder} from './connectors/item/printConnectorItemRequestBuilder';
+import {RestoreFactoryDefaultsRequestBuilder} from './restoreFactoryDefaults/restoreFactoryDefaultsRequestBuilder';
+import {PrinterShareItemRequestBuilder} from './shares/item/printerShareItemRequestBuilder';
+import {SharesRequestBuilder} from './shares/sharesRequestBuilder';
+import {PrintTaskTriggerItemRequestBuilder} from './taskTriggers/item/printTaskTriggerItemRequestBuilder';
+import {TaskTriggersRequestBuilder} from './taskTriggers/taskTriggersRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/printers/{printer-id}  */
+/** Provides operations to manage the printers property of the microsoft.graph.print entity.  */
 export class PrinterItemRequestBuilder {
     public get connectors(): ConnectorsRequestBuilder {
         return new ConnectorsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,6 +32,17 @@ export class PrinterItemRequestBuilder {
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
+     * Gets an item from the MicrosoftGraph.print.printers.item.connectors.item collection
+     * @param id Unique identifier of the item
+     * @returns a printConnectorItemRequestBuilder
+     */
+    public connectorsById(id: string) : PrintConnectorItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["printConnector_id"] = id
+        return new PrintConnectorItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Instantiates a new PrinterItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
@@ -40,7 +56,7 @@ export class PrinterItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of printers registered in the tenant.
+     * Delete navigation property printers for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -75,7 +91,7 @@ export class PrinterItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of printers registered in the tenant.
+     * Update the navigation property printers in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -93,7 +109,7 @@ export class PrinterItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of printers registered in the tenant.
+     * Delete navigation property printers for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -102,7 +118,11 @@ export class PrinterItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of printers registered in the tenant.
@@ -119,10 +139,14 @@ export class PrinterItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Printer>(requestInfo, Printer, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Printer>(requestInfo, createPrinterFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of printers registered in the tenant.
+     * Update the navigation property printers in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -133,7 +157,22 @@ export class PrinterItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.print.printers.item.shares.item collection
+     * @param id Unique identifier of the item
+     * @returns a printerShareItemRequestBuilder
+     */
+    public sharesById(id: string) : PrinterShareItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["printerShare_id"] = id
+        return new PrinterShareItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.print.printers.item.taskTriggers.item collection

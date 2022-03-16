@@ -1,4 +1,5 @@
-import {Entity, VolumeType} from './index';
+import {Entity} from './index';
+import {VolumeType} from './volumeType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class BitlockerRecoveryKey extends Entity implements Parsable {
@@ -24,6 +25,13 @@ export class BitlockerRecoveryKey extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The date and time when the key was originally backed up to Azure Active Directory. Not nullable.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the deviceId property value. Identifier of the device the BitLocker key is originally backed up from. Supports $filter (eq).
      * @returns a string
      */
@@ -31,18 +39,11 @@ export class BitlockerRecoveryKey extends Entity implements Parsable {
         return this._deviceId;
     };
     /**
-     * Gets the key property value. The BitLocker recovery key. Returned only on $select. Not nullable.
-     * @returns a string
+     * Sets the deviceId property value. Identifier of the device the BitLocker key is originally backed up from. Supports $filter (eq).
+     * @param value Value to set for the deviceId property.
      */
-    public get key() {
-        return this._key;
-    };
-    /**
-     * Gets the volumeType property value. Indicates the type of volume the BitLocker key is associated with. The possible values are: 1 (for operatingSystemVolume), 2 (for fixedDataVolume), 3 (for removableDataVolume), and 4 (for unknownFutureValue).
-     * @returns a volumeType
-     */
-    public get volumeType() {
-        return this._volumeType;
+    public set deviceId(value: string | undefined) {
+        this._deviceId = value;
     };
     /**
      * The deserialization information for the current model
@@ -57,6 +58,20 @@ export class BitlockerRecoveryKey extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the key property value. The BitLocker recovery key. Returned only on $select. Not nullable.
+     * @returns a string
+     */
+    public get key() {
+        return this._key;
+    };
+    /**
+     * Sets the key property value. The BitLocker recovery key. Returned only on $select. Not nullable.
+     * @param value Value to set for the key property.
+     */
+    public set key(value: string | undefined) {
+        this._key = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -69,25 +84,11 @@ export class BitlockerRecoveryKey extends Entity implements Parsable {
         writer.writeEnumValue<VolumeType>("volumeType", this.volumeType);
     };
     /**
-     * Sets the createdDateTime property value. The date and time when the key was originally backed up to Azure Active Directory. Not nullable.
-     * @param value Value to set for the createdDateTime property.
+     * Gets the volumeType property value. Indicates the type of volume the BitLocker key is associated with. The possible values are: 1 (for operatingSystemVolume), 2 (for fixedDataVolume), 3 (for removableDataVolume), and 4 (for unknownFutureValue).
+     * @returns a volumeType
      */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the deviceId property value. Identifier of the device the BitLocker key is originally backed up from. Supports $filter (eq).
-     * @param value Value to set for the deviceId property.
-     */
-    public set deviceId(value: string | undefined) {
-        this._deviceId = value;
-    };
-    /**
-     * Sets the key property value. The BitLocker recovery key. Returned only on $select. Not nullable.
-     * @param value Value to set for the key property.
-     */
-    public set key(value: string | undefined) {
-        this._key = value;
+    public get volumeType() {
+        return this._volumeType;
     };
     /**
      * Sets the volumeType property value. Indicates the type of volume the BitLocker key is associated with. The possible values are: 1 (for operatingSystemVolume), 2 (for fixedDataVolume), 3 (for removableDataVolume), and 4 (for unknownFutureValue).

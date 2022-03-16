@@ -1,4 +1,5 @@
-import {Entity, RemoteAssistanceOnboardingStatus} from './index';
+import {Entity} from './index';
+import {RemoteAssistanceOnboardingStatus} from './remoteAssistanceOnboardingStatus';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class RemoteAssistancePartner extends Entity implements Parsable {
@@ -24,25 +25,11 @@ export class RemoteAssistancePartner extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the lastConnectionDateTime property value. Timestamp of the last request sent to Intune by the TEM partner.
-     * @returns a Date
+     * Sets the displayName property value. Display name of the partner.
+     * @param value Value to set for the displayName property.
      */
-    public get lastConnectionDateTime() {
-        return this._lastConnectionDateTime;
-    };
-    /**
-     * Gets the onboardingStatus property value. A friendly description of the current TeamViewer connector status. Possible values are: notOnboarded, onboarding, onboarded.
-     * @returns a remoteAssistanceOnboardingStatus
-     */
-    public get onboardingStatus() {
-        return this._onboardingStatus;
-    };
-    /**
-     * Gets the onboardingUrl property value. URL of the partner's onboarding portal, where an administrator can configure their Remote Assistance service.
-     * @returns a string
-     */
-    public get onboardingUrl() {
-        return this._onboardingUrl;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -57,6 +44,48 @@ export class RemoteAssistancePartner extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the lastConnectionDateTime property value. Timestamp of the last request sent to Intune by the TEM partner.
+     * @returns a Date
+     */
+    public get lastConnectionDateTime() {
+        return this._lastConnectionDateTime;
+    };
+    /**
+     * Sets the lastConnectionDateTime property value. Timestamp of the last request sent to Intune by the TEM partner.
+     * @param value Value to set for the lastConnectionDateTime property.
+     */
+    public set lastConnectionDateTime(value: Date | undefined) {
+        this._lastConnectionDateTime = value;
+    };
+    /**
+     * Gets the onboardingStatus property value. A friendly description of the current TeamViewer connector status. Possible values are: notOnboarded, onboarding, onboarded.
+     * @returns a remoteAssistanceOnboardingStatus
+     */
+    public get onboardingStatus() {
+        return this._onboardingStatus;
+    };
+    /**
+     * Sets the onboardingStatus property value. A friendly description of the current TeamViewer connector status. Possible values are: notOnboarded, onboarding, onboarded.
+     * @param value Value to set for the onboardingStatus property.
+     */
+    public set onboardingStatus(value: RemoteAssistanceOnboardingStatus | undefined) {
+        this._onboardingStatus = value;
+    };
+    /**
+     * Gets the onboardingUrl property value. URL of the partner's onboarding portal, where an administrator can configure their Remote Assistance service.
+     * @returns a string
+     */
+    public get onboardingUrl() {
+        return this._onboardingUrl;
+    };
+    /**
+     * Sets the onboardingUrl property value. URL of the partner's onboarding portal, where an administrator can configure their Remote Assistance service.
+     * @param value Value to set for the onboardingUrl property.
+     */
+    public set onboardingUrl(value: string | undefined) {
+        this._onboardingUrl = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -67,33 +96,5 @@ export class RemoteAssistancePartner extends Entity implements Parsable {
         writer.writeDateValue("lastConnectionDateTime", this.lastConnectionDateTime);
         writer.writeEnumValue<RemoteAssistanceOnboardingStatus>("onboardingStatus", this.onboardingStatus);
         writer.writeStringValue("onboardingUrl", this.onboardingUrl);
-    };
-    /**
-     * Sets the displayName property value. Display name of the partner.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the lastConnectionDateTime property value. Timestamp of the last request sent to Intune by the TEM partner.
-     * @param value Value to set for the lastConnectionDateTime property.
-     */
-    public set lastConnectionDateTime(value: Date | undefined) {
-        this._lastConnectionDateTime = value;
-    };
-    /**
-     * Sets the onboardingStatus property value. A friendly description of the current TeamViewer connector status. Possible values are: notOnboarded, onboarding, onboarded.
-     * @param value Value to set for the onboardingStatus property.
-     */
-    public set onboardingStatus(value: RemoteAssistanceOnboardingStatus | undefined) {
-        this._onboardingStatus = value;
-    };
-    /**
-     * Sets the onboardingUrl property value. URL of the partner's onboarding portal, where an administrator can configure their Remote Assistance service.
-     * @param value Value to set for the onboardingUrl property.
-     */
-    public set onboardingUrl(value: string | undefined) {
-        this._onboardingUrl = value;
     };
 }

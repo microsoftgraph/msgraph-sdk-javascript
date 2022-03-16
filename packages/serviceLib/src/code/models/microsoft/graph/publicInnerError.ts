@@ -1,7 +1,8 @@
+import {createPublicErrorDetailFromDiscriminatorValue} from './createPublicErrorDetailFromDiscriminatorValue';
 import {PublicErrorDetail} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PublicInnerError implements Parsable {
+export class PublicInnerError implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The error code.  */
@@ -13,17 +14,18 @@ export class PublicInnerError implements Parsable {
     /** The target of the error.  */
     private _target?: string | undefined;
     /**
-     * Instantiates a new publicInnerError and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the code property value. The error code.
@@ -33,11 +35,43 @@ export class PublicInnerError implements Parsable {
         return this._code;
     };
     /**
+     * Sets the code property value. The error code.
+     * @param value Value to set for the code property.
+     */
+    public set code(value: string | undefined) {
+        this._code = value;
+    };
+    /**
+     * Instantiates a new publicInnerError and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the details property value. A collection of error details.
      * @returns a publicErrorDetail
      */
     public get details() {
         return this._details;
+    };
+    /**
+     * Sets the details property value. A collection of error details.
+     * @param value Value to set for the details property.
+     */
+    public set details(value: PublicErrorDetail[] | undefined) {
+        this._details = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["code", (o, n) => { (o as unknown as PublicInnerError).code = n.getStringValue(); }],
+            ["details", (o, n) => { (o as unknown as PublicInnerError).details = n.getCollectionOfObjectValues<PublicErrorDetail>(createPublicErrorDetailFromDiscriminatorValue); }],
+            ["message", (o, n) => { (o as unknown as PublicInnerError).message = n.getStringValue(); }],
+            ["target", (o, n) => { (o as unknown as PublicInnerError).target = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the message property value. The error message.
@@ -47,23 +81,11 @@ export class PublicInnerError implements Parsable {
         return this._message;
     };
     /**
-     * Gets the target property value. The target of the error.
-     * @returns a string
+     * Sets the message property value. The error message.
+     * @param value Value to set for the message property.
      */
-    public get target() {
-        return this._target;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["code", (o, n) => { (o as unknown as PublicInnerError).code = n.getStringValue(); }],
-            ["details", (o, n) => { (o as unknown as PublicInnerError).details = n.getCollectionOfObjectValues<PublicErrorDetail>(PublicErrorDetail); }],
-            ["message", (o, n) => { (o as unknown as PublicInnerError).message = n.getStringValue(); }],
-            ["target", (o, n) => { (o as unknown as PublicInnerError).target = n.getStringValue(); }],
-        ]);
+    public set message(value: string | undefined) {
+        this._message = value;
     };
     /**
      * Serializes information the current object
@@ -78,32 +100,11 @@ export class PublicInnerError implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the target property value. The target of the error.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the code property value. The error code.
-     * @param value Value to set for the code property.
-     */
-    public set code(value: string | undefined) {
-        this._code = value;
-    };
-    /**
-     * Sets the details property value. A collection of error details.
-     * @param value Value to set for the details property.
-     */
-    public set details(value: PublicErrorDetail[] | undefined) {
-        this._details = value;
-    };
-    /**
-     * Sets the message property value. The error message.
-     * @param value Value to set for the message property.
-     */
-    public set message(value: string | undefined) {
-        this._message = value;
+    public get target() {
+        return this._target;
     };
     /**
      * Sets the target property value. The target of the error.

@@ -1,8 +1,11 @@
 import {ColumnDefinition} from '../../../../models/microsoft/graph/';
-import {SourceColumnRequestBuilder} from './sourceColumn/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createColumnDefinitionFromDiscriminatorValue} from '../../../../models/microsoft/graph/createColumnDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {SourceColumnRequestBuilder} from './sourceColumn/sourceColumnRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/columns/{columnDefinition-id}  */
+/** Provides operations to manage the columns property of the microsoft.graph.site entity.  */
 export class ColumnDefinitionItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -27,7 +30,7 @@ export class ColumnDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of column definitions reusable across lists under this site.
+     * Delete navigation property columns for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class ColumnDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of column definitions reusable across lists under this site.
+     * Update the navigation property columns in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class ColumnDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of column definitions reusable across lists under this site.
+     * Delete navigation property columns for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class ColumnDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of column definitions reusable across lists under this site.
@@ -106,10 +113,14 @@ export class ColumnDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ColumnDefinition>(requestInfo, ColumnDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ColumnDefinition>(requestInfo, createColumnDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of column definitions reusable across lists under this site.
+     * Update the navigation property columns in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class ColumnDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

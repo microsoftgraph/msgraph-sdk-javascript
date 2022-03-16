@@ -1,9 +1,12 @@
 import {AccessReviewHistoryDefinition} from '../../../../models/microsoft/graph/';
-import {InstancesRequestBuilder} from './instances/';
-import {AccessReviewHistoryInstanceItemRequestBuilder} from './instances/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAccessReviewHistoryDefinitionFromDiscriminatorValue} from '../../../../models/microsoft/graph/createAccessReviewHistoryDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InstancesRequestBuilder} from './instances/instancesRequestBuilder';
+import {AccessReviewHistoryInstanceItemRequestBuilder} from './instances/item/accessReviewHistoryInstanceItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/accessReviews/historyDefinitions/{accessReviewHistoryDefinition-id}  */
+/** Provides operations to manage the historyDefinitions property of the microsoft.graph.accessReviewSet entity.  */
 export class AccessReviewHistoryDefinitionItemRequestBuilder {
     public get instances(): InstancesRequestBuilder {
         return new InstancesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents a collection of access review history data and the scopes used to collect that data.
+     * Delete navigation property historyDefinitions for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a collection of access review history data and the scopes used to collect that data.
+     * Update the navigation property historyDefinitions in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a collection of access review history data and the scopes used to collect that data.
+     * Delete navigation property historyDefinitions for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Represents a collection of access review history data and the scopes used to collect that data.
@@ -107,7 +114,11 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessReviewHistoryDefinition>(requestInfo, AccessReviewHistoryDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessReviewHistoryDefinition>(requestInfo, createAccessReviewHistoryDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.accessReviews.historyDefinitions.item.instances.item collection
@@ -121,7 +132,7 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         return new AccessReviewHistoryInstanceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Represents a collection of access review history data and the scopes used to collect that data.
+     * Update the navigation property historyDefinitions in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class AccessReviewHistoryDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class IntegerRange implements Parsable {
+export class IntegerRange implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The inclusive upper bound of the integer range.  */
@@ -8,17 +8,24 @@ export class IntegerRange implements Parsable {
     /** The inclusive lower bound of the integer range.  */
     private _start?: number | undefined;
     /**
-     * Instantiates a new integerRange and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new integerRange and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the end property value. The inclusive upper bound of the integer range.
@@ -28,11 +35,11 @@ export class IntegerRange implements Parsable {
         return this._end;
     };
     /**
-     * Gets the start property value. The inclusive lower bound of the integer range.
-     * @returns a int64
+     * Sets the end property value. The inclusive upper bound of the integer range.
+     * @param value Value to set for the end property.
      */
-    public get start() {
-        return this._start;
+    public set end(value: number | undefined) {
+        this._end = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class IntegerRange implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the start property value. The inclusive lower bound of the integer range.
+     * @returns a int64
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the end property value. The inclusive upper bound of the integer range.
-     * @param value Value to set for the end property.
-     */
-    public set end(value: number | undefined) {
-        this._end = value;
+    public get start() {
+        return this._start;
     };
     /**
      * Sets the start property value. The inclusive lower bound of the integer range.

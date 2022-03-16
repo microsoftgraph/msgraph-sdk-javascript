@@ -1,4 +1,6 @@
-import {ChangeTrackedEntity, ScheduleChangeRequestActor, ScheduleChangeState} from './index';
+import {ChangeTrackedEntity} from './index';
+import {ScheduleChangeRequestActor} from './scheduleChangeRequestActor';
+import {ScheduleChangeState} from './scheduleChangeState';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ScheduleChangeRequest extends ChangeTrackedEntity implements Parsable {
@@ -11,12 +13,6 @@ export class ScheduleChangeRequest extends ChangeTrackedEntity implements Parsab
     private _senderUserId?: string | undefined;
     private _state?: ScheduleChangeState | undefined;
     /**
-     * Instantiates a new scheduleChangeRequest and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the assignedTo property value. 
      * @returns a scheduleChangeRequestActor
      */
@@ -24,53 +20,17 @@ export class ScheduleChangeRequest extends ChangeTrackedEntity implements Parsab
         return this._assignedTo;
     };
     /**
-     * Gets the managerActionDateTime property value. 
-     * @returns a Date
+     * Sets the assignedTo property value. 
+     * @param value Value to set for the assignedTo property.
      */
-    public get managerActionDateTime() {
-        return this._managerActionDateTime;
+    public set assignedTo(value: ScheduleChangeRequestActor | undefined) {
+        this._assignedTo = value;
     };
     /**
-     * Gets the managerActionMessage property value. 
-     * @returns a string
+     * Instantiates a new scheduleChangeRequest and sets the default values.
      */
-    public get managerActionMessage() {
-        return this._managerActionMessage;
-    };
-    /**
-     * Gets the managerUserId property value. 
-     * @returns a string
-     */
-    public get managerUserId() {
-        return this._managerUserId;
-    };
-    /**
-     * Gets the senderDateTime property value. 
-     * @returns a Date
-     */
-    public get senderDateTime() {
-        return this._senderDateTime;
-    };
-    /**
-     * Gets the senderMessage property value. 
-     * @returns a string
-     */
-    public get senderMessage() {
-        return this._senderMessage;
-    };
-    /**
-     * Gets the senderUserId property value. 
-     * @returns a string
-     */
-    public get senderUserId() {
-        return this._senderUserId;
-    };
-    /**
-     * Gets the state property value. 
-     * @returns a scheduleChangeState
-     */
-    public get state() {
-        return this._state;
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -89,6 +49,90 @@ export class ScheduleChangeRequest extends ChangeTrackedEntity implements Parsab
         ]);
     };
     /**
+     * Gets the managerActionDateTime property value. 
+     * @returns a Date
+     */
+    public get managerActionDateTime() {
+        return this._managerActionDateTime;
+    };
+    /**
+     * Sets the managerActionDateTime property value. 
+     * @param value Value to set for the managerActionDateTime property.
+     */
+    public set managerActionDateTime(value: Date | undefined) {
+        this._managerActionDateTime = value;
+    };
+    /**
+     * Gets the managerActionMessage property value. 
+     * @returns a string
+     */
+    public get managerActionMessage() {
+        return this._managerActionMessage;
+    };
+    /**
+     * Sets the managerActionMessage property value. 
+     * @param value Value to set for the managerActionMessage property.
+     */
+    public set managerActionMessage(value: string | undefined) {
+        this._managerActionMessage = value;
+    };
+    /**
+     * Gets the managerUserId property value. 
+     * @returns a string
+     */
+    public get managerUserId() {
+        return this._managerUserId;
+    };
+    /**
+     * Sets the managerUserId property value. 
+     * @param value Value to set for the managerUserId property.
+     */
+    public set managerUserId(value: string | undefined) {
+        this._managerUserId = value;
+    };
+    /**
+     * Gets the senderDateTime property value. 
+     * @returns a Date
+     */
+    public get senderDateTime() {
+        return this._senderDateTime;
+    };
+    /**
+     * Sets the senderDateTime property value. 
+     * @param value Value to set for the senderDateTime property.
+     */
+    public set senderDateTime(value: Date | undefined) {
+        this._senderDateTime = value;
+    };
+    /**
+     * Gets the senderMessage property value. 
+     * @returns a string
+     */
+    public get senderMessage() {
+        return this._senderMessage;
+    };
+    /**
+     * Sets the senderMessage property value. 
+     * @param value Value to set for the senderMessage property.
+     */
+    public set senderMessage(value: string | undefined) {
+        this._senderMessage = value;
+    };
+    /**
+     * Gets the senderUserId property value. 
+     * @returns a string
+     */
+    public get senderUserId() {
+        return this._senderUserId;
+    };
+    /**
+     * Sets the senderUserId property value. 
+     * @param value Value to set for the senderUserId property.
+     */
+    public set senderUserId(value: string | undefined) {
+        this._senderUserId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -105,53 +149,11 @@ export class ScheduleChangeRequest extends ChangeTrackedEntity implements Parsab
         writer.writeEnumValue<ScheduleChangeState>("state", this.state);
     };
     /**
-     * Sets the assignedTo property value. 
-     * @param value Value to set for the assignedTo property.
+     * Gets the state property value. 
+     * @returns a scheduleChangeState
      */
-    public set assignedTo(value: ScheduleChangeRequestActor | undefined) {
-        this._assignedTo = value;
-    };
-    /**
-     * Sets the managerActionDateTime property value. 
-     * @param value Value to set for the managerActionDateTime property.
-     */
-    public set managerActionDateTime(value: Date | undefined) {
-        this._managerActionDateTime = value;
-    };
-    /**
-     * Sets the managerActionMessage property value. 
-     * @param value Value to set for the managerActionMessage property.
-     */
-    public set managerActionMessage(value: string | undefined) {
-        this._managerActionMessage = value;
-    };
-    /**
-     * Sets the managerUserId property value. 
-     * @param value Value to set for the managerUserId property.
-     */
-    public set managerUserId(value: string | undefined) {
-        this._managerUserId = value;
-    };
-    /**
-     * Sets the senderDateTime property value. 
-     * @param value Value to set for the senderDateTime property.
-     */
-    public set senderDateTime(value: Date | undefined) {
-        this._senderDateTime = value;
-    };
-    /**
-     * Sets the senderMessage property value. 
-     * @param value Value to set for the senderMessage property.
-     */
-    public set senderMessage(value: string | undefined) {
-        this._senderMessage = value;
-    };
-    /**
-     * Sets the senderUserId property value. 
-     * @param value Value to set for the senderUserId property.
-     */
-    public set senderUserId(value: string | undefined) {
-        this._senderUserId = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. 

@@ -1,11 +1,14 @@
 import {PermissionGrantPolicy} from '../../../models/microsoft/graph/';
-import {ExcludesRequestBuilder} from './excludes/';
-import {PermissionGrantConditionSetItemRequestBuilder as icdcaecb83e1a96823841e24d4d4a38ca237ec43d8d6f0a211ddf19094fe784e7} from './excludes/item/';
-import {IncludesRequestBuilder} from './includes/';
-import {PermissionGrantConditionSetItemRequestBuilder as if6b0fc6e3bf6ebc5e7e4db0060a5a67ea185eac93d504145bd6be716c61fa0d4} from './includes/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPermissionGrantPolicyFromDiscriminatorValue} from '../../../models/microsoft/graph/createPermissionGrantPolicyFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ExcludesRequestBuilder} from './excludes/excludesRequestBuilder';
+import {PermissionGrantConditionSetItemRequestBuilder as icdcaecb83e1a96823841e24d4d4a38ca237ec43d8d6f0a211ddf19094fe784e7} from './excludes/item/permissionGrantConditionSetItemRequestBuilder';
+import {IncludesRequestBuilder} from './includes/includesRequestBuilder';
+import {PermissionGrantConditionSetItemRequestBuilder as if6b0fc6e3bf6ebc5e7e4db0060a5a67ea185eac93d504145bd6be716c61fa0d4} from './includes/item/permissionGrantConditionSetItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /policies/permissionGrantPolicies/{permissionGrantPolicy-id}  */
+/** Provides operations to manage the permissionGrantPolicies property of the microsoft.graph.policyRoot entity.  */
 export class PermissionGrantPolicyItemRequestBuilder {
     public get excludes(): ExcludesRequestBuilder {
         return new ExcludesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class PermissionGrantPolicyItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The policy that specifies the conditions under which consent can be granted.
+     * Delete navigation property permissionGrantPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class PermissionGrantPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The policy that specifies the conditions under which consent can be granted.
+     * Update the navigation property permissionGrantPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class PermissionGrantPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The policy that specifies the conditions under which consent can be granted.
+     * Delete navigation property permissionGrantPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class PermissionGrantPolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.policies.permissionGrantPolicies.item.excludes.item collection
@@ -123,7 +130,11 @@ export class PermissionGrantPolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PermissionGrantPolicy>(requestInfo, PermissionGrantPolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PermissionGrantPolicy>(requestInfo, createPermissionGrantPolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.policies.permissionGrantPolicies.item.includes.item collection
@@ -137,7 +148,7 @@ export class PermissionGrantPolicyItemRequestBuilder {
         return new if6b0fc6e3bf6ebc5e7e4db0060a5a67ea185eac93d504145bd6be716c61fa0d4(urlTplParams, this.requestAdapter);
     };
     /**
-     * The policy that specifies the conditions under which consent can be granted.
+     * Update the navigation property permissionGrantPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -148,6 +159,10 @@ export class PermissionGrantPolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

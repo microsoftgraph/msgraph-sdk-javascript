@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AttendanceInterval implements Parsable {
+export class AttendanceInterval implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Duration of the meeting interval in seconds; that is, the difference between joinDateTime and leaveDateTime.  */
@@ -10,17 +10,24 @@ export class AttendanceInterval implements Parsable {
     /** The time the attendee left in UTC.  */
     private _leaveDateTime?: Date | undefined;
     /**
-     * Instantiates a new attendanceInterval and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new attendanceInterval and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the durationInSeconds property value. Duration of the meeting interval in seconds; that is, the difference between joinDateTime and leaveDateTime.
@@ -30,18 +37,11 @@ export class AttendanceInterval implements Parsable {
         return this._durationInSeconds;
     };
     /**
-     * Gets the joinDateTime property value. The time the attendee joined in UTC.
-     * @returns a Date
+     * Sets the durationInSeconds property value. Duration of the meeting interval in seconds; that is, the difference between joinDateTime and leaveDateTime.
+     * @param value Value to set for the durationInSeconds property.
      */
-    public get joinDateTime() {
-        return this._joinDateTime;
-    };
-    /**
-     * Gets the leaveDateTime property value. The time the attendee left in UTC.
-     * @returns a Date
-     */
-    public get leaveDateTime() {
-        return this._leaveDateTime;
+    public set durationInSeconds(value: number | undefined) {
+        this._durationInSeconds = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,29 +55,11 @@ export class AttendanceInterval implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the joinDateTime property value. The time the attendee joined in UTC.
+     * @returns a Date
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeNumberValue("durationInSeconds", this.durationInSeconds);
-        writer.writeDateValue("joinDateTime", this.joinDateTime);
-        writer.writeDateValue("leaveDateTime", this.leaveDateTime);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the durationInSeconds property value. Duration of the meeting interval in seconds; that is, the difference between joinDateTime and leaveDateTime.
-     * @param value Value to set for the durationInSeconds property.
-     */
-    public set durationInSeconds(value: number | undefined) {
-        this._durationInSeconds = value;
+    public get joinDateTime() {
+        return this._joinDateTime;
     };
     /**
      * Sets the joinDateTime property value. The time the attendee joined in UTC.
@@ -87,10 +69,28 @@ export class AttendanceInterval implements Parsable {
         this._joinDateTime = value;
     };
     /**
+     * Gets the leaveDateTime property value. The time the attendee left in UTC.
+     * @returns a Date
+     */
+    public get leaveDateTime() {
+        return this._leaveDateTime;
+    };
+    /**
      * Sets the leaveDateTime property value. The time the attendee left in UTC.
      * @param value Value to set for the leaveDateTime property.
      */
     public set leaveDateTime(value: Date | undefined) {
         this._leaveDateTime = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeNumberValue("durationInSeconds", this.durationInSeconds);
+        writer.writeDateValue("joinDateTime", this.joinDateTime);
+        writer.writeDateValue("leaveDateTime", this.leaveDateTime);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

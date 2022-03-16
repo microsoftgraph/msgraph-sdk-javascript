@@ -1,10 +1,17 @@
-import {AccessReviewInstance} from '../../../../../models/microsoft/graph/';
-import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/';
-import {InstancesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {AccessReviewInstance, AccessReviewInstanceCollectionResponse} from '../../../../../models/microsoft/graph/';
+import {createAccessReviewInstanceCollectionResponseFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAccessReviewInstanceCollectionResponseFromDiscriminatorValue';
+import {createAccessReviewInstanceFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAccessReviewInstanceFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/filterByCurrentUserWithOnRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/accessReviews/definitions/{accessReviewScheduleDefinition-id}/instances  */
+/** Provides operations to manage the instances property of the microsoft.graph.accessReviewScheduleDefinition entity.  */
 export class InstancesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -51,7 +58,7 @@ export class InstancesRequestBuilder {
         return requestInfo;
     };
     /**
-     * If the accessReviewScheduleDefinition is a recurring access review, instances represent each recurrence. A review that does not recur will have exactly one instance. Instances also represent each unique resource under review in the accessReviewScheduleDefinition. If a review has multiple resources and multiple instances, each resource will have a unique instance for each recurrence.
+     * Create new navigation property to instances for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -69,8 +76,8 @@ export class InstancesRequestBuilder {
         return requestInfo;
     };
     /**
-     * Builds and executes requests for operations under /identityGovernance/accessReviews/definitions/{accessReviewScheduleDefinition-id}/instances/microsoft.graph.filterByCurrentUser(on={on})
-     * @param on Usage: on={on}
+     * Provides operations to call the filterByCurrentUser method.
+     * @param on Usage: on='{on}'
      * @returns a filterByCurrentUserWithOnRequestBuilder
      */
     public filterByCurrentUserWithOn(on: string | undefined) : FilterByCurrentUserWithOnRequestBuilder {
@@ -83,7 +90,7 @@ export class InstancesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of InstancesResponse
+     * @returns a Promise of AccessReviewInstanceCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -94,14 +101,18 @@ export class InstancesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<InstancesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AccessReviewInstanceCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<InstancesResponse>(requestInfo, InstancesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessReviewInstanceCollectionResponse>(requestInfo, createAccessReviewInstanceCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * If the accessReviewScheduleDefinition is a recurring access review, instances represent each recurrence. A review that does not recur will have exactly one instance. Instances also represent each unique resource under review in the accessReviewScheduleDefinition. If a review has multiple resources and multiple instances, each resource will have a unique instance for each recurrence.
+     * Create new navigation property to instances for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -113,6 +124,10 @@ export class InstancesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessReviewInstance>(requestInfo, AccessReviewInstance, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessReviewInstance>(requestInfo, createAccessReviewInstanceFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

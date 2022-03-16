@@ -1,18 +1,12 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class IncompleteData implements Parsable {
+export class IncompleteData implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The service does not have source data before the specified time.  */
     private _missingDataBeforeDateTime?: Date | undefined;
     /** Some data was not recorded due to excessive activity.  */
     private _wasThrottled?: boolean | undefined;
-    /**
-     * Instantiates a new incompleteData and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -21,18 +15,17 @@ export class IncompleteData implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the missingDataBeforeDateTime property value. The service does not have source data before the specified time.
-     * @returns a Date
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get missingDataBeforeDateTime() {
-        return this._missingDataBeforeDateTime;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the wasThrottled property value. Some data was not recorded due to excessive activity.
-     * @returns a boolean
+     * Instantiates a new incompleteData and sets the default values.
      */
-    public get wasThrottled() {
-        return this._wasThrottled;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -45,6 +38,20 @@ export class IncompleteData implements Parsable {
         ]);
     };
     /**
+     * Gets the missingDataBeforeDateTime property value. The service does not have source data before the specified time.
+     * @returns a Date
+     */
+    public get missingDataBeforeDateTime() {
+        return this._missingDataBeforeDateTime;
+    };
+    /**
+     * Sets the missingDataBeforeDateTime property value. The service does not have source data before the specified time.
+     * @param value Value to set for the missingDataBeforeDateTime property.
+     */
+    public set missingDataBeforeDateTime(value: Date | undefined) {
+        this._missingDataBeforeDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -55,18 +62,11 @@ export class IncompleteData implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the wasThrottled property value. Some data was not recorded due to excessive activity.
+     * @returns a boolean
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the missingDataBeforeDateTime property value. The service does not have source data before the specified time.
-     * @param value Value to set for the missingDataBeforeDateTime property.
-     */
-    public set missingDataBeforeDateTime(value: Date | undefined) {
-        this._missingDataBeforeDateTime = value;
+    public get wasThrottled() {
+        return this._wasThrottled;
     };
     /**
      * Sets the wasThrottled property value. Some data was not recorded due to excessive activity.

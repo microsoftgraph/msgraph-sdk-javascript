@@ -1,3 +1,9 @@
+import {createContentTypeInfoFromDiscriminatorValue} from './createContentTypeInfoFromDiscriminatorValue';
+import {createDriveItemFromDiscriminatorValue} from './createDriveItemFromDiscriminatorValue';
+import {createFieldValueSetFromDiscriminatorValue} from './createFieldValueSetFromDiscriminatorValue';
+import {createItemAnalyticsFromDiscriminatorValue} from './createItemAnalyticsFromDiscriminatorValue';
+import {createListItemVersionFromDiscriminatorValue} from './createListItemVersionFromDiscriminatorValue';
+import {createSharepointIdsFromDiscriminatorValue} from './createSharepointIdsFromDiscriminatorValue';
 import {BaseItem, ContentTypeInfo, DriveItem, FieldValueSet, ItemAnalytics, ListItemVersion, SharepointIds} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -15,17 +21,24 @@ export class ListItem extends BaseItem implements Parsable {
     /** The list of previous versions of the list item.  */
     private _versions?: ListItemVersion[] | undefined;
     /**
-     * Instantiates a new listItem and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the analytics property value. Analytics about the view activities that took place on this item.
      * @returns a itemAnalytics
      */
     public get analytics() {
         return this._analytics;
+    };
+    /**
+     * Sets the analytics property value. Analytics about the view activities that took place on this item.
+     * @param value Value to set for the analytics property.
+     */
+    public set analytics(value: ItemAnalytics | undefined) {
+        this._analytics = value;
+    };
+    /**
+     * Instantiates a new listItem and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the contentType property value. The content type of this list item
@@ -35,11 +48,25 @@ export class ListItem extends BaseItem implements Parsable {
         return this._contentType;
     };
     /**
+     * Sets the contentType property value. The content type of this list item
+     * @param value Value to set for the contentType property.
+     */
+    public set contentType(value: ContentTypeInfo | undefined) {
+        this._contentType = value;
+    };
+    /**
      * Gets the driveItem property value. For document libraries, the driveItem relationship exposes the listItem as a [driveItem][]
      * @returns a driveItem
      */
     public get driveItem() {
         return this._driveItem;
+    };
+    /**
+     * Sets the driveItem property value. For document libraries, the driveItem relationship exposes the listItem as a [driveItem][]
+     * @param value Value to set for the driveItem property.
+     */
+    public set driveItem(value: DriveItem | undefined) {
+        this._driveItem = value;
     };
     /**
      * Gets the fields property value. The values of the columns set on this list item.
@@ -49,18 +76,11 @@ export class ListItem extends BaseItem implements Parsable {
         return this._fields;
     };
     /**
-     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
-     * @returns a sharepointIds
+     * Sets the fields property value. The values of the columns set on this list item.
+     * @param value Value to set for the fields property.
      */
-    public get sharepointIds() {
-        return this._sharepointIds;
-    };
-    /**
-     * Gets the versions property value. The list of previous versions of the list item.
-     * @returns a listItemVersion
-     */
-    public get versions() {
-        return this._versions;
+    public set fields(value: FieldValueSet | undefined) {
+        this._fields = value;
     };
     /**
      * The deserialization information for the current model
@@ -68,12 +88,12 @@ export class ListItem extends BaseItem implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["analytics", (o, n) => { (o as unknown as ListItem).analytics = n.getObjectValue<ItemAnalytics>(ItemAnalytics); }],
-            ["contentType", (o, n) => { (o as unknown as ListItem).contentType = n.getObjectValue<ContentTypeInfo>(ContentTypeInfo); }],
-            ["driveItem", (o, n) => { (o as unknown as ListItem).driveItem = n.getObjectValue<DriveItem>(DriveItem); }],
-            ["fields", (o, n) => { (o as unknown as ListItem).fields = n.getObjectValue<FieldValueSet>(FieldValueSet); }],
-            ["sharepointIds", (o, n) => { (o as unknown as ListItem).sharepointIds = n.getObjectValue<SharepointIds>(SharepointIds); }],
-            ["versions", (o, n) => { (o as unknown as ListItem).versions = n.getCollectionOfObjectValues<ListItemVersion>(ListItemVersion); }],
+            ["analytics", (o, n) => { (o as unknown as ListItem).analytics = n.getObjectValue<ItemAnalytics>(createItemAnalyticsFromDiscriminatorValue); }],
+            ["contentType", (o, n) => { (o as unknown as ListItem).contentType = n.getObjectValue<ContentTypeInfo>(createContentTypeInfoFromDiscriminatorValue); }],
+            ["driveItem", (o, n) => { (o as unknown as ListItem).driveItem = n.getObjectValue<DriveItem>(createDriveItemFromDiscriminatorValue); }],
+            ["fields", (o, n) => { (o as unknown as ListItem).fields = n.getObjectValue<FieldValueSet>(createFieldValueSetFromDiscriminatorValue); }],
+            ["sharepointIds", (o, n) => { (o as unknown as ListItem).sharepointIds = n.getObjectValue<SharepointIds>(createSharepointIdsFromDiscriminatorValue); }],
+            ["versions", (o, n) => { (o as unknown as ListItem).versions = n.getCollectionOfObjectValues<ListItemVersion>(createListItemVersionFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -91,32 +111,11 @@ export class ListItem extends BaseItem implements Parsable {
         writer.writeCollectionOfObjectValues<ListItemVersion>("versions", this.versions);
     };
     /**
-     * Sets the analytics property value. Analytics about the view activities that took place on this item.
-     * @param value Value to set for the analytics property.
+     * Gets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
+     * @returns a sharepointIds
      */
-    public set analytics(value: ItemAnalytics | undefined) {
-        this._analytics = value;
-    };
-    /**
-     * Sets the contentType property value. The content type of this list item
-     * @param value Value to set for the contentType property.
-     */
-    public set contentType(value: ContentTypeInfo | undefined) {
-        this._contentType = value;
-    };
-    /**
-     * Sets the driveItem property value. For document libraries, the driveItem relationship exposes the listItem as a [driveItem][]
-     * @param value Value to set for the driveItem property.
-     */
-    public set driveItem(value: DriveItem | undefined) {
-        this._driveItem = value;
-    };
-    /**
-     * Sets the fields property value. The values of the columns set on this list item.
-     * @param value Value to set for the fields property.
-     */
-    public set fields(value: FieldValueSet | undefined) {
-        this._fields = value;
+    public get sharepointIds() {
+        return this._sharepointIds;
     };
     /**
      * Sets the sharepointIds property value. Returns identifiers useful for SharePoint REST compatibility. Read-only.
@@ -124,6 +123,13 @@ export class ListItem extends BaseItem implements Parsable {
      */
     public set sharepointIds(value: SharepointIds | undefined) {
         this._sharepointIds = value;
+    };
+    /**
+     * Gets the versions property value. The list of previous versions of the list item.
+     * @returns a listItemVersion
+     */
+    public get versions() {
+        return this._versions;
     };
     /**
      * Sets the versions property value. The list of previous versions of the list item.

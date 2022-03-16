@@ -1,11 +1,14 @@
 import {UserFlowLanguageConfiguration} from '../../../../../models/microsoft/graph/';
-import {DefaultPagesRequestBuilder} from './defaultPages/';
-import {UserFlowLanguagePageItemRequestBuilder as i02445f928641d2528ff8432aa10fa9fe28f9e155676802b7e96972f05481bf87} from './defaultPages/item/';
-import {OverridesPagesRequestBuilder} from './overridesPages/';
-import {UserFlowLanguagePageItemRequestBuilder as i61debdccf08937ace9cec969a566b0bbba67db81f7ccb7650e4a0edd79c937e2} from './overridesPages/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserFlowLanguageConfigurationFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createUserFlowLanguageConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DefaultPagesRequestBuilder} from './defaultPages/defaultPagesRequestBuilder';
+import {UserFlowLanguagePageItemRequestBuilder as i02445f928641d2528ff8432aa10fa9fe28f9e155676802b7e96972f05481bf87} from './defaultPages/item/userFlowLanguagePageItemRequestBuilder';
+import {UserFlowLanguagePageItemRequestBuilder as i61debdccf08937ace9cec969a566b0bbba67db81f7ccb7650e4a0edd79c937e2} from './overridesPages/item/userFlowLanguagePageItemRequestBuilder';
+import {OverridesPagesRequestBuilder} from './overridesPages/overridesPagesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}/languages/{userFlowLanguageConfiguration-id}  */
+/** Provides operations to manage the languages property of the microsoft.graph.b2xIdentityUserFlow entity.  */
 export class UserFlowLanguageConfigurationItemRequestBuilder {
     public get defaultPages(): DefaultPagesRequestBuilder {
         return new DefaultPagesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Delete navigation property languages for identity
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Update the navigation property languages in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -97,7 +100,7 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         return new i02445f928641d2528ff8432aa10fa9fe28f9e155676802b7e96972f05481bf87(urlTplParams, this.requestAdapter);
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Delete navigation property languages for identity
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -106,7 +109,11 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
@@ -123,7 +130,11 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserFlowLanguageConfiguration>(requestInfo, UserFlowLanguageConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserFlowLanguageConfiguration>(requestInfo, createUserFlowLanguageConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identity.b2xUserFlows.item.languages.item.overridesPages.item collection
@@ -137,7 +148,7 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         return new i61debdccf08937ace9cec969a566b0bbba67db81f7ccb7650e4a0edd79c937e2(urlTplParams, this.requestAdapter);
     };
     /**
-     * The languages supported for customization within the user flow. Language customization is enabled by default in self-service sign-up user flow. You cannot create custom languages in self-service sign-up user flows.
+     * Update the navigation property languages in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -148,6 +159,10 @@ export class UserFlowLanguageConfigurationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

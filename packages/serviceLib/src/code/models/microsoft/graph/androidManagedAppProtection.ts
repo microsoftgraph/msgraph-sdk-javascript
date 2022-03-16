@@ -1,3 +1,5 @@
+import {createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue} from './createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue';
+import {createManagedMobileAppFromDiscriminatorValue} from './createManagedMobileAppFromDiscriminatorValue';
 import {ManagedAppPolicyDeploymentSummary, ManagedMobileApp, TargetedManagedAppProtection} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -23,17 +25,24 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
     /** Indicates whether a managed user can take screen captures of managed apps  */
     private _screenCaptureBlocked?: boolean | undefined;
     /**
-     * Instantiates a new androidManagedAppProtection and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the apps property value. List of apps to which the policy is deployed.
      * @returns a managedMobileApp
      */
     public get apps() {
         return this._apps;
+    };
+    /**
+     * Sets the apps property value. List of apps to which the policy is deployed.
+     * @param value Value to set for the apps property.
+     */
+    public set apps(value: ManagedMobileApp[] | undefined) {
+        this._apps = value;
+    };
+    /**
+     * Instantiates a new androidManagedAppProtection and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the customBrowserDisplayName property value. Friendly name of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
@@ -43,11 +52,25 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         return this._customBrowserDisplayName;
     };
     /**
+     * Sets the customBrowserDisplayName property value. Friendly name of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
+     * @param value Value to set for the customBrowserDisplayName property.
+     */
+    public set customBrowserDisplayName(value: string | undefined) {
+        this._customBrowserDisplayName = value;
+    };
+    /**
      * Gets the customBrowserPackageId property value. Unique identifier of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
      * @returns a string
      */
     public get customBrowserPackageId() {
         return this._customBrowserPackageId;
+    };
+    /**
+     * Sets the customBrowserPackageId property value. Unique identifier of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
+     * @param value Value to set for the customBrowserPackageId property.
+     */
+    public set customBrowserPackageId(value: string | undefined) {
+        this._customBrowserPackageId = value;
     };
     /**
      * Gets the deployedAppCount property value. Count of apps to which the current policy is deployed.
@@ -57,11 +80,25 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         return this._deployedAppCount;
     };
     /**
+     * Sets the deployedAppCount property value. Count of apps to which the current policy is deployed.
+     * @param value Value to set for the deployedAppCount property.
+     */
+    public set deployedAppCount(value: number | undefined) {
+        this._deployedAppCount = value;
+    };
+    /**
      * Gets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
      * @returns a managedAppPolicyDeploymentSummary
      */
     public get deploymentSummary() {
         return this._deploymentSummary;
+    };
+    /**
+     * Sets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
+     * @param value Value to set for the deploymentSummary property.
+     */
+    public set deploymentSummary(value: ManagedAppPolicyDeploymentSummary | undefined) {
+        this._deploymentSummary = value;
     };
     /**
      * Gets the disableAppEncryptionIfDeviceEncryptionIsEnabled property value. When this setting is enabled, app level encryption is disabled if device level encryption is enabled
@@ -71,11 +108,43 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         return this._disableAppEncryptionIfDeviceEncryptionIsEnabled;
     };
     /**
+     * Sets the disableAppEncryptionIfDeviceEncryptionIsEnabled property value. When this setting is enabled, app level encryption is disabled if device level encryption is enabled
+     * @param value Value to set for the disableAppEncryptionIfDeviceEncryptionIsEnabled property.
+     */
+    public set disableAppEncryptionIfDeviceEncryptionIsEnabled(value: boolean | undefined) {
+        this._disableAppEncryptionIfDeviceEncryptionIsEnabled = value;
+    };
+    /**
      * Gets the encryptAppData property value. Indicates whether application data for managed apps should be encrypted
      * @returns a boolean
      */
     public get encryptAppData() {
         return this._encryptAppData;
+    };
+    /**
+     * Sets the encryptAppData property value. Indicates whether application data for managed apps should be encrypted
+     * @param value Value to set for the encryptAppData property.
+     */
+    public set encryptAppData(value: boolean | undefined) {
+        this._encryptAppData = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["apps", (o, n) => { (o as unknown as AndroidManagedAppProtection).apps = n.getCollectionOfObjectValues<ManagedMobileApp>(createManagedMobileAppFromDiscriminatorValue); }],
+            ["customBrowserDisplayName", (o, n) => { (o as unknown as AndroidManagedAppProtection).customBrowserDisplayName = n.getStringValue(); }],
+            ["customBrowserPackageId", (o, n) => { (o as unknown as AndroidManagedAppProtection).customBrowserPackageId = n.getStringValue(); }],
+            ["deployedAppCount", (o, n) => { (o as unknown as AndroidManagedAppProtection).deployedAppCount = n.getNumberValue(); }],
+            ["deploymentSummary", (o, n) => { (o as unknown as AndroidManagedAppProtection).deploymentSummary = n.getObjectValue<ManagedAppPolicyDeploymentSummary>(createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue); }],
+            ["disableAppEncryptionIfDeviceEncryptionIsEnabled", (o, n) => { (o as unknown as AndroidManagedAppProtection).disableAppEncryptionIfDeviceEncryptionIsEnabled = n.getBooleanValue(); }],
+            ["encryptAppData", (o, n) => { (o as unknown as AndroidManagedAppProtection).encryptAppData = n.getBooleanValue(); }],
+            ["minimumRequiredPatchVersion", (o, n) => { (o as unknown as AndroidManagedAppProtection).minimumRequiredPatchVersion = n.getStringValue(); }],
+            ["minimumWarningPatchVersion", (o, n) => { (o as unknown as AndroidManagedAppProtection).minimumWarningPatchVersion = n.getStringValue(); }],
+            ["screenCaptureBlocked", (o, n) => { (o as unknown as AndroidManagedAppProtection).screenCaptureBlocked = n.getBooleanValue(); }],
+        ]);
     };
     /**
      * Gets the minimumRequiredPatchVersion property value. Define the oldest required Android security patch level a user can have to gain secure access to the app.
@@ -85,11 +154,25 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         return this._minimumRequiredPatchVersion;
     };
     /**
+     * Sets the minimumRequiredPatchVersion property value. Define the oldest required Android security patch level a user can have to gain secure access to the app.
+     * @param value Value to set for the minimumRequiredPatchVersion property.
+     */
+    public set minimumRequiredPatchVersion(value: string | undefined) {
+        this._minimumRequiredPatchVersion = value;
+    };
+    /**
      * Gets the minimumWarningPatchVersion property value. Define the oldest recommended Android security patch level a user can have for secure access to the app.
      * @returns a string
      */
     public get minimumWarningPatchVersion() {
         return this._minimumWarningPatchVersion;
+    };
+    /**
+     * Sets the minimumWarningPatchVersion property value. Define the oldest recommended Android security patch level a user can have for secure access to the app.
+     * @param value Value to set for the minimumWarningPatchVersion property.
+     */
+    public set minimumWarningPatchVersion(value: string | undefined) {
+        this._minimumWarningPatchVersion = value;
     };
     /**
      * Gets the screenCaptureBlocked property value. Indicates whether a managed user can take screen captures of managed apps
@@ -99,22 +182,11 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         return this._screenCaptureBlocked;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the screenCaptureBlocked property value. Indicates whether a managed user can take screen captures of managed apps
+     * @param value Value to set for the screenCaptureBlocked property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["apps", (o, n) => { (o as unknown as AndroidManagedAppProtection).apps = n.getCollectionOfObjectValues<ManagedMobileApp>(ManagedMobileApp); }],
-            ["customBrowserDisplayName", (o, n) => { (o as unknown as AndroidManagedAppProtection).customBrowserDisplayName = n.getStringValue(); }],
-            ["customBrowserPackageId", (o, n) => { (o as unknown as AndroidManagedAppProtection).customBrowserPackageId = n.getStringValue(); }],
-            ["deployedAppCount", (o, n) => { (o as unknown as AndroidManagedAppProtection).deployedAppCount = n.getNumberValue(); }],
-            ["deploymentSummary", (o, n) => { (o as unknown as AndroidManagedAppProtection).deploymentSummary = n.getObjectValue<ManagedAppPolicyDeploymentSummary>(ManagedAppPolicyDeploymentSummary); }],
-            ["disableAppEncryptionIfDeviceEncryptionIsEnabled", (o, n) => { (o as unknown as AndroidManagedAppProtection).disableAppEncryptionIfDeviceEncryptionIsEnabled = n.getBooleanValue(); }],
-            ["encryptAppData", (o, n) => { (o as unknown as AndroidManagedAppProtection).encryptAppData = n.getBooleanValue(); }],
-            ["minimumRequiredPatchVersion", (o, n) => { (o as unknown as AndroidManagedAppProtection).minimumRequiredPatchVersion = n.getStringValue(); }],
-            ["minimumWarningPatchVersion", (o, n) => { (o as unknown as AndroidManagedAppProtection).minimumWarningPatchVersion = n.getStringValue(); }],
-            ["screenCaptureBlocked", (o, n) => { (o as unknown as AndroidManagedAppProtection).screenCaptureBlocked = n.getBooleanValue(); }],
-        ]);
+    public set screenCaptureBlocked(value: boolean | undefined) {
+        this._screenCaptureBlocked = value;
     };
     /**
      * Serializes information the current object
@@ -133,75 +205,5 @@ export class AndroidManagedAppProtection extends TargetedManagedAppProtection im
         writer.writeStringValue("minimumRequiredPatchVersion", this.minimumRequiredPatchVersion);
         writer.writeStringValue("minimumWarningPatchVersion", this.minimumWarningPatchVersion);
         writer.writeBooleanValue("screenCaptureBlocked", this.screenCaptureBlocked);
-    };
-    /**
-     * Sets the apps property value. List of apps to which the policy is deployed.
-     * @param value Value to set for the apps property.
-     */
-    public set apps(value: ManagedMobileApp[] | undefined) {
-        this._apps = value;
-    };
-    /**
-     * Sets the customBrowserDisplayName property value. Friendly name of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
-     * @param value Value to set for the customBrowserDisplayName property.
-     */
-    public set customBrowserDisplayName(value: string | undefined) {
-        this._customBrowserDisplayName = value;
-    };
-    /**
-     * Sets the customBrowserPackageId property value. Unique identifier of the preferred custom browser to open weblink on Android. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
-     * @param value Value to set for the customBrowserPackageId property.
-     */
-    public set customBrowserPackageId(value: string | undefined) {
-        this._customBrowserPackageId = value;
-    };
-    /**
-     * Sets the deployedAppCount property value. Count of apps to which the current policy is deployed.
-     * @param value Value to set for the deployedAppCount property.
-     */
-    public set deployedAppCount(value: number | undefined) {
-        this._deployedAppCount = value;
-    };
-    /**
-     * Sets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
-     * @param value Value to set for the deploymentSummary property.
-     */
-    public set deploymentSummary(value: ManagedAppPolicyDeploymentSummary | undefined) {
-        this._deploymentSummary = value;
-    };
-    /**
-     * Sets the disableAppEncryptionIfDeviceEncryptionIsEnabled property value. When this setting is enabled, app level encryption is disabled if device level encryption is enabled
-     * @param value Value to set for the disableAppEncryptionIfDeviceEncryptionIsEnabled property.
-     */
-    public set disableAppEncryptionIfDeviceEncryptionIsEnabled(value: boolean | undefined) {
-        this._disableAppEncryptionIfDeviceEncryptionIsEnabled = value;
-    };
-    /**
-     * Sets the encryptAppData property value. Indicates whether application data for managed apps should be encrypted
-     * @param value Value to set for the encryptAppData property.
-     */
-    public set encryptAppData(value: boolean | undefined) {
-        this._encryptAppData = value;
-    };
-    /**
-     * Sets the minimumRequiredPatchVersion property value. Define the oldest required Android security patch level a user can have to gain secure access to the app.
-     * @param value Value to set for the minimumRequiredPatchVersion property.
-     */
-    public set minimumRequiredPatchVersion(value: string | undefined) {
-        this._minimumRequiredPatchVersion = value;
-    };
-    /**
-     * Sets the minimumWarningPatchVersion property value. Define the oldest recommended Android security patch level a user can have for secure access to the app.
-     * @param value Value to set for the minimumWarningPatchVersion property.
-     */
-    public set minimumWarningPatchVersion(value: string | undefined) {
-        this._minimumWarningPatchVersion = value;
-    };
-    /**
-     * Sets the screenCaptureBlocked property value. Indicates whether a managed user can take screen captures of managed apps
-     * @param value Value to set for the screenCaptureBlocked property.
-     */
-    public set screenCaptureBlocked(value: boolean | undefined) {
-        this._screenCaptureBlocked = value;
     };
 }

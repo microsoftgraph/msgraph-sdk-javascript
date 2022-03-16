@@ -1,11 +1,14 @@
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
 import {Store} from '../../../models/microsoft/graph/termStore/';
-import {GroupsRequestBuilder} from './groups/';
-import {GroupItemRequestBuilder} from './groups/item/';
-import {SetsRequestBuilder} from './sets/';
-import {SetItemRequestBuilder} from './sets/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createStoreFromDiscriminatorValue} from '../../../models/microsoft/graph/termStore/createStoreFromDiscriminatorValue';
+import {GroupsRequestBuilder} from './groups/groupsRequestBuilder';
+import {GroupItemRequestBuilder} from './groups/item/groupItemRequestBuilder';
+import {SetItemRequestBuilder} from './sets/item/setItemRequestBuilder';
+import {SetsRequestBuilder} from './sets/setsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/termStore  */
+/** Provides operations to manage the termStore property of the microsoft.graph.site entity.  */
 export class TermStoreRequestBuilder {
     public get groups(): GroupsRequestBuilder {
         return new GroupsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class TermStoreRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The default termStore under this site.
+     * Delete navigation property termStore for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class TermStoreRequestBuilder {
         return requestInfo;
     };
     /**
-     * The default termStore under this site.
+     * Update the navigation property termStore in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class TermStoreRequestBuilder {
         return requestInfo;
     };
     /**
-     * The default termStore under this site.
+     * Delete navigation property termStore for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class TermStoreRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The default termStore under this site.
@@ -112,7 +119,11 @@ export class TermStoreRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Store>(requestInfo, Store, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Store>(requestInfo, createStoreFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStore.groups.item collection
@@ -126,7 +137,7 @@ export class TermStoreRequestBuilder {
         return new GroupItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The default termStore under this site.
+     * Update the navigation property termStore in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,7 +148,11 @@ export class TermStoreRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStore.sets.item collection

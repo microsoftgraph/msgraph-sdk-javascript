@@ -1,7 +1,8 @@
+import {createAlteredQueryTokenFromDiscriminatorValue} from './createAlteredQueryTokenFromDiscriminatorValue';
 import {AlteredQueryToken} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SearchAlteration implements Parsable {
+export class SearchAlteration implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Defines the altered highlighted query string with spelling correction. The annotation around the corrected segment is: /ue000, /ue001.  */
@@ -11,17 +12,18 @@ export class SearchAlteration implements Parsable {
     /** Represents changed segments related to an original user query.  */
     private _alteredQueryTokens?: AlteredQueryToken[] | undefined;
     /**
-     * Instantiates a new searchAlteration and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the alteredHighlightedQueryString property value. Defines the altered highlighted query string with spelling correction. The annotation around the corrected segment is: /ue000, /ue001.
@@ -31,11 +33,25 @@ export class SearchAlteration implements Parsable {
         return this._alteredHighlightedQueryString;
     };
     /**
+     * Sets the alteredHighlightedQueryString property value. Defines the altered highlighted query string with spelling correction. The annotation around the corrected segment is: /ue000, /ue001.
+     * @param value Value to set for the alteredHighlightedQueryString property.
+     */
+    public set alteredHighlightedQueryString(value: string | undefined) {
+        this._alteredHighlightedQueryString = value;
+    };
+    /**
      * Gets the alteredQueryString property value. Defines the altered query string with spelling correction.
      * @returns a string
      */
     public get alteredQueryString() {
         return this._alteredQueryString;
+    };
+    /**
+     * Sets the alteredQueryString property value. Defines the altered query string with spelling correction.
+     * @param value Value to set for the alteredQueryString property.
+     */
+    public set alteredQueryString(value: string | undefined) {
+        this._alteredQueryString = value;
     };
     /**
      * Gets the alteredQueryTokens property value. Represents changed segments related to an original user query.
@@ -45,6 +61,19 @@ export class SearchAlteration implements Parsable {
         return this._alteredQueryTokens;
     };
     /**
+     * Sets the alteredQueryTokens property value. Represents changed segments related to an original user query.
+     * @param value Value to set for the alteredQueryTokens property.
+     */
+    public set alteredQueryTokens(value: AlteredQueryToken[] | undefined) {
+        this._alteredQueryTokens = value;
+    };
+    /**
+     * Instantiates a new searchAlteration and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -52,7 +81,7 @@ export class SearchAlteration implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["alteredHighlightedQueryString", (o, n) => { (o as unknown as SearchAlteration).alteredHighlightedQueryString = n.getStringValue(); }],
             ["alteredQueryString", (o, n) => { (o as unknown as SearchAlteration).alteredQueryString = n.getStringValue(); }],
-            ["alteredQueryTokens", (o, n) => { (o as unknown as SearchAlteration).alteredQueryTokens = n.getCollectionOfObjectValues<AlteredQueryToken>(AlteredQueryToken); }],
+            ["alteredQueryTokens", (o, n) => { (o as unknown as SearchAlteration).alteredQueryTokens = n.getCollectionOfObjectValues<AlteredQueryToken>(createAlteredQueryTokenFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -65,33 +94,5 @@ export class SearchAlteration implements Parsable {
         writer.writeStringValue("alteredQueryString", this.alteredQueryString);
         writer.writeCollectionOfObjectValues<AlteredQueryToken>("alteredQueryTokens", this.alteredQueryTokens);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the alteredHighlightedQueryString property value. Defines the altered highlighted query string with spelling correction. The annotation around the corrected segment is: /ue000, /ue001.
-     * @param value Value to set for the alteredHighlightedQueryString property.
-     */
-    public set alteredHighlightedQueryString(value: string | undefined) {
-        this._alteredHighlightedQueryString = value;
-    };
-    /**
-     * Sets the alteredQueryString property value. Defines the altered query string with spelling correction.
-     * @param value Value to set for the alteredQueryString property.
-     */
-    public set alteredQueryString(value: string | undefined) {
-        this._alteredQueryString = value;
-    };
-    /**
-     * Sets the alteredQueryTokens property value. Represents changed segments related to an original user query.
-     * @param value Value to set for the alteredQueryTokens property.
-     */
-    public set alteredQueryTokens(value: AlteredQueryToken[] | undefined) {
-        this._alteredQueryTokens = value;
     };
 }

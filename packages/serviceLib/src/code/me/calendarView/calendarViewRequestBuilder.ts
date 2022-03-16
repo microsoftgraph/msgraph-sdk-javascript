@@ -1,10 +1,17 @@
-import {Event} from '../../models/microsoft/graph/';
-import {DeltaRequestBuilder} from './delta/';
-import {CalendarViewResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {Event, EventCollectionResponse} from '../../models/microsoft/graph/';
+import {createEventCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createEventCollectionResponseFromDiscriminatorValue';
+import {createEventFromDiscriminatorValue} from '../../models/microsoft/graph/createEventFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {DeltaRequestBuilder} from './delta/deltaRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/calendarView  */
+/** Provides operations to manage the calendarView property of the microsoft.graph.user entity.  */
 export class CalendarViewRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -51,7 +58,7 @@ export class CalendarViewRequestBuilder {
         return requestInfo;
     };
     /**
-     * The calendar view for the calendar. Read-only. Nullable.
+     * Create new navigation property to calendarView for me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -69,7 +76,7 @@ export class CalendarViewRequestBuilder {
         return requestInfo;
     };
     /**
-     * Builds and executes requests for operations under /me/calendarView/microsoft.graph.delta()
+     * Provides operations to call the delta method.
      * @returns a deltaRequestBuilder
      */
     public delta() : DeltaRequestBuilder {
@@ -81,7 +88,7 @@ export class CalendarViewRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of CalendarViewResponse
+     * @returns a Promise of EventCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -92,14 +99,18 @@ export class CalendarViewRequestBuilder {
                     skip?: number,
                     startDateTime?: string,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<CalendarViewResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<EventCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<CalendarViewResponse>(requestInfo, CalendarViewResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<EventCollectionResponse>(requestInfo, createEventCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The calendar view for the calendar. Read-only. Nullable.
+     * Create new navigation property to calendarView for me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -111,6 +122,10 @@ export class CalendarViewRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<Event>(requestInfo, Event, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Event>(requestInfo, createEventFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

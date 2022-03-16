@@ -1,16 +1,11 @@
-import {DeviceManagementExchangeConnectorSyncType} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {DeviceManagementExchangeConnectorSyncType} from '../../../../models/microsoft/graph/deviceManagementExchangeConnectorSyncType';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SyncRequestBody implements Parsable {
+/** Provides operations to call the sync method.  */
+export class SyncRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _syncType?: DeviceManagementExchangeConnectorSyncType | undefined;
-    /**
-     * Instantiates a new syncRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +14,17 @@ export class SyncRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the syncType property value. 
-     * @returns a deviceManagementExchangeConnectorSyncType
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get syncType() {
-        return this._syncType;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new syncRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -44,11 +45,11 @@ export class SyncRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the syncType property value. 
+     * @returns a deviceManagementExchangeConnectorSyncType
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get syncType() {
+        return this._syncType;
     };
     /**
      * Sets the syncType property value. 

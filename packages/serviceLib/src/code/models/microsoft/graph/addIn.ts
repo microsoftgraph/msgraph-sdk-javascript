@@ -1,12 +1,27 @@
+import {createKeyValueFromDiscriminatorValue} from './createKeyValueFromDiscriminatorValue';
 import {KeyValue} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AddIn implements Parsable {
+export class AddIn implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _id?: string | undefined;
     private _properties?: KeyValue[] | undefined;
     private _type?: string | undefined;
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
     /**
      * Instantiates a new addIn and sets the default values.
      */
@@ -14,11 +29,15 @@ export class AddIn implements Parsable {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["id", (o, n) => { (o as unknown as AddIn).id = n.getStringValue(); }],
+            ["properties", (o, n) => { (o as unknown as AddIn).properties = n.getCollectionOfObjectValues<KeyValue>(createKeyValueFromDiscriminatorValue); }],
+            ["type", (o, n) => { (o as unknown as AddIn).type = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the id property value. 
@@ -28,6 +47,13 @@ export class AddIn implements Parsable {
         return this._id;
     };
     /**
+     * Sets the id property value. 
+     * @param value Value to set for the id property.
+     */
+    public set id(value: string | undefined) {
+        this._id = value;
+    };
+    /**
      * Gets the properties property value. 
      * @returns a keyValue
      */
@@ -35,22 +61,11 @@ export class AddIn implements Parsable {
         return this._properties;
     };
     /**
-     * Gets the type property value. 
-     * @returns a string
+     * Sets the properties property value. 
+     * @param value Value to set for the properties property.
      */
-    public get type() {
-        return this._type;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["id", (o, n) => { (o as unknown as AddIn).id = n.getStringValue(); }],
-            ["properties", (o, n) => { (o as unknown as AddIn).properties = n.getCollectionOfObjectValues<KeyValue>(KeyValue); }],
-            ["type", (o, n) => { (o as unknown as AddIn).type = n.getStringValue(); }],
-        ]);
+    public set properties(value: KeyValue[] | undefined) {
+        this._properties = value;
     };
     /**
      * Serializes information the current object
@@ -64,25 +79,11 @@ export class AddIn implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the type property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the id property value. 
-     * @param value Value to set for the id property.
-     */
-    public set id(value: string | undefined) {
-        this._id = value;
-    };
-    /**
-     * Sets the properties property value. 
-     * @param value Value to set for the properties property.
-     */
-    public set properties(value: KeyValue[] | undefined) {
-        this._properties = value;
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. 

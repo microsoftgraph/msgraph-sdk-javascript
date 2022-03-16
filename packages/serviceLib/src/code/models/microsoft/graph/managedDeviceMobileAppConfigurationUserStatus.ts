@@ -1,4 +1,5 @@
-import {ComplianceStatus, Entity} from './index';
+import {ComplianceStatus} from './complianceStatus';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ManagedDeviceMobileAppConfigurationUserStatus extends Entity implements Parsable {
@@ -26,32 +27,11 @@ export class ManagedDeviceMobileAppConfigurationUserStatus extends Entity implem
         return this._devicesCount;
     };
     /**
-     * Gets the lastReportedDateTime property value. Last modified date time of the policy report.
-     * @returns a Date
+     * Sets the devicesCount property value. Devices count for that user.
+     * @param value Value to set for the devicesCount property.
      */
-    public get lastReportedDateTime() {
-        return this._lastReportedDateTime;
-    };
-    /**
-     * Gets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
-     * @returns a complianceStatus
-     */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * Gets the userDisplayName property value. User name of the DevicePolicyStatus.
-     * @returns a string
-     */
-    public get userDisplayName() {
-        return this._userDisplayName;
-    };
-    /**
-     * Gets the userPrincipalName property value. UserPrincipalName.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set devicesCount(value: number | undefined) {
+        this._devicesCount = value;
     };
     /**
      * The deserialization information for the current model
@@ -67,6 +47,20 @@ export class ManagedDeviceMobileAppConfigurationUserStatus extends Entity implem
         ]);
     };
     /**
+     * Gets the lastReportedDateTime property value. Last modified date time of the policy report.
+     * @returns a Date
+     */
+    public get lastReportedDateTime() {
+        return this._lastReportedDateTime;
+    };
+    /**
+     * Sets the lastReportedDateTime property value. Last modified date time of the policy report.
+     * @param value Value to set for the lastReportedDateTime property.
+     */
+    public set lastReportedDateTime(value: Date | undefined) {
+        this._lastReportedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -80,18 +74,11 @@ export class ManagedDeviceMobileAppConfigurationUserStatus extends Entity implem
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the devicesCount property value. Devices count for that user.
-     * @param value Value to set for the devicesCount property.
+     * Gets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
+     * @returns a complianceStatus
      */
-    public set devicesCount(value: number | undefined) {
-        this._devicesCount = value;
-    };
-    /**
-     * Sets the lastReportedDateTime property value. Last modified date time of the policy report.
-     * @param value Value to set for the lastReportedDateTime property.
-     */
-    public set lastReportedDateTime(value: Date | undefined) {
-        this._lastReportedDateTime = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Compliance status of the policy report. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
@@ -101,11 +88,25 @@ export class ManagedDeviceMobileAppConfigurationUserStatus extends Entity implem
         this._status = value;
     };
     /**
+     * Gets the userDisplayName property value. User name of the DevicePolicyStatus.
+     * @returns a string
+     */
+    public get userDisplayName() {
+        return this._userDisplayName;
+    };
+    /**
      * Sets the userDisplayName property value. User name of the DevicePolicyStatus.
      * @param value Value to set for the userDisplayName property.
      */
     public set userDisplayName(value: string | undefined) {
         this._userDisplayName = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. UserPrincipalName.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. UserPrincipalName.

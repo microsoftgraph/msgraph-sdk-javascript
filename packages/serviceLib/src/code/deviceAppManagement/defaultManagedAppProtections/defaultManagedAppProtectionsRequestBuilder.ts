@@ -1,9 +1,16 @@
-import {DefaultManagedAppProtection} from '../../models/microsoft/graph/';
-import {DefaultManagedAppProtectionsResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {DefaultManagedAppProtection, DefaultManagedAppProtectionCollectionResponse} from '../../models/microsoft/graph/';
+import {createDefaultManagedAppProtectionCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createDefaultManagedAppProtectionCollectionResponseFromDiscriminatorValue';
+import {createDefaultManagedAppProtectionFromDiscriminatorValue} from '../../models/microsoft/graph/createDefaultManagedAppProtectionFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/defaultManagedAppProtections  */
+/** Provides operations to manage the defaultManagedAppProtections property of the microsoft.graph.deviceAppManagement entity.  */
 export class DefaultManagedAppProtectionsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class DefaultManagedAppProtectionsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Default managed app policies.
+     * Create new navigation property to defaultManagedAppProtections for deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class DefaultManagedAppProtectionsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of DefaultManagedAppProtectionsResponse
+     * @returns a Promise of DefaultManagedAppProtectionCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class DefaultManagedAppProtectionsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<DefaultManagedAppProtectionsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<DefaultManagedAppProtectionCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DefaultManagedAppProtectionsResponse>(requestInfo, DefaultManagedAppProtectionsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DefaultManagedAppProtectionCollectionResponse>(requestInfo, createDefaultManagedAppProtectionCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Default managed app policies.
+     * Create new navigation property to defaultManagedAppProtections for deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class DefaultManagedAppProtectionsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<DefaultManagedAppProtection>(requestInfo, DefaultManagedAppProtection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DefaultManagedAppProtection>(requestInfo, createDefaultManagedAppProtectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

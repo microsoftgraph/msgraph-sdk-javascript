@@ -1,7 +1,9 @@
-import {ClonableTeamParts, TeamVisibilityType} from '../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ClonableTeamParts} from '../../../models/microsoft/graph/clonableTeamParts';
+import {TeamVisibilityType} from '../../../models/microsoft/graph/teamVisibilityType';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CloneRequestBody implements Parsable {
+/** Provides operations to call the clone method.  */
+export class CloneRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _classification?: string | undefined;
@@ -11,17 +13,18 @@ export class CloneRequestBody implements Parsable {
     private _partsToClone?: ClonableTeamParts | undefined;
     private _visibility?: TeamVisibilityType | undefined;
     /**
-     * Instantiates a new cloneRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the classification property value. 
@@ -31,11 +34,31 @@ export class CloneRequestBody implements Parsable {
         return this._classification;
     };
     /**
+     * Sets the classification property value. 
+     * @param value Value to set for the classification property.
+     */
+    public set classification(value: string | undefined) {
+        this._classification = value;
+    };
+    /**
+     * Instantiates a new cloneRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the description property value. 
      * @returns a string
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. 
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. 
@@ -45,25 +68,11 @@ export class CloneRequestBody implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the mailNickname property value. 
-     * @returns a string
+     * Sets the displayName property value. 
+     * @param value Value to set for the displayName property.
      */
-    public get mailNickname() {
-        return this._mailNickname;
-    };
-    /**
-     * Gets the partsToClone property value. 
-     * @returns a clonableTeamParts
-     */
-    public get partsToClone() {
-        return this._partsToClone;
-    };
-    /**
-     * Gets the visibility property value. 
-     * @returns a teamVisibilityType
-     */
-    public get visibility() {
-        return this._visibility;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -80,6 +89,34 @@ export class CloneRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the mailNickname property value. 
+     * @returns a string
+     */
+    public get mailNickname() {
+        return this._mailNickname;
+    };
+    /**
+     * Sets the mailNickname property value. 
+     * @param value Value to set for the mailNickname property.
+     */
+    public set mailNickname(value: string | undefined) {
+        this._mailNickname = value;
+    };
+    /**
+     * Gets the partsToClone property value. 
+     * @returns a clonableTeamParts
+     */
+    public get partsToClone() {
+        return this._partsToClone;
+    };
+    /**
+     * Sets the partsToClone property value. 
+     * @param value Value to set for the partsToClone property.
+     */
+    public set partsToClone(value: ClonableTeamParts | undefined) {
+        this._partsToClone = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -94,46 +131,11 @@ export class CloneRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the visibility property value. 
+     * @returns a teamVisibilityType
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the classification property value. 
-     * @param value Value to set for the classification property.
-     */
-    public set classification(value: string | undefined) {
-        this._classification = value;
-    };
-    /**
-     * Sets the description property value. 
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. 
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the mailNickname property value. 
-     * @param value Value to set for the mailNickname property.
-     */
-    public set mailNickname(value: string | undefined) {
-        this._mailNickname = value;
-    };
-    /**
-     * Sets the partsToClone property value. 
-     * @param value Value to set for the partsToClone property.
-     */
-    public set partsToClone(value: ClonableTeamParts | undefined) {
-        this._partsToClone = value;
+    public get visibility() {
+        return this._visibility;
     };
     /**
      * Sets the visibility property value. 

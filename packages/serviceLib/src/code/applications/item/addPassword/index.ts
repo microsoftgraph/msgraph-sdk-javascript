@@ -1,2 +1,1 @@
-export * from './PasswordCredentialRequestBody'
-export * from './AddPasswordRequestBuilder'
+export * from './passwordCredentialRequestBody'

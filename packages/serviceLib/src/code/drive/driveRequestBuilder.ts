@@ -1,20 +1,23 @@
 import {Drive} from '../models/microsoft/graph/';
-import {BundlesRequestBuilder} from './bundles/';
-import {DriveItemItemRequestBuilder as i0b7fdf1ec1f43c42f1ef084cf9106faaca4adefb44f21181b3c14a7024381238} from './bundles/item/';
-import {FollowingRequestBuilder} from './following/';
-import {DriveItemItemRequestBuilder as id1b25a4691d5d100bd784d0d1ad10a2f615640d789e9d0bd16ae44799f3e5912} from './following/item/';
-import {ItemsRequestBuilder} from './items/';
-import {DriveItemItemRequestBuilder as i9766a1616b91c7045c57a5671ffc753cbde491d472b13f1736141319dfeaad2b} from './items/item/';
-import {ListRequestBuilder} from './list/';
-import {RecentRequestBuilder} from './recent/';
-import {RootRequestBuilder} from './root/';
-import {SearchWithQRequestBuilder} from './searchWithQ/';
-import {SharedWithMeRequestBuilder} from './sharedWithMe/';
-import {SpecialRequestBuilder} from './special/';
-import {DriveItemItemRequestBuilder as ibf4c80273c8b3a526e9f7415912867a4757808ca91d030c7a2212081943e51f6} from './special/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDriveFromDiscriminatorValue} from '../models/microsoft/graph/createDriveFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BundlesRequestBuilder} from './bundles/bundlesRequestBuilder';
+import {DriveItemItemRequestBuilder as i0b7fdf1ec1f43c42f1ef084cf9106faaca4adefb44f21181b3c14a7024381238} from './bundles/item/driveItemItemRequestBuilder';
+import {FollowingRequestBuilder} from './following/followingRequestBuilder';
+import {DriveItemItemRequestBuilder as id1b25a4691d5d100bd784d0d1ad10a2f615640d789e9d0bd16ae44799f3e5912} from './following/item/driveItemItemRequestBuilder';
+import {DriveItemItemRequestBuilder as i9766a1616b91c7045c57a5671ffc753cbde491d472b13f1736141319dfeaad2b} from './items/item/driveItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {ListRequestBuilder} from './list/listRequestBuilder';
+import {RecentRequestBuilder} from './recent/recentRequestBuilder';
+import {RootRequestBuilder} from './root/rootRequestBuilder';
+import {SearchWithQRequestBuilder} from './searchWithQ/searchWithQRequestBuilder';
+import {SharedWithMeRequestBuilder} from './sharedWithMe/sharedWithMeRequestBuilder';
+import {DriveItemItemRequestBuilder as ibf4c80273c8b3a526e9f7415912867a4757808ca91d030c7a2212081943e51f6} from './special/item/driveItemItemRequestBuilder';
+import {SpecialRequestBuilder} from './special/specialRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /drive  */
+/** Provides operations to manage the drive singleton.  */
 export class DriveRequestBuilder {
     public get bundles(): BundlesRequestBuilder {
         return new BundlesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -128,7 +131,11 @@ export class DriveRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Drive>(requestInfo, Drive, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Drive>(requestInfo, createDriveFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.drive.items.item collection
@@ -153,18 +160,22 @@ export class DriveRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /drive/microsoft.graph.recent()
+     * Provides operations to call the recent method.
      * @returns a recentRequestBuilder
      */
     public recent() : RecentRequestBuilder {
         return new RecentRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /drive/microsoft.graph.search(q='{q}')
-     * @param q Usage: q={q}
+     * Provides operations to call the search method.
+     * @param q Usage: q='{q}'
      * @returns a searchWithQRequestBuilder
      */
     public searchWithQ(q: string | undefined) : SearchWithQRequestBuilder {
@@ -172,7 +183,7 @@ export class DriveRequestBuilder {
         return new SearchWithQRequestBuilder(this.pathParameters, this.requestAdapter, q);
     };
     /**
-     * Builds and executes requests for operations under /drive/microsoft.graph.sharedWithMe()
+     * Provides operations to call the sharedWithMe method.
      * @returns a sharedWithMeRequestBuilder
      */
     public sharedWithMe() : SharedWithMeRequestBuilder {

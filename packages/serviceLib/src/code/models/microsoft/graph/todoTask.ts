@@ -1,4 +1,11 @@
-import {DateTimeTimeZone, Entity, Extension, Importance, ItemBody, LinkedResource, PatternedRecurrence, TaskStatus} from './index';
+import {createDateTimeTimeZoneFromDiscriminatorValue} from './createDateTimeTimeZoneFromDiscriminatorValue';
+import {createExtensionFromDiscriminatorValue} from './createExtensionFromDiscriminatorValue';
+import {createItemBodyFromDiscriminatorValue} from './createItemBodyFromDiscriminatorValue';
+import {createLinkedResourceFromDiscriminatorValue} from './createLinkedResourceFromDiscriminatorValue';
+import {createPatternedRecurrenceFromDiscriminatorValue} from './createPatternedRecurrenceFromDiscriminatorValue';
+import {Importance} from './importance';
+import {DateTimeTimeZone, Entity, Extension, ItemBody, LinkedResource, PatternedRecurrence} from './index';
+import {TaskStatus} from './taskStatus';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class TodoTask extends Entity implements Parsable {
@@ -31,17 +38,18 @@ export class TodoTask extends Entity implements Parsable {
     /** A brief description of the task.  */
     private _title?: string | undefined;
     /**
-     * Instantiates a new todoTask and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the body property value. The task body that typically contains information about the task.
      * @returns a itemBody
      */
     public get body() {
         return this._body;
+    };
+    /**
+     * Sets the body property value. The task body that typically contains information about the task.
+     * @param value Value to set for the body property.
+     */
+    public set body(value: ItemBody | undefined) {
+        this._body = value;
     };
     /**
      * Gets the bodyLastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
@@ -51,11 +59,31 @@ export class TodoTask extends Entity implements Parsable {
         return this._bodyLastModifiedDateTime;
     };
     /**
+     * Sets the bodyLastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
+     * @param value Value to set for the bodyLastModifiedDateTime property.
+     */
+    public set bodyLastModifiedDateTime(value: Date | undefined) {
+        this._bodyLastModifiedDateTime = value;
+    };
+    /**
      * Gets the completedDateTime property value. The date in the specified time zone that the task was finished.
      * @returns a dateTimeTimeZone
      */
     public get completedDateTime() {
         return this._completedDateTime;
+    };
+    /**
+     * Sets the completedDateTime property value. The date in the specified time zone that the task was finished.
+     * @param value Value to set for the completedDateTime property.
+     */
+    public set completedDateTime(value: DateTimeTimeZone | undefined) {
+        this._completedDateTime = value;
+    };
+    /**
+     * Instantiates a new todoTask and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdDateTime property value. The date and time when the task was created. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
@@ -65,11 +93,25 @@ export class TodoTask extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The date and time when the task was created. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the dueDateTime property value. The date in the specified time zone that the task is to be finished.
      * @returns a dateTimeTimeZone
      */
     public get dueDateTime() {
         return this._dueDateTime;
+    };
+    /**
+     * Sets the dueDateTime property value. The date in the specified time zone that the task is to be finished.
+     * @param value Value to set for the dueDateTime property.
+     */
+    public set dueDateTime(value: DateTimeTimeZone | undefined) {
+        this._dueDateTime = value;
     };
     /**
      * Gets the extensions property value. The collection of open extensions defined for the task. Nullable.
@@ -79,11 +121,47 @@ export class TodoTask extends Entity implements Parsable {
         return this._extensions;
     };
     /**
+     * Sets the extensions property value. The collection of open extensions defined for the task. Nullable.
+     * @param value Value to set for the extensions property.
+     */
+    public set extensions(value: Extension[] | undefined) {
+        this._extensions = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["body", (o, n) => { (o as unknown as TodoTask).body = n.getObjectValue<ItemBody>(createItemBodyFromDiscriminatorValue); }],
+            ["bodyLastModifiedDateTime", (o, n) => { (o as unknown as TodoTask).bodyLastModifiedDateTime = n.getDateValue(); }],
+            ["completedDateTime", (o, n) => { (o as unknown as TodoTask).completedDateTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as TodoTask).createdDateTime = n.getDateValue(); }],
+            ["dueDateTime", (o, n) => { (o as unknown as TodoTask).dueDateTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+            ["extensions", (o, n) => { (o as unknown as TodoTask).extensions = n.getCollectionOfObjectValues<Extension>(createExtensionFromDiscriminatorValue); }],
+            ["importance", (o, n) => { (o as unknown as TodoTask).importance = n.getEnumValue<Importance>(Importance); }],
+            ["isReminderOn", (o, n) => { (o as unknown as TodoTask).isReminderOn = n.getBooleanValue(); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as TodoTask).lastModifiedDateTime = n.getDateValue(); }],
+            ["linkedResources", (o, n) => { (o as unknown as TodoTask).linkedResources = n.getCollectionOfObjectValues<LinkedResource>(createLinkedResourceFromDiscriminatorValue); }],
+            ["recurrence", (o, n) => { (o as unknown as TodoTask).recurrence = n.getObjectValue<PatternedRecurrence>(createPatternedRecurrenceFromDiscriminatorValue); }],
+            ["reminderDateTime", (o, n) => { (o as unknown as TodoTask).reminderDateTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+            ["status", (o, n) => { (o as unknown as TodoTask).status = n.getEnumValue<TaskStatus>(TaskStatus); }],
+            ["title", (o, n) => { (o as unknown as TodoTask).title = n.getStringValue(); }],
+        ]);
+    };
+    /**
      * Gets the importance property value. The importance of the task. Possible values are: low, normal, high.
      * @returns a importance
      */
     public get importance() {
         return this._importance;
+    };
+    /**
+     * Sets the importance property value. The importance of the task. Possible values are: low, normal, high.
+     * @param value Value to set for the importance property.
+     */
+    public set importance(value: Importance | undefined) {
+        this._importance = value;
     };
     /**
      * Gets the isReminderOn property value. Set to true if an alert is set to remind the user of the task.
@@ -93,11 +171,25 @@ export class TodoTask extends Entity implements Parsable {
         return this._isReminderOn;
     };
     /**
+     * Sets the isReminderOn property value. Set to true if an alert is set to remind the user of the task.
+     * @param value Value to set for the isReminderOn property.
+     */
+    public set isReminderOn(value: boolean | undefined) {
+        this._isReminderOn = value;
+    };
+    /**
      * Gets the lastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
      * @returns a Date
      */
     public get lastModifiedDateTime() {
         return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
     };
     /**
      * Gets the linkedResources property value. A collection of resources linked to the task.
@@ -107,11 +199,25 @@ export class TodoTask extends Entity implements Parsable {
         return this._linkedResources;
     };
     /**
+     * Sets the linkedResources property value. A collection of resources linked to the task.
+     * @param value Value to set for the linkedResources property.
+     */
+    public set linkedResources(value: LinkedResource[] | undefined) {
+        this._linkedResources = value;
+    };
+    /**
      * Gets the recurrence property value. The recurrence pattern for the task.
      * @returns a patternedRecurrence
      */
     public get recurrence() {
         return this._recurrence;
+    };
+    /**
+     * Sets the recurrence property value. The recurrence pattern for the task.
+     * @param value Value to set for the recurrence property.
+     */
+    public set recurrence(value: PatternedRecurrence | undefined) {
+        this._recurrence = value;
     };
     /**
      * Gets the reminderDateTime property value. The date and time for a reminder alert of the task to occur.
@@ -121,40 +227,11 @@ export class TodoTask extends Entity implements Parsable {
         return this._reminderDateTime;
     };
     /**
-     * Gets the status property value. Indicates the state or progress of the task. Possible values are: notStarted, inProgress, completed, waitingOnOthers, deferred.
-     * @returns a taskStatus
+     * Sets the reminderDateTime property value. The date and time for a reminder alert of the task to occur.
+     * @param value Value to set for the reminderDateTime property.
      */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * Gets the title property value. A brief description of the task.
-     * @returns a string
-     */
-    public get title() {
-        return this._title;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["body", (o, n) => { (o as unknown as TodoTask).body = n.getObjectValue<ItemBody>(ItemBody); }],
-            ["bodyLastModifiedDateTime", (o, n) => { (o as unknown as TodoTask).bodyLastModifiedDateTime = n.getDateValue(); }],
-            ["completedDateTime", (o, n) => { (o as unknown as TodoTask).completedDateTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-            ["createdDateTime", (o, n) => { (o as unknown as TodoTask).createdDateTime = n.getDateValue(); }],
-            ["dueDateTime", (o, n) => { (o as unknown as TodoTask).dueDateTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-            ["extensions", (o, n) => { (o as unknown as TodoTask).extensions = n.getCollectionOfObjectValues<Extension>(Extension); }],
-            ["importance", (o, n) => { (o as unknown as TodoTask).importance = n.getEnumValue<Importance>(Importance); }],
-            ["isReminderOn", (o, n) => { (o as unknown as TodoTask).isReminderOn = n.getBooleanValue(); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as TodoTask).lastModifiedDateTime = n.getDateValue(); }],
-            ["linkedResources", (o, n) => { (o as unknown as TodoTask).linkedResources = n.getCollectionOfObjectValues<LinkedResource>(LinkedResource); }],
-            ["recurrence", (o, n) => { (o as unknown as TodoTask).recurrence = n.getObjectValue<PatternedRecurrence>(PatternedRecurrence); }],
-            ["reminderDateTime", (o, n) => { (o as unknown as TodoTask).reminderDateTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-            ["status", (o, n) => { (o as unknown as TodoTask).status = n.getEnumValue<TaskStatus>(TaskStatus); }],
-            ["title", (o, n) => { (o as unknown as TodoTask).title = n.getStringValue(); }],
-        ]);
+    public set reminderDateTime(value: DateTimeTimeZone | undefined) {
+        this._reminderDateTime = value;
     };
     /**
      * Serializes information the current object
@@ -179,88 +256,11 @@ export class TodoTask extends Entity implements Parsable {
         writer.writeStringValue("title", this.title);
     };
     /**
-     * Sets the body property value. The task body that typically contains information about the task.
-     * @param value Value to set for the body property.
+     * Gets the status property value. Indicates the state or progress of the task. Possible values are: notStarted, inProgress, completed, waitingOnOthers, deferred.
+     * @returns a taskStatus
      */
-    public set body(value: ItemBody | undefined) {
-        this._body = value;
-    };
-    /**
-     * Sets the bodyLastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
-     * @param value Value to set for the bodyLastModifiedDateTime property.
-     */
-    public set bodyLastModifiedDateTime(value: Date | undefined) {
-        this._bodyLastModifiedDateTime = value;
-    };
-    /**
-     * Sets the completedDateTime property value. The date in the specified time zone that the task was finished.
-     * @param value Value to set for the completedDateTime property.
-     */
-    public set completedDateTime(value: DateTimeTimeZone | undefined) {
-        this._completedDateTime = value;
-    };
-    /**
-     * Sets the createdDateTime property value. The date and time when the task was created. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the dueDateTime property value. The date in the specified time zone that the task is to be finished.
-     * @param value Value to set for the dueDateTime property.
-     */
-    public set dueDateTime(value: DateTimeTimeZone | undefined) {
-        this._dueDateTime = value;
-    };
-    /**
-     * Sets the extensions property value. The collection of open extensions defined for the task. Nullable.
-     * @param value Value to set for the extensions property.
-     */
-    public set extensions(value: Extension[] | undefined) {
-        this._extensions = value;
-    };
-    /**
-     * Sets the importance property value. The importance of the task. Possible values are: low, normal, high.
-     * @param value Value to set for the importance property.
-     */
-    public set importance(value: Importance | undefined) {
-        this._importance = value;
-    };
-    /**
-     * Sets the isReminderOn property value. Set to true if an alert is set to remind the user of the task.
-     * @param value Value to set for the isReminderOn property.
-     */
-    public set isReminderOn(value: boolean | undefined) {
-        this._isReminderOn = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. The date and time when the task was last modified. By default, it is in UTC. You can provide a custom time zone in the request header. The property value uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2020 would look like this: '2020-01-01T00:00:00Z'.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the linkedResources property value. A collection of resources linked to the task.
-     * @param value Value to set for the linkedResources property.
-     */
-    public set linkedResources(value: LinkedResource[] | undefined) {
-        this._linkedResources = value;
-    };
-    /**
-     * Sets the recurrence property value. The recurrence pattern for the task.
-     * @param value Value to set for the recurrence property.
-     */
-    public set recurrence(value: PatternedRecurrence | undefined) {
-        this._recurrence = value;
-    };
-    /**
-     * Sets the reminderDateTime property value. The date and time for a reminder alert of the task to occur.
-     * @param value Value to set for the reminderDateTime property.
-     */
-    public set reminderDateTime(value: DateTimeTimeZone | undefined) {
-        this._reminderDateTime = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Indicates the state or progress of the task. Possible values are: notStarted, inProgress, completed, waitingOnOthers, deferred.
@@ -268,6 +268,13 @@ export class TodoTask extends Entity implements Parsable {
      */
     public set status(value: TaskStatus | undefined) {
         this._status = value;
+    };
+    /**
+     * Gets the title property value. A brief description of the task.
+     * @returns a string
+     */
+    public get title() {
+        return this._title;
     };
     /**
      * Sets the title property value. A brief description of the task.

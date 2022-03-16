@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DeviceOperatingSystemSummary implements Parsable {
+/** Device operating system summary.  */
+export class DeviceOperatingSystemSummary implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Number of android device count.  */
@@ -16,17 +17,18 @@ export class DeviceOperatingSystemSummary implements Parsable {
     /** Number of Windows mobile device count.  */
     private _windowsMobileCount?: number | undefined;
     /**
-     * Instantiates a new deviceOperatingSystemSummary and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the androidCount property value. Number of android device count.
@@ -36,39 +38,17 @@ export class DeviceOperatingSystemSummary implements Parsable {
         return this._androidCount;
     };
     /**
-     * Gets the iosCount property value. Number of iOS device count.
-     * @returns a integer
+     * Sets the androidCount property value. Number of android device count.
+     * @param value Value to set for the androidCount property.
      */
-    public get iosCount() {
-        return this._iosCount;
+    public set androidCount(value: number | undefined) {
+        this._androidCount = value;
     };
     /**
-     * Gets the macOSCount property value. Number of Mac OS X device count.
-     * @returns a integer
+     * Instantiates a new deviceOperatingSystemSummary and sets the default values.
      */
-    public get macOSCount() {
-        return this._macOSCount;
-    };
-    /**
-     * Gets the unknownCount property value. Number of unknown device count.
-     * @returns a integer
-     */
-    public get unknownCount() {
-        return this._unknownCount;
-    };
-    /**
-     * Gets the windowsCount property value. Number of Windows device count.
-     * @returns a integer
-     */
-    public get windowsCount() {
-        return this._windowsCount;
-    };
-    /**
-     * Gets the windowsMobileCount property value. Number of Windows mobile device count.
-     * @returns a integer
-     */
-    public get windowsMobileCount() {
-        return this._windowsMobileCount;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -85,6 +65,34 @@ export class DeviceOperatingSystemSummary implements Parsable {
         ]);
     };
     /**
+     * Gets the iosCount property value. Number of iOS device count.
+     * @returns a integer
+     */
+    public get iosCount() {
+        return this._iosCount;
+    };
+    /**
+     * Sets the iosCount property value. Number of iOS device count.
+     * @param value Value to set for the iosCount property.
+     */
+    public set iosCount(value: number | undefined) {
+        this._iosCount = value;
+    };
+    /**
+     * Gets the macOSCount property value. Number of Mac OS X device count.
+     * @returns a integer
+     */
+    public get macOSCount() {
+        return this._macOSCount;
+    };
+    /**
+     * Sets the macOSCount property value. Number of Mac OS X device count.
+     * @param value Value to set for the macOSCount property.
+     */
+    public set macOSCount(value: number | undefined) {
+        this._macOSCount = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -99,32 +107,11 @@ export class DeviceOperatingSystemSummary implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the unknownCount property value. Number of unknown device count.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the androidCount property value. Number of android device count.
-     * @param value Value to set for the androidCount property.
-     */
-    public set androidCount(value: number | undefined) {
-        this._androidCount = value;
-    };
-    /**
-     * Sets the iosCount property value. Number of iOS device count.
-     * @param value Value to set for the iosCount property.
-     */
-    public set iosCount(value: number | undefined) {
-        this._iosCount = value;
-    };
-    /**
-     * Sets the macOSCount property value. Number of Mac OS X device count.
-     * @param value Value to set for the macOSCount property.
-     */
-    public set macOSCount(value: number | undefined) {
-        this._macOSCount = value;
+    public get unknownCount() {
+        return this._unknownCount;
     };
     /**
      * Sets the unknownCount property value. Number of unknown device count.
@@ -134,11 +121,25 @@ export class DeviceOperatingSystemSummary implements Parsable {
         this._unknownCount = value;
     };
     /**
+     * Gets the windowsCount property value. Number of Windows device count.
+     * @returns a integer
+     */
+    public get windowsCount() {
+        return this._windowsCount;
+    };
+    /**
      * Sets the windowsCount property value. Number of Windows device count.
      * @param value Value to set for the windowsCount property.
      */
     public set windowsCount(value: number | undefined) {
         this._windowsCount = value;
+    };
+    /**
+     * Gets the windowsMobileCount property value. Number of Windows mobile device count.
+     * @returns a integer
+     */
+    public get windowsMobileCount() {
+        return this._windowsMobileCount;
     };
     /**
      * Sets the windowsMobileCount property value. Number of Windows mobile device count.

@@ -1,7 +1,10 @@
 import {HomeRealmDiscoveryPolicy} from '../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createHomeRealmDiscoveryPolicyFromDiscriminatorValue} from '../../../models/microsoft/graph/createHomeRealmDiscoveryPolicyFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /policies/homeRealmDiscoveryPolicies/{homeRealmDiscoveryPolicy-id}  */
+/** Provides operations to manage the homeRealmDiscoveryPolicies property of the microsoft.graph.policyRoot entity.  */
 export class HomeRealmDiscoveryPolicyItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The policy to control Azure AD authentication behavior for federated users.
+     * Delete navigation property homeRealmDiscoveryPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The policy to control Azure AD authentication behavior for federated users.
+     * Update the navigation property homeRealmDiscoveryPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The policy to control Azure AD authentication behavior for federated users.
+     * Delete navigation property homeRealmDiscoveryPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The policy to control Azure AD authentication behavior for federated users.
@@ -102,10 +109,14 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<HomeRealmDiscoveryPolicy>(requestInfo, HomeRealmDiscoveryPolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<HomeRealmDiscoveryPolicy>(requestInfo, createHomeRealmDiscoveryPolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The policy to control Azure AD authentication behavior for federated users.
+     * Update the navigation property homeRealmDiscoveryPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class HomeRealmDiscoveryPolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

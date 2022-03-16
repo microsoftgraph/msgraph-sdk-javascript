@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PlannerCategoryDescriptions implements Parsable {
+export class PlannerCategoryDescriptions implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The label associated with Category 1  */
@@ -16,17 +16,18 @@ export class PlannerCategoryDescriptions implements Parsable {
     /** The label associated with Category 6  */
     private _category6?: string | undefined;
     /**
-     * Instantiates a new plannerCategoryDescriptions and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the category1 property value. The label associated with Category 1
@@ -36,11 +37,25 @@ export class PlannerCategoryDescriptions implements Parsable {
         return this._category1;
     };
     /**
+     * Sets the category1 property value. The label associated with Category 1
+     * @param value Value to set for the category1 property.
+     */
+    public set category1(value: string | undefined) {
+        this._category1 = value;
+    };
+    /**
      * Gets the category2 property value. The label associated with Category 2
      * @returns a string
      */
     public get category2() {
         return this._category2;
+    };
+    /**
+     * Sets the category2 property value. The label associated with Category 2
+     * @param value Value to set for the category2 property.
+     */
+    public set category2(value: string | undefined) {
+        this._category2 = value;
     };
     /**
      * Gets the category3 property value. The label associated with Category 3
@@ -50,11 +65,25 @@ export class PlannerCategoryDescriptions implements Parsable {
         return this._category3;
     };
     /**
+     * Sets the category3 property value. The label associated with Category 3
+     * @param value Value to set for the category3 property.
+     */
+    public set category3(value: string | undefined) {
+        this._category3 = value;
+    };
+    /**
      * Gets the category4 property value. The label associated with Category 4
      * @returns a string
      */
     public get category4() {
         return this._category4;
+    };
+    /**
+     * Sets the category4 property value. The label associated with Category 4
+     * @param value Value to set for the category4 property.
+     */
+    public set category4(value: string | undefined) {
+        this._category4 = value;
     };
     /**
      * Gets the category5 property value. The label associated with Category 5
@@ -64,11 +93,31 @@ export class PlannerCategoryDescriptions implements Parsable {
         return this._category5;
     };
     /**
+     * Sets the category5 property value. The label associated with Category 5
+     * @param value Value to set for the category5 property.
+     */
+    public set category5(value: string | undefined) {
+        this._category5 = value;
+    };
+    /**
      * Gets the category6 property value. The label associated with Category 6
      * @returns a string
      */
     public get category6() {
         return this._category6;
+    };
+    /**
+     * Sets the category6 property value. The label associated with Category 6
+     * @param value Value to set for the category6 property.
+     */
+    public set category6(value: string | undefined) {
+        this._category6 = value;
+    };
+    /**
+     * Instantiates a new plannerCategoryDescriptions and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -97,54 +146,5 @@ export class PlannerCategoryDescriptions implements Parsable {
         writer.writeStringValue("category5", this.category5);
         writer.writeStringValue("category6", this.category6);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the category1 property value. The label associated with Category 1
-     * @param value Value to set for the category1 property.
-     */
-    public set category1(value: string | undefined) {
-        this._category1 = value;
-    };
-    /**
-     * Sets the category2 property value. The label associated with Category 2
-     * @param value Value to set for the category2 property.
-     */
-    public set category2(value: string | undefined) {
-        this._category2 = value;
-    };
-    /**
-     * Sets the category3 property value. The label associated with Category 3
-     * @param value Value to set for the category3 property.
-     */
-    public set category3(value: string | undefined) {
-        this._category3 = value;
-    };
-    /**
-     * Sets the category4 property value. The label associated with Category 4
-     * @param value Value to set for the category4 property.
-     */
-    public set category4(value: string | undefined) {
-        this._category4 = value;
-    };
-    /**
-     * Sets the category5 property value. The label associated with Category 5
-     * @param value Value to set for the category5 property.
-     */
-    public set category5(value: string | undefined) {
-        this._category5 = value;
-    };
-    /**
-     * Sets the category6 property value. The label associated with Category 6
-     * @param value Value to set for the category6 property.
-     */
-    public set category6(value: string | undefined) {
-        this._category6 = value;
     };
 }

@@ -9,12 +9,6 @@ export class GroupLifecyclePolicy extends Entity implements Parsable {
     /** The group type for which the expiration policy applies. Possible values are All, Selected or None.  */
     private _managedGroupTypes?: string | undefined;
     /**
-     * Instantiates a new groupLifecyclePolicy and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the alternateNotificationEmails property value. List of email address to send notifications for groups without owners. Multiple email address can be defined by separating email address with a semicolon.
      * @returns a string
      */
@@ -22,18 +16,17 @@ export class GroupLifecyclePolicy extends Entity implements Parsable {
         return this._alternateNotificationEmails;
     };
     /**
-     * Gets the groupLifetimeInDays property value. Number of days before a group expires and needs to be renewed. Once renewed, the group expiration is extended by the number of days defined.
-     * @returns a integer
+     * Sets the alternateNotificationEmails property value. List of email address to send notifications for groups without owners. Multiple email address can be defined by separating email address with a semicolon.
+     * @param value Value to set for the alternateNotificationEmails property.
      */
-    public get groupLifetimeInDays() {
-        return this._groupLifetimeInDays;
+    public set alternateNotificationEmails(value: string | undefined) {
+        this._alternateNotificationEmails = value;
     };
     /**
-     * Gets the managedGroupTypes property value. The group type for which the expiration policy applies. Possible values are All, Selected or None.
-     * @returns a string
+     * Instantiates a new groupLifecyclePolicy and sets the default values.
      */
-    public get managedGroupTypes() {
-        return this._managedGroupTypes;
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -47,22 +40,11 @@ export class GroupLifecyclePolicy extends Entity implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the groupLifetimeInDays property value. Number of days before a group expires and needs to be renewed. Once renewed, the group expiration is extended by the number of days defined.
+     * @returns a integer
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeStringValue("alternateNotificationEmails", this.alternateNotificationEmails);
-        writer.writeNumberValue("groupLifetimeInDays", this.groupLifetimeInDays);
-        writer.writeStringValue("managedGroupTypes", this.managedGroupTypes);
-    };
-    /**
-     * Sets the alternateNotificationEmails property value. List of email address to send notifications for groups without owners. Multiple email address can be defined by separating email address with a semicolon.
-     * @param value Value to set for the alternateNotificationEmails property.
-     */
-    public set alternateNotificationEmails(value: string | undefined) {
-        this._alternateNotificationEmails = value;
+    public get groupLifetimeInDays() {
+        return this._groupLifetimeInDays;
     };
     /**
      * Sets the groupLifetimeInDays property value. Number of days before a group expires and needs to be renewed. Once renewed, the group expiration is extended by the number of days defined.
@@ -72,10 +54,28 @@ export class GroupLifecyclePolicy extends Entity implements Parsable {
         this._groupLifetimeInDays = value;
     };
     /**
+     * Gets the managedGroupTypes property value. The group type for which the expiration policy applies. Possible values are All, Selected or None.
+     * @returns a string
+     */
+    public get managedGroupTypes() {
+        return this._managedGroupTypes;
+    };
+    /**
      * Sets the managedGroupTypes property value. The group type for which the expiration policy applies. Possible values are All, Selected or None.
      * @param value Value to set for the managedGroupTypes property.
      */
     public set managedGroupTypes(value: string | undefined) {
         this._managedGroupTypes = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeStringValue("alternateNotificationEmails", this.alternateNotificationEmails);
+        writer.writeNumberValue("groupLifetimeInDays", this.groupLifetimeInDays);
+        writer.writeStringValue("managedGroupTypes", this.managedGroupTypes);
     };
 }

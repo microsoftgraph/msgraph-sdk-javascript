@@ -1,11 +1,14 @@
 import {DeviceEnrollmentConfiguration} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {EnrollmentConfigurationAssignmentItemRequestBuilder} from './assignments/item/';
-import {SetPriorityRequestBuilder} from './setPriority/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceEnrollmentConfigurationFromDiscriminatorValue} from '../../../models/microsoft/graph/createDeviceEnrollmentConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {EnrollmentConfigurationAssignmentItemRequestBuilder} from './assignments/item/enrollmentConfigurationAssignmentItemRequestBuilder';
+import {SetPriorityRequestBuilder} from './setPriority/setPriorityRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/deviceEnrollmentConfigurations/{deviceEnrollmentConfiguration-id}  */
+/** Provides operations to manage the deviceEnrollmentConfigurations property of the microsoft.graph.deviceManagement entity.  */
 export class DeviceEnrollmentConfigurationItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -47,7 +50,7 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of device enrollment configurations
+     * Delete navigation property deviceEnrollmentConfigurations for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -82,7 +85,7 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of device enrollment configurations
+     * Update the navigation property deviceEnrollmentConfigurations in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -100,7 +103,7 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of device enrollment configurations
+     * Delete navigation property deviceEnrollmentConfigurations for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -109,7 +112,11 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of device enrollment configurations
@@ -126,10 +133,14 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceEnrollmentConfiguration>(requestInfo, DeviceEnrollmentConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceEnrollmentConfiguration>(requestInfo, createDeviceEnrollmentConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of device enrollment configurations
+     * Update the navigation property deviceEnrollmentConfigurations in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -140,6 +151,10 @@ export class DeviceEnrollmentConfigurationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

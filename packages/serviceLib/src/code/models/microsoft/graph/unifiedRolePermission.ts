@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class UnifiedRolePermission implements Parsable {
+export class UnifiedRolePermission implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Set of tasks that can be performed on a resource. Required.  */
@@ -10,17 +10,18 @@ export class UnifiedRolePermission implements Parsable {
     /** Set of tasks that may not be performed on a resource. Not yet supported.  */
     private _excludedResourceActions?: string[] | undefined;
     /**
-     * Instantiates a new unifiedRolePermission and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowedResourceActions property value. Set of tasks that can be performed on a resource. Required.
@@ -30,6 +31,13 @@ export class UnifiedRolePermission implements Parsable {
         return this._allowedResourceActions;
     };
     /**
+     * Sets the allowedResourceActions property value. Set of tasks that can be performed on a resource. Required.
+     * @param value Value to set for the allowedResourceActions property.
+     */
+    public set allowedResourceActions(value: string[] | undefined) {
+        this._allowedResourceActions = value;
+    };
+    /**
      * Gets the condition property value. Optional constraints that must be met for the permission to be effective.
      * @returns a string
      */
@@ -37,11 +45,31 @@ export class UnifiedRolePermission implements Parsable {
         return this._condition;
     };
     /**
+     * Sets the condition property value. Optional constraints that must be met for the permission to be effective.
+     * @param value Value to set for the condition property.
+     */
+    public set condition(value: string | undefined) {
+        this._condition = value;
+    };
+    /**
+     * Instantiates a new unifiedRolePermission and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the excludedResourceActions property value. Set of tasks that may not be performed on a resource. Not yet supported.
      * @returns a string
      */
     public get excludedResourceActions() {
         return this._excludedResourceActions;
+    };
+    /**
+     * Sets the excludedResourceActions property value. Set of tasks that may not be performed on a resource. Not yet supported.
+     * @param value Value to set for the excludedResourceActions property.
+     */
+    public set excludedResourceActions(value: string[] | undefined) {
+        this._excludedResourceActions = value;
     };
     /**
      * The deserialization information for the current model
@@ -64,33 +92,5 @@ export class UnifiedRolePermission implements Parsable {
         writer.writeStringValue("condition", this.condition);
         writer.writeCollectionOfPrimitiveValues<string>("excludedResourceActions", this.excludedResourceActions);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowedResourceActions property value. Set of tasks that can be performed on a resource. Required.
-     * @param value Value to set for the allowedResourceActions property.
-     */
-    public set allowedResourceActions(value: string[] | undefined) {
-        this._allowedResourceActions = value;
-    };
-    /**
-     * Sets the condition property value. Optional constraints that must be met for the permission to be effective.
-     * @param value Value to set for the condition property.
-     */
-    public set condition(value: string | undefined) {
-        this._condition = value;
-    };
-    /**
-     * Sets the excludedResourceActions property value. Set of tasks that may not be performed on a resource. Not yet supported.
-     * @param value Value to set for the excludedResourceActions property.
-     */
-    public set excludedResourceActions(value: string[] | undefined) {
-        this._excludedResourceActions = value;
     };
 }

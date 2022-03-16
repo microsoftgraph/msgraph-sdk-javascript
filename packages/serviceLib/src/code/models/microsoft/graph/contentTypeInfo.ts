@@ -1,18 +1,12 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ContentTypeInfo implements Parsable {
+export class ContentTypeInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The id of the content type.  */
     private _id?: string | undefined;
     /** The name of the content type.  */
     private _name?: string | undefined;
-    /**
-     * Instantiates a new contentTypeInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -21,18 +15,17 @@ export class ContentTypeInfo implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the id property value. The id of the content type.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get id() {
-        return this._id;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the name property value. The name of the content type.
-     * @returns a string
+     * Instantiates a new contentTypeInfo and sets the default values.
      */
-    public get name() {
-        return this._name;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -45,21 +38,11 @@ export class ContentTypeInfo implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the id property value. The id of the content type.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("id", this.id);
-        writer.writeStringValue("name", this.name);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get id() {
+        return this._id;
     };
     /**
      * Sets the id property value. The id of the content type.
@@ -69,10 +52,27 @@ export class ContentTypeInfo implements Parsable {
         this._id = value;
     };
     /**
+     * Gets the name property value. The name of the content type.
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
      * Sets the name property value. The name of the content type.
      * @param value Value to set for the name property.
      */
     public set name(value: string | undefined) {
         this._name = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("id", this.id);
+        writer.writeStringValue("name", this.name);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

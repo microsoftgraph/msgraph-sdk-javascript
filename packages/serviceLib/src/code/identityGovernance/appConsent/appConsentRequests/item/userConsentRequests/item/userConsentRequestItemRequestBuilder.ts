@@ -1,8 +1,11 @@
 import {UserConsentRequest} from '../../../../../../models/microsoft/graph/';
-import {ApprovalRequestBuilder} from './approval/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserConsentRequestFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createUserConsentRequestFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ApprovalRequestBuilder} from './approval/approvalRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/appConsent/appConsentRequests/{appConsentRequest-id}/userConsentRequests/{userConsentRequest-id}  */
+/** Provides operations to manage the userConsentRequests property of the microsoft.graph.appConsentRequest entity.  */
 export class UserConsentRequestItemRequestBuilder {
     public get approval(): ApprovalRequestBuilder {
         return new ApprovalRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class UserConsentRequestItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A list of pending user consent requests.
+     * Delete navigation property userConsentRequests for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class UserConsentRequestItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of pending user consent requests.
+     * Update the navigation property userConsentRequests in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class UserConsentRequestItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of pending user consent requests.
+     * Delete navigation property userConsentRequests for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class UserConsentRequestItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A list of pending user consent requests.
@@ -106,10 +113,14 @@ export class UserConsentRequestItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserConsentRequest>(requestInfo, UserConsentRequest, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserConsentRequest>(requestInfo, createUserConsentRequestFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A list of pending user consent requests.
+     * Update the navigation property userConsentRequests in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class UserConsentRequestItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

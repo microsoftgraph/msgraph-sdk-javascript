@@ -1,19 +1,13 @@
-import {Tone} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {Tone} from './tone';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ToneInfo implements Parsable {
+export class ToneInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** An incremental identifier used for ordering DTMF events.  */
     private _sequenceId?: number | undefined;
     /** Possible values are: tone0, tone1, tone2, tone3, tone4, tone5, tone6, tone7, tone8, tone9, star, pound, a, b, c, d, flash.  */
     private _tone?: Tone | undefined;
-    /**
-     * Instantiates a new toneInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -22,18 +16,17 @@ export class ToneInfo implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the sequenceId property value. An incremental identifier used for ordering DTMF events.
-     * @returns a int64
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get sequenceId() {
-        return this._sequenceId;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the tone property value. Possible values are: tone0, tone1, tone2, tone3, tone4, tone5, tone6, tone7, tone8, tone9, star, pound, a, b, c, d, flash.
-     * @returns a tone
+     * Instantiates a new toneInfo and sets the default values.
      */
-    public get tone() {
-        return this._tone;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -46,6 +39,20 @@ export class ToneInfo implements Parsable {
         ]);
     };
     /**
+     * Gets the sequenceId property value. An incremental identifier used for ordering DTMF events.
+     * @returns a int64
+     */
+    public get sequenceId() {
+        return this._sequenceId;
+    };
+    /**
+     * Sets the sequenceId property value. An incremental identifier used for ordering DTMF events.
+     * @param value Value to set for the sequenceId property.
+     */
+    public set sequenceId(value: number | undefined) {
+        this._sequenceId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -56,18 +63,11 @@ export class ToneInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the tone property value. Possible values are: tone0, tone1, tone2, tone3, tone4, tone5, tone6, tone7, tone8, tone9, star, pound, a, b, c, d, flash.
+     * @returns a tone
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the sequenceId property value. An incremental identifier used for ordering DTMF events.
-     * @param value Value to set for the sequenceId property.
-     */
-    public set sequenceId(value: number | undefined) {
-        this._sequenceId = value;
+    public get tone() {
+        return this._tone;
     };
     /**
      * Sets the tone property value. Possible values are: tone0, tone1, tone2, tone3, tone4, tone5, tone6, tone7, tone8, tone9, star, pound, a, b, c, d, flash.

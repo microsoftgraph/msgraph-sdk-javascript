@@ -1,9 +1,12 @@
 import {AgreementFileLocalization} from '../../../../../models/microsoft/graph/';
-import {VersionsRequestBuilder} from './versions/';
-import {AgreementFileVersionItemRequestBuilder} from './versions/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAgreementFileLocalizationFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAgreementFileLocalizationFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AgreementFileVersionItemRequestBuilder} from './versions/item/agreementFileVersionItemRequestBuilder';
+import {VersionsRequestBuilder} from './versions/versionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /agreements/{agreement-id}/file/localizations/{agreementFileLocalization-id}  */
+/** Provides operations to manage the localizations property of the microsoft.graph.agreementFile entity.  */
 export class AgreementFileLocalizationItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -28,7 +31,7 @@ export class AgreementFileLocalizationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The localized version of the terms of use agreement files attached to the agreement.
+     * Delete navigation property localizations for agreements
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class AgreementFileLocalizationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The localized version of the terms of use agreement files attached to the agreement.
+     * Update the navigation property localizations in agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class AgreementFileLocalizationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The localized version of the terms of use agreement files attached to the agreement.
+     * Delete navigation property localizations for agreements
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class AgreementFileLocalizationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The localized version of the terms of use agreement files attached to the agreement.
@@ -107,10 +114,14 @@ export class AgreementFileLocalizationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AgreementFileLocalization>(requestInfo, AgreementFileLocalization, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AgreementFileLocalization>(requestInfo, createAgreementFileLocalizationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The localized version of the terms of use agreement files attached to the agreement.
+     * Update the navigation property localizations in agreements
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -121,7 +132,11 @@ export class AgreementFileLocalizationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.agreements.item.file.localizations.item.versions.item collection

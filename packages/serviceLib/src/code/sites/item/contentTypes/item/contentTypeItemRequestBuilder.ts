@@ -1,19 +1,24 @@
 import {ContentType} from '../../../../models/microsoft/graph/';
-import {AssociateWithHubSitesRequestBuilder} from './associateWithHubSites/';
-import {BaseRequestBuilder} from './base/';
-import {BaseTypesRequestBuilder} from './baseTypes/';
-import {ColumnLinksRequestBuilder} from './columnLinks/';
-import {ColumnLinkItemRequestBuilder} from './columnLinks/item/';
-import {ColumnPositionsRequestBuilder} from './columnPositions/';
-import {ColumnsRequestBuilder} from './columns/';
-import {ColumnDefinitionItemRequestBuilder} from './columns/item/';
-import {CopyToDefaultContentLocationRequestBuilder} from './copyToDefaultContentLocation/';
-import {IsPublishedRequestBuilder} from './isPublished/';
-import {PublishRequestBuilder} from './publish/';
-import {UnpublishRequestBuilder} from './unpublish/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createContentTypeFromDiscriminatorValue} from '../../../../models/microsoft/graph/createContentTypeFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssociateWithHubSitesRequestBuilder} from './associateWithHubSites/associateWithHubSitesRequestBuilder';
+import {BaseRequestBuilder} from './base/baseRequestBuilder';
+import {BaseTypesRequestBuilder} from './baseTypes/baseTypesRequestBuilder';
+import {ContentTypeItemRequestBuilder as i1df7b87290f00d88318ef9bce3b35b00760248be70a557cfcc67652e86f0648e} from './baseTypes/item/contentTypeItemRequestBuilder';
+import {ColumnLinksRequestBuilder} from './columnLinks/columnLinksRequestBuilder';
+import {ColumnLinkItemRequestBuilder} from './columnLinks/item/columnLinkItemRequestBuilder';
+import {ColumnPositionsRequestBuilder} from './columnPositions/columnPositionsRequestBuilder';
+import {ColumnDefinitionItemRequestBuilder as ie6dd4ddd6b1eabcf49930437b2860a2541a85a88dbdadad9181fabfb80970baa} from './columnPositions/item/columnDefinitionItemRequestBuilder';
+import {ColumnsRequestBuilder} from './columns/columnsRequestBuilder';
+import {ColumnDefinitionItemRequestBuilder as i75ffb77adaf3d52ea0a55e7fd83ab14b21c506384e205123e1b1af9aa110ab2e} from './columns/item/columnDefinitionItemRequestBuilder';
+import {CopyToDefaultContentLocationRequestBuilder} from './copyToDefaultContentLocation/copyToDefaultContentLocationRequestBuilder';
+import {IsPublishedRequestBuilder} from './isPublished/isPublishedRequestBuilder';
+import {PublishRequestBuilder} from './publish/publishRequestBuilder';
+import {UnpublishRequestBuilder} from './unpublish/unpublishRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/contentTypes/{contentType-id}  */
+/** Provides operations to manage the contentTypes property of the microsoft.graph.site entity.  */
 export class ContentTypeItemRequestBuilder {
     public get associateWithHubSites(): AssociateWithHubSitesRequestBuilder {
         return new AssociateWithHubSitesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -49,6 +54,17 @@ export class ContentTypeItemRequestBuilder {
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
+     * Gets an item from the MicrosoftGraph.sites.item.contentTypes.item.baseTypes.item collection
+     * @param id Unique identifier of the item
+     * @returns a contentTypeItemRequestBuilder
+     */
+    public baseTypesById(id: string) : i1df7b87290f00d88318ef9bce3b35b00760248be70a557cfcc67652e86f0648e {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["contentType_id1"] = id
+        return new i1df7b87290f00d88318ef9bce3b35b00760248be70a557cfcc67652e86f0648e(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Gets an item from the MicrosoftGraph.sites.item.contentTypes.item.columnLinks.item collection
      * @param id Unique identifier of the item
      * @returns a columnLinkItemRequestBuilder
@@ -60,15 +76,26 @@ export class ContentTypeItemRequestBuilder {
         return new ColumnLinkItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
+     * Gets an item from the MicrosoftGraph.sites.item.contentTypes.item.columnPositions.item collection
+     * @param id Unique identifier of the item
+     * @returns a columnDefinitionItemRequestBuilder
+     */
+    public columnPositionsById(id: string) : ie6dd4ddd6b1eabcf49930437b2860a2541a85a88dbdadad9181fabfb80970baa {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["columnDefinition_id"] = id
+        return new ie6dd4ddd6b1eabcf49930437b2860a2541a85a88dbdadad9181fabfb80970baa(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Gets an item from the MicrosoftGraph.sites.item.contentTypes.item.columns.item collection
      * @param id Unique identifier of the item
      * @returns a columnDefinitionItemRequestBuilder
      */
-    public columnsById(id: string) : ColumnDefinitionItemRequestBuilder {
+    public columnsById(id: string) : i75ffb77adaf3d52ea0a55e7fd83ab14b21c506384e205123e1b1af9aa110ab2e {
         if(!id) throw new Error("id cannot be undefined");
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["columnDefinition_id"] = id
-        return new ColumnDefinitionItemRequestBuilder(urlTplParams, this.requestAdapter);
+        return new i75ffb77adaf3d52ea0a55e7fd83ab14b21c506384e205123e1b1af9aa110ab2e(urlTplParams, this.requestAdapter);
     };
     /**
      * Instantiates a new ContentTypeItemRequestBuilder and sets the default values.
@@ -84,7 +111,7 @@ export class ContentTypeItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of content types defined for this site.
+     * Delete navigation property contentTypes for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -119,7 +146,7 @@ export class ContentTypeItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of content types defined for this site.
+     * Update the navigation property contentTypes in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,7 +164,7 @@ export class ContentTypeItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of content types defined for this site.
+     * Delete navigation property contentTypes for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -146,7 +173,11 @@ export class ContentTypeItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of content types defined for this site.
@@ -163,17 +194,21 @@ export class ContentTypeItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, ContentType, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, createContentTypeFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /sites/{site-id}/contentTypes/{contentType-id}/microsoft.graph.isPublished()
+     * Provides operations to call the isPublished method.
      * @returns a isPublishedRequestBuilder
      */
     public isPublished() : IsPublishedRequestBuilder {
         return new IsPublishedRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * The collection of content types defined for this site.
+     * Update the navigation property contentTypes in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -184,6 +219,10 @@ export class ContentTypeItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

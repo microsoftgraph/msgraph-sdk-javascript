@@ -11,13 +11,6 @@ export class IdentitySecurityDefaultsEnforcementPolicy extends PolicyBase implem
         super();
     };
     /**
-     * Gets the isEnabled property value. If set to true, Azure Active Directory security defaults is enabled for the tenant.
-     * @returns a boolean
-     */
-    public get isEnabled() {
-        return this._isEnabled;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +20,11 @@ export class IdentitySecurityDefaultsEnforcementPolicy extends PolicyBase implem
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the isEnabled property value. If set to true, Azure Active Directory security defaults is enabled for the tenant.
+     * @returns a boolean
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeBooleanValue("isEnabled", this.isEnabled);
+    public get isEnabled() {
+        return this._isEnabled;
     };
     /**
      * Sets the isEnabled property value. If set to true, Azure Active Directory security defaults is enabled for the tenant.
@@ -41,5 +32,14 @@ export class IdentitySecurityDefaultsEnforcementPolicy extends PolicyBase implem
      */
     public set isEnabled(value: boolean | undefined) {
         this._isEnabled = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeBooleanValue("isEnabled", this.isEnabled);
     };
 }

@@ -1,8 +1,16 @@
 import {ChatMessage} from '../../../../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createChatMessageFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/createChatMessageFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {HostedContentsRequestBuilder} from './hostedContents/hostedContentsRequestBuilder';
+import {ChatMessageHostedContentItemRequestBuilder} from './hostedContents/item/chatMessageHostedContentItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/channels/{channel-id}/messages/{chatMessage-id}/replies/{chatMessage-id1}  */
+/** Provides operations to manage the replies property of the microsoft.graph.chatMessage entity.  */
 export class ChatMessageItemRequestBuilder {
+    public get hostedContents(): HostedContentsRequestBuilder {
+        return new HostedContentsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -23,7 +31,7 @@ export class ChatMessageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Replies for a specified message.
+     * Delete navigation property replies for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +66,7 @@ export class ChatMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Replies for a specified message.
+     * Update the navigation property replies in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +84,7 @@ export class ChatMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Replies for a specified message.
+     * Delete navigation property replies for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +93,11 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Replies for a specified message.
@@ -102,10 +114,25 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ChatMessage>(requestInfo, ChatMessage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ChatMessage>(requestInfo, createChatMessageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Replies for a specified message.
+     * Gets an item from the MicrosoftGraph.teams.item.channels.item.messages.item.replies.item.hostedContents.item collection
+     * @param id Unique identifier of the item
+     * @returns a chatMessageHostedContentItemRequestBuilder
+     */
+    public hostedContentsById(id: string) : ChatMessageHostedContentItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["chatMessageHostedContent_id"] = id
+        return new ChatMessageHostedContentItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property replies in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +143,10 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

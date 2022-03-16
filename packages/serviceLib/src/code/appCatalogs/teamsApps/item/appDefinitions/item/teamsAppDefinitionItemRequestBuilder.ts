@@ -1,8 +1,11 @@
 import {TeamsAppDefinition} from '../../../../../models/microsoft/graph/';
-import {BotRequestBuilder} from './bot/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTeamsAppDefinitionFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createTeamsAppDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BotRequestBuilder} from './bot/botRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /appCatalogs/teamsApps/{teamsApp-id}/appDefinitions/{teamsAppDefinition-id}  */
+/** Provides operations to manage the appDefinitions property of the microsoft.graph.teamsApp entity.  */
 export class TeamsAppDefinitionItemRequestBuilder {
     public get bot(): BotRequestBuilder {
         return new BotRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class TeamsAppDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The details for each version of the app.
+     * Delete navigation property appDefinitions for appCatalogs
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class TeamsAppDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The details for each version of the app.
+     * Update the navigation property appDefinitions in appCatalogs
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class TeamsAppDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The details for each version of the app.
+     * Delete navigation property appDefinitions for appCatalogs
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class TeamsAppDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The details for each version of the app.
@@ -106,10 +113,14 @@ export class TeamsAppDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TeamsAppDefinition>(requestInfo, TeamsAppDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TeamsAppDefinition>(requestInfo, createTeamsAppDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The details for each version of the app.
+     * Update the navigation property appDefinitions in appCatalogs
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class TeamsAppDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

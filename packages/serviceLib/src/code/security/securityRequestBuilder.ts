@@ -1,13 +1,16 @@
 import {Security} from '../models/microsoft/graph/';
-import {AlertsRequestBuilder} from './alerts/';
-import {AlertItemRequestBuilder} from './alerts/item/';
-import {SecureScoreControlProfilesRequestBuilder} from './secureScoreControlProfiles/';
-import {SecureScoreControlProfileItemRequestBuilder} from './secureScoreControlProfiles/item/';
-import {SecureScoresRequestBuilder} from './secureScores/';
-import {SecureScoreItemRequestBuilder} from './secureScores/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSecurityFromDiscriminatorValue} from '../models/microsoft/graph/createSecurityFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AlertsRequestBuilder} from './alerts/alertsRequestBuilder';
+import {AlertItemRequestBuilder} from './alerts/item/alertItemRequestBuilder';
+import {SecureScoreControlProfileItemRequestBuilder} from './secureScoreControlProfiles/item/secureScoreControlProfileItemRequestBuilder';
+import {SecureScoreControlProfilesRequestBuilder} from './secureScoreControlProfiles/secureScoreControlProfilesRequestBuilder';
+import {SecureScoreItemRequestBuilder} from './secureScores/item/secureScoreItemRequestBuilder';
+import {SecureScoresRequestBuilder} from './secureScores/secureScoresRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /security  */
+/** Provides operations to manage the security singleton.  */
 export class SecurityRequestBuilder {
     public get alerts(): AlertsRequestBuilder {
         return new AlertsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -101,7 +104,11 @@ export class SecurityRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Security>(requestInfo, Security, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Security>(requestInfo, createSecurityFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update security
@@ -115,7 +122,11 @@ export class SecurityRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.security.secureScoreControlProfiles.item collection

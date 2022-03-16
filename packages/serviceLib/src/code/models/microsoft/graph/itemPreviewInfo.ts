@@ -1,17 +1,11 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ItemPreviewInfo implements Parsable {
+export class ItemPreviewInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _getUrl?: string | undefined;
     private _postParameters?: string | undefined;
     private _postUrl?: string | undefined;
-    /**
-     * Instantiates a new itemPreviewInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -20,25 +14,17 @@ export class ItemPreviewInfo implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the getUrl property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get getUrl() {
-        return this._getUrl;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the postParameters property value. 
-     * @returns a string
+     * Instantiates a new itemPreviewInfo and sets the default values.
      */
-    public get postParameters() {
-        return this._postParameters;
-    };
-    /**
-     * Gets the postUrl property value. 
-     * @returns a string
-     */
-    public get postUrl() {
-        return this._postUrl;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -52,22 +38,11 @@ export class ItemPreviewInfo implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the getUrl property value. 
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("getUrl", this.getUrl);
-        writer.writeStringValue("postParameters", this.postParameters);
-        writer.writeStringValue("postUrl", this.postUrl);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get getUrl() {
+        return this._getUrl;
     };
     /**
      * Sets the getUrl property value. 
@@ -77,6 +52,13 @@ export class ItemPreviewInfo implements Parsable {
         this._getUrl = value;
     };
     /**
+     * Gets the postParameters property value. 
+     * @returns a string
+     */
+    public get postParameters() {
+        return this._postParameters;
+    };
+    /**
      * Sets the postParameters property value. 
      * @param value Value to set for the postParameters property.
      */
@@ -84,10 +66,28 @@ export class ItemPreviewInfo implements Parsable {
         this._postParameters = value;
     };
     /**
+     * Gets the postUrl property value. 
+     * @returns a string
+     */
+    public get postUrl() {
+        return this._postUrl;
+    };
+    /**
      * Sets the postUrl property value. 
      * @param value Value to set for the postUrl property.
      */
     public set postUrl(value: string | undefined) {
         this._postUrl = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("getUrl", this.getUrl);
+        writer.writeStringValue("postParameters", this.postParameters);
+        writer.writeStringValue("postUrl", this.postUrl);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

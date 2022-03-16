@@ -1,19 +1,22 @@
 import {MailFolder} from '../../../../models/microsoft/graph/';
-import {ChildFoldersRequestBuilder} from './childFolders/';
-import {MailFolderItemRequestBuilder as i5c93d7404870341283f5b39bb33ee5869ef2c058f6fa1a7fd794718890feeff0} from './childFolders/item/';
-import {CopyRequestBuilder} from './copy/';
-import {MessageRulesRequestBuilder} from './messageRules/';
-import {MessageRuleItemRequestBuilder} from './messageRules/item/';
-import {MessagesRequestBuilder} from './messages/';
-import {MessageItemRequestBuilder} from './messages/item/';
-import {MoveRequestBuilder} from './move/';
-import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/';
-import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/';
-import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/';
-import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMailFolderFromDiscriminatorValue} from '../../../../models/microsoft/graph/createMailFolderFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ChildFoldersRequestBuilder} from './childFolders/childFoldersRequestBuilder';
+import {MailFolderItemRequestBuilder as i5c93d7404870341283f5b39bb33ee5869ef2c058f6fa1a7fd794718890feeff0} from './childFolders/item/mailFolderItemRequestBuilder';
+import {CopyRequestBuilder} from './copy/copyRequestBuilder';
+import {MessageRuleItemRequestBuilder} from './messageRules/item/messageRuleItemRequestBuilder';
+import {MessageRulesRequestBuilder} from './messageRules/messageRulesRequestBuilder';
+import {MessageItemRequestBuilder} from './messages/item/messageItemRequestBuilder';
+import {MessagesRequestBuilder} from './messages/messagesRequestBuilder';
+import {MoveRequestBuilder} from './move/moveRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}  */
+/** Provides operations to manage the mailFolders property of the microsoft.graph.user entity.  */
 export class MailFolderItemRequestBuilder {
     public get childFolders(): ChildFoldersRequestBuilder {
         return new ChildFoldersRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -67,7 +70,7 @@ export class MailFolderItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The user's mail folders. Read-only. Nullable.
+     * Delete navigation property mailFolders for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -101,7 +104,7 @@ export class MailFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The user's mail folders. Read-only. Nullable.
+     * Update the navigation property mailFolders in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -119,7 +122,7 @@ export class MailFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The user's mail folders. Read-only. Nullable.
+     * Delete navigation property mailFolders for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -128,7 +131,11 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The user's mail folders. Read-only. Nullable.
@@ -144,7 +151,11 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, MailFolder, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MailFolder>(requestInfo, createMailFolderFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.mailFolders.item.messageRules.item collection
@@ -180,7 +191,7 @@ export class MailFolderItemRequestBuilder {
         return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The user's mail folders. Read-only. Nullable.
+     * Update the navigation property mailFolders in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -191,7 +202,11 @@ export class MailFolderItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.mailFolders.item.singleValueExtendedProperties.item collection

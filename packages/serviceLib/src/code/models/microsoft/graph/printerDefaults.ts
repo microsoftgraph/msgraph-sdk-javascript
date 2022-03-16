@@ -1,7 +1,13 @@
-import {PrintColorMode, PrintDuplexMode, PrintFinishing, PrintMultipageLayout, PrintOrientation, PrintQuality, PrintScaling} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {PrintColorMode} from './printColorMode';
+import {PrintDuplexMode} from './printDuplexMode';
+import {PrintFinishing} from './printFinishing';
+import {PrintMultipageLayout} from './printMultipageLayout';
+import {PrintOrientation} from './printOrientation';
+import {PrintQuality} from './printQuality';
+import {PrintScaling} from './printScaling';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PrinterDefaults implements Parsable {
+export class PrinterDefaults implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The default color mode to use when printing the document. Valid values are described in the following table.  */
@@ -39,17 +45,18 @@ export class PrinterDefaults implements Parsable {
     /** Specifies how the printer scales the document data to fit the requested media. Valid values are described in the following table.  */
     private _scaling?: PrintScaling | undefined;
     /**
-     * Instantiates a new printerDefaults and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the colorMode property value. The default color mode to use when printing the document. Valid values are described in the following table.
@@ -59,11 +66,31 @@ export class PrinterDefaults implements Parsable {
         return this._colorMode;
     };
     /**
+     * Sets the colorMode property value. The default color mode to use when printing the document. Valid values are described in the following table.
+     * @param value Value to set for the colorMode property.
+     */
+    public set colorMode(value: PrintColorMode | undefined) {
+        this._colorMode = value;
+    };
+    /**
+     * Instantiates a new printerDefaults and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the contentType property value. The default content (MIME) type to use when processing documents.
      * @returns a string
      */
     public get contentType() {
         return this._contentType;
+    };
+    /**
+     * Sets the contentType property value. The default content (MIME) type to use when processing documents.
+     * @param value Value to set for the contentType property.
+     */
+    public set contentType(value: string | undefined) {
+        this._contentType = value;
     };
     /**
      * Gets the copiesPerJob property value. The default number of copies printed per job.
@@ -73,11 +100,25 @@ export class PrinterDefaults implements Parsable {
         return this._copiesPerJob;
     };
     /**
+     * Sets the copiesPerJob property value. The default number of copies printed per job.
+     * @param value Value to set for the copiesPerJob property.
+     */
+    public set copiesPerJob(value: number | undefined) {
+        this._copiesPerJob = value;
+    };
+    /**
      * Gets the dpi property value. The default resolution in DPI to use when printing the job.
      * @returns a integer
      */
     public get dpi() {
         return this._dpi;
+    };
+    /**
+     * Sets the dpi property value. The default resolution in DPI to use when printing the job.
+     * @param value Value to set for the dpi property.
+     */
+    public set dpi(value: number | undefined) {
+        this._dpi = value;
     };
     /**
      * Gets the duplexMode property value. The default duplex (double-sided) configuration to use when printing a document. Valid values are described in the following table.
@@ -87,11 +128,25 @@ export class PrinterDefaults implements Parsable {
         return this._duplexMode;
     };
     /**
+     * Sets the duplexMode property value. The default duplex (double-sided) configuration to use when printing a document. Valid values are described in the following table.
+     * @param value Value to set for the duplexMode property.
+     */
+    public set duplexMode(value: PrintDuplexMode | undefined) {
+        this._duplexMode = value;
+    };
+    /**
      * Gets the finishings property value. The default set of finishings to apply to print jobs. Valid values are described in the following table.
      * @returns a printFinishing
      */
     public get finishings() {
         return this._finishings;
+    };
+    /**
+     * Sets the finishings property value. The default set of finishings to apply to print jobs. Valid values are described in the following table.
+     * @param value Value to set for the finishings property.
+     */
+    public set finishings(value: PrintFinishing[] | undefined) {
+        this._finishings = value;
     };
     /**
      * Gets the fitPdfToPage property value. The default fitPdfToPage setting. True to fit each page of a PDF document to a physical sheet of media; false to let the printer decide how to lay out impressions.
@@ -101,74 +156,11 @@ export class PrinterDefaults implements Parsable {
         return this._fitPdfToPage;
     };
     /**
-     * Gets the inputBin property value. The default input bin that serves as the paper source.
-     * @returns a string
+     * Sets the fitPdfToPage property value. The default fitPdfToPage setting. True to fit each page of a PDF document to a physical sheet of media; false to let the printer decide how to lay out impressions.
+     * @param value Value to set for the fitPdfToPage property.
      */
-    public get inputBin() {
-        return this._inputBin;
-    };
-    /**
-     * Gets the mediaColor property value. The default media (such as paper) color to print the document on.
-     * @returns a string
-     */
-    public get mediaColor() {
-        return this._mediaColor;
-    };
-    /**
-     * Gets the mediaSize property value. The default media size to use. Supports standard size names for ISO and ANSI media sizes. Valid values are listed in the printerCapabilities topic.
-     * @returns a string
-     */
-    public get mediaSize() {
-        return this._mediaSize;
-    };
-    /**
-     * Gets the mediaType property value. The default media (such as paper) type to print the document on.
-     * @returns a string
-     */
-    public get mediaType() {
-        return this._mediaType;
-    };
-    /**
-     * Gets the multipageLayout property value. The default direction to lay out pages when multiple pages are being printed per sheet. Valid values are described in the following table.
-     * @returns a printMultipageLayout
-     */
-    public get multipageLayout() {
-        return this._multipageLayout;
-    };
-    /**
-     * Gets the orientation property value. The default orientation to use when printing the document. Valid values are described in the following table.
-     * @returns a printOrientation
-     */
-    public get orientation() {
-        return this._orientation;
-    };
-    /**
-     * Gets the outputBin property value. The default output bin to place completed prints into. See the printer's capabilities for a list of supported output bins.
-     * @returns a string
-     */
-    public get outputBin() {
-        return this._outputBin;
-    };
-    /**
-     * Gets the pagesPerSheet property value. The default number of document pages to print on each sheet.
-     * @returns a integer
-     */
-    public get pagesPerSheet() {
-        return this._pagesPerSheet;
-    };
-    /**
-     * Gets the quality property value. The default quality to use when printing the document. Valid values are described in the following table.
-     * @returns a printQuality
-     */
-    public get quality() {
-        return this._quality;
-    };
-    /**
-     * Gets the scaling property value. Specifies how the printer scales the document data to fit the requested media. Valid values are described in the following table.
-     * @returns a printScaling
-     */
-    public get scaling() {
-        return this._scaling;
+    public set fitPdfToPage(value: boolean | undefined) {
+        this._fitPdfToPage = value;
     };
     /**
      * The deserialization information for the current model
@@ -196,6 +188,146 @@ export class PrinterDefaults implements Parsable {
         ]);
     };
     /**
+     * Gets the inputBin property value. The default input bin that serves as the paper source.
+     * @returns a string
+     */
+    public get inputBin() {
+        return this._inputBin;
+    };
+    /**
+     * Sets the inputBin property value. The default input bin that serves as the paper source.
+     * @param value Value to set for the inputBin property.
+     */
+    public set inputBin(value: string | undefined) {
+        this._inputBin = value;
+    };
+    /**
+     * Gets the mediaColor property value. The default media (such as paper) color to print the document on.
+     * @returns a string
+     */
+    public get mediaColor() {
+        return this._mediaColor;
+    };
+    /**
+     * Sets the mediaColor property value. The default media (such as paper) color to print the document on.
+     * @param value Value to set for the mediaColor property.
+     */
+    public set mediaColor(value: string | undefined) {
+        this._mediaColor = value;
+    };
+    /**
+     * Gets the mediaSize property value. The default media size to use. Supports standard size names for ISO and ANSI media sizes. Valid values are listed in the printerCapabilities topic.
+     * @returns a string
+     */
+    public get mediaSize() {
+        return this._mediaSize;
+    };
+    /**
+     * Sets the mediaSize property value. The default media size to use. Supports standard size names for ISO and ANSI media sizes. Valid values are listed in the printerCapabilities topic.
+     * @param value Value to set for the mediaSize property.
+     */
+    public set mediaSize(value: string | undefined) {
+        this._mediaSize = value;
+    };
+    /**
+     * Gets the mediaType property value. The default media (such as paper) type to print the document on.
+     * @returns a string
+     */
+    public get mediaType() {
+        return this._mediaType;
+    };
+    /**
+     * Sets the mediaType property value. The default media (such as paper) type to print the document on.
+     * @param value Value to set for the mediaType property.
+     */
+    public set mediaType(value: string | undefined) {
+        this._mediaType = value;
+    };
+    /**
+     * Gets the multipageLayout property value. The default direction to lay out pages when multiple pages are being printed per sheet. Valid values are described in the following table.
+     * @returns a printMultipageLayout
+     */
+    public get multipageLayout() {
+        return this._multipageLayout;
+    };
+    /**
+     * Sets the multipageLayout property value. The default direction to lay out pages when multiple pages are being printed per sheet. Valid values are described in the following table.
+     * @param value Value to set for the multipageLayout property.
+     */
+    public set multipageLayout(value: PrintMultipageLayout | undefined) {
+        this._multipageLayout = value;
+    };
+    /**
+     * Gets the orientation property value. The default orientation to use when printing the document. Valid values are described in the following table.
+     * @returns a printOrientation
+     */
+    public get orientation() {
+        return this._orientation;
+    };
+    /**
+     * Sets the orientation property value. The default orientation to use when printing the document. Valid values are described in the following table.
+     * @param value Value to set for the orientation property.
+     */
+    public set orientation(value: PrintOrientation | undefined) {
+        this._orientation = value;
+    };
+    /**
+     * Gets the outputBin property value. The default output bin to place completed prints into. See the printer's capabilities for a list of supported output bins.
+     * @returns a string
+     */
+    public get outputBin() {
+        return this._outputBin;
+    };
+    /**
+     * Sets the outputBin property value. The default output bin to place completed prints into. See the printer's capabilities for a list of supported output bins.
+     * @param value Value to set for the outputBin property.
+     */
+    public set outputBin(value: string | undefined) {
+        this._outputBin = value;
+    };
+    /**
+     * Gets the pagesPerSheet property value. The default number of document pages to print on each sheet.
+     * @returns a integer
+     */
+    public get pagesPerSheet() {
+        return this._pagesPerSheet;
+    };
+    /**
+     * Sets the pagesPerSheet property value. The default number of document pages to print on each sheet.
+     * @param value Value to set for the pagesPerSheet property.
+     */
+    public set pagesPerSheet(value: number | undefined) {
+        this._pagesPerSheet = value;
+    };
+    /**
+     * Gets the quality property value. The default quality to use when printing the document. Valid values are described in the following table.
+     * @returns a printQuality
+     */
+    public get quality() {
+        return this._quality;
+    };
+    /**
+     * Sets the quality property value. The default quality to use when printing the document. Valid values are described in the following table.
+     * @param value Value to set for the quality property.
+     */
+    public set quality(value: PrintQuality | undefined) {
+        this._quality = value;
+    };
+    /**
+     * Gets the scaling property value. Specifies how the printer scales the document data to fit the requested media. Valid values are described in the following table.
+     * @returns a printScaling
+     */
+    public get scaling() {
+        return this._scaling;
+    };
+    /**
+     * Sets the scaling property value. Specifies how the printer scales the document data to fit the requested media. Valid values are described in the following table.
+     * @param value Value to set for the scaling property.
+     */
+    public set scaling(value: PrintScaling | undefined) {
+        this._scaling = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -219,131 +351,5 @@ export class PrinterDefaults implements Parsable {
         writer.writeEnumValue<PrintQuality>("quality", this.quality);
         writer.writeEnumValue<PrintScaling>("scaling", this.scaling);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the colorMode property value. The default color mode to use when printing the document. Valid values are described in the following table.
-     * @param value Value to set for the colorMode property.
-     */
-    public set colorMode(value: PrintColorMode | undefined) {
-        this._colorMode = value;
-    };
-    /**
-     * Sets the contentType property value. The default content (MIME) type to use when processing documents.
-     * @param value Value to set for the contentType property.
-     */
-    public set contentType(value: string | undefined) {
-        this._contentType = value;
-    };
-    /**
-     * Sets the copiesPerJob property value. The default number of copies printed per job.
-     * @param value Value to set for the copiesPerJob property.
-     */
-    public set copiesPerJob(value: number | undefined) {
-        this._copiesPerJob = value;
-    };
-    /**
-     * Sets the dpi property value. The default resolution in DPI to use when printing the job.
-     * @param value Value to set for the dpi property.
-     */
-    public set dpi(value: number | undefined) {
-        this._dpi = value;
-    };
-    /**
-     * Sets the duplexMode property value. The default duplex (double-sided) configuration to use when printing a document. Valid values are described in the following table.
-     * @param value Value to set for the duplexMode property.
-     */
-    public set duplexMode(value: PrintDuplexMode | undefined) {
-        this._duplexMode = value;
-    };
-    /**
-     * Sets the finishings property value. The default set of finishings to apply to print jobs. Valid values are described in the following table.
-     * @param value Value to set for the finishings property.
-     */
-    public set finishings(value: PrintFinishing[] | undefined) {
-        this._finishings = value;
-    };
-    /**
-     * Sets the fitPdfToPage property value. The default fitPdfToPage setting. True to fit each page of a PDF document to a physical sheet of media; false to let the printer decide how to lay out impressions.
-     * @param value Value to set for the fitPdfToPage property.
-     */
-    public set fitPdfToPage(value: boolean | undefined) {
-        this._fitPdfToPage = value;
-    };
-    /**
-     * Sets the inputBin property value. The default input bin that serves as the paper source.
-     * @param value Value to set for the inputBin property.
-     */
-    public set inputBin(value: string | undefined) {
-        this._inputBin = value;
-    };
-    /**
-     * Sets the mediaColor property value. The default media (such as paper) color to print the document on.
-     * @param value Value to set for the mediaColor property.
-     */
-    public set mediaColor(value: string | undefined) {
-        this._mediaColor = value;
-    };
-    /**
-     * Sets the mediaSize property value. The default media size to use. Supports standard size names for ISO and ANSI media sizes. Valid values are listed in the printerCapabilities topic.
-     * @param value Value to set for the mediaSize property.
-     */
-    public set mediaSize(value: string | undefined) {
-        this._mediaSize = value;
-    };
-    /**
-     * Sets the mediaType property value. The default media (such as paper) type to print the document on.
-     * @param value Value to set for the mediaType property.
-     */
-    public set mediaType(value: string | undefined) {
-        this._mediaType = value;
-    };
-    /**
-     * Sets the multipageLayout property value. The default direction to lay out pages when multiple pages are being printed per sheet. Valid values are described in the following table.
-     * @param value Value to set for the multipageLayout property.
-     */
-    public set multipageLayout(value: PrintMultipageLayout | undefined) {
-        this._multipageLayout = value;
-    };
-    /**
-     * Sets the orientation property value. The default orientation to use when printing the document. Valid values are described in the following table.
-     * @param value Value to set for the orientation property.
-     */
-    public set orientation(value: PrintOrientation | undefined) {
-        this._orientation = value;
-    };
-    /**
-     * Sets the outputBin property value. The default output bin to place completed prints into. See the printer's capabilities for a list of supported output bins.
-     * @param value Value to set for the outputBin property.
-     */
-    public set outputBin(value: string | undefined) {
-        this._outputBin = value;
-    };
-    /**
-     * Sets the pagesPerSheet property value. The default number of document pages to print on each sheet.
-     * @param value Value to set for the pagesPerSheet property.
-     */
-    public set pagesPerSheet(value: number | undefined) {
-        this._pagesPerSheet = value;
-    };
-    /**
-     * Sets the quality property value. The default quality to use when printing the document. Valid values are described in the following table.
-     * @param value Value to set for the quality property.
-     */
-    public set quality(value: PrintQuality | undefined) {
-        this._quality = value;
-    };
-    /**
-     * Sets the scaling property value. Specifies how the printer scales the document data to fit the requested media. Valid values are described in the following table.
-     * @param value Value to set for the scaling property.
-     */
-    public set scaling(value: PrintScaling | undefined) {
-        this._scaling = value;
     };
 }

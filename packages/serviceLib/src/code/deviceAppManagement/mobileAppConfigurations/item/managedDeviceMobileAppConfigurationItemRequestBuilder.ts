@@ -1,16 +1,19 @@
 import {ManagedDeviceMobileAppConfiguration} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {ManagedDeviceMobileAppConfigurationAssignmentItemRequestBuilder} from './assignments/item/';
-import {DeviceStatusesRequestBuilder} from './deviceStatuses/';
-import {ManagedDeviceMobileAppConfigurationDeviceStatusItemRequestBuilder} from './deviceStatuses/item/';
-import {DeviceStatusSummaryRequestBuilder} from './deviceStatusSummary/';
-import {UserStatusesRequestBuilder} from './userStatuses/';
-import {ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder} from './userStatuses/item/';
-import {UserStatusSummaryRequestBuilder} from './userStatusSummary/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedDeviceMobileAppConfigurationFromDiscriminatorValue} from '../../../models/microsoft/graph/createManagedDeviceMobileAppConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {ManagedDeviceMobileAppConfigurationAssignmentItemRequestBuilder} from './assignments/item/managedDeviceMobileAppConfigurationAssignmentItemRequestBuilder';
+import {DeviceStatusesRequestBuilder} from './deviceStatuses/deviceStatusesRequestBuilder';
+import {ManagedDeviceMobileAppConfigurationDeviceStatusItemRequestBuilder} from './deviceStatuses/item/managedDeviceMobileAppConfigurationDeviceStatusItemRequestBuilder';
+import {DeviceStatusSummaryRequestBuilder} from './deviceStatusSummary/deviceStatusSummaryRequestBuilder';
+import {ManagedDeviceMobileAppConfigurationUserStatusItemRequestBuilder} from './userStatuses/item/managedDeviceMobileAppConfigurationUserStatusItemRequestBuilder';
+import {UserStatusesRequestBuilder} from './userStatuses/userStatusesRequestBuilder';
+import {UserStatusSummaryRequestBuilder} from './userStatusSummary/userStatusSummaryRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/mobileAppConfigurations/{managedDeviceMobileAppConfiguration-id}  */
+/** Provides operations to manage the mobileAppConfigurations property of the microsoft.graph.deviceAppManagement entity.  */
 export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -61,7 +64,7 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The Managed Device Mobile Application Configurations.
+     * Delete navigation property mobileAppConfigurations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -96,7 +99,7 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Managed Device Mobile Application Configurations.
+     * Update the navigation property mobileAppConfigurations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,7 +117,7 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Managed Device Mobile Application Configurations.
+     * Delete navigation property mobileAppConfigurations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -123,7 +126,11 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileAppConfigurations.item.deviceStatuses.item collection
@@ -151,10 +158,14 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedDeviceMobileAppConfiguration>(requestInfo, ManagedDeviceMobileAppConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedDeviceMobileAppConfiguration>(requestInfo, createManagedDeviceMobileAppConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The Managed Device Mobile Application Configurations.
+     * Update the navigation property mobileAppConfigurations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -165,7 +176,11 @@ export class ManagedDeviceMobileAppConfigurationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileAppConfigurations.item.userStatuses.item collection

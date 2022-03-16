@@ -1,4 +1,4 @@
-import {TargetAppsRequestBuilder} from './targetApps/';
+import {TargetAppsRequestBuilder} from './targetApps/targetAppsRequestBuilder';
 import {getPathParameters, RequestAdapter} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /deviceAppManagement/managedAppRegistrations/{managedAppRegistration-id}/intendedPolicies/{managedAppPolicy-id}/microsoft.graph.managedAppProtection  */

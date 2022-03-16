@@ -1,15 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CheckMemberGroupsRequestBody implements Parsable {
+/** Provides operations to call the checkMemberGroups method.  */
+export class CheckMemberGroupsRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _groupIds?: string[] | undefined;
-    /**
-     * Instantiates a new checkMemberGroupsRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -18,11 +13,17 @@ export class CheckMemberGroupsRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the groupIds property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get groupIds() {
-        return this._groupIds;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new checkMemberGroupsRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -34,20 +35,11 @@ export class CheckMemberGroupsRequestBody implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the groupIds property value. 
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeCollectionOfPrimitiveValues<string>("groupIds", this.groupIds);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get groupIds() {
+        return this._groupIds;
     };
     /**
      * Sets the groupIds property value. 
@@ -55,5 +47,14 @@ export class CheckMemberGroupsRequestBody implements Parsable {
      */
     public set groupIds(value: string[] | undefined) {
         this._groupIds = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeCollectionOfPrimitiveValues<string>("groupIds", this.groupIds);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

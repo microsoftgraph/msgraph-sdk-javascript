@@ -1,2 +1,1 @@
-export * from './SyncRequestBuilder'
-export * from './SyncRequestBody'
+export * from './syncRequestBody'

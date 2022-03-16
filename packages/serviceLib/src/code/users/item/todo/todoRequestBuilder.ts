@@ -1,9 +1,12 @@
 import {Todo} from '../../../models/microsoft/graph/';
-import {ListsRequestBuilder} from './lists/';
-import {TodoTaskListItemRequestBuilder} from './lists/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTodoFromDiscriminatorValue} from '../../../models/microsoft/graph/createTodoFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {TodoTaskListItemRequestBuilder} from './lists/item/todoTaskListItemRequestBuilder';
+import {ListsRequestBuilder} from './lists/listsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/todo  */
+/** Provides operations to manage the todo property of the microsoft.graph.user entity.  */
 export class TodoRequestBuilder {
     public get lists(): ListsRequestBuilder {
         return new ListsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class TodoRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents the To Do services available to a user.
+     * Delete navigation property todo for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class TodoRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents the To Do services available to a user.
+     * Update the navigation property todo in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class TodoRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents the To Do services available to a user.
+     * Delete navigation property todo for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class TodoRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Represents the To Do services available to a user.
@@ -107,7 +114,11 @@ export class TodoRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Todo>(requestInfo, Todo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Todo>(requestInfo, createTodoFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.todo.lists.item collection
@@ -121,7 +132,7 @@ export class TodoRequestBuilder {
         return new TodoTaskListItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Represents the To Do services available to a user.
+     * Update the navigation property todo in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class TodoRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

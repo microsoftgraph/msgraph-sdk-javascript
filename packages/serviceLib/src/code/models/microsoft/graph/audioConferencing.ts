@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AudioConferencing implements Parsable {
+export class AudioConferencing implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The conference id of the online meeting.  */
@@ -14,17 +14,18 @@ export class AudioConferencing implements Parsable {
     /** List of toll numbers that are displayed in the meeting invite.  */
     private _tollNumbers?: string[] | undefined;
     /**
-     * Instantiates a new audioConferencing and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the conferenceId property value. The conference id of the online meeting.
@@ -34,6 +35,19 @@ export class AudioConferencing implements Parsable {
         return this._conferenceId;
     };
     /**
+     * Sets the conferenceId property value. The conference id of the online meeting.
+     * @param value Value to set for the conferenceId property.
+     */
+    public set conferenceId(value: string | undefined) {
+        this._conferenceId = value;
+    };
+    /**
+     * Instantiates a new audioConferencing and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the dialinUrl property value. A URL to the externally-accessible web page that contains dial-in information.
      * @returns a string
      */
@@ -41,32 +55,11 @@ export class AudioConferencing implements Parsable {
         return this._dialinUrl;
     };
     /**
-     * Gets the tollFreeNumber property value. 
-     * @returns a string
+     * Sets the dialinUrl property value. A URL to the externally-accessible web page that contains dial-in information.
+     * @param value Value to set for the dialinUrl property.
      */
-    public get tollFreeNumber() {
-        return this._tollFreeNumber;
-    };
-    /**
-     * Gets the tollFreeNumbers property value. List of toll-free numbers that are displayed in the meeting invite.
-     * @returns a string
-     */
-    public get tollFreeNumbers() {
-        return this._tollFreeNumbers;
-    };
-    /**
-     * Gets the tollNumber property value. 
-     * @returns a string
-     */
-    public get tollNumber() {
-        return this._tollNumber;
-    };
-    /**
-     * Gets the tollNumbers property value. List of toll numbers that are displayed in the meeting invite.
-     * @returns a string
-     */
-    public get tollNumbers() {
-        return this._tollNumbers;
+    public set dialinUrl(value: string | undefined) {
+        this._dialinUrl = value;
     };
     /**
      * The deserialization information for the current model
@@ -97,25 +90,11 @@ export class AudioConferencing implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the tollFreeNumber property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the conferenceId property value. The conference id of the online meeting.
-     * @param value Value to set for the conferenceId property.
-     */
-    public set conferenceId(value: string | undefined) {
-        this._conferenceId = value;
-    };
-    /**
-     * Sets the dialinUrl property value. A URL to the externally-accessible web page that contains dial-in information.
-     * @param value Value to set for the dialinUrl property.
-     */
-    public set dialinUrl(value: string | undefined) {
-        this._dialinUrl = value;
+    public get tollFreeNumber() {
+        return this._tollFreeNumber;
     };
     /**
      * Sets the tollFreeNumber property value. 
@@ -125,6 +104,13 @@ export class AudioConferencing implements Parsable {
         this._tollFreeNumber = value;
     };
     /**
+     * Gets the tollFreeNumbers property value. List of toll-free numbers that are displayed in the meeting invite.
+     * @returns a string
+     */
+    public get tollFreeNumbers() {
+        return this._tollFreeNumbers;
+    };
+    /**
      * Sets the tollFreeNumbers property value. List of toll-free numbers that are displayed in the meeting invite.
      * @param value Value to set for the tollFreeNumbers property.
      */
@@ -132,11 +118,25 @@ export class AudioConferencing implements Parsable {
         this._tollFreeNumbers = value;
     };
     /**
+     * Gets the tollNumber property value. 
+     * @returns a string
+     */
+    public get tollNumber() {
+        return this._tollNumber;
+    };
+    /**
      * Sets the tollNumber property value. 
      * @param value Value to set for the tollNumber property.
      */
     public set tollNumber(value: string | undefined) {
         this._tollNumber = value;
+    };
+    /**
+     * Gets the tollNumbers property value. List of toll numbers that are displayed in the meeting invite.
+     * @returns a string
+     */
+    public get tollNumbers() {
+        return this._tollNumbers;
     };
     /**
      * Sets the tollNumbers property value. List of toll numbers that are displayed in the meeting invite.

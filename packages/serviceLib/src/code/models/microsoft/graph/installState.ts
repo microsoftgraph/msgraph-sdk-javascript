@@ -1,3 +1,4 @@
+/** Provides operations to manage the deviceAppManagement singleton.  */
 export enum InstallState {
     NotApplicable = "notApplicable",
     Installed = "installed",

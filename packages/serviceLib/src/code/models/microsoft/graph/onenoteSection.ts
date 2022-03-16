@@ -1,3 +1,7 @@
+import {createNotebookFromDiscriminatorValue} from './createNotebookFromDiscriminatorValue';
+import {createOnenotePageFromDiscriminatorValue} from './createOnenotePageFromDiscriminatorValue';
+import {createSectionGroupFromDiscriminatorValue} from './createSectionGroupFromDiscriminatorValue';
+import {createSectionLinksFromDiscriminatorValue} from './createSectionLinksFromDiscriminatorValue';
 import {Notebook, OnenoteEntityHierarchyModel, OnenotePage, SectionGroup, SectionLinks} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -21,11 +25,32 @@ export class OnenoteSection extends OnenoteEntityHierarchyModel implements Parsa
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["isDefault", (o, n) => { (o as unknown as OnenoteSection).isDefault = n.getBooleanValue(); }],
+            ["links", (o, n) => { (o as unknown as OnenoteSection).links = n.getObjectValue<SectionLinks>(createSectionLinksFromDiscriminatorValue); }],
+            ["pages", (o, n) => { (o as unknown as OnenoteSection).pages = n.getCollectionOfObjectValues<OnenotePage>(createOnenotePageFromDiscriminatorValue); }],
+            ["pagesUrl", (o, n) => { (o as unknown as OnenoteSection).pagesUrl = n.getStringValue(); }],
+            ["parentNotebook", (o, n) => { (o as unknown as OnenoteSection).parentNotebook = n.getObjectValue<Notebook>(createNotebookFromDiscriminatorValue); }],
+            ["parentSectionGroup", (o, n) => { (o as unknown as OnenoteSection).parentSectionGroup = n.getObjectValue<SectionGroup>(createSectionGroupFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the isDefault property value. Indicates whether this is the user's default section. Read-only.
      * @returns a boolean
      */
     public get isDefault() {
         return this._isDefault;
+    };
+    /**
+     * Sets the isDefault property value. Indicates whether this is the user's default section. Read-only.
+     * @param value Value to set for the isDefault property.
+     */
+    public set isDefault(value: boolean | undefined) {
+        this._isDefault = value;
     };
     /**
      * Gets the links property value. Links for opening the section. The oneNoteClientURL link opens the section in the OneNote native client if it's installed. The oneNoteWebURL link opens the section in OneNote on the web.
@@ -35,11 +60,25 @@ export class OnenoteSection extends OnenoteEntityHierarchyModel implements Parsa
         return this._links;
     };
     /**
+     * Sets the links property value. Links for opening the section. The oneNoteClientURL link opens the section in the OneNote native client if it's installed. The oneNoteWebURL link opens the section in OneNote on the web.
+     * @param value Value to set for the links property.
+     */
+    public set links(value: SectionLinks | undefined) {
+        this._links = value;
+    };
+    /**
      * Gets the pages property value. The collection of pages in the section.  Read-only. Nullable.
      * @returns a onenotePage
      */
     public get pages() {
         return this._pages;
+    };
+    /**
+     * Sets the pages property value. The collection of pages in the section.  Read-only. Nullable.
+     * @param value Value to set for the pages property.
+     */
+    public set pages(value: OnenotePage[] | undefined) {
+        this._pages = value;
     };
     /**
      * Gets the pagesUrl property value. The pages endpoint where you can get details for all the pages in the section. Read-only.
@@ -49,11 +88,25 @@ export class OnenoteSection extends OnenoteEntityHierarchyModel implements Parsa
         return this._pagesUrl;
     };
     /**
+     * Sets the pagesUrl property value. The pages endpoint where you can get details for all the pages in the section. Read-only.
+     * @param value Value to set for the pagesUrl property.
+     */
+    public set pagesUrl(value: string | undefined) {
+        this._pagesUrl = value;
+    };
+    /**
      * Gets the parentNotebook property value. The notebook that contains the section.  Read-only.
      * @returns a notebook
      */
     public get parentNotebook() {
         return this._parentNotebook;
+    };
+    /**
+     * Sets the parentNotebook property value. The notebook that contains the section.  Read-only.
+     * @param value Value to set for the parentNotebook property.
+     */
+    public set parentNotebook(value: Notebook | undefined) {
+        this._parentNotebook = value;
     };
     /**
      * Gets the parentSectionGroup property value. The section group that contains the section.  Read-only.
@@ -63,18 +116,11 @@ export class OnenoteSection extends OnenoteEntityHierarchyModel implements Parsa
         return this._parentSectionGroup;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the parentSectionGroup property value. The section group that contains the section.  Read-only.
+     * @param value Value to set for the parentSectionGroup property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["isDefault", (o, n) => { (o as unknown as OnenoteSection).isDefault = n.getBooleanValue(); }],
-            ["links", (o, n) => { (o as unknown as OnenoteSection).links = n.getObjectValue<SectionLinks>(SectionLinks); }],
-            ["pages", (o, n) => { (o as unknown as OnenoteSection).pages = n.getCollectionOfObjectValues<OnenotePage>(OnenotePage); }],
-            ["pagesUrl", (o, n) => { (o as unknown as OnenoteSection).pagesUrl = n.getStringValue(); }],
-            ["parentNotebook", (o, n) => { (o as unknown as OnenoteSection).parentNotebook = n.getObjectValue<Notebook>(Notebook); }],
-            ["parentSectionGroup", (o, n) => { (o as unknown as OnenoteSection).parentSectionGroup = n.getObjectValue<SectionGroup>(SectionGroup); }],
-        ]);
+    public set parentSectionGroup(value: SectionGroup | undefined) {
+        this._parentSectionGroup = value;
     };
     /**
      * Serializes information the current object
@@ -89,47 +135,5 @@ export class OnenoteSection extends OnenoteEntityHierarchyModel implements Parsa
         writer.writeStringValue("pagesUrl", this.pagesUrl);
         writer.writeObjectValue<Notebook>("parentNotebook", this.parentNotebook);
         writer.writeObjectValue<SectionGroup>("parentSectionGroup", this.parentSectionGroup);
-    };
-    /**
-     * Sets the isDefault property value. Indicates whether this is the user's default section. Read-only.
-     * @param value Value to set for the isDefault property.
-     */
-    public set isDefault(value: boolean | undefined) {
-        this._isDefault = value;
-    };
-    /**
-     * Sets the links property value. Links for opening the section. The oneNoteClientURL link opens the section in the OneNote native client if it's installed. The oneNoteWebURL link opens the section in OneNote on the web.
-     * @param value Value to set for the links property.
-     */
-    public set links(value: SectionLinks | undefined) {
-        this._links = value;
-    };
-    /**
-     * Sets the pages property value. The collection of pages in the section.  Read-only. Nullable.
-     * @param value Value to set for the pages property.
-     */
-    public set pages(value: OnenotePage[] | undefined) {
-        this._pages = value;
-    };
-    /**
-     * Sets the pagesUrl property value. The pages endpoint where you can get details for all the pages in the section. Read-only.
-     * @param value Value to set for the pagesUrl property.
-     */
-    public set pagesUrl(value: string | undefined) {
-        this._pagesUrl = value;
-    };
-    /**
-     * Sets the parentNotebook property value. The notebook that contains the section.  Read-only.
-     * @param value Value to set for the parentNotebook property.
-     */
-    public set parentNotebook(value: Notebook | undefined) {
-        this._parentNotebook = value;
-    };
-    /**
-     * Sets the parentSectionGroup property value. The section group that contains the section.  Read-only.
-     * @param value Value to set for the parentSectionGroup property.
-     */
-    public set parentSectionGroup(value: SectionGroup | undefined) {
-        this._parentSectionGroup = value;
     };
 }

@@ -1,10 +1,17 @@
-import {AccessPackageAssignment} from '../../../models/microsoft/graph/';
-import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/';
-import {AssignmentsResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {AccessPackageAssignment, AccessPackageAssignmentCollectionResponse} from '../../../models/microsoft/graph/';
+import {createAccessPackageAssignmentCollectionResponseFromDiscriminatorValue} from '../../../models/microsoft/graph/createAccessPackageAssignmentCollectionResponseFromDiscriminatorValue';
+import {createAccessPackageAssignmentFromDiscriminatorValue} from '../../../models/microsoft/graph/createAccessPackageAssignmentFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/filterByCurrentUserWithOnRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/assignments  */
+/** Provides operations to manage the assignments property of the microsoft.graph.entitlementManagement entity.  */
 export class AssignmentsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -51,7 +58,7 @@ export class AssignmentsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents the grant of an access package to a subject (user or group).
+     * Create new navigation property to assignments for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -69,8 +76,8 @@ export class AssignmentsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Builds and executes requests for operations under /identityGovernance/entitlementManagement/assignments/microsoft.graph.filterByCurrentUser(on={on})
-     * @param on Usage: on={on}
+     * Provides operations to call the filterByCurrentUser method.
+     * @param on Usage: on='{on}'
      * @returns a filterByCurrentUserWithOnRequestBuilder
      */
     public filterByCurrentUserWithOn(on: string | undefined) : FilterByCurrentUserWithOnRequestBuilder {
@@ -83,7 +90,7 @@ export class AssignmentsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of AssignmentsResponse
+     * @returns a Promise of AccessPackageAssignmentCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -94,14 +101,18 @@ export class AssignmentsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AssignmentsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AccessPackageAssignmentCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AssignmentsResponse>(requestInfo, AssignmentsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackageAssignmentCollectionResponse>(requestInfo, createAccessPackageAssignmentCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Represents the grant of an access package to a subject (user or group).
+     * Create new navigation property to assignments for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -113,6 +124,10 @@ export class AssignmentsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessPackageAssignment>(requestInfo, AccessPackageAssignment, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackageAssignment>(requestInfo, createAccessPackageAssignmentFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

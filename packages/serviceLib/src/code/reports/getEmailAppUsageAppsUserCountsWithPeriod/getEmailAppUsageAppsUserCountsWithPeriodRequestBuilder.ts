@@ -1,6 +1,8 @@
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGetEmailAppUsageAppsUserCountsWithPeriodResponseFromDiscriminatorValue} from './createGetEmailAppUsageAppsUserCountsWithPeriodResponseFromDiscriminatorValue';
+import {GetEmailAppUsageAppsUserCountsWithPeriodResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageAppsUserCounts(period='{period}')  */
+/** Provides operations to call the getEmailAppUsageAppsUserCounts method.  */
 export class GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -11,7 +13,7 @@ export class GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder {
     /**
      * Instantiates a new GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
-     * @param period Usage: period={period}
+     * @param period Usage: period='{period}'
      * @param requestAdapter The request adapter to use to execute the requests.
      */
     public constructor(pathParameters: Record<string, unknown> | string | undefined, requestAdapter: RequestAdapter, period?: string | undefined) {
@@ -43,12 +45,12 @@ export class GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ArrayBuffer
+     * @returns a Promise of GetEmailAppUsageAppsUserCountsWithPeriodResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetEmailAppUsageAppsUserCountsWithPeriodResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<GetEmailAppUsageAppsUserCountsWithPeriodResponse>(requestInfo, createGetEmailAppUsageAppsUserCountsWithPeriodResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

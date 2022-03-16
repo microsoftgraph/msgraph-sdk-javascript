@@ -1,2 +1,2 @@
-export * from './MarkReadRequestBody'
-export * from './MarkReadRequestBuilder'
+export * from './markReadResponse'
+export * from './markReadRequestBody'

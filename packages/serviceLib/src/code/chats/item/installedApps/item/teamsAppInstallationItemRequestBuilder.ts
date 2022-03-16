@@ -1,10 +1,13 @@
 import {TeamsAppInstallation} from '../../../../models/microsoft/graph/';
-import {TeamsAppRequestBuilder} from './teamsApp/';
-import {TeamsAppDefinitionRequestBuilder} from './teamsAppDefinition/';
-import {UpgradeRequestBuilder} from './upgrade/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTeamsAppInstallationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createTeamsAppInstallationFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {TeamsAppRequestBuilder} from './teamsApp/teamsAppRequestBuilder';
+import {TeamsAppDefinitionRequestBuilder} from './teamsAppDefinition/teamsAppDefinitionRequestBuilder';
+import {UpgradeRequestBuilder} from './upgrade/upgradeRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /chats/{chat-id}/installedApps/{teamsAppInstallation-id}  */
+/** Provides operations to manage the installedApps property of the microsoft.graph.chat entity.  */
 export class TeamsAppInstallationItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -35,7 +38,7 @@ export class TeamsAppInstallationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of all the apps in the chat. Nullable.
+     * Delete navigation property installedApps for chats
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -70,7 +73,7 @@ export class TeamsAppInstallationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the apps in the chat. Nullable.
+     * Update the navigation property installedApps in chats
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -88,7 +91,7 @@ export class TeamsAppInstallationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the apps in the chat. Nullable.
+     * Delete navigation property installedApps for chats
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -97,7 +100,11 @@ export class TeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of all the apps in the chat. Nullable.
@@ -114,10 +121,14 @@ export class TeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TeamsAppInstallation>(requestInfo, TeamsAppInstallation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TeamsAppInstallation>(requestInfo, createTeamsAppInstallationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of all the apps in the chat. Nullable.
+     * Update the navigation property installedApps in chats
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -128,6 +139,10 @@ export class TeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,12 +1,15 @@
 import {SubjectRightsRequest} from '../../../models/microsoft/graph/';
-import {GetFinalAttachmentRequestBuilder} from './getFinalAttachment/';
-import {GetFinalReportRequestBuilder} from './getFinalReport/';
-import {NotesRequestBuilder} from './notes/';
-import {AuthoredNoteItemRequestBuilder} from './notes/item/';
-import {TeamRequestBuilder} from './team/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSubjectRightsRequestFromDiscriminatorValue} from '../../../models/microsoft/graph/createSubjectRightsRequestFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {GetFinalAttachmentRequestBuilder} from './getFinalAttachment/getFinalAttachmentRequestBuilder';
+import {GetFinalReportRequestBuilder} from './getFinalReport/getFinalReportRequestBuilder';
+import {AuthoredNoteItemRequestBuilder} from './notes/item/authoredNoteItemRequestBuilder';
+import {NotesRequestBuilder} from './notes/notesRequestBuilder';
+import {TeamRequestBuilder} from './team/teamRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /privacy/subjectRightsRequests/{subjectRightsRequest-id}  */
+/** Provides operations to manage the subjectRightsRequests property of the microsoft.graph.privacy entity.  */
 export class SubjectRightsRequestItemRequestBuilder {
     public get notes(): NotesRequestBuilder {
         return new NotesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -96,7 +99,11 @@ export class SubjectRightsRequestItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get subjectRightsRequests from privacy
@@ -113,17 +120,21 @@ export class SubjectRightsRequestItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<SubjectRightsRequest>(requestInfo, SubjectRightsRequest, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SubjectRightsRequest>(requestInfo, createSubjectRightsRequestFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /privacy/subjectRightsRequests/{subjectRightsRequest-id}/microsoft.graph.getFinalAttachment()
+     * Provides operations to call the getFinalAttachment method.
      * @returns a getFinalAttachmentRequestBuilder
      */
     public getFinalAttachment() : GetFinalAttachmentRequestBuilder {
         return new GetFinalAttachmentRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /privacy/subjectRightsRequests/{subjectRightsRequest-id}/microsoft.graph.getFinalReport()
+     * Provides operations to call the getFinalReport method.
      * @returns a getFinalReportRequestBuilder
      */
     public getFinalReport() : GetFinalReportRequestBuilder {
@@ -152,6 +163,10 @@ export class SubjectRightsRequestItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,3 +1,4 @@
+import {createRiskUserActivityFromDiscriminatorValue} from './createRiskUserActivityFromDiscriminatorValue';
 import {RiskUserActivity, RiskyUser} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -9,17 +10,35 @@ export class RiskyUserHistoryItem extends RiskyUser implements Parsable {
     /** The id of the user.  */
     private _userId?: string | undefined;
     /**
+     * Gets the activity property value. The activity related to user risk level change.
+     * @returns a riskUserActivity
+     */
+    public get activity() {
+        return this._activity;
+    };
+    /**
+     * Sets the activity property value. The activity related to user risk level change.
+     * @param value Value to set for the activity property.
+     */
+    public set activity(value: RiskUserActivity | undefined) {
+        this._activity = value;
+    };
+    /**
      * Instantiates a new riskyUserHistoryItem and sets the default values.
      */
     public constructor() {
         super();
     };
     /**
-     * Gets the activity property value. The activity related to user risk level change.
-     * @returns a riskUserActivity
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get activity() {
-        return this._activity;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["activity", (o, n) => { (o as unknown as RiskyUserHistoryItem).activity = n.getObjectValue<RiskUserActivity>(createRiskUserActivityFromDiscriminatorValue); }],
+            ["initiatedBy", (o, n) => { (o as unknown as RiskyUserHistoryItem).initiatedBy = n.getStringValue(); }],
+            ["userId", (o, n) => { (o as unknown as RiskyUserHistoryItem).userId = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the initiatedBy property value. The id of actor that does the operation.
@@ -29,22 +48,11 @@ export class RiskyUserHistoryItem extends RiskyUser implements Parsable {
         return this._initiatedBy;
     };
     /**
-     * Gets the userId property value. The id of the user.
-     * @returns a string
+     * Sets the initiatedBy property value. The id of actor that does the operation.
+     * @param value Value to set for the initiatedBy property.
      */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["activity", (o, n) => { (o as unknown as RiskyUserHistoryItem).activity = n.getObjectValue<RiskUserActivity>(RiskUserActivity); }],
-            ["initiatedBy", (o, n) => { (o as unknown as RiskyUserHistoryItem).initiatedBy = n.getStringValue(); }],
-            ["userId", (o, n) => { (o as unknown as RiskyUserHistoryItem).userId = n.getStringValue(); }],
-        ]);
+    public set initiatedBy(value: string | undefined) {
+        this._initiatedBy = value;
     };
     /**
      * Serializes information the current object
@@ -58,18 +66,11 @@ export class RiskyUserHistoryItem extends RiskyUser implements Parsable {
         writer.writeStringValue("userId", this.userId);
     };
     /**
-     * Sets the activity property value. The activity related to user risk level change.
-     * @param value Value to set for the activity property.
+     * Gets the userId property value. The id of the user.
+     * @returns a string
      */
-    public set activity(value: RiskUserActivity | undefined) {
-        this._activity = value;
-    };
-    /**
-     * Sets the initiatedBy property value. The id of actor that does the operation.
-     * @param value Value to set for the initiatedBy property.
-     */
-    public set initiatedBy(value: string | undefined) {
-        this._initiatedBy = value;
+    public get userId() {
+        return this._userId;
     };
     /**
      * Sets the userId property value. The id of the user.

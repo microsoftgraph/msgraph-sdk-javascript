@@ -1,24 +1,27 @@
 import {TimeSlot} from '../../../../../../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createTimeSlotFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/createTimeSlotFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DeclineRequestBody implements Parsable {
+/** Provides operations to call the decline method.  */
+export class DeclineRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _comment?: string | undefined;
     private _proposedNewTime?: TimeSlot | undefined;
     private _sendResponse?: boolean | undefined;
     /**
-     * Instantiates a new declineRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the comment property value. 
@@ -28,11 +31,42 @@ export class DeclineRequestBody implements Parsable {
         return this._comment;
     };
     /**
+     * Sets the comment property value. 
+     * @param value Value to set for the Comment property.
+     */
+    public set comment(value: string | undefined) {
+        this._comment = value;
+    };
+    /**
+     * Instantiates a new declineRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["comment", (o, n) => { (o as unknown as DeclineRequestBody).comment = n.getStringValue(); }],
+            ["proposedNewTime", (o, n) => { (o as unknown as DeclineRequestBody).proposedNewTime = n.getObjectValue<TimeSlot>(createTimeSlotFromDiscriminatorValue); }],
+            ["sendResponse", (o, n) => { (o as unknown as DeclineRequestBody).sendResponse = n.getBooleanValue(); }],
+        ]);
+    };
+    /**
      * Gets the proposedNewTime property value. 
      * @returns a timeSlot
      */
     public get proposedNewTime() {
         return this._proposedNewTime;
+    };
+    /**
+     * Sets the proposedNewTime property value. 
+     * @param value Value to set for the ProposedNewTime property.
+     */
+    public set proposedNewTime(value: TimeSlot | undefined) {
+        this._proposedNewTime = value;
     };
     /**
      * Gets the sendResponse property value. 
@@ -42,15 +76,11 @@ export class DeclineRequestBody implements Parsable {
         return this._sendResponse;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the sendResponse property value. 
+     * @param value Value to set for the SendResponse property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["comment", (o, n) => { (o as unknown as DeclineRequestBody).comment = n.getStringValue(); }],
-            ["proposedNewTime", (o, n) => { (o as unknown as DeclineRequestBody).proposedNewTime = n.getObjectValue<TimeSlot>(TimeSlot); }],
-            ["sendResponse", (o, n) => { (o as unknown as DeclineRequestBody).sendResponse = n.getBooleanValue(); }],
-        ]);
+    public set sendResponse(value: boolean | undefined) {
+        this._sendResponse = value;
     };
     /**
      * Serializes information the current object
@@ -62,33 +92,5 @@ export class DeclineRequestBody implements Parsable {
         writer.writeObjectValue<TimeSlot>("proposedNewTime", this.proposedNewTime);
         writer.writeBooleanValue("sendResponse", this.sendResponse);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the comment property value. 
-     * @param value Value to set for the Comment property.
-     */
-    public set comment(value: string | undefined) {
-        this._comment = value;
-    };
-    /**
-     * Sets the proposedNewTime property value. 
-     * @param value Value to set for the ProposedNewTime property.
-     */
-    public set proposedNewTime(value: TimeSlot | undefined) {
-        this._proposedNewTime = value;
-    };
-    /**
-     * Sets the sendResponse property value. 
-     * @param value Value to set for the SendResponse property.
-     */
-    public set sendResponse(value: boolean | undefined) {
-        this._sendResponse = value;
     };
 }

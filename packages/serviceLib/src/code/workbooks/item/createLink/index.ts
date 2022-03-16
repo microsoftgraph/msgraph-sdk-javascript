@@ -1,2 +1,1 @@
-export * from './CreateLinkRequestBuilder'
-export * from './CreateLinkRequestBody'
+export * from './createLinkRequestBody'

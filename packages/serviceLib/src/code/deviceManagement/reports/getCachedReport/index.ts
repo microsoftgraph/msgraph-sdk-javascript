@@ -1,2 +1,2 @@
-export * from './GetCachedReportRequestBuilder'
-export * from './GetCachedReportRequestBody'
+export * from './getCachedReportRequestBody'
+export * from './getCachedReportResponse'

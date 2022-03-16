@@ -1,2 +1,1 @@
-export * from './ScheduleActionsForRulesRequestBuilder'
-export * from './ScheduleActionsForRulesRequestBody'
+export * from './scheduleActionsForRulesRequestBody'

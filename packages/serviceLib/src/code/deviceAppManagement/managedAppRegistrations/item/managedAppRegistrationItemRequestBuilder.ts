@@ -1,13 +1,16 @@
 import {ManagedAppRegistration} from '../../../models/microsoft/graph/';
-import {AppliedPoliciesRequestBuilder} from './appliedPolicies/';
-import {ManagedAppPolicyItemRequestBuilder as i02f4e9a033ab52989a97e60c23262a4bff968b0aad605259456d4a05ecce9f55} from './appliedPolicies/item/';
-import {IntendedPoliciesRequestBuilder} from './intendedPolicies/';
-import {ManagedAppPolicyItemRequestBuilder as i614787a4168892e90c82618ecb2314ca7d5dbc776ae31c7a89ec90496677f6e6} from './intendedPolicies/item/';
-import {OperationsRequestBuilder} from './operations/';
-import {ManagedAppOperationItemRequestBuilder} from './operations/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedAppRegistrationFromDiscriminatorValue} from '../../../models/microsoft/graph/createManagedAppRegistrationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AppliedPoliciesRequestBuilder} from './appliedPolicies/appliedPoliciesRequestBuilder';
+import {ManagedAppPolicyItemRequestBuilder as i02f4e9a033ab52989a97e60c23262a4bff968b0aad605259456d4a05ecce9f55} from './appliedPolicies/item/managedAppPolicyItemRequestBuilder';
+import {IntendedPoliciesRequestBuilder} from './intendedPolicies/intendedPoliciesRequestBuilder';
+import {ManagedAppPolicyItemRequestBuilder as i614787a4168892e90c82618ecb2314ca7d5dbc776ae31c7a89ec90496677f6e6} from './intendedPolicies/item/managedAppPolicyItemRequestBuilder';
+import {ManagedAppOperationItemRequestBuilder} from './operations/item/managedAppOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/managedAppRegistrations/{managedAppRegistration-id}  */
+/** Provides operations to manage the managedAppRegistrations property of the microsoft.graph.deviceAppManagement entity.  */
 export class ManagedAppRegistrationItemRequestBuilder {
     public get appliedPolicies(): AppliedPoliciesRequestBuilder {
         return new AppliedPoliciesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -49,7 +52,7 @@ export class ManagedAppRegistrationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The managed app registrations.
+     * Delete navigation property managedAppRegistrations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -84,7 +87,7 @@ export class ManagedAppRegistrationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The managed app registrations.
+     * Update the navigation property managedAppRegistrations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -102,7 +105,7 @@ export class ManagedAppRegistrationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The managed app registrations.
+     * Delete navigation property managedAppRegistrations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -111,7 +114,11 @@ export class ManagedAppRegistrationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The managed app registrations.
@@ -128,7 +135,11 @@ export class ManagedAppRegistrationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedAppRegistration>(requestInfo, ManagedAppRegistration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedAppRegistration>(requestInfo, createManagedAppRegistrationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedAppRegistrations.item.intendedPolicies.item collection
@@ -153,7 +164,7 @@ export class ManagedAppRegistrationItemRequestBuilder {
         return new ManagedAppOperationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The managed app registrations.
+     * Update the navigation property managedAppRegistrations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -164,6 +175,10 @@ export class ManagedAppRegistrationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

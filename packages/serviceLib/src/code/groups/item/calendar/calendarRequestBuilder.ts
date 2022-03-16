@@ -1,19 +1,22 @@
 import {Calendar} from '../../../models/microsoft/graph/';
-import {AllowedCalendarSharingRolesWithUserRequestBuilder} from './allowedCalendarSharingRolesWithUser/';
-import {CalendarPermissionsRequestBuilder} from './calendarPermissions/';
-import {CalendarPermissionItemRequestBuilder} from './calendarPermissions/item/';
-import {CalendarViewRequestBuilder} from './calendarView/';
-import {EventItemRequestBuilder as i488710905421f7854d26da34eabd1645586018a6b1b71fcd4ef86b53a5f5d688} from './calendarView/item/';
-import {EventsRequestBuilder} from './events/';
-import {EventItemRequestBuilder as i0e379969bebb6618247d6f40e0602bd08ea87a0254af1bb0b8972f57a69375be} from './events/item/';
-import {GetScheduleRequestBuilder} from './getSchedule/';
-import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/';
-import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/';
-import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/';
-import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createCalendarFromDiscriminatorValue} from '../../../models/microsoft/graph/createCalendarFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AllowedCalendarSharingRolesWithUserRequestBuilder} from './allowedCalendarSharingRolesWithUser/allowedCalendarSharingRolesWithUserRequestBuilder';
+import {CalendarPermissionsRequestBuilder} from './calendarPermissions/calendarPermissionsRequestBuilder';
+import {CalendarPermissionItemRequestBuilder} from './calendarPermissions/item/calendarPermissionItemRequestBuilder';
+import {CalendarViewRequestBuilder} from './calendarView/calendarViewRequestBuilder';
+import {EventItemRequestBuilder as i488710905421f7854d26da34eabd1645586018a6b1b71fcd4ef86b53a5f5d688} from './calendarView/item/eventItemRequestBuilder';
+import {EventsRequestBuilder} from './events/eventsRequestBuilder';
+import {EventItemRequestBuilder as i0e379969bebb6618247d6f40e0602bd08ea87a0254af1bb0b8972f57a69375be} from './events/item/eventItemRequestBuilder';
+import {GetScheduleRequestBuilder} from './getSchedule/getScheduleRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/calendar  */
+/** Provides operations to manage the calendar property of the microsoft.graph.group entity.  */
 export class CalendarRequestBuilder {
     public get calendarPermissions(): CalendarPermissionsRequestBuilder {
         return new CalendarPermissionsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -40,8 +43,8 @@ export class CalendarRequestBuilder {
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
-     * Builds and executes requests for operations under /groups/{group-id}/calendar/microsoft.graph.allowedCalendarSharingRoles(User='{User}')
-     * @param User Usage: User={User}
+     * Provides operations to call the allowedCalendarSharingRoles method.
+     * @param User Usage: User='{User}'
      * @returns a allowedCalendarSharingRolesWithUserRequestBuilder
      */
     public allowedCalendarSharingRolesWithUser(user: string | undefined) : AllowedCalendarSharingRolesWithUserRequestBuilder {
@@ -84,7 +87,7 @@ export class CalendarRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The group's calendar. Read-only.
+     * Delete navigation property calendar for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -118,7 +121,7 @@ export class CalendarRequestBuilder {
         return requestInfo;
     };
     /**
-     * The group's calendar. Read-only.
+     * Update the navigation property calendar in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,7 +139,7 @@ export class CalendarRequestBuilder {
         return requestInfo;
     };
     /**
-     * The group's calendar. Read-only.
+     * Delete navigation property calendar for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -145,7 +148,11 @@ export class CalendarRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.calendar.events.item collection
@@ -172,7 +179,11 @@ export class CalendarRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Calendar>(requestInfo, Calendar, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Calendar>(requestInfo, createCalendarFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.calendar.multiValueExtendedProperties.item collection
@@ -186,7 +197,7 @@ export class CalendarRequestBuilder {
         return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The group's calendar. Read-only.
+     * Update the navigation property calendar in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -197,7 +208,11 @@ export class CalendarRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.calendar.singleValueExtendedProperties.item collection

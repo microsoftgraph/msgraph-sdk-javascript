@@ -1,30 +1,33 @@
 import {ManagedDevice} from '../../../models/microsoft/graph/';
-import {BypassActivationLockRequestBuilder} from './bypassActivationLock/';
-import {CleanWindowsDeviceRequestBuilder} from './cleanWindowsDevice/';
-import {DeleteUserFromSharedAppleDeviceRequestBuilder} from './deleteUserFromSharedAppleDevice/';
-import {DeviceCategoryRequestBuilder} from './deviceCategory/';
-import {DeviceCompliancePolicyStatesRequestBuilder} from './deviceCompliancePolicyStates/';
-import {DeviceCompliancePolicyStateItemRequestBuilder} from './deviceCompliancePolicyStates/item/';
-import {DeviceConfigurationStatesRequestBuilder} from './deviceConfigurationStates/';
-import {DeviceConfigurationStateItemRequestBuilder} from './deviceConfigurationStates/item/';
-import {DisableLostModeRequestBuilder} from './disableLostMode/';
-import {LocateDeviceRequestBuilder} from './locateDevice/';
-import {LogoutSharedAppleDeviceActiveUserRequestBuilder} from './logoutSharedAppleDeviceActiveUser/';
-import {RebootNowRequestBuilder} from './rebootNow/';
-import {RecoverPasscodeRequestBuilder} from './recoverPasscode/';
-import {RemoteLockRequestBuilder} from './remoteLock/';
-import {RequestRemoteAssistanceRequestBuilder} from './requestRemoteAssistance/';
-import {ResetPasscodeRequestBuilder} from './resetPasscode/';
-import {RetireRequestBuilder} from './retire/';
-import {ShutDownRequestBuilder} from './shutDown/';
-import {SyncDeviceRequestBuilder} from './syncDevice/';
-import {UpdateWindowsDeviceAccountRequestBuilder} from './updateWindowsDeviceAccount/';
-import {WindowsDefenderScanRequestBuilder} from './windowsDefenderScan/';
-import {WindowsDefenderUpdateSignaturesRequestBuilder} from './windowsDefenderUpdateSignatures/';
-import {WipeRequestBuilder} from './wipe/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedDeviceFromDiscriminatorValue} from '../../../models/microsoft/graph/createManagedDeviceFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BypassActivationLockRequestBuilder} from './bypassActivationLock/bypassActivationLockRequestBuilder';
+import {CleanWindowsDeviceRequestBuilder} from './cleanWindowsDevice/cleanWindowsDeviceRequestBuilder';
+import {DeleteUserFromSharedAppleDeviceRequestBuilder} from './deleteUserFromSharedAppleDevice/deleteUserFromSharedAppleDeviceRequestBuilder';
+import {DeviceCategoryRequestBuilder} from './deviceCategory/deviceCategoryRequestBuilder';
+import {DeviceCompliancePolicyStatesRequestBuilder} from './deviceCompliancePolicyStates/deviceCompliancePolicyStatesRequestBuilder';
+import {DeviceCompliancePolicyStateItemRequestBuilder} from './deviceCompliancePolicyStates/item/deviceCompliancePolicyStateItemRequestBuilder';
+import {DeviceConfigurationStatesRequestBuilder} from './deviceConfigurationStates/deviceConfigurationStatesRequestBuilder';
+import {DeviceConfigurationStateItemRequestBuilder} from './deviceConfigurationStates/item/deviceConfigurationStateItemRequestBuilder';
+import {DisableLostModeRequestBuilder} from './disableLostMode/disableLostModeRequestBuilder';
+import {LocateDeviceRequestBuilder} from './locateDevice/locateDeviceRequestBuilder';
+import {LogoutSharedAppleDeviceActiveUserRequestBuilder} from './logoutSharedAppleDeviceActiveUser/logoutSharedAppleDeviceActiveUserRequestBuilder';
+import {RebootNowRequestBuilder} from './rebootNow/rebootNowRequestBuilder';
+import {RecoverPasscodeRequestBuilder} from './recoverPasscode/recoverPasscodeRequestBuilder';
+import {RemoteLockRequestBuilder} from './remoteLock/remoteLockRequestBuilder';
+import {RequestRemoteAssistanceRequestBuilder} from './requestRemoteAssistance/requestRemoteAssistanceRequestBuilder';
+import {ResetPasscodeRequestBuilder} from './resetPasscode/resetPasscodeRequestBuilder';
+import {RetireRequestBuilder} from './retire/retireRequestBuilder';
+import {ShutDownRequestBuilder} from './shutDown/shutDownRequestBuilder';
+import {SyncDeviceRequestBuilder} from './syncDevice/syncDeviceRequestBuilder';
+import {UpdateWindowsDeviceAccountRequestBuilder} from './updateWindowsDeviceAccount/updateWindowsDeviceAccountRequestBuilder';
+import {WindowsDefenderScanRequestBuilder} from './windowsDefenderScan/windowsDefenderScanRequestBuilder';
+import {WindowsDefenderUpdateSignaturesRequestBuilder} from './windowsDefenderUpdateSignatures/windowsDefenderUpdateSignaturesRequestBuilder';
+import {WipeRequestBuilder} from './wipe/wipeRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/managedDevices/{managedDevice-id}  */
+/** Provides operations to manage the managedDevices property of the microsoft.graph.user entity.  */
 export class ManagedDeviceItemRequestBuilder {
     public get bypassActivationLock(): BypassActivationLockRequestBuilder {
         return new BypassActivationLockRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -109,7 +112,7 @@ export class ManagedDeviceItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The managed devices associated with the user.
+     * Delete navigation property managedDevices for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -144,7 +147,7 @@ export class ManagedDeviceItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The managed devices associated with the user.
+     * Update the navigation property managedDevices in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -162,7 +165,7 @@ export class ManagedDeviceItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The managed devices associated with the user.
+     * Delete navigation property managedDevices for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -171,7 +174,11 @@ export class ManagedDeviceItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.me.managedDevices.item.deviceCompliancePolicyStates.item collection
@@ -210,10 +217,14 @@ export class ManagedDeviceItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedDevice>(requestInfo, ManagedDevice, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedDevice>(requestInfo, createManagedDeviceFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The managed devices associated with the user.
+     * Update the navigation property managedDevices in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -224,6 +235,10 @@ export class ManagedDeviceItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

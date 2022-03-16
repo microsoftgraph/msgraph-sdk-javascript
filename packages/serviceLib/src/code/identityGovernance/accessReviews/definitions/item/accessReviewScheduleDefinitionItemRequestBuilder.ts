@@ -1,10 +1,13 @@
 import {AccessReviewScheduleDefinition} from '../../../../models/microsoft/graph/';
-import {InstancesRequestBuilder} from './instances/';
-import {AccessReviewInstanceItemRequestBuilder} from './instances/item/';
-import {StopRequestBuilder} from './stop/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAccessReviewScheduleDefinitionFromDiscriminatorValue} from '../../../../models/microsoft/graph/createAccessReviewScheduleDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InstancesRequestBuilder} from './instances/instancesRequestBuilder';
+import {AccessReviewInstanceItemRequestBuilder} from './instances/item/accessReviewInstanceItemRequestBuilder';
+import {StopRequestBuilder} from './stop/stopRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/accessReviews/definitions/{accessReviewScheduleDefinition-id}  */
+/** Provides operations to manage the definitions property of the microsoft.graph.accessReviewSet entity.  */
 export class AccessReviewScheduleDefinitionItemRequestBuilder {
     public get instances(): InstancesRequestBuilder {
         return new InstancesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -32,7 +35,7 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents the template and scheduling for an access review.
+     * Delete navigation property definitions for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -67,7 +70,7 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents the template and scheduling for an access review.
+     * Update the navigation property definitions in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -85,7 +88,7 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents the template and scheduling for an access review.
+     * Delete navigation property definitions for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -94,7 +97,11 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Represents the template and scheduling for an access review.
@@ -111,7 +118,11 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessReviewScheduleDefinition>(requestInfo, AccessReviewScheduleDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessReviewScheduleDefinition>(requestInfo, createAccessReviewScheduleDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.accessReviews.definitions.item.instances.item collection
@@ -125,7 +136,7 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         return new AccessReviewInstanceItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Represents the template and scheduling for an access review.
+     * Update the navigation property definitions in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,6 +147,10 @@ export class AccessReviewScheduleDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

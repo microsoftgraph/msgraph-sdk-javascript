@@ -1,18 +1,25 @@
 import {Device} from '../../models/microsoft/graph/';
-import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
-import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {GetMemberGroupsRequestBuilder} from './getMemberGroups/';
-import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
-import {MemberOfRequestBuilder} from './memberOf/';
-import {RegisteredOwnersRequestBuilder} from './registeredOwners/';
-import {RegisteredUsersRequestBuilder} from './registeredUsers/';
-import {RestoreRequestBuilder} from './restore/';
-import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceFromDiscriminatorValue} from '../../models/microsoft/graph/createDeviceFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/checkMemberGroupsRequestBuilder';
+import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/checkMemberObjectsRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {GetMemberGroupsRequestBuilder} from './getMemberGroups/getMemberGroupsRequestBuilder';
+import {GetMemberObjectsRequestBuilder} from './getMemberObjects/getMemberObjectsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i9d40d028d1e8342ff3fcea55372b693c080789329c673ec38ffbe2c18b947ea1} from './memberOf/item/directoryObjectItemRequestBuilder';
+import {MemberOfRequestBuilder} from './memberOf/memberOfRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i3ac9e2cf5efdc1ecc035ab26e123c1f02cf64857c31db782aca144126da63386} from './registeredOwners/item/directoryObjectItemRequestBuilder';
+import {RegisteredOwnersRequestBuilder} from './registeredOwners/registeredOwnersRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as ic450a85e9fd6f3c3b6fb36a627475ecf9941b8ccf12457e1d1c4657bfb00d53a} from './registeredUsers/item/directoryObjectItemRequestBuilder';
+import {RegisteredUsersRequestBuilder} from './registeredUsers/registeredUsersRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i80e076cf47da10310cf6337e71131245c01968d1129466b1183a215fe885d019} from './transitiveMemberOf/item/directoryObjectItemRequestBuilder';
+import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/transitiveMemberOfRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /devices/{device-id}  */
+/** Provides operations to manage the collection of device entities.  */
 export class DeviceItemRequestBuilder {
     public get checkMemberGroups(): CheckMemberGroupsRequestBuilder {
         return new CheckMemberGroupsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -126,7 +133,11 @@ export class DeviceItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.devices.item.extensions.item collection
@@ -154,7 +165,22 @@ export class DeviceItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Device>(requestInfo, Device, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Device>(requestInfo, createDeviceFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.devices.item.memberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public memberOfById(id: string) : i9d40d028d1e8342ff3fcea55372b693c080789329c673ec38ffbe2c18b947ea1 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i9d40d028d1e8342ff3fcea55372b693c080789329c673ec38ffbe2c18b947ea1(urlTplParams, this.requestAdapter);
     };
     /**
      * Update entity in devices
@@ -168,6 +194,43 @@ export class DeviceItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.devices.item.registeredOwners.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public registeredOwnersById(id: string) : i3ac9e2cf5efdc1ecc035ab26e123c1f02cf64857c31db782aca144126da63386 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i3ac9e2cf5efdc1ecc035ab26e123c1f02cf64857c31db782aca144126da63386(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.devices.item.registeredUsers.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public registeredUsersById(id: string) : ic450a85e9fd6f3c3b6fb36a627475ecf9941b8ccf12457e1d1c4657bfb00d53a {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new ic450a85e9fd6f3c3b6fb36a627475ecf9941b8ccf12457e1d1c4657bfb00d53a(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.devices.item.transitiveMemberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public transitiveMemberOfById(id: string) : i80e076cf47da10310cf6337e71131245c01968d1129466b1183a215fe885d019 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i80e076cf47da10310cf6337e71131245c01968d1129466b1183a215fe885d019(urlTplParams, this.requestAdapter);
     };
 }

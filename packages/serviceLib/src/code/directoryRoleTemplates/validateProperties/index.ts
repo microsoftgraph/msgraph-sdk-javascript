@@ -1,2 +1,1 @@
-export * from './ValidatePropertiesRequestBuilder'
-export * from './ValidatePropertiesRequestBody'
+export * from './validatePropertiesRequestBody'

@@ -1,1 +1,1 @@
-export * from './AvailableProviderTypesRequestBuilder'
+export * from './availableProviderTypesResponse'

@@ -1,7 +1,7 @@
-import {PrintOperationProcessingState} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {PrintOperationProcessingState} from './printOperationProcessingState';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PrintOperationStatus implements Parsable {
+export class PrintOperationStatus implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** A human-readable description of the printOperation's current processing state. Read-only.  */
@@ -9,17 +9,24 @@ export class PrintOperationStatus implements Parsable {
     /** The printOperation's current processing state. Valid values are described in the following table. Read-only.  */
     private _state?: PrintOperationProcessingState | undefined;
     /**
-     * Instantiates a new printOperationStatus and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new printOperationStatus and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the description property value. A human-readable description of the printOperation's current processing state. Read-only.
@@ -29,11 +36,11 @@ export class PrintOperationStatus implements Parsable {
         return this._description;
     };
     /**
-     * Gets the state property value. The printOperation's current processing state. Valid values are described in the following table. Read-only.
-     * @returns a printOperationProcessingState
+     * Sets the description property value. A human-readable description of the printOperation's current processing state. Read-only.
+     * @param value Value to set for the description property.
      */
-    public get state() {
-        return this._state;
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * The deserialization information for the current model
@@ -56,18 +63,11 @@ export class PrintOperationStatus implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the state property value. The printOperation's current processing state. Valid values are described in the following table. Read-only.
+     * @returns a printOperationProcessingState
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the description property value. A human-readable description of the printOperation's current processing state. Read-only.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. The printOperation's current processing state. Valid values are described in the following table. Read-only.

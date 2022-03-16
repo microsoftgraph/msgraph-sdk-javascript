@@ -1,7 +1,10 @@
-import {ComplianceStatus, SettingSource} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ComplianceStatus} from './complianceStatus';
+import {createSettingSourceFromDiscriminatorValue} from './createSettingSourceFromDiscriminatorValue';
+import {SettingSource} from './index';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DeviceCompliancePolicySettingState implements Parsable {
+/** Device Compilance Policy Setting State for a given device.  */
+export class DeviceCompliancePolicySettingState implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Current value of setting on device  */
@@ -29,17 +32,24 @@ export class DeviceCompliancePolicySettingState implements Parsable {
     /** UserPrincipalName.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new deviceCompliancePolicySettingState and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new deviceCompliancePolicySettingState and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the currentValue property value. Current value of setting on device
@@ -49,11 +59,25 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         return this._currentValue;
     };
     /**
+     * Sets the currentValue property value. Current value of setting on device
+     * @param value Value to set for the currentValue property.
+     */
+    public set currentValue(value: string | undefined) {
+        this._currentValue = value;
+    };
+    /**
      * Gets the errorCode property value. Error code for the setting
      * @returns a int64
      */
     public get errorCode() {
         return this._errorCode;
+    };
+    /**
+     * Sets the errorCode property value. Error code for the setting
+     * @param value Value to set for the errorCode property.
+     */
+    public set errorCode(value: number | undefined) {
+        this._errorCode = value;
     };
     /**
      * Gets the errorDescription property value. Error description
@@ -63,67 +87,11 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         return this._errorDescription;
     };
     /**
-     * Gets the instanceDisplayName property value. Name of setting instance that is being reported.
-     * @returns a string
+     * Sets the errorDescription property value. Error description
+     * @param value Value to set for the errorDescription property.
      */
-    public get instanceDisplayName() {
-        return this._instanceDisplayName;
-    };
-    /**
-     * Gets the setting property value. The setting that is being reported
-     * @returns a string
-     */
-    public get setting() {
-        return this._setting;
-    };
-    /**
-     * Gets the settingName property value. Localized/user friendly setting name that is being reported
-     * @returns a string
-     */
-    public get settingName() {
-        return this._settingName;
-    };
-    /**
-     * Gets the sources property value. Contributing policies
-     * @returns a settingSource
-     */
-    public get sources() {
-        return this._sources;
-    };
-    /**
-     * Gets the state property value. The compliance state of the setting. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
-     * @returns a complianceStatus
-     */
-    public get state() {
-        return this._state;
-    };
-    /**
-     * Gets the userEmail property value. UserEmail
-     * @returns a string
-     */
-    public get userEmail() {
-        return this._userEmail;
-    };
-    /**
-     * Gets the userId property value. UserId
-     * @returns a string
-     */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * Gets the userName property value. UserName
-     * @returns a string
-     */
-    public get userName() {
-        return this._userName;
-    };
-    /**
-     * Gets the userPrincipalName property value. UserPrincipalName.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set errorDescription(value: string | undefined) {
+        this._errorDescription = value;
     };
     /**
      * The deserialization information for the current model
@@ -137,13 +105,27 @@ export class DeviceCompliancePolicySettingState implements Parsable {
             ["instanceDisplayName", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).instanceDisplayName = n.getStringValue(); }],
             ["setting", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).setting = n.getStringValue(); }],
             ["settingName", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).settingName = n.getStringValue(); }],
-            ["sources", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).sources = n.getCollectionOfObjectValues<SettingSource>(SettingSource); }],
+            ["sources", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).sources = n.getCollectionOfObjectValues<SettingSource>(createSettingSourceFromDiscriminatorValue); }],
             ["state", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).state = n.getEnumValue<ComplianceStatus>(ComplianceStatus); }],
             ["userEmail", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).userEmail = n.getStringValue(); }],
             ["userId", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).userId = n.getStringValue(); }],
             ["userName", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).userName = n.getStringValue(); }],
             ["userPrincipalName", (o, n) => { (o as unknown as DeviceCompliancePolicySettingState).userPrincipalName = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the instanceDisplayName property value. Name of setting instance that is being reported.
+     * @returns a string
+     */
+    public get instanceDisplayName() {
+        return this._instanceDisplayName;
+    };
+    /**
+     * Sets the instanceDisplayName property value. Name of setting instance that is being reported.
+     * @param value Value to set for the instanceDisplayName property.
+     */
+    public set instanceDisplayName(value: string | undefined) {
+        this._instanceDisplayName = value;
     };
     /**
      * Serializes information the current object
@@ -166,39 +148,11 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the setting property value. The setting that is being reported
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the currentValue property value. Current value of setting on device
-     * @param value Value to set for the currentValue property.
-     */
-    public set currentValue(value: string | undefined) {
-        this._currentValue = value;
-    };
-    /**
-     * Sets the errorCode property value. Error code for the setting
-     * @param value Value to set for the errorCode property.
-     */
-    public set errorCode(value: number | undefined) {
-        this._errorCode = value;
-    };
-    /**
-     * Sets the errorDescription property value. Error description
-     * @param value Value to set for the errorDescription property.
-     */
-    public set errorDescription(value: string | undefined) {
-        this._errorDescription = value;
-    };
-    /**
-     * Sets the instanceDisplayName property value. Name of setting instance that is being reported.
-     * @param value Value to set for the instanceDisplayName property.
-     */
-    public set instanceDisplayName(value: string | undefined) {
-        this._instanceDisplayName = value;
+    public get setting() {
+        return this._setting;
     };
     /**
      * Sets the setting property value. The setting that is being reported
@@ -208,11 +162,25 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         this._setting = value;
     };
     /**
+     * Gets the settingName property value. Localized/user friendly setting name that is being reported
+     * @returns a string
+     */
+    public get settingName() {
+        return this._settingName;
+    };
+    /**
      * Sets the settingName property value. Localized/user friendly setting name that is being reported
      * @param value Value to set for the settingName property.
      */
     public set settingName(value: string | undefined) {
         this._settingName = value;
+    };
+    /**
+     * Gets the sources property value. Contributing policies
+     * @returns a settingSource
+     */
+    public get sources() {
+        return this._sources;
     };
     /**
      * Sets the sources property value. Contributing policies
@@ -222,11 +190,25 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         this._sources = value;
     };
     /**
+     * Gets the state property value. The compliance state of the setting. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
+     * @returns a complianceStatus
+     */
+    public get state() {
+        return this._state;
+    };
+    /**
      * Sets the state property value. The compliance state of the setting. Possible values are: unknown, notApplicable, compliant, remediated, nonCompliant, error, conflict, notAssigned.
      * @param value Value to set for the state property.
      */
     public set state(value: ComplianceStatus | undefined) {
         this._state = value;
+    };
+    /**
+     * Gets the userEmail property value. UserEmail
+     * @returns a string
+     */
+    public get userEmail() {
+        return this._userEmail;
     };
     /**
      * Sets the userEmail property value. UserEmail
@@ -236,6 +218,13 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         this._userEmail = value;
     };
     /**
+     * Gets the userId property value. UserId
+     * @returns a string
+     */
+    public get userId() {
+        return this._userId;
+    };
+    /**
      * Sets the userId property value. UserId
      * @param value Value to set for the userId property.
      */
@@ -243,11 +232,25 @@ export class DeviceCompliancePolicySettingState implements Parsable {
         this._userId = value;
     };
     /**
+     * Gets the userName property value. UserName
+     * @returns a string
+     */
+    public get userName() {
+        return this._userName;
+    };
+    /**
      * Sets the userName property value. UserName
      * @param value Value to set for the userName property.
      */
     public set userName(value: string | undefined) {
         this._userName = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. UserPrincipalName.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. UserPrincipalName.

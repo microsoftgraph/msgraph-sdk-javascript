@@ -1,6 +1,6 @@
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/managedDevices/{managedDevice-id}/microsoft.graph.windowsDefenderUpdateSignatures  */
+/** Provides operations to call the windowsDefenderUpdateSignatures method.  */
 export class WindowsDefenderUpdateSignaturesRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;

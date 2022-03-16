@@ -1,4 +1,6 @@
-import {Entity, TeamsAppDefinition, TeamsAppDistributionMethod} from './index';
+import {createTeamsAppDefinitionFromDiscriminatorValue} from './createTeamsAppDefinitionFromDiscriminatorValue';
+import {Entity, TeamsAppDefinition} from './index';
+import {TeamsAppDistributionMethod} from './teamsAppDistributionMethod';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class TeamsApp extends Entity implements Parsable {
@@ -11,17 +13,24 @@ export class TeamsApp extends Entity implements Parsable {
     /** The ID of the catalog provided by the app developer in the Microsoft Teams zip app package.  */
     private _externalId?: string | undefined;
     /**
-     * Instantiates a new teamsApp and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the appDefinitions property value. The details for each version of the app.
      * @returns a teamsAppDefinition
      */
     public get appDefinitions() {
         return this._appDefinitions;
+    };
+    /**
+     * Sets the appDefinitions property value. The details for each version of the app.
+     * @param value Value to set for the appDefinitions property.
+     */
+    public set appDefinitions(value: TeamsAppDefinition[] | undefined) {
+        this._appDefinitions = value;
+    };
+    /**
+     * Instantiates a new teamsApp and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the displayName property value. The name of the catalog app provided by the app developer in the Microsoft Teams zip app package.
@@ -31,11 +40,25 @@ export class TeamsApp extends Entity implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. The name of the catalog app provided by the app developer in the Microsoft Teams zip app package.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the distributionMethod property value. The method of distribution for the app. Read-only.
      * @returns a teamsAppDistributionMethod
      */
     public get distributionMethod() {
         return this._distributionMethod;
+    };
+    /**
+     * Sets the distributionMethod property value. The method of distribution for the app. Read-only.
+     * @param value Value to set for the distributionMethod property.
+     */
+    public set distributionMethod(value: TeamsAppDistributionMethod | undefined) {
+        this._distributionMethod = value;
     };
     /**
      * Gets the externalId property value. The ID of the catalog provided by the app developer in the Microsoft Teams zip app package.
@@ -45,12 +68,19 @@ export class TeamsApp extends Entity implements Parsable {
         return this._externalId;
     };
     /**
+     * Sets the externalId property value. The ID of the catalog provided by the app developer in the Microsoft Teams zip app package.
+     * @param value Value to set for the externalId property.
+     */
+    public set externalId(value: string | undefined) {
+        this._externalId = value;
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["appDefinitions", (o, n) => { (o as unknown as TeamsApp).appDefinitions = n.getCollectionOfObjectValues<TeamsAppDefinition>(TeamsAppDefinition); }],
+            ["appDefinitions", (o, n) => { (o as unknown as TeamsApp).appDefinitions = n.getCollectionOfObjectValues<TeamsAppDefinition>(createTeamsAppDefinitionFromDiscriminatorValue); }],
             ["displayName", (o, n) => { (o as unknown as TeamsApp).displayName = n.getStringValue(); }],
             ["distributionMethod", (o, n) => { (o as unknown as TeamsApp).distributionMethod = n.getEnumValue<TeamsAppDistributionMethod>(TeamsAppDistributionMethod); }],
             ["externalId", (o, n) => { (o as unknown as TeamsApp).externalId = n.getStringValue(); }],
@@ -67,33 +97,5 @@ export class TeamsApp extends Entity implements Parsable {
         writer.writeStringValue("displayName", this.displayName);
         writer.writeEnumValue<TeamsAppDistributionMethod>("distributionMethod", this.distributionMethod);
         writer.writeStringValue("externalId", this.externalId);
-    };
-    /**
-     * Sets the appDefinitions property value. The details for each version of the app.
-     * @param value Value to set for the appDefinitions property.
-     */
-    public set appDefinitions(value: TeamsAppDefinition[] | undefined) {
-        this._appDefinitions = value;
-    };
-    /**
-     * Sets the displayName property value. The name of the catalog app provided by the app developer in the Microsoft Teams zip app package.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the distributionMethod property value. The method of distribution for the app. Read-only.
-     * @param value Value to set for the distributionMethod property.
-     */
-    public set distributionMethod(value: TeamsAppDistributionMethod | undefined) {
-        this._distributionMethod = value;
-    };
-    /**
-     * Sets the externalId property value. The ID of the catalog provided by the app developer in the Microsoft Teams zip app package.
-     * @param value Value to set for the externalId property.
-     */
-    public set externalId(value: string | undefined) {
-        this._externalId = value;
     };
 }

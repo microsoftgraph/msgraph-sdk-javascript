@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PrivacyProfile implements Parsable {
+export class PrivacyProfile implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** A valid smtp email address for the privacy statement contact. Not required.  */
@@ -8,17 +8,24 @@ export class PrivacyProfile implements Parsable {
     /** A valid URL format that begins with http:// or https://. Maximum length is 255 characters. The URL that directs to the company's privacy statement. Not required.  */
     private _statementUrl?: string | undefined;
     /**
-     * Instantiates a new privacyProfile and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new privacyProfile and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the contactEmail property value. A valid smtp email address for the privacy statement contact. Not required.
@@ -28,11 +35,11 @@ export class PrivacyProfile implements Parsable {
         return this._contactEmail;
     };
     /**
-     * Gets the statementUrl property value. A valid URL format that begins with http:// or https://. Maximum length is 255 characters. The URL that directs to the company's privacy statement. Not required.
-     * @returns a string
+     * Sets the contactEmail property value. A valid smtp email address for the privacy statement contact. Not required.
+     * @param value Value to set for the contactEmail property.
      */
-    public get statementUrl() {
-        return this._statementUrl;
+    public set contactEmail(value: string | undefined) {
+        this._contactEmail = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class PrivacyProfile implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the statementUrl property value. A valid URL format that begins with http:// or https://. Maximum length is 255 characters. The URL that directs to the company's privacy statement. Not required.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the contactEmail property value. A valid smtp email address for the privacy statement contact. Not required.
-     * @param value Value to set for the contactEmail property.
-     */
-    public set contactEmail(value: string | undefined) {
-        this._contactEmail = value;
+    public get statementUrl() {
+        return this._statementUrl;
     };
     /**
      * Sets the statementUrl property value. A valid URL format that begins with http:// or https://. Maximum length is 255 characters. The URL that directs to the company's privacy statement. Not required.

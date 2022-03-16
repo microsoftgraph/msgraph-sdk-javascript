@@ -1,14 +1,42 @@
 import {Agreement} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAgreementFromDiscriminatorValue} from '../../../../models/microsoft/graph/createAgreementFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AcceptancesRequestBuilder} from './acceptances/acceptancesRequestBuilder';
+import {AgreementAcceptanceItemRequestBuilder} from './acceptances/item/agreementAcceptanceItemRequestBuilder';
+import {FileRequestBuilder} from './file/fileRequestBuilder';
+import {FilesRequestBuilder} from './files/filesRequestBuilder';
+import {AgreementFileLocalizationItemRequestBuilder} from './files/item/agreementFileLocalizationItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/termsOfUse/agreements/{agreement-id}  */
+/** Provides operations to manage the agreements property of the microsoft.graph.termsOfUseContainer entity.  */
 export class AgreementItemRequestBuilder {
+    public get acceptances(): AcceptancesRequestBuilder {
+        return new AcceptancesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get file(): FileRequestBuilder {
+        return new FileRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get files(): FilesRequestBuilder {
+        return new FilesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.identityGovernance.termsOfUse.agreements.item.acceptances.item collection
+     * @param id Unique identifier of the item
+     * @returns a agreementAcceptanceItemRequestBuilder
+     */
+    public acceptancesById(id: string) : AgreementAcceptanceItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["agreementAcceptance_id"] = id
+        return new AgreementAcceptanceItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new AgreementItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -23,7 +51,7 @@ export class AgreementItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents a tenant's customizable terms of use agreement that's created and managed with Azure Active Directory (Azure AD).
+     * Delete navigation property agreements for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +86,7 @@ export class AgreementItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a tenant's customizable terms of use agreement that's created and managed with Azure Active Directory (Azure AD).
+     * Update the navigation property agreements in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +104,7 @@ export class AgreementItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a tenant's customizable terms of use agreement that's created and managed with Azure Active Directory (Azure AD).
+     * Delete navigation property agreements for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +113,22 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.identityGovernance.termsOfUse.agreements.item.files.item collection
+     * @param id Unique identifier of the item
+     * @returns a agreementFileLocalizationItemRequestBuilder
+     */
+    public filesById(id: string) : AgreementFileLocalizationItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["agreementFileLocalization_id"] = id
+        return new AgreementFileLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Represents a tenant's customizable terms of use agreement that's created and managed with Azure Active Directory (Azure AD).
@@ -102,10 +145,14 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Agreement>(requestInfo, Agreement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Agreement>(requestInfo, createAgreementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Represents a tenant's customizable terms of use agreement that's created and managed with Azure Active Directory (Azure AD).
+     * Update the navigation property agreements in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +163,10 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

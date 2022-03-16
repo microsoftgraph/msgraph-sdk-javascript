@@ -1,8 +1,11 @@
 import {BookingAppointment} from '../../../../../models/microsoft/graph/';
-import {CancelRequestBuilder} from './cancel/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createBookingAppointmentFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createBookingAppointmentFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CancelRequestBuilder} from './cancel/cancelRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /solutions/bookingBusinesses/{bookingBusiness-id}/calendarView/{bookingAppointment-id}  */
+/** Provides operations to manage the calendarView property of the microsoft.graph.bookingBusiness entity.  */
 export class BookingAppointmentItemRequestBuilder {
     public get cancel(): CancelRequestBuilder {
         return new CancelRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class BookingAppointmentItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The set of appointments of this business in a specified date range. Read-only. Nullable.
+     * Delete navigation property calendarView for solutions
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class BookingAppointmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The set of appointments of this business in a specified date range. Read-only. Nullable.
+     * Update the navigation property calendarView in solutions
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class BookingAppointmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The set of appointments of this business in a specified date range. Read-only. Nullable.
+     * Delete navigation property calendarView for solutions
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class BookingAppointmentItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The set of appointments of this business in a specified date range. Read-only. Nullable.
@@ -106,10 +113,14 @@ export class BookingAppointmentItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<BookingAppointment>(requestInfo, BookingAppointment, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<BookingAppointment>(requestInfo, createBookingAppointmentFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The set of appointments of this business in a specified date range. Read-only. Nullable.
+     * Update the navigation property calendarView in solutions
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class BookingAppointmentItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

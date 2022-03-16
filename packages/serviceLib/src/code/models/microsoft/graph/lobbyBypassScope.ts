@@ -1,3 +1,4 @@
+/** Provides operations to manage the cloudCommunications singleton.  */
 export enum LobbyBypassScope {
     Organizer = "organizer",
     Organization = "organization",

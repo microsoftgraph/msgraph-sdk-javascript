@@ -1,3 +1,4 @@
+/** Provides operations to manage the deviceManagement singleton.  */
 export enum DeviceComplianceActionType {
     NoAction = "noAction",
     Notification = "notification",

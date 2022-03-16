@@ -1,7 +1,8 @@
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
 import {IdentitySet} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class IncomingContext implements Parsable {
+export class IncomingContext implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The ID of the participant that is under observation. Read-only.  */
@@ -13,17 +14,36 @@ export class IncomingContext implements Parsable {
     /** The identity that transferred the call.  */
     private _transferor?: IdentitySet | undefined;
     /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Instantiates a new incomingContext and sets the default values.
      */
     public constructor() {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["observedParticipantId", (o, n) => { (o as unknown as IncomingContext).observedParticipantId = n.getStringValue(); }],
+            ["onBehalfOf", (o, n) => { (o as unknown as IncomingContext).onBehalfOf = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["sourceParticipantId", (o, n) => { (o as unknown as IncomingContext).sourceParticipantId = n.getStringValue(); }],
+            ["transferor", (o, n) => { (o as unknown as IncomingContext).transferor = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the observedParticipantId property value. The ID of the participant that is under observation. Read-only.
@@ -33,6 +53,13 @@ export class IncomingContext implements Parsable {
         return this._observedParticipantId;
     };
     /**
+     * Sets the observedParticipantId property value. The ID of the participant that is under observation. Read-only.
+     * @param value Value to set for the observedParticipantId property.
+     */
+    public set observedParticipantId(value: string | undefined) {
+        this._observedParticipantId = value;
+    };
+    /**
      * Gets the onBehalfOf property value. The identity that the call is happening on behalf of.
      * @returns a identitySet
      */
@@ -40,30 +67,11 @@ export class IncomingContext implements Parsable {
         return this._onBehalfOf;
     };
     /**
-     * Gets the sourceParticipantId property value. The ID of the participant that triggered the incoming call. Read-only.
-     * @returns a string
+     * Sets the onBehalfOf property value. The identity that the call is happening on behalf of.
+     * @param value Value to set for the onBehalfOf property.
      */
-    public get sourceParticipantId() {
-        return this._sourceParticipantId;
-    };
-    /**
-     * Gets the transferor property value. The identity that transferred the call.
-     * @returns a identitySet
-     */
-    public get transferor() {
-        return this._transferor;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["observedParticipantId", (o, n) => { (o as unknown as IncomingContext).observedParticipantId = n.getStringValue(); }],
-            ["onBehalfOf", (o, n) => { (o as unknown as IncomingContext).onBehalfOf = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["sourceParticipantId", (o, n) => { (o as unknown as IncomingContext).sourceParticipantId = n.getStringValue(); }],
-            ["transferor", (o, n) => { (o as unknown as IncomingContext).transferor = n.getObjectValue<IdentitySet>(IdentitySet); }],
-        ]);
+    public set onBehalfOf(value: IdentitySet | undefined) {
+        this._onBehalfOf = value;
     };
     /**
      * Serializes information the current object
@@ -78,25 +86,11 @@ export class IncomingContext implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sourceParticipantId property value. The ID of the participant that triggered the incoming call. Read-only.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the observedParticipantId property value. The ID of the participant that is under observation. Read-only.
-     * @param value Value to set for the observedParticipantId property.
-     */
-    public set observedParticipantId(value: string | undefined) {
-        this._observedParticipantId = value;
-    };
-    /**
-     * Sets the onBehalfOf property value. The identity that the call is happening on behalf of.
-     * @param value Value to set for the onBehalfOf property.
-     */
-    public set onBehalfOf(value: IdentitySet | undefined) {
-        this._onBehalfOf = value;
+    public get sourceParticipantId() {
+        return this._sourceParticipantId;
     };
     /**
      * Sets the sourceParticipantId property value. The ID of the participant that triggered the incoming call. Read-only.
@@ -104,6 +98,13 @@ export class IncomingContext implements Parsable {
      */
     public set sourceParticipantId(value: string | undefined) {
         this._sourceParticipantId = value;
+    };
+    /**
+     * Gets the transferor property value. The identity that transferred the call.
+     * @returns a identitySet
+     */
+    public get transferor() {
+        return this._transferor;
     };
     /**
      * Sets the transferor property value. The identity that transferred the call.

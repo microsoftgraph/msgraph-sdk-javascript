@@ -1,7 +1,8 @@
-import {FilterByCurrentUserWithOn} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createFilterByCurrentUserWithOnResponseFromDiscriminatorValue} from './createFilterByCurrentUserWithOnResponseFromDiscriminatorValue';
+import {FilterByCurrentUserWithOnResponse} from './index';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/accessPackages/microsoft.graph.filterByCurrentUser(on={on})  */
+/** Provides operations to call the filterByCurrentUser method.  */
 export class FilterByCurrentUserWithOnRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -11,14 +12,14 @@ export class FilterByCurrentUserWithOnRequestBuilder {
     private readonly urlTemplate: string;
     /**
      * Instantiates a new FilterByCurrentUserWithOnRequestBuilder and sets the default values.
-     * @param on Usage: on={on}
+     * @param on Usage: on='{on}'
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
      */
     public constructor(pathParameters: Record<string, unknown> | string | undefined, requestAdapter: RequestAdapter, on?: string | undefined) {
         if(!pathParameters) throw new Error("pathParameters cannot be undefined");
         if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
-        this.urlTemplate = "{+baseurl}/identityGovernance/entitlementManagement/accessPackages/microsoft.graph.filterByCurrentUser(on={on})";
+        this.urlTemplate = "{+baseurl}/identityGovernance/entitlementManagement/accessPackages/microsoft.graph.filterByCurrentUser(on='{on}')";
         const urlTplParams = getPathParameters(pathParameters);
         urlTplParams["on"] = on
         this.pathParameters = urlTplParams;
@@ -44,12 +45,12 @@ export class FilterByCurrentUserWithOnRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of FilterByCurrentUserWithOn
+     * @returns a Promise of FilterByCurrentUserWithOnResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<FilterByCurrentUserWithOn[] | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<FilterByCurrentUserWithOnResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendCollectionAsync<FilterByCurrentUserWithOn>(requestInfo, FilterByCurrentUserWithOn, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<FilterByCurrentUserWithOnResponse>(requestInfo, createFilterByCurrentUserWithOnResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ResultTemplateOption implements Parsable {
+export class ResultTemplateOption implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Indicates whether search display layouts are enabled. If enabled, the user will get the result template to render the search results content in the resultTemplates property of the response. The result template is based on Adaptive Cards. Optional.  */
     private _enableResultTemplate?: boolean | undefined;
-    /**
-     * Instantiates a new resultTemplateOption and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,31 @@ export class ResultTemplateOption implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new resultTemplateOption and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the enableResultTemplate property value. Indicates whether search display layouts are enabled. If enabled, the user will get the result template to render the search results content in the resultTemplates property of the response. The result template is based on Adaptive Cards. Optional.
      * @returns a boolean
      */
     public get enableResultTemplate() {
         return this._enableResultTemplate;
+    };
+    /**
+     * Sets the enableResultTemplate property value. Indicates whether search display layouts are enabled. If enabled, the user will get the result template to render the search results content in the resultTemplates property of the response. The result template is based on Adaptive Cards. Optional.
+     * @param value Value to set for the enableResultTemplate property.
+     */
+    public set enableResultTemplate(value: boolean | undefined) {
+        this._enableResultTemplate = value;
     };
     /**
      * The deserialization information for the current model
@@ -42,19 +56,5 @@ export class ResultTemplateOption implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeBooleanValue("enableResultTemplate", this.enableResultTemplate);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the enableResultTemplate property value. Indicates whether search display layouts are enabled. If enabled, the user will get the result template to render the search results content in the resultTemplates property of the response. The result template is based on Adaptive Cards. Optional.
-     * @param value Value to set for the enableResultTemplate property.
-     */
-    public set enableResultTemplate(value: boolean | undefined) {
-        this._enableResultTemplate = value;
     };
 }

@@ -11,17 +11,24 @@ export class LinkedResource extends Entity implements Parsable {
     /** Deep link to the linkedResource.  */
     private _webUrl?: string | undefined;
     /**
-     * Instantiates a new linkedResource and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the applicationName property value. Field indicating the app name of the source that is sending the linkedResource.
      * @returns a string
      */
     public get applicationName() {
         return this._applicationName;
+    };
+    /**
+     * Sets the applicationName property value. Field indicating the app name of the source that is sending the linkedResource.
+     * @param value Value to set for the applicationName property.
+     */
+    public set applicationName(value: string | undefined) {
+        this._applicationName = value;
+    };
+    /**
+     * Instantiates a new linkedResource and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the displayName property value. Field indicating the title of the linkedResource.
@@ -31,6 +38,13 @@ export class LinkedResource extends Entity implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. Field indicating the title of the linkedResource.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the externalId property value. Id of the object that is associated with this task on the third-party/partner system.
      * @returns a string
      */
@@ -38,11 +52,11 @@ export class LinkedResource extends Entity implements Parsable {
         return this._externalId;
     };
     /**
-     * Gets the webUrl property value. Deep link to the linkedResource.
-     * @returns a string
+     * Sets the externalId property value. Id of the object that is associated with this task on the third-party/partner system.
+     * @param value Value to set for the externalId property.
      */
-    public get webUrl() {
-        return this._webUrl;
+    public set externalId(value: string | undefined) {
+        this._externalId = value;
     };
     /**
      * The deserialization information for the current model
@@ -69,25 +83,11 @@ export class LinkedResource extends Entity implements Parsable {
         writer.writeStringValue("webUrl", this.webUrl);
     };
     /**
-     * Sets the applicationName property value. Field indicating the app name of the source that is sending the linkedResource.
-     * @param value Value to set for the applicationName property.
+     * Gets the webUrl property value. Deep link to the linkedResource.
+     * @returns a string
      */
-    public set applicationName(value: string | undefined) {
-        this._applicationName = value;
-    };
-    /**
-     * Sets the displayName property value. Field indicating the title of the linkedResource.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the externalId property value. Id of the object that is associated with this task on the third-party/partner system.
-     * @param value Value to set for the externalId property.
-     */
-    public set externalId(value: string | undefined) {
-        this._externalId = value;
+    public get webUrl() {
+        return this._webUrl;
     };
     /**
      * Sets the webUrl property value. Deep link to the linkedResource.

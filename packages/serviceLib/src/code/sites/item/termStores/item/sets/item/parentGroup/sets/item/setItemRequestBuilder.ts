@@ -1,14 +1,43 @@
+import {ODataError} from '../../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
 import {Set} from '../../../../../../../../../models/microsoft/graph/termStore/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSetFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/termStore/createSetFromDiscriminatorValue';
+import {ChildrenRequestBuilder} from './children/childrenRequestBuilder';
+import {TermItemRequestBuilder as ie6eb3588a737614cf9225aee097f9824d99781569c1bf549667c0dbbc439f9f3} from './children/item/termItemRequestBuilder';
+import {RelationItemRequestBuilder} from './relations/item/relationItemRequestBuilder';
+import {RelationsRequestBuilder} from './relations/relationsRequestBuilder';
+import {TermItemRequestBuilder as i0b21e7282f201edb47bfa760441d0cdd0478093b156dbcacde5ad09625b99041} from './terms/item/termItemRequestBuilder';
+import {TermsRequestBuilder} from './terms/termsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/termStores/{store-id}/sets/{set-id}/parentGroup/sets/{set-id1}  */
+/** Provides operations to manage the sets property of the microsoft.graph.termStore.group entity.  */
 export class SetItemRequestBuilder {
+    public get children(): ChildrenRequestBuilder {
+        return new ChildrenRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
+    public get relations(): RelationsRequestBuilder {
+        return new RelationsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get terms(): TermsRequestBuilder {
+        return new TermsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.sites.item.termStores.item.sets.item.parentGroup.sets.item.children.item collection
+     * @param id Unique identifier of the item
+     * @returns a termItemRequestBuilder
+     */
+    public childrenById(id: string) : ie6eb3588a737614cf9225aee097f9824d99781569c1bf549667c0dbbc439f9f3 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["term_id"] = id
+        return new ie6eb3588a737614cf9225aee097f9824d99781569c1bf549667c0dbbc439f9f3(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new SetItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -23,7 +52,7 @@ export class SetItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * All sets under the group in a term [store].
+     * Delete navigation property sets for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +87,7 @@ export class SetItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All sets under the group in a term [store].
+     * Update the navigation property sets in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +105,7 @@ export class SetItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All sets under the group in a term [store].
+     * Delete navigation property sets for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +114,11 @@ export class SetItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * All sets under the group in a term [store].
@@ -102,10 +135,14 @@ export class SetItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Set>(requestInfo, Set, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Set>(requestInfo, createSetFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * All sets under the group in a term [store].
+     * Update the navigation property sets in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +153,32 @@ export class SetItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.sites.item.termStores.item.sets.item.parentGroup.sets.item.relations.item collection
+     * @param id Unique identifier of the item
+     * @returns a relationItemRequestBuilder
+     */
+    public relationsById(id: string) : RelationItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["relation_id"] = id
+        return new RelationItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.sites.item.termStores.item.sets.item.parentGroup.sets.item.terms.item collection
+     * @param id Unique identifier of the item
+     * @returns a termItemRequestBuilder
+     */
+    public termsById(id: string) : i0b21e7282f201edb47bfa760441d0cdd0478093b156dbcacde5ad09625b99041 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["term_id"] = id
+        return new i0b21e7282f201edb47bfa760441d0cdd0478093b156dbcacde5ad09625b99041(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,7 +1,9 @@
+import {createSearchAggregationFromDiscriminatorValue} from './createSearchAggregationFromDiscriminatorValue';
+import {createSearchHitFromDiscriminatorValue} from './createSearchHitFromDiscriminatorValue';
 import {SearchAggregation, SearchHit} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SearchHitsContainer implements Parsable {
+export class SearchHitsContainer implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Contains the collection of aggregations computed based on the provided aggregationOption specified in the request.  */
@@ -13,17 +15,18 @@ export class SearchHitsContainer implements Parsable {
     /** The total number of results. Note this is not the number of results on the page, but the total number of results satisfying the query.  */
     private _total?: number | undefined;
     /**
-     * Instantiates a new searchHitsContainer and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the aggregations property value. Contains the collection of aggregations computed based on the provided aggregationOption specified in the request.
@@ -33,11 +36,43 @@ export class SearchHitsContainer implements Parsable {
         return this._aggregations;
     };
     /**
+     * Sets the aggregations property value. Contains the collection of aggregations computed based on the provided aggregationOption specified in the request.
+     * @param value Value to set for the aggregations property.
+     */
+    public set aggregations(value: SearchAggregation[] | undefined) {
+        this._aggregations = value;
+    };
+    /**
+     * Instantiates a new searchHitsContainer and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["aggregations", (o, n) => { (o as unknown as SearchHitsContainer).aggregations = n.getCollectionOfObjectValues<SearchAggregation>(createSearchAggregationFromDiscriminatorValue); }],
+            ["hits", (o, n) => { (o as unknown as SearchHitsContainer).hits = n.getCollectionOfObjectValues<SearchHit>(createSearchHitFromDiscriminatorValue); }],
+            ["moreResultsAvailable", (o, n) => { (o as unknown as SearchHitsContainer).moreResultsAvailable = n.getBooleanValue(); }],
+            ["total", (o, n) => { (o as unknown as SearchHitsContainer).total = n.getNumberValue(); }],
+        ]);
+    };
+    /**
      * Gets the hits property value. A collection of the search results.
      * @returns a searchHit
      */
     public get hits() {
         return this._hits;
+    };
+    /**
+     * Sets the hits property value. A collection of the search results.
+     * @param value Value to set for the hits property.
+     */
+    public set hits(value: SearchHit[] | undefined) {
+        this._hits = value;
     };
     /**
      * Gets the moreResultsAvailable property value. Provides information if more results are available. Based on this information, you can adjust the from and size properties of the searchRequest accordingly.
@@ -47,23 +82,11 @@ export class SearchHitsContainer implements Parsable {
         return this._moreResultsAvailable;
     };
     /**
-     * Gets the total property value. The total number of results. Note this is not the number of results on the page, but the total number of results satisfying the query.
-     * @returns a integer
+     * Sets the moreResultsAvailable property value. Provides information if more results are available. Based on this information, you can adjust the from and size properties of the searchRequest accordingly.
+     * @param value Value to set for the moreResultsAvailable property.
      */
-    public get total() {
-        return this._total;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["aggregations", (o, n) => { (o as unknown as SearchHitsContainer).aggregations = n.getCollectionOfObjectValues<SearchAggregation>(SearchAggregation); }],
-            ["hits", (o, n) => { (o as unknown as SearchHitsContainer).hits = n.getCollectionOfObjectValues<SearchHit>(SearchHit); }],
-            ["moreResultsAvailable", (o, n) => { (o as unknown as SearchHitsContainer).moreResultsAvailable = n.getBooleanValue(); }],
-            ["total", (o, n) => { (o as unknown as SearchHitsContainer).total = n.getNumberValue(); }],
-        ]);
+    public set moreResultsAvailable(value: boolean | undefined) {
+        this._moreResultsAvailable = value;
     };
     /**
      * Serializes information the current object
@@ -78,32 +101,11 @@ export class SearchHitsContainer implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the total property value. The total number of results. Note this is not the number of results on the page, but the total number of results satisfying the query.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the aggregations property value. Contains the collection of aggregations computed based on the provided aggregationOption specified in the request.
-     * @param value Value to set for the aggregations property.
-     */
-    public set aggregations(value: SearchAggregation[] | undefined) {
-        this._aggregations = value;
-    };
-    /**
-     * Sets the hits property value. A collection of the search results.
-     * @param value Value to set for the hits property.
-     */
-    public set hits(value: SearchHit[] | undefined) {
-        this._hits = value;
-    };
-    /**
-     * Sets the moreResultsAvailable property value. Provides information if more results are available. Based on this information, you can adjust the from and size properties of the searchRequest accordingly.
-     * @param value Value to set for the moreResultsAvailable property.
-     */
-    public set moreResultsAvailable(value: boolean | undefined) {
-        this._moreResultsAvailable = value;
+    public get total() {
+        return this._total;
     };
     /**
      * Sets the total property value. The total number of results. Note this is not the number of results on the page, but the total number of results satisfying the query.

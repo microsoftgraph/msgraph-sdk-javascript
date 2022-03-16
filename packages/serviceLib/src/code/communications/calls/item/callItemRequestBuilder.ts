@@ -1,26 +1,29 @@
 import {Call} from '../../../models/microsoft/graph/';
-import {AnswerRequestBuilder} from './answer/';
-import {AudioRoutingGroupsRequestBuilder} from './audioRoutingGroups/';
-import {AudioRoutingGroupItemRequestBuilder} from './audioRoutingGroups/item/';
-import {CancelMediaProcessingRequestBuilder} from './cancelMediaProcessing/';
-import {ChangeScreenSharingRoleRequestBuilder} from './changeScreenSharingRole/';
-import {KeepAliveRequestBuilder} from './keepAlive/';
-import {MuteRequestBuilder} from './mute/';
-import {OperationsRequestBuilder} from './operations/';
-import {CommsOperationItemRequestBuilder} from './operations/item/';
-import {ParticipantsRequestBuilder} from './participants/';
-import {ParticipantItemRequestBuilder} from './participants/item/';
-import {PlayPromptRequestBuilder} from './playPrompt/';
-import {RecordResponseRequestBuilder} from './recordResponse/';
-import {RedirectRequestBuilder} from './redirect/';
-import {RejectRequestBuilder} from './reject/';
-import {SubscribeToToneRequestBuilder} from './subscribeToTone/';
-import {TransferRequestBuilder} from './transfer/';
-import {UnmuteRequestBuilder} from './unmute/';
-import {UpdateRecordingStatusRequestBuilder} from './updateRecordingStatus/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createCallFromDiscriminatorValue} from '../../../models/microsoft/graph/createCallFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AnswerRequestBuilder} from './answer/answerRequestBuilder';
+import {AudioRoutingGroupsRequestBuilder} from './audioRoutingGroups/audioRoutingGroupsRequestBuilder';
+import {AudioRoutingGroupItemRequestBuilder} from './audioRoutingGroups/item/audioRoutingGroupItemRequestBuilder';
+import {CancelMediaProcessingRequestBuilder} from './cancelMediaProcessing/cancelMediaProcessingRequestBuilder';
+import {ChangeScreenSharingRoleRequestBuilder} from './changeScreenSharingRole/changeScreenSharingRoleRequestBuilder';
+import {KeepAliveRequestBuilder} from './keepAlive/keepAliveRequestBuilder';
+import {MuteRequestBuilder} from './mute/muteRequestBuilder';
+import {CommsOperationItemRequestBuilder} from './operations/item/commsOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {ParticipantItemRequestBuilder} from './participants/item/participantItemRequestBuilder';
+import {ParticipantsRequestBuilder} from './participants/participantsRequestBuilder';
+import {PlayPromptRequestBuilder} from './playPrompt/playPromptRequestBuilder';
+import {RecordResponseRequestBuilder} from './recordResponse/recordResponseRequestBuilder';
+import {RedirectRequestBuilder} from './redirect/redirectRequestBuilder';
+import {RejectRequestBuilder} from './reject/rejectRequestBuilder';
+import {SubscribeToToneRequestBuilder} from './subscribeToTone/subscribeToToneRequestBuilder';
+import {TransferRequestBuilder} from './transfer/transferRequestBuilder';
+import {UnmuteRequestBuilder} from './unmute/unmuteRequestBuilder';
+import {UpdateRecordingStatusRequestBuilder} from './updateRecordingStatus/updateRecordingStatusRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}  */
+/** Provides operations to manage the calls property of the microsoft.graph.cloudCommunications entity.  */
 export class CallItemRequestBuilder {
     public get answer(): AnswerRequestBuilder {
         return new AnswerRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -163,7 +166,11 @@ export class CallItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get calls from communications
@@ -180,7 +187,11 @@ export class CallItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Call>(requestInfo, Call, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Call>(requestInfo, createCallFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.communications.calls.item.operations.item collection
@@ -216,6 +227,10 @@ export class CallItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,22 +1,24 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AssignUserToDeviceRequestBody implements Parsable {
+/** Provides operations to call the assignUserToDevice method.  */
+export class AssignUserToDeviceRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _addressableUserName?: string | undefined;
     private _userPrincipalName?: string | undefined;
-    /**
-     * Instantiates a new assignUserToDeviceRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the addressableUserName property value. 
@@ -26,11 +28,17 @@ export class AssignUserToDeviceRequestBody implements Parsable {
         return this._addressableUserName;
     };
     /**
-     * Gets the userPrincipalName property value. 
-     * @returns a string
+     * Sets the addressableUserName property value. 
+     * @param value Value to set for the addressableUserName property.
      */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set addressableUserName(value: string | undefined) {
+        this._addressableUserName = value;
+    };
+    /**
+     * Instantiates a new assignUserToDeviceRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -53,18 +61,11 @@ export class AssignUserToDeviceRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the userPrincipalName property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the addressableUserName property value. 
-     * @param value Value to set for the addressableUserName property.
-     */
-    public set addressableUserName(value: string | undefined) {
-        this._addressableUserName = value;
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. 

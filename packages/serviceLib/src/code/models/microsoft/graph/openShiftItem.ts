@@ -11,13 +11,6 @@ export class OpenShiftItem extends ShiftItem implements Parsable {
         super();
     };
     /**
-     * Gets the openSlotCount property value. Count of the number of slots for the given open shift.
-     * @returns a integer
-     */
-    public get openSlotCount() {
-        return this._openSlotCount;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +20,11 @@ export class OpenShiftItem extends ShiftItem implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the openSlotCount property value. Count of the number of slots for the given open shift.
+     * @returns a integer
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeNumberValue("openSlotCount", this.openSlotCount);
+    public get openSlotCount() {
+        return this._openSlotCount;
     };
     /**
      * Sets the openSlotCount property value. Count of the number of slots for the given open shift.
@@ -41,5 +32,14 @@ export class OpenShiftItem extends ShiftItem implements Parsable {
      */
     public set openSlotCount(value: number | undefined) {
         this._openSlotCount = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeNumberValue("openSlotCount", this.openSlotCount);
     };
 }

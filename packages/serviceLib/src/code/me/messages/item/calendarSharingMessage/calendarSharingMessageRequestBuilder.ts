@@ -1,4 +1,4 @@
-import {AcceptRequestBuilder} from './accept/';
+import {AcceptRequestBuilder} from './accept/acceptRequestBuilder';
 import {getPathParameters, RequestAdapter} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /me/messages/{message-id}/microsoft.graph.calendarSharingMessage  */

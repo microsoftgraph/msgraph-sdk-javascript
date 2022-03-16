@@ -1,4 +1,6 @@
-import {Entity, Status, UserActivity} from './index';
+import {createUserActivityFromDiscriminatorValue} from './createUserActivityFromDiscriminatorValue';
+import {Entity, UserActivity} from './index';
+import {Status} from './status';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ActivityHistoryItem extends Entity implements Parsable {
@@ -20,17 +22,18 @@ export class ActivityHistoryItem extends Entity implements Parsable {
     /** Optional. The timezone in which the user's device used to generate the activity was located at activity creation time. Values supplied as Olson IDs in order to support cross-platform representation.  */
     private _userTimezone?: string | undefined;
     /**
-     * Instantiates a new activityHistoryItem and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the activeDurationSeconds property value. Optional. The duration of active user engagement. if not supplied, this is calculated from the startedDateTime and lastActiveDateTime.
      * @returns a integer
      */
     public get activeDurationSeconds() {
         return this._activeDurationSeconds;
+    };
+    /**
+     * Sets the activeDurationSeconds property value. Optional. The duration of active user engagement. if not supplied, this is calculated from the startedDateTime and lastActiveDateTime.
+     * @param value Value to set for the activeDurationSeconds property.
+     */
+    public set activeDurationSeconds(value: number | undefined) {
+        this._activeDurationSeconds = value;
     };
     /**
      * Gets the activity property value. 
@@ -40,11 +43,31 @@ export class ActivityHistoryItem extends Entity implements Parsable {
         return this._activity;
     };
     /**
+     * Sets the activity property value. 
+     * @param value Value to set for the activity property.
+     */
+    public set activity(value: UserActivity | undefined) {
+        this._activity = value;
+    };
+    /**
+     * Instantiates a new activityHistoryItem and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the createdDateTime property value. Set by the server. DateTime in UTC when the object was created on the server.
      * @returns a Date
      */
     public get createdDateTime() {
         return this._createdDateTime;
+    };
+    /**
+     * Sets the createdDateTime property value. Set by the server. DateTime in UTC when the object was created on the server.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
     };
     /**
      * Gets the expirationDateTime property value. Optional. UTC DateTime when the historyItem will undergo hard-delete. Can be set by the client.
@@ -54,11 +77,42 @@ export class ActivityHistoryItem extends Entity implements Parsable {
         return this._expirationDateTime;
     };
     /**
+     * Sets the expirationDateTime property value. Optional. UTC DateTime when the historyItem will undergo hard-delete. Can be set by the client.
+     * @param value Value to set for the expirationDateTime property.
+     */
+    public set expirationDateTime(value: Date | undefined) {
+        this._expirationDateTime = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["activeDurationSeconds", (o, n) => { (o as unknown as ActivityHistoryItem).activeDurationSeconds = n.getNumberValue(); }],
+            ["activity", (o, n) => { (o as unknown as ActivityHistoryItem).activity = n.getObjectValue<UserActivity>(createUserActivityFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).createdDateTime = n.getDateValue(); }],
+            ["expirationDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).expirationDateTime = n.getDateValue(); }],
+            ["lastActiveDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).lastActiveDateTime = n.getDateValue(); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).lastModifiedDateTime = n.getDateValue(); }],
+            ["startedDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).startedDateTime = n.getDateValue(); }],
+            ["status", (o, n) => { (o as unknown as ActivityHistoryItem).status = n.getEnumValue<Status>(Status); }],
+            ["userTimezone", (o, n) => { (o as unknown as ActivityHistoryItem).userTimezone = n.getStringValue(); }],
+        ]);
+    };
+    /**
      * Gets the lastActiveDateTime property value. Optional. UTC DateTime when the historyItem (activity session) was last understood as active or finished - if null, historyItem status should be Ongoing.
      * @returns a Date
      */
     public get lastActiveDateTime() {
         return this._lastActiveDateTime;
+    };
+    /**
+     * Sets the lastActiveDateTime property value. Optional. UTC DateTime when the historyItem (activity session) was last understood as active or finished - if null, historyItem status should be Ongoing.
+     * @param value Value to set for the lastActiveDateTime property.
+     */
+    public set lastActiveDateTime(value: Date | undefined) {
+        this._lastActiveDateTime = value;
     };
     /**
      * Gets the lastModifiedDateTime property value. Set by the server. DateTime in UTC when the object was modified on the server.
@@ -68,42 +122,11 @@ export class ActivityHistoryItem extends Entity implements Parsable {
         return this._lastModifiedDateTime;
     };
     /**
-     * Gets the startedDateTime property value. Required. UTC DateTime when the historyItem (activity session) was started. Required for timeline history.
-     * @returns a Date
+     * Sets the lastModifiedDateTime property value. Set by the server. DateTime in UTC when the object was modified on the server.
+     * @param value Value to set for the lastModifiedDateTime property.
      */
-    public get startedDateTime() {
-        return this._startedDateTime;
-    };
-    /**
-     * Gets the status property value. Set by the server. A status code used to identify valid objects. Values: active, updated, deleted, ignored.
-     * @returns a status
-     */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * Gets the userTimezone property value. Optional. The timezone in which the user's device used to generate the activity was located at activity creation time. Values supplied as Olson IDs in order to support cross-platform representation.
-     * @returns a string
-     */
-    public get userTimezone() {
-        return this._userTimezone;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["activeDurationSeconds", (o, n) => { (o as unknown as ActivityHistoryItem).activeDurationSeconds = n.getNumberValue(); }],
-            ["activity", (o, n) => { (o as unknown as ActivityHistoryItem).activity = n.getObjectValue<UserActivity>(UserActivity); }],
-            ["createdDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).createdDateTime = n.getDateValue(); }],
-            ["expirationDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).expirationDateTime = n.getDateValue(); }],
-            ["lastActiveDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).lastActiveDateTime = n.getDateValue(); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).lastModifiedDateTime = n.getDateValue(); }],
-            ["startedDateTime", (o, n) => { (o as unknown as ActivityHistoryItem).startedDateTime = n.getDateValue(); }],
-            ["status", (o, n) => { (o as unknown as ActivityHistoryItem).status = n.getEnumValue<Status>(Status); }],
-            ["userTimezone", (o, n) => { (o as unknown as ActivityHistoryItem).userTimezone = n.getStringValue(); }],
-        ]);
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
     };
     /**
      * Serializes information the current object
@@ -123,46 +146,11 @@ export class ActivityHistoryItem extends Entity implements Parsable {
         writer.writeStringValue("userTimezone", this.userTimezone);
     };
     /**
-     * Sets the activeDurationSeconds property value. Optional. The duration of active user engagement. if not supplied, this is calculated from the startedDateTime and lastActiveDateTime.
-     * @param value Value to set for the activeDurationSeconds property.
+     * Gets the startedDateTime property value. Required. UTC DateTime when the historyItem (activity session) was started. Required for timeline history.
+     * @returns a Date
      */
-    public set activeDurationSeconds(value: number | undefined) {
-        this._activeDurationSeconds = value;
-    };
-    /**
-     * Sets the activity property value. 
-     * @param value Value to set for the activity property.
-     */
-    public set activity(value: UserActivity | undefined) {
-        this._activity = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Set by the server. DateTime in UTC when the object was created on the server.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. Optional. UTC DateTime when the historyItem will undergo hard-delete. Can be set by the client.
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: Date | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the lastActiveDateTime property value. Optional. UTC DateTime when the historyItem (activity session) was last understood as active or finished - if null, historyItem status should be Ongoing.
-     * @param value Value to set for the lastActiveDateTime property.
-     */
-    public set lastActiveDateTime(value: Date | undefined) {
-        this._lastActiveDateTime = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Set by the server. DateTime in UTC when the object was modified on the server.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
+    public get startedDateTime() {
+        return this._startedDateTime;
     };
     /**
      * Sets the startedDateTime property value. Required. UTC DateTime when the historyItem (activity session) was started. Required for timeline history.
@@ -172,11 +160,25 @@ export class ActivityHistoryItem extends Entity implements Parsable {
         this._startedDateTime = value;
     };
     /**
+     * Gets the status property value. Set by the server. A status code used to identify valid objects. Values: active, updated, deleted, ignored.
+     * @returns a status
+     */
+    public get status() {
+        return this._status;
+    };
+    /**
      * Sets the status property value. Set by the server. A status code used to identify valid objects. Values: active, updated, deleted, ignored.
      * @param value Value to set for the status property.
      */
     public set status(value: Status | undefined) {
         this._status = value;
+    };
+    /**
+     * Gets the userTimezone property value. Optional. The timezone in which the user's device used to generate the activity was located at activity creation time. Values supplied as Olson IDs in order to support cross-platform representation.
+     * @returns a string
+     */
+    public get userTimezone() {
+        return this._userTimezone;
     };
     /**
      * Sets the userTimezone property value. Optional. The timezone in which the user's device used to generate the activity was located at activity creation time. Values supplied as Olson IDs in order to support cross-platform representation.

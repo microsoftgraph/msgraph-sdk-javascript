@@ -1,0 +1,7 @@
+import {DeviceConfigurationAssignment} from './index';
+import {ParseNode} from '@microsoft/kiota-abstractions';
+
+export function createDeviceConfigurationAssignmentFromDiscriminatorValue(parseNode: ParseNode | undefined) : DeviceConfigurationAssignment {
+    if(!parseNode) throw new Error("parseNode cannot be undefined");
+    return new DeviceConfigurationAssignment();
+}

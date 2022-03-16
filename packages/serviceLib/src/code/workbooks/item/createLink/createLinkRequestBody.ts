@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CreateLinkRequestBody implements Parsable {
+/** Provides operations to call the createLink method.  */
+export class CreateLinkRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _expirationDateTime?: Date | undefined;
@@ -10,17 +11,24 @@ export class CreateLinkRequestBody implements Parsable {
     private _scope?: string | undefined;
     private _type?: string | undefined;
     /**
-     * Instantiates a new createLinkRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new createLinkRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the expirationDateTime property value. 
@@ -30,39 +38,11 @@ export class CreateLinkRequestBody implements Parsable {
         return this._expirationDateTime;
     };
     /**
-     * Gets the message property value. 
-     * @returns a string
+     * Sets the expirationDateTime property value. 
+     * @param value Value to set for the expirationDateTime property.
      */
-    public get message() {
-        return this._message;
-    };
-    /**
-     * Gets the password property value. 
-     * @returns a string
-     */
-    public get password() {
-        return this._password;
-    };
-    /**
-     * Gets the retainInheritedPermissions property value. 
-     * @returns a boolean
-     */
-    public get retainInheritedPermissions() {
-        return this._retainInheritedPermissions;
-    };
-    /**
-     * Gets the scope property value. 
-     * @returns a string
-     */
-    public get scope() {
-        return this._scope;
-    };
-    /**
-     * Gets the type property value. 
-     * @returns a string
-     */
-    public get type() {
-        return this._type;
+    public set expirationDateTime(value: Date | undefined) {
+        this._expirationDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -79,6 +59,62 @@ export class CreateLinkRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the message property value. 
+     * @returns a string
+     */
+    public get message() {
+        return this._message;
+    };
+    /**
+     * Sets the message property value. 
+     * @param value Value to set for the message property.
+     */
+    public set message(value: string | undefined) {
+        this._message = value;
+    };
+    /**
+     * Gets the password property value. 
+     * @returns a string
+     */
+    public get password() {
+        return this._password;
+    };
+    /**
+     * Sets the password property value. 
+     * @param value Value to set for the password property.
+     */
+    public set password(value: string | undefined) {
+        this._password = value;
+    };
+    /**
+     * Gets the retainInheritedPermissions property value. 
+     * @returns a boolean
+     */
+    public get retainInheritedPermissions() {
+        return this._retainInheritedPermissions;
+    };
+    /**
+     * Sets the retainInheritedPermissions property value. 
+     * @param value Value to set for the retainInheritedPermissions property.
+     */
+    public set retainInheritedPermissions(value: boolean | undefined) {
+        this._retainInheritedPermissions = value;
+    };
+    /**
+     * Gets the scope property value. 
+     * @returns a string
+     */
+    public get scope() {
+        return this._scope;
+    };
+    /**
+     * Sets the scope property value. 
+     * @param value Value to set for the scope property.
+     */
+    public set scope(value: string | undefined) {
+        this._scope = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -93,46 +129,11 @@ export class CreateLinkRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the type property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. 
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: Date | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the message property value. 
-     * @param value Value to set for the message property.
-     */
-    public set message(value: string | undefined) {
-        this._message = value;
-    };
-    /**
-     * Sets the password property value. 
-     * @param value Value to set for the password property.
-     */
-    public set password(value: string | undefined) {
-        this._password = value;
-    };
-    /**
-     * Sets the retainInheritedPermissions property value. 
-     * @param value Value to set for the retainInheritedPermissions property.
-     */
-    public set retainInheritedPermissions(value: boolean | undefined) {
-        this._retainInheritedPermissions = value;
-    };
-    /**
-     * Sets the scope property value. 
-     * @param value Value to set for the scope property.
-     */
-    public set scope(value: string | undefined) {
-        this._scope = value;
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. 

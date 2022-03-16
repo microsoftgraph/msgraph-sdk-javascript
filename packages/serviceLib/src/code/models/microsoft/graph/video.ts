@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Video implements Parsable {
+export class Video implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Number of audio bits per sample.  */
@@ -24,17 +24,18 @@ export class Video implements Parsable {
     /** Width of the video, in pixels.  */
     private _width?: number | undefined;
     /**
-     * Instantiates a new video and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the audioBitsPerSample property value. Number of audio bits per sample.
@@ -44,11 +45,25 @@ export class Video implements Parsable {
         return this._audioBitsPerSample;
     };
     /**
+     * Sets the audioBitsPerSample property value. Number of audio bits per sample.
+     * @param value Value to set for the audioBitsPerSample property.
+     */
+    public set audioBitsPerSample(value: number | undefined) {
+        this._audioBitsPerSample = value;
+    };
+    /**
      * Gets the audioChannels property value. Number of audio channels.
      * @returns a integer
      */
     public get audioChannels() {
         return this._audioChannels;
+    };
+    /**
+     * Sets the audioChannels property value. Number of audio channels.
+     * @param value Value to set for the audioChannels property.
+     */
+    public set audioChannels(value: number | undefined) {
+        this._audioChannels = value;
     };
     /**
      * Gets the audioFormat property value. Name of the audio format (AAC, MP3, etc.).
@@ -58,11 +73,25 @@ export class Video implements Parsable {
         return this._audioFormat;
     };
     /**
+     * Sets the audioFormat property value. Name of the audio format (AAC, MP3, etc.).
+     * @param value Value to set for the audioFormat property.
+     */
+    public set audioFormat(value: string | undefined) {
+        this._audioFormat = value;
+    };
+    /**
      * Gets the audioSamplesPerSecond property value. Number of audio samples per second.
      * @returns a integer
      */
     public get audioSamplesPerSecond() {
         return this._audioSamplesPerSecond;
+    };
+    /**
+     * Sets the audioSamplesPerSecond property value. Number of audio samples per second.
+     * @param value Value to set for the audioSamplesPerSecond property.
+     */
+    public set audioSamplesPerSecond(value: number | undefined) {
+        this._audioSamplesPerSecond = value;
     };
     /**
      * Gets the bitrate property value. Bit rate of the video in bits per second.
@@ -72,11 +101,31 @@ export class Video implements Parsable {
         return this._bitrate;
     };
     /**
+     * Sets the bitrate property value. Bit rate of the video in bits per second.
+     * @param value Value to set for the bitrate property.
+     */
+    public set bitrate(value: number | undefined) {
+        this._bitrate = value;
+    };
+    /**
+     * Instantiates a new video and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the duration property value. Duration of the file in milliseconds.
      * @returns a int64
      */
     public get duration() {
         return this._duration;
+    };
+    /**
+     * Sets the duration property value. Duration of the file in milliseconds.
+     * @param value Value to set for the duration property.
+     */
+    public set duration(value: number | undefined) {
+        this._duration = value;
     };
     /**
      * Gets the fourCC property value. 'Four character code' name of the video format.
@@ -86,6 +135,13 @@ export class Video implements Parsable {
         return this._fourCC;
     };
     /**
+     * Sets the fourCC property value. 'Four character code' name of the video format.
+     * @param value Value to set for the fourCC property.
+     */
+    public set fourCC(value: string | undefined) {
+        this._fourCC = value;
+    };
+    /**
      * Gets the frameRate property value. Frame rate of the video.
      * @returns a double
      */
@@ -93,18 +149,11 @@ export class Video implements Parsable {
         return this._frameRate;
     };
     /**
-     * Gets the height property value. Height of the video, in pixels.
-     * @returns a integer
+     * Sets the frameRate property value. Frame rate of the video.
+     * @param value Value to set for the frameRate property.
      */
-    public get height() {
-        return this._height;
-    };
-    /**
-     * Gets the width property value. Width of the video, in pixels.
-     * @returns a integer
-     */
-    public get width() {
-        return this._width;
+    public set frameRate(value: number | undefined) {
+        this._frameRate = value;
     };
     /**
      * The deserialization information for the current model
@@ -125,6 +174,20 @@ export class Video implements Parsable {
         ]);
     };
     /**
+     * Gets the height property value. Height of the video, in pixels.
+     * @returns a integer
+     */
+    public get height() {
+        return this._height;
+    };
+    /**
+     * Sets the height property value. Height of the video, in pixels.
+     * @param value Value to set for the height property.
+     */
+    public set height(value: number | undefined) {
+        this._height = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -143,74 +206,11 @@ export class Video implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the width property value. Width of the video, in pixels.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the audioBitsPerSample property value. Number of audio bits per sample.
-     * @param value Value to set for the audioBitsPerSample property.
-     */
-    public set audioBitsPerSample(value: number | undefined) {
-        this._audioBitsPerSample = value;
-    };
-    /**
-     * Sets the audioChannels property value. Number of audio channels.
-     * @param value Value to set for the audioChannels property.
-     */
-    public set audioChannels(value: number | undefined) {
-        this._audioChannels = value;
-    };
-    /**
-     * Sets the audioFormat property value. Name of the audio format (AAC, MP3, etc.).
-     * @param value Value to set for the audioFormat property.
-     */
-    public set audioFormat(value: string | undefined) {
-        this._audioFormat = value;
-    };
-    /**
-     * Sets the audioSamplesPerSecond property value. Number of audio samples per second.
-     * @param value Value to set for the audioSamplesPerSecond property.
-     */
-    public set audioSamplesPerSecond(value: number | undefined) {
-        this._audioSamplesPerSecond = value;
-    };
-    /**
-     * Sets the bitrate property value. Bit rate of the video in bits per second.
-     * @param value Value to set for the bitrate property.
-     */
-    public set bitrate(value: number | undefined) {
-        this._bitrate = value;
-    };
-    /**
-     * Sets the duration property value. Duration of the file in milliseconds.
-     * @param value Value to set for the duration property.
-     */
-    public set duration(value: number | undefined) {
-        this._duration = value;
-    };
-    /**
-     * Sets the fourCC property value. 'Four character code' name of the video format.
-     * @param value Value to set for the fourCC property.
-     */
-    public set fourCC(value: string | undefined) {
-        this._fourCC = value;
-    };
-    /**
-     * Sets the frameRate property value. Frame rate of the video.
-     * @param value Value to set for the frameRate property.
-     */
-    public set frameRate(value: number | undefined) {
-        this._frameRate = value;
-    };
-    /**
-     * Sets the height property value. Height of the video, in pixels.
-     * @param value Value to set for the height property.
-     */
-    public set height(value: number | undefined) {
-        this._height = value;
+    public get width() {
+        return this._width;
     };
     /**
      * Sets the width property value. Width of the video, in pixels.

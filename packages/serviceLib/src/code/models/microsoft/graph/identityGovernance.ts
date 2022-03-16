@@ -1,7 +1,11 @@
+import {createAccessReviewSetFromDiscriminatorValue} from './createAccessReviewSetFromDiscriminatorValue';
+import {createAppConsentApprovalRouteFromDiscriminatorValue} from './createAppConsentApprovalRouteFromDiscriminatorValue';
+import {createEntitlementManagementFromDiscriminatorValue} from './createEntitlementManagementFromDiscriminatorValue';
+import {createTermsOfUseContainerFromDiscriminatorValue} from './createTermsOfUseContainerFromDiscriminatorValue';
 import {AccessReviewSet, AppConsentApprovalRoute, EntitlementManagement, TermsOfUseContainer} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class IdentityGovernance implements Parsable {
+export class IdentityGovernance implements AdditionalDataHolder, Parsable {
     private _accessReviews?: AccessReviewSet | undefined;
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
@@ -9,17 +13,18 @@ export class IdentityGovernance implements Parsable {
     private _entitlementManagement?: EntitlementManagement | undefined;
     private _termsOfUse?: TermsOfUseContainer | undefined;
     /**
-     * Instantiates a new IdentityGovernance and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the accessReviews property value. 
      * @returns a accessReviewSet
      */
     public get accessReviews() {
         return this._accessReviews;
+    };
+    /**
+     * Sets the accessReviews property value. 
+     * @param value Value to set for the accessReviews property.
+     */
+    public set accessReviews(value: AccessReviewSet | undefined) {
+        this._accessReviews = value;
     };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -29,11 +34,31 @@ export class IdentityGovernance implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Gets the appConsent property value. 
      * @returns a appConsentApprovalRoute
      */
     public get appConsent() {
         return this._appConsent;
+    };
+    /**
+     * Sets the appConsent property value. 
+     * @param value Value to set for the appConsent property.
+     */
+    public set appConsent(value: AppConsentApprovalRoute | undefined) {
+        this._appConsent = value;
+    };
+    /**
+     * Instantiates a new IdentityGovernance and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the entitlementManagement property value. 
@@ -43,11 +68,11 @@ export class IdentityGovernance implements Parsable {
         return this._entitlementManagement;
     };
     /**
-     * Gets the termsOfUse property value. 
-     * @returns a termsOfUseContainer
+     * Sets the entitlementManagement property value. 
+     * @param value Value to set for the entitlementManagement property.
      */
-    public get termsOfUse() {
-        return this._termsOfUse;
+    public set entitlementManagement(value: EntitlementManagement | undefined) {
+        this._entitlementManagement = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,10 +80,10 @@ export class IdentityGovernance implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["accessReviews", (o, n) => { (o as unknown as IdentityGovernance).accessReviews = n.getObjectValue<AccessReviewSet>(AccessReviewSet); }],
-            ["appConsent", (o, n) => { (o as unknown as IdentityGovernance).appConsent = n.getObjectValue<AppConsentApprovalRoute>(AppConsentApprovalRoute); }],
-            ["entitlementManagement", (o, n) => { (o as unknown as IdentityGovernance).entitlementManagement = n.getObjectValue<EntitlementManagement>(EntitlementManagement); }],
-            ["termsOfUse", (o, n) => { (o as unknown as IdentityGovernance).termsOfUse = n.getObjectValue<TermsOfUseContainer>(TermsOfUseContainer); }],
+            ["accessReviews", (o, n) => { (o as unknown as IdentityGovernance).accessReviews = n.getObjectValue<AccessReviewSet>(createAccessReviewSetFromDiscriminatorValue); }],
+            ["appConsent", (o, n) => { (o as unknown as IdentityGovernance).appConsent = n.getObjectValue<AppConsentApprovalRoute>(createAppConsentApprovalRouteFromDiscriminatorValue); }],
+            ["entitlementManagement", (o, n) => { (o as unknown as IdentityGovernance).entitlementManagement = n.getObjectValue<EntitlementManagement>(createEntitlementManagementFromDiscriminatorValue); }],
+            ["termsOfUse", (o, n) => { (o as unknown as IdentityGovernance).termsOfUse = n.getObjectValue<TermsOfUseContainer>(createTermsOfUseContainerFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -74,32 +99,11 @@ export class IdentityGovernance implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the accessReviews property value. 
-     * @param value Value to set for the accessReviews property.
+     * Gets the termsOfUse property value. 
+     * @returns a termsOfUseContainer
      */
-    public set accessReviews(value: AccessReviewSet | undefined) {
-        this._accessReviews = value;
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the appConsent property value. 
-     * @param value Value to set for the appConsent property.
-     */
-    public set appConsent(value: AppConsentApprovalRoute | undefined) {
-        this._appConsent = value;
-    };
-    /**
-     * Sets the entitlementManagement property value. 
-     * @param value Value to set for the entitlementManagement property.
-     */
-    public set entitlementManagement(value: EntitlementManagement | undefined) {
-        this._entitlementManagement = value;
+    public get termsOfUse() {
+        return this._termsOfUse;
     };
     /**
      * Sets the termsOfUse property value. 

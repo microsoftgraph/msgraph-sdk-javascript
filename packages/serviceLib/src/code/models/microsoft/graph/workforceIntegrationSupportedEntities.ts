@@ -1,3 +1,4 @@
+/** Provides operations to manage the teamwork singleton.  */
 export enum WorkforceIntegrationSupportedEntities {
     None = "none",
     Shift = "shift",

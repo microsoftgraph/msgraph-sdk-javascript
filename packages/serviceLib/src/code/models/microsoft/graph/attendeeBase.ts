@@ -1,4 +1,5 @@
-import {AttendeeType, Recipient} from './index';
+import {AttendeeType} from './attendeeType';
+import {Recipient} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AttendeeBase extends Recipient implements Parsable {
@@ -9,13 +10,6 @@ export class AttendeeBase extends Recipient implements Parsable {
      */
     public constructor() {
         super();
-    };
-    /**
-     * Gets the type property value. The type of attendee. The possible values are: required, optional, resource. Currently if the attendee is a person, findMeetingTimes always considers the person is of the Required type.
-     * @returns a attendeeType
-     */
-    public get type() {
-        return this._type;
     };
     /**
      * The deserialization information for the current model
@@ -34,6 +28,13 @@ export class AttendeeBase extends Recipient implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeEnumValue<AttendeeType>("type", this.type);
+    };
+    /**
+     * Gets the type property value. The type of attendee. The possible values are: required, optional, resource. Currently if the attendee is a person, findMeetingTimes always considers the person is of the Required type.
+     * @returns a attendeeType
+     */
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. The type of attendee. The possible values are: required, optional, resource. Currently if the attendee is a person, findMeetingTimes always considers the person is of the Required type.

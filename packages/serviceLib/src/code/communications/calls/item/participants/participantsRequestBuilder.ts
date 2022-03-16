@@ -1,10 +1,17 @@
-import {Participant} from '../../../../models/microsoft/graph/';
-import {ParticipantsResponse} from './index';
-import {InviteRequestBuilder} from './invite/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {Participant, ParticipantCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createParticipantCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createParticipantCollectionResponseFromDiscriminatorValue';
+import {createParticipantFromDiscriminatorValue} from '../../../../models/microsoft/graph/createParticipantFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {InviteRequestBuilder} from './invite/inviteRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}/participants  */
+/** Provides operations to manage the participants property of the microsoft.graph.call entity.  */
 export class ParticipantsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get invite(): InviteRequestBuilder {
         return new InviteRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -54,7 +61,7 @@ export class ParticipantsRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable.
+     * Create new navigation property to participants for communications
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -77,7 +84,7 @@ export class ParticipantsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ParticipantsResponse
+     * @returns a Promise of ParticipantCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -88,14 +95,18 @@ export class ParticipantsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ParticipantsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ParticipantCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ParticipantsResponse>(requestInfo, ParticipantsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ParticipantCollectionResponse>(requestInfo, createParticipantCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Read-only. Nullable.
+     * Create new navigation property to participants for communications
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -107,6 +118,10 @@ export class ParticipantsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<Participant>(requestInfo, Participant, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Participant>(requestInfo, createParticipantFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

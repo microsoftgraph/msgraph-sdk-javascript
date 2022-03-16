@@ -1,19 +1,22 @@
 import {DeviceConfiguration} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {DeviceConfigurationAssignmentItemRequestBuilder} from './assignments/item/';
-import {DeviceSettingStateSummariesRequestBuilder} from './deviceSettingStateSummaries/';
-import {SettingStateDeviceSummaryItemRequestBuilder} from './deviceSettingStateSummaries/item/';
-import {DeviceStatusesRequestBuilder} from './deviceStatuses/';
-import {DeviceConfigurationDeviceStatusItemRequestBuilder} from './deviceStatuses/item/';
-import {DeviceStatusOverviewRequestBuilder} from './deviceStatusOverview/';
-import {GetOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder} from './getOmaSettingPlainTextValueWithSecretReferenceValueId/';
-import {UserStatusesRequestBuilder} from './userStatuses/';
-import {DeviceConfigurationUserStatusItemRequestBuilder} from './userStatuses/item/';
-import {UserStatusOverviewRequestBuilder} from './userStatusOverview/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceConfigurationFromDiscriminatorValue} from '../../../models/microsoft/graph/createDeviceConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {DeviceConfigurationAssignmentItemRequestBuilder} from './assignments/item/deviceConfigurationAssignmentItemRequestBuilder';
+import {DeviceSettingStateSummariesRequestBuilder} from './deviceSettingStateSummaries/deviceSettingStateSummariesRequestBuilder';
+import {SettingStateDeviceSummaryItemRequestBuilder} from './deviceSettingStateSummaries/item/settingStateDeviceSummaryItemRequestBuilder';
+import {DeviceStatusesRequestBuilder} from './deviceStatuses/deviceStatusesRequestBuilder';
+import {DeviceConfigurationDeviceStatusItemRequestBuilder} from './deviceStatuses/item/deviceConfigurationDeviceStatusItemRequestBuilder';
+import {DeviceStatusOverviewRequestBuilder} from './deviceStatusOverview/deviceStatusOverviewRequestBuilder';
+import {GetOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder} from './getOmaSettingPlainTextValueWithSecretReferenceValueId/getOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder';
+import {DeviceConfigurationUserStatusItemRequestBuilder} from './userStatuses/item/deviceConfigurationUserStatusItemRequestBuilder';
+import {UserStatusesRequestBuilder} from './userStatuses/userStatusesRequestBuilder';
+import {UserStatusOverviewRequestBuilder} from './userStatusOverview/userStatusOverviewRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/deviceConfigurations/{deviceConfiguration-id}  */
+/** Provides operations to manage the deviceConfigurations property of the microsoft.graph.deviceManagement entity.  */
 export class DeviceConfigurationItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -67,7 +70,7 @@ export class DeviceConfigurationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The device configurations.
+     * Delete navigation property deviceConfigurations for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -102,7 +105,7 @@ export class DeviceConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device configurations.
+     * Update the navigation property deviceConfigurations in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,7 +123,7 @@ export class DeviceConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device configurations.
+     * Delete navigation property deviceConfigurations for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -129,7 +132,11 @@ export class DeviceConfigurationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.deviceConfigurations.item.deviceSettingStateSummaries.item collection
@@ -168,11 +175,15 @@ export class DeviceConfigurationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceConfiguration>(requestInfo, DeviceConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceConfiguration>(requestInfo, createDeviceConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /deviceManagement/deviceConfigurations/{deviceConfiguration-id}/microsoft.graph.getOmaSettingPlainTextValue(secretReferenceValueId='{secretReferenceValueId}')
-     * @param secretReferenceValueId Usage: secretReferenceValueId={secretReferenceValueId}
+     * Provides operations to call the getOmaSettingPlainTextValue method.
+     * @param secretReferenceValueId Usage: secretReferenceValueId='{secretReferenceValueId}'
      * @returns a getOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder
      */
     public getOmaSettingPlainTextValueWithSecretReferenceValueId(secretReferenceValueId: string | undefined) : GetOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder {
@@ -180,7 +191,7 @@ export class DeviceConfigurationItemRequestBuilder {
         return new GetOmaSettingPlainTextValueWithSecretReferenceValueIdRequestBuilder(this.pathParameters, this.requestAdapter, secretReferenceValueId);
     };
     /**
-     * The device configurations.
+     * Update the navigation property deviceConfigurations in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -191,7 +202,11 @@ export class DeviceConfigurationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.deviceConfigurations.item.userStatuses.item collection

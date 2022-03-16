@@ -1,4 +1,10 @@
 import {Entity, KeyValue} from '../';
+import {createKeyValueFromDiscriminatorValue} from '../createKeyValueFromDiscriminatorValue';
+import {createLocalizedDescriptionFromDiscriminatorValue} from './createLocalizedDescriptionFromDiscriminatorValue';
+import {createLocalizedLabelFromDiscriminatorValue} from './createLocalizedLabelFromDiscriminatorValue';
+import {createRelationFromDiscriminatorValue} from './createRelationFromDiscriminatorValue';
+import {createSetFromDiscriminatorValue} from './createSetFromDiscriminatorValue';
+import {createTermFromDiscriminatorValue} from './createTermFromDiscriminatorValue';
 import {LocalizedDescription, LocalizedLabel, Relation, Set} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -20,17 +26,24 @@ export class Term extends Entity implements Parsable {
     /** The [set] in which the term is created.  */
     private _set?: Set | undefined;
     /**
-     * Instantiates a new term and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the children property value. Children of current term.
      * @returns a term
      */
     public get children() {
         return this._children;
+    };
+    /**
+     * Sets the children property value. Children of current term.
+     * @param value Value to set for the children property.
+     */
+    public set children(value: Term[] | undefined) {
+        this._children = value;
+    };
+    /**
+     * Instantiates a new term and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdDateTime property value. Date and time of term creation. Read-only.
@@ -40,11 +53,41 @@ export class Term extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. Date and time of term creation. Read-only.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the descriptions property value. Description about term that is dependent on the languageTag.
      * @returns a localizedDescription
      */
     public get descriptions() {
         return this._descriptions;
+    };
+    /**
+     * Sets the descriptions property value. Description about term that is dependent on the languageTag.
+     * @param value Value to set for the descriptions property.
+     */
+    public set descriptions(value: LocalizedDescription[] | undefined) {
+        this._descriptions = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["children", (o, n) => { (o as unknown as Term).children = n.getCollectionOfObjectValues<Term>(createTermFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as Term).createdDateTime = n.getDateValue(); }],
+            ["descriptions", (o, n) => { (o as unknown as Term).descriptions = n.getCollectionOfObjectValues<LocalizedDescription>(createLocalizedDescriptionFromDiscriminatorValue); }],
+            ["labels", (o, n) => { (o as unknown as Term).labels = n.getCollectionOfObjectValues<LocalizedLabel>(createLocalizedLabelFromDiscriminatorValue); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as Term).lastModifiedDateTime = n.getDateValue(); }],
+            ["properties", (o, n) => { (o as unknown as Term).properties = n.getCollectionOfObjectValues<KeyValue>(createKeyValueFromDiscriminatorValue); }],
+            ["relations", (o, n) => { (o as unknown as Term).relations = n.getCollectionOfObjectValues<Relation>(createRelationFromDiscriminatorValue); }],
+            ["set", (o, n) => { (o as unknown as Term).set = n.getObjectValue<Set>(createSetFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the labels property value. Label metadata for a term.
@@ -54,11 +97,25 @@ export class Term extends Entity implements Parsable {
         return this._labels;
     };
     /**
+     * Sets the labels property value. Label metadata for a term.
+     * @param value Value to set for the labels property.
+     */
+    public set labels(value: LocalizedLabel[] | undefined) {
+        this._labels = value;
+    };
+    /**
      * Gets the lastModifiedDateTime property value. Last date and time of term modification. Read-only.
      * @returns a Date
      */
     public get lastModifiedDateTime() {
         return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. Last date and time of term modification. Read-only.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
     };
     /**
      * Gets the properties property value. Collection of properties on the term.
@@ -68,6 +125,13 @@ export class Term extends Entity implements Parsable {
         return this._properties;
     };
     /**
+     * Sets the properties property value. Collection of properties on the term.
+     * @param value Value to set for the properties property.
+     */
+    public set properties(value: KeyValue[] | undefined) {
+        this._properties = value;
+    };
+    /**
      * Gets the relations property value. To indicate which terms are related to the current term as either pinned or reused.
      * @returns a relation
      */
@@ -75,27 +139,11 @@ export class Term extends Entity implements Parsable {
         return this._relations;
     };
     /**
-     * Gets the set property value. The [set] in which the term is created.
-     * @returns a set
+     * Sets the relations property value. To indicate which terms are related to the current term as either pinned or reused.
+     * @param value Value to set for the relations property.
      */
-    public get set() {
-        return this._set;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["children", (o, n) => { (o as unknown as Term).children = n.getCollectionOfObjectValues<Term>(Term); }],
-            ["createdDateTime", (o, n) => { (o as unknown as Term).createdDateTime = n.getDateValue(); }],
-            ["descriptions", (o, n) => { (o as unknown as Term).descriptions = n.getCollectionOfObjectValues<LocalizedDescription>(LocalizedDescription); }],
-            ["labels", (o, n) => { (o as unknown as Term).labels = n.getCollectionOfObjectValues<LocalizedLabel>(LocalizedLabel); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as Term).lastModifiedDateTime = n.getDateValue(); }],
-            ["properties", (o, n) => { (o as unknown as Term).properties = n.getCollectionOfObjectValues<KeyValue>(KeyValue); }],
-            ["relations", (o, n) => { (o as unknown as Term).relations = n.getCollectionOfObjectValues<Relation>(Relation); }],
-            ["set", (o, n) => { (o as unknown as Term).set = n.getObjectValue<Set>(Set); }],
-        ]);
+    public set relations(value: Relation[] | undefined) {
+        this._relations = value;
     };
     /**
      * Serializes information the current object
@@ -114,53 +162,11 @@ export class Term extends Entity implements Parsable {
         writer.writeObjectValue<Set>("set", this.set);
     };
     /**
-     * Sets the children property value. Children of current term.
-     * @param value Value to set for the children property.
+     * Gets the set property value. The [set] in which the term is created.
+     * @returns a set
      */
-    public set children(value: Term[] | undefined) {
-        this._children = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Date and time of term creation. Read-only.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the descriptions property value. Description about term that is dependent on the languageTag.
-     * @param value Value to set for the descriptions property.
-     */
-    public set descriptions(value: LocalizedDescription[] | undefined) {
-        this._descriptions = value;
-    };
-    /**
-     * Sets the labels property value. Label metadata for a term.
-     * @param value Value to set for the labels property.
-     */
-    public set labels(value: LocalizedLabel[] | undefined) {
-        this._labels = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Last date and time of term modification. Read-only.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the properties property value. Collection of properties on the term.
-     * @param value Value to set for the properties property.
-     */
-    public set properties(value: KeyValue[] | undefined) {
-        this._properties = value;
-    };
-    /**
-     * Sets the relations property value. To indicate which terms are related to the current term as either pinned or reused.
-     * @param value Value to set for the relations property.
-     */
-    public set relations(value: Relation[] | undefined) {
-        this._relations = value;
+    public get set() {
+        return this._set;
     };
     /**
      * Sets the set property value. The [set] in which the term is created.

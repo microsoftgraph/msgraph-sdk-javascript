@@ -1,4 +1,7 @@
-import {ManagedAppDataEncryptionType, ManagedAppPolicyDeploymentSummary, ManagedMobileApp, TargetedManagedAppProtection} from './index';
+import {createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue} from './createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue';
+import {createManagedMobileAppFromDiscriminatorValue} from './createManagedMobileAppFromDiscriminatorValue';
+import {ManagedAppPolicyDeploymentSummary, ManagedMobileApp, TargetedManagedAppProtection} from './index';
+import {ManagedAppDataEncryptionType} from './managedAppDataEncryptionType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class IosManagedAppProtection extends TargetedManagedAppProtection implements Parsable {
@@ -17,17 +20,18 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
     /** Versions less than the specified version will block the managed app from accessing company data.  */
     private _minimumRequiredSdkVersion?: string | undefined;
     /**
-     * Instantiates a new iosManagedAppProtection and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the appDataEncryptionType property value. Type of encryption which should be used for data in a managed app. Possible values are: useDeviceSettings, afterDeviceRestart, whenDeviceLockedExceptOpenFiles, whenDeviceLocked.
      * @returns a managedAppDataEncryptionType
      */
     public get appDataEncryptionType() {
         return this._appDataEncryptionType;
+    };
+    /**
+     * Sets the appDataEncryptionType property value. Type of encryption which should be used for data in a managed app. Possible values are: useDeviceSettings, afterDeviceRestart, whenDeviceLockedExceptOpenFiles, whenDeviceLocked.
+     * @param value Value to set for the appDataEncryptionType property.
+     */
+    public set appDataEncryptionType(value: ManagedAppDataEncryptionType | undefined) {
+        this._appDataEncryptionType = value;
     };
     /**
      * Gets the apps property value. List of apps to which the policy is deployed.
@@ -37,11 +41,31 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
         return this._apps;
     };
     /**
+     * Sets the apps property value. List of apps to which the policy is deployed.
+     * @param value Value to set for the apps property.
+     */
+    public set apps(value: ManagedMobileApp[] | undefined) {
+        this._apps = value;
+    };
+    /**
+     * Instantiates a new iosManagedAppProtection and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the customBrowserProtocol property value. A custom browser protocol to open weblink on iOS. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
      * @returns a string
      */
     public get customBrowserProtocol() {
         return this._customBrowserProtocol;
+    };
+    /**
+     * Sets the customBrowserProtocol property value. A custom browser protocol to open weblink on iOS. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
+     * @param value Value to set for the customBrowserProtocol property.
+     */
+    public set customBrowserProtocol(value: string | undefined) {
+        this._customBrowserProtocol = value;
     };
     /**
      * Gets the deployedAppCount property value. Count of apps to which the current policy is deployed.
@@ -51,11 +75,25 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
         return this._deployedAppCount;
     };
     /**
+     * Sets the deployedAppCount property value. Count of apps to which the current policy is deployed.
+     * @param value Value to set for the deployedAppCount property.
+     */
+    public set deployedAppCount(value: number | undefined) {
+        this._deployedAppCount = value;
+    };
+    /**
      * Gets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
      * @returns a managedAppPolicyDeploymentSummary
      */
     public get deploymentSummary() {
         return this._deploymentSummary;
+    };
+    /**
+     * Sets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
+     * @param value Value to set for the deploymentSummary property.
+     */
+    public set deploymentSummary(value: ManagedAppPolicyDeploymentSummary | undefined) {
+        this._deploymentSummary = value;
     };
     /**
      * Gets the faceIdBlocked property value. Indicates whether use of the FaceID is allowed in place of a pin if PinRequired is set to True.
@@ -65,11 +103,11 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
         return this._faceIdBlocked;
     };
     /**
-     * Gets the minimumRequiredSdkVersion property value. Versions less than the specified version will block the managed app from accessing company data.
-     * @returns a string
+     * Sets the faceIdBlocked property value. Indicates whether use of the FaceID is allowed in place of a pin if PinRequired is set to True.
+     * @param value Value to set for the faceIdBlocked property.
      */
-    public get minimumRequiredSdkVersion() {
-        return this._minimumRequiredSdkVersion;
+    public set faceIdBlocked(value: boolean | undefined) {
+        this._faceIdBlocked = value;
     };
     /**
      * The deserialization information for the current model
@@ -78,13 +116,27 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["appDataEncryptionType", (o, n) => { (o as unknown as IosManagedAppProtection).appDataEncryptionType = n.getEnumValue<ManagedAppDataEncryptionType>(ManagedAppDataEncryptionType); }],
-            ["apps", (o, n) => { (o as unknown as IosManagedAppProtection).apps = n.getCollectionOfObjectValues<ManagedMobileApp>(ManagedMobileApp); }],
+            ["apps", (o, n) => { (o as unknown as IosManagedAppProtection).apps = n.getCollectionOfObjectValues<ManagedMobileApp>(createManagedMobileAppFromDiscriminatorValue); }],
             ["customBrowserProtocol", (o, n) => { (o as unknown as IosManagedAppProtection).customBrowserProtocol = n.getStringValue(); }],
             ["deployedAppCount", (o, n) => { (o as unknown as IosManagedAppProtection).deployedAppCount = n.getNumberValue(); }],
-            ["deploymentSummary", (o, n) => { (o as unknown as IosManagedAppProtection).deploymentSummary = n.getObjectValue<ManagedAppPolicyDeploymentSummary>(ManagedAppPolicyDeploymentSummary); }],
+            ["deploymentSummary", (o, n) => { (o as unknown as IosManagedAppProtection).deploymentSummary = n.getObjectValue<ManagedAppPolicyDeploymentSummary>(createManagedAppPolicyDeploymentSummaryFromDiscriminatorValue); }],
             ["faceIdBlocked", (o, n) => { (o as unknown as IosManagedAppProtection).faceIdBlocked = n.getBooleanValue(); }],
             ["minimumRequiredSdkVersion", (o, n) => { (o as unknown as IosManagedAppProtection).minimumRequiredSdkVersion = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the minimumRequiredSdkVersion property value. Versions less than the specified version will block the managed app from accessing company data.
+     * @returns a string
+     */
+    public get minimumRequiredSdkVersion() {
+        return this._minimumRequiredSdkVersion;
+    };
+    /**
+     * Sets the minimumRequiredSdkVersion property value. Versions less than the specified version will block the managed app from accessing company data.
+     * @param value Value to set for the minimumRequiredSdkVersion property.
+     */
+    public set minimumRequiredSdkVersion(value: string | undefined) {
+        this._minimumRequiredSdkVersion = value;
     };
     /**
      * Serializes information the current object
@@ -100,54 +152,5 @@ export class IosManagedAppProtection extends TargetedManagedAppProtection implem
         writer.writeObjectValue<ManagedAppPolicyDeploymentSummary>("deploymentSummary", this.deploymentSummary);
         writer.writeBooleanValue("faceIdBlocked", this.faceIdBlocked);
         writer.writeStringValue("minimumRequiredSdkVersion", this.minimumRequiredSdkVersion);
-    };
-    /**
-     * Sets the appDataEncryptionType property value. Type of encryption which should be used for data in a managed app. Possible values are: useDeviceSettings, afterDeviceRestart, whenDeviceLockedExceptOpenFiles, whenDeviceLocked.
-     * @param value Value to set for the appDataEncryptionType property.
-     */
-    public set appDataEncryptionType(value: ManagedAppDataEncryptionType | undefined) {
-        this._appDataEncryptionType = value;
-    };
-    /**
-     * Sets the apps property value. List of apps to which the policy is deployed.
-     * @param value Value to set for the apps property.
-     */
-    public set apps(value: ManagedMobileApp[] | undefined) {
-        this._apps = value;
-    };
-    /**
-     * Sets the customBrowserProtocol property value. A custom browser protocol to open weblink on iOS. When this property is configured, ManagedBrowserToOpenLinksRequired should be true.
-     * @param value Value to set for the customBrowserProtocol property.
-     */
-    public set customBrowserProtocol(value: string | undefined) {
-        this._customBrowserProtocol = value;
-    };
-    /**
-     * Sets the deployedAppCount property value. Count of apps to which the current policy is deployed.
-     * @param value Value to set for the deployedAppCount property.
-     */
-    public set deployedAppCount(value: number | undefined) {
-        this._deployedAppCount = value;
-    };
-    /**
-     * Sets the deploymentSummary property value. Navigation property to deployment summary of the configuration.
-     * @param value Value to set for the deploymentSummary property.
-     */
-    public set deploymentSummary(value: ManagedAppPolicyDeploymentSummary | undefined) {
-        this._deploymentSummary = value;
-    };
-    /**
-     * Sets the faceIdBlocked property value. Indicates whether use of the FaceID is allowed in place of a pin if PinRequired is set to True.
-     * @param value Value to set for the faceIdBlocked property.
-     */
-    public set faceIdBlocked(value: boolean | undefined) {
-        this._faceIdBlocked = value;
-    };
-    /**
-     * Sets the minimumRequiredSdkVersion property value. Versions less than the specified version will block the managed app from accessing company data.
-     * @param value Value to set for the minimumRequiredSdkVersion property.
-     */
-    public set minimumRequiredSdkVersion(value: string | undefined) {
-        this._minimumRequiredSdkVersion = value;
     };
 }

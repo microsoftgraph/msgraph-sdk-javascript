@@ -1,107 +1,110 @@
 import {ReportRoot} from '../models/microsoft/graph/';
-import {DailyPrintUsageByPrinterRequestBuilder} from './dailyPrintUsageByPrinter/';
-import {PrintUsageByPrinterItemRequestBuilder as ib67a70a60b2942ceb0cfb3d4f396db59334d867adc1a42ddd8755743f4383a28} from './dailyPrintUsageByPrinter/item/';
-import {DailyPrintUsageByUserRequestBuilder} from './dailyPrintUsageByUser/';
-import {PrintUsageByUserItemRequestBuilder as i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3} from './dailyPrintUsageByUser/item/';
-import {DeviceConfigurationDeviceActivityRequestBuilder} from './deviceConfigurationDeviceActivity/';
-import {DeviceConfigurationUserActivityRequestBuilder} from './deviceConfigurationUserActivity/';
-import {GetEmailActivityCountsWithPeriodRequestBuilder} from './getEmailActivityCountsWithPeriod/';
-import {GetEmailActivityUserCountsWithPeriodRequestBuilder} from './getEmailActivityUserCountsWithPeriod/';
-import {GetEmailActivityUserDetailWithDateRequestBuilder} from './getEmailActivityUserDetailWithDate/';
-import {GetEmailActivityUserDetailWithPeriodRequestBuilder} from './getEmailActivityUserDetailWithPeriod/';
-import {GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageAppsUserCountsWithPeriod/';
-import {GetEmailAppUsageUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageUserCountsWithPeriod/';
-import {GetEmailAppUsageUserDetailWithDateRequestBuilder} from './getEmailAppUsageUserDetailWithDate/';
-import {GetEmailAppUsageUserDetailWithPeriodRequestBuilder} from './getEmailAppUsageUserDetailWithPeriod/';
-import {GetEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageVersionsUserCountsWithPeriod/';
-import {GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTime/';
-import {GetMailboxUsageDetailWithPeriodRequestBuilder} from './getMailboxUsageDetailWithPeriod/';
-import {GetMailboxUsageMailboxCountsWithPeriodRequestBuilder} from './getMailboxUsageMailboxCountsWithPeriod/';
-import {GetMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder} from './getMailboxUsageQuotaStatusMailboxCountsWithPeriod/';
-import {GetMailboxUsageStorageWithPeriodRequestBuilder} from './getMailboxUsageStorageWithPeriod/';
-import {GetOffice365ActivationCountsRequestBuilder} from './getOffice365ActivationCounts/';
-import {GetOffice365ActivationsUserCountsRequestBuilder} from './getOffice365ActivationsUserCounts/';
-import {GetOffice365ActivationsUserDetailRequestBuilder} from './getOffice365ActivationsUserDetail/';
-import {GetOffice365ActiveUserCountsWithPeriodRequestBuilder} from './getOffice365ActiveUserCountsWithPeriod/';
-import {GetOffice365ActiveUserDetailWithDateRequestBuilder} from './getOffice365ActiveUserDetailWithDate/';
-import {GetOffice365ActiveUserDetailWithPeriodRequestBuilder} from './getOffice365ActiveUserDetailWithPeriod/';
-import {GetOffice365GroupsActivityCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityCountsWithPeriod/';
-import {GetOffice365GroupsActivityDetailWithDateRequestBuilder} from './getOffice365GroupsActivityDetailWithDate/';
-import {GetOffice365GroupsActivityDetailWithPeriodRequestBuilder} from './getOffice365GroupsActivityDetailWithPeriod/';
-import {GetOffice365GroupsActivityFileCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityFileCountsWithPeriod/';
-import {GetOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityGroupCountsWithPeriod/';
-import {GetOffice365GroupsActivityStorageWithPeriodRequestBuilder} from './getOffice365GroupsActivityStorageWithPeriod/';
-import {GetOffice365ServicesUserCountsWithPeriodRequestBuilder} from './getOffice365ServicesUserCountsWithPeriod/';
-import {GetOneDriveActivityFileCountsWithPeriodRequestBuilder} from './getOneDriveActivityFileCountsWithPeriod/';
-import {GetOneDriveActivityUserCountsWithPeriodRequestBuilder} from './getOneDriveActivityUserCountsWithPeriod/';
-import {GetOneDriveActivityUserDetailWithDateRequestBuilder} from './getOneDriveActivityUserDetailWithDate/';
-import {GetOneDriveActivityUserDetailWithPeriodRequestBuilder} from './getOneDriveActivityUserDetailWithPeriod/';
-import {GetOneDriveUsageAccountCountsWithPeriodRequestBuilder} from './getOneDriveUsageAccountCountsWithPeriod/';
-import {GetOneDriveUsageAccountDetailWithDateRequestBuilder} from './getOneDriveUsageAccountDetailWithDate/';
-import {GetOneDriveUsageAccountDetailWithPeriodRequestBuilder} from './getOneDriveUsageAccountDetailWithPeriod/';
-import {GetOneDriveUsageFileCountsWithPeriodRequestBuilder} from './getOneDriveUsageFileCountsWithPeriod/';
-import {GetOneDriveUsageStorageWithPeriodRequestBuilder} from './getOneDriveUsageStorageWithPeriod/';
-import {GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTime/';
-import {GetSharePointActivityFileCountsWithPeriodRequestBuilder} from './getSharePointActivityFileCountsWithPeriod/';
-import {GetSharePointActivityPagesWithPeriodRequestBuilder} from './getSharePointActivityPagesWithPeriod/';
-import {GetSharePointActivityUserCountsWithPeriodRequestBuilder} from './getSharePointActivityUserCountsWithPeriod/';
-import {GetSharePointActivityUserDetailWithDateRequestBuilder} from './getSharePointActivityUserDetailWithDate/';
-import {GetSharePointActivityUserDetailWithPeriodRequestBuilder} from './getSharePointActivityUserDetailWithPeriod/';
-import {GetSharePointSiteUsageDetailWithDateRequestBuilder} from './getSharePointSiteUsageDetailWithDate/';
-import {GetSharePointSiteUsageDetailWithPeriodRequestBuilder} from './getSharePointSiteUsageDetailWithPeriod/';
-import {GetSharePointSiteUsageFileCountsWithPeriodRequestBuilder} from './getSharePointSiteUsageFileCountsWithPeriod/';
-import {GetSharePointSiteUsagePagesWithPeriodRequestBuilder} from './getSharePointSiteUsagePagesWithPeriod/';
-import {GetSharePointSiteUsageSiteCountsWithPeriodRequestBuilder} from './getSharePointSiteUsageSiteCountsWithPeriod/';
-import {GetSharePointSiteUsageStorageWithPeriodRequestBuilder} from './getSharePointSiteUsageStorageWithPeriod/';
-import {GetSkypeForBusinessActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessActivityCountsWithPeriod/';
-import {GetSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessActivityUserCountsWithPeriod/';
-import {GetSkypeForBusinessActivityUserDetailWithDateRequestBuilder} from './getSkypeForBusinessActivityUserDetailWithDate/';
-import {GetSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder} from './getSkypeForBusinessActivityUserDetailWithPeriod/';
-import {GetSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriod/';
-import {GetSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageUserCountsWithPeriod/';
-import {GetSkypeForBusinessDeviceUsageUserDetailWithDateRequestBuilder} from './getSkypeForBusinessDeviceUsageUserDetailWithDate/';
-import {GetSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageUserDetailWithPeriod/';
-import {GetSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityCountsWithPeriod/';
-import {GetSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriod/';
-import {GetSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityUserCountsWithPeriod/';
-import {GetSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityCountsWithPeriod/';
-import {GetSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityMinuteCountsWithPeriod/';
-import {GetSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityUserCountsWithPeriod/';
-import {GetSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityCountsWithPeriod/';
-import {GetSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriod/';
-import {GetSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityUserCountsWithPeriod/';
-import {GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getTeamsDeviceUsageDistributionUserCountsWithPeriod/';
-import {GetTeamsDeviceUsageUserCountsWithPeriodRequestBuilder} from './getTeamsDeviceUsageUserCountsWithPeriod/';
-import {GetTeamsDeviceUsageUserDetailWithDateRequestBuilder} from './getTeamsDeviceUsageUserDetailWithDate/';
-import {GetTeamsDeviceUsageUserDetailWithPeriodRequestBuilder} from './getTeamsDeviceUsageUserDetailWithPeriod/';
-import {GetTeamsUserActivityCountsWithPeriodRequestBuilder} from './getTeamsUserActivityCountsWithPeriod/';
-import {GetTeamsUserActivityUserCountsWithPeriodRequestBuilder} from './getTeamsUserActivityUserCountsWithPeriod/';
-import {GetTeamsUserActivityUserDetailWithDateRequestBuilder} from './getTeamsUserActivityUserDetailWithDate/';
-import {GetTeamsUserActivityUserDetailWithPeriodRequestBuilder} from './getTeamsUserActivityUserDetailWithPeriod/';
-import {GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTime/';
-import {GetYammerActivityCountsWithPeriodRequestBuilder} from './getYammerActivityCountsWithPeriod/';
-import {GetYammerActivityUserCountsWithPeriodRequestBuilder} from './getYammerActivityUserCountsWithPeriod/';
-import {GetYammerActivityUserDetailWithDateRequestBuilder} from './getYammerActivityUserDetailWithDate/';
-import {GetYammerActivityUserDetailWithPeriodRequestBuilder} from './getYammerActivityUserDetailWithPeriod/';
-import {GetYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getYammerDeviceUsageDistributionUserCountsWithPeriod/';
-import {GetYammerDeviceUsageUserCountsWithPeriodRequestBuilder} from './getYammerDeviceUsageUserCountsWithPeriod/';
-import {GetYammerDeviceUsageUserDetailWithDateRequestBuilder} from './getYammerDeviceUsageUserDetailWithDate/';
-import {GetYammerDeviceUsageUserDetailWithPeriodRequestBuilder} from './getYammerDeviceUsageUserDetailWithPeriod/';
-import {GetYammerGroupsActivityCountsWithPeriodRequestBuilder} from './getYammerGroupsActivityCountsWithPeriod/';
-import {GetYammerGroupsActivityDetailWithDateRequestBuilder} from './getYammerGroupsActivityDetailWithDate/';
-import {GetYammerGroupsActivityDetailWithPeriodRequestBuilder} from './getYammerGroupsActivityDetailWithPeriod/';
-import {GetYammerGroupsActivityGroupCountsWithPeriodRequestBuilder} from './getYammerGroupsActivityGroupCountsWithPeriod/';
-import {ManagedDeviceEnrollmentFailureDetailsRequestBuilder} from './managedDeviceEnrollmentFailureDetails/';
-import {ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder} from './managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipToken/';
-import {ManagedDeviceEnrollmentTopFailuresRequestBuilder} from './managedDeviceEnrollmentTopFailures/';
-import {ManagedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder} from './managedDeviceEnrollmentTopFailuresWithPeriod/';
-import {MonthlyPrintUsageByPrinterRequestBuilder} from './monthlyPrintUsageByPrinter/';
-import {PrintUsageByPrinterItemRequestBuilder as i2c60a8e28db21474c0e58e0f539afec944871233fe3f764a516b7389d62b1fab} from './monthlyPrintUsageByPrinter/item/';
-import {MonthlyPrintUsageByUserRequestBuilder} from './monthlyPrintUsageByUser/';
-import {PrintUsageByUserItemRequestBuilder as i19a558e8de9c295f0ad48586ddbc0a19b77027bdd76ac25f42b3d301110f77d7} from './monthlyPrintUsageByUser/item/';
-import {DateOnly, getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createReportRootFromDiscriminatorValue} from '../models/microsoft/graph/createReportRootFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DailyPrintUsageByPrinterRequestBuilder} from './dailyPrintUsageByPrinter/dailyPrintUsageByPrinterRequestBuilder';
+import {PrintUsageByPrinterItemRequestBuilder as ib67a70a60b2942ceb0cfb3d4f396db59334d867adc1a42ddd8755743f4383a28} from './dailyPrintUsageByPrinter/item/printUsageByPrinterItemRequestBuilder';
+import {DailyPrintUsageByUserRequestBuilder} from './dailyPrintUsageByUser/dailyPrintUsageByUserRequestBuilder';
+import {PrintUsageByUserItemRequestBuilder as i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3} from './dailyPrintUsageByUser/item/printUsageByUserItemRequestBuilder';
+import {DeviceConfigurationDeviceActivityRequestBuilder} from './deviceConfigurationDeviceActivity/deviceConfigurationDeviceActivityRequestBuilder';
+import {DeviceConfigurationUserActivityRequestBuilder} from './deviceConfigurationUserActivity/deviceConfigurationUserActivityRequestBuilder';
+import {GetEmailActivityCountsWithPeriodRequestBuilder} from './getEmailActivityCountsWithPeriod/getEmailActivityCountsWithPeriodRequestBuilder';
+import {GetEmailActivityUserCountsWithPeriodRequestBuilder} from './getEmailActivityUserCountsWithPeriod/getEmailActivityUserCountsWithPeriodRequestBuilder';
+import {GetEmailActivityUserDetailWithDateRequestBuilder} from './getEmailActivityUserDetailWithDate/getEmailActivityUserDetailWithDateRequestBuilder';
+import {GetEmailActivityUserDetailWithPeriodRequestBuilder} from './getEmailActivityUserDetailWithPeriod/getEmailActivityUserDetailWithPeriodRequestBuilder';
+import {GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageAppsUserCountsWithPeriod/getEmailAppUsageAppsUserCountsWithPeriodRequestBuilder';
+import {GetEmailAppUsageUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageUserCountsWithPeriod/getEmailAppUsageUserCountsWithPeriodRequestBuilder';
+import {GetEmailAppUsageUserDetailWithDateRequestBuilder} from './getEmailAppUsageUserDetailWithDate/getEmailAppUsageUserDetailWithDateRequestBuilder';
+import {GetEmailAppUsageUserDetailWithPeriodRequestBuilder} from './getEmailAppUsageUserDetailWithPeriod/getEmailAppUsageUserDetailWithPeriodRequestBuilder';
+import {GetEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder} from './getEmailAppUsageVersionsUserCountsWithPeriod/getEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder';
+import {GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTime/getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder';
+import {GetMailboxUsageDetailWithPeriodRequestBuilder} from './getMailboxUsageDetailWithPeriod/getMailboxUsageDetailWithPeriodRequestBuilder';
+import {GetMailboxUsageMailboxCountsWithPeriodRequestBuilder} from './getMailboxUsageMailboxCountsWithPeriod/getMailboxUsageMailboxCountsWithPeriodRequestBuilder';
+import {GetMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder} from './getMailboxUsageQuotaStatusMailboxCountsWithPeriod/getMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder';
+import {GetMailboxUsageStorageWithPeriodRequestBuilder} from './getMailboxUsageStorageWithPeriod/getMailboxUsageStorageWithPeriodRequestBuilder';
+import {GetOffice365ActivationCountsRequestBuilder} from './getOffice365ActivationCounts/getOffice365ActivationCountsRequestBuilder';
+import {GetOffice365ActivationsUserCountsRequestBuilder} from './getOffice365ActivationsUserCounts/getOffice365ActivationsUserCountsRequestBuilder';
+import {GetOffice365ActivationsUserDetailRequestBuilder} from './getOffice365ActivationsUserDetail/getOffice365ActivationsUserDetailRequestBuilder';
+import {GetOffice365ActiveUserCountsWithPeriodRequestBuilder} from './getOffice365ActiveUserCountsWithPeriod/getOffice365ActiveUserCountsWithPeriodRequestBuilder';
+import {GetOffice365ActiveUserDetailWithDateRequestBuilder} from './getOffice365ActiveUserDetailWithDate/getOffice365ActiveUserDetailWithDateRequestBuilder';
+import {GetOffice365ActiveUserDetailWithPeriodRequestBuilder} from './getOffice365ActiveUserDetailWithPeriod/getOffice365ActiveUserDetailWithPeriodRequestBuilder';
+import {GetOffice365GroupsActivityCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityCountsWithPeriod/getOffice365GroupsActivityCountsWithPeriodRequestBuilder';
+import {GetOffice365GroupsActivityDetailWithDateRequestBuilder} from './getOffice365GroupsActivityDetailWithDate/getOffice365GroupsActivityDetailWithDateRequestBuilder';
+import {GetOffice365GroupsActivityDetailWithPeriodRequestBuilder} from './getOffice365GroupsActivityDetailWithPeriod/getOffice365GroupsActivityDetailWithPeriodRequestBuilder';
+import {GetOffice365GroupsActivityFileCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityFileCountsWithPeriod/getOffice365GroupsActivityFileCountsWithPeriodRequestBuilder';
+import {GetOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder} from './getOffice365GroupsActivityGroupCountsWithPeriod/getOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder';
+import {GetOffice365GroupsActivityStorageWithPeriodRequestBuilder} from './getOffice365GroupsActivityStorageWithPeriod/getOffice365GroupsActivityStorageWithPeriodRequestBuilder';
+import {GetOffice365ServicesUserCountsWithPeriodRequestBuilder} from './getOffice365ServicesUserCountsWithPeriod/getOffice365ServicesUserCountsWithPeriodRequestBuilder';
+import {GetOneDriveActivityFileCountsWithPeriodRequestBuilder} from './getOneDriveActivityFileCountsWithPeriod/getOneDriveActivityFileCountsWithPeriodRequestBuilder';
+import {GetOneDriveActivityUserCountsWithPeriodRequestBuilder} from './getOneDriveActivityUserCountsWithPeriod/getOneDriveActivityUserCountsWithPeriodRequestBuilder';
+import {GetOneDriveActivityUserDetailWithDateRequestBuilder} from './getOneDriveActivityUserDetailWithDate/getOneDriveActivityUserDetailWithDateRequestBuilder';
+import {GetOneDriveActivityUserDetailWithPeriodRequestBuilder} from './getOneDriveActivityUserDetailWithPeriod/getOneDriveActivityUserDetailWithPeriodRequestBuilder';
+import {GetOneDriveUsageAccountCountsWithPeriodRequestBuilder} from './getOneDriveUsageAccountCountsWithPeriod/getOneDriveUsageAccountCountsWithPeriodRequestBuilder';
+import {GetOneDriveUsageAccountDetailWithDateRequestBuilder} from './getOneDriveUsageAccountDetailWithDate/getOneDriveUsageAccountDetailWithDateRequestBuilder';
+import {GetOneDriveUsageAccountDetailWithPeriodRequestBuilder} from './getOneDriveUsageAccountDetailWithPeriod/getOneDriveUsageAccountDetailWithPeriodRequestBuilder';
+import {GetOneDriveUsageFileCountsWithPeriodRequestBuilder} from './getOneDriveUsageFileCountsWithPeriod/getOneDriveUsageFileCountsWithPeriodRequestBuilder';
+import {GetOneDriveUsageStorageWithPeriodRequestBuilder} from './getOneDriveUsageStorageWithPeriod/getOneDriveUsageStorageWithPeriodRequestBuilder';
+import {GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTime/getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder';
+import {GetSharePointActivityFileCountsWithPeriodRequestBuilder} from './getSharePointActivityFileCountsWithPeriod/getSharePointActivityFileCountsWithPeriodRequestBuilder';
+import {GetSharePointActivityPagesWithPeriodRequestBuilder} from './getSharePointActivityPagesWithPeriod/getSharePointActivityPagesWithPeriodRequestBuilder';
+import {GetSharePointActivityUserCountsWithPeriodRequestBuilder} from './getSharePointActivityUserCountsWithPeriod/getSharePointActivityUserCountsWithPeriodRequestBuilder';
+import {GetSharePointActivityUserDetailWithDateRequestBuilder} from './getSharePointActivityUserDetailWithDate/getSharePointActivityUserDetailWithDateRequestBuilder';
+import {GetSharePointActivityUserDetailWithPeriodRequestBuilder} from './getSharePointActivityUserDetailWithPeriod/getSharePointActivityUserDetailWithPeriodRequestBuilder';
+import {GetSharePointSiteUsageDetailWithDateRequestBuilder} from './getSharePointSiteUsageDetailWithDate/getSharePointSiteUsageDetailWithDateRequestBuilder';
+import {GetSharePointSiteUsageDetailWithPeriodRequestBuilder} from './getSharePointSiteUsageDetailWithPeriod/getSharePointSiteUsageDetailWithPeriodRequestBuilder';
+import {GetSharePointSiteUsageFileCountsWithPeriodRequestBuilder} from './getSharePointSiteUsageFileCountsWithPeriod/getSharePointSiteUsageFileCountsWithPeriodRequestBuilder';
+import {GetSharePointSiteUsagePagesWithPeriodRequestBuilder} from './getSharePointSiteUsagePagesWithPeriod/getSharePointSiteUsagePagesWithPeriodRequestBuilder';
+import {GetSharePointSiteUsageSiteCountsWithPeriodRequestBuilder} from './getSharePointSiteUsageSiteCountsWithPeriod/getSharePointSiteUsageSiteCountsWithPeriodRequestBuilder';
+import {GetSharePointSiteUsageStorageWithPeriodRequestBuilder} from './getSharePointSiteUsageStorageWithPeriod/getSharePointSiteUsageStorageWithPeriodRequestBuilder';
+import {GetSkypeForBusinessActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessActivityCountsWithPeriod/getSkypeForBusinessActivityCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessActivityUserCountsWithPeriod/getSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessActivityUserDetailWithDateRequestBuilder} from './getSkypeForBusinessActivityUserDetailWithDate/getSkypeForBusinessActivityUserDetailWithDateRequestBuilder';
+import {GetSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder} from './getSkypeForBusinessActivityUserDetailWithPeriod/getSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder';
+import {GetSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriod/getSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageUserCountsWithPeriod/getSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessDeviceUsageUserDetailWithDateRequestBuilder} from './getSkypeForBusinessDeviceUsageUserDetailWithDate/getSkypeForBusinessDeviceUsageUserDetailWithDateRequestBuilder';
+import {GetSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder} from './getSkypeForBusinessDeviceUsageUserDetailWithPeriod/getSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder';
+import {GetSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityCountsWithPeriod/getSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriod/getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessOrganizerActivityUserCountsWithPeriod/getSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityCountsWithPeriod/getSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityMinuteCountsWithPeriod/getSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessParticipantActivityUserCountsWithPeriod/getSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityCountsWithPeriod/getSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriod/getSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder';
+import {GetSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder} from './getSkypeForBusinessPeerToPeerActivityUserCountsWithPeriod/getSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder';
+import {GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getTeamsDeviceUsageDistributionUserCountsWithPeriod/getTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder';
+import {GetTeamsDeviceUsageUserCountsWithPeriodRequestBuilder} from './getTeamsDeviceUsageUserCountsWithPeriod/getTeamsDeviceUsageUserCountsWithPeriodRequestBuilder';
+import {GetTeamsDeviceUsageUserDetailWithDateRequestBuilder} from './getTeamsDeviceUsageUserDetailWithDate/getTeamsDeviceUsageUserDetailWithDateRequestBuilder';
+import {GetTeamsDeviceUsageUserDetailWithPeriodRequestBuilder} from './getTeamsDeviceUsageUserDetailWithPeriod/getTeamsDeviceUsageUserDetailWithPeriodRequestBuilder';
+import {GetTeamsUserActivityCountsWithPeriodRequestBuilder} from './getTeamsUserActivityCountsWithPeriod/getTeamsUserActivityCountsWithPeriodRequestBuilder';
+import {GetTeamsUserActivityUserCountsWithPeriodRequestBuilder} from './getTeamsUserActivityUserCountsWithPeriod/getTeamsUserActivityUserCountsWithPeriodRequestBuilder';
+import {GetTeamsUserActivityUserDetailWithDateRequestBuilder} from './getTeamsUserActivityUserDetailWithDate/getTeamsUserActivityUserDetailWithDateRequestBuilder';
+import {GetTeamsUserActivityUserDetailWithPeriodRequestBuilder} from './getTeamsUserActivityUserDetailWithPeriod/getTeamsUserActivityUserDetailWithPeriodRequestBuilder';
+import {GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder} from './getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTime/getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder';
+import {GetYammerActivityCountsWithPeriodRequestBuilder} from './getYammerActivityCountsWithPeriod/getYammerActivityCountsWithPeriodRequestBuilder';
+import {GetYammerActivityUserCountsWithPeriodRequestBuilder} from './getYammerActivityUserCountsWithPeriod/getYammerActivityUserCountsWithPeriodRequestBuilder';
+import {GetYammerActivityUserDetailWithDateRequestBuilder} from './getYammerActivityUserDetailWithDate/getYammerActivityUserDetailWithDateRequestBuilder';
+import {GetYammerActivityUserDetailWithPeriodRequestBuilder} from './getYammerActivityUserDetailWithPeriod/getYammerActivityUserDetailWithPeriodRequestBuilder';
+import {GetYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder} from './getYammerDeviceUsageDistributionUserCountsWithPeriod/getYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder';
+import {GetYammerDeviceUsageUserCountsWithPeriodRequestBuilder} from './getYammerDeviceUsageUserCountsWithPeriod/getYammerDeviceUsageUserCountsWithPeriodRequestBuilder';
+import {GetYammerDeviceUsageUserDetailWithDateRequestBuilder} from './getYammerDeviceUsageUserDetailWithDate/getYammerDeviceUsageUserDetailWithDateRequestBuilder';
+import {GetYammerDeviceUsageUserDetailWithPeriodRequestBuilder} from './getYammerDeviceUsageUserDetailWithPeriod/getYammerDeviceUsageUserDetailWithPeriodRequestBuilder';
+import {GetYammerGroupsActivityCountsWithPeriodRequestBuilder} from './getYammerGroupsActivityCountsWithPeriod/getYammerGroupsActivityCountsWithPeriodRequestBuilder';
+import {GetYammerGroupsActivityDetailWithDateRequestBuilder} from './getYammerGroupsActivityDetailWithDate/getYammerGroupsActivityDetailWithDateRequestBuilder';
+import {GetYammerGroupsActivityDetailWithPeriodRequestBuilder} from './getYammerGroupsActivityDetailWithPeriod/getYammerGroupsActivityDetailWithPeriodRequestBuilder';
+import {GetYammerGroupsActivityGroupCountsWithPeriodRequestBuilder} from './getYammerGroupsActivityGroupCountsWithPeriod/getYammerGroupsActivityGroupCountsWithPeriodRequestBuilder';
+import {ManagedDeviceEnrollmentFailureDetailsRequestBuilder} from './managedDeviceEnrollmentFailureDetails/managedDeviceEnrollmentFailureDetailsRequestBuilder';
+import {ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder} from './managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipToken/managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder';
+import {ManagedDeviceEnrollmentTopFailuresRequestBuilder} from './managedDeviceEnrollmentTopFailures/managedDeviceEnrollmentTopFailuresRequestBuilder';
+import {ManagedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder} from './managedDeviceEnrollmentTopFailuresWithPeriod/managedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder';
+import {PrintUsageByPrinterItemRequestBuilder as i2c60a8e28db21474c0e58e0f539afec944871233fe3f764a516b7389d62b1fab} from './monthlyPrintUsageByPrinter/item/printUsageByPrinterItemRequestBuilder';
+import {MonthlyPrintUsageByPrinterRequestBuilder} from './monthlyPrintUsageByPrinter/monthlyPrintUsageByPrinterRequestBuilder';
+import {PrintUsageByUserItemRequestBuilder as i19a558e8de9c295f0ad48586ddbc0a19b77027bdd76ac25f42b3d301110f77d7} from './monthlyPrintUsageByUser/item/printUsageByUserItemRequestBuilder';
+import {MonthlyPrintUsageByUserRequestBuilder} from './monthlyPrintUsageByUser/monthlyPrintUsageByUserRequestBuilder';
+import {DateOnly, getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /reports  */
+/** Provides operations to manage the reportRoot singleton.  */
 export class ReportsRequestBuilder {
     public get dailyPrintUsageByPrinter(): DailyPrintUsageByPrinterRequestBuilder {
         return new DailyPrintUsageByPrinterRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -195,14 +198,14 @@ export class ReportsRequestBuilder {
         return new i5602768dda0b70f8110e58df61e9d1d004ef6da72375298c7c9bc52d8a0135b3(urlTplParams, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.deviceConfigurationDeviceActivity()
+     * Provides operations to call the deviceConfigurationDeviceActivity method.
      * @returns a deviceConfigurationDeviceActivityRequestBuilder
      */
     public deviceConfigurationDeviceActivity() : DeviceConfigurationDeviceActivityRequestBuilder {
         return new DeviceConfigurationDeviceActivityRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.deviceConfigurationUserActivity()
+     * Provides operations to call the deviceConfigurationUserActivity method.
      * @returns a deviceConfigurationUserActivityRequestBuilder
      */
     public deviceConfigurationUserActivity() : DeviceConfigurationUserActivityRequestBuilder {
@@ -223,11 +226,15 @@ export class ReportsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ReportRoot>(requestInfo, ReportRoot, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ReportRoot>(requestInfo, createReportRootFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailActivityCountsWithPeriodRequestBuilder
      */
     public getEmailActivityCountsWithPeriod(period: string | undefined) : GetEmailActivityCountsWithPeriodRequestBuilder {
@@ -235,8 +242,8 @@ export class ReportsRequestBuilder {
         return new GetEmailActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailActivityUserCountsWithPeriodRequestBuilder
      */
     public getEmailActivityUserCountsWithPeriod(period: string | undefined) : GetEmailActivityUserCountsWithPeriodRequestBuilder {
@@ -244,7 +251,7 @@ export class ReportsRequestBuilder {
         return new GetEmailActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailActivityUserDetail(date={date})
+     * Provides operations to call the getEmailActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getEmailActivityUserDetailWithDateRequestBuilder
      */
@@ -253,8 +260,8 @@ export class ReportsRequestBuilder {
         return new GetEmailActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailActivityUserDetailWithPeriodRequestBuilder
      */
     public getEmailActivityUserDetailWithPeriod(period: string | undefined) : GetEmailActivityUserDetailWithPeriodRequestBuilder {
@@ -262,8 +269,8 @@ export class ReportsRequestBuilder {
         return new GetEmailActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageAppsUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailAppUsageAppsUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailAppUsageAppsUserCountsWithPeriodRequestBuilder
      */
     public getEmailAppUsageAppsUserCountsWithPeriod(period: string | undefined) : GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder {
@@ -271,8 +278,8 @@ export class ReportsRequestBuilder {
         return new GetEmailAppUsageAppsUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailAppUsageUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailAppUsageUserCountsWithPeriodRequestBuilder
      */
     public getEmailAppUsageUserCountsWithPeriod(period: string | undefined) : GetEmailAppUsageUserCountsWithPeriodRequestBuilder {
@@ -280,7 +287,7 @@ export class ReportsRequestBuilder {
         return new GetEmailAppUsageUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageUserDetail(date={date})
+     * Provides operations to call the getEmailAppUsageUserDetail method.
      * @param date Usage: date={date}
      * @returns a getEmailAppUsageUserDetailWithDateRequestBuilder
      */
@@ -289,8 +296,8 @@ export class ReportsRequestBuilder {
         return new GetEmailAppUsageUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailAppUsageUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailAppUsageUserDetailWithPeriodRequestBuilder
      */
     public getEmailAppUsageUserDetailWithPeriod(period: string | undefined) : GetEmailAppUsageUserDetailWithPeriodRequestBuilder {
@@ -298,8 +305,8 @@ export class ReportsRequestBuilder {
         return new GetEmailAppUsageUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageVersionsUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getEmailAppUsageVersionsUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder
      */
     public getEmailAppUsageVersionsUserCountsWithPeriod(period: string | undefined) : GetEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder {
@@ -307,21 +314,21 @@ export class ReportsRequestBuilder {
         return new GetEmailAppUsageVersionsUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getGroupArchivedPrintJobs(groupId='{groupId}',startDateTime={startDateTime},endDateTime={endDateTime})
-     * @param endDateTime Usage: endDateTime={endDateTime}
-     * @param groupId Usage: groupId={groupId}
-     * @param startDateTime Usage: startDateTime={startDateTime}
+     * Provides operations to call the getGroupArchivedPrintJobs method.
+     * @param endDateTime Usage: endDateTime='{endDateTime}'
+     * @param groupId Usage: groupId='{groupId}'
+     * @param startDateTime Usage: startDateTime='{startDateTime}'
      * @returns a getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder
      */
-    public getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTime(groupId: string | undefined, startDateTime: Date | undefined, endDateTime: Date | undefined) : GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder {
+    public getGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTime(endDateTime: Date | undefined, groupId: string | undefined, startDateTime: Date | undefined) : GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder {
         if(!endDateTime) throw new Error("endDateTime cannot be undefined");
         if(!groupId) throw new Error("groupId cannot be undefined");
         if(!startDateTime) throw new Error("startDateTime cannot be undefined");
-        return new GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, groupId, startDateTime, endDateTime);
+        return new GetGroupArchivedPrintJobsWithGroupIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, endDateTime, groupId, startDateTime);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getMailboxUsageDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getMailboxUsageDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getMailboxUsageDetailWithPeriodRequestBuilder
      */
     public getMailboxUsageDetailWithPeriod(period: string | undefined) : GetMailboxUsageDetailWithPeriodRequestBuilder {
@@ -329,8 +336,8 @@ export class ReportsRequestBuilder {
         return new GetMailboxUsageDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getMailboxUsageMailboxCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getMailboxUsageMailboxCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getMailboxUsageMailboxCountsWithPeriodRequestBuilder
      */
     public getMailboxUsageMailboxCountsWithPeriod(period: string | undefined) : GetMailboxUsageMailboxCountsWithPeriodRequestBuilder {
@@ -338,8 +345,8 @@ export class ReportsRequestBuilder {
         return new GetMailboxUsageMailboxCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getMailboxUsageQuotaStatusMailboxCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getMailboxUsageQuotaStatusMailboxCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder
      */
     public getMailboxUsageQuotaStatusMailboxCountsWithPeriod(period: string | undefined) : GetMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder {
@@ -347,8 +354,8 @@ export class ReportsRequestBuilder {
         return new GetMailboxUsageQuotaStatusMailboxCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getMailboxUsageStorage(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getMailboxUsageStorage method.
+     * @param period Usage: period='{period}'
      * @returns a getMailboxUsageStorageWithPeriodRequestBuilder
      */
     public getMailboxUsageStorageWithPeriod(period: string | undefined) : GetMailboxUsageStorageWithPeriodRequestBuilder {
@@ -356,29 +363,29 @@ export class ReportsRequestBuilder {
         return new GetMailboxUsageStorageWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActivationCounts()
+     * Provides operations to call the getOffice365ActivationCounts method.
      * @returns a getOffice365ActivationCountsRequestBuilder
      */
     public getOffice365ActivationCounts() : GetOffice365ActivationCountsRequestBuilder {
         return new GetOffice365ActivationCountsRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActivationsUserCounts()
+     * Provides operations to call the getOffice365ActivationsUserCounts method.
      * @returns a getOffice365ActivationsUserCountsRequestBuilder
      */
     public getOffice365ActivationsUserCounts() : GetOffice365ActivationsUserCountsRequestBuilder {
         return new GetOffice365ActivationsUserCountsRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActivationsUserDetail()
+     * Provides operations to call the getOffice365ActivationsUserDetail method.
      * @returns a getOffice365ActivationsUserDetailRequestBuilder
      */
     public getOffice365ActivationsUserDetail() : GetOffice365ActivationsUserDetailRequestBuilder {
         return new GetOffice365ActivationsUserDetailRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActiveUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365ActiveUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365ActiveUserCountsWithPeriodRequestBuilder
      */
     public getOffice365ActiveUserCountsWithPeriod(period: string | undefined) : GetOffice365ActiveUserCountsWithPeriodRequestBuilder {
@@ -386,7 +393,7 @@ export class ReportsRequestBuilder {
         return new GetOffice365ActiveUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActiveUserDetail(date={date})
+     * Provides operations to call the getOffice365ActiveUserDetail method.
      * @param date Usage: date={date}
      * @returns a getOffice365ActiveUserDetailWithDateRequestBuilder
      */
@@ -395,8 +402,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365ActiveUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ActiveUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365ActiveUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365ActiveUserDetailWithPeriodRequestBuilder
      */
     public getOffice365ActiveUserDetailWithPeriod(period: string | undefined) : GetOffice365ActiveUserDetailWithPeriodRequestBuilder {
@@ -404,8 +411,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365ActiveUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365GroupsActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365GroupsActivityCountsWithPeriodRequestBuilder
      */
     public getOffice365GroupsActivityCountsWithPeriod(period: string | undefined) : GetOffice365GroupsActivityCountsWithPeriodRequestBuilder {
@@ -413,7 +420,7 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityDetail(date={date})
+     * Provides operations to call the getOffice365GroupsActivityDetail method.
      * @param date Usage: date={date}
      * @returns a getOffice365GroupsActivityDetailWithDateRequestBuilder
      */
@@ -422,8 +429,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365GroupsActivityDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365GroupsActivityDetailWithPeriodRequestBuilder
      */
     public getOffice365GroupsActivityDetailWithPeriod(period: string | undefined) : GetOffice365GroupsActivityDetailWithPeriodRequestBuilder {
@@ -431,8 +438,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityFileCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365GroupsActivityFileCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365GroupsActivityFileCountsWithPeriodRequestBuilder
      */
     public getOffice365GroupsActivityFileCountsWithPeriod(period: string | undefined) : GetOffice365GroupsActivityFileCountsWithPeriodRequestBuilder {
@@ -440,8 +447,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityFileCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityGroupCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365GroupsActivityGroupCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder
      */
     public getOffice365GroupsActivityGroupCountsWithPeriod(period: string | undefined) : GetOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder {
@@ -449,8 +456,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityGroupCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365GroupsActivityStorage(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365GroupsActivityStorage method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365GroupsActivityStorageWithPeriodRequestBuilder
      */
     public getOffice365GroupsActivityStorageWithPeriod(period: string | undefined) : GetOffice365GroupsActivityStorageWithPeriodRequestBuilder {
@@ -458,8 +465,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365GroupsActivityStorageWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOffice365ServicesUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOffice365ServicesUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOffice365ServicesUserCountsWithPeriodRequestBuilder
      */
     public getOffice365ServicesUserCountsWithPeriod(period: string | undefined) : GetOffice365ServicesUserCountsWithPeriodRequestBuilder {
@@ -467,8 +474,8 @@ export class ReportsRequestBuilder {
         return new GetOffice365ServicesUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveActivityFileCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveActivityFileCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveActivityFileCountsWithPeriodRequestBuilder
      */
     public getOneDriveActivityFileCountsWithPeriod(period: string | undefined) : GetOneDriveActivityFileCountsWithPeriodRequestBuilder {
@@ -476,8 +483,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveActivityFileCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveActivityUserCountsWithPeriodRequestBuilder
      */
     public getOneDriveActivityUserCountsWithPeriod(period: string | undefined) : GetOneDriveActivityUserCountsWithPeriodRequestBuilder {
@@ -485,7 +492,7 @@ export class ReportsRequestBuilder {
         return new GetOneDriveActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveActivityUserDetail(date={date})
+     * Provides operations to call the getOneDriveActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getOneDriveActivityUserDetailWithDateRequestBuilder
      */
@@ -494,8 +501,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveActivityUserDetailWithPeriodRequestBuilder
      */
     public getOneDriveActivityUserDetailWithPeriod(period: string | undefined) : GetOneDriveActivityUserDetailWithPeriodRequestBuilder {
@@ -503,8 +510,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveUsageAccountCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveUsageAccountCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveUsageAccountCountsWithPeriodRequestBuilder
      */
     public getOneDriveUsageAccountCountsWithPeriod(period: string | undefined) : GetOneDriveUsageAccountCountsWithPeriodRequestBuilder {
@@ -512,7 +519,7 @@ export class ReportsRequestBuilder {
         return new GetOneDriveUsageAccountCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveUsageAccountDetail(date={date})
+     * Provides operations to call the getOneDriveUsageAccountDetail method.
      * @param date Usage: date={date}
      * @returns a getOneDriveUsageAccountDetailWithDateRequestBuilder
      */
@@ -521,8 +528,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveUsageAccountDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveUsageAccountDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveUsageAccountDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveUsageAccountDetailWithPeriodRequestBuilder
      */
     public getOneDriveUsageAccountDetailWithPeriod(period: string | undefined) : GetOneDriveUsageAccountDetailWithPeriodRequestBuilder {
@@ -530,8 +537,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveUsageAccountDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveUsageFileCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveUsageFileCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveUsageFileCountsWithPeriodRequestBuilder
      */
     public getOneDriveUsageFileCountsWithPeriod(period: string | undefined) : GetOneDriveUsageFileCountsWithPeriodRequestBuilder {
@@ -539,8 +546,8 @@ export class ReportsRequestBuilder {
         return new GetOneDriveUsageFileCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getOneDriveUsageStorage(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getOneDriveUsageStorage method.
+     * @param period Usage: period='{period}'
      * @returns a getOneDriveUsageStorageWithPeriodRequestBuilder
      */
     public getOneDriveUsageStorageWithPeriod(period: string | undefined) : GetOneDriveUsageStorageWithPeriodRequestBuilder {
@@ -548,21 +555,21 @@ export class ReportsRequestBuilder {
         return new GetOneDriveUsageStorageWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getPrinterArchivedPrintJobs(printerId='{printerId}',startDateTime={startDateTime},endDateTime={endDateTime})
-     * @param endDateTime Usage: endDateTime={endDateTime}
-     * @param printerId Usage: printerId={printerId}
-     * @param startDateTime Usage: startDateTime={startDateTime}
+     * Provides operations to call the getPrinterArchivedPrintJobs method.
+     * @param endDateTime Usage: endDateTime='{endDateTime}'
+     * @param printerId Usage: printerId='{printerId}'
+     * @param startDateTime Usage: startDateTime='{startDateTime}'
      * @returns a getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder
      */
-    public getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTime(printerId: string | undefined, startDateTime: Date | undefined, endDateTime: Date | undefined) : GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder {
+    public getPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTime(endDateTime: Date | undefined, printerId: string | undefined, startDateTime: Date | undefined) : GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder {
         if(!endDateTime) throw new Error("endDateTime cannot be undefined");
         if(!printerId) throw new Error("printerId cannot be undefined");
         if(!startDateTime) throw new Error("startDateTime cannot be undefined");
-        return new GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, printerId, startDateTime, endDateTime);
+        return new GetPrinterArchivedPrintJobsWithPrinterIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, endDateTime, printerId, startDateTime);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointActivityFileCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointActivityFileCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointActivityFileCountsWithPeriodRequestBuilder
      */
     public getSharePointActivityFileCountsWithPeriod(period: string | undefined) : GetSharePointActivityFileCountsWithPeriodRequestBuilder {
@@ -570,8 +577,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointActivityFileCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointActivityPages(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointActivityPages method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointActivityPagesWithPeriodRequestBuilder
      */
     public getSharePointActivityPagesWithPeriod(period: string | undefined) : GetSharePointActivityPagesWithPeriodRequestBuilder {
@@ -579,8 +586,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointActivityPagesWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointActivityUserCountsWithPeriodRequestBuilder
      */
     public getSharePointActivityUserCountsWithPeriod(period: string | undefined) : GetSharePointActivityUserCountsWithPeriodRequestBuilder {
@@ -588,7 +595,7 @@ export class ReportsRequestBuilder {
         return new GetSharePointActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointActivityUserDetail(date={date})
+     * Provides operations to call the getSharePointActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getSharePointActivityUserDetailWithDateRequestBuilder
      */
@@ -597,8 +604,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointActivityUserDetailWithPeriodRequestBuilder
      */
     public getSharePointActivityUserDetailWithPeriod(period: string | undefined) : GetSharePointActivityUserDetailWithPeriodRequestBuilder {
@@ -606,7 +613,7 @@ export class ReportsRequestBuilder {
         return new GetSharePointActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsageDetail(date={date})
+     * Provides operations to call the getSharePointSiteUsageDetail method.
      * @param date Usage: date={date}
      * @returns a getSharePointSiteUsageDetailWithDateRequestBuilder
      */
@@ -615,8 +622,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsageDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsageDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointSiteUsageDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointSiteUsageDetailWithPeriodRequestBuilder
      */
     public getSharePointSiteUsageDetailWithPeriod(period: string | undefined) : GetSharePointSiteUsageDetailWithPeriodRequestBuilder {
@@ -624,8 +631,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsageDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsageFileCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointSiteUsageFileCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointSiteUsageFileCountsWithPeriodRequestBuilder
      */
     public getSharePointSiteUsageFileCountsWithPeriod(period: string | undefined) : GetSharePointSiteUsageFileCountsWithPeriodRequestBuilder {
@@ -633,8 +640,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsageFileCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsagePages(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointSiteUsagePages method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointSiteUsagePagesWithPeriodRequestBuilder
      */
     public getSharePointSiteUsagePagesWithPeriod(period: string | undefined) : GetSharePointSiteUsagePagesWithPeriodRequestBuilder {
@@ -642,8 +649,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsagePagesWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsageSiteCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointSiteUsageSiteCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointSiteUsageSiteCountsWithPeriodRequestBuilder
      */
     public getSharePointSiteUsageSiteCountsWithPeriod(period: string | undefined) : GetSharePointSiteUsageSiteCountsWithPeriodRequestBuilder {
@@ -651,8 +658,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsageSiteCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSharePointSiteUsageStorage(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSharePointSiteUsageStorage method.
+     * @param period Usage: period='{period}'
      * @returns a getSharePointSiteUsageStorageWithPeriodRequestBuilder
      */
     public getSharePointSiteUsageStorageWithPeriod(period: string | undefined) : GetSharePointSiteUsageStorageWithPeriodRequestBuilder {
@@ -660,8 +667,8 @@ export class ReportsRequestBuilder {
         return new GetSharePointSiteUsageStorageWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessActivityCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessActivityCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessActivityCountsWithPeriodRequestBuilder {
@@ -669,8 +676,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessActivityUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder {
@@ -678,7 +685,7 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessActivityUserDetail(date={date})
+     * Provides operations to call the getSkypeForBusinessActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getSkypeForBusinessActivityUserDetailWithDateRequestBuilder
      */
@@ -687,8 +694,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder
      */
     public getSkypeForBusinessActivityUserDetailWithPeriod(period: string | undefined) : GetSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder {
@@ -696,8 +703,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessDeviceUsageDistributionUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessDeviceUsageDistributionUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
@@ -705,8 +712,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessDeviceUsageDistributionUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessDeviceUsageUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessDeviceUsageUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessDeviceUsageUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder {
@@ -714,7 +721,7 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessDeviceUsageUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessDeviceUsageUserDetail(date={date})
+     * Provides operations to call the getSkypeForBusinessDeviceUsageUserDetail method.
      * @param date Usage: date={date}
      * @returns a getSkypeForBusinessDeviceUsageUserDetailWithDateRequestBuilder
      */
@@ -723,8 +730,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessDeviceUsageUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessDeviceUsageUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessDeviceUsageUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder
      */
     public getSkypeForBusinessDeviceUsageUserDetailWithPeriod(period: string | undefined) : GetSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder {
@@ -732,8 +739,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessDeviceUsageUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessOrganizerActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessOrganizerActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessOrganizerActivityCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder {
@@ -741,8 +748,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessOrganizerActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessOrganizerActivityMinuteCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessOrganizerActivityMinuteCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessOrganizerActivityMinuteCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder {
@@ -750,8 +757,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessOrganizerActivityMinuteCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessOrganizerActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessOrganizerActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessOrganizerActivityUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder {
@@ -759,8 +766,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessOrganizerActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessParticipantActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessParticipantActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessParticipantActivityCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder {
@@ -768,8 +775,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessParticipantActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessParticipantActivityMinuteCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessParticipantActivityMinuteCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessParticipantActivityMinuteCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder {
@@ -777,8 +784,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessParticipantActivityMinuteCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessParticipantActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessParticipantActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessParticipantActivityUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder {
@@ -786,8 +793,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessParticipantActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessPeerToPeerActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessPeerToPeerActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessPeerToPeerActivityCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder {
@@ -795,8 +802,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessPeerToPeerActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessPeerToPeerActivityMinuteCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessPeerToPeerActivityMinuteCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder {
@@ -804,8 +811,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessPeerToPeerActivityMinuteCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getSkypeForBusinessPeerToPeerActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getSkypeForBusinessPeerToPeerActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder
      */
     public getSkypeForBusinessPeerToPeerActivityUserCountsWithPeriod(period: string | undefined) : GetSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder {
@@ -813,8 +820,8 @@ export class ReportsRequestBuilder {
         return new GetSkypeForBusinessPeerToPeerActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsDeviceUsageDistributionUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsDeviceUsageDistributionUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder
      */
     public getTeamsDeviceUsageDistributionUserCountsWithPeriod(period: string | undefined) : GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
@@ -822,8 +829,8 @@ export class ReportsRequestBuilder {
         return new GetTeamsDeviceUsageDistributionUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsDeviceUsageUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsDeviceUsageUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsDeviceUsageUserCountsWithPeriodRequestBuilder
      */
     public getTeamsDeviceUsageUserCountsWithPeriod(period: string | undefined) : GetTeamsDeviceUsageUserCountsWithPeriodRequestBuilder {
@@ -831,7 +838,7 @@ export class ReportsRequestBuilder {
         return new GetTeamsDeviceUsageUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsDeviceUsageUserDetail(date={date})
+     * Provides operations to call the getTeamsDeviceUsageUserDetail method.
      * @param date Usage: date={date}
      * @returns a getTeamsDeviceUsageUserDetailWithDateRequestBuilder
      */
@@ -840,8 +847,8 @@ export class ReportsRequestBuilder {
         return new GetTeamsDeviceUsageUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsDeviceUsageUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsDeviceUsageUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsDeviceUsageUserDetailWithPeriodRequestBuilder
      */
     public getTeamsDeviceUsageUserDetailWithPeriod(period: string | undefined) : GetTeamsDeviceUsageUserDetailWithPeriodRequestBuilder {
@@ -849,8 +856,8 @@ export class ReportsRequestBuilder {
         return new GetTeamsDeviceUsageUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsUserActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsUserActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsUserActivityCountsWithPeriodRequestBuilder
      */
     public getTeamsUserActivityCountsWithPeriod(period: string | undefined) : GetTeamsUserActivityCountsWithPeriodRequestBuilder {
@@ -858,8 +865,8 @@ export class ReportsRequestBuilder {
         return new GetTeamsUserActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsUserActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsUserActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsUserActivityUserCountsWithPeriodRequestBuilder
      */
     public getTeamsUserActivityUserCountsWithPeriod(period: string | undefined) : GetTeamsUserActivityUserCountsWithPeriodRequestBuilder {
@@ -867,7 +874,7 @@ export class ReportsRequestBuilder {
         return new GetTeamsUserActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsUserActivityUserDetail(date={date})
+     * Provides operations to call the getTeamsUserActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getTeamsUserActivityUserDetailWithDateRequestBuilder
      */
@@ -876,8 +883,8 @@ export class ReportsRequestBuilder {
         return new GetTeamsUserActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getTeamsUserActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getTeamsUserActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getTeamsUserActivityUserDetailWithPeriodRequestBuilder
      */
     public getTeamsUserActivityUserDetailWithPeriod(period: string | undefined) : GetTeamsUserActivityUserDetailWithPeriodRequestBuilder {
@@ -885,21 +892,21 @@ export class ReportsRequestBuilder {
         return new GetTeamsUserActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getUserArchivedPrintJobs(userId='{userId}',startDateTime={startDateTime},endDateTime={endDateTime})
-     * @param endDateTime Usage: endDateTime={endDateTime}
-     * @param startDateTime Usage: startDateTime={startDateTime}
-     * @param userId Usage: userId={userId}
+     * Provides operations to call the getUserArchivedPrintJobs method.
+     * @param endDateTime Usage: endDateTime='{endDateTime}'
+     * @param startDateTime Usage: startDateTime='{startDateTime}'
+     * @param userId Usage: userId='{userId}'
      * @returns a getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder
      */
-    public getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTime(userId: string | undefined, startDateTime: Date | undefined, endDateTime: Date | undefined) : GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder {
+    public getUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTime(endDateTime: Date | undefined, startDateTime: Date | undefined, userId: string | undefined) : GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder {
         if(!endDateTime) throw new Error("endDateTime cannot be undefined");
         if(!startDateTime) throw new Error("startDateTime cannot be undefined");
         if(!userId) throw new Error("userId cannot be undefined");
-        return new GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, userId, startDateTime, endDateTime);
+        return new GetUserArchivedPrintJobsWithUserIdWithStartDateTimeWithEndDateTimeRequestBuilder(this.pathParameters, this.requestAdapter, endDateTime, startDateTime, userId);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerActivityCountsWithPeriodRequestBuilder
      */
     public getYammerActivityCountsWithPeriod(period: string | undefined) : GetYammerActivityCountsWithPeriodRequestBuilder {
@@ -907,8 +914,8 @@ export class ReportsRequestBuilder {
         return new GetYammerActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerActivityUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerActivityUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerActivityUserCountsWithPeriodRequestBuilder
      */
     public getYammerActivityUserCountsWithPeriod(period: string | undefined) : GetYammerActivityUserCountsWithPeriodRequestBuilder {
@@ -916,7 +923,7 @@ export class ReportsRequestBuilder {
         return new GetYammerActivityUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerActivityUserDetail(date={date})
+     * Provides operations to call the getYammerActivityUserDetail method.
      * @param date Usage: date={date}
      * @returns a getYammerActivityUserDetailWithDateRequestBuilder
      */
@@ -925,8 +932,8 @@ export class ReportsRequestBuilder {
         return new GetYammerActivityUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerActivityUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerActivityUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerActivityUserDetailWithPeriodRequestBuilder
      */
     public getYammerActivityUserDetailWithPeriod(period: string | undefined) : GetYammerActivityUserDetailWithPeriodRequestBuilder {
@@ -934,8 +941,8 @@ export class ReportsRequestBuilder {
         return new GetYammerActivityUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerDeviceUsageDistributionUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerDeviceUsageDistributionUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder
      */
     public getYammerDeviceUsageDistributionUserCountsWithPeriod(period: string | undefined) : GetYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder {
@@ -943,8 +950,8 @@ export class ReportsRequestBuilder {
         return new GetYammerDeviceUsageDistributionUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerDeviceUsageUserCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerDeviceUsageUserCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerDeviceUsageUserCountsWithPeriodRequestBuilder
      */
     public getYammerDeviceUsageUserCountsWithPeriod(period: string | undefined) : GetYammerDeviceUsageUserCountsWithPeriodRequestBuilder {
@@ -952,7 +959,7 @@ export class ReportsRequestBuilder {
         return new GetYammerDeviceUsageUserCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerDeviceUsageUserDetail(date={date})
+     * Provides operations to call the getYammerDeviceUsageUserDetail method.
      * @param date Usage: date={date}
      * @returns a getYammerDeviceUsageUserDetailWithDateRequestBuilder
      */
@@ -961,8 +968,8 @@ export class ReportsRequestBuilder {
         return new GetYammerDeviceUsageUserDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerDeviceUsageUserDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerDeviceUsageUserDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerDeviceUsageUserDetailWithPeriodRequestBuilder
      */
     public getYammerDeviceUsageUserDetailWithPeriod(period: string | undefined) : GetYammerDeviceUsageUserDetailWithPeriodRequestBuilder {
@@ -970,8 +977,8 @@ export class ReportsRequestBuilder {
         return new GetYammerDeviceUsageUserDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerGroupsActivityCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerGroupsActivityCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerGroupsActivityCountsWithPeriodRequestBuilder
      */
     public getYammerGroupsActivityCountsWithPeriod(period: string | undefined) : GetYammerGroupsActivityCountsWithPeriodRequestBuilder {
@@ -979,7 +986,7 @@ export class ReportsRequestBuilder {
         return new GetYammerGroupsActivityCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerGroupsActivityDetail(date={date})
+     * Provides operations to call the getYammerGroupsActivityDetail method.
      * @param date Usage: date={date}
      * @returns a getYammerGroupsActivityDetailWithDateRequestBuilder
      */
@@ -988,8 +995,8 @@ export class ReportsRequestBuilder {
         return new GetYammerGroupsActivityDetailWithDateRequestBuilder(this.pathParameters, this.requestAdapter, date);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerGroupsActivityDetail(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerGroupsActivityDetail method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerGroupsActivityDetailWithPeriodRequestBuilder
      */
     public getYammerGroupsActivityDetailWithPeriod(period: string | undefined) : GetYammerGroupsActivityDetailWithPeriodRequestBuilder {
@@ -997,8 +1004,8 @@ export class ReportsRequestBuilder {
         return new GetYammerGroupsActivityDetailWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.getYammerGroupsActivityGroupCounts(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the getYammerGroupsActivityGroupCounts method.
+     * @param period Usage: period='{period}'
      * @returns a getYammerGroupsActivityGroupCountsWithPeriodRequestBuilder
      */
     public getYammerGroupsActivityGroupCountsWithPeriod(period: string | undefined) : GetYammerGroupsActivityGroupCountsWithPeriodRequestBuilder {
@@ -1006,37 +1013,37 @@ export class ReportsRequestBuilder {
         return new GetYammerGroupsActivityGroupCountsWithPeriodRequestBuilder(this.pathParameters, this.requestAdapter, period);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.managedDeviceEnrollmentFailureDetails()
+     * Provides operations to call the managedDeviceEnrollmentFailureDetails method.
      * @returns a managedDeviceEnrollmentFailureDetailsRequestBuilder
      */
     public managedDeviceEnrollmentFailureDetails() : ManagedDeviceEnrollmentFailureDetailsRequestBuilder {
         return new ManagedDeviceEnrollmentFailureDetailsRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.managedDeviceEnrollmentFailureDetails(skip={skip},top={top},filter='{filter}',skipToken='{skipToken}')
-     * @param filter Usage: filter={filter}
+     * Provides operations to call the managedDeviceEnrollmentFailureDetails method.
+     * @param filter Usage: filter='{filter}'
      * @param skip Usage: skip={skip}
-     * @param skipToken Usage: skipToken={skipToken}
+     * @param skipToken Usage: skipToken='{skipToken}'
      * @param top Usage: top={top}
      * @returns a managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder
      */
-    public managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipToken(skip: number | undefined, top: number | undefined, filter: string | undefined, skipToken: string | undefined) : ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder {
+    public managedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipToken(filter: string | undefined, skip: number | undefined, skipToken: string | undefined, top: number | undefined) : ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder {
         if(!filter) throw new Error("filter cannot be undefined");
         if(!skip) throw new Error("skip cannot be undefined");
         if(!skipToken) throw new Error("skipToken cannot be undefined");
         if(!top) throw new Error("top cannot be undefined");
-        return new ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder(this.pathParameters, this.requestAdapter, skip, top, filter, skipToken);
+        return new ManagedDeviceEnrollmentFailureDetailsWithSkipWithTopWithFilterWithSkipTokenRequestBuilder(this.pathParameters, this.requestAdapter, filter, skip, skipToken, top);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.managedDeviceEnrollmentTopFailures()
+     * Provides operations to call the managedDeviceEnrollmentTopFailures method.
      * @returns a managedDeviceEnrollmentTopFailuresRequestBuilder
      */
     public managedDeviceEnrollmentTopFailures() : ManagedDeviceEnrollmentTopFailuresRequestBuilder {
         return new ManagedDeviceEnrollmentTopFailuresRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /reports/microsoft.graph.managedDeviceEnrollmentTopFailures(period='{period}')
-     * @param period Usage: period={period}
+     * Provides operations to call the managedDeviceEnrollmentTopFailures method.
+     * @param period Usage: period='{period}'
      * @returns a managedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder
      */
     public managedDeviceEnrollmentTopFailuresWithPeriod(period: string | undefined) : ManagedDeviceEnrollmentTopFailuresWithPeriodRequestBuilder {
@@ -1077,6 +1084,10 @@ export class ReportsRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

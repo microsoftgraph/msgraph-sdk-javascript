@@ -1,4 +1,5 @@
-import {EnrollmentState, Entity} from './index';
+import {EnrollmentState} from './enrollmentState';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
@@ -35,17 +36,18 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
     /** User Principal Name.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new windowsAutopilotDeviceIdentity and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the addressableUserName property value. Addressable user name.
      * @returns a string
      */
     public get addressableUserName() {
         return this._addressableUserName;
+    };
+    /**
+     * Sets the addressableUserName property value. Addressable user name.
+     * @param value Value to set for the addressableUserName property.
+     */
+    public set addressableUserName(value: string | undefined) {
+        this._addressableUserName = value;
     };
     /**
      * Gets the azureActiveDirectoryDeviceId property value. AAD Device ID - to be deprecated
@@ -55,11 +57,31 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         return this._azureActiveDirectoryDeviceId;
     };
     /**
+     * Sets the azureActiveDirectoryDeviceId property value. AAD Device ID - to be deprecated
+     * @param value Value to set for the azureActiveDirectoryDeviceId property.
+     */
+    public set azureActiveDirectoryDeviceId(value: string | undefined) {
+        this._azureActiveDirectoryDeviceId = value;
+    };
+    /**
+     * Instantiates a new windowsAutopilotDeviceIdentity and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the displayName property value. Display Name
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. Display Name
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * Gets the enrollmentState property value. Intune enrollment state of the Windows autopilot device. Possible values are: unknown, enrolled, pendingReset, failed, notContacted.
@@ -69,88 +91,11 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         return this._enrollmentState;
     };
     /**
-     * Gets the groupTag property value. Group Tag of the Windows autopilot device.
-     * @returns a string
+     * Sets the enrollmentState property value. Intune enrollment state of the Windows autopilot device. Possible values are: unknown, enrolled, pendingReset, failed, notContacted.
+     * @param value Value to set for the enrollmentState property.
      */
-    public get groupTag() {
-        return this._groupTag;
-    };
-    /**
-     * Gets the lastContactedDateTime property value. Intune Last Contacted Date Time of the Windows autopilot device.
-     * @returns a Date
-     */
-    public get lastContactedDateTime() {
-        return this._lastContactedDateTime;
-    };
-    /**
-     * Gets the managedDeviceId property value. Managed Device ID
-     * @returns a string
-     */
-    public get managedDeviceId() {
-        return this._managedDeviceId;
-    };
-    /**
-     * Gets the manufacturer property value. Oem manufacturer of the Windows autopilot device.
-     * @returns a string
-     */
-    public get manufacturer() {
-        return this._manufacturer;
-    };
-    /**
-     * Gets the model property value. Model name of the Windows autopilot device.
-     * @returns a string
-     */
-    public get model() {
-        return this._model;
-    };
-    /**
-     * Gets the productKey property value. Product Key of the Windows autopilot device.
-     * @returns a string
-     */
-    public get productKey() {
-        return this._productKey;
-    };
-    /**
-     * Gets the purchaseOrderIdentifier property value. Purchase Order Identifier of the Windows autopilot device.
-     * @returns a string
-     */
-    public get purchaseOrderIdentifier() {
-        return this._purchaseOrderIdentifier;
-    };
-    /**
-     * Gets the resourceName property value. Resource Name.
-     * @returns a string
-     */
-    public get resourceName() {
-        return this._resourceName;
-    };
-    /**
-     * Gets the serialNumber property value. Serial number of the Windows autopilot device.
-     * @returns a string
-     */
-    public get serialNumber() {
-        return this._serialNumber;
-    };
-    /**
-     * Gets the skuNumber property value. SKU Number
-     * @returns a string
-     */
-    public get skuNumber() {
-        return this._skuNumber;
-    };
-    /**
-     * Gets the systemFamily property value. System Family
-     * @returns a string
-     */
-    public get systemFamily() {
-        return this._systemFamily;
-    };
-    /**
-     * Gets the userPrincipalName property value. User Principal Name.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set enrollmentState(value: EnrollmentState | undefined) {
+        this._enrollmentState = value;
     };
     /**
      * The deserialization information for the current model
@@ -177,6 +122,118 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the groupTag property value. Group Tag of the Windows autopilot device.
+     * @returns a string
+     */
+    public get groupTag() {
+        return this._groupTag;
+    };
+    /**
+     * Sets the groupTag property value. Group Tag of the Windows autopilot device.
+     * @param value Value to set for the groupTag property.
+     */
+    public set groupTag(value: string | undefined) {
+        this._groupTag = value;
+    };
+    /**
+     * Gets the lastContactedDateTime property value. Intune Last Contacted Date Time of the Windows autopilot device.
+     * @returns a Date
+     */
+    public get lastContactedDateTime() {
+        return this._lastContactedDateTime;
+    };
+    /**
+     * Sets the lastContactedDateTime property value. Intune Last Contacted Date Time of the Windows autopilot device.
+     * @param value Value to set for the lastContactedDateTime property.
+     */
+    public set lastContactedDateTime(value: Date | undefined) {
+        this._lastContactedDateTime = value;
+    };
+    /**
+     * Gets the managedDeviceId property value. Managed Device ID
+     * @returns a string
+     */
+    public get managedDeviceId() {
+        return this._managedDeviceId;
+    };
+    /**
+     * Sets the managedDeviceId property value. Managed Device ID
+     * @param value Value to set for the managedDeviceId property.
+     */
+    public set managedDeviceId(value: string | undefined) {
+        this._managedDeviceId = value;
+    };
+    /**
+     * Gets the manufacturer property value. Oem manufacturer of the Windows autopilot device.
+     * @returns a string
+     */
+    public get manufacturer() {
+        return this._manufacturer;
+    };
+    /**
+     * Sets the manufacturer property value. Oem manufacturer of the Windows autopilot device.
+     * @param value Value to set for the manufacturer property.
+     */
+    public set manufacturer(value: string | undefined) {
+        this._manufacturer = value;
+    };
+    /**
+     * Gets the model property value. Model name of the Windows autopilot device.
+     * @returns a string
+     */
+    public get model() {
+        return this._model;
+    };
+    /**
+     * Sets the model property value. Model name of the Windows autopilot device.
+     * @param value Value to set for the model property.
+     */
+    public set model(value: string | undefined) {
+        this._model = value;
+    };
+    /**
+     * Gets the productKey property value. Product Key of the Windows autopilot device.
+     * @returns a string
+     */
+    public get productKey() {
+        return this._productKey;
+    };
+    /**
+     * Sets the productKey property value. Product Key of the Windows autopilot device.
+     * @param value Value to set for the productKey property.
+     */
+    public set productKey(value: string | undefined) {
+        this._productKey = value;
+    };
+    /**
+     * Gets the purchaseOrderIdentifier property value. Purchase Order Identifier of the Windows autopilot device.
+     * @returns a string
+     */
+    public get purchaseOrderIdentifier() {
+        return this._purchaseOrderIdentifier;
+    };
+    /**
+     * Sets the purchaseOrderIdentifier property value. Purchase Order Identifier of the Windows autopilot device.
+     * @param value Value to set for the purchaseOrderIdentifier property.
+     */
+    public set purchaseOrderIdentifier(value: string | undefined) {
+        this._purchaseOrderIdentifier = value;
+    };
+    /**
+     * Gets the resourceName property value. Resource Name.
+     * @returns a string
+     */
+    public get resourceName() {
+        return this._resourceName;
+    };
+    /**
+     * Sets the resourceName property value. Resource Name.
+     * @param value Value to set for the resourceName property.
+     */
+    public set resourceName(value: string | undefined) {
+        this._resourceName = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -201,88 +258,11 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the addressableUserName property value. Addressable user name.
-     * @param value Value to set for the addressableUserName property.
+     * Gets the serialNumber property value. Serial number of the Windows autopilot device.
+     * @returns a string
      */
-    public set addressableUserName(value: string | undefined) {
-        this._addressableUserName = value;
-    };
-    /**
-     * Sets the azureActiveDirectoryDeviceId property value. AAD Device ID - to be deprecated
-     * @param value Value to set for the azureActiveDirectoryDeviceId property.
-     */
-    public set azureActiveDirectoryDeviceId(value: string | undefined) {
-        this._azureActiveDirectoryDeviceId = value;
-    };
-    /**
-     * Sets the displayName property value. Display Name
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the enrollmentState property value. Intune enrollment state of the Windows autopilot device. Possible values are: unknown, enrolled, pendingReset, failed, notContacted.
-     * @param value Value to set for the enrollmentState property.
-     */
-    public set enrollmentState(value: EnrollmentState | undefined) {
-        this._enrollmentState = value;
-    };
-    /**
-     * Sets the groupTag property value. Group Tag of the Windows autopilot device.
-     * @param value Value to set for the groupTag property.
-     */
-    public set groupTag(value: string | undefined) {
-        this._groupTag = value;
-    };
-    /**
-     * Sets the lastContactedDateTime property value. Intune Last Contacted Date Time of the Windows autopilot device.
-     * @param value Value to set for the lastContactedDateTime property.
-     */
-    public set lastContactedDateTime(value: Date | undefined) {
-        this._lastContactedDateTime = value;
-    };
-    /**
-     * Sets the managedDeviceId property value. Managed Device ID
-     * @param value Value to set for the managedDeviceId property.
-     */
-    public set managedDeviceId(value: string | undefined) {
-        this._managedDeviceId = value;
-    };
-    /**
-     * Sets the manufacturer property value. Oem manufacturer of the Windows autopilot device.
-     * @param value Value to set for the manufacturer property.
-     */
-    public set manufacturer(value: string | undefined) {
-        this._manufacturer = value;
-    };
-    /**
-     * Sets the model property value. Model name of the Windows autopilot device.
-     * @param value Value to set for the model property.
-     */
-    public set model(value: string | undefined) {
-        this._model = value;
-    };
-    /**
-     * Sets the productKey property value. Product Key of the Windows autopilot device.
-     * @param value Value to set for the productKey property.
-     */
-    public set productKey(value: string | undefined) {
-        this._productKey = value;
-    };
-    /**
-     * Sets the purchaseOrderIdentifier property value. Purchase Order Identifier of the Windows autopilot device.
-     * @param value Value to set for the purchaseOrderIdentifier property.
-     */
-    public set purchaseOrderIdentifier(value: string | undefined) {
-        this._purchaseOrderIdentifier = value;
-    };
-    /**
-     * Sets the resourceName property value. Resource Name.
-     * @param value Value to set for the resourceName property.
-     */
-    public set resourceName(value: string | undefined) {
-        this._resourceName = value;
+    public get serialNumber() {
+        return this._serialNumber;
     };
     /**
      * Sets the serialNumber property value. Serial number of the Windows autopilot device.
@@ -292,6 +272,13 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         this._serialNumber = value;
     };
     /**
+     * Gets the skuNumber property value. SKU Number
+     * @returns a string
+     */
+    public get skuNumber() {
+        return this._skuNumber;
+    };
+    /**
      * Sets the skuNumber property value. SKU Number
      * @param value Value to set for the skuNumber property.
      */
@@ -299,11 +286,25 @@ export class WindowsAutopilotDeviceIdentity extends Entity implements Parsable {
         this._skuNumber = value;
     };
     /**
+     * Gets the systemFamily property value. System Family
+     * @returns a string
+     */
+    public get systemFamily() {
+        return this._systemFamily;
+    };
+    /**
      * Sets the systemFamily property value. System Family
      * @param value Value to set for the systemFamily property.
      */
     public set systemFamily(value: string | undefined) {
         this._systemFamily = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. User Principal Name.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. User Principal Name.

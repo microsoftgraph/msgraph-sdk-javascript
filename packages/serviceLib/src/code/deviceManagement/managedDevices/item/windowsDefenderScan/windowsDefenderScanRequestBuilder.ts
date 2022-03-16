@@ -1,7 +1,7 @@
 import {WindowsDefenderScanRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/managedDevices/{managedDevice-id}/microsoft.graph.windowsDefenderScan  */
+/** Provides operations to call the windowsDefenderScan method.  */
 export class WindowsDefenderScanRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;

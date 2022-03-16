@@ -1,14 +1,17 @@
 import {ExternalConnection} from '../../models/microsoft/graph/externalConnectors/';
-import {GroupsRequestBuilder} from './groups/';
-import {ExternalGroupItemRequestBuilder} from './groups/item/';
-import {ItemsRequestBuilder} from './items/';
-import {ExternalItemItemRequestBuilder} from './items/item/';
-import {OperationsRequestBuilder} from './operations/';
-import {ConnectionOperationItemRequestBuilder} from './operations/item/';
-import {SchemaRequestBuilder} from './schema/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createExternalConnectionFromDiscriminatorValue} from '../../models/microsoft/graph/externalConnectors/createExternalConnectionFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {GroupsRequestBuilder} from './groups/groupsRequestBuilder';
+import {ExternalGroupItemRequestBuilder} from './groups/item/externalGroupItemRequestBuilder';
+import {ExternalItemItemRequestBuilder} from './items/item/externalItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {ConnectionOperationItemRequestBuilder} from './operations/item/connectionOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {SchemaRequestBuilder} from './schema/schemaRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /connections/{externalConnection-id}  */
+/** Provides operations to manage the collection of externalConnection entities.  */
 export class ExternalConnectionItemRequestBuilder {
     public get groups(): GroupsRequestBuilder {
         return new GroupsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -104,7 +107,11 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entity from connections by key
@@ -121,7 +128,11 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ExternalConnection>(requestInfo, ExternalConnection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ExternalConnection>(requestInfo, createExternalConnectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.connections.item.groups.item collection
@@ -168,6 +179,10 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

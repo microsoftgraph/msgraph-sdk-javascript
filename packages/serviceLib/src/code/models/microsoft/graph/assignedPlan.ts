@@ -1,28 +1,29 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AssignedPlan implements Parsable {
+export class AssignedPlan implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The date and time at which the plan was assigned. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.  */
     private _assignedDateTime?: Date | undefined;
     /** Condition of the capability assignment. The possible values are Enabled, Warning, Suspended, Deleted, LockedOut. See a detailed description of each value.  */
     private _capabilityStatus?: string | undefined;
-    /** The name of the service; for example, 'Exchange'.  */
+    /** The name of the service; for example, exchange.  */
     private _service?: string | undefined;
-    /** A GUID that identifies the service plan.  */
+    /** A GUID that identifies the service plan. For a complete list of GUIDs and their equivalent friendly service names, see Product names and service plan identifiers for licensing.  */
     private _servicePlanId?: string | undefined;
-    /**
-     * Instantiates a new assignedPlan and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the assignedDateTime property value. The date and time at which the plan was assigned. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
@@ -32,6 +33,13 @@ export class AssignedPlan implements Parsable {
         return this._assignedDateTime;
     };
     /**
+     * Sets the assignedDateTime property value. The date and time at which the plan was assigned. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
+     * @param value Value to set for the assignedDateTime property.
+     */
+    public set assignedDateTime(value: Date | undefined) {
+        this._assignedDateTime = value;
+    };
+    /**
      * Gets the capabilityStatus property value. Condition of the capability assignment. The possible values are Enabled, Warning, Suspended, Deleted, LockedOut. See a detailed description of each value.
      * @returns a string
      */
@@ -39,18 +47,17 @@ export class AssignedPlan implements Parsable {
         return this._capabilityStatus;
     };
     /**
-     * Gets the service property value. The name of the service; for example, 'Exchange'.
-     * @returns a string
+     * Sets the capabilityStatus property value. Condition of the capability assignment. The possible values are Enabled, Warning, Suspended, Deleted, LockedOut. See a detailed description of each value.
+     * @param value Value to set for the capabilityStatus property.
      */
-    public get service() {
-        return this._service;
+    public set capabilityStatus(value: string | undefined) {
+        this._capabilityStatus = value;
     };
     /**
-     * Gets the servicePlanId property value. A GUID that identifies the service plan.
-     * @returns a string
+     * Instantiates a new assignedPlan and sets the default values.
      */
-    public get servicePlanId() {
-        return this._servicePlanId;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -77,35 +84,28 @@ export class AssignedPlan implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the service property value. The name of the service; for example, exchange.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get service() {
+        return this._service;
     };
     /**
-     * Sets the assignedDateTime property value. The date and time at which the plan was assigned. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
-     * @param value Value to set for the assignedDateTime property.
-     */
-    public set assignedDateTime(value: Date | undefined) {
-        this._assignedDateTime = value;
-    };
-    /**
-     * Sets the capabilityStatus property value. Condition of the capability assignment. The possible values are Enabled, Warning, Suspended, Deleted, LockedOut. See a detailed description of each value.
-     * @param value Value to set for the capabilityStatus property.
-     */
-    public set capabilityStatus(value: string | undefined) {
-        this._capabilityStatus = value;
-    };
-    /**
-     * Sets the service property value. The name of the service; for example, 'Exchange'.
+     * Sets the service property value. The name of the service; for example, exchange.
      * @param value Value to set for the service property.
      */
     public set service(value: string | undefined) {
         this._service = value;
     };
     /**
-     * Sets the servicePlanId property value. A GUID that identifies the service plan.
+     * Gets the servicePlanId property value. A GUID that identifies the service plan. For a complete list of GUIDs and their equivalent friendly service names, see Product names and service plan identifiers for licensing.
+     * @returns a string
+     */
+    public get servicePlanId() {
+        return this._servicePlanId;
+    };
+    /**
+     * Sets the servicePlanId property value. A GUID that identifies the service plan. For a complete list of GUIDs and their equivalent friendly service names, see Product names and service plan identifiers for licensing.
      * @param value Value to set for the servicePlanId property.
      */
     public set servicePlanId(value: string | undefined) {

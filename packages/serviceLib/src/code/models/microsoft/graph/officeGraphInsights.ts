@@ -1,3 +1,6 @@
+import {createSharedInsightFromDiscriminatorValue} from './createSharedInsightFromDiscriminatorValue';
+import {createTrendingFromDiscriminatorValue} from './createTrendingFromDiscriminatorValue';
+import {createUsedInsightFromDiscriminatorValue} from './createUsedInsightFromDiscriminatorValue';
 import {Entity, SharedInsight, Trending, UsedInsight} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -15,35 +18,14 @@ export class OfficeGraphInsights extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the shared property value. Calculated relationship identifying documents shared with or by the user. This includes URLs, file attachments, and reference attachments to OneDrive for Business and SharePoint files found in Outlook messages and meetings. This also includes URLs and reference attachments to Teams conversations. Ordered by recency of share.
-     * @returns a sharedInsight
-     */
-    public get shared() {
-        return this._shared;
-    };
-    /**
-     * Gets the trending property value. Calculated relationship identifying documents trending around a user. Trending documents are calculated based on activity of the user's closest network of people and include files stored in OneDrive for Business and SharePoint. Trending insights help the user to discover potentially useful content that the user has access to, but has never viewed before.
-     * @returns a trending
-     */
-    public get trending() {
-        return this._trending;
-    };
-    /**
-     * Gets the used property value. Calculated relationship identifying the latest documents viewed or modified by a user, including OneDrive for Business and SharePoint documents, ranked by recency of use.
-     * @returns a usedInsight
-     */
-    public get used() {
-        return this._used;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["shared", (o, n) => { (o as unknown as OfficeGraphInsights).shared = n.getCollectionOfObjectValues<SharedInsight>(SharedInsight); }],
-            ["trending", (o, n) => { (o as unknown as OfficeGraphInsights).trending = n.getCollectionOfObjectValues<Trending>(Trending); }],
-            ["used", (o, n) => { (o as unknown as OfficeGraphInsights).used = n.getCollectionOfObjectValues<UsedInsight>(UsedInsight); }],
+            ["shared", (o, n) => { (o as unknown as OfficeGraphInsights).shared = n.getCollectionOfObjectValues<SharedInsight>(createSharedInsightFromDiscriminatorValue); }],
+            ["trending", (o, n) => { (o as unknown as OfficeGraphInsights).trending = n.getCollectionOfObjectValues<Trending>(createTrendingFromDiscriminatorValue); }],
+            ["used", (o, n) => { (o as unknown as OfficeGraphInsights).used = n.getCollectionOfObjectValues<UsedInsight>(createUsedInsightFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -58,6 +40,13 @@ export class OfficeGraphInsights extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<UsedInsight>("used", this.used);
     };
     /**
+     * Gets the shared property value. Calculated relationship identifying documents shared with or by the user. This includes URLs, file attachments, and reference attachments to OneDrive for Business and SharePoint files found in Outlook messages and meetings. This also includes URLs and reference attachments to Teams conversations. Ordered by recency of share.
+     * @returns a sharedInsight
+     */
+    public get shared() {
+        return this._shared;
+    };
+    /**
      * Sets the shared property value. Calculated relationship identifying documents shared with or by the user. This includes URLs, file attachments, and reference attachments to OneDrive for Business and SharePoint files found in Outlook messages and meetings. This also includes URLs and reference attachments to Teams conversations. Ordered by recency of share.
      * @param value Value to set for the shared property.
      */
@@ -65,11 +54,25 @@ export class OfficeGraphInsights extends Entity implements Parsable {
         this._shared = value;
     };
     /**
+     * Gets the trending property value. Calculated relationship identifying documents trending around a user. Trending documents are calculated based on activity of the user's closest network of people and include files stored in OneDrive for Business and SharePoint. Trending insights help the user to discover potentially useful content that the user has access to, but has never viewed before.
+     * @returns a trending
+     */
+    public get trending() {
+        return this._trending;
+    };
+    /**
      * Sets the trending property value. Calculated relationship identifying documents trending around a user. Trending documents are calculated based on activity of the user's closest network of people and include files stored in OneDrive for Business and SharePoint. Trending insights help the user to discover potentially useful content that the user has access to, but has never viewed before.
      * @param value Value to set for the trending property.
      */
     public set trending(value: Trending[] | undefined) {
         this._trending = value;
+    };
+    /**
+     * Gets the used property value. Calculated relationship identifying the latest documents viewed or modified by a user, including OneDrive for Business and SharePoint documents, ranked by recency of use.
+     * @returns a usedInsight
+     */
+    public get used() {
+        return this._used;
     };
     /**
      * Sets the used property value. Calculated relationship identifying the latest documents viewed or modified by a user, including OneDrive for Business and SharePoint documents, ranked by recency of use.

@@ -1,4 +1,5 @@
-import {Identity, TeamworkConversationIdentityType} from './index';
+import {Identity} from './index';
+import {TeamworkConversationIdentityType} from './teamworkConversationIdentityType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class TeamworkConversationIdentity extends Identity implements Parsable {
@@ -18,6 +19,13 @@ export class TeamworkConversationIdentity extends Identity implements Parsable {
         return this._conversationIdentityType;
     };
     /**
+     * Sets the conversationIdentityType property value. Type of conversation. Possible values are: team, channel, chat, and unknownFutureValue.
+     * @param value Value to set for the conversationIdentityType property.
+     */
+    public set conversationIdentityType(value: TeamworkConversationIdentityType | undefined) {
+        this._conversationIdentityType = value;
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,12 +42,5 @@ export class TeamworkConversationIdentity extends Identity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeEnumValue<TeamworkConversationIdentityType>("conversationIdentityType", this.conversationIdentityType);
-    };
-    /**
-     * Sets the conversationIdentityType property value. Type of conversation. Possible values are: team, channel, chat, and unknownFutureValue.
-     * @param value Value to set for the conversationIdentityType property.
-     */
-    public set conversationIdentityType(value: TeamworkConversationIdentityType | undefined) {
-        this._conversationIdentityType = value;
     };
 }

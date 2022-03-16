@@ -20,11 +20,25 @@ export class TeamworkHostedContent extends Entity implements Parsable {
         return this._contentBytes;
     };
     /**
+     * Sets the contentBytes property value. Write only. Bytes for the hosted content (such as images).
+     * @param value Value to set for the contentBytes property.
+     */
+    public set contentBytes(value: string | undefined) {
+        this._contentBytes = value;
+    };
+    /**
      * Gets the contentType property value. Write only. Content type. sicj as image/png, image/jpg.
      * @returns a string
      */
     public get contentType() {
         return this._contentType;
+    };
+    /**
+     * Sets the contentType property value. Write only. Content type. sicj as image/png, image/jpg.
+     * @param value Value to set for the contentType property.
+     */
+    public set contentType(value: string | undefined) {
+        this._contentType = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,19 +59,5 @@ export class TeamworkHostedContent extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeStringValue("contentBytes", this.contentBytes);
         writer.writeStringValue("contentType", this.contentType);
-    };
-    /**
-     * Sets the contentBytes property value. Write only. Bytes for the hosted content (such as images).
-     * @param value Value to set for the contentBytes property.
-     */
-    public set contentBytes(value: string | undefined) {
-        this._contentBytes = value;
-    };
-    /**
-     * Sets the contentType property value. Write only. Content type. sicj as image/png, image/jpg.
-     * @param value Value to set for the contentType property.
-     */
-    public set contentType(value: string | undefined) {
-        this._contentType = value;
     };
 }

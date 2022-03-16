@@ -1,2 +1,1 @@
-export * from './SearchWithQRequestBuilder'
-export * from './SearchWithQ'
+export * from './searchWithQResponse'

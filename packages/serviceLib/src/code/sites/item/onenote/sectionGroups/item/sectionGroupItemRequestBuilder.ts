@@ -1,12 +1,16 @@
 import {SectionGroup} from '../../../../../models/microsoft/graph/';
-import {ParentNotebookRequestBuilder} from './parentNotebook/';
-import {ParentSectionGroupRequestBuilder} from './parentSectionGroup/';
-import {SectionGroupsRequestBuilder} from './sectionGroups/';
-import {SectionsRequestBuilder} from './sections/';
-import {OnenoteSectionItemRequestBuilder} from './sections/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSectionGroupFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createSectionGroupFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ParentNotebookRequestBuilder} from './parentNotebook/parentNotebookRequestBuilder';
+import {ParentSectionGroupRequestBuilder} from './parentSectionGroup/parentSectionGroupRequestBuilder';
+import {SectionGroupItemRequestBuilder as i1dd1fc05a3188d610bad9dad2d95ca1b29f4e1d99f7f76e3882594b6deed2b2f} from './sectionGroups/item/sectionGroupItemRequestBuilder';
+import {SectionGroupsRequestBuilder} from './sectionGroups/sectionGroupsRequestBuilder';
+import {OnenoteSectionItemRequestBuilder} from './sections/item/onenoteSectionItemRequestBuilder';
+import {SectionsRequestBuilder} from './sections/sectionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/onenote/sectionGroups/{sectionGroup-id}  */
+/** Provides operations to manage the sectionGroups property of the microsoft.graph.onenote entity.  */
 export class SectionGroupItemRequestBuilder {
     public get parentNotebook(): ParentNotebookRequestBuilder {
         return new ParentNotebookRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -40,7 +44,7 @@ export class SectionGroupItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The section groups in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Delete navigation property sectionGroups for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -75,7 +79,7 @@ export class SectionGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The section groups in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Update the navigation property sectionGroups in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -93,7 +97,7 @@ export class SectionGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The section groups in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Delete navigation property sectionGroups for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -102,7 +106,11 @@ export class SectionGroupItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The section groups in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
@@ -119,10 +127,14 @@ export class SectionGroupItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<SectionGroup>(requestInfo, SectionGroup, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SectionGroup>(requestInfo, createSectionGroupFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The section groups in all OneNote notebooks that are owned by the user or group.  Read-only. Nullable.
+     * Update the navigation property sectionGroups in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -133,7 +145,22 @@ export class SectionGroupItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.sites.item.onenote.sectionGroups.item.sectionGroups.item collection
+     * @param id Unique identifier of the item
+     * @returns a sectionGroupItemRequestBuilder
+     */
+    public sectionGroupsById(id: string) : i1dd1fc05a3188d610bad9dad2d95ca1b29f4e1d99f7f76e3882594b6deed2b2f {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["sectionGroup_id1"] = id
+        return new i1dd1fc05a3188d610bad9dad2d95ca1b29f4e1d99f7f76e3882594b6deed2b2f(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.onenote.sectionGroups.item.sections.item collection

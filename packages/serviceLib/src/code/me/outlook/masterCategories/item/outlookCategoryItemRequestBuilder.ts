@@ -1,7 +1,10 @@
 import {OutlookCategory} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOutlookCategoryFromDiscriminatorValue} from '../../../../models/microsoft/graph/createOutlookCategoryFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/outlook/masterCategories/{outlookCategory-id}  */
+/** Provides operations to manage the masterCategories property of the microsoft.graph.outlookUser entity.  */
 export class OutlookCategoryItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class OutlookCategoryItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A list of categories defined for the user.
+     * Delete navigation property masterCategories for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -57,7 +60,7 @@ export class OutlookCategoryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of categories defined for the user.
+     * Update the navigation property masterCategories in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -75,7 +78,7 @@ export class OutlookCategoryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of categories defined for the user.
+     * Delete navigation property masterCategories for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -84,7 +87,11 @@ export class OutlookCategoryItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A list of categories defined for the user.
@@ -100,10 +107,14 @@ export class OutlookCategoryItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<OutlookCategory>(requestInfo, OutlookCategory, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<OutlookCategory>(requestInfo, createOutlookCategoryFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A list of categories defined for the user.
+     * Update the navigation property masterCategories in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,6 +125,10 @@ export class OutlookCategoryItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

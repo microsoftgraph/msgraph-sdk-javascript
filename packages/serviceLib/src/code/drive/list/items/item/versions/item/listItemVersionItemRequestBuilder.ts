@@ -1,9 +1,12 @@
 import {ListItemVersion} from '../../../../../../models/microsoft/graph/';
-import {FieldsRequestBuilder} from './fields/';
-import {RestoreVersionRequestBuilder} from './restoreVersion/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createListItemVersionFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createListItemVersionFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {FieldsRequestBuilder} from './fields/fieldsRequestBuilder';
+import {RestoreVersionRequestBuilder} from './restoreVersion/restoreVersionRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /drive/list/items/{listItem-id}/versions/{listItemVersion-id}  */
+/** Provides operations to manage the versions property of the microsoft.graph.listItem entity.  */
 export class ListItemVersionItemRequestBuilder {
     public get fields(): FieldsRequestBuilder {
         return new FieldsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -31,7 +34,7 @@ export class ListItemVersionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of previous versions of the list item.
+     * Delete navigation property versions for drive
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +69,7 @@ export class ListItemVersionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of previous versions of the list item.
+     * Update the navigation property versions in drive
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +87,7 @@ export class ListItemVersionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of previous versions of the list item.
+     * Delete navigation property versions for drive
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +96,11 @@ export class ListItemVersionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of previous versions of the list item.
@@ -110,10 +117,14 @@ export class ListItemVersionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ListItemVersion>(requestInfo, ListItemVersion, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ListItemVersion>(requestInfo, createListItemVersionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of previous versions of the list item.
+     * Update the navigation property versions in drive
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +135,10 @@ export class ListItemVersionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

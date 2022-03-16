@@ -1,2 +1,1 @@
-export * from './ForceDeleteRequestBody'
-export * from './ForceDeleteRequestBuilder'
+export * from './forceDeleteRequestBody'

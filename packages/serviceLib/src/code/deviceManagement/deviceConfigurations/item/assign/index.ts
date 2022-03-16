@@ -1,3 +1,2 @@
-export * from './AssignRequestBody'
-export * from './Assign'
-export * from './AssignRequestBuilder'
+export * from './assignRequestBody'
+export * from './assignResponse'

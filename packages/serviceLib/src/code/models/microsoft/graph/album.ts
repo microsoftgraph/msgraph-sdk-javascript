@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Album implements Parsable {
+export class Album implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Unique identifier of the [driveItem][] that is the cover of the album.  */
     private _coverImageItemId?: string | undefined;
-    /**
-     * Instantiates a new album and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,31 @@ export class Album implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new album and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the coverImageItemId property value. Unique identifier of the [driveItem][] that is the cover of the album.
      * @returns a string
      */
     public get coverImageItemId() {
         return this._coverImageItemId;
+    };
+    /**
+     * Sets the coverImageItemId property value. Unique identifier of the [driveItem][] that is the cover of the album.
+     * @param value Value to set for the coverImageItemId property.
+     */
+    public set coverImageItemId(value: string | undefined) {
+        this._coverImageItemId = value;
     };
     /**
      * The deserialization information for the current model
@@ -42,19 +56,5 @@ export class Album implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeStringValue("coverImageItemId", this.coverImageItemId);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the coverImageItemId property value. Unique identifier of the [driveItem][] that is the cover of the album.
-     * @param value Value to set for the coverImageItemId property.
-     */
-    public set coverImageItemId(value: string | undefined) {
-        this._coverImageItemId = value;
     };
 }

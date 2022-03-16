@@ -1,19 +1,22 @@
 import {Print} from '../models/microsoft/graph/';
-import {ConnectorsRequestBuilder} from './connectors/';
-import {PrintConnectorItemRequestBuilder} from './connectors/item/';
-import {OperationsRequestBuilder} from './operations/';
-import {PrintOperationItemRequestBuilder} from './operations/item/';
-import {PrintersRequestBuilder} from './printers/';
-import {PrinterItemRequestBuilder} from './printers/item/';
-import {ServicesRequestBuilder} from './services/';
-import {PrintServiceItemRequestBuilder} from './services/item/';
-import {SharesRequestBuilder} from './shares/';
-import {PrinterShareItemRequestBuilder} from './shares/item/';
-import {TaskDefinitionsRequestBuilder} from './taskDefinitions/';
-import {PrintTaskDefinitionItemRequestBuilder} from './taskDefinitions/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrintFromDiscriminatorValue} from '../models/microsoft/graph/createPrintFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ConnectorsRequestBuilder} from './connectors/connectorsRequestBuilder';
+import {PrintConnectorItemRequestBuilder} from './connectors/item/printConnectorItemRequestBuilder';
+import {PrintOperationItemRequestBuilder} from './operations/item/printOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {PrinterItemRequestBuilder} from './printers/item/printerItemRequestBuilder';
+import {PrintersRequestBuilder} from './printers/printersRequestBuilder';
+import {PrintServiceItemRequestBuilder} from './services/item/printServiceItemRequestBuilder';
+import {ServicesRequestBuilder} from './services/servicesRequestBuilder';
+import {PrinterShareItemRequestBuilder} from './shares/item/printerShareItemRequestBuilder';
+import {SharesRequestBuilder} from './shares/sharesRequestBuilder';
+import {PrintTaskDefinitionItemRequestBuilder} from './taskDefinitions/item/printTaskDefinitionItemRequestBuilder';
+import {TaskDefinitionsRequestBuilder} from './taskDefinitions/taskDefinitionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print  */
+/** Provides operations to manage the print singleton.  */
 export class PrintRequestBuilder {
     public get connectors(): ConnectorsRequestBuilder {
         return new ConnectorsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -116,7 +119,11 @@ export class PrintRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Print>(requestInfo, Print, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Print>(requestInfo, createPrintFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.print.operations.item collection
@@ -141,7 +148,11 @@ export class PrintRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.print.printers.item collection

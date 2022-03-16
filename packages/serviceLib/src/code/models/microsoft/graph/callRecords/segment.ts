@@ -1,4 +1,7 @@
 import {Entity} from '../';
+import {createEndpointFromDiscriminatorValue} from './createEndpointFromDiscriminatorValue';
+import {createFailureInfoFromDiscriminatorValue} from './createFailureInfoFromDiscriminatorValue';
+import {createMediaFromDiscriminatorValue} from './createMediaFromDiscriminatorValue';
 import {Endpoint, FailureInfo, Media} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -16,17 +19,18 @@ export class Segment extends Entity implements Parsable {
     /** UTC time when the segment started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z  */
     private _startDateTime?: Date | undefined;
     /**
-     * Instantiates a new segment and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the callee property value. Endpoint that answered this segment.
      * @returns a endpoint
      */
     public get callee() {
         return this._callee;
+    };
+    /**
+     * Sets the callee property value. Endpoint that answered this segment.
+     * @param value Value to set for the callee property.
+     */
+    public set callee(value: Endpoint | undefined) {
+        this._callee = value;
     };
     /**
      * Gets the caller property value. Endpoint that initiated this segment.
@@ -36,11 +40,31 @@ export class Segment extends Entity implements Parsable {
         return this._caller;
     };
     /**
+     * Sets the caller property value. Endpoint that initiated this segment.
+     * @param value Value to set for the caller property.
+     */
+    public set caller(value: Endpoint | undefined) {
+        this._caller = value;
+    };
+    /**
+     * Instantiates a new segment and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the endDateTime property value. UTC time when the segment ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
      * @returns a Date
      */
     public get endDateTime() {
         return this._endDateTime;
+    };
+    /**
+     * Sets the endDateTime property value. UTC time when the segment ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @param value Value to set for the endDateTime property.
+     */
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * Gets the failureInfo property value. Failure information associated with the segment if it failed.
@@ -50,18 +74,11 @@ export class Segment extends Entity implements Parsable {
         return this._failureInfo;
     };
     /**
-     * Gets the media property value. Media associated with this segment.
-     * @returns a media
+     * Sets the failureInfo property value. Failure information associated with the segment if it failed.
+     * @param value Value to set for the failureInfo property.
      */
-    public get media() {
-        return this._media;
-    };
-    /**
-     * Gets the startDateTime property value. UTC time when the segment started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @returns a Date
-     */
-    public get startDateTime() {
-        return this._startDateTime;
+    public set failureInfo(value: FailureInfo | undefined) {
+        this._failureInfo = value;
     };
     /**
      * The deserialization information for the current model
@@ -69,13 +86,27 @@ export class Segment extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["callee", (o, n) => { (o as unknown as Segment).callee = n.getObjectValue<Endpoint>(Endpoint); }],
-            ["caller", (o, n) => { (o as unknown as Segment).caller = n.getObjectValue<Endpoint>(Endpoint); }],
+            ["callee", (o, n) => { (o as unknown as Segment).callee = n.getObjectValue<Endpoint>(createEndpointFromDiscriminatorValue); }],
+            ["caller", (o, n) => { (o as unknown as Segment).caller = n.getObjectValue<Endpoint>(createEndpointFromDiscriminatorValue); }],
             ["endDateTime", (o, n) => { (o as unknown as Segment).endDateTime = n.getDateValue(); }],
-            ["failureInfo", (o, n) => { (o as unknown as Segment).failureInfo = n.getObjectValue<FailureInfo>(FailureInfo); }],
-            ["media", (o, n) => { (o as unknown as Segment).media = n.getCollectionOfObjectValues<Media>(Media); }],
+            ["failureInfo", (o, n) => { (o as unknown as Segment).failureInfo = n.getObjectValue<FailureInfo>(createFailureInfoFromDiscriminatorValue); }],
+            ["media", (o, n) => { (o as unknown as Segment).media = n.getCollectionOfObjectValues<Media>(createMediaFromDiscriminatorValue); }],
             ["startDateTime", (o, n) => { (o as unknown as Segment).startDateTime = n.getDateValue(); }],
         ]);
+    };
+    /**
+     * Gets the media property value. Media associated with this segment.
+     * @returns a media
+     */
+    public get media() {
+        return this._media;
+    };
+    /**
+     * Sets the media property value. Media associated with this segment.
+     * @param value Value to set for the media property.
+     */
+    public set media(value: Media[] | undefined) {
+        this._media = value;
     };
     /**
      * Serializes information the current object
@@ -92,39 +123,11 @@ export class Segment extends Entity implements Parsable {
         writer.writeDateValue("startDateTime", this.startDateTime);
     };
     /**
-     * Sets the callee property value. Endpoint that answered this segment.
-     * @param value Value to set for the callee property.
+     * Gets the startDateTime property value. UTC time when the segment started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @returns a Date
      */
-    public set callee(value: Endpoint | undefined) {
-        this._callee = value;
-    };
-    /**
-     * Sets the caller property value. Endpoint that initiated this segment.
-     * @param value Value to set for the caller property.
-     */
-    public set caller(value: Endpoint | undefined) {
-        this._caller = value;
-    };
-    /**
-     * Sets the endDateTime property value. UTC time when the segment ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the failureInfo property value. Failure information associated with the segment if it failed.
-     * @param value Value to set for the failureInfo property.
-     */
-    public set failureInfo(value: FailureInfo | undefined) {
-        this._failureInfo = value;
-    };
-    /**
-     * Sets the media property value. Media associated with this segment.
-     * @param value Value to set for the media property.
-     */
-    public set media(value: Media[] | undefined) {
-        this._media = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. UTC time when the segment started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z

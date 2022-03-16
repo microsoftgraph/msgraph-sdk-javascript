@@ -1,4 +1,10 @@
-import {AccessReviewHistoryDecisionFilter, AccessReviewHistoryInstance, AccessReviewHistoryScheduleSettings, AccessReviewHistoryStatus, AccessReviewScope, Entity, UserIdentity} from './index';
+import {AccessReviewHistoryDecisionFilter} from './accessReviewHistoryDecisionFilter';
+import {AccessReviewHistoryStatus} from './accessReviewHistoryStatus';
+import {createAccessReviewHistoryInstanceFromDiscriminatorValue} from './createAccessReviewHistoryInstanceFromDiscriminatorValue';
+import {createAccessReviewHistoryScheduleSettingsFromDiscriminatorValue} from './createAccessReviewHistoryScheduleSettingsFromDiscriminatorValue';
+import {createAccessReviewScopeFromDiscriminatorValue} from './createAccessReviewScopeFromDiscriminatorValue';
+import {createUserIdentityFromDiscriminatorValue} from './createUserIdentityFromDiscriminatorValue';
+import {AccessReviewHistoryInstance, AccessReviewHistoryScheduleSettings, AccessReviewScope, Entity, UserIdentity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AccessReviewHistoryDefinition extends Entity implements Parsable {
@@ -35,11 +41,25 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         return this._createdBy;
     };
     /**
+     * Sets the createdBy property value. 
+     * @param value Value to set for the createdBy property.
+     */
+    public set createdBy(value: UserIdentity | undefined) {
+        this._createdBy = value;
+    };
+    /**
      * Gets the createdDateTime property value. Timestamp when the access review definition was created.
      * @returns a Date
      */
     public get createdDateTime() {
         return this._createdDateTime;
+    };
+    /**
+     * Sets the createdDateTime property value. Timestamp when the access review definition was created.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
     };
     /**
      * Gets the decisions property value. Determines which review decisions will be included in the fetched review history data if specified. Optional on create. All decisions will be included by default if no decisions are provided on create. Possible values are: approve, deny, dontKnow, notReviewed, and notNotified.
@@ -49,11 +69,43 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         return this._decisions;
     };
     /**
+     * Sets the decisions property value. Determines which review decisions will be included in the fetched review history data if specified. Optional on create. All decisions will be included by default if no decisions are provided on create. Possible values are: approve, deny, dontKnow, notReviewed, and notNotified.
+     * @param value Value to set for the decisions property.
+     */
+    public set decisions(value: AccessReviewHistoryDecisionFilter[] | undefined) {
+        this._decisions = value;
+    };
+    /**
      * Gets the displayName property value. Name for the access review history data collection. Required.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. Name for the access review history data collection. Required.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["createdBy", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).createdBy = n.getObjectValue<UserIdentity>(createUserIdentityFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).createdDateTime = n.getDateValue(); }],
+            ["decisions", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).decisions = n.getEnumValues<AccessReviewHistoryDecisionFilter>(AccessReviewHistoryDecisionFilter); }],
+            ["displayName", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).displayName = n.getStringValue(); }],
+            ["instances", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).instances = n.getCollectionOfObjectValues<AccessReviewHistoryInstance>(createAccessReviewHistoryInstanceFromDiscriminatorValue); }],
+            ["reviewHistoryPeriodEndDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).reviewHistoryPeriodEndDateTime = n.getDateValue(); }],
+            ["reviewHistoryPeriodStartDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).reviewHistoryPeriodStartDateTime = n.getDateValue(); }],
+            ["scheduleSettings", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).scheduleSettings = n.getObjectValue<AccessReviewHistoryScheduleSettings>(createAccessReviewHistoryScheduleSettingsFromDiscriminatorValue); }],
+            ["scopes", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).scopes = n.getCollectionOfObjectValues<AccessReviewScope>(createAccessReviewScopeFromDiscriminatorValue); }],
+            ["status", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).status = n.getEnumValue<AccessReviewHistoryStatus>(AccessReviewHistoryStatus); }],
+        ]);
     };
     /**
      * Gets the instances property value. If the accessReviewHistoryDefinition is a recurring definition, instances represent each recurrence. A definition that does not recur will have exactly one instance.
@@ -63,11 +115,25 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         return this._instances;
     };
     /**
+     * Sets the instances property value. If the accessReviewHistoryDefinition is a recurring definition, instances represent each recurrence. A definition that does not recur will have exactly one instance.
+     * @param value Value to set for the instances property.
+     */
+    public set instances(value: AccessReviewHistoryInstance[] | undefined) {
+        this._instances = value;
+    };
+    /**
      * Gets the reviewHistoryPeriodEndDateTime property value. A timestamp. Reviews ending on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
      * @returns a Date
      */
     public get reviewHistoryPeriodEndDateTime() {
         return this._reviewHistoryPeriodEndDateTime;
+    };
+    /**
+     * Sets the reviewHistoryPeriodEndDateTime property value. A timestamp. Reviews ending on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
+     * @param value Value to set for the reviewHistoryPeriodEndDateTime property.
+     */
+    public set reviewHistoryPeriodEndDateTime(value: Date | undefined) {
+        this._reviewHistoryPeriodEndDateTime = value;
     };
     /**
      * Gets the reviewHistoryPeriodStartDateTime property value. A timestamp. Reviews starting on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
@@ -77,11 +143,25 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         return this._reviewHistoryPeriodStartDateTime;
     };
     /**
+     * Sets the reviewHistoryPeriodStartDateTime property value. A timestamp. Reviews starting on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
+     * @param value Value to set for the reviewHistoryPeriodStartDateTime property.
+     */
+    public set reviewHistoryPeriodStartDateTime(value: Date | undefined) {
+        this._reviewHistoryPeriodStartDateTime = value;
+    };
+    /**
      * Gets the scheduleSettings property value. The settings for a recurring access review history definition series. Only required if reviewHistoryPeriodStartDateTime or reviewHistoryPeriodEndDateTime are not defined.
      * @returns a accessReviewHistoryScheduleSettings
      */
     public get scheduleSettings() {
         return this._scheduleSettings;
+    };
+    /**
+     * Sets the scheduleSettings property value. The settings for a recurring access review history definition series. Only required if reviewHistoryPeriodStartDateTime or reviewHistoryPeriodEndDateTime are not defined.
+     * @param value Value to set for the scheduleSettings property.
+     */
+    public set scheduleSettings(value: AccessReviewHistoryScheduleSettings | undefined) {
+        this._scheduleSettings = value;
     };
     /**
      * Gets the scopes property value. Used to scope what reviews are included in the fetched history data. Fetches reviews whose scope matches with this provided scope. Required.
@@ -91,29 +171,11 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         return this._scopes;
     };
     /**
-     * Gets the status property value. Represents the status of the review history data collection. The possible values are: done, inProgress, error, requested, unknownFutureValue.
-     * @returns a accessReviewHistoryStatus
+     * Sets the scopes property value. Used to scope what reviews are included in the fetched history data. Fetches reviews whose scope matches with this provided scope. Required.
+     * @param value Value to set for the scopes property.
      */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["createdBy", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).createdBy = n.getObjectValue<UserIdentity>(UserIdentity); }],
-            ["createdDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).createdDateTime = n.getDateValue(); }],
-            ["decisions", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).decisions = n.getEnumValues<AccessReviewHistoryDecisionFilter>(AccessReviewHistoryDecisionFilter); }],
-            ["displayName", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).displayName = n.getStringValue(); }],
-            ["instances", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).instances = n.getCollectionOfObjectValues<AccessReviewHistoryInstance>(AccessReviewHistoryInstance); }],
-            ["reviewHistoryPeriodEndDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).reviewHistoryPeriodEndDateTime = n.getDateValue(); }],
-            ["reviewHistoryPeriodStartDateTime", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).reviewHistoryPeriodStartDateTime = n.getDateValue(); }],
-            ["scheduleSettings", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).scheduleSettings = n.getObjectValue<AccessReviewHistoryScheduleSettings>(AccessReviewHistoryScheduleSettings); }],
-            ["scopes", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).scopes = n.getCollectionOfObjectValues<AccessReviewScope>(AccessReviewScope); }],
-            ["status", (o, n) => { (o as unknown as AccessReviewHistoryDefinition).status = n.getEnumValue<AccessReviewHistoryStatus>(AccessReviewHistoryStatus); }],
-        ]);
+    public set scopes(value: AccessReviewScope[] | undefined) {
+        this._scopes = value;
     };
     /**
      * Serializes information the current object
@@ -134,67 +196,11 @@ export class AccessReviewHistoryDefinition extends Entity implements Parsable {
         writer.writeEnumValue<AccessReviewHistoryStatus>("status", this.status);
     };
     /**
-     * Sets the createdBy property value. 
-     * @param value Value to set for the createdBy property.
+     * Gets the status property value. Represents the status of the review history data collection. The possible values are: done, inProgress, error, requested, unknownFutureValue.
+     * @returns a accessReviewHistoryStatus
      */
-    public set createdBy(value: UserIdentity | undefined) {
-        this._createdBy = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Timestamp when the access review definition was created.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the decisions property value. Determines which review decisions will be included in the fetched review history data if specified. Optional on create. All decisions will be included by default if no decisions are provided on create. Possible values are: approve, deny, dontKnow, notReviewed, and notNotified.
-     * @param value Value to set for the decisions property.
-     */
-    public set decisions(value: AccessReviewHistoryDecisionFilter[] | undefined) {
-        this._decisions = value;
-    };
-    /**
-     * Sets the displayName property value. Name for the access review history data collection. Required.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the instances property value. If the accessReviewHistoryDefinition is a recurring definition, instances represent each recurrence. A definition that does not recur will have exactly one instance.
-     * @param value Value to set for the instances property.
-     */
-    public set instances(value: AccessReviewHistoryInstance[] | undefined) {
-        this._instances = value;
-    };
-    /**
-     * Sets the reviewHistoryPeriodEndDateTime property value. A timestamp. Reviews ending on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
-     * @param value Value to set for the reviewHistoryPeriodEndDateTime property.
-     */
-    public set reviewHistoryPeriodEndDateTime(value: Date | undefined) {
-        this._reviewHistoryPeriodEndDateTime = value;
-    };
-    /**
-     * Sets the reviewHistoryPeriodStartDateTime property value. A timestamp. Reviews starting on or before this date will be included in the fetched history data. Only required if scheduleSettings is not defined.
-     * @param value Value to set for the reviewHistoryPeriodStartDateTime property.
-     */
-    public set reviewHistoryPeriodStartDateTime(value: Date | undefined) {
-        this._reviewHistoryPeriodStartDateTime = value;
-    };
-    /**
-     * Sets the scheduleSettings property value. The settings for a recurring access review history definition series. Only required if reviewHistoryPeriodStartDateTime or reviewHistoryPeriodEndDateTime are not defined.
-     * @param value Value to set for the scheduleSettings property.
-     */
-    public set scheduleSettings(value: AccessReviewHistoryScheduleSettings | undefined) {
-        this._scheduleSettings = value;
-    };
-    /**
-     * Sets the scopes property value. Used to scope what reviews are included in the fetched history data. Fetches reviews whose scope matches with this provided scope. Required.
-     * @param value Value to set for the scopes property.
-     */
-    public set scopes(value: AccessReviewScope[] | undefined) {
-        this._scopes = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. Represents the status of the review history data collection. The possible values are: done, inProgress, error, requested, unknownFutureValue.

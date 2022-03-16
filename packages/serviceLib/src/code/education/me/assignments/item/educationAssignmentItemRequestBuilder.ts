@@ -1,16 +1,19 @@
 import {EducationAssignment} from '../../../../models/microsoft/graph/';
-import {CategoriesRequestBuilder} from './categories/';
-import {EducationCategoryItemRequestBuilder} from './categories/item/';
-import {PublishRequestBuilder} from './publish/';
-import {ResourcesRequestBuilder} from './resources/';
-import {EducationAssignmentResourceItemRequestBuilder} from './resources/item/';
-import {RubricRequestBuilder} from './rubric/';
-import {SetUpResourcesFolderRequestBuilder} from './setUpResourcesFolder/';
-import {SubmissionsRequestBuilder} from './submissions/';
-import {EducationSubmissionItemRequestBuilder} from './submissions/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEducationAssignmentFromDiscriminatorValue} from '../../../../models/microsoft/graph/createEducationAssignmentFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CategoriesRequestBuilder} from './categories/categoriesRequestBuilder';
+import {EducationCategoryItemRequestBuilder} from './categories/item/educationCategoryItemRequestBuilder';
+import {PublishRequestBuilder} from './publish/publishRequestBuilder';
+import {EducationAssignmentResourceItemRequestBuilder} from './resources/item/educationAssignmentResourceItemRequestBuilder';
+import {ResourcesRequestBuilder} from './resources/resourcesRequestBuilder';
+import {RubricRequestBuilder} from './rubric/rubricRequestBuilder';
+import {SetUpResourcesFolderRequestBuilder} from './setUpResourcesFolder/setUpResourcesFolderRequestBuilder';
+import {EducationSubmissionItemRequestBuilder} from './submissions/item/educationSubmissionItemRequestBuilder';
+import {SubmissionsRequestBuilder} from './submissions/submissionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /education/me/assignments/{educationAssignment-id}  */
+/** Provides operations to manage the assignments property of the microsoft.graph.educationUser entity.  */
 export class EducationAssignmentItemRequestBuilder {
     public get categories(): CategoriesRequestBuilder {
         return new CategoriesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -61,7 +64,7 @@ export class EducationAssignmentItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Assignments belonging to the user.
+     * Delete navigation property assignments for education
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -96,7 +99,7 @@ export class EducationAssignmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Assignments belonging to the user.
+     * Update the navigation property assignments in education
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,7 +117,7 @@ export class EducationAssignmentItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Assignments belonging to the user.
+     * Delete navigation property assignments for education
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -123,7 +126,11 @@ export class EducationAssignmentItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Assignments belonging to the user.
@@ -140,10 +147,14 @@ export class EducationAssignmentItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<EducationAssignment>(requestInfo, EducationAssignment, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<EducationAssignment>(requestInfo, createEducationAssignmentFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Assignments belonging to the user.
+     * Update the navigation property assignments in education
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -154,7 +165,11 @@ export class EducationAssignmentItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.education.me.assignments.item.resources.item collection

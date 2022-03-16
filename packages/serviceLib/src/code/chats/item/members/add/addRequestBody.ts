@@ -1,16 +1,12 @@
 import {ConversationMember} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createConversationMemberFromDiscriminatorValue} from '../../../../models/microsoft/graph/createConversationMemberFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AddRequestBody implements Parsable {
+/** Provides operations to call the add method.  */
+export class AddRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _values?: ConversationMember[] | undefined;
-    /**
-     * Instantiates a new addRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +15,17 @@ export class AddRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the values property value. 
-     * @returns a conversationMember
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get values() {
-        return this._values;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new addRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -31,7 +33,7 @@ export class AddRequestBody implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["values", (o, n) => { (o as unknown as AddRequestBody).values = n.getCollectionOfObjectValues<ConversationMember>(ConversationMember); }],
+            ["values", (o, n) => { (o as unknown as AddRequestBody).values = n.getCollectionOfObjectValues<ConversationMember>(createConversationMemberFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -44,11 +46,11 @@ export class AddRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the values property value. 
+     * @returns a conversationMember
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get values() {
+        return this._values;
     };
     /**
      * Sets the values property value. 

@@ -1,8 +1,9 @@
 import {PlayPromptOperation} from '../../../../models/microsoft/graph/';
+import {createPlayPromptOperationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createPlayPromptOperationFromDiscriminatorValue';
 import {PlayPromptRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}/microsoft.graph.playPrompt  */
+/** Provides operations to call the playPrompt method.  */
 export class PlayPromptRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -47,13 +48,13 @@ export class PlayPromptRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of PlayPromptResponse
+     * @returns a Promise of PlayPromptOperation
      */
     public post(body: PlayPromptRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<PlayPromptOperation | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<PlayPromptOperation>(requestInfo, PlayPromptOperation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<PlayPromptOperation>(requestInfo, createPlayPromptOperationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,3 +1,5 @@
+import {createAppIdentityFromDiscriminatorValue} from './createAppIdentityFromDiscriminatorValue';
+import {createPrintTaskFromDiscriminatorValue} from './createPrintTaskFromDiscriminatorValue';
 import {AppIdentity, Entity, PrintTask} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -21,6 +23,13 @@ export class PrintTaskDefinition extends Entity implements Parsable {
         return this._createdBy;
     };
     /**
+     * Sets the createdBy property value. 
+     * @param value Value to set for the createdBy property.
+     */
+    public set createdBy(value: AppIdentity | undefined) {
+        this._createdBy = value;
+    };
+    /**
      * Gets the displayName property value. The name of the printTaskDefinition.
      * @returns a string
      */
@@ -28,11 +37,11 @@ export class PrintTaskDefinition extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the tasks property value. A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
-     * @returns a printTask
+     * Sets the displayName property value. The name of the printTaskDefinition.
+     * @param value Value to set for the displayName property.
      */
-    public get tasks() {
-        return this._tasks;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -40,9 +49,9 @@ export class PrintTaskDefinition extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["createdBy", (o, n) => { (o as unknown as PrintTaskDefinition).createdBy = n.getObjectValue<AppIdentity>(AppIdentity); }],
+            ["createdBy", (o, n) => { (o as unknown as PrintTaskDefinition).createdBy = n.getObjectValue<AppIdentity>(createAppIdentityFromDiscriminatorValue); }],
             ["displayName", (o, n) => { (o as unknown as PrintTaskDefinition).displayName = n.getStringValue(); }],
-            ["tasks", (o, n) => { (o as unknown as PrintTaskDefinition).tasks = n.getCollectionOfObjectValues<PrintTask>(PrintTask); }],
+            ["tasks", (o, n) => { (o as unknown as PrintTaskDefinition).tasks = n.getCollectionOfObjectValues<PrintTask>(createPrintTaskFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -57,18 +66,11 @@ export class PrintTaskDefinition extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<PrintTask>("tasks", this.tasks);
     };
     /**
-     * Sets the createdBy property value. 
-     * @param value Value to set for the createdBy property.
+     * Gets the tasks property value. A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
+     * @returns a printTask
      */
-    public set createdBy(value: AppIdentity | undefined) {
-        this._createdBy = value;
-    };
-    /**
-     * Sets the displayName property value. The name of the printTaskDefinition.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get tasks() {
+        return this._tasks;
     };
     /**
      * Sets the tasks property value. A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.

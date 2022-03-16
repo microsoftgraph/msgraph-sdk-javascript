@@ -1,2 +1,1 @@
-export * from './ChangeScreenSharingRoleRequestBuilder'
-export * from './ChangeScreenSharingRoleRequestBody'
+export * from './changeScreenSharingRoleRequestBody'

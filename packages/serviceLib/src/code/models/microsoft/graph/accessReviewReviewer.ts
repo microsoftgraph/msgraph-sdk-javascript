@@ -22,6 +22,13 @@ export class AccessReviewReviewer extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The date when the reviewer was added for the access review.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the displayName property value. Name of reviewer.
      * @returns a string
      */
@@ -29,11 +36,11 @@ export class AccessReviewReviewer extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the userPrincipalName property value. User principal name of the reviewer.
-     * @returns a string
+     * Sets the displayName property value. Name of reviewer.
+     * @param value Value to set for the displayName property.
      */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -58,18 +65,11 @@ export class AccessReviewReviewer extends Entity implements Parsable {
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the createdDateTime property value. The date when the reviewer was added for the access review.
-     * @param value Value to set for the createdDateTime property.
+     * Gets the userPrincipalName property value. User principal name of the reviewer.
+     * @returns a string
      */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the displayName property value. Name of reviewer.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. User principal name of the reviewer.

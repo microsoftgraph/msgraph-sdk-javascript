@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class InformationalUrl implements Parsable {
+export class InformationalUrl implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** CDN URL to the application's logo, Read-only.  */
@@ -14,12 +14,6 @@ export class InformationalUrl implements Parsable {
     /** Link to the application's terms of service statement. For example, https://www.contoso.com/app/termsofservice  */
     private _termsOfServiceUrl?: string | undefined;
     /**
-     * Instantiates a new informationalUrl and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -27,39 +21,17 @@ export class InformationalUrl implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the logoUrl property value. CDN URL to the application's logo, Read-only.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get logoUrl() {
-        return this._logoUrl;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the marketingUrl property value. Link to the application's marketing page. For example, https://www.contoso.com/app/marketing
-     * @returns a string
+     * Instantiates a new informationalUrl and sets the default values.
      */
-    public get marketingUrl() {
-        return this._marketingUrl;
-    };
-    /**
-     * Gets the privacyStatementUrl property value. Link to the application's privacy statement. For example, https://www.contoso.com/app/privacy
-     * @returns a string
-     */
-    public get privacyStatementUrl() {
-        return this._privacyStatementUrl;
-    };
-    /**
-     * Gets the supportUrl property value. Link to the application's support page. For example, https://www.contoso.com/app/support
-     * @returns a string
-     */
-    public get supportUrl() {
-        return this._supportUrl;
-    };
-    /**
-     * Gets the termsOfServiceUrl property value. Link to the application's terms of service statement. For example, https://www.contoso.com/app/termsofservice
-     * @returns a string
-     */
-    public get termsOfServiceUrl() {
-        return this._termsOfServiceUrl;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -75,6 +47,48 @@ export class InformationalUrl implements Parsable {
         ]);
     };
     /**
+     * Gets the logoUrl property value. CDN URL to the application's logo, Read-only.
+     * @returns a string
+     */
+    public get logoUrl() {
+        return this._logoUrl;
+    };
+    /**
+     * Sets the logoUrl property value. CDN URL to the application's logo, Read-only.
+     * @param value Value to set for the logoUrl property.
+     */
+    public set logoUrl(value: string | undefined) {
+        this._logoUrl = value;
+    };
+    /**
+     * Gets the marketingUrl property value. Link to the application's marketing page. For example, https://www.contoso.com/app/marketing
+     * @returns a string
+     */
+    public get marketingUrl() {
+        return this._marketingUrl;
+    };
+    /**
+     * Sets the marketingUrl property value. Link to the application's marketing page. For example, https://www.contoso.com/app/marketing
+     * @param value Value to set for the marketingUrl property.
+     */
+    public set marketingUrl(value: string | undefined) {
+        this._marketingUrl = value;
+    };
+    /**
+     * Gets the privacyStatementUrl property value. Link to the application's privacy statement. For example, https://www.contoso.com/app/privacy
+     * @returns a string
+     */
+    public get privacyStatementUrl() {
+        return this._privacyStatementUrl;
+    };
+    /**
+     * Sets the privacyStatementUrl property value. Link to the application's privacy statement. For example, https://www.contoso.com/app/privacy
+     * @param value Value to set for the privacyStatementUrl property.
+     */
+    public set privacyStatementUrl(value: string | undefined) {
+        this._privacyStatementUrl = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -88,32 +102,11 @@ export class InformationalUrl implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the supportUrl property value. Link to the application's support page. For example, https://www.contoso.com/app/support
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the logoUrl property value. CDN URL to the application's logo, Read-only.
-     * @param value Value to set for the logoUrl property.
-     */
-    public set logoUrl(value: string | undefined) {
-        this._logoUrl = value;
-    };
-    /**
-     * Sets the marketingUrl property value. Link to the application's marketing page. For example, https://www.contoso.com/app/marketing
-     * @param value Value to set for the marketingUrl property.
-     */
-    public set marketingUrl(value: string | undefined) {
-        this._marketingUrl = value;
-    };
-    /**
-     * Sets the privacyStatementUrl property value. Link to the application's privacy statement. For example, https://www.contoso.com/app/privacy
-     * @param value Value to set for the privacyStatementUrl property.
-     */
-    public set privacyStatementUrl(value: string | undefined) {
-        this._privacyStatementUrl = value;
+    public get supportUrl() {
+        return this._supportUrl;
     };
     /**
      * Sets the supportUrl property value. Link to the application's support page. For example, https://www.contoso.com/app/support
@@ -121,6 +114,13 @@ export class InformationalUrl implements Parsable {
      */
     public set supportUrl(value: string | undefined) {
         this._supportUrl = value;
+    };
+    /**
+     * Gets the termsOfServiceUrl property value. Link to the application's terms of service statement. For example, https://www.contoso.com/app/termsofservice
+     * @returns a string
+     */
+    public get termsOfServiceUrl() {
+        return this._termsOfServiceUrl;
     };
     /**
      * Sets the termsOfServiceUrl property value. Link to the application's terms of service statement. For example, https://www.contoso.com/app/termsofservice

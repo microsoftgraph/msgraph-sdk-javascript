@@ -1,12 +1,15 @@
 import {Agreement} from '../../models/microsoft/graph/';
-import {AcceptancesRequestBuilder} from './acceptances/';
-import {AgreementAcceptanceItemRequestBuilder} from './acceptances/item/';
-import {FileRequestBuilder} from './file/';
-import {FilesRequestBuilder} from './files/';
-import {AgreementFileLocalizationItemRequestBuilder} from './files/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAgreementFromDiscriminatorValue} from '../../models/microsoft/graph/createAgreementFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AcceptancesRequestBuilder} from './acceptances/acceptancesRequestBuilder';
+import {AgreementAcceptanceItemRequestBuilder} from './acceptances/item/agreementAcceptanceItemRequestBuilder';
+import {FileRequestBuilder} from './file/fileRequestBuilder';
+import {FilesRequestBuilder} from './files/filesRequestBuilder';
+import {AgreementFileLocalizationItemRequestBuilder} from './files/item/agreementFileLocalizationItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /agreements/{agreement-id}  */
+/** Provides operations to manage the collection of agreement entities.  */
 export class AgreementItemRequestBuilder {
     public get acceptances(): AcceptancesRequestBuilder {
         return new AcceptancesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -109,7 +112,11 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.agreements.item.files.item collection
@@ -136,7 +143,11 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Agreement>(requestInfo, Agreement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Agreement>(requestInfo, createAgreementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update entity in agreements
@@ -150,6 +161,10 @@ export class AgreementItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

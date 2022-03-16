@@ -1,14 +1,18 @@
 import {SharedDriveItem} from '../../models/microsoft/graph/';
-import {DriveItemRequestBuilder} from './driveItem/';
-import {ItemsRequestBuilder} from './items/';
-import {ListRequestBuilder} from './list/';
-import {ListItemRequestBuilder} from './listItem/';
-import {PermissionRequestBuilder} from './permission/';
-import {RootRequestBuilder} from './root/';
-import {SiteRequestBuilder} from './site/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSharedDriveItemFromDiscriminatorValue} from '../../models/microsoft/graph/createSharedDriveItemFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DriveItemRequestBuilder} from './driveItem/driveItemRequestBuilder';
+import {DriveItemItemRequestBuilder} from './items/item/driveItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {ListRequestBuilder} from './list/listRequestBuilder';
+import {ListItemRequestBuilder} from './listItem/listItemRequestBuilder';
+import {PermissionRequestBuilder} from './permission/permissionRequestBuilder';
+import {RootRequestBuilder} from './root/rootRequestBuilder';
+import {SiteRequestBuilder} from './site/siteRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /shares/{sharedDriveItem-id}  */
+/** Provides operations to manage the collection of sharedDriveItem entities.  */
 export class SharedDriveItemItemRequestBuilder {
     public get driveItem(): DriveItemRequestBuilder {
         return new DriveItemRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -113,7 +117,11 @@ export class SharedDriveItemItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entity from shares by key
@@ -130,7 +138,22 @@ export class SharedDriveItemItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<SharedDriveItem>(requestInfo, SharedDriveItem, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SharedDriveItem>(requestInfo, createSharedDriveItemFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.shares.item.items.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public itemsById(id: string) : DriveItemItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id"] = id
+        return new DriveItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update entity in shares
@@ -144,6 +167,10 @@ export class SharedDriveItemItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

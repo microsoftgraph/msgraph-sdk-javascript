@@ -1,2 +1,1 @@
-export * from './DeltaWithTokenRequestBuilder'
-export * from './DeltaWithToken'
+export * from './deltaWithTokenResponse'

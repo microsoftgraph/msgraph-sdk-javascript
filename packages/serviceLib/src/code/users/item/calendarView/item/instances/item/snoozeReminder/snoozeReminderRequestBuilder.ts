@@ -1,7 +1,7 @@
 import {SnoozeReminderRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/calendarView/{event-id}/instances/{event-id1}/microsoft.graph.snoozeReminder  */
+/** Provides operations to call the snoozeReminder method.  */
 export class SnoozeReminderRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;

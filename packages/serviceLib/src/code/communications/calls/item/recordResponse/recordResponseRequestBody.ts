@@ -1,7 +1,9 @@
 import {Prompt} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createPromptFromDiscriminatorValue} from '../../../../models/microsoft/graph/createPromptFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class RecordResponseRequestBody implements Parsable {
+/** Provides operations to call the recordResponse method.  */
+export class RecordResponseRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _bargeInAllowed?: boolean | undefined;
@@ -13,17 +15,18 @@ export class RecordResponseRequestBody implements Parsable {
     private _prompts?: Prompt[] | undefined;
     private _stopTones?: string[] | undefined;
     /**
-     * Instantiates a new recordResponseRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the bargeInAllowed property value. 
@@ -33,6 +36,13 @@ export class RecordResponseRequestBody implements Parsable {
         return this._bargeInAllowed;
     };
     /**
+     * Sets the bargeInAllowed property value. 
+     * @param value Value to set for the bargeInAllowed property.
+     */
+    public set bargeInAllowed(value: boolean | undefined) {
+        this._bargeInAllowed = value;
+    };
+    /**
      * Gets the clientContext property value. 
      * @returns a string
      */
@@ -40,46 +50,17 @@ export class RecordResponseRequestBody implements Parsable {
         return this._clientContext;
     };
     /**
-     * Gets the initialSilenceTimeoutInSeconds property value. 
-     * @returns a integer
+     * Sets the clientContext property value. 
+     * @param value Value to set for the clientContext property.
      */
-    public get initialSilenceTimeoutInSeconds() {
-        return this._initialSilenceTimeoutInSeconds;
+    public set clientContext(value: string | undefined) {
+        this._clientContext = value;
     };
     /**
-     * Gets the maxRecordDurationInSeconds property value. 
-     * @returns a integer
+     * Instantiates a new recordResponseRequestBody and sets the default values.
      */
-    public get maxRecordDurationInSeconds() {
-        return this._maxRecordDurationInSeconds;
-    };
-    /**
-     * Gets the maxSilenceTimeoutInSeconds property value. 
-     * @returns a integer
-     */
-    public get maxSilenceTimeoutInSeconds() {
-        return this._maxSilenceTimeoutInSeconds;
-    };
-    /**
-     * Gets the playBeep property value. 
-     * @returns a boolean
-     */
-    public get playBeep() {
-        return this._playBeep;
-    };
-    /**
-     * Gets the prompts property value. 
-     * @returns a prompt
-     */
-    public get prompts() {
-        return this._prompts;
-    };
-    /**
-     * Gets the stopTones property value. 
-     * @returns a string
-     */
-    public get stopTones() {
-        return this._stopTones;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -93,9 +74,79 @@ export class RecordResponseRequestBody implements Parsable {
             ["maxRecordDurationInSeconds", (o, n) => { (o as unknown as RecordResponseRequestBody).maxRecordDurationInSeconds = n.getNumberValue(); }],
             ["maxSilenceTimeoutInSeconds", (o, n) => { (o as unknown as RecordResponseRequestBody).maxSilenceTimeoutInSeconds = n.getNumberValue(); }],
             ["playBeep", (o, n) => { (o as unknown as RecordResponseRequestBody).playBeep = n.getBooleanValue(); }],
-            ["prompts", (o, n) => { (o as unknown as RecordResponseRequestBody).prompts = n.getCollectionOfObjectValues<Prompt>(Prompt); }],
+            ["prompts", (o, n) => { (o as unknown as RecordResponseRequestBody).prompts = n.getCollectionOfObjectValues<Prompt>(createPromptFromDiscriminatorValue); }],
             ["stopTones", (o, n) => { (o as unknown as RecordResponseRequestBody).stopTones = n.getCollectionOfPrimitiveValues<string>(); }],
         ]);
+    };
+    /**
+     * Gets the initialSilenceTimeoutInSeconds property value. 
+     * @returns a integer
+     */
+    public get initialSilenceTimeoutInSeconds() {
+        return this._initialSilenceTimeoutInSeconds;
+    };
+    /**
+     * Sets the initialSilenceTimeoutInSeconds property value. 
+     * @param value Value to set for the initialSilenceTimeoutInSeconds property.
+     */
+    public set initialSilenceTimeoutInSeconds(value: number | undefined) {
+        this._initialSilenceTimeoutInSeconds = value;
+    };
+    /**
+     * Gets the maxRecordDurationInSeconds property value. 
+     * @returns a integer
+     */
+    public get maxRecordDurationInSeconds() {
+        return this._maxRecordDurationInSeconds;
+    };
+    /**
+     * Sets the maxRecordDurationInSeconds property value. 
+     * @param value Value to set for the maxRecordDurationInSeconds property.
+     */
+    public set maxRecordDurationInSeconds(value: number | undefined) {
+        this._maxRecordDurationInSeconds = value;
+    };
+    /**
+     * Gets the maxSilenceTimeoutInSeconds property value. 
+     * @returns a integer
+     */
+    public get maxSilenceTimeoutInSeconds() {
+        return this._maxSilenceTimeoutInSeconds;
+    };
+    /**
+     * Sets the maxSilenceTimeoutInSeconds property value. 
+     * @param value Value to set for the maxSilenceTimeoutInSeconds property.
+     */
+    public set maxSilenceTimeoutInSeconds(value: number | undefined) {
+        this._maxSilenceTimeoutInSeconds = value;
+    };
+    /**
+     * Gets the playBeep property value. 
+     * @returns a boolean
+     */
+    public get playBeep() {
+        return this._playBeep;
+    };
+    /**
+     * Sets the playBeep property value. 
+     * @param value Value to set for the playBeep property.
+     */
+    public set playBeep(value: boolean | undefined) {
+        this._playBeep = value;
+    };
+    /**
+     * Gets the prompts property value. 
+     * @returns a prompt
+     */
+    public get prompts() {
+        return this._prompts;
+    };
+    /**
+     * Sets the prompts property value. 
+     * @param value Value to set for the prompts property.
+     */
+    public set prompts(value: Prompt[] | undefined) {
+        this._prompts = value;
     };
     /**
      * Serializes information the current object
@@ -114,60 +165,11 @@ export class RecordResponseRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the stopTones property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the bargeInAllowed property value. 
-     * @param value Value to set for the bargeInAllowed property.
-     */
-    public set bargeInAllowed(value: boolean | undefined) {
-        this._bargeInAllowed = value;
-    };
-    /**
-     * Sets the clientContext property value. 
-     * @param value Value to set for the clientContext property.
-     */
-    public set clientContext(value: string | undefined) {
-        this._clientContext = value;
-    };
-    /**
-     * Sets the initialSilenceTimeoutInSeconds property value. 
-     * @param value Value to set for the initialSilenceTimeoutInSeconds property.
-     */
-    public set initialSilenceTimeoutInSeconds(value: number | undefined) {
-        this._initialSilenceTimeoutInSeconds = value;
-    };
-    /**
-     * Sets the maxRecordDurationInSeconds property value. 
-     * @param value Value to set for the maxRecordDurationInSeconds property.
-     */
-    public set maxRecordDurationInSeconds(value: number | undefined) {
-        this._maxRecordDurationInSeconds = value;
-    };
-    /**
-     * Sets the maxSilenceTimeoutInSeconds property value. 
-     * @param value Value to set for the maxSilenceTimeoutInSeconds property.
-     */
-    public set maxSilenceTimeoutInSeconds(value: number | undefined) {
-        this._maxSilenceTimeoutInSeconds = value;
-    };
-    /**
-     * Sets the playBeep property value. 
-     * @param value Value to set for the playBeep property.
-     */
-    public set playBeep(value: boolean | undefined) {
-        this._playBeep = value;
-    };
-    /**
-     * Sets the prompts property value. 
-     * @param value Value to set for the prompts property.
-     */
-    public set prompts(value: Prompt[] | undefined) {
-        this._prompts = value;
+    public get stopTones() {
+        return this._stopTones;
     };
     /**
      * Sets the stopTones property value. 

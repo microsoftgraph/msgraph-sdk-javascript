@@ -1,10 +1,15 @@
 import {PrinterShare} from '../../../models/microsoft/graph/';
-import {AllowedGroupsRequestBuilder} from './allowedGroups/';
-import {AllowedUsersRequestBuilder} from './allowedUsers/';
-import {PrinterRequestBuilder} from './printer/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrinterShareFromDiscriminatorValue} from '../../../models/microsoft/graph/createPrinterShareFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AllowedGroupsRequestBuilder} from './allowedGroups/allowedGroupsRequestBuilder';
+import {GroupItemRequestBuilder} from './allowedGroups/item/groupItemRequestBuilder';
+import {AllowedUsersRequestBuilder} from './allowedUsers/allowedUsersRequestBuilder';
+import {UserItemRequestBuilder} from './allowedUsers/item/userItemRequestBuilder';
+import {PrinterRequestBuilder} from './printer/printerRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/shares/{printerShare-id}  */
+/** Provides operations to manage the shares property of the microsoft.graph.print entity.  */
 export class PrinterShareItemRequestBuilder {
     public get allowedGroups(): AllowedGroupsRequestBuilder {
         return new AllowedGroupsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -22,6 +27,28 @@ export class PrinterShareItemRequestBuilder {
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
+     * Gets an item from the MicrosoftGraph.print.shares.item.allowedGroups.item collection
+     * @param id Unique identifier of the item
+     * @returns a groupItemRequestBuilder
+     */
+    public allowedGroupsById(id: string) : GroupItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["group_id"] = id
+        return new GroupItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.print.shares.item.allowedUsers.item collection
+     * @param id Unique identifier of the item
+     * @returns a userItemRequestBuilder
+     */
+    public allowedUsersById(id: string) : UserItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["user_id"] = id
+        return new UserItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Instantiates a new PrinterShareItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
@@ -35,7 +62,7 @@ export class PrinterShareItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of printer shares registered in the tenant.
+     * Delete navigation property shares for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -70,7 +97,7 @@ export class PrinterShareItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of printer shares registered in the tenant.
+     * Update the navigation property shares in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -88,7 +115,7 @@ export class PrinterShareItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of printer shares registered in the tenant.
+     * Delete navigation property shares for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -97,7 +124,11 @@ export class PrinterShareItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of printer shares registered in the tenant.
@@ -114,10 +145,14 @@ export class PrinterShareItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrinterShare>(requestInfo, PrinterShare, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrinterShare>(requestInfo, createPrinterShareFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of printer shares registered in the tenant.
+     * Update the navigation property shares in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -128,6 +163,10 @@ export class PrinterShareItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

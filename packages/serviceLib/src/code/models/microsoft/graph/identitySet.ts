@@ -1,7 +1,8 @@
+import {createIdentityFromDiscriminatorValue} from './createIdentityFromDiscriminatorValue';
 import {Identity} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class IdentitySet implements Parsable {
+export class IdentitySet implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Optional. The application associated with this action.  */
@@ -11,17 +12,18 @@ export class IdentitySet implements Parsable {
     /** Optional. The user associated with this action.  */
     private _user?: Identity | undefined;
     /**
-     * Instantiates a new identitySet and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the application property value. Optional. The application associated with this action.
@@ -31,6 +33,19 @@ export class IdentitySet implements Parsable {
         return this._application;
     };
     /**
+     * Sets the application property value. Optional. The application associated with this action.
+     * @param value Value to set for the application property.
+     */
+    public set application(value: Identity | undefined) {
+        this._application = value;
+    };
+    /**
+     * Instantiates a new identitySet and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the device property value. Optional. The device associated with this action.
      * @returns a identity
      */
@@ -38,11 +53,11 @@ export class IdentitySet implements Parsable {
         return this._device;
     };
     /**
-     * Gets the user property value. Optional. The user associated with this action.
-     * @returns a identity
+     * Sets the device property value. Optional. The device associated with this action.
+     * @param value Value to set for the device property.
      */
-    public get user() {
-        return this._user;
+    public set device(value: Identity | undefined) {
+        this._device = value;
     };
     /**
      * The deserialization information for the current model
@@ -50,9 +65,9 @@ export class IdentitySet implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["application", (o, n) => { (o as unknown as IdentitySet).application = n.getObjectValue<Identity>(Identity); }],
-            ["device", (o, n) => { (o as unknown as IdentitySet).device = n.getObjectValue<Identity>(Identity); }],
-            ["user", (o, n) => { (o as unknown as IdentitySet).user = n.getObjectValue<Identity>(Identity); }],
+            ["application", (o, n) => { (o as unknown as IdentitySet).application = n.getObjectValue<Identity>(createIdentityFromDiscriminatorValue); }],
+            ["device", (o, n) => { (o as unknown as IdentitySet).device = n.getObjectValue<Identity>(createIdentityFromDiscriminatorValue); }],
+            ["user", (o, n) => { (o as unknown as IdentitySet).user = n.getObjectValue<Identity>(createIdentityFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -67,25 +82,11 @@ export class IdentitySet implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the user property value. Optional. The user associated with this action.
+     * @returns a identity
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the application property value. Optional. The application associated with this action.
-     * @param value Value to set for the application property.
-     */
-    public set application(value: Identity | undefined) {
-        this._application = value;
-    };
-    /**
-     * Sets the device property value. Optional. The device associated with this action.
-     * @param value Value to set for the device property.
-     */
-    public set device(value: Identity | undefined) {
-        this._device = value;
+    public get user() {
+        return this._user;
     };
     /**
      * Sets the user property value. Optional. The user associated with this action.

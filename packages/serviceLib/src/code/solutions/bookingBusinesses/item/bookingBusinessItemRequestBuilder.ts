@@ -1,21 +1,24 @@
 import {BookingBusiness} from '../../../models/microsoft/graph/';
-import {AppointmentsRequestBuilder} from './appointments/';
-import {BookingAppointmentItemRequestBuilder as i1239abbd4fb7cc5796031c837e834700746753fc5f5d2b890701693c87335be1} from './appointments/item/';
-import {CalendarViewRequestBuilder} from './calendarView/';
-import {BookingAppointmentItemRequestBuilder as ib14200d56dfe9e0746327f9bb1b9ed401728441d149cf4643765f62cae3a71f8} from './calendarView/item/';
-import {CustomersRequestBuilder} from './customers/';
-import {BookingCustomerBaseItemRequestBuilder} from './customers/item/';
-import {CustomQuestionsRequestBuilder} from './customQuestions/';
-import {BookingCustomQuestionItemRequestBuilder} from './customQuestions/item/';
-import {PublishRequestBuilder} from './publish/';
-import {ServicesRequestBuilder} from './services/';
-import {BookingServiceItemRequestBuilder} from './services/item/';
-import {StaffMembersRequestBuilder} from './staffMembers/';
-import {BookingStaffMemberBaseItemRequestBuilder} from './staffMembers/item/';
-import {UnpublishRequestBuilder} from './unpublish/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createBookingBusinessFromDiscriminatorValue} from '../../../models/microsoft/graph/createBookingBusinessFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AppointmentsRequestBuilder} from './appointments/appointmentsRequestBuilder';
+import {BookingAppointmentItemRequestBuilder as i1239abbd4fb7cc5796031c837e834700746753fc5f5d2b890701693c87335be1} from './appointments/item/bookingAppointmentItemRequestBuilder';
+import {CalendarViewRequestBuilder} from './calendarView/calendarViewRequestBuilder';
+import {BookingAppointmentItemRequestBuilder as ib14200d56dfe9e0746327f9bb1b9ed401728441d149cf4643765f62cae3a71f8} from './calendarView/item/bookingAppointmentItemRequestBuilder';
+import {CustomersRequestBuilder} from './customers/customersRequestBuilder';
+import {BookingCustomerBaseItemRequestBuilder} from './customers/item/bookingCustomerBaseItemRequestBuilder';
+import {CustomQuestionsRequestBuilder} from './customQuestions/customQuestionsRequestBuilder';
+import {BookingCustomQuestionItemRequestBuilder} from './customQuestions/item/bookingCustomQuestionItemRequestBuilder';
+import {PublishRequestBuilder} from './publish/publishRequestBuilder';
+import {BookingServiceItemRequestBuilder} from './services/item/bookingServiceItemRequestBuilder';
+import {ServicesRequestBuilder} from './services/servicesRequestBuilder';
+import {BookingStaffMemberBaseItemRequestBuilder} from './staffMembers/item/bookingStaffMemberBaseItemRequestBuilder';
+import {StaffMembersRequestBuilder} from './staffMembers/staffMembersRequestBuilder';
+import {UnpublishRequestBuilder} from './unpublish/unpublishRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /solutions/bookingBusinesses/{bookingBusiness-id}  */
+/** Provides operations to manage the bookingBusinesses property of the microsoft.graph.solutionsRoot entity.  */
 export class BookingBusinessItemRequestBuilder {
     public get appointments(): AppointmentsRequestBuilder {
         return new AppointmentsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -167,7 +170,11 @@ export class BookingBusinessItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get bookingBusinesses from solutions
@@ -184,7 +191,11 @@ export class BookingBusinessItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<BookingBusiness>(requestInfo, BookingBusiness, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<BookingBusiness>(requestInfo, createBookingBusinessFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update the navigation property bookingBusinesses in solutions
@@ -198,7 +209,11 @@ export class BookingBusinessItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.solutions.bookingBusinesses.item.services.item collection

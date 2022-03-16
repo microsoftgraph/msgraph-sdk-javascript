@@ -1,1 +1,1 @@
-export * from './SupportedTimeZonesWithTimeZoneStandardRequestBuilder'
+export * from './supportedTimeZonesWithTimeZoneStandardResponse'

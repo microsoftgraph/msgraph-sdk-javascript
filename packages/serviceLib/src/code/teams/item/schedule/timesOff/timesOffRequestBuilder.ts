@@ -1,9 +1,16 @@
-import {TimeOff} from '../../../../models/microsoft/graph/';
-import {TimesOffResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {TimeOff, TimeOffCollectionResponse} from '../../../../models/microsoft/graph/';
+import {createTimeOffCollectionResponseFromDiscriminatorValue} from '../../../../models/microsoft/graph/createTimeOffCollectionResponseFromDiscriminatorValue';
+import {createTimeOffFromDiscriminatorValue} from '../../../../models/microsoft/graph/createTimeOffFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/schedule/timesOff  */
+/** Provides operations to manage the timesOff property of the microsoft.graph.schedule entity.  */
 export class TimesOffRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -49,7 +56,7 @@ export class TimesOffRequestBuilder {
         return requestInfo;
     };
     /**
-     * The instances of times off in the schedule.
+     * Create new navigation property to timesOff for teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -72,7 +79,7 @@ export class TimesOffRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of TimesOffResponse
+     * @returns a Promise of TimeOffCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -82,14 +89,18 @@ export class TimesOffRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<TimesOffResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<TimeOffCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TimesOffResponse>(requestInfo, TimesOffResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TimeOffCollectionResponse>(requestInfo, createTimeOffCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The instances of times off in the schedule.
+     * Create new navigation property to timesOff for teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -101,6 +112,10 @@ export class TimesOffRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<TimeOff>(requestInfo, TimeOff, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TimeOff>(requestInfo, createTimeOffFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

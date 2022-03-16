@@ -1,7 +1,9 @@
-import {IdentitySet, RoutingType} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
+import {IdentitySet} from './index';
+import {RoutingType} from './routingType';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CallRoute implements Parsable {
+export class CallRoute implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _final?: IdentitySet | undefined;
@@ -9,17 +11,24 @@ export class CallRoute implements Parsable {
     /** Possible values are: forwarded, lookup, selfFork.  */
     private _routingType?: RoutingType | undefined;
     /**
-     * Instantiates a new callRoute and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new callRoute and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the final property value. 
@@ -29,11 +38,36 @@ export class CallRoute implements Parsable {
         return this._final;
     };
     /**
+     * Sets the final property value. 
+     * @param value Value to set for the final property.
+     */
+    public set final(value: IdentitySet | undefined) {
+        this._final = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["final", (o, n) => { (o as unknown as CallRoute).final = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["original", (o, n) => { (o as unknown as CallRoute).original = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["routingType", (o, n) => { (o as unknown as CallRoute).routingType = n.getEnumValue<RoutingType>(RoutingType); }],
+        ]);
+    };
+    /**
      * Gets the original property value. 
      * @returns a identitySet
      */
     public get original() {
         return this._original;
+    };
+    /**
+     * Sets the original property value. 
+     * @param value Value to set for the original property.
+     */
+    public set original(value: IdentitySet | undefined) {
+        this._original = value;
     };
     /**
      * Gets the routingType property value. Possible values are: forwarded, lookup, selfFork.
@@ -43,15 +77,11 @@ export class CallRoute implements Parsable {
         return this._routingType;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the routingType property value. Possible values are: forwarded, lookup, selfFork.
+     * @param value Value to set for the routingType property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["final", (o, n) => { (o as unknown as CallRoute).final = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["original", (o, n) => { (o as unknown as CallRoute).original = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["routingType", (o, n) => { (o as unknown as CallRoute).routingType = n.getEnumValue<RoutingType>(RoutingType); }],
-        ]);
+    public set routingType(value: RoutingType | undefined) {
+        this._routingType = value;
     };
     /**
      * Serializes information the current object
@@ -63,33 +93,5 @@ export class CallRoute implements Parsable {
         writer.writeObjectValue<IdentitySet>("original", this.original);
         writer.writeEnumValue<RoutingType>("routingType", this.routingType);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the final property value. 
-     * @param value Value to set for the final property.
-     */
-    public set final(value: IdentitySet | undefined) {
-        this._final = value;
-    };
-    /**
-     * Sets the original property value. 
-     * @param value Value to set for the original property.
-     */
-    public set original(value: IdentitySet | undefined) {
-        this._original = value;
-    };
-    /**
-     * Sets the routingType property value. Possible values are: forwarded, lookup, selfFork.
-     * @param value Value to set for the routingType property.
-     */
-    public set routingType(value: RoutingType | undefined) {
-        this._routingType = value;
     };
 }

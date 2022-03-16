@@ -1,14 +1,17 @@
 import {ListItem} from '../../../../../models/microsoft/graph/';
-import {AnalyticsRequestBuilder} from './analytics/';
-import {DriveItemRequestBuilder} from './driveItem/';
-import {FieldsRequestBuilder} from './fields/';
-import {GetActivitiesByIntervalRequestBuilder} from './getActivitiesByInterval/';
-import {GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder} from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval/';
-import {VersionsRequestBuilder} from './versions/';
-import {ListItemVersionItemRequestBuilder} from './versions/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createListItemFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createListItemFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AnalyticsRequestBuilder} from './analytics/analyticsRequestBuilder';
+import {DriveItemRequestBuilder} from './driveItem/driveItemRequestBuilder';
+import {FieldsRequestBuilder} from './fields/fieldsRequestBuilder';
+import {GetActivitiesByIntervalRequestBuilder} from './getActivitiesByInterval/getActivitiesByIntervalRequestBuilder';
+import {GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder} from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval/getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder';
+import {ListItemVersionItemRequestBuilder} from './versions/item/listItemVersionItemRequestBuilder';
+import {VersionsRequestBuilder} from './versions/versionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /drives/{drive-id}/list/items/{listItem-id}  */
+/** Provides operations to manage the items property of the microsoft.graph.list entity.  */
 export class ListItemItemRequestBuilder {
     public get analytics(): AnalyticsRequestBuilder {
         return new AnalyticsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -42,7 +45,7 @@ export class ListItemItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * All items contained in the list.
+     * Delete navigation property items for drives
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -77,7 +80,7 @@ export class ListItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All items contained in the list.
+     * Update the navigation property items in drives
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -95,7 +98,7 @@ export class ListItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All items contained in the list.
+     * Delete navigation property items for drives
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -104,7 +107,11 @@ export class ListItemItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * All items contained in the list.
@@ -121,30 +128,34 @@ export class ListItemItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ListItem>(requestInfo, ListItem, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ListItem>(requestInfo, createListItemFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /drives/{drive-id}/list/items/{listItem-id}/microsoft.graph.getActivitiesByInterval()
+     * Provides operations to call the getActivitiesByInterval method.
      * @returns a getActivitiesByIntervalRequestBuilder
      */
     public getActivitiesByInterval() : GetActivitiesByIntervalRequestBuilder {
         return new GetActivitiesByIntervalRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /drives/{drive-id}/list/items/{listItem-id}/microsoft.graph.getActivitiesByInterval(startDateTime='{startDateTime}',endDateTime='{endDateTime}',interval='{interval}')
-     * @param endDateTime Usage: endDateTime={endDateTime}
-     * @param interval Usage: interval={interval}
-     * @param startDateTime Usage: startDateTime={startDateTime}
+     * Provides operations to call the getActivitiesByInterval method.
+     * @param endDateTime Usage: endDateTime='{endDateTime}'
+     * @param interval Usage: interval='{interval}'
+     * @param startDateTime Usage: startDateTime='{startDateTime}'
      * @returns a getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder
      */
-    public getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval(startDateTime: string | undefined, endDateTime: string | undefined, interval: string | undefined) : GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder {
+    public getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval(endDateTime: string | undefined, interval: string | undefined, startDateTime: string | undefined) : GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder {
         if(!endDateTime) throw new Error("endDateTime cannot be undefined");
         if(!interval) throw new Error("interval cannot be undefined");
         if(!startDateTime) throw new Error("startDateTime cannot be undefined");
-        return new GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder(this.pathParameters, this.requestAdapter, startDateTime, endDateTime, interval);
+        return new GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder(this.pathParameters, this.requestAdapter, endDateTime, interval, startDateTime);
     };
     /**
-     * All items contained in the list.
+     * Update the navigation property items in drives
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -155,7 +166,11 @@ export class ListItemItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.drives.item.list.items.item.versions.item collection

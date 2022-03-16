@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PrintMargin implements Parsable {
+export class PrintMargin implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The margin in microns from the bottom edge.  */
@@ -12,17 +12,18 @@ export class PrintMargin implements Parsable {
     /** The margin in microns from the top edge.  */
     private _top?: number | undefined;
     /**
-     * Instantiates a new printMargin and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the bottom property value. The margin in microns from the bottom edge.
@@ -32,25 +33,17 @@ export class PrintMargin implements Parsable {
         return this._bottom;
     };
     /**
-     * Gets the left property value. The margin in microns from the left edge.
-     * @returns a integer
+     * Sets the bottom property value. The margin in microns from the bottom edge.
+     * @param value Value to set for the bottom property.
      */
-    public get left() {
-        return this._left;
+    public set bottom(value: number | undefined) {
+        this._bottom = value;
     };
     /**
-     * Gets the right property value. The margin in microns from the right edge.
-     * @returns a integer
+     * Instantiates a new printMargin and sets the default values.
      */
-    public get right() {
-        return this._right;
-    };
-    /**
-     * Gets the top property value. The margin in microns from the top edge.
-     * @returns a integer
-     */
-    public get top() {
-        return this._top;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -65,6 +58,34 @@ export class PrintMargin implements Parsable {
         ]);
     };
     /**
+     * Gets the left property value. The margin in microns from the left edge.
+     * @returns a integer
+     */
+    public get left() {
+        return this._left;
+    };
+    /**
+     * Sets the left property value. The margin in microns from the left edge.
+     * @param value Value to set for the left property.
+     */
+    public set left(value: number | undefined) {
+        this._left = value;
+    };
+    /**
+     * Gets the right property value. The margin in microns from the right edge.
+     * @returns a integer
+     */
+    public get right() {
+        return this._right;
+    };
+    /**
+     * Sets the right property value. The margin in microns from the right edge.
+     * @param value Value to set for the right property.
+     */
+    public set right(value: number | undefined) {
+        this._right = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -77,32 +98,11 @@ export class PrintMargin implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the top property value. The margin in microns from the top edge.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the bottom property value. The margin in microns from the bottom edge.
-     * @param value Value to set for the bottom property.
-     */
-    public set bottom(value: number | undefined) {
-        this._bottom = value;
-    };
-    /**
-     * Sets the left property value. The margin in microns from the left edge.
-     * @param value Value to set for the left property.
-     */
-    public set left(value: number | undefined) {
-        this._left = value;
-    };
-    /**
-     * Sets the right property value. The margin in microns from the right edge.
-     * @param value Value to set for the right property.
-     */
-    public set right(value: number | undefined) {
-        this._right = value;
+    public get top() {
+        return this._top;
     };
     /**
      * Sets the top property value. The margin in microns from the top edge.

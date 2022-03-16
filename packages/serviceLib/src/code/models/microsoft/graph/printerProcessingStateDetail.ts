@@ -1,3 +1,4 @@
+/** Provides operations to manage the print singleton.  */
 export enum PrinterProcessingStateDetail {
     Paused = "paused",
     MediaJam = "mediaJam",

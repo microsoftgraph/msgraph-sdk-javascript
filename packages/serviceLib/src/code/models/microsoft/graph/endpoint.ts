@@ -13,12 +13,6 @@ export class Endpoint extends DirectoryObject implements Parsable {
     /** URL of the published resource. Not nullable. Read-only.  */
     private _uri?: string | undefined;
     /**
-     * Instantiates a new endpoint and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the capability property value. Describes the capability that is associated with this resource. (e.g. Messages, Conversations, etc.)  Not nullable. Read-only.
      * @returns a string
      */
@@ -26,32 +20,17 @@ export class Endpoint extends DirectoryObject implements Parsable {
         return this._capability;
     };
     /**
-     * Gets the providerId property value. Application id of the publishing underlying service. Not nullable. Read-only.
-     * @returns a string
+     * Sets the capability property value. Describes the capability that is associated with this resource. (e.g. Messages, Conversations, etc.)  Not nullable. Read-only.
+     * @param value Value to set for the capability property.
      */
-    public get providerId() {
-        return this._providerId;
+    public set capability(value: string | undefined) {
+        this._capability = value;
     };
     /**
-     * Gets the providerName property value. Name of the publishing underlying service. Read-only.
-     * @returns a string
+     * Instantiates a new endpoint and sets the default values.
      */
-    public get providerName() {
-        return this._providerName;
-    };
-    /**
-     * Gets the providerResourceId property value. For Microsoft 365 groups, this is set to a well-known name for the resource (e.g. Yammer.FeedURL etc.). Not nullable. Read-only.
-     * @returns a string
-     */
-    public get providerResourceId() {
-        return this._providerResourceId;
-    };
-    /**
-     * Gets the uri property value. URL of the published resource. Not nullable. Read-only.
-     * @returns a string
-     */
-    public get uri() {
-        return this._uri;
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -67,6 +46,48 @@ export class Endpoint extends DirectoryObject implements Parsable {
         ]);
     };
     /**
+     * Gets the providerId property value. Application id of the publishing underlying service. Not nullable. Read-only.
+     * @returns a string
+     */
+    public get providerId() {
+        return this._providerId;
+    };
+    /**
+     * Sets the providerId property value. Application id of the publishing underlying service. Not nullable. Read-only.
+     * @param value Value to set for the providerId property.
+     */
+    public set providerId(value: string | undefined) {
+        this._providerId = value;
+    };
+    /**
+     * Gets the providerName property value. Name of the publishing underlying service. Read-only.
+     * @returns a string
+     */
+    public get providerName() {
+        return this._providerName;
+    };
+    /**
+     * Sets the providerName property value. Name of the publishing underlying service. Read-only.
+     * @param value Value to set for the providerName property.
+     */
+    public set providerName(value: string | undefined) {
+        this._providerName = value;
+    };
+    /**
+     * Gets the providerResourceId property value. For Microsoft 365 groups, this is set to a well-known name for the resource (e.g. Yammer.FeedURL etc.). Not nullable. Read-only.
+     * @returns a string
+     */
+    public get providerResourceId() {
+        return this._providerResourceId;
+    };
+    /**
+     * Sets the providerResourceId property value. For Microsoft 365 groups, this is set to a well-known name for the resource (e.g. Yammer.FeedURL etc.). Not nullable. Read-only.
+     * @param value Value to set for the providerResourceId property.
+     */
+    public set providerResourceId(value: string | undefined) {
+        this._providerResourceId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -80,32 +101,11 @@ export class Endpoint extends DirectoryObject implements Parsable {
         writer.writeStringValue("uri", this.uri);
     };
     /**
-     * Sets the capability property value. Describes the capability that is associated with this resource. (e.g. Messages, Conversations, etc.)  Not nullable. Read-only.
-     * @param value Value to set for the capability property.
+     * Gets the uri property value. URL of the published resource. Not nullable. Read-only.
+     * @returns a string
      */
-    public set capability(value: string | undefined) {
-        this._capability = value;
-    };
-    /**
-     * Sets the providerId property value. Application id of the publishing underlying service. Not nullable. Read-only.
-     * @param value Value to set for the providerId property.
-     */
-    public set providerId(value: string | undefined) {
-        this._providerId = value;
-    };
-    /**
-     * Sets the providerName property value. Name of the publishing underlying service. Read-only.
-     * @param value Value to set for the providerName property.
-     */
-    public set providerName(value: string | undefined) {
-        this._providerName = value;
-    };
-    /**
-     * Sets the providerResourceId property value. For Microsoft 365 groups, this is set to a well-known name for the resource (e.g. Yammer.FeedURL etc.). Not nullable. Read-only.
-     * @param value Value to set for the providerResourceId property.
-     */
-    public set providerResourceId(value: string | undefined) {
-        this._providerResourceId = value;
+    public get uri() {
+        return this._uri;
     };
     /**
      * Sets the uri property value. URL of the published resource. Not nullable. Read-only.

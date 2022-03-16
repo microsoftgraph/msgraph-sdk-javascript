@@ -1,7 +1,9 @@
+import {createExpirationPatternFromDiscriminatorValue} from './createExpirationPatternFromDiscriminatorValue';
+import {createPatternedRecurrenceFromDiscriminatorValue} from './createPatternedRecurrenceFromDiscriminatorValue';
 import {ExpirationPattern, PatternedRecurrence} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class EntitlementManagementSchedule implements Parsable {
+export class EntitlementManagementSchedule implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** When the access should expire.  */
@@ -11,17 +13,24 @@ export class EntitlementManagementSchedule implements Parsable {
     /** The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.  */
     private _startDateTime?: Date | undefined;
     /**
-     * Instantiates a new entitlementManagementSchedule and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new entitlementManagementSchedule and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the expiration property value. When the access should expire.
@@ -31,18 +40,11 @@ export class EntitlementManagementSchedule implements Parsable {
         return this._expiration;
     };
     /**
-     * Gets the recurrence property value. For recurring access. Not used at present.
-     * @returns a patternedRecurrence
+     * Sets the expiration property value. When the access should expire.
+     * @param value Value to set for the expiration property.
      */
-    public get recurrence() {
-        return this._recurrence;
-    };
-    /**
-     * Gets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
-     * @returns a Date
-     */
-    public get startDateTime() {
-        return this._startDateTime;
+    public set expiration(value: ExpirationPattern | undefined) {
+        this._expiration = value;
     };
     /**
      * The deserialization information for the current model
@@ -50,10 +52,24 @@ export class EntitlementManagementSchedule implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["expiration", (o, n) => { (o as unknown as EntitlementManagementSchedule).expiration = n.getObjectValue<ExpirationPattern>(ExpirationPattern); }],
-            ["recurrence", (o, n) => { (o as unknown as EntitlementManagementSchedule).recurrence = n.getObjectValue<PatternedRecurrence>(PatternedRecurrence); }],
+            ["expiration", (o, n) => { (o as unknown as EntitlementManagementSchedule).expiration = n.getObjectValue<ExpirationPattern>(createExpirationPatternFromDiscriminatorValue); }],
+            ["recurrence", (o, n) => { (o as unknown as EntitlementManagementSchedule).recurrence = n.getObjectValue<PatternedRecurrence>(createPatternedRecurrenceFromDiscriminatorValue); }],
             ["startDateTime", (o, n) => { (o as unknown as EntitlementManagementSchedule).startDateTime = n.getDateValue(); }],
         ]);
+    };
+    /**
+     * Gets the recurrence property value. For recurring access. Not used at present.
+     * @returns a patternedRecurrence
+     */
+    public get recurrence() {
+        return this._recurrence;
+    };
+    /**
+     * Sets the recurrence property value. For recurring access. Not used at present.
+     * @param value Value to set for the recurrence property.
+     */
+    public set recurrence(value: PatternedRecurrence | undefined) {
+        this._recurrence = value;
     };
     /**
      * Serializes information the current object
@@ -67,25 +83,11 @@ export class EntitlementManagementSchedule implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
+     * @returns a Date
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the expiration property value. When the access should expire.
-     * @param value Value to set for the expiration property.
-     */
-    public set expiration(value: ExpirationPattern | undefined) {
-        this._expiration = value;
-    };
-    /**
-     * Sets the recurrence property value. For recurring access. Not used at present.
-     * @param value Value to set for the recurrence property.
-     */
-    public set recurrence(value: PatternedRecurrence | undefined) {
-        this._recurrence = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.

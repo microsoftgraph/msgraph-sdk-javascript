@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Hashes implements Parsable {
+export class Hashes implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The CRC32 value of the file in little endian (if available). Read-only.  */
@@ -12,17 +12,24 @@ export class Hashes implements Parsable {
     /** SHA256 hash for the contents of the file (if available). Read-only.  */
     private _sha256Hash?: string | undefined;
     /**
-     * Instantiates a new hashes and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new hashes and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the crc32Hash property value. The CRC32 value of the file in little endian (if available). Read-only.
@@ -32,25 +39,11 @@ export class Hashes implements Parsable {
         return this._crc32Hash;
     };
     /**
-     * Gets the quickXorHash property value. A proprietary hash of the file that can be used to determine if the contents of the file have changed (if available). Read-only.
-     * @returns a string
+     * Sets the crc32Hash property value. The CRC32 value of the file in little endian (if available). Read-only.
+     * @param value Value to set for the crc32Hash property.
      */
-    public get quickXorHash() {
-        return this._quickXorHash;
-    };
-    /**
-     * Gets the sha1Hash property value. SHA1 hash for the contents of the file (if available). Read-only.
-     * @returns a string
-     */
-    public get sha1Hash() {
-        return this._sha1Hash;
-    };
-    /**
-     * Gets the sha256Hash property value. SHA256 hash for the contents of the file (if available). Read-only.
-     * @returns a string
-     */
-    public get sha256Hash() {
-        return this._sha256Hash;
+    public set crc32Hash(value: string | undefined) {
+        this._crc32Hash = value;
     };
     /**
      * The deserialization information for the current model
@@ -65,6 +58,20 @@ export class Hashes implements Parsable {
         ]);
     };
     /**
+     * Gets the quickXorHash property value. A proprietary hash of the file that can be used to determine if the contents of the file have changed (if available). Read-only.
+     * @returns a string
+     */
+    public get quickXorHash() {
+        return this._quickXorHash;
+    };
+    /**
+     * Sets the quickXorHash property value. A proprietary hash of the file that can be used to determine if the contents of the file have changed (if available). Read-only.
+     * @param value Value to set for the quickXorHash property.
+     */
+    public set quickXorHash(value: string | undefined) {
+        this._quickXorHash = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -77,25 +84,11 @@ export class Hashes implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sha1Hash property value. SHA1 hash for the contents of the file (if available). Read-only.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the crc32Hash property value. The CRC32 value of the file in little endian (if available). Read-only.
-     * @param value Value to set for the crc32Hash property.
-     */
-    public set crc32Hash(value: string | undefined) {
-        this._crc32Hash = value;
-    };
-    /**
-     * Sets the quickXorHash property value. A proprietary hash of the file that can be used to determine if the contents of the file have changed (if available). Read-only.
-     * @param value Value to set for the quickXorHash property.
-     */
-    public set quickXorHash(value: string | undefined) {
-        this._quickXorHash = value;
+    public get sha1Hash() {
+        return this._sha1Hash;
     };
     /**
      * Sets the sha1Hash property value. SHA1 hash for the contents of the file (if available). Read-only.
@@ -103,6 +96,13 @@ export class Hashes implements Parsable {
      */
     public set sha1Hash(value: string | undefined) {
         this._sha1Hash = value;
+    };
+    /**
+     * Gets the sha256Hash property value. SHA256 hash for the contents of the file (if available). Read-only.
+     * @returns a string
+     */
+    public get sha256Hash() {
+        return this._sha256Hash;
     };
     /**
      * Sets the sha256Hash property value. SHA256 hash for the contents of the file (if available). Read-only.

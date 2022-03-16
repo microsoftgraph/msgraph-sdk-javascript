@@ -1,4 +1,6 @@
-import {DeviceComplianceSettingState, Entity, PolicyPlatformType} from './index';
+import {createDeviceComplianceSettingStateFromDiscriminatorValue} from './createDeviceComplianceSettingStateFromDiscriminatorValue';
+import {DeviceComplianceSettingState, Entity} from './index';
+import {PolicyPlatformType} from './policyPlatformType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class DeviceCompliancePolicySettingStateSummary extends Entity implements Parsable {
@@ -25,17 +27,18 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
     /** Number of unknown devices  */
     private _unknownDeviceCount?: number | undefined;
     /**
-     * Instantiates a new deviceCompliancePolicySettingStateSummary and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the compliantDeviceCount property value. Number of compliant devices
      * @returns a integer
      */
     public get compliantDeviceCount() {
         return this._compliantDeviceCount;
+    };
+    /**
+     * Sets the compliantDeviceCount property value. Number of compliant devices
+     * @param value Value to set for the compliantDeviceCount property.
+     */
+    public set compliantDeviceCount(value: number | undefined) {
+        this._compliantDeviceCount = value;
     };
     /**
      * Gets the conflictDeviceCount property value. Number of conflict devices
@@ -45,11 +48,31 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
         return this._conflictDeviceCount;
     };
     /**
+     * Sets the conflictDeviceCount property value. Number of conflict devices
+     * @param value Value to set for the conflictDeviceCount property.
+     */
+    public set conflictDeviceCount(value: number | undefined) {
+        this._conflictDeviceCount = value;
+    };
+    /**
+     * Instantiates a new deviceCompliancePolicySettingStateSummary and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the deviceComplianceSettingStates property value. Not yet documented
      * @returns a deviceComplianceSettingState
      */
     public get deviceComplianceSettingStates() {
         return this._deviceComplianceSettingStates;
+    };
+    /**
+     * Sets the deviceComplianceSettingStates property value. Not yet documented
+     * @param value Value to set for the deviceComplianceSettingStates property.
+     */
+    public set deviceComplianceSettingStates(value: DeviceComplianceSettingState[] | undefined) {
+        this._deviceComplianceSettingStates = value;
     };
     /**
      * Gets the errorDeviceCount property value. Number of error devices
@@ -59,53 +82,11 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
         return this._errorDeviceCount;
     };
     /**
-     * Gets the nonCompliantDeviceCount property value. Number of NonCompliant devices
-     * @returns a integer
+     * Sets the errorDeviceCount property value. Number of error devices
+     * @param value Value to set for the errorDeviceCount property.
      */
-    public get nonCompliantDeviceCount() {
-        return this._nonCompliantDeviceCount;
-    };
-    /**
-     * Gets the notApplicableDeviceCount property value. Number of not applicable devices
-     * @returns a integer
-     */
-    public get notApplicableDeviceCount() {
-        return this._notApplicableDeviceCount;
-    };
-    /**
-     * Gets the platformType property value. Setting platform. Possible values are: android, iOS, macOS, windowsPhone81, windows81AndLater, windows10AndLater, androidWorkProfile, all.
-     * @returns a policyPlatformType
-     */
-    public get platformType() {
-        return this._platformType;
-    };
-    /**
-     * Gets the remediatedDeviceCount property value. Number of remediated devices
-     * @returns a integer
-     */
-    public get remediatedDeviceCount() {
-        return this._remediatedDeviceCount;
-    };
-    /**
-     * Gets the setting property value. The setting class name and property name.
-     * @returns a string
-     */
-    public get setting() {
-        return this._setting;
-    };
-    /**
-     * Gets the settingName property value. Name of the setting.
-     * @returns a string
-     */
-    public get settingName() {
-        return this._settingName;
-    };
-    /**
-     * Gets the unknownDeviceCount property value. Number of unknown devices
-     * @returns a integer
-     */
-    public get unknownDeviceCount() {
-        return this._unknownDeviceCount;
+    public set errorDeviceCount(value: number | undefined) {
+        this._errorDeviceCount = value;
     };
     /**
      * The deserialization information for the current model
@@ -115,7 +96,7 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["compliantDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).compliantDeviceCount = n.getNumberValue(); }],
             ["conflictDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).conflictDeviceCount = n.getNumberValue(); }],
-            ["deviceComplianceSettingStates", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).deviceComplianceSettingStates = n.getCollectionOfObjectValues<DeviceComplianceSettingState>(DeviceComplianceSettingState); }],
+            ["deviceComplianceSettingStates", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).deviceComplianceSettingStates = n.getCollectionOfObjectValues<DeviceComplianceSettingState>(createDeviceComplianceSettingStateFromDiscriminatorValue); }],
             ["errorDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).errorDeviceCount = n.getNumberValue(); }],
             ["nonCompliantDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).nonCompliantDeviceCount = n.getNumberValue(); }],
             ["notApplicableDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).notApplicableDeviceCount = n.getNumberValue(); }],
@@ -125,6 +106,62 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
             ["settingName", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).settingName = n.getStringValue(); }],
             ["unknownDeviceCount", (o, n) => { (o as unknown as DeviceCompliancePolicySettingStateSummary).unknownDeviceCount = n.getNumberValue(); }],
         ]);
+    };
+    /**
+     * Gets the nonCompliantDeviceCount property value. Number of NonCompliant devices
+     * @returns a integer
+     */
+    public get nonCompliantDeviceCount() {
+        return this._nonCompliantDeviceCount;
+    };
+    /**
+     * Sets the nonCompliantDeviceCount property value. Number of NonCompliant devices
+     * @param value Value to set for the nonCompliantDeviceCount property.
+     */
+    public set nonCompliantDeviceCount(value: number | undefined) {
+        this._nonCompliantDeviceCount = value;
+    };
+    /**
+     * Gets the notApplicableDeviceCount property value. Number of not applicable devices
+     * @returns a integer
+     */
+    public get notApplicableDeviceCount() {
+        return this._notApplicableDeviceCount;
+    };
+    /**
+     * Sets the notApplicableDeviceCount property value. Number of not applicable devices
+     * @param value Value to set for the notApplicableDeviceCount property.
+     */
+    public set notApplicableDeviceCount(value: number | undefined) {
+        this._notApplicableDeviceCount = value;
+    };
+    /**
+     * Gets the platformType property value. Setting platform. Possible values are: android, iOS, macOS, windowsPhone81, windows81AndLater, windows10AndLater, androidWorkProfile, all.
+     * @returns a policyPlatformType
+     */
+    public get platformType() {
+        return this._platformType;
+    };
+    /**
+     * Sets the platformType property value. Setting platform. Possible values are: android, iOS, macOS, windowsPhone81, windows81AndLater, windows10AndLater, androidWorkProfile, all.
+     * @param value Value to set for the platformType property.
+     */
+    public set platformType(value: PolicyPlatformType | undefined) {
+        this._platformType = value;
+    };
+    /**
+     * Gets the remediatedDeviceCount property value. Number of remediated devices
+     * @returns a integer
+     */
+    public get remediatedDeviceCount() {
+        return this._remediatedDeviceCount;
+    };
+    /**
+     * Sets the remediatedDeviceCount property value. Number of remediated devices
+     * @param value Value to set for the remediatedDeviceCount property.
+     */
+    public set remediatedDeviceCount(value: number | undefined) {
+        this._remediatedDeviceCount = value;
     };
     /**
      * Serializes information the current object
@@ -146,60 +183,11 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
         writer.writeNumberValue("unknownDeviceCount", this.unknownDeviceCount);
     };
     /**
-     * Sets the compliantDeviceCount property value. Number of compliant devices
-     * @param value Value to set for the compliantDeviceCount property.
+     * Gets the setting property value. The setting class name and property name.
+     * @returns a string
      */
-    public set compliantDeviceCount(value: number | undefined) {
-        this._compliantDeviceCount = value;
-    };
-    /**
-     * Sets the conflictDeviceCount property value. Number of conflict devices
-     * @param value Value to set for the conflictDeviceCount property.
-     */
-    public set conflictDeviceCount(value: number | undefined) {
-        this._conflictDeviceCount = value;
-    };
-    /**
-     * Sets the deviceComplianceSettingStates property value. Not yet documented
-     * @param value Value to set for the deviceComplianceSettingStates property.
-     */
-    public set deviceComplianceSettingStates(value: DeviceComplianceSettingState[] | undefined) {
-        this._deviceComplianceSettingStates = value;
-    };
-    /**
-     * Sets the errorDeviceCount property value. Number of error devices
-     * @param value Value to set for the errorDeviceCount property.
-     */
-    public set errorDeviceCount(value: number | undefined) {
-        this._errorDeviceCount = value;
-    };
-    /**
-     * Sets the nonCompliantDeviceCount property value. Number of NonCompliant devices
-     * @param value Value to set for the nonCompliantDeviceCount property.
-     */
-    public set nonCompliantDeviceCount(value: number | undefined) {
-        this._nonCompliantDeviceCount = value;
-    };
-    /**
-     * Sets the notApplicableDeviceCount property value. Number of not applicable devices
-     * @param value Value to set for the notApplicableDeviceCount property.
-     */
-    public set notApplicableDeviceCount(value: number | undefined) {
-        this._notApplicableDeviceCount = value;
-    };
-    /**
-     * Sets the platformType property value. Setting platform. Possible values are: android, iOS, macOS, windowsPhone81, windows81AndLater, windows10AndLater, androidWorkProfile, all.
-     * @param value Value to set for the platformType property.
-     */
-    public set platformType(value: PolicyPlatformType | undefined) {
-        this._platformType = value;
-    };
-    /**
-     * Sets the remediatedDeviceCount property value. Number of remediated devices
-     * @param value Value to set for the remediatedDeviceCount property.
-     */
-    public set remediatedDeviceCount(value: number | undefined) {
-        this._remediatedDeviceCount = value;
+    public get setting() {
+        return this._setting;
     };
     /**
      * Sets the setting property value. The setting class name and property name.
@@ -209,11 +197,25 @@ export class DeviceCompliancePolicySettingStateSummary extends Entity implements
         this._setting = value;
     };
     /**
+     * Gets the settingName property value. Name of the setting.
+     * @returns a string
+     */
+    public get settingName() {
+        return this._settingName;
+    };
+    /**
      * Sets the settingName property value. Name of the setting.
      * @param value Value to set for the settingName property.
      */
     public set settingName(value: string | undefined) {
         this._settingName = value;
+    };
+    /**
+     * Gets the unknownDeviceCount property value. Number of unknown devices
+     * @returns a integer
+     */
+    public get unknownDeviceCount() {
+        return this._unknownDeviceCount;
     };
     /**
      * Sets the unknownDeviceCount property value. Number of unknown devices

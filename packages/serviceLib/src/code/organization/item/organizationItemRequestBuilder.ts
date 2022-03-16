@@ -1,17 +1,21 @@
 import {Organization} from '../../models/microsoft/graph/';
-import {BrandingRequestBuilder} from './branding/';
-import {CertificateBasedAuthConfigurationRequestBuilder} from './certificateBasedAuthConfiguration/';
-import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
-import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {GetMemberGroupsRequestBuilder} from './getMemberGroups/';
-import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
-import {RestoreRequestBuilder} from './restore/';
-import {SetMobileDeviceManagementAuthorityRequestBuilder} from './setMobileDeviceManagementAuthority/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOrganizationFromDiscriminatorValue} from '../../models/microsoft/graph/createOrganizationFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BrandingRequestBuilder} from './branding/brandingRequestBuilder';
+import {CertificateBasedAuthConfigurationRequestBuilder} from './certificateBasedAuthConfiguration/certificateBasedAuthConfigurationRequestBuilder';
+import {CertificateBasedAuthConfigurationItemRequestBuilder} from './certificateBasedAuthConfiguration/item/certificateBasedAuthConfigurationItemRequestBuilder';
+import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/checkMemberGroupsRequestBuilder';
+import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/checkMemberObjectsRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {GetMemberGroupsRequestBuilder} from './getMemberGroups/getMemberGroupsRequestBuilder';
+import {GetMemberObjectsRequestBuilder} from './getMemberObjects/getMemberObjectsRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {SetMobileDeviceManagementAuthorityRequestBuilder} from './setMobileDeviceManagementAuthority/setMobileDeviceManagementAuthorityRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /organization/{organization-id}  */
+/** Provides operations to manage the collection of organization entities.  */
 export class OrganizationItemRequestBuilder {
     public get branding(): BrandingRequestBuilder {
         return new BrandingRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -46,6 +50,17 @@ export class OrganizationItemRequestBuilder {
     }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.organization.item.certificateBasedAuthConfiguration.item collection
+     * @param id Unique identifier of the item
+     * @returns a certificateBasedAuthConfigurationItemRequestBuilder
+     */
+    public certificateBasedAuthConfigurationById(id: string) : CertificateBasedAuthConfigurationItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["certificateBasedAuthConfiguration_id"] = id
+        return new CertificateBasedAuthConfigurationItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new OrganizationItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -122,7 +137,11 @@ export class OrganizationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.organization.item.extensions.item collection
@@ -150,7 +169,11 @@ export class OrganizationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Organization>(requestInfo, Organization, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Organization>(requestInfo, createOrganizationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update entity in organization
@@ -164,6 +187,10 @@ export class OrganizationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

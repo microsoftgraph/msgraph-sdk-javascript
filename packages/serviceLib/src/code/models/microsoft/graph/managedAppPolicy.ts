@@ -26,11 +26,25 @@ export class ManagedAppPolicy extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The date and time the policy was created.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the description property value. The policy's description.
      * @returns a string
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. The policy's description.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. Policy display name.
@@ -40,18 +54,11 @@ export class ManagedAppPolicy extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the lastModifiedDateTime property value. Last time the policy was modified.
-     * @returns a Date
+     * Sets the displayName property value. Policy display name.
+     * @param value Value to set for the displayName property.
      */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the version property value. Version of the entity.
-     * @returns a string
-     */
-    public get version() {
-        return this._version;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -67,6 +74,20 @@ export class ManagedAppPolicy extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the lastModifiedDateTime property value. Last time the policy was modified.
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. Last time the policy was modified.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -80,32 +101,11 @@ export class ManagedAppPolicy extends Entity implements Parsable {
         writer.writeStringValue("version", this.version);
     };
     /**
-     * Sets the createdDateTime property value. The date and time the policy was created.
-     * @param value Value to set for the createdDateTime property.
+     * Gets the version property value. Version of the entity.
+     * @returns a string
      */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the description property value. The policy's description.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. Policy display name.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Last time the policy was modified.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. Version of the entity.

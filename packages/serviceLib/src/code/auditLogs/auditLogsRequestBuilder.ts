@@ -1,15 +1,18 @@
 import {AuditLogRoot} from '../models/microsoft/graph/';
-import {DirectoryAuditsRequestBuilder} from './directoryAudits/';
-import {DirectoryAuditItemRequestBuilder} from './directoryAudits/item/';
-import {ProvisioningRequestBuilder} from './provisioning/';
-import {ProvisioningObjectSummaryItemRequestBuilder} from './provisioning/item/';
-import {RestrictedSignInsRequestBuilder} from './restrictedSignIns/';
-import {RestrictedSignInItemRequestBuilder} from './restrictedSignIns/item/';
-import {SignInsRequestBuilder} from './signIns/';
-import {SignInItemRequestBuilder} from './signIns/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAuditLogRootFromDiscriminatorValue} from '../models/microsoft/graph/createAuditLogRootFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DirectoryAuditsRequestBuilder} from './directoryAudits/directoryAuditsRequestBuilder';
+import {DirectoryAuditItemRequestBuilder} from './directoryAudits/item/directoryAuditItemRequestBuilder';
+import {ProvisioningObjectSummaryItemRequestBuilder} from './provisioning/item/provisioningObjectSummaryItemRequestBuilder';
+import {ProvisioningRequestBuilder} from './provisioning/provisioningRequestBuilder';
+import {RestrictedSignInItemRequestBuilder} from './restrictedSignIns/item/restrictedSignInItemRequestBuilder';
+import {RestrictedSignInsRequestBuilder} from './restrictedSignIns/restrictedSignInsRequestBuilder';
+import {SignInItemRequestBuilder} from './signIns/item/signInItemRequestBuilder';
+import {SignInsRequestBuilder} from './signIns/signInsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /auditLogs  */
+/** Provides operations to manage the auditLogRoot singleton.  */
 export class AuditLogsRequestBuilder {
     public get directoryAudits(): DirectoryAuditsRequestBuilder {
         return new DirectoryAuditsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -106,7 +109,11 @@ export class AuditLogsRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AuditLogRoot>(requestInfo, AuditLogRoot, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AuditLogRoot>(requestInfo, createAuditLogRootFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update auditLogs
@@ -120,7 +127,11 @@ export class AuditLogsRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.auditLogs.provisioning.item collection

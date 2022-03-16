@@ -1,7 +1,8 @@
+import {createGeoCoordinatesFromDiscriminatorValue} from './createGeoCoordinatesFromDiscriminatorValue';
 import {GeoCoordinates} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SignInLocation implements Parsable {
+export class SignInLocation implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Provides the city where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.  */
@@ -13,17 +14,18 @@ export class SignInLocation implements Parsable {
     /** Provides the State where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.  */
     private _state?: string | undefined;
     /**
-     * Instantiates a new signInLocation and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the city property value. Provides the city where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.
@@ -33,11 +35,31 @@ export class SignInLocation implements Parsable {
         return this._city;
     };
     /**
+     * Sets the city property value. Provides the city where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.
+     * @param value Value to set for the city property.
+     */
+    public set city(value: string | undefined) {
+        this._city = value;
+    };
+    /**
+     * Instantiates a new signInLocation and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the countryOrRegion property value. Provides the country code info (2 letter code) where the sign-in originated.  This is calculated using latitude/longitude information from the sign-in activity.
      * @returns a string
      */
     public get countryOrRegion() {
         return this._countryOrRegion;
+    };
+    /**
+     * Sets the countryOrRegion property value. Provides the country code info (2 letter code) where the sign-in originated.  This is calculated using latitude/longitude information from the sign-in activity.
+     * @param value Value to set for the countryOrRegion property.
+     */
+    public set countryOrRegion(value: string | undefined) {
+        this._countryOrRegion = value;
     };
     /**
      * Gets the geoCoordinates property value. Provides the latitude, longitude and altitude where the sign-in originated.
@@ -47,11 +69,11 @@ export class SignInLocation implements Parsable {
         return this._geoCoordinates;
     };
     /**
-     * Gets the state property value. Provides the State where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.
-     * @returns a string
+     * Sets the geoCoordinates property value. Provides the latitude, longitude and altitude where the sign-in originated.
+     * @param value Value to set for the geoCoordinates property.
      */
-    public get state() {
-        return this._state;
+    public set geoCoordinates(value: GeoCoordinates | undefined) {
+        this._geoCoordinates = value;
     };
     /**
      * The deserialization information for the current model
@@ -61,7 +83,7 @@ export class SignInLocation implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["city", (o, n) => { (o as unknown as SignInLocation).city = n.getStringValue(); }],
             ["countryOrRegion", (o, n) => { (o as unknown as SignInLocation).countryOrRegion = n.getStringValue(); }],
-            ["geoCoordinates", (o, n) => { (o as unknown as SignInLocation).geoCoordinates = n.getObjectValue<GeoCoordinates>(GeoCoordinates); }],
+            ["geoCoordinates", (o, n) => { (o as unknown as SignInLocation).geoCoordinates = n.getObjectValue<GeoCoordinates>(createGeoCoordinatesFromDiscriminatorValue); }],
             ["state", (o, n) => { (o as unknown as SignInLocation).state = n.getStringValue(); }],
         ]);
     };
@@ -78,32 +100,11 @@ export class SignInLocation implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the state property value. Provides the State where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the city property value. Provides the city where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.
-     * @param value Value to set for the city property.
-     */
-    public set city(value: string | undefined) {
-        this._city = value;
-    };
-    /**
-     * Sets the countryOrRegion property value. Provides the country code info (2 letter code) where the sign-in originated.  This is calculated using latitude/longitude information from the sign-in activity.
-     * @param value Value to set for the countryOrRegion property.
-     */
-    public set countryOrRegion(value: string | undefined) {
-        this._countryOrRegion = value;
-    };
-    /**
-     * Sets the geoCoordinates property value. Provides the latitude, longitude and altitude where the sign-in originated.
-     * @param value Value to set for the geoCoordinates property.
-     */
-    public set geoCoordinates(value: GeoCoordinates | undefined) {
-        this._geoCoordinates = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. Provides the State where the sign-in originated. This is calculated using latitude/longitude information from the sign-in activity.

@@ -1,4 +1,5 @@
-import {Identity, InitiatorType} from './index';
+import {Identity} from './index';
+import {InitiatorType} from './initiatorType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Initiator extends Identity implements Parsable {
@@ -11,13 +12,6 @@ export class Initiator extends Identity implements Parsable {
         super();
     };
     /**
-     * Gets the initiatorType property value. Type of initiator. Possible values are: user, application, system, unknownFutureValue.
-     * @returns a initiatorType
-     */
-    public get initiatorType() {
-        return this._initiatorType;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +21,11 @@ export class Initiator extends Identity implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the initiatorType property value. Type of initiator. Possible values are: user, application, system, unknownFutureValue.
+     * @returns a initiatorType
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeEnumValue<InitiatorType>("initiatorType", this.initiatorType);
+    public get initiatorType() {
+        return this._initiatorType;
     };
     /**
      * Sets the initiatorType property value. Type of initiator. Possible values are: user, application, system, unknownFutureValue.
@@ -41,5 +33,14 @@ export class Initiator extends Identity implements Parsable {
      */
     public set initiatorType(value: InitiatorType | undefined) {
         this._initiatorType = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeEnumValue<InitiatorType>("initiatorType", this.initiatorType);
     };
 }

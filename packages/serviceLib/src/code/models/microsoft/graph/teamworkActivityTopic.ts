@@ -1,7 +1,7 @@
-import {TeamworkActivityTopicSource} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {TeamworkActivityTopicSource} from './teamworkActivityTopicSource';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TeamworkActivityTopic implements Parsable {
+export class TeamworkActivityTopic implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Type of source. Possible values are: entityUrl, text. For supported Microsoft Graph URLs, use entityUrl. For custom text, use text.  */
@@ -11,12 +11,6 @@ export class TeamworkActivityTopic implements Parsable {
     /** The link the user clicks when they select the notification. Optional when source is entityUrl; required when source is text.  */
     private _webUrl?: string | undefined;
     /**
-     * Instantiates a new teamworkActivityTopic and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -24,25 +18,17 @@ export class TeamworkActivityTopic implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the source property value. Type of source. Possible values are: entityUrl, text. For supported Microsoft Graph URLs, use entityUrl. For custom text, use text.
-     * @returns a teamworkActivityTopicSource
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get source() {
-        return this._source;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the value property value. The topic value. If the value of the source property is entityUrl, this must be a Microsoft Graph URL. If the vaule is text, this must be a plain text value.
-     * @returns a string
+     * Instantiates a new teamworkActivityTopic and sets the default values.
      */
-    public get value() {
-        return this._value;
-    };
-    /**
-     * Gets the webUrl property value. The link the user clicks when they select the notification. Optional when source is entityUrl; required when source is text.
-     * @returns a string
-     */
-    public get webUrl() {
-        return this._webUrl;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -67,11 +53,11 @@ export class TeamworkActivityTopic implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the source property value. Type of source. Possible values are: entityUrl, text. For supported Microsoft Graph URLs, use entityUrl. For custom text, use text.
+     * @returns a teamworkActivityTopicSource
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get source() {
+        return this._source;
     };
     /**
      * Sets the source property value. Type of source. Possible values are: entityUrl, text. For supported Microsoft Graph URLs, use entityUrl. For custom text, use text.
@@ -81,11 +67,25 @@ export class TeamworkActivityTopic implements Parsable {
         this._source = value;
     };
     /**
+     * Gets the value property value. The topic value. If the value of the source property is entityUrl, this must be a Microsoft Graph URL. If the vaule is text, this must be a plain text value.
+     * @returns a string
+     */
+    public get value() {
+        return this._value;
+    };
+    /**
      * Sets the value property value. The topic value. If the value of the source property is entityUrl, this must be a Microsoft Graph URL. If the vaule is text, this must be a plain text value.
      * @param value Value to set for the value property.
      */
     public set value(value: string | undefined) {
         this._value = value;
+    };
+    /**
+     * Gets the webUrl property value. The link the user clicks when they select the notification. Optional when source is entityUrl; required when source is text.
+     * @returns a string
+     */
+    public get webUrl() {
+        return this._webUrl;
     };
     /**
      * Sets the webUrl property value. The link the user clicks when they select the notification. Optional when source is entityUrl; required when source is text.

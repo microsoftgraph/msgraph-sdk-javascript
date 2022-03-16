@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class WindowsInformationProtectionResourceCollection implements Parsable {
+/** Windows Information Protection Resource Collection  */
+export class WindowsInformationProtectionResourceCollection implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Display name  */
@@ -8,17 +9,24 @@ export class WindowsInformationProtectionResourceCollection implements Parsable 
     /** Collection of resources  */
     private _resources?: string[] | undefined;
     /**
-     * Instantiates a new windowsInformationProtectionResourceCollection and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new windowsInformationProtectionResourceCollection and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the displayName property value. Display name
@@ -28,11 +36,11 @@ export class WindowsInformationProtectionResourceCollection implements Parsable 
         return this._displayName;
     };
     /**
-     * Gets the resources property value. Collection of resources
-     * @returns a string
+     * Sets the displayName property value. Display name
+     * @param value Value to set for the displayName property.
      */
-    public get resources() {
-        return this._resources;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,6 +53,20 @@ export class WindowsInformationProtectionResourceCollection implements Parsable 
         ]);
     };
     /**
+     * Gets the resources property value. Collection of resources
+     * @returns a string
+     */
+    public get resources() {
+        return this._resources;
+    };
+    /**
+     * Sets the resources property value. Collection of resources
+     * @param value Value to set for the resources property.
+     */
+    public set resources(value: string[] | undefined) {
+        this._resources = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -53,26 +75,5 @@ export class WindowsInformationProtectionResourceCollection implements Parsable 
         writer.writeStringValue("displayName", this.displayName);
         writer.writeCollectionOfPrimitiveValues<string>("resources", this.resources);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the displayName property value. Display name
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the resources property value. Collection of resources
-     * @param value Value to set for the resources property.
-     */
-    public set resources(value: string[] | undefined) {
-        this._resources = value;
     };
 }

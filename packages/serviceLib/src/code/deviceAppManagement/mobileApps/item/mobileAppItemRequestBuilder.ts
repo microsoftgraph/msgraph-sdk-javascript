@@ -1,11 +1,15 @@
 import {MobileApp} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {MobileAppAssignmentItemRequestBuilder} from './assignments/item/';
-import {CategoriesRequestBuilder} from './categories/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMobileAppFromDiscriminatorValue} from '../../../models/microsoft/graph/createMobileAppFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {MobileAppAssignmentItemRequestBuilder} from './assignments/item/mobileAppAssignmentItemRequestBuilder';
+import {CategoriesRequestBuilder} from './categories/categoriesRequestBuilder';
+import {MobileAppCategoryItemRequestBuilder} from './categories/item/mobileAppCategoryItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/mobileApps/{mobileApp-id}  */
+/** Provides operations to manage the mobileApps property of the microsoft.graph.deviceAppManagement entity.  */
 export class MobileAppItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -34,6 +38,17 @@ export class MobileAppItemRequestBuilder {
         return new MobileAppAssignmentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
+     * Gets an item from the MicrosoftGraph.deviceAppManagement.mobileApps.item.categories.item collection
+     * @param id Unique identifier of the item
+     * @returns a mobileAppCategoryItemRequestBuilder
+     */
+    public categoriesById(id: string) : MobileAppCategoryItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["mobileAppCategory_id"] = id
+        return new MobileAppCategoryItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Instantiates a new MobileAppItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
      * @param requestAdapter The request adapter to use to execute the requests.
@@ -47,7 +62,7 @@ export class MobileAppItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The mobile apps.
+     * Delete navigation property mobileApps for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -82,7 +97,7 @@ export class MobileAppItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The mobile apps.
+     * Update the navigation property mobileApps in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -100,7 +115,7 @@ export class MobileAppItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The mobile apps.
+     * Delete navigation property mobileApps for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -109,7 +124,11 @@ export class MobileAppItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The mobile apps.
@@ -126,10 +145,14 @@ export class MobileAppItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MobileApp>(requestInfo, MobileApp, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MobileApp>(requestInfo, createMobileAppFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The mobile apps.
+     * Update the navigation property mobileApps in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -140,6 +163,10 @@ export class MobileAppItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

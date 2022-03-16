@@ -5,17 +5,24 @@ export class WorkbookChartLineFormat extends Entity implements Parsable {
     /** HTML color code representing the color of lines in the chart.  */
     private _color?: string | undefined;
     /**
-     * Instantiates a new workbookChartLineFormat and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the color property value. HTML color code representing the color of lines in the chart.
      * @returns a string
      */
     public get color() {
         return this._color;
+    };
+    /**
+     * Sets the color property value. HTML color code representing the color of lines in the chart.
+     * @param value Value to set for the color property.
+     */
+    public set color(value: string | undefined) {
+        this._color = value;
+    };
+    /**
+     * Instantiates a new workbookChartLineFormat and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -34,12 +41,5 @@ export class WorkbookChartLineFormat extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("color", this.color);
-    };
-    /**
-     * Sets the color property value. HTML color code representing the color of lines in the chart.
-     * @param value Value to set for the color property.
-     */
-    public set color(value: string | undefined) {
-        this._color = value;
     };
 }

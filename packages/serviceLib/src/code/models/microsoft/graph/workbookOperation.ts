@@ -1,4 +1,6 @@
-import {Entity, WorkbookOperationError, WorkbookOperationStatus} from './index';
+import {createWorkbookOperationErrorFromDiscriminatorValue} from './createWorkbookOperationErrorFromDiscriminatorValue';
+import {Entity, WorkbookOperationError} from './index';
+import {WorkbookOperationStatus} from './workbookOperationStatus';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class WorkbookOperation extends Entity implements Parsable {
@@ -22,18 +24,11 @@ export class WorkbookOperation extends Entity implements Parsable {
         return this._error_escaped;
     };
     /**
-     * Gets the resourceLocation property value. The resource URI for the result.
-     * @returns a string
+     * Sets the error property value. The error returned by the operation.
+     * @param value Value to set for the error_escaped property.
      */
-    public get resourceLocation() {
-        return this._resourceLocation;
-    };
-    /**
-     * Gets the status property value. The current status of the operation. Possible values are: NotStarted, Running, Completed, Failed.
-     * @returns a workbookOperationStatus
-     */
-    public get status() {
-        return this._status;
+    public set error_escaped(value: WorkbookOperationError | undefined) {
+        this._error_escaped = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,10 +36,24 @@ export class WorkbookOperation extends Entity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["error", (o, n) => { (o as unknown as WorkbookOperation).error_escaped = n.getObjectValue<WorkbookOperationError>(WorkbookOperationError); }],
+            ["error", (o, n) => { (o as unknown as WorkbookOperation).error_escaped = n.getObjectValue<WorkbookOperationError>(createWorkbookOperationErrorFromDiscriminatorValue); }],
             ["resourceLocation", (o, n) => { (o as unknown as WorkbookOperation).resourceLocation = n.getStringValue(); }],
             ["status", (o, n) => { (o as unknown as WorkbookOperation).status = n.getEnumValue<WorkbookOperationStatus>(WorkbookOperationStatus); }],
         ]);
+    };
+    /**
+     * Gets the resourceLocation property value. The resource URI for the result.
+     * @returns a string
+     */
+    public get resourceLocation() {
+        return this._resourceLocation;
+    };
+    /**
+     * Sets the resourceLocation property value. The resource URI for the result.
+     * @param value Value to set for the resourceLocation property.
+     */
+    public set resourceLocation(value: string | undefined) {
+        this._resourceLocation = value;
     };
     /**
      * Serializes information the current object
@@ -58,18 +67,11 @@ export class WorkbookOperation extends Entity implements Parsable {
         writer.writeEnumValue<WorkbookOperationStatus>("status", this.status);
     };
     /**
-     * Sets the error property value. The error returned by the operation.
-     * @param value Value to set for the error_escaped property.
+     * Gets the status property value. The current status of the operation. Possible values are: NotStarted, Running, Completed, Failed.
+     * @returns a workbookOperationStatus
      */
-    public set error_escaped(value: WorkbookOperationError | undefined) {
-        this._error_escaped = value;
-    };
-    /**
-     * Sets the resourceLocation property value. The resource URI for the result.
-     * @param value Value to set for the resourceLocation property.
-     */
-    public set resourceLocation(value: string | undefined) {
-        this._resourceLocation = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. The current status of the operation. Possible values are: NotStarted, Running, Completed, Failed.

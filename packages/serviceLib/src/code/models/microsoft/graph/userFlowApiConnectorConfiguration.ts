@@ -1,11 +1,26 @@
+import {createIdentityApiConnectorFromDiscriminatorValue} from './createIdentityApiConnectorFromDiscriminatorValue';
 import {IdentityApiConnector} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class UserFlowApiConnectorConfiguration implements Parsable {
+export class UserFlowApiConnectorConfiguration implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _postAttributeCollection?: IdentityApiConnector | undefined;
     private _postFederationSignup?: IdentityApiConnector | undefined;
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
     /**
      * Instantiates a new userFlowApiConnectorConfiguration and sets the default values.
      */
@@ -13,11 +28,14 @@ export class UserFlowApiConnectorConfiguration implements Parsable {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["postAttributeCollection", (o, n) => { (o as unknown as UserFlowApiConnectorConfiguration).postAttributeCollection = n.getObjectValue<IdentityApiConnector>(createIdentityApiConnectorFromDiscriminatorValue); }],
+            ["postFederationSignup", (o, n) => { (o as unknown as UserFlowApiConnectorConfiguration).postFederationSignup = n.getObjectValue<IdentityApiConnector>(createIdentityApiConnectorFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the postAttributeCollection property value. 
@@ -27,6 +45,13 @@ export class UserFlowApiConnectorConfiguration implements Parsable {
         return this._postAttributeCollection;
     };
     /**
+     * Sets the postAttributeCollection property value. 
+     * @param value Value to set for the postAttributeCollection property.
+     */
+    public set postAttributeCollection(value: IdentityApiConnector | undefined) {
+        this._postAttributeCollection = value;
+    };
+    /**
      * Gets the postFederationSignup property value. 
      * @returns a identityApiConnector
      */
@@ -34,14 +59,11 @@ export class UserFlowApiConnectorConfiguration implements Parsable {
         return this._postFederationSignup;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the postFederationSignup property value. 
+     * @param value Value to set for the postFederationSignup property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["postAttributeCollection", (o, n) => { (o as unknown as UserFlowApiConnectorConfiguration).postAttributeCollection = n.getObjectValue<IdentityApiConnector>(IdentityApiConnector); }],
-            ["postFederationSignup", (o, n) => { (o as unknown as UserFlowApiConnectorConfiguration).postFederationSignup = n.getObjectValue<IdentityApiConnector>(IdentityApiConnector); }],
-        ]);
+    public set postFederationSignup(value: IdentityApiConnector | undefined) {
+        this._postFederationSignup = value;
     };
     /**
      * Serializes information the current object
@@ -52,26 +74,5 @@ export class UserFlowApiConnectorConfiguration implements Parsable {
         writer.writeObjectValue<IdentityApiConnector>("postAttributeCollection", this.postAttributeCollection);
         writer.writeObjectValue<IdentityApiConnector>("postFederationSignup", this.postFederationSignup);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the postAttributeCollection property value. 
-     * @param value Value to set for the postAttributeCollection property.
-     */
-    public set postAttributeCollection(value: IdentityApiConnector | undefined) {
-        this._postAttributeCollection = value;
-    };
-    /**
-     * Sets the postFederationSignup property value. 
-     * @param value Value to set for the postFederationSignup property.
-     */
-    public set postFederationSignup(value: IdentityApiConnector | undefined) {
-        this._postFederationSignup = value;
     };
 }

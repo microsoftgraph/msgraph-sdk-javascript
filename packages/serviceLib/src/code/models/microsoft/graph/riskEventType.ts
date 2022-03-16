@@ -1,3 +1,4 @@
+/** Provides operations to manage the auditLogRoot singleton.  */
 export enum RiskEventType {
     UnlikelyTravel = "unlikelyTravel",
     AnonymizedIPAddress = "anonymizedIPAddress",

@@ -1,19 +1,22 @@
 import {Onenote} from '../../../models/microsoft/graph/';
-import {NotebooksRequestBuilder} from './notebooks/';
-import {NotebookItemRequestBuilder} from './notebooks/item/';
-import {OperationsRequestBuilder} from './operations/';
-import {OnenoteOperationItemRequestBuilder} from './operations/item/';
-import {PagesRequestBuilder} from './pages/';
-import {OnenotePageItemRequestBuilder} from './pages/item/';
-import {ResourcesRequestBuilder} from './resources/';
-import {OnenoteResourceItemRequestBuilder} from './resources/item/';
-import {SectionGroupsRequestBuilder} from './sectionGroups/';
-import {SectionGroupItemRequestBuilder} from './sectionGroups/item/';
-import {SectionsRequestBuilder} from './sections/';
-import {OnenoteSectionItemRequestBuilder} from './sections/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOnenoteFromDiscriminatorValue} from '../../../models/microsoft/graph/createOnenoteFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {NotebookItemRequestBuilder} from './notebooks/item/notebookItemRequestBuilder';
+import {NotebooksRequestBuilder} from './notebooks/notebooksRequestBuilder';
+import {OnenoteOperationItemRequestBuilder} from './operations/item/onenoteOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {OnenotePageItemRequestBuilder} from './pages/item/onenotePageItemRequestBuilder';
+import {PagesRequestBuilder} from './pages/pagesRequestBuilder';
+import {OnenoteResourceItemRequestBuilder} from './resources/item/onenoteResourceItemRequestBuilder';
+import {ResourcesRequestBuilder} from './resources/resourcesRequestBuilder';
+import {SectionGroupItemRequestBuilder} from './sectionGroups/item/sectionGroupItemRequestBuilder';
+import {SectionGroupsRequestBuilder} from './sectionGroups/sectionGroupsRequestBuilder';
+import {OnenoteSectionItemRequestBuilder} from './sections/item/onenoteSectionItemRequestBuilder';
+import {SectionsRequestBuilder} from './sections/sectionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/onenote  */
+/** Provides operations to manage the onenote property of the microsoft.graph.site entity.  */
 export class OnenoteRequestBuilder {
     public get notebooks(): NotebooksRequestBuilder {
         return new NotebooksRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -53,7 +56,7 @@ export class OnenoteRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Calls the OneNote service for notebook related operations.
+     * Delete navigation property onenote for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -88,7 +91,7 @@ export class OnenoteRequestBuilder {
         return requestInfo;
     };
     /**
-     * Calls the OneNote service for notebook related operations.
+     * Update the navigation property onenote in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -106,7 +109,7 @@ export class OnenoteRequestBuilder {
         return requestInfo;
     };
     /**
-     * Calls the OneNote service for notebook related operations.
+     * Delete navigation property onenote for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -115,7 +118,11 @@ export class OnenoteRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Calls the OneNote service for notebook related operations.
@@ -132,7 +139,11 @@ export class OnenoteRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Onenote>(requestInfo, Onenote, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Onenote>(requestInfo, createOnenoteFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.onenote.notebooks.item collection
@@ -168,7 +179,7 @@ export class OnenoteRequestBuilder {
         return new OnenotePageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Calls the OneNote service for notebook related operations.
+     * Update the navigation property onenote in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -179,7 +190,11 @@ export class OnenoteRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.onenote.resources.item collection

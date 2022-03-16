@@ -1,8 +1,11 @@
 import {UserScopeTeamsAppInstallation} from '../../../../models/microsoft/graph/';
-import {ChatRequestBuilder} from './chat/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserScopeTeamsAppInstallationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUserScopeTeamsAppInstallationFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ChatRequestBuilder} from './chat/chatRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/teamwork/installedApps/{userScopeTeamsAppInstallation-id}  */
+/** Provides operations to manage the installedApps property of the microsoft.graph.userTeamwork entity.  */
 export class UserScopeTeamsAppInstallationItemRequestBuilder {
     public get chat(): ChatRequestBuilder {
         return new ChatRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The apps installed in the personal scope of this user.
+     * Delete navigation property installedApps for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The apps installed in the personal scope of this user.
+     * Update the navigation property installedApps in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The apps installed in the personal scope of this user.
+     * Delete navigation property installedApps for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The apps installed in the personal scope of this user.
@@ -106,10 +113,14 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserScopeTeamsAppInstallation>(requestInfo, UserScopeTeamsAppInstallation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserScopeTeamsAppInstallation>(requestInfo, createUserScopeTeamsAppInstallationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The apps installed in the personal scope of this user.
+     * Update the navigation property installedApps in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class UserScopeTeamsAppInstallationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

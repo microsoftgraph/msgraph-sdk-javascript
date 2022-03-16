@@ -1,0 +1,7 @@
+import {DirectoryAudit} from './index';
+import {ParseNode} from '@microsoft/kiota-abstractions';
+
+export function createDirectoryAuditFromDiscriminatorValue(parseNode: ParseNode | undefined) : DirectoryAudit {
+    if(!parseNode) throw new Error("parseNode cannot be undefined");
+    return new DirectoryAudit();
+}

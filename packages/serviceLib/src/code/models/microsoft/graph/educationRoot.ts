@@ -1,7 +1,10 @@
+import {createEducationClassFromDiscriminatorValue} from './createEducationClassFromDiscriminatorValue';
+import {createEducationSchoolFromDiscriminatorValue} from './createEducationSchoolFromDiscriminatorValue';
+import {createEducationUserFromDiscriminatorValue} from './createEducationUserFromDiscriminatorValue';
 import {EducationClass, EducationSchool, EducationUser} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class EducationRoot implements Parsable {
+export class EducationRoot implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _classes?: EducationClass[] | undefined;
@@ -9,17 +12,18 @@ export class EducationRoot implements Parsable {
     private _schools?: EducationSchool[] | undefined;
     private _users?: EducationUser[] | undefined;
     /**
-     * Instantiates a new EducationRoot and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the classes property value. 
@@ -29,11 +33,43 @@ export class EducationRoot implements Parsable {
         return this._classes;
     };
     /**
+     * Sets the classes property value. 
+     * @param value Value to set for the classes property.
+     */
+    public set classes(value: EducationClass[] | undefined) {
+        this._classes = value;
+    };
+    /**
+     * Instantiates a new EducationRoot and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["classes", (o, n) => { (o as unknown as EducationRoot).classes = n.getCollectionOfObjectValues<EducationClass>(createEducationClassFromDiscriminatorValue); }],
+            ["me", (o, n) => { (o as unknown as EducationRoot).me = n.getObjectValue<EducationUser>(createEducationUserFromDiscriminatorValue); }],
+            ["schools", (o, n) => { (o as unknown as EducationRoot).schools = n.getCollectionOfObjectValues<EducationSchool>(createEducationSchoolFromDiscriminatorValue); }],
+            ["users", (o, n) => { (o as unknown as EducationRoot).users = n.getCollectionOfObjectValues<EducationUser>(createEducationUserFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the me property value. 
      * @returns a educationUser
      */
     public get me() {
         return this._me;
+    };
+    /**
+     * Sets the me property value. 
+     * @param value Value to set for the me property.
+     */
+    public set me(value: EducationUser | undefined) {
+        this._me = value;
     };
     /**
      * Gets the schools property value. 
@@ -43,23 +79,11 @@ export class EducationRoot implements Parsable {
         return this._schools;
     };
     /**
-     * Gets the users property value. 
-     * @returns a educationUser
+     * Sets the schools property value. 
+     * @param value Value to set for the schools property.
      */
-    public get users() {
-        return this._users;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["classes", (o, n) => { (o as unknown as EducationRoot).classes = n.getCollectionOfObjectValues<EducationClass>(EducationClass); }],
-            ["me", (o, n) => { (o as unknown as EducationRoot).me = n.getObjectValue<EducationUser>(EducationUser); }],
-            ["schools", (o, n) => { (o as unknown as EducationRoot).schools = n.getCollectionOfObjectValues<EducationSchool>(EducationSchool); }],
-            ["users", (o, n) => { (o as unknown as EducationRoot).users = n.getCollectionOfObjectValues<EducationUser>(EducationUser); }],
-        ]);
+    public set schools(value: EducationSchool[] | undefined) {
+        this._schools = value;
     };
     /**
      * Serializes information the current object
@@ -74,32 +98,11 @@ export class EducationRoot implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the users property value. 
+     * @returns a educationUser
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the classes property value. 
-     * @param value Value to set for the classes property.
-     */
-    public set classes(value: EducationClass[] | undefined) {
-        this._classes = value;
-    };
-    /**
-     * Sets the me property value. 
-     * @param value Value to set for the me property.
-     */
-    public set me(value: EducationUser | undefined) {
-        this._me = value;
-    };
-    /**
-     * Sets the schools property value. 
-     * @param value Value to set for the schools property.
-     */
-    public set schools(value: EducationSchool[] | undefined) {
-        this._schools = value;
+    public get users() {
+        return this._users;
     };
     /**
      * Sets the users property value. 

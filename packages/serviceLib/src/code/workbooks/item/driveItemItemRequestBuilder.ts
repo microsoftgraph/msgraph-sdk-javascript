@@ -1,36 +1,39 @@
 import {DriveItem} from '../../models/microsoft/graph/';
-import {AnalyticsRequestBuilder} from './analytics/';
-import {CheckinRequestBuilder} from './checkin/';
-import {CheckoutRequestBuilder} from './checkout/';
-import {ChildrenRequestBuilder} from './children/';
-import {ContentRequestBuilder} from './content/';
-import {CopyRequestBuilder} from './copy/';
-import {CreateLinkRequestBuilder} from './createLink/';
-import {CreateUploadSessionRequestBuilder} from './createUploadSession/';
-import {DeltaRequestBuilder} from './delta/';
-import {DeltaWithTokenRequestBuilder} from './deltaWithToken/';
-import {FollowRequestBuilder} from './follow/';
-import {GetActivitiesByIntervalRequestBuilder} from './getActivitiesByInterval/';
-import {GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder} from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval/';
-import {InviteRequestBuilder} from './invite/';
-import {ListItemRequestBuilder} from './listItem/';
-import {PermissionsRequestBuilder} from './permissions/';
-import {PermissionItemRequestBuilder} from './permissions/item/';
-import {PreviewRequestBuilder} from './preview/';
-import {RestoreRequestBuilder} from './restore/';
-import {SearchWithQRequestBuilder} from './searchWithQ/';
-import {SubscriptionsRequestBuilder} from './subscriptions/';
-import {SubscriptionItemRequestBuilder} from './subscriptions/item/';
-import {ThumbnailsRequestBuilder} from './thumbnails/';
-import {ThumbnailSetItemRequestBuilder} from './thumbnails/item/';
-import {UnfollowRequestBuilder} from './unfollow/';
-import {ValidatePermissionRequestBuilder} from './validatePermission/';
-import {VersionsRequestBuilder} from './versions/';
-import {DriveItemVersionItemRequestBuilder} from './versions/item/';
-import {WorkbookRequestBuilder} from './workbook/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDriveItemFromDiscriminatorValue} from '../../models/microsoft/graph/createDriveItemFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AnalyticsRequestBuilder} from './analytics/analyticsRequestBuilder';
+import {CheckinRequestBuilder} from './checkin/checkinRequestBuilder';
+import {CheckoutRequestBuilder} from './checkout/checkoutRequestBuilder';
+import {ChildrenRequestBuilder} from './children/childrenRequestBuilder';
+import {DriveItemItemRequestBuilder as ibeb8cdea0606e1ae202ce0d52861fd9d4d2e71d1479fd742a77bf9a3fc69e038} from './children/item/driveItemItemRequestBuilder';
+import {ContentRequestBuilder} from './content/contentRequestBuilder';
+import {CopyRequestBuilder} from './copy/copyRequestBuilder';
+import {CreateLinkRequestBuilder} from './createLink/createLinkRequestBuilder';
+import {CreateUploadSessionRequestBuilder} from './createUploadSession/createUploadSessionRequestBuilder';
+import {DeltaRequestBuilder} from './delta/deltaRequestBuilder';
+import {DeltaWithTokenRequestBuilder} from './deltaWithToken/deltaWithTokenRequestBuilder';
+import {FollowRequestBuilder} from './follow/followRequestBuilder';
+import {GetActivitiesByIntervalRequestBuilder} from './getActivitiesByInterval/getActivitiesByIntervalRequestBuilder';
+import {GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder} from './getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval/getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder';
+import {InviteRequestBuilder} from './invite/inviteRequestBuilder';
+import {ListItemRequestBuilder} from './listItem/listItemRequestBuilder';
+import {PermissionItemRequestBuilder} from './permissions/item/permissionItemRequestBuilder';
+import {PermissionsRequestBuilder} from './permissions/permissionsRequestBuilder';
+import {PreviewRequestBuilder} from './preview/previewRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {SearchWithQRequestBuilder} from './searchWithQ/searchWithQRequestBuilder';
+import {SubscriptionItemRequestBuilder} from './subscriptions/item/subscriptionItemRequestBuilder';
+import {SubscriptionsRequestBuilder} from './subscriptions/subscriptionsRequestBuilder';
+import {ThumbnailSetItemRequestBuilder} from './thumbnails/item/thumbnailSetItemRequestBuilder';
+import {ThumbnailsRequestBuilder} from './thumbnails/thumbnailsRequestBuilder';
+import {UnfollowRequestBuilder} from './unfollow/unfollowRequestBuilder';
+import {ValidatePermissionRequestBuilder} from './validatePermission/validatePermissionRequestBuilder';
+import {DriveItemVersionItemRequestBuilder} from './versions/item/driveItemVersionItemRequestBuilder';
+import {VersionsRequestBuilder} from './versions/versionsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /workbooks/{driveItem-id}  */
+/** Provides operations to manage the collection of driveItem entities.  */
 export class DriveItemItemRequestBuilder {
     public get analytics(): AnalyticsRequestBuilder {
         return new AnalyticsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -95,9 +98,17 @@ export class DriveItemItemRequestBuilder {
     public get versions(): VersionsRequestBuilder {
         return new VersionsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
-    public get workbook(): WorkbookRequestBuilder {
-        return new WorkbookRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
+    /**
+     * Gets an item from the MicrosoftGraph.workbooks.item.children.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public childrenById(id: string) : ibeb8cdea0606e1ae202ce0d52861fd9d4d2e71d1479fd742a77bf9a3fc69e038 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id1"] = id
+        return new ibeb8cdea0606e1ae202ce0d52861fd9d4d2e71d1479fd742a77bf9a3fc69e038(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new DriveItemItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -174,18 +185,22 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /workbooks/{driveItem-id}/microsoft.graph.delta()
+     * Provides operations to call the delta method.
      * @returns a deltaRequestBuilder
      */
     public delta() : DeltaRequestBuilder {
         return new DeltaRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /workbooks/{driveItem-id}/microsoft.graph.delta(token='{token}')
-     * @param token Usage: token={token}
+     * Provides operations to call the delta method.
+     * @param token Usage: token='{token}'
      * @returns a deltaWithTokenRequestBuilder
      */
     public deltaWithToken(token: string | undefined) : DeltaWithTokenRequestBuilder {
@@ -207,27 +222,31 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DriveItem>(requestInfo, DriveItem, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DriveItem>(requestInfo, createDriveItemFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /workbooks/{driveItem-id}/microsoft.graph.getActivitiesByInterval()
+     * Provides operations to call the getActivitiesByInterval method.
      * @returns a getActivitiesByIntervalRequestBuilder
      */
     public getActivitiesByInterval() : GetActivitiesByIntervalRequestBuilder {
         return new GetActivitiesByIntervalRequestBuilder(this.pathParameters, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /workbooks/{driveItem-id}/microsoft.graph.getActivitiesByInterval(startDateTime='{startDateTime}',endDateTime='{endDateTime}',interval='{interval}')
-     * @param endDateTime Usage: endDateTime={endDateTime}
-     * @param interval Usage: interval={interval}
-     * @param startDateTime Usage: startDateTime={startDateTime}
+     * Provides operations to call the getActivitiesByInterval method.
+     * @param endDateTime Usage: endDateTime='{endDateTime}'
+     * @param interval Usage: interval='{interval}'
+     * @param startDateTime Usage: startDateTime='{startDateTime}'
      * @returns a getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder
      */
-    public getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval(startDateTime: string | undefined, endDateTime: string | undefined, interval: string | undefined) : GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder {
+    public getActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval(endDateTime: string | undefined, interval: string | undefined, startDateTime: string | undefined) : GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder {
         if(!endDateTime) throw new Error("endDateTime cannot be undefined");
         if(!interval) throw new Error("interval cannot be undefined");
         if(!startDateTime) throw new Error("startDateTime cannot be undefined");
-        return new GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder(this.pathParameters, this.requestAdapter, startDateTime, endDateTime, interval);
+        return new GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithIntervalRequestBuilder(this.pathParameters, this.requestAdapter, endDateTime, interval, startDateTime);
     };
     /**
      * Update entity in workbooks
@@ -241,7 +260,11 @@ export class DriveItemItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.workbooks.item.permissions.item collection
@@ -255,8 +278,8 @@ export class DriveItemItemRequestBuilder {
         return new PermissionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Builds and executes requests for operations under /workbooks/{driveItem-id}/microsoft.graph.search(q='{q}')
-     * @param q Usage: q={q}
+     * Provides operations to call the search method.
+     * @param q Usage: q='{q}'
      * @returns a searchWithQRequestBuilder
      */
     public searchWithQ(q: string | undefined) : SearchWithQRequestBuilder {

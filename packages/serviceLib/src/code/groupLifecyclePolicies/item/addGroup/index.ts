@@ -1,2 +1,2 @@
-export * from './AddGroupRequestBody'
-export * from './AddGroupRequestBuilder'
+export * from './addGroupRequestBody'
+export * from './addGroupResponse'

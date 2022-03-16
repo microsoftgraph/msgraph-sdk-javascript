@@ -1,19 +1,13 @@
-import {FailureStage} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {FailureStage} from './failureStage';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class FailureInfo implements Parsable {
+export class FailureInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Classification of why a call or portion of a call failed.  */
     private _reason?: string | undefined;
     /** The stage when the failure occurred. Possible values are: unknown, callSetup, midcall, unknownFutureValue.  */
     private _stage?: FailureStage | undefined;
-    /**
-     * Instantiates a new failureInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -22,18 +16,17 @@ export class FailureInfo implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the reason property value. Classification of why a call or portion of a call failed.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get reason() {
-        return this._reason;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the stage property value. The stage when the failure occurred. Possible values are: unknown, callSetup, midcall, unknownFutureValue.
-     * @returns a failureStage
+     * Instantiates a new failureInfo and sets the default values.
      */
-    public get stage() {
-        return this._stage;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -46,6 +39,20 @@ export class FailureInfo implements Parsable {
         ]);
     };
     /**
+     * Gets the reason property value. Classification of why a call or portion of a call failed.
+     * @returns a string
+     */
+    public get reason() {
+        return this._reason;
+    };
+    /**
+     * Sets the reason property value. Classification of why a call or portion of a call failed.
+     * @param value Value to set for the reason property.
+     */
+    public set reason(value: string | undefined) {
+        this._reason = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -56,18 +63,11 @@ export class FailureInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the stage property value. The stage when the failure occurred. Possible values are: unknown, callSetup, midcall, unknownFutureValue.
+     * @returns a failureStage
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the reason property value. Classification of why a call or portion of a call failed.
-     * @param value Value to set for the reason property.
-     */
-    public set reason(value: string | undefined) {
-        this._reason = value;
+    public get stage() {
+        return this._stage;
     };
     /**
      * Sets the stage property value. The stage when the failure occurred. Possible values are: unknown, callSetup, midcall, unknownFutureValue.

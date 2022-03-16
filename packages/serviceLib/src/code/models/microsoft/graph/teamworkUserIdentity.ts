@@ -1,4 +1,5 @@
-import {Identity, TeamworkUserIdentityType} from './index';
+import {Identity} from './index';
+import {TeamworkUserIdentityType} from './teamworkUserIdentityType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class TeamworkUserIdentity extends Identity implements Parsable {
@@ -9,13 +10,6 @@ export class TeamworkUserIdentity extends Identity implements Parsable {
      */
     public constructor() {
         super();
-    };
-    /**
-     * Gets the userIdentityType property value. Type of user. Possible values are: aadUser, onPremiseAadUser, anonymousGuest, federatedUser, personalMicrosoftAccountUser, skypeUser, phoneUser, and unknownFutureValue.
-     * @returns a teamworkUserIdentityType
-     */
-    public get userIdentityType() {
-        return this._userIdentityType;
     };
     /**
      * The deserialization information for the current model
@@ -34,6 +28,13 @@ export class TeamworkUserIdentity extends Identity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeEnumValue<TeamworkUserIdentityType>("userIdentityType", this.userIdentityType);
+    };
+    /**
+     * Gets the userIdentityType property value. Type of user. Possible values are: aadUser, onPremiseAadUser, anonymousGuest, federatedUser, personalMicrosoftAccountUser, skypeUser, phoneUser, and unknownFutureValue.
+     * @returns a teamworkUserIdentityType
+     */
+    public get userIdentityType() {
+        return this._userIdentityType;
     };
     /**
      * Sets the userIdentityType property value. Type of user. Possible values are: aadUser, onPremiseAadUser, anonymousGuest, federatedUser, personalMicrosoftAccountUser, skypeUser, phoneUser, and unknownFutureValue.

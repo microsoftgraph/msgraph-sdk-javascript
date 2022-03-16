@@ -1,26 +1,33 @@
 import {Application} from '../../models/microsoft/graph/';
-import {AddKeyRequestBuilder} from './addKey/';
-import {AddPasswordRequestBuilder} from './addPassword/';
-import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
-import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
-import {CreatedOnBehalfOfRequestBuilder} from './createdOnBehalfOf/';
-import {ExtensionPropertiesRequestBuilder} from './extensionProperties/';
-import {ExtensionPropertyItemRequestBuilder} from './extensionProperties/item/';
-import {GetMemberGroupsRequestBuilder} from './getMemberGroups/';
-import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
-import {HomeRealmDiscoveryPoliciesRequestBuilder} from './homeRealmDiscoveryPolicies/';
-import {LogoRequestBuilder} from './logo/';
-import {OwnersRequestBuilder} from './owners/';
-import {RemoveKeyRequestBuilder} from './removeKey/';
-import {RemovePasswordRequestBuilder} from './removePassword/';
-import {RestoreRequestBuilder} from './restore/';
-import {SetVerifiedPublisherRequestBuilder} from './setVerifiedPublisher/';
-import {TokenIssuancePoliciesRequestBuilder} from './tokenIssuancePolicies/';
-import {TokenLifetimePoliciesRequestBuilder} from './tokenLifetimePolicies/';
-import {UnsetVerifiedPublisherRequestBuilder} from './unsetVerifiedPublisher/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createApplicationFromDiscriminatorValue} from '../../models/microsoft/graph/createApplicationFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AddKeyRequestBuilder} from './addKey/addKeyRequestBuilder';
+import {AddPasswordRequestBuilder} from './addPassword/addPasswordRequestBuilder';
+import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/checkMemberGroupsRequestBuilder';
+import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/checkMemberObjectsRequestBuilder';
+import {CreatedOnBehalfOfRequestBuilder} from './createdOnBehalfOf/createdOnBehalfOfRequestBuilder';
+import {ExtensionPropertiesRequestBuilder} from './extensionProperties/extensionPropertiesRequestBuilder';
+import {ExtensionPropertyItemRequestBuilder} from './extensionProperties/item/extensionPropertyItemRequestBuilder';
+import {GetMemberGroupsRequestBuilder} from './getMemberGroups/getMemberGroupsRequestBuilder';
+import {GetMemberObjectsRequestBuilder} from './getMemberObjects/getMemberObjectsRequestBuilder';
+import {HomeRealmDiscoveryPoliciesRequestBuilder} from './homeRealmDiscoveryPolicies/homeRealmDiscoveryPoliciesRequestBuilder';
+import {HomeRealmDiscoveryPolicyItemRequestBuilder} from './homeRealmDiscoveryPolicies/item/homeRealmDiscoveryPolicyItemRequestBuilder';
+import {LogoRequestBuilder} from './logo/logoRequestBuilder';
+import {DirectoryObjectItemRequestBuilder} from './owners/item/directoryObjectItemRequestBuilder';
+import {OwnersRequestBuilder} from './owners/ownersRequestBuilder';
+import {RemoveKeyRequestBuilder} from './removeKey/removeKeyRequestBuilder';
+import {RemovePasswordRequestBuilder} from './removePassword/removePasswordRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {SetVerifiedPublisherRequestBuilder} from './setVerifiedPublisher/setVerifiedPublisherRequestBuilder';
+import {TokenIssuancePolicyItemRequestBuilder} from './tokenIssuancePolicies/item/tokenIssuancePolicyItemRequestBuilder';
+import {TokenIssuancePoliciesRequestBuilder} from './tokenIssuancePolicies/tokenIssuancePoliciesRequestBuilder';
+import {TokenLifetimePolicyItemRequestBuilder} from './tokenLifetimePolicies/item/tokenLifetimePolicyItemRequestBuilder';
+import {TokenLifetimePoliciesRequestBuilder} from './tokenLifetimePolicies/tokenLifetimePoliciesRequestBuilder';
+import {UnsetVerifiedPublisherRequestBuilder} from './unsetVerifiedPublisher/unsetVerifiedPublisherRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /applications/{application-id}  */
+/** Provides operations to manage the collection of application entities.  */
 export class ApplicationItemRequestBuilder {
     public get addKey(): AddKeyRequestBuilder {
         return new AddKeyRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -158,7 +165,11 @@ export class ApplicationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.applications.item.extensionProperties.item collection
@@ -186,7 +197,33 @@ export class ApplicationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Application>(requestInfo, Application, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Application>(requestInfo, createApplicationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.applications.item.homeRealmDiscoveryPolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a homeRealmDiscoveryPolicyItemRequestBuilder
+     */
+    public homeRealmDiscoveryPoliciesById(id: string) : HomeRealmDiscoveryPolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["homeRealmDiscoveryPolicy_id"] = id
+        return new HomeRealmDiscoveryPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.applications.item.owners.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public ownersById(id: string) : DirectoryObjectItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new DirectoryObjectItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update entity in applications
@@ -200,6 +237,32 @@ export class ApplicationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.applications.item.tokenIssuancePolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a tokenIssuancePolicyItemRequestBuilder
+     */
+    public tokenIssuancePoliciesById(id: string) : TokenIssuancePolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["tokenIssuancePolicy_id"] = id
+        return new TokenIssuancePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.applications.item.tokenLifetimePolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a tokenLifetimePolicyItemRequestBuilder
+     */
+    public tokenLifetimePoliciesById(id: string) : TokenLifetimePolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["tokenLifetimePolicy_id"] = id
+        return new TokenLifetimePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

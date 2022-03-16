@@ -1,4 +1,18 @@
-import {ComplianceState, ConfigurationManagerClientEnabledFeatures, DeviceActionResult, DeviceCategory, DeviceCompliancePolicyState, DeviceConfigurationState, DeviceEnrollmentType, DeviceHealthAttestationState, DeviceManagementExchangeAccessState, DeviceManagementExchangeAccessStateReason, DeviceRegistrationState, Entity, ManagedDeviceOwnerType, ManagedDevicePartnerReportedHealthState, ManagementAgentType} from './index';
+import {ComplianceState} from './complianceState';
+import {createConfigurationManagerClientEnabledFeaturesFromDiscriminatorValue} from './createConfigurationManagerClientEnabledFeaturesFromDiscriminatorValue';
+import {createDeviceActionResultFromDiscriminatorValue} from './createDeviceActionResultFromDiscriminatorValue';
+import {createDeviceCategoryFromDiscriminatorValue} from './createDeviceCategoryFromDiscriminatorValue';
+import {createDeviceCompliancePolicyStateFromDiscriminatorValue} from './createDeviceCompliancePolicyStateFromDiscriminatorValue';
+import {createDeviceConfigurationStateFromDiscriminatorValue} from './createDeviceConfigurationStateFromDiscriminatorValue';
+import {createDeviceHealthAttestationStateFromDiscriminatorValue} from './createDeviceHealthAttestationStateFromDiscriminatorValue';
+import {DeviceEnrollmentType} from './deviceEnrollmentType';
+import {DeviceManagementExchangeAccessState} from './deviceManagementExchangeAccessState';
+import {DeviceManagementExchangeAccessStateReason} from './deviceManagementExchangeAccessStateReason';
+import {DeviceRegistrationState} from './deviceRegistrationState';
+import {ConfigurationManagerClientEnabledFeatures, DeviceActionResult, DeviceCategory, DeviceCompliancePolicyState, DeviceConfigurationState, DeviceHealthAttestationState, Entity} from './index';
+import {ManagedDeviceOwnerType} from './managedDeviceOwnerType';
+import {ManagedDevicePartnerReportedHealthState} from './managedDevicePartnerReportedHealthState';
+import {ManagementAgentType} from './managementAgentType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ManagedDevice extends Entity implements Parsable {
@@ -111,17 +125,18 @@ export class ManagedDevice extends Entity implements Parsable {
     /** Wi-Fi MAC. This property is read-only.  */
     private _wiFiMacAddress?: string | undefined;
     /**
-     * Instantiates a new managedDevice and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the activationLockBypassCode property value. Code that allows the Activation Lock on a device to be bypassed. This property is read-only.
      * @returns a string
      */
     public get activationLockBypassCode() {
         return this._activationLockBypassCode;
+    };
+    /**
+     * Sets the activationLockBypassCode property value. Code that allows the Activation Lock on a device to be bypassed. This property is read-only.
+     * @param value Value to set for the activationLockBypassCode property.
+     */
+    public set activationLockBypassCode(value: string | undefined) {
+        this._activationLockBypassCode = value;
     };
     /**
      * Gets the androidSecurityPatchLevel property value. Android security patch level. This property is read-only.
@@ -131,11 +146,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._androidSecurityPatchLevel;
     };
     /**
+     * Sets the androidSecurityPatchLevel property value. Android security patch level. This property is read-only.
+     * @param value Value to set for the androidSecurityPatchLevel property.
+     */
+    public set androidSecurityPatchLevel(value: string | undefined) {
+        this._androidSecurityPatchLevel = value;
+    };
+    /**
      * Gets the azureADDeviceId property value. The unique identifier for the Azure Active Directory device. Read only. This property is read-only.
      * @returns a string
      */
     public get azureADDeviceId() {
         return this._azureADDeviceId;
+    };
+    /**
+     * Sets the azureADDeviceId property value. The unique identifier for the Azure Active Directory device. Read only. This property is read-only.
+     * @param value Value to set for the azureADDeviceId property.
+     */
+    public set azureADDeviceId(value: string | undefined) {
+        this._azureADDeviceId = value;
     };
     /**
      * Gets the azureADRegistered property value. Whether the device is Azure Active Directory registered. This property is read-only.
@@ -145,11 +174,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._azureADRegistered;
     };
     /**
+     * Sets the azureADRegistered property value. Whether the device is Azure Active Directory registered. This property is read-only.
+     * @param value Value to set for the azureADRegistered property.
+     */
+    public set azureADRegistered(value: boolean | undefined) {
+        this._azureADRegistered = value;
+    };
+    /**
      * Gets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires. This property is read-only.
      * @returns a Date
      */
     public get complianceGracePeriodExpirationDateTime() {
         return this._complianceGracePeriodExpirationDateTime;
+    };
+    /**
+     * Sets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires. This property is read-only.
+     * @param value Value to set for the complianceGracePeriodExpirationDateTime property.
+     */
+    public set complianceGracePeriodExpirationDateTime(value: Date | undefined) {
+        this._complianceGracePeriodExpirationDateTime = value;
     };
     /**
      * Gets the complianceState property value. Compliance state of the device. This property is read-only. Possible values are: unknown, compliant, noncompliant, conflict, error, inGracePeriod, configManager.
@@ -159,11 +202,31 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._complianceState;
     };
     /**
+     * Sets the complianceState property value. Compliance state of the device. This property is read-only. Possible values are: unknown, compliant, noncompliant, conflict, error, inGracePeriod, configManager.
+     * @param value Value to set for the complianceState property.
+     */
+    public set complianceState(value: ComplianceState | undefined) {
+        this._complianceState = value;
+    };
+    /**
      * Gets the configurationManagerClientEnabledFeatures property value. ConfigrMgr client enabled features. This property is read-only.
      * @returns a configurationManagerClientEnabledFeatures
      */
     public get configurationManagerClientEnabledFeatures() {
         return this._configurationManagerClientEnabledFeatures;
+    };
+    /**
+     * Sets the configurationManagerClientEnabledFeatures property value. ConfigrMgr client enabled features. This property is read-only.
+     * @param value Value to set for the configurationManagerClientEnabledFeatures property.
+     */
+    public set configurationManagerClientEnabledFeatures(value: ConfigurationManagerClientEnabledFeatures | undefined) {
+        this._configurationManagerClientEnabledFeatures = value;
+    };
+    /**
+     * Instantiates a new managedDevice and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the deviceActionResults property value. List of ComplexType deviceActionResult objects. This property is read-only.
@@ -173,11 +236,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._deviceActionResults;
     };
     /**
+     * Sets the deviceActionResults property value. List of ComplexType deviceActionResult objects. This property is read-only.
+     * @param value Value to set for the deviceActionResults property.
+     */
+    public set deviceActionResults(value: DeviceActionResult[] | undefined) {
+        this._deviceActionResults = value;
+    };
+    /**
      * Gets the deviceCategory property value. Device category
      * @returns a deviceCategory
      */
     public get deviceCategory() {
         return this._deviceCategory;
+    };
+    /**
+     * Sets the deviceCategory property value. Device category
+     * @param value Value to set for the deviceCategory property.
+     */
+    public set deviceCategory(value: DeviceCategory | undefined) {
+        this._deviceCategory = value;
     };
     /**
      * Gets the deviceCategoryDisplayName property value. Device category display name. This property is read-only.
@@ -187,11 +264,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._deviceCategoryDisplayName;
     };
     /**
+     * Sets the deviceCategoryDisplayName property value. Device category display name. This property is read-only.
+     * @param value Value to set for the deviceCategoryDisplayName property.
+     */
+    public set deviceCategoryDisplayName(value: string | undefined) {
+        this._deviceCategoryDisplayName = value;
+    };
+    /**
      * Gets the deviceCompliancePolicyStates property value. Device compliance policy states for this device.
      * @returns a deviceCompliancePolicyState
      */
     public get deviceCompliancePolicyStates() {
         return this._deviceCompliancePolicyStates;
+    };
+    /**
+     * Sets the deviceCompliancePolicyStates property value. Device compliance policy states for this device.
+     * @param value Value to set for the deviceCompliancePolicyStates property.
+     */
+    public set deviceCompliancePolicyStates(value: DeviceCompliancePolicyState[] | undefined) {
+        this._deviceCompliancePolicyStates = value;
     };
     /**
      * Gets the deviceConfigurationStates property value. Device configuration states for this device.
@@ -201,11 +292,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._deviceConfigurationStates;
     };
     /**
+     * Sets the deviceConfigurationStates property value. Device configuration states for this device.
+     * @param value Value to set for the deviceConfigurationStates property.
+     */
+    public set deviceConfigurationStates(value: DeviceConfigurationState[] | undefined) {
+        this._deviceConfigurationStates = value;
+    };
+    /**
      * Gets the deviceEnrollmentType property value. Enrollment type of the device. This property is read-only. Possible values are: unknown, userEnrollment, deviceEnrollmentManager, appleBulkWithUser, appleBulkWithoutUser, windowsAzureADJoin, windowsBulkUserless, windowsAutoEnrollment, windowsBulkAzureDomainJoin, windowsCoManagement, windowsAzureADJoinUsingDeviceAuth, appleUserEnrollment, appleUserEnrollmentWithServiceAccount.
      * @returns a deviceEnrollmentType
      */
     public get deviceEnrollmentType() {
         return this._deviceEnrollmentType;
+    };
+    /**
+     * Sets the deviceEnrollmentType property value. Enrollment type of the device. This property is read-only. Possible values are: unknown, userEnrollment, deviceEnrollmentManager, appleBulkWithUser, appleBulkWithoutUser, windowsAzureADJoin, windowsBulkUserless, windowsAutoEnrollment, windowsBulkAzureDomainJoin, windowsCoManagement, windowsAzureADJoinUsingDeviceAuth, appleUserEnrollment, appleUserEnrollmentWithServiceAccount.
+     * @param value Value to set for the deviceEnrollmentType property.
+     */
+    public set deviceEnrollmentType(value: DeviceEnrollmentType | undefined) {
+        this._deviceEnrollmentType = value;
     };
     /**
      * Gets the deviceHealthAttestationState property value. The device health attestation state. This property is read-only.
@@ -215,11 +320,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._deviceHealthAttestationState;
     };
     /**
+     * Sets the deviceHealthAttestationState property value. The device health attestation state. This property is read-only.
+     * @param value Value to set for the deviceHealthAttestationState property.
+     */
+    public set deviceHealthAttestationState(value: DeviceHealthAttestationState | undefined) {
+        this._deviceHealthAttestationState = value;
+    };
+    /**
      * Gets the deviceName property value. Name of the device. This property is read-only.
      * @returns a string
      */
     public get deviceName() {
         return this._deviceName;
+    };
+    /**
+     * Sets the deviceName property value. Name of the device. This property is read-only.
+     * @param value Value to set for the deviceName property.
+     */
+    public set deviceName(value: string | undefined) {
+        this._deviceName = value;
     };
     /**
      * Gets the deviceRegistrationState property value. Device registration state. This property is read-only. Possible values are: notRegistered, registered, revoked, keyConflict, approvalPending, certificateReset, notRegisteredPendingEnrollment, unknown.
@@ -229,11 +348,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._deviceRegistrationState;
     };
     /**
+     * Sets the deviceRegistrationState property value. Device registration state. This property is read-only. Possible values are: notRegistered, registered, revoked, keyConflict, approvalPending, certificateReset, notRegisteredPendingEnrollment, unknown.
+     * @param value Value to set for the deviceRegistrationState property.
+     */
+    public set deviceRegistrationState(value: DeviceRegistrationState | undefined) {
+        this._deviceRegistrationState = value;
+    };
+    /**
      * Gets the easActivated property value. Whether the device is Exchange ActiveSync activated. This property is read-only.
      * @returns a boolean
      */
     public get easActivated() {
         return this._easActivated;
+    };
+    /**
+     * Sets the easActivated property value. Whether the device is Exchange ActiveSync activated. This property is read-only.
+     * @param value Value to set for the easActivated property.
+     */
+    public set easActivated(value: boolean | undefined) {
+        this._easActivated = value;
     };
     /**
      * Gets the easActivationDateTime property value. Exchange ActivationSync activation time of the device. This property is read-only.
@@ -243,11 +376,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._easActivationDateTime;
     };
     /**
+     * Sets the easActivationDateTime property value. Exchange ActivationSync activation time of the device. This property is read-only.
+     * @param value Value to set for the easActivationDateTime property.
+     */
+    public set easActivationDateTime(value: Date | undefined) {
+        this._easActivationDateTime = value;
+    };
+    /**
      * Gets the easDeviceId property value. Exchange ActiveSync Id of the device. This property is read-only.
      * @returns a string
      */
     public get easDeviceId() {
         return this._easDeviceId;
+    };
+    /**
+     * Sets the easDeviceId property value. Exchange ActiveSync Id of the device. This property is read-only.
+     * @param value Value to set for the easDeviceId property.
+     */
+    public set easDeviceId(value: string | undefined) {
+        this._easDeviceId = value;
     };
     /**
      * Gets the emailAddress property value. Email(s) for the user associated with the device. This property is read-only.
@@ -257,11 +404,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._emailAddress;
     };
     /**
+     * Sets the emailAddress property value. Email(s) for the user associated with the device. This property is read-only.
+     * @param value Value to set for the emailAddress property.
+     */
+    public set emailAddress(value: string | undefined) {
+        this._emailAddress = value;
+    };
+    /**
      * Gets the enrolledDateTime property value. Enrollment time of the device. This property is read-only.
      * @returns a Date
      */
     public get enrolledDateTime() {
         return this._enrolledDateTime;
+    };
+    /**
+     * Sets the enrolledDateTime property value. Enrollment time of the device. This property is read-only.
+     * @param value Value to set for the enrolledDateTime property.
+     */
+    public set enrolledDateTime(value: Date | undefined) {
+        this._enrolledDateTime = value;
     };
     /**
      * Gets the ethernetMacAddress property value. Ethernet MAC. This property is read-only.
@@ -271,11 +432,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._ethernetMacAddress;
     };
     /**
+     * Sets the ethernetMacAddress property value. Ethernet MAC. This property is read-only.
+     * @param value Value to set for the ethernetMacAddress property.
+     */
+    public set ethernetMacAddress(value: string | undefined) {
+        this._ethernetMacAddress = value;
+    };
+    /**
      * Gets the exchangeAccessState property value. The Access State of the device in Exchange. This property is read-only. Possible values are: none, unknown, allowed, blocked, quarantined.
      * @returns a deviceManagementExchangeAccessState
      */
     public get exchangeAccessState() {
         return this._exchangeAccessState;
+    };
+    /**
+     * Sets the exchangeAccessState property value. The Access State of the device in Exchange. This property is read-only. Possible values are: none, unknown, allowed, blocked, quarantined.
+     * @param value Value to set for the exchangeAccessState property.
+     */
+    public set exchangeAccessState(value: DeviceManagementExchangeAccessState | undefined) {
+        this._exchangeAccessState = value;
     };
     /**
      * Gets the exchangeAccessStateReason property value. The reason for the device's access state in Exchange. This property is read-only. Possible values are: none, unknown, exchangeGlobalRule, exchangeIndividualRule, exchangeDeviceRule, exchangeUpgrade, exchangeMailboxPolicy, other, compliant, notCompliant, notEnrolled, unknownLocation, mfaRequired, azureADBlockDueToAccessPolicy, compromisedPassword, deviceNotKnownWithManagedApp.
@@ -285,11 +460,25 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._exchangeAccessStateReason;
     };
     /**
+     * Sets the exchangeAccessStateReason property value. The reason for the device's access state in Exchange. This property is read-only. Possible values are: none, unknown, exchangeGlobalRule, exchangeIndividualRule, exchangeDeviceRule, exchangeUpgrade, exchangeMailboxPolicy, other, compliant, notCompliant, notEnrolled, unknownLocation, mfaRequired, azureADBlockDueToAccessPolicy, compromisedPassword, deviceNotKnownWithManagedApp.
+     * @param value Value to set for the exchangeAccessStateReason property.
+     */
+    public set exchangeAccessStateReason(value: DeviceManagementExchangeAccessStateReason | undefined) {
+        this._exchangeAccessStateReason = value;
+    };
+    /**
      * Gets the exchangeLastSuccessfulSyncDateTime property value. Last time the device contacted Exchange. This property is read-only.
      * @returns a Date
      */
     public get exchangeLastSuccessfulSyncDateTime() {
         return this._exchangeLastSuccessfulSyncDateTime;
+    };
+    /**
+     * Sets the exchangeLastSuccessfulSyncDateTime property value. Last time the device contacted Exchange. This property is read-only.
+     * @param value Value to set for the exchangeLastSuccessfulSyncDateTime property.
+     */
+    public set exchangeLastSuccessfulSyncDateTime(value: Date | undefined) {
+        this._exchangeLastSuccessfulSyncDateTime = value;
     };
     /**
      * Gets the freeStorageSpaceInBytes property value. Free Storage in Bytes. This property is read-only.
@@ -299,200 +488,11 @@ export class ManagedDevice extends Entity implements Parsable {
         return this._freeStorageSpaceInBytes;
     };
     /**
-     * Gets the iccid property value. Integrated Circuit Card Identifier, it is A SIM card's unique identification number. This property is read-only.
-     * @returns a string
+     * Sets the freeStorageSpaceInBytes property value. Free Storage in Bytes. This property is read-only.
+     * @param value Value to set for the freeStorageSpaceInBytes property.
      */
-    public get iccid() {
-        return this._iccid;
-    };
-    /**
-     * Gets the imei property value. IMEI. This property is read-only.
-     * @returns a string
-     */
-    public get imei() {
-        return this._imei;
-    };
-    /**
-     * Gets the isEncrypted property value. Device encryption status. This property is read-only.
-     * @returns a boolean
-     */
-    public get isEncrypted() {
-        return this._isEncrypted;
-    };
-    /**
-     * Gets the isSupervised property value. Device supervised status. This property is read-only.
-     * @returns a boolean
-     */
-    public get isSupervised() {
-        return this._isSupervised;
-    };
-    /**
-     * Gets the jailBroken property value. whether the device is jail broken or rooted. This property is read-only.
-     * @returns a string
-     */
-    public get jailBroken() {
-        return this._jailBroken;
-    };
-    /**
-     * Gets the lastSyncDateTime property value. The date and time that the device last completed a successful sync with Intune. This property is read-only.
-     * @returns a Date
-     */
-    public get lastSyncDateTime() {
-        return this._lastSyncDateTime;
-    };
-    /**
-     * Gets the managedDeviceName property value. Automatically generated name to identify a device. Can be overwritten to a user friendly name.
-     * @returns a string
-     */
-    public get managedDeviceName() {
-        return this._managedDeviceName;
-    };
-    /**
-     * Gets the managedDeviceOwnerType property value. Ownership of the device. Can be 'company' or 'personal'. Possible values are: unknown, company, personal.
-     * @returns a managedDeviceOwnerType
-     */
-    public get managedDeviceOwnerType() {
-        return this._managedDeviceOwnerType;
-    };
-    /**
-     * Gets the managementAgent property value. Management channel of the device. Intune, EAS, etc. This property is read-only. Possible values are: eas, mdm, easMdm, intuneClient, easIntuneClient, configurationManagerClient, configurationManagerClientMdm, configurationManagerClientMdmEas, unknown, jamf, googleCloudDevicePolicyController.
-     * @returns a managementAgentType
-     */
-    public get managementAgent() {
-        return this._managementAgent;
-    };
-    /**
-     * Gets the manufacturer property value. Manufacturer of the device. This property is read-only.
-     * @returns a string
-     */
-    public get manufacturer() {
-        return this._manufacturer;
-    };
-    /**
-     * Gets the meid property value. MEID. This property is read-only.
-     * @returns a string
-     */
-    public get meid() {
-        return this._meid;
-    };
-    /**
-     * Gets the model property value. Model of the device. This property is read-only.
-     * @returns a string
-     */
-    public get model() {
-        return this._model;
-    };
-    /**
-     * Gets the notes property value. Notes on the device created by IT Admin
-     * @returns a string
-     */
-    public get notes() {
-        return this._notes;
-    };
-    /**
-     * Gets the operatingSystem property value. Operating system of the device. Windows, iOS, etc. This property is read-only.
-     * @returns a string
-     */
-    public get operatingSystem() {
-        return this._operatingSystem;
-    };
-    /**
-     * Gets the osVersion property value. Operating system version of the device. This property is read-only.
-     * @returns a string
-     */
-    public get osVersion() {
-        return this._osVersion;
-    };
-    /**
-     * Gets the partnerReportedThreatState property value. Indicates the threat state of a device when a Mobile Threat Defense partner is in use by the account and device. Read Only. This property is read-only. Possible values are: unknown, activated, deactivated, secured, lowSeverity, mediumSeverity, highSeverity, unresponsive, compromised, misconfigured.
-     * @returns a managedDevicePartnerReportedHealthState
-     */
-    public get partnerReportedThreatState() {
-        return this._partnerReportedThreatState;
-    };
-    /**
-     * Gets the phoneNumber property value. Phone number of the device. This property is read-only.
-     * @returns a string
-     */
-    public get phoneNumber() {
-        return this._phoneNumber;
-    };
-    /**
-     * Gets the physicalMemoryInBytes property value. Total Memory in Bytes. This property is read-only.
-     * @returns a int64
-     */
-    public get physicalMemoryInBytes() {
-        return this._physicalMemoryInBytes;
-    };
-    /**
-     * Gets the remoteAssistanceSessionErrorDetails property value. An error string that identifies issues when creating Remote Assistance session objects. This property is read-only.
-     * @returns a string
-     */
-    public get remoteAssistanceSessionErrorDetails() {
-        return this._remoteAssistanceSessionErrorDetails;
-    };
-    /**
-     * Gets the remoteAssistanceSessionUrl property value. Url that allows a Remote Assistance session to be established with the device. This property is read-only.
-     * @returns a string
-     */
-    public get remoteAssistanceSessionUrl() {
-        return this._remoteAssistanceSessionUrl;
-    };
-    /**
-     * Gets the serialNumber property value. SerialNumber. This property is read-only.
-     * @returns a string
-     */
-    public get serialNumber() {
-        return this._serialNumber;
-    };
-    /**
-     * Gets the subscriberCarrier property value. Subscriber Carrier. This property is read-only.
-     * @returns a string
-     */
-    public get subscriberCarrier() {
-        return this._subscriberCarrier;
-    };
-    /**
-     * Gets the totalStorageSpaceInBytes property value. Total Storage in Bytes. This property is read-only.
-     * @returns a int64
-     */
-    public get totalStorageSpaceInBytes() {
-        return this._totalStorageSpaceInBytes;
-    };
-    /**
-     * Gets the udid property value. Unique Device Identifier for iOS and macOS devices. This property is read-only.
-     * @returns a string
-     */
-    public get udid() {
-        return this._udid;
-    };
-    /**
-     * Gets the userDisplayName property value. User display name. This property is read-only.
-     * @returns a string
-     */
-    public get userDisplayName() {
-        return this._userDisplayName;
-    };
-    /**
-     * Gets the userId property value. Unique Identifier for the user associated with the device. This property is read-only.
-     * @returns a string
-     */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * Gets the userPrincipalName property value. Device user principal name. This property is read-only.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
-    };
-    /**
-     * Gets the wiFiMacAddress property value. Wi-Fi MAC. This property is read-only.
-     * @returns a string
-     */
-    public get wiFiMacAddress() {
-        return this._wiFiMacAddress;
+    public set freeStorageSpaceInBytes(value: number | undefined) {
+        this._freeStorageSpaceInBytes = value;
     };
     /**
      * The deserialization information for the current model
@@ -506,14 +506,14 @@ export class ManagedDevice extends Entity implements Parsable {
             ["azureADRegistered", (o, n) => { (o as unknown as ManagedDevice).azureADRegistered = n.getBooleanValue(); }],
             ["complianceGracePeriodExpirationDateTime", (o, n) => { (o as unknown as ManagedDevice).complianceGracePeriodExpirationDateTime = n.getDateValue(); }],
             ["complianceState", (o, n) => { (o as unknown as ManagedDevice).complianceState = n.getEnumValue<ComplianceState>(ComplianceState); }],
-            ["configurationManagerClientEnabledFeatures", (o, n) => { (o as unknown as ManagedDevice).configurationManagerClientEnabledFeatures = n.getObjectValue<ConfigurationManagerClientEnabledFeatures>(ConfigurationManagerClientEnabledFeatures); }],
-            ["deviceActionResults", (o, n) => { (o as unknown as ManagedDevice).deviceActionResults = n.getCollectionOfObjectValues<DeviceActionResult>(DeviceActionResult); }],
-            ["deviceCategory", (o, n) => { (o as unknown as ManagedDevice).deviceCategory = n.getObjectValue<DeviceCategory>(DeviceCategory); }],
+            ["configurationManagerClientEnabledFeatures", (o, n) => { (o as unknown as ManagedDevice).configurationManagerClientEnabledFeatures = n.getObjectValue<ConfigurationManagerClientEnabledFeatures>(createConfigurationManagerClientEnabledFeaturesFromDiscriminatorValue); }],
+            ["deviceActionResults", (o, n) => { (o as unknown as ManagedDevice).deviceActionResults = n.getCollectionOfObjectValues<DeviceActionResult>(createDeviceActionResultFromDiscriminatorValue); }],
+            ["deviceCategory", (o, n) => { (o as unknown as ManagedDevice).deviceCategory = n.getObjectValue<DeviceCategory>(createDeviceCategoryFromDiscriminatorValue); }],
             ["deviceCategoryDisplayName", (o, n) => { (o as unknown as ManagedDevice).deviceCategoryDisplayName = n.getStringValue(); }],
-            ["deviceCompliancePolicyStates", (o, n) => { (o as unknown as ManagedDevice).deviceCompliancePolicyStates = n.getCollectionOfObjectValues<DeviceCompliancePolicyState>(DeviceCompliancePolicyState); }],
-            ["deviceConfigurationStates", (o, n) => { (o as unknown as ManagedDevice).deviceConfigurationStates = n.getCollectionOfObjectValues<DeviceConfigurationState>(DeviceConfigurationState); }],
+            ["deviceCompliancePolicyStates", (o, n) => { (o as unknown as ManagedDevice).deviceCompliancePolicyStates = n.getCollectionOfObjectValues<DeviceCompliancePolicyState>(createDeviceCompliancePolicyStateFromDiscriminatorValue); }],
+            ["deviceConfigurationStates", (o, n) => { (o as unknown as ManagedDevice).deviceConfigurationStates = n.getCollectionOfObjectValues<DeviceConfigurationState>(createDeviceConfigurationStateFromDiscriminatorValue); }],
             ["deviceEnrollmentType", (o, n) => { (o as unknown as ManagedDevice).deviceEnrollmentType = n.getEnumValue<DeviceEnrollmentType>(DeviceEnrollmentType); }],
-            ["deviceHealthAttestationState", (o, n) => { (o as unknown as ManagedDevice).deviceHealthAttestationState = n.getObjectValue<DeviceHealthAttestationState>(DeviceHealthAttestationState); }],
+            ["deviceHealthAttestationState", (o, n) => { (o as unknown as ManagedDevice).deviceHealthAttestationState = n.getObjectValue<DeviceHealthAttestationState>(createDeviceHealthAttestationStateFromDiscriminatorValue); }],
             ["deviceName", (o, n) => { (o as unknown as ManagedDevice).deviceName = n.getStringValue(); }],
             ["deviceRegistrationState", (o, n) => { (o as unknown as ManagedDevice).deviceRegistrationState = n.getEnumValue<DeviceRegistrationState>(DeviceRegistrationState); }],
             ["easActivated", (o, n) => { (o as unknown as ManagedDevice).easActivated = n.getBooleanValue(); }],
@@ -555,6 +555,286 @@ export class ManagedDevice extends Entity implements Parsable {
             ["userPrincipalName", (o, n) => { (o as unknown as ManagedDevice).userPrincipalName = n.getStringValue(); }],
             ["wiFiMacAddress", (o, n) => { (o as unknown as ManagedDevice).wiFiMacAddress = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the iccid property value. Integrated Circuit Card Identifier, it is A SIM card's unique identification number. This property is read-only.
+     * @returns a string
+     */
+    public get iccid() {
+        return this._iccid;
+    };
+    /**
+     * Sets the iccid property value. Integrated Circuit Card Identifier, it is A SIM card's unique identification number. This property is read-only.
+     * @param value Value to set for the iccid property.
+     */
+    public set iccid(value: string | undefined) {
+        this._iccid = value;
+    };
+    /**
+     * Gets the imei property value. IMEI. This property is read-only.
+     * @returns a string
+     */
+    public get imei() {
+        return this._imei;
+    };
+    /**
+     * Sets the imei property value. IMEI. This property is read-only.
+     * @param value Value to set for the imei property.
+     */
+    public set imei(value: string | undefined) {
+        this._imei = value;
+    };
+    /**
+     * Gets the isEncrypted property value. Device encryption status. This property is read-only.
+     * @returns a boolean
+     */
+    public get isEncrypted() {
+        return this._isEncrypted;
+    };
+    /**
+     * Sets the isEncrypted property value. Device encryption status. This property is read-only.
+     * @param value Value to set for the isEncrypted property.
+     */
+    public set isEncrypted(value: boolean | undefined) {
+        this._isEncrypted = value;
+    };
+    /**
+     * Gets the isSupervised property value. Device supervised status. This property is read-only.
+     * @returns a boolean
+     */
+    public get isSupervised() {
+        return this._isSupervised;
+    };
+    /**
+     * Sets the isSupervised property value. Device supervised status. This property is read-only.
+     * @param value Value to set for the isSupervised property.
+     */
+    public set isSupervised(value: boolean | undefined) {
+        this._isSupervised = value;
+    };
+    /**
+     * Gets the jailBroken property value. whether the device is jail broken or rooted. This property is read-only.
+     * @returns a string
+     */
+    public get jailBroken() {
+        return this._jailBroken;
+    };
+    /**
+     * Sets the jailBroken property value. whether the device is jail broken or rooted. This property is read-only.
+     * @param value Value to set for the jailBroken property.
+     */
+    public set jailBroken(value: string | undefined) {
+        this._jailBroken = value;
+    };
+    /**
+     * Gets the lastSyncDateTime property value. The date and time that the device last completed a successful sync with Intune. This property is read-only.
+     * @returns a Date
+     */
+    public get lastSyncDateTime() {
+        return this._lastSyncDateTime;
+    };
+    /**
+     * Sets the lastSyncDateTime property value. The date and time that the device last completed a successful sync with Intune. This property is read-only.
+     * @param value Value to set for the lastSyncDateTime property.
+     */
+    public set lastSyncDateTime(value: Date | undefined) {
+        this._lastSyncDateTime = value;
+    };
+    /**
+     * Gets the managedDeviceName property value. Automatically generated name to identify a device. Can be overwritten to a user friendly name.
+     * @returns a string
+     */
+    public get managedDeviceName() {
+        return this._managedDeviceName;
+    };
+    /**
+     * Sets the managedDeviceName property value. Automatically generated name to identify a device. Can be overwritten to a user friendly name.
+     * @param value Value to set for the managedDeviceName property.
+     */
+    public set managedDeviceName(value: string | undefined) {
+        this._managedDeviceName = value;
+    };
+    /**
+     * Gets the managedDeviceOwnerType property value. Ownership of the device. Can be 'company' or 'personal'. Possible values are: unknown, company, personal.
+     * @returns a managedDeviceOwnerType
+     */
+    public get managedDeviceOwnerType() {
+        return this._managedDeviceOwnerType;
+    };
+    /**
+     * Sets the managedDeviceOwnerType property value. Ownership of the device. Can be 'company' or 'personal'. Possible values are: unknown, company, personal.
+     * @param value Value to set for the managedDeviceOwnerType property.
+     */
+    public set managedDeviceOwnerType(value: ManagedDeviceOwnerType | undefined) {
+        this._managedDeviceOwnerType = value;
+    };
+    /**
+     * Gets the managementAgent property value. Management channel of the device. Intune, EAS, etc. This property is read-only. Possible values are: eas, mdm, easMdm, intuneClient, easIntuneClient, configurationManagerClient, configurationManagerClientMdm, configurationManagerClientMdmEas, unknown, jamf, googleCloudDevicePolicyController.
+     * @returns a managementAgentType
+     */
+    public get managementAgent() {
+        return this._managementAgent;
+    };
+    /**
+     * Sets the managementAgent property value. Management channel of the device. Intune, EAS, etc. This property is read-only. Possible values are: eas, mdm, easMdm, intuneClient, easIntuneClient, configurationManagerClient, configurationManagerClientMdm, configurationManagerClientMdmEas, unknown, jamf, googleCloudDevicePolicyController.
+     * @param value Value to set for the managementAgent property.
+     */
+    public set managementAgent(value: ManagementAgentType | undefined) {
+        this._managementAgent = value;
+    };
+    /**
+     * Gets the manufacturer property value. Manufacturer of the device. This property is read-only.
+     * @returns a string
+     */
+    public get manufacturer() {
+        return this._manufacturer;
+    };
+    /**
+     * Sets the manufacturer property value. Manufacturer of the device. This property is read-only.
+     * @param value Value to set for the manufacturer property.
+     */
+    public set manufacturer(value: string | undefined) {
+        this._manufacturer = value;
+    };
+    /**
+     * Gets the meid property value. MEID. This property is read-only.
+     * @returns a string
+     */
+    public get meid() {
+        return this._meid;
+    };
+    /**
+     * Sets the meid property value. MEID. This property is read-only.
+     * @param value Value to set for the meid property.
+     */
+    public set meid(value: string | undefined) {
+        this._meid = value;
+    };
+    /**
+     * Gets the model property value. Model of the device. This property is read-only.
+     * @returns a string
+     */
+    public get model() {
+        return this._model;
+    };
+    /**
+     * Sets the model property value. Model of the device. This property is read-only.
+     * @param value Value to set for the model property.
+     */
+    public set model(value: string | undefined) {
+        this._model = value;
+    };
+    /**
+     * Gets the notes property value. Notes on the device created by IT Admin
+     * @returns a string
+     */
+    public get notes() {
+        return this._notes;
+    };
+    /**
+     * Sets the notes property value. Notes on the device created by IT Admin
+     * @param value Value to set for the notes property.
+     */
+    public set notes(value: string | undefined) {
+        this._notes = value;
+    };
+    /**
+     * Gets the operatingSystem property value. Operating system of the device. Windows, iOS, etc. This property is read-only.
+     * @returns a string
+     */
+    public get operatingSystem() {
+        return this._operatingSystem;
+    };
+    /**
+     * Sets the operatingSystem property value. Operating system of the device. Windows, iOS, etc. This property is read-only.
+     * @param value Value to set for the operatingSystem property.
+     */
+    public set operatingSystem(value: string | undefined) {
+        this._operatingSystem = value;
+    };
+    /**
+     * Gets the osVersion property value. Operating system version of the device. This property is read-only.
+     * @returns a string
+     */
+    public get osVersion() {
+        return this._osVersion;
+    };
+    /**
+     * Sets the osVersion property value. Operating system version of the device. This property is read-only.
+     * @param value Value to set for the osVersion property.
+     */
+    public set osVersion(value: string | undefined) {
+        this._osVersion = value;
+    };
+    /**
+     * Gets the partnerReportedThreatState property value. Indicates the threat state of a device when a Mobile Threat Defense partner is in use by the account and device. Read Only. This property is read-only. Possible values are: unknown, activated, deactivated, secured, lowSeverity, mediumSeverity, highSeverity, unresponsive, compromised, misconfigured.
+     * @returns a managedDevicePartnerReportedHealthState
+     */
+    public get partnerReportedThreatState() {
+        return this._partnerReportedThreatState;
+    };
+    /**
+     * Sets the partnerReportedThreatState property value. Indicates the threat state of a device when a Mobile Threat Defense partner is in use by the account and device. Read Only. This property is read-only. Possible values are: unknown, activated, deactivated, secured, lowSeverity, mediumSeverity, highSeverity, unresponsive, compromised, misconfigured.
+     * @param value Value to set for the partnerReportedThreatState property.
+     */
+    public set partnerReportedThreatState(value: ManagedDevicePartnerReportedHealthState | undefined) {
+        this._partnerReportedThreatState = value;
+    };
+    /**
+     * Gets the phoneNumber property value. Phone number of the device. This property is read-only.
+     * @returns a string
+     */
+    public get phoneNumber() {
+        return this._phoneNumber;
+    };
+    /**
+     * Sets the phoneNumber property value. Phone number of the device. This property is read-only.
+     * @param value Value to set for the phoneNumber property.
+     */
+    public set phoneNumber(value: string | undefined) {
+        this._phoneNumber = value;
+    };
+    /**
+     * Gets the physicalMemoryInBytes property value. Total Memory in Bytes. This property is read-only.
+     * @returns a int64
+     */
+    public get physicalMemoryInBytes() {
+        return this._physicalMemoryInBytes;
+    };
+    /**
+     * Sets the physicalMemoryInBytes property value. Total Memory in Bytes. This property is read-only.
+     * @param value Value to set for the physicalMemoryInBytes property.
+     */
+    public set physicalMemoryInBytes(value: number | undefined) {
+        this._physicalMemoryInBytes = value;
+    };
+    /**
+     * Gets the remoteAssistanceSessionErrorDetails property value. An error string that identifies issues when creating Remote Assistance session objects. This property is read-only.
+     * @returns a string
+     */
+    public get remoteAssistanceSessionErrorDetails() {
+        return this._remoteAssistanceSessionErrorDetails;
+    };
+    /**
+     * Sets the remoteAssistanceSessionErrorDetails property value. An error string that identifies issues when creating Remote Assistance session objects. This property is read-only.
+     * @param value Value to set for the remoteAssistanceSessionErrorDetails property.
+     */
+    public set remoteAssistanceSessionErrorDetails(value: string | undefined) {
+        this._remoteAssistanceSessionErrorDetails = value;
+    };
+    /**
+     * Gets the remoteAssistanceSessionUrl property value. Url that allows a Remote Assistance session to be established with the device. This property is read-only.
+     * @returns a string
+     */
+    public get remoteAssistanceSessionUrl() {
+        return this._remoteAssistanceSessionUrl;
+    };
+    /**
+     * Sets the remoteAssistanceSessionUrl property value. Url that allows a Remote Assistance session to be established with the device. This property is read-only.
+     * @param value Value to set for the remoteAssistanceSessionUrl property.
+     */
+    public set remoteAssistanceSessionUrl(value: string | undefined) {
+        this._remoteAssistanceSessionUrl = value;
     };
     /**
      * Serializes information the current object
@@ -619,326 +899,11 @@ export class ManagedDevice extends Entity implements Parsable {
         writer.writeStringValue("wiFiMacAddress", this.wiFiMacAddress);
     };
     /**
-     * Sets the activationLockBypassCode property value. Code that allows the Activation Lock on a device to be bypassed. This property is read-only.
-     * @param value Value to set for the activationLockBypassCode property.
+     * Gets the serialNumber property value. SerialNumber. This property is read-only.
+     * @returns a string
      */
-    public set activationLockBypassCode(value: string | undefined) {
-        this._activationLockBypassCode = value;
-    };
-    /**
-     * Sets the androidSecurityPatchLevel property value. Android security patch level. This property is read-only.
-     * @param value Value to set for the androidSecurityPatchLevel property.
-     */
-    public set androidSecurityPatchLevel(value: string | undefined) {
-        this._androidSecurityPatchLevel = value;
-    };
-    /**
-     * Sets the azureADDeviceId property value. The unique identifier for the Azure Active Directory device. Read only. This property is read-only.
-     * @param value Value to set for the azureADDeviceId property.
-     */
-    public set azureADDeviceId(value: string | undefined) {
-        this._azureADDeviceId = value;
-    };
-    /**
-     * Sets the azureADRegistered property value. Whether the device is Azure Active Directory registered. This property is read-only.
-     * @param value Value to set for the azureADRegistered property.
-     */
-    public set azureADRegistered(value: boolean | undefined) {
-        this._azureADRegistered = value;
-    };
-    /**
-     * Sets the complianceGracePeriodExpirationDateTime property value. The DateTime when device compliance grace period expires. This property is read-only.
-     * @param value Value to set for the complianceGracePeriodExpirationDateTime property.
-     */
-    public set complianceGracePeriodExpirationDateTime(value: Date | undefined) {
-        this._complianceGracePeriodExpirationDateTime = value;
-    };
-    /**
-     * Sets the complianceState property value. Compliance state of the device. This property is read-only. Possible values are: unknown, compliant, noncompliant, conflict, error, inGracePeriod, configManager.
-     * @param value Value to set for the complianceState property.
-     */
-    public set complianceState(value: ComplianceState | undefined) {
-        this._complianceState = value;
-    };
-    /**
-     * Sets the configurationManagerClientEnabledFeatures property value. ConfigrMgr client enabled features. This property is read-only.
-     * @param value Value to set for the configurationManagerClientEnabledFeatures property.
-     */
-    public set configurationManagerClientEnabledFeatures(value: ConfigurationManagerClientEnabledFeatures | undefined) {
-        this._configurationManagerClientEnabledFeatures = value;
-    };
-    /**
-     * Sets the deviceActionResults property value. List of ComplexType deviceActionResult objects. This property is read-only.
-     * @param value Value to set for the deviceActionResults property.
-     */
-    public set deviceActionResults(value: DeviceActionResult[] | undefined) {
-        this._deviceActionResults = value;
-    };
-    /**
-     * Sets the deviceCategory property value. Device category
-     * @param value Value to set for the deviceCategory property.
-     */
-    public set deviceCategory(value: DeviceCategory | undefined) {
-        this._deviceCategory = value;
-    };
-    /**
-     * Sets the deviceCategoryDisplayName property value. Device category display name. This property is read-only.
-     * @param value Value to set for the deviceCategoryDisplayName property.
-     */
-    public set deviceCategoryDisplayName(value: string | undefined) {
-        this._deviceCategoryDisplayName = value;
-    };
-    /**
-     * Sets the deviceCompliancePolicyStates property value. Device compliance policy states for this device.
-     * @param value Value to set for the deviceCompliancePolicyStates property.
-     */
-    public set deviceCompliancePolicyStates(value: DeviceCompliancePolicyState[] | undefined) {
-        this._deviceCompliancePolicyStates = value;
-    };
-    /**
-     * Sets the deviceConfigurationStates property value. Device configuration states for this device.
-     * @param value Value to set for the deviceConfigurationStates property.
-     */
-    public set deviceConfigurationStates(value: DeviceConfigurationState[] | undefined) {
-        this._deviceConfigurationStates = value;
-    };
-    /**
-     * Sets the deviceEnrollmentType property value. Enrollment type of the device. This property is read-only. Possible values are: unknown, userEnrollment, deviceEnrollmentManager, appleBulkWithUser, appleBulkWithoutUser, windowsAzureADJoin, windowsBulkUserless, windowsAutoEnrollment, windowsBulkAzureDomainJoin, windowsCoManagement, windowsAzureADJoinUsingDeviceAuth, appleUserEnrollment, appleUserEnrollmentWithServiceAccount.
-     * @param value Value to set for the deviceEnrollmentType property.
-     */
-    public set deviceEnrollmentType(value: DeviceEnrollmentType | undefined) {
-        this._deviceEnrollmentType = value;
-    };
-    /**
-     * Sets the deviceHealthAttestationState property value. The device health attestation state. This property is read-only.
-     * @param value Value to set for the deviceHealthAttestationState property.
-     */
-    public set deviceHealthAttestationState(value: DeviceHealthAttestationState | undefined) {
-        this._deviceHealthAttestationState = value;
-    };
-    /**
-     * Sets the deviceName property value. Name of the device. This property is read-only.
-     * @param value Value to set for the deviceName property.
-     */
-    public set deviceName(value: string | undefined) {
-        this._deviceName = value;
-    };
-    /**
-     * Sets the deviceRegistrationState property value. Device registration state. This property is read-only. Possible values are: notRegistered, registered, revoked, keyConflict, approvalPending, certificateReset, notRegisteredPendingEnrollment, unknown.
-     * @param value Value to set for the deviceRegistrationState property.
-     */
-    public set deviceRegistrationState(value: DeviceRegistrationState | undefined) {
-        this._deviceRegistrationState = value;
-    };
-    /**
-     * Sets the easActivated property value. Whether the device is Exchange ActiveSync activated. This property is read-only.
-     * @param value Value to set for the easActivated property.
-     */
-    public set easActivated(value: boolean | undefined) {
-        this._easActivated = value;
-    };
-    /**
-     * Sets the easActivationDateTime property value. Exchange ActivationSync activation time of the device. This property is read-only.
-     * @param value Value to set for the easActivationDateTime property.
-     */
-    public set easActivationDateTime(value: Date | undefined) {
-        this._easActivationDateTime = value;
-    };
-    /**
-     * Sets the easDeviceId property value. Exchange ActiveSync Id of the device. This property is read-only.
-     * @param value Value to set for the easDeviceId property.
-     */
-    public set easDeviceId(value: string | undefined) {
-        this._easDeviceId = value;
-    };
-    /**
-     * Sets the emailAddress property value. Email(s) for the user associated with the device. This property is read-only.
-     * @param value Value to set for the emailAddress property.
-     */
-    public set emailAddress(value: string | undefined) {
-        this._emailAddress = value;
-    };
-    /**
-     * Sets the enrolledDateTime property value. Enrollment time of the device. This property is read-only.
-     * @param value Value to set for the enrolledDateTime property.
-     */
-    public set enrolledDateTime(value: Date | undefined) {
-        this._enrolledDateTime = value;
-    };
-    /**
-     * Sets the ethernetMacAddress property value. Ethernet MAC. This property is read-only.
-     * @param value Value to set for the ethernetMacAddress property.
-     */
-    public set ethernetMacAddress(value: string | undefined) {
-        this._ethernetMacAddress = value;
-    };
-    /**
-     * Sets the exchangeAccessState property value. The Access State of the device in Exchange. This property is read-only. Possible values are: none, unknown, allowed, blocked, quarantined.
-     * @param value Value to set for the exchangeAccessState property.
-     */
-    public set exchangeAccessState(value: DeviceManagementExchangeAccessState | undefined) {
-        this._exchangeAccessState = value;
-    };
-    /**
-     * Sets the exchangeAccessStateReason property value. The reason for the device's access state in Exchange. This property is read-only. Possible values are: none, unknown, exchangeGlobalRule, exchangeIndividualRule, exchangeDeviceRule, exchangeUpgrade, exchangeMailboxPolicy, other, compliant, notCompliant, notEnrolled, unknownLocation, mfaRequired, azureADBlockDueToAccessPolicy, compromisedPassword, deviceNotKnownWithManagedApp.
-     * @param value Value to set for the exchangeAccessStateReason property.
-     */
-    public set exchangeAccessStateReason(value: DeviceManagementExchangeAccessStateReason | undefined) {
-        this._exchangeAccessStateReason = value;
-    };
-    /**
-     * Sets the exchangeLastSuccessfulSyncDateTime property value. Last time the device contacted Exchange. This property is read-only.
-     * @param value Value to set for the exchangeLastSuccessfulSyncDateTime property.
-     */
-    public set exchangeLastSuccessfulSyncDateTime(value: Date | undefined) {
-        this._exchangeLastSuccessfulSyncDateTime = value;
-    };
-    /**
-     * Sets the freeStorageSpaceInBytes property value. Free Storage in Bytes. This property is read-only.
-     * @param value Value to set for the freeStorageSpaceInBytes property.
-     */
-    public set freeStorageSpaceInBytes(value: number | undefined) {
-        this._freeStorageSpaceInBytes = value;
-    };
-    /**
-     * Sets the iccid property value. Integrated Circuit Card Identifier, it is A SIM card's unique identification number. This property is read-only.
-     * @param value Value to set for the iccid property.
-     */
-    public set iccid(value: string | undefined) {
-        this._iccid = value;
-    };
-    /**
-     * Sets the imei property value. IMEI. This property is read-only.
-     * @param value Value to set for the imei property.
-     */
-    public set imei(value: string | undefined) {
-        this._imei = value;
-    };
-    /**
-     * Sets the isEncrypted property value. Device encryption status. This property is read-only.
-     * @param value Value to set for the isEncrypted property.
-     */
-    public set isEncrypted(value: boolean | undefined) {
-        this._isEncrypted = value;
-    };
-    /**
-     * Sets the isSupervised property value. Device supervised status. This property is read-only.
-     * @param value Value to set for the isSupervised property.
-     */
-    public set isSupervised(value: boolean | undefined) {
-        this._isSupervised = value;
-    };
-    /**
-     * Sets the jailBroken property value. whether the device is jail broken or rooted. This property is read-only.
-     * @param value Value to set for the jailBroken property.
-     */
-    public set jailBroken(value: string | undefined) {
-        this._jailBroken = value;
-    };
-    /**
-     * Sets the lastSyncDateTime property value. The date and time that the device last completed a successful sync with Intune. This property is read-only.
-     * @param value Value to set for the lastSyncDateTime property.
-     */
-    public set lastSyncDateTime(value: Date | undefined) {
-        this._lastSyncDateTime = value;
-    };
-    /**
-     * Sets the managedDeviceName property value. Automatically generated name to identify a device. Can be overwritten to a user friendly name.
-     * @param value Value to set for the managedDeviceName property.
-     */
-    public set managedDeviceName(value: string | undefined) {
-        this._managedDeviceName = value;
-    };
-    /**
-     * Sets the managedDeviceOwnerType property value. Ownership of the device. Can be 'company' or 'personal'. Possible values are: unknown, company, personal.
-     * @param value Value to set for the managedDeviceOwnerType property.
-     */
-    public set managedDeviceOwnerType(value: ManagedDeviceOwnerType | undefined) {
-        this._managedDeviceOwnerType = value;
-    };
-    /**
-     * Sets the managementAgent property value. Management channel of the device. Intune, EAS, etc. This property is read-only. Possible values are: eas, mdm, easMdm, intuneClient, easIntuneClient, configurationManagerClient, configurationManagerClientMdm, configurationManagerClientMdmEas, unknown, jamf, googleCloudDevicePolicyController.
-     * @param value Value to set for the managementAgent property.
-     */
-    public set managementAgent(value: ManagementAgentType | undefined) {
-        this._managementAgent = value;
-    };
-    /**
-     * Sets the manufacturer property value. Manufacturer of the device. This property is read-only.
-     * @param value Value to set for the manufacturer property.
-     */
-    public set manufacturer(value: string | undefined) {
-        this._manufacturer = value;
-    };
-    /**
-     * Sets the meid property value. MEID. This property is read-only.
-     * @param value Value to set for the meid property.
-     */
-    public set meid(value: string | undefined) {
-        this._meid = value;
-    };
-    /**
-     * Sets the model property value. Model of the device. This property is read-only.
-     * @param value Value to set for the model property.
-     */
-    public set model(value: string | undefined) {
-        this._model = value;
-    };
-    /**
-     * Sets the notes property value. Notes on the device created by IT Admin
-     * @param value Value to set for the notes property.
-     */
-    public set notes(value: string | undefined) {
-        this._notes = value;
-    };
-    /**
-     * Sets the operatingSystem property value. Operating system of the device. Windows, iOS, etc. This property is read-only.
-     * @param value Value to set for the operatingSystem property.
-     */
-    public set operatingSystem(value: string | undefined) {
-        this._operatingSystem = value;
-    };
-    /**
-     * Sets the osVersion property value. Operating system version of the device. This property is read-only.
-     * @param value Value to set for the osVersion property.
-     */
-    public set osVersion(value: string | undefined) {
-        this._osVersion = value;
-    };
-    /**
-     * Sets the partnerReportedThreatState property value. Indicates the threat state of a device when a Mobile Threat Defense partner is in use by the account and device. Read Only. This property is read-only. Possible values are: unknown, activated, deactivated, secured, lowSeverity, mediumSeverity, highSeverity, unresponsive, compromised, misconfigured.
-     * @param value Value to set for the partnerReportedThreatState property.
-     */
-    public set partnerReportedThreatState(value: ManagedDevicePartnerReportedHealthState | undefined) {
-        this._partnerReportedThreatState = value;
-    };
-    /**
-     * Sets the phoneNumber property value. Phone number of the device. This property is read-only.
-     * @param value Value to set for the phoneNumber property.
-     */
-    public set phoneNumber(value: string | undefined) {
-        this._phoneNumber = value;
-    };
-    /**
-     * Sets the physicalMemoryInBytes property value. Total Memory in Bytes. This property is read-only.
-     * @param value Value to set for the physicalMemoryInBytes property.
-     */
-    public set physicalMemoryInBytes(value: number | undefined) {
-        this._physicalMemoryInBytes = value;
-    };
-    /**
-     * Sets the remoteAssistanceSessionErrorDetails property value. An error string that identifies issues when creating Remote Assistance session objects. This property is read-only.
-     * @param value Value to set for the remoteAssistanceSessionErrorDetails property.
-     */
-    public set remoteAssistanceSessionErrorDetails(value: string | undefined) {
-        this._remoteAssistanceSessionErrorDetails = value;
-    };
-    /**
-     * Sets the remoteAssistanceSessionUrl property value. Url that allows a Remote Assistance session to be established with the device. This property is read-only.
-     * @param value Value to set for the remoteAssistanceSessionUrl property.
-     */
-    public set remoteAssistanceSessionUrl(value: string | undefined) {
-        this._remoteAssistanceSessionUrl = value;
+    public get serialNumber() {
+        return this._serialNumber;
     };
     /**
      * Sets the serialNumber property value. SerialNumber. This property is read-only.
@@ -948,11 +913,25 @@ export class ManagedDevice extends Entity implements Parsable {
         this._serialNumber = value;
     };
     /**
+     * Gets the subscriberCarrier property value. Subscriber Carrier. This property is read-only.
+     * @returns a string
+     */
+    public get subscriberCarrier() {
+        return this._subscriberCarrier;
+    };
+    /**
      * Sets the subscriberCarrier property value. Subscriber Carrier. This property is read-only.
      * @param value Value to set for the subscriberCarrier property.
      */
     public set subscriberCarrier(value: string | undefined) {
         this._subscriberCarrier = value;
+    };
+    /**
+     * Gets the totalStorageSpaceInBytes property value. Total Storage in Bytes. This property is read-only.
+     * @returns a int64
+     */
+    public get totalStorageSpaceInBytes() {
+        return this._totalStorageSpaceInBytes;
     };
     /**
      * Sets the totalStorageSpaceInBytes property value. Total Storage in Bytes. This property is read-only.
@@ -962,11 +941,25 @@ export class ManagedDevice extends Entity implements Parsable {
         this._totalStorageSpaceInBytes = value;
     };
     /**
+     * Gets the udid property value. Unique Device Identifier for iOS and macOS devices. This property is read-only.
+     * @returns a string
+     */
+    public get udid() {
+        return this._udid;
+    };
+    /**
      * Sets the udid property value. Unique Device Identifier for iOS and macOS devices. This property is read-only.
      * @param value Value to set for the udid property.
      */
     public set udid(value: string | undefined) {
         this._udid = value;
+    };
+    /**
+     * Gets the userDisplayName property value. User display name. This property is read-only.
+     * @returns a string
+     */
+    public get userDisplayName() {
+        return this._userDisplayName;
     };
     /**
      * Sets the userDisplayName property value. User display name. This property is read-only.
@@ -976,6 +969,13 @@ export class ManagedDevice extends Entity implements Parsable {
         this._userDisplayName = value;
     };
     /**
+     * Gets the userId property value. Unique Identifier for the user associated with the device. This property is read-only.
+     * @returns a string
+     */
+    public get userId() {
+        return this._userId;
+    };
+    /**
      * Sets the userId property value. Unique Identifier for the user associated with the device. This property is read-only.
      * @param value Value to set for the userId property.
      */
@@ -983,11 +983,25 @@ export class ManagedDevice extends Entity implements Parsable {
         this._userId = value;
     };
     /**
+     * Gets the userPrincipalName property value. Device user principal name. This property is read-only.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
+    };
+    /**
      * Sets the userPrincipalName property value. Device user principal name. This property is read-only.
      * @param value Value to set for the userPrincipalName property.
      */
     public set userPrincipalName(value: string | undefined) {
         this._userPrincipalName = value;
+    };
+    /**
+     * Gets the wiFiMacAddress property value. Wi-Fi MAC. This property is read-only.
+     * @returns a string
+     */
+    public get wiFiMacAddress() {
+        return this._wiFiMacAddress;
     };
     /**
      * Sets the wiFiMacAddress property value. Wi-Fi MAC. This property is read-only.

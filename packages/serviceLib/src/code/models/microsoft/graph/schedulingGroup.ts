@@ -22,18 +22,11 @@ export class SchedulingGroup extends ChangeTrackedEntity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the isActive property value. Indicates whether the schedulingGroup can be used when creating new entities or updating existing ones. Required.
-     * @returns a boolean
+     * Sets the displayName property value. The display name for the schedulingGroup. Required.
+     * @param value Value to set for the displayName property.
      */
-    public get isActive() {
-        return this._isActive;
-    };
-    /**
-     * Gets the userIds property value. The list of user IDs that are a member of the schedulingGroup. Required.
-     * @returns a string
-     */
-    public get userIds() {
-        return this._userIds;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -47,6 +40,20 @@ export class SchedulingGroup extends ChangeTrackedEntity implements Parsable {
         ]);
     };
     /**
+     * Gets the isActive property value. Indicates whether the schedulingGroup can be used when creating new entities or updating existing ones. Required.
+     * @returns a boolean
+     */
+    public get isActive() {
+        return this._isActive;
+    };
+    /**
+     * Sets the isActive property value. Indicates whether the schedulingGroup can be used when creating new entities or updating existing ones. Required.
+     * @param value Value to set for the isActive property.
+     */
+    public set isActive(value: boolean | undefined) {
+        this._isActive = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -58,18 +65,11 @@ export class SchedulingGroup extends ChangeTrackedEntity implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("userIds", this.userIds);
     };
     /**
-     * Sets the displayName property value. The display name for the schedulingGroup. Required.
-     * @param value Value to set for the displayName property.
+     * Gets the userIds property value. The list of user IDs that are a member of the schedulingGroup. Required.
+     * @returns a string
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isActive property value. Indicates whether the schedulingGroup can be used when creating new entities or updating existing ones. Required.
-     * @param value Value to set for the isActive property.
-     */
-    public set isActive(value: boolean | undefined) {
-        this._isActive = value;
+    public get userIds() {
+        return this._userIds;
     };
     /**
      * Sets the userIds property value. The list of user IDs that are a member of the schedulingGroup. Required.

@@ -1,7 +1,9 @@
+import {createJsonFromDiscriminatorValue} from './createJsonFromDiscriminatorValue';
+import {createWorkbookIconFromDiscriminatorValue} from './createWorkbookIconFromDiscriminatorValue';
 import {Json, WorkbookIcon} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class WorkbookFilterCriteria implements Parsable {
+export class WorkbookFilterCriteria implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _color?: string | undefined;
@@ -13,17 +15,18 @@ export class WorkbookFilterCriteria implements Parsable {
     private _operator?: string | undefined;
     private _values?: Json | undefined;
     /**
-     * Instantiates a new workbookFilterCriteria and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the color property value. 
@@ -33,11 +36,31 @@ export class WorkbookFilterCriteria implements Parsable {
         return this._color;
     };
     /**
+     * Sets the color property value. 
+     * @param value Value to set for the color property.
+     */
+    public set color(value: string | undefined) {
+        this._color = value;
+    };
+    /**
+     * Instantiates a new workbookFilterCriteria and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the criterion1 property value. 
      * @returns a string
      */
     public get criterion1() {
         return this._criterion1;
+    };
+    /**
+     * Sets the criterion1 property value. 
+     * @param value Value to set for the criterion1 property.
+     */
+    public set criterion1(value: string | undefined) {
+        this._criterion1 = value;
     };
     /**
      * Gets the criterion2 property value. 
@@ -47,11 +70,25 @@ export class WorkbookFilterCriteria implements Parsable {
         return this._criterion2;
     };
     /**
+     * Sets the criterion2 property value. 
+     * @param value Value to set for the criterion2 property.
+     */
+    public set criterion2(value: string | undefined) {
+        this._criterion2 = value;
+    };
+    /**
      * Gets the dynamicCriteria property value. 
      * @returns a string
      */
     public get dynamicCriteria() {
         return this._dynamicCriteria;
+    };
+    /**
+     * Sets the dynamicCriteria property value. 
+     * @param value Value to set for the dynamicCriteria property.
+     */
+    public set dynamicCriteria(value: string | undefined) {
+        this._dynamicCriteria = value;
     };
     /**
      * Gets the filterOn property value. 
@@ -61,25 +98,11 @@ export class WorkbookFilterCriteria implements Parsable {
         return this._filterOn;
     };
     /**
-     * Gets the icon property value. 
-     * @returns a workbookIcon
+     * Sets the filterOn property value. 
+     * @param value Value to set for the filterOn property.
      */
-    public get icon() {
-        return this._icon;
-    };
-    /**
-     * Gets the operator property value. 
-     * @returns a string
-     */
-    public get operator() {
-        return this._operator;
-    };
-    /**
-     * Gets the values property value. 
-     * @returns a Json
-     */
-    public get values() {
-        return this._values;
+    public set filterOn(value: string | undefined) {
+        this._filterOn = value;
     };
     /**
      * The deserialization information for the current model
@@ -92,10 +115,38 @@ export class WorkbookFilterCriteria implements Parsable {
             ["criterion2", (o, n) => { (o as unknown as WorkbookFilterCriteria).criterion2 = n.getStringValue(); }],
             ["dynamicCriteria", (o, n) => { (o as unknown as WorkbookFilterCriteria).dynamicCriteria = n.getStringValue(); }],
             ["filterOn", (o, n) => { (o as unknown as WorkbookFilterCriteria).filterOn = n.getStringValue(); }],
-            ["icon", (o, n) => { (o as unknown as WorkbookFilterCriteria).icon = n.getObjectValue<WorkbookIcon>(WorkbookIcon); }],
+            ["icon", (o, n) => { (o as unknown as WorkbookFilterCriteria).icon = n.getObjectValue<WorkbookIcon>(createWorkbookIconFromDiscriminatorValue); }],
             ["operator", (o, n) => { (o as unknown as WorkbookFilterCriteria).operator = n.getStringValue(); }],
-            ["values", (o, n) => { (o as unknown as WorkbookFilterCriteria).values = n.getObjectValue<Json>(Json); }],
+            ["values", (o, n) => { (o as unknown as WorkbookFilterCriteria).values = n.getObjectValue<Json>(createJsonFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the icon property value. 
+     * @returns a workbookIcon
+     */
+    public get icon() {
+        return this._icon;
+    };
+    /**
+     * Sets the icon property value. 
+     * @param value Value to set for the icon property.
+     */
+    public set icon(value: WorkbookIcon | undefined) {
+        this._icon = value;
+    };
+    /**
+     * Gets the operator property value. 
+     * @returns a string
+     */
+    public get operator() {
+        return this._operator;
+    };
+    /**
+     * Sets the operator property value. 
+     * @param value Value to set for the operator property.
+     */
+    public set operator(value: string | undefined) {
+        this._operator = value;
     };
     /**
      * Serializes information the current object
@@ -114,60 +165,11 @@ export class WorkbookFilterCriteria implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the values property value. 
+     * @returns a Json
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the color property value. 
-     * @param value Value to set for the color property.
-     */
-    public set color(value: string | undefined) {
-        this._color = value;
-    };
-    /**
-     * Sets the criterion1 property value. 
-     * @param value Value to set for the criterion1 property.
-     */
-    public set criterion1(value: string | undefined) {
-        this._criterion1 = value;
-    };
-    /**
-     * Sets the criterion2 property value. 
-     * @param value Value to set for the criterion2 property.
-     */
-    public set criterion2(value: string | undefined) {
-        this._criterion2 = value;
-    };
-    /**
-     * Sets the dynamicCriteria property value. 
-     * @param value Value to set for the dynamicCriteria property.
-     */
-    public set dynamicCriteria(value: string | undefined) {
-        this._dynamicCriteria = value;
-    };
-    /**
-     * Sets the filterOn property value. 
-     * @param value Value to set for the filterOn property.
-     */
-    public set filterOn(value: string | undefined) {
-        this._filterOn = value;
-    };
-    /**
-     * Sets the icon property value. 
-     * @param value Value to set for the icon property.
-     */
-    public set icon(value: WorkbookIcon | undefined) {
-        this._icon = value;
-    };
-    /**
-     * Sets the operator property value. 
-     * @param value Value to set for the operator property.
-     */
-    public set operator(value: string | undefined) {
-        this._operator = value;
+    public get values() {
+        return this._values;
     };
     /**
      * Sets the values property value. 

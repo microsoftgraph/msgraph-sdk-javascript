@@ -1,17 +1,35 @@
 import {Event} from '../../../../../../../models/microsoft/graph/';
-import {AcceptRequestBuilder} from './accept/';
-import {CancelRequestBuilder} from './cancel/';
-import {DeclineRequestBuilder} from './decline/';
-import {DismissReminderRequestBuilder} from './dismissReminder/';
-import {ForwardRequestBuilder} from './forward/';
-import {SnoozeReminderRequestBuilder} from './snoozeReminder/';
-import {TentativelyAcceptRequestBuilder} from './tentativelyAccept/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEventFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/createEventFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AcceptRequestBuilder} from './accept/acceptRequestBuilder';
+import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
+import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
+import {CalendarRequestBuilder} from './calendar/calendarRequestBuilder';
+import {CancelRequestBuilder} from './cancel/cancelRequestBuilder';
+import {DeclineRequestBuilder} from './decline/declineRequestBuilder';
+import {DismissReminderRequestBuilder} from './dismissReminder/dismissReminderRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {ForwardRequestBuilder} from './forward/forwardRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {SnoozeReminderRequestBuilder} from './snoozeReminder/snoozeReminderRequestBuilder';
+import {TentativelyAcceptRequestBuilder} from './tentativelyAccept/tentativelyAcceptRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/calendars/{calendar-id}/events/{event-id}/instances/{event-id1}  */
+/** Provides operations to manage the instances property of the microsoft.graph.event entity.  */
 export class EventItemRequestBuilder {
     public get accept(): AcceptRequestBuilder {
         return new AcceptRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get attachments(): AttachmentsRequestBuilder {
+        return new AttachmentsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get calendar(): CalendarRequestBuilder {
+        return new CalendarRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get cancel(): CancelRequestBuilder {
         return new CancelRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -22,13 +40,22 @@ export class EventItemRequestBuilder {
     public get dismissReminder(): DismissReminderRequestBuilder {
         return new DismissReminderRequestBuilder(this.pathParameters, this.requestAdapter);
     }
+    public get extensions(): ExtensionsRequestBuilder {
+        return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get forward(): ForwardRequestBuilder {
         return new ForwardRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get multiValueExtendedProperties(): MultiValueExtendedPropertiesRequestBuilder {
+        return new MultiValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get singleValueExtendedProperties(): SingleValueExtendedPropertiesRequestBuilder {
+        return new SingleValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get snoozeReminder(): SnoozeReminderRequestBuilder {
         return new SnoozeReminderRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -37,6 +64,17 @@ export class EventItemRequestBuilder {
     }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.me.calendars.item.events.item.instances.item.attachments.item collection
+     * @param id Unique identifier of the item
+     * @returns a attachmentItemRequestBuilder
+     */
+    public attachmentsById(id: string) : AttachmentItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["attachment_id"] = id
+        return new AttachmentItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new EventItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -51,7 +89,7 @@ export class EventItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The occurrences of a recurring series, if the event is a series master. This property includes occurrences that are part of the recurrence pattern, and exceptions that have been modified, but does not include occurrences that have been cancelled from the series. Navigation property. Read-only. Nullable.
+     * Delete navigation property instances for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -85,7 +123,7 @@ export class EventItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The occurrences of a recurring series, if the event is a series master. This property includes occurrences that are part of the recurrence pattern, and exceptions that have been modified, but does not include occurrences that have been cancelled from the series. Navigation property. Read-only. Nullable.
+     * Update the navigation property instances in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,7 +141,7 @@ export class EventItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The occurrences of a recurring series, if the event is a series master. This property includes occurrences that are part of the recurrence pattern, and exceptions that have been modified, but does not include occurrences that have been cancelled from the series. Navigation property. Read-only. Nullable.
+     * Delete navigation property instances for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -112,7 +150,22 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.calendars.item.events.item.instances.item.extensions.item collection
+     * @param id Unique identifier of the item
+     * @returns a extensionItemRequestBuilder
+     */
+    public extensionsById(id: string) : ExtensionItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["extension_id"] = id
+        return new ExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * The occurrences of a recurring series, if the event is a series master. This property includes occurrences that are part of the recurrence pattern, and exceptions that have been modified, but does not include occurrences that have been cancelled from the series. Navigation property. Read-only. Nullable.
@@ -128,10 +181,25 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Event>(requestInfo, Event, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Event>(requestInfo, createEventFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The occurrences of a recurring series, if the event is a series master. This property includes occurrences that are part of the recurrence pattern, and exceptions that have been modified, but does not include occurrences that have been cancelled from the series. Navigation property. Read-only. Nullable.
+     * Gets an item from the MicrosoftGraph.me.calendars.item.events.item.instances.item.multiValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a multiValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["multiValueLegacyExtendedProperty_id"] = id
+        return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property instances in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -142,6 +210,21 @@ export class EventItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.calendars.item.events.item.instances.item.singleValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a singleValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["singleValueLegacyExtendedProperty_id"] = id
+        return new SingleValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

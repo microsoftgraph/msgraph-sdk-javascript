@@ -1,4 +1,7 @@
-import {DeviceAndAppManagementAssignmentTarget, Entity, InstallIntent, MobileAppAssignmentSettings} from './index';
+import {createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue} from './createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue';
+import {createMobileAppAssignmentSettingsFromDiscriminatorValue} from './createMobileAppAssignmentSettingsFromDiscriminatorValue';
+import {DeviceAndAppManagementAssignmentTarget, Entity, MobileAppAssignmentSettings} from './index';
+import {InstallIntent} from './installIntent';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MobileAppAssignment extends Entity implements Parsable {
@@ -15,6 +18,17 @@ export class MobileAppAssignment extends Entity implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["intent", (o, n) => { (o as unknown as MobileAppAssignment).intent = n.getEnumValue<InstallIntent>(InstallIntent); }],
+            ["settings", (o, n) => { (o as unknown as MobileAppAssignment).settings = n.getObjectValue<MobileAppAssignmentSettings>(createMobileAppAssignmentSettingsFromDiscriminatorValue); }],
+            ["target", (o, n) => { (o as unknown as MobileAppAssignment).target = n.getObjectValue<DeviceAndAppManagementAssignmentTarget>(createDeviceAndAppManagementAssignmentTargetFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the intent property value. The install intent defined by the admin. Possible values are: available, required, uninstall, availableWithoutEnrollment.
      * @returns a installIntent
      */
@@ -22,29 +36,11 @@ export class MobileAppAssignment extends Entity implements Parsable {
         return this._intent;
     };
     /**
-     * Gets the settings property value. The settings for target assignment defined by the admin.
-     * @returns a mobileAppAssignmentSettings
+     * Sets the intent property value. The install intent defined by the admin. Possible values are: available, required, uninstall, availableWithoutEnrollment.
+     * @param value Value to set for the intent property.
      */
-    public get settings() {
-        return this._settings;
-    };
-    /**
-     * Gets the target property value. The target group assignment defined by the admin.
-     * @returns a deviceAndAppManagementAssignmentTarget
-     */
-    public get target() {
-        return this._target;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["intent", (o, n) => { (o as unknown as MobileAppAssignment).intent = n.getEnumValue<InstallIntent>(InstallIntent); }],
-            ["settings", (o, n) => { (o as unknown as MobileAppAssignment).settings = n.getObjectValue<MobileAppAssignmentSettings>(MobileAppAssignmentSettings); }],
-            ["target", (o, n) => { (o as unknown as MobileAppAssignment).target = n.getObjectValue<DeviceAndAppManagementAssignmentTarget>(DeviceAndAppManagementAssignmentTarget); }],
-        ]);
+    public set intent(value: InstallIntent | undefined) {
+        this._intent = value;
     };
     /**
      * Serializes information the current object
@@ -58,11 +54,11 @@ export class MobileAppAssignment extends Entity implements Parsable {
         writer.writeObjectValue<DeviceAndAppManagementAssignmentTarget>("target", this.target);
     };
     /**
-     * Sets the intent property value. The install intent defined by the admin. Possible values are: available, required, uninstall, availableWithoutEnrollment.
-     * @param value Value to set for the intent property.
+     * Gets the settings property value. The settings for target assignment defined by the admin.
+     * @returns a mobileAppAssignmentSettings
      */
-    public set intent(value: InstallIntent | undefined) {
-        this._intent = value;
+    public get settings() {
+        return this._settings;
     };
     /**
      * Sets the settings property value. The settings for target assignment defined by the admin.
@@ -70,6 +66,13 @@ export class MobileAppAssignment extends Entity implements Parsable {
      */
     public set settings(value: MobileAppAssignmentSettings | undefined) {
         this._settings = value;
+    };
+    /**
+     * Gets the target property value. The target group assignment defined by the admin.
+     * @returns a deviceAndAppManagementAssignmentTarget
+     */
+    public get target() {
+        return this._target;
     };
     /**
      * Sets the target property value. The target group assignment defined by the admin.

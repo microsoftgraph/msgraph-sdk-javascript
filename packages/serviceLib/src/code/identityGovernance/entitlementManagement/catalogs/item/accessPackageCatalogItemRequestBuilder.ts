@@ -1,9 +1,12 @@
 import {AccessPackageCatalog} from '../../../../models/microsoft/graph/';
-import {AccessPackagesRequestBuilder} from './accessPackages/';
-import {AccessPackageItemRequestBuilder} from './accessPackages/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAccessPackageCatalogFromDiscriminatorValue} from '../../../../models/microsoft/graph/createAccessPackageCatalogFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AccessPackagesRequestBuilder} from './accessPackages/accessPackagesRequestBuilder';
+import {AccessPackageItemRequestBuilder} from './accessPackages/item/accessPackageItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/catalogs/{accessPackageCatalog-id}  */
+/** Provides operations to manage the catalogs property of the microsoft.graph.entitlementManagement entity.  */
 export class AccessPackageCatalogItemRequestBuilder {
     public get accessPackages(): AccessPackagesRequestBuilder {
         return new AccessPackagesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -39,7 +42,7 @@ export class AccessPackageCatalogItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents a group of access packages.
+     * Delete navigation property catalogs for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -74,7 +77,7 @@ export class AccessPackageCatalogItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a group of access packages.
+     * Update the navigation property catalogs in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -92,7 +95,7 @@ export class AccessPackageCatalogItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents a group of access packages.
+     * Delete navigation property catalogs for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -101,7 +104,11 @@ export class AccessPackageCatalogItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Represents a group of access packages.
@@ -118,10 +125,14 @@ export class AccessPackageCatalogItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessPackageCatalog>(requestInfo, AccessPackageCatalog, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackageCatalog>(requestInfo, createAccessPackageCatalogFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Represents a group of access packages.
+     * Update the navigation property catalogs in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class AccessPackageCatalogItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

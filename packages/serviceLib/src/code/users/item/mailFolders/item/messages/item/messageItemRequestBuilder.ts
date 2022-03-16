@@ -1,26 +1,29 @@
 import {Message} from '../../../../../../models/microsoft/graph/';
-import {AttachmentsRequestBuilder} from './attachments/';
-import {AttachmentItemRequestBuilder} from './attachments/item/';
-import {CalendarSharingMessageRequestBuilder} from './calendarSharingMessage/';
-import {CopyRequestBuilder} from './copy/';
-import {CreateForwardRequestBuilder} from './createForward/';
-import {CreateReplyRequestBuilder} from './createReply/';
-import {CreateReplyAllRequestBuilder} from './createReplyAll/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {ForwardRequestBuilder} from './forward/';
-import {MoveRequestBuilder} from './move/';
-import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/';
-import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/';
-import {ReplyRequestBuilder} from './reply/';
-import {ReplyAllRequestBuilder} from './replyAll/';
-import {SendRequestBuilder} from './send/';
-import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/';
-import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/';
-import {ContentRequestBuilder} from './value/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMessageFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createMessageFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
+import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
+import {CalendarSharingMessageRequestBuilder} from './calendarSharingMessage/calendarSharingMessageRequestBuilder';
+import {CopyRequestBuilder} from './copy/copyRequestBuilder';
+import {CreateForwardRequestBuilder} from './createForward/createForwardRequestBuilder';
+import {CreateReplyRequestBuilder} from './createReply/createReplyRequestBuilder';
+import {CreateReplyAllRequestBuilder} from './createReplyAll/createReplyAllRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {ForwardRequestBuilder} from './forward/forwardRequestBuilder';
+import {MoveRequestBuilder} from './move/moveRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {ReplyRequestBuilder} from './reply/replyRequestBuilder';
+import {ReplyAllRequestBuilder} from './replyAll/replyAllRequestBuilder';
+import {SendRequestBuilder} from './send/sendRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {ContentRequestBuilder} from './value/contentRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/mailFolders/{mailFolder-id}/messages/{message-id}  */
+/** Provides operations to manage the messages property of the microsoft.graph.mailFolder entity.  */
 export class MessageItemRequestBuilder {
     public get attachments(): AttachmentsRequestBuilder {
         return new AttachmentsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -98,7 +101,7 @@ export class MessageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of messages in the mailFolder.
+     * Delete navigation property messages for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -133,7 +136,7 @@ export class MessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of messages in the mailFolder.
+     * Update the navigation property messages in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -151,7 +154,7 @@ export class MessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of messages in the mailFolder.
+     * Delete navigation property messages for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -160,7 +163,11 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.mailFolders.item.messages.item.extensions.item collection
@@ -188,7 +195,11 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Message>(requestInfo, Message, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Message>(requestInfo, createMessageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.mailFolders.item.messages.item.multiValueExtendedProperties.item collection
@@ -202,7 +213,7 @@ export class MessageItemRequestBuilder {
         return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The collection of messages in the mailFolder.
+     * Update the navigation property messages in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -213,7 +224,11 @@ export class MessageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.mailFolders.item.messages.item.singleValueExtendedProperties.item collection

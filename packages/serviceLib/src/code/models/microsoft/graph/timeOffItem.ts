@@ -11,13 +11,6 @@ export class TimeOffItem extends ScheduleEntity implements Parsable {
         super();
     };
     /**
-     * Gets the timeOffReasonId property value. ID of the timeOffReason for this timeOffItem. Required.
-     * @returns a string
-     */
-    public get timeOffReasonId() {
-        return this._timeOffReasonId;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,6 +27,13 @@ export class TimeOffItem extends ScheduleEntity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("timeOffReasonId", this.timeOffReasonId);
+    };
+    /**
+     * Gets the timeOffReasonId property value. ID of the timeOffReason for this timeOffItem. Required.
+     * @returns a string
+     */
+    public get timeOffReasonId() {
+        return this._timeOffReasonId;
     };
     /**
      * Sets the timeOffReasonId property value. ID of the timeOffReason for this timeOffItem. Required.

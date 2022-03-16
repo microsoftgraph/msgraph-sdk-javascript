@@ -1,4 +1,7 @@
-import {Entity, Extension, TodoTask, WellknownListName} from './index';
+import {createExtensionFromDiscriminatorValue} from './createExtensionFromDiscriminatorValue';
+import {createTodoTaskFromDiscriminatorValue} from './createTodoTaskFromDiscriminatorValue';
+import {Entity, Extension, TodoTask} from './index';
+import {WellknownListName} from './wellknownListName';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class TodoTaskList extends Entity implements Parsable {
@@ -28,11 +31,39 @@ export class TodoTaskList extends Entity implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. The name of the task list.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the extensions property value. The collection of open extensions defined for the task list. Nullable.
      * @returns a extension
      */
     public get extensions() {
         return this._extensions;
+    };
+    /**
+     * Sets the extensions property value. The collection of open extensions defined for the task list. Nullable.
+     * @param value Value to set for the extensions property.
+     */
+    public set extensions(value: Extension[] | undefined) {
+        this._extensions = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["displayName", (o, n) => { (o as unknown as TodoTaskList).displayName = n.getStringValue(); }],
+            ["extensions", (o, n) => { (o as unknown as TodoTaskList).extensions = n.getCollectionOfObjectValues<Extension>(createExtensionFromDiscriminatorValue); }],
+            ["isOwner", (o, n) => { (o as unknown as TodoTaskList).isOwner = n.getBooleanValue(); }],
+            ["isShared", (o, n) => { (o as unknown as TodoTaskList).isShared = n.getBooleanValue(); }],
+            ["tasks", (o, n) => { (o as unknown as TodoTaskList).tasks = n.getCollectionOfObjectValues<TodoTask>(createTodoTaskFromDiscriminatorValue); }],
+            ["wellknownListName", (o, n) => { (o as unknown as TodoTaskList).wellknownListName = n.getEnumValue<WellknownListName>(WellknownListName); }],
+        ]);
     };
     /**
      * Gets the isOwner property value. True if the user is owner of the given task list.
@@ -42,6 +73,13 @@ export class TodoTaskList extends Entity implements Parsable {
         return this._isOwner;
     };
     /**
+     * Sets the isOwner property value. True if the user is owner of the given task list.
+     * @param value Value to set for the isOwner property.
+     */
+    public set isOwner(value: boolean | undefined) {
+        this._isOwner = value;
+    };
+    /**
      * Gets the isShared property value. True if the task list is shared with other users
      * @returns a boolean
      */
@@ -49,32 +87,11 @@ export class TodoTaskList extends Entity implements Parsable {
         return this._isShared;
     };
     /**
-     * Gets the tasks property value. The tasks in this task list. Read-only. Nullable.
-     * @returns a todoTask
+     * Sets the isShared property value. True if the task list is shared with other users
+     * @param value Value to set for the isShared property.
      */
-    public get tasks() {
-        return this._tasks;
-    };
-    /**
-     * Gets the wellknownListName property value. Property indicating the list name if the given list is a well-known list. Possible values are: none, defaultList, flaggedEmails, unknownFutureValue.
-     * @returns a wellknownListName
-     */
-    public get wellknownListName() {
-        return this._wellknownListName;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["displayName", (o, n) => { (o as unknown as TodoTaskList).displayName = n.getStringValue(); }],
-            ["extensions", (o, n) => { (o as unknown as TodoTaskList).extensions = n.getCollectionOfObjectValues<Extension>(Extension); }],
-            ["isOwner", (o, n) => { (o as unknown as TodoTaskList).isOwner = n.getBooleanValue(); }],
-            ["isShared", (o, n) => { (o as unknown as TodoTaskList).isShared = n.getBooleanValue(); }],
-            ["tasks", (o, n) => { (o as unknown as TodoTaskList).tasks = n.getCollectionOfObjectValues<TodoTask>(TodoTask); }],
-            ["wellknownListName", (o, n) => { (o as unknown as TodoTaskList).wellknownListName = n.getEnumValue<WellknownListName>(WellknownListName); }],
-        ]);
+    public set isShared(value: boolean | undefined) {
+        this._isShared = value;
     };
     /**
      * Serializes information the current object
@@ -91,32 +108,11 @@ export class TodoTaskList extends Entity implements Parsable {
         writer.writeEnumValue<WellknownListName>("wellknownListName", this.wellknownListName);
     };
     /**
-     * Sets the displayName property value. The name of the task list.
-     * @param value Value to set for the displayName property.
+     * Gets the tasks property value. The tasks in this task list. Read-only. Nullable.
+     * @returns a todoTask
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the extensions property value. The collection of open extensions defined for the task list. Nullable.
-     * @param value Value to set for the extensions property.
-     */
-    public set extensions(value: Extension[] | undefined) {
-        this._extensions = value;
-    };
-    /**
-     * Sets the isOwner property value. True if the user is owner of the given task list.
-     * @param value Value to set for the isOwner property.
-     */
-    public set isOwner(value: boolean | undefined) {
-        this._isOwner = value;
-    };
-    /**
-     * Sets the isShared property value. True if the task list is shared with other users
-     * @param value Value to set for the isShared property.
-     */
-    public set isShared(value: boolean | undefined) {
-        this._isShared = value;
+    public get tasks() {
+        return this._tasks;
     };
     /**
      * Sets the tasks property value. The tasks in this task list. Read-only. Nullable.
@@ -124,6 +120,13 @@ export class TodoTaskList extends Entity implements Parsable {
      */
     public set tasks(value: TodoTask[] | undefined) {
         this._tasks = value;
+    };
+    /**
+     * Gets the wellknownListName property value. Property indicating the list name if the given list is a well-known list. Possible values are: none, defaultList, flaggedEmails, unknownFutureValue.
+     * @returns a wellknownListName
+     */
+    public get wellknownListName() {
+        return this._wellknownListName;
     };
     /**
      * Sets the wellknownListName property value. Property indicating the list name if the given list is a well-known list. Possible values are: none, defaultList, flaggedEmails, unknownFutureValue.

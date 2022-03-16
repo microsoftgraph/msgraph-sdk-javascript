@@ -1,8 +1,12 @@
 import {DetectedApp} from '../../../models/microsoft/graph/';
-import {ManagedDevicesRequestBuilder} from './managedDevices/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDetectedAppFromDiscriminatorValue} from '../../../models/microsoft/graph/createDetectedAppFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ManagedDeviceItemRequestBuilder} from './managedDevices/item/managedDeviceItemRequestBuilder';
+import {ManagedDevicesRequestBuilder} from './managedDevices/managedDevicesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/detectedApps/{detectedApp-id}  */
+/** Provides operations to manage the detectedApps property of the microsoft.graph.deviceManagement entity.  */
 export class DetectedAppItemRequestBuilder {
     public get managedDevices(): ManagedDevicesRequestBuilder {
         return new ManagedDevicesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +31,7 @@ export class DetectedAppItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of detected apps associated with a device.
+     * Delete navigation property detectedApps for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +66,7 @@ export class DetectedAppItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of detected apps associated with a device.
+     * Update the navigation property detectedApps in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +84,7 @@ export class DetectedAppItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of detected apps associated with a device.
+     * Delete navigation property detectedApps for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +93,11 @@ export class DetectedAppItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of detected apps associated with a device.
@@ -106,10 +114,25 @@ export class DetectedAppItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DetectedApp>(requestInfo, DetectedApp, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DetectedApp>(requestInfo, createDetectedAppFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of detected apps associated with a device.
+     * Gets an item from the MicrosoftGraph.deviceManagement.detectedApps.item.managedDevices.item collection
+     * @param id Unique identifier of the item
+     * @returns a managedDeviceItemRequestBuilder
+     */
+    public managedDevicesById(id: string) : ManagedDeviceItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["managedDevice_id"] = id
+        return new ManagedDeviceItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property detectedApps in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +143,10 @@ export class DetectedAppItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

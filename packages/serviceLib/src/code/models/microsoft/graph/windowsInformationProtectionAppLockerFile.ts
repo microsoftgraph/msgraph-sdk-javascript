@@ -24,11 +24,25 @@ export class WindowsInformationProtectionAppLockerFile extends Entity implements
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. The friendly name
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the file property value. File as a byte array
      * @returns a binary
      */
     public get file() {
         return this._file;
+    };
+    /**
+     * Sets the file property value. File as a byte array
+     * @param value Value to set for the file property.
+     */
+    public set file(value: string | undefined) {
+        this._file = value;
     };
     /**
      * Gets the fileHash property value. SHA256 hash of the file
@@ -38,11 +52,11 @@ export class WindowsInformationProtectionAppLockerFile extends Entity implements
         return this._fileHash;
     };
     /**
-     * Gets the version property value. Version of the entity.
-     * @returns a string
+     * Sets the fileHash property value. SHA256 hash of the file
+     * @param value Value to set for the fileHash property.
      */
-    public get version() {
-        return this._version;
+    public set fileHash(value: string | undefined) {
+        this._fileHash = value;
     };
     /**
      * The deserialization information for the current model
@@ -69,25 +83,11 @@ export class WindowsInformationProtectionAppLockerFile extends Entity implements
         writer.writeStringValue("version", this.version);
     };
     /**
-     * Sets the displayName property value. The friendly name
-     * @param value Value to set for the displayName property.
+     * Gets the version property value. Version of the entity.
+     * @returns a string
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the file property value. File as a byte array
-     * @param value Value to set for the file property.
-     */
-    public set file(value: string | undefined) {
-        this._file = value;
-    };
-    /**
-     * Sets the fileHash property value. SHA256 hash of the file
-     * @param value Value to set for the fileHash property.
-     */
-    public set fileHash(value: string | undefined) {
-        this._fileHash = value;
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. Version of the entity.

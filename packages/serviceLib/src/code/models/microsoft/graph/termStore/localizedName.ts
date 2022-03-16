@@ -1,18 +1,12 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class LocalizedName implements Parsable {
+export class LocalizedName implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The language tag for the label.  */
     private _languageTag?: string | undefined;
     /** The name in the localized language.  */
     private _name?: string | undefined;
-    /**
-     * Instantiates a new localizedName and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -21,18 +15,17 @@ export class LocalizedName implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the languageTag property value. The language tag for the label.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get languageTag() {
-        return this._languageTag;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the name property value. The name in the localized language.
-     * @returns a string
+     * Instantiates a new localizedName and sets the default values.
      */
-    public get name() {
-        return this._name;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -45,21 +38,11 @@ export class LocalizedName implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the languageTag property value. The language tag for the label.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("languageTag", this.languageTag);
-        writer.writeStringValue("name", this.name);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get languageTag() {
+        return this._languageTag;
     };
     /**
      * Sets the languageTag property value. The language tag for the label.
@@ -69,10 +52,27 @@ export class LocalizedName implements Parsable {
         this._languageTag = value;
     };
     /**
+     * Gets the name property value. The name in the localized language.
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
      * Sets the name property value. The name in the localized language.
      * @param value Value to set for the name property.
      */
     public set name(value: string | undefined) {
         this._name = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("languageTag", this.languageTag);
+        writer.writeStringValue("name", this.name);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

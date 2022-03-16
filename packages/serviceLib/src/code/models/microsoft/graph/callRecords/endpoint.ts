@@ -1,17 +1,12 @@
+import {createUserAgentFromDiscriminatorValue} from './createUserAgentFromDiscriminatorValue';
 import {UserAgent} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Endpoint implements Parsable {
+export class Endpoint implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** User-agent reported by this endpoint.  */
     private _userAgent?: UserAgent | undefined;
-    /**
-     * Instantiates a new endpoint and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -20,11 +15,17 @@ export class Endpoint implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the userAgent property value. User-agent reported by this endpoint.
-     * @returns a userAgent
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get userAgent() {
-        return this._userAgent;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new endpoint and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -32,7 +33,7 @@ export class Endpoint implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["userAgent", (o, n) => { (o as unknown as Endpoint).userAgent = n.getObjectValue<UserAgent>(UserAgent); }],
+            ["userAgent", (o, n) => { (o as unknown as Endpoint).userAgent = n.getObjectValue<UserAgent>(createUserAgentFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -45,11 +46,11 @@ export class Endpoint implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the userAgent property value. User-agent reported by this endpoint.
+     * @returns a userAgent
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get userAgent() {
+        return this._userAgent;
     };
     /**
      * Sets the userAgent property value. User-agent reported by this endpoint.

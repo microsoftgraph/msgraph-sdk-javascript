@@ -1,4 +1,5 @@
-import {AgreementAcceptanceState, Entity} from './index';
+import {AgreementAcceptanceState} from './agreementAcceptanceState';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AgreementAcceptance extends Entity implements Parsable {
@@ -18,7 +19,7 @@ export class AgreementAcceptance extends Entity implements Parsable {
     private _expirationDateTime?: Date | undefined;
     /** The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.  */
     private _recordedDateTime?: Date | undefined;
-    /** The state of the agreement acceptance. Possible values are: accepted, declined.  */
+    /** The state of the agreement acceptance. Possible values are: accepted, declined. Supports $filter (eq).  */
     private _state?: AgreementAcceptanceState | undefined;
     /** Display name of the user when the acceptance was recorded.  */
     private _userDisplayName?: string | undefined;
@@ -29,17 +30,18 @@ export class AgreementAcceptance extends Entity implements Parsable {
     /** UPN of the user when the acceptance was recorded.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new agreementAcceptance and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the agreementFileId property value. The identifier of the agreement file accepted by the user.
      * @returns a string
      */
     public get agreementFileId() {
         return this._agreementFileId;
+    };
+    /**
+     * Sets the agreementFileId property value. The identifier of the agreement file accepted by the user.
+     * @param value Value to set for the agreementFileId property.
+     */
+    public set agreementFileId(value: string | undefined) {
+        this._agreementFileId = value;
     };
     /**
      * Gets the agreementId property value. The identifier of the agreement.
@@ -49,11 +51,31 @@ export class AgreementAcceptance extends Entity implements Parsable {
         return this._agreementId;
     };
     /**
+     * Sets the agreementId property value. The identifier of the agreement.
+     * @param value Value to set for the agreementId property.
+     */
+    public set agreementId(value: string | undefined) {
+        this._agreementId = value;
+    };
+    /**
+     * Instantiates a new agreementAcceptance and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the deviceDisplayName property value. The display name of the device used for accepting the agreement.
      * @returns a string
      */
     public get deviceDisplayName() {
         return this._deviceDisplayName;
+    };
+    /**
+     * Sets the deviceDisplayName property value. The display name of the device used for accepting the agreement.
+     * @param value Value to set for the deviceDisplayName property.
+     */
+    public set deviceDisplayName(value: string | undefined) {
+        this._deviceDisplayName = value;
     };
     /**
      * Gets the deviceId property value. The unique identifier of the device used for accepting the agreement.
@@ -63,11 +85,25 @@ export class AgreementAcceptance extends Entity implements Parsable {
         return this._deviceId;
     };
     /**
+     * Sets the deviceId property value. The unique identifier of the device used for accepting the agreement.
+     * @param value Value to set for the deviceId property.
+     */
+    public set deviceId(value: string | undefined) {
+        this._deviceId = value;
+    };
+    /**
      * Gets the deviceOSType property value. The operating system used to accept the agreement.
      * @returns a string
      */
     public get deviceOSType() {
         return this._deviceOSType;
+    };
+    /**
+     * Sets the deviceOSType property value. The operating system used to accept the agreement.
+     * @param value Value to set for the deviceOSType property.
+     */
+    public set deviceOSType(value: string | undefined) {
+        this._deviceOSType = value;
     };
     /**
      * Gets the deviceOSVersion property value. The operating system version of the device used to accept the agreement.
@@ -77,6 +113,13 @@ export class AgreementAcceptance extends Entity implements Parsable {
         return this._deviceOSVersion;
     };
     /**
+     * Sets the deviceOSVersion property value. The operating system version of the device used to accept the agreement.
+     * @param value Value to set for the deviceOSVersion property.
+     */
+    public set deviceOSVersion(value: string | undefined) {
+        this._deviceOSVersion = value;
+    };
+    /**
      * Gets the expirationDateTime property value. The expiration date time of the acceptance. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
      * @returns a Date
      */
@@ -84,46 +127,11 @@ export class AgreementAcceptance extends Entity implements Parsable {
         return this._expirationDateTime;
     };
     /**
-     * Gets the recordedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
-     * @returns a Date
+     * Sets the expirationDateTime property value. The expiration date time of the acceptance. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
+     * @param value Value to set for the expirationDateTime property.
      */
-    public get recordedDateTime() {
-        return this._recordedDateTime;
-    };
-    /**
-     * Gets the state property value. The state of the agreement acceptance. Possible values are: accepted, declined.
-     * @returns a agreementAcceptanceState
-     */
-    public get state() {
-        return this._state;
-    };
-    /**
-     * Gets the userDisplayName property value. Display name of the user when the acceptance was recorded.
-     * @returns a string
-     */
-    public get userDisplayName() {
-        return this._userDisplayName;
-    };
-    /**
-     * Gets the userEmail property value. Email of the user when the acceptance was recorded.
-     * @returns a string
-     */
-    public get userEmail() {
-        return this._userEmail;
-    };
-    /**
-     * Gets the userId property value. The identifier of the user who accepted the agreement.
-     * @returns a string
-     */
-    public get userId() {
-        return this._userId;
-    };
-    /**
-     * Gets the userPrincipalName property value. UPN of the user when the acceptance was recorded.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public set expirationDateTime(value: Date | undefined) {
+        this._expirationDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -147,6 +155,20 @@ export class AgreementAcceptance extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the recordedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
+     * @returns a Date
+     */
+    public get recordedDateTime() {
+        return this._recordedDateTime;
+    };
+    /**
+     * Sets the recordedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
+     * @param value Value to set for the recordedDateTime property.
+     */
+    public set recordedDateTime(value: Date | undefined) {
+        this._recordedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -168,67 +190,25 @@ export class AgreementAcceptance extends Entity implements Parsable {
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the agreementFileId property value. The identifier of the agreement file accepted by the user.
-     * @param value Value to set for the agreementFileId property.
+     * Gets the state property value. The state of the agreement acceptance. Possible values are: accepted, declined. Supports $filter (eq).
+     * @returns a agreementAcceptanceState
      */
-    public set agreementFileId(value: string | undefined) {
-        this._agreementFileId = value;
+    public get state() {
+        return this._state;
     };
     /**
-     * Sets the agreementId property value. The identifier of the agreement.
-     * @param value Value to set for the agreementId property.
-     */
-    public set agreementId(value: string | undefined) {
-        this._agreementId = value;
-    };
-    /**
-     * Sets the deviceDisplayName property value. The display name of the device used for accepting the agreement.
-     * @param value Value to set for the deviceDisplayName property.
-     */
-    public set deviceDisplayName(value: string | undefined) {
-        this._deviceDisplayName = value;
-    };
-    /**
-     * Sets the deviceId property value. The unique identifier of the device used for accepting the agreement.
-     * @param value Value to set for the deviceId property.
-     */
-    public set deviceId(value: string | undefined) {
-        this._deviceId = value;
-    };
-    /**
-     * Sets the deviceOSType property value. The operating system used to accept the agreement.
-     * @param value Value to set for the deviceOSType property.
-     */
-    public set deviceOSType(value: string | undefined) {
-        this._deviceOSType = value;
-    };
-    /**
-     * Sets the deviceOSVersion property value. The operating system version of the device used to accept the agreement.
-     * @param value Value to set for the deviceOSVersion property.
-     */
-    public set deviceOSVersion(value: string | undefined) {
-        this._deviceOSVersion = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. The expiration date time of the acceptance. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: Date | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the recordedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z.
-     * @param value Value to set for the recordedDateTime property.
-     */
-    public set recordedDateTime(value: Date | undefined) {
-        this._recordedDateTime = value;
-    };
-    /**
-     * Sets the state property value. The state of the agreement acceptance. Possible values are: accepted, declined.
+     * Sets the state property value. The state of the agreement acceptance. Possible values are: accepted, declined. Supports $filter (eq).
      * @param value Value to set for the state property.
      */
     public set state(value: AgreementAcceptanceState | undefined) {
         this._state = value;
+    };
+    /**
+     * Gets the userDisplayName property value. Display name of the user when the acceptance was recorded.
+     * @returns a string
+     */
+    public get userDisplayName() {
+        return this._userDisplayName;
     };
     /**
      * Sets the userDisplayName property value. Display name of the user when the acceptance was recorded.
@@ -238,6 +218,13 @@ export class AgreementAcceptance extends Entity implements Parsable {
         this._userDisplayName = value;
     };
     /**
+     * Gets the userEmail property value. Email of the user when the acceptance was recorded.
+     * @returns a string
+     */
+    public get userEmail() {
+        return this._userEmail;
+    };
+    /**
      * Sets the userEmail property value. Email of the user when the acceptance was recorded.
      * @param value Value to set for the userEmail property.
      */
@@ -245,11 +232,25 @@ export class AgreementAcceptance extends Entity implements Parsable {
         this._userEmail = value;
     };
     /**
+     * Gets the userId property value. The identifier of the user who accepted the agreement.
+     * @returns a string
+     */
+    public get userId() {
+        return this._userId;
+    };
+    /**
      * Sets the userId property value. The identifier of the user who accepted the agreement.
      * @param value Value to set for the userId property.
      */
     public set userId(value: string | undefined) {
         this._userId = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. UPN of the user when the acceptance was recorded.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. UPN of the user when the acceptance was recorded.

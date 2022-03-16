@@ -1,3 +1,4 @@
+/** Provides operations to manage the collection of drive entities.  */
 export enum FreeBusyStatus {
     Unknown = "unknown",
     Free = "free",

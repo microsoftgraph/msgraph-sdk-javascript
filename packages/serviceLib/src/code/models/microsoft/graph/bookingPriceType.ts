@@ -1,3 +1,4 @@
+/** Provides operations to manage the solutionsRoot singleton.  */
 export enum BookingPriceType {
     Undefined = "undefined",
     FixedPrice = "fixedPrice",

@@ -1,2 +1,1 @@
-export * from './GetApplicablePolicyRequirements'
-export * from './GetApplicablePolicyRequirementsRequestBuilder'
+export * from './getApplicablePolicyRequirementsResponse'

@@ -1,9 +1,12 @@
 import {GroupLifecyclePolicy} from '../../models/microsoft/graph/';
-import {AddGroupRequestBuilder} from './addGroup/';
-import {RemoveGroupRequestBuilder} from './removeGroup/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGroupLifecyclePolicyFromDiscriminatorValue} from '../../models/microsoft/graph/createGroupLifecyclePolicyFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AddGroupRequestBuilder} from './addGroup/addGroupRequestBuilder';
+import {RemoveGroupRequestBuilder} from './removeGroup/removeGroupRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groupLifecyclePolicies/{groupLifecyclePolicy-id}  */
+/** Provides operations to manage the collection of groupLifecyclePolicy entities.  */
 export class GroupLifecyclePolicyItemRequestBuilder {
     public get addGroup(): AddGroupRequestBuilder {
         return new AddGroupRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -93,7 +96,11 @@ export class GroupLifecyclePolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entity from groupLifecyclePolicies by key
@@ -110,7 +117,11 @@ export class GroupLifecyclePolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<GroupLifecyclePolicy>(requestInfo, GroupLifecyclePolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<GroupLifecyclePolicy>(requestInfo, createGroupLifecyclePolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update entity in groupLifecyclePolicies
@@ -124,6 +135,10 @@ export class GroupLifecyclePolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,21 +1,24 @@
 import {DeviceCompliancePolicy} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {DeviceCompliancePolicyAssignmentItemRequestBuilder} from './assignments/item/';
-import {DeviceSettingStateSummariesRequestBuilder} from './deviceSettingStateSummaries/';
-import {SettingStateDeviceSummaryItemRequestBuilder} from './deviceSettingStateSummaries/item/';
-import {DeviceStatusesRequestBuilder} from './deviceStatuses/';
-import {DeviceComplianceDeviceStatusItemRequestBuilder} from './deviceStatuses/item/';
-import {DeviceStatusOverviewRequestBuilder} from './deviceStatusOverview/';
-import {ScheduleActionsForRulesRequestBuilder} from './scheduleActionsForRules/';
-import {ScheduledActionsForRuleRequestBuilder} from './scheduledActionsForRule/';
-import {DeviceComplianceScheduledActionForRuleItemRequestBuilder} from './scheduledActionsForRule/item/';
-import {UserStatusesRequestBuilder} from './userStatuses/';
-import {DeviceComplianceUserStatusItemRequestBuilder} from './userStatuses/item/';
-import {UserStatusOverviewRequestBuilder} from './userStatusOverview/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceCompliancePolicyFromDiscriminatorValue} from '../../../models/microsoft/graph/createDeviceCompliancePolicyFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {DeviceCompliancePolicyAssignmentItemRequestBuilder} from './assignments/item/deviceCompliancePolicyAssignmentItemRequestBuilder';
+import {DeviceSettingStateSummariesRequestBuilder} from './deviceSettingStateSummaries/deviceSettingStateSummariesRequestBuilder';
+import {SettingStateDeviceSummaryItemRequestBuilder} from './deviceSettingStateSummaries/item/settingStateDeviceSummaryItemRequestBuilder';
+import {DeviceStatusesRequestBuilder} from './deviceStatuses/deviceStatusesRequestBuilder';
+import {DeviceComplianceDeviceStatusItemRequestBuilder} from './deviceStatuses/item/deviceComplianceDeviceStatusItemRequestBuilder';
+import {DeviceStatusOverviewRequestBuilder} from './deviceStatusOverview/deviceStatusOverviewRequestBuilder';
+import {ScheduleActionsForRulesRequestBuilder} from './scheduleActionsForRules/scheduleActionsForRulesRequestBuilder';
+import {DeviceComplianceScheduledActionForRuleItemRequestBuilder} from './scheduledActionsForRule/item/deviceComplianceScheduledActionForRuleItemRequestBuilder';
+import {ScheduledActionsForRuleRequestBuilder} from './scheduledActionsForRule/scheduledActionsForRuleRequestBuilder';
+import {DeviceComplianceUserStatusItemRequestBuilder} from './userStatuses/item/deviceComplianceUserStatusItemRequestBuilder';
+import {UserStatusesRequestBuilder} from './userStatuses/userStatusesRequestBuilder';
+import {UserStatusOverviewRequestBuilder} from './userStatusOverview/userStatusOverviewRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/deviceCompliancePolicies/{deviceCompliancePolicy-id}  */
+/** Provides operations to manage the deviceCompliancePolicies property of the microsoft.graph.deviceManagement entity.  */
 export class DeviceCompliancePolicyItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -75,7 +78,7 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The device compliance policies.
+     * Delete navigation property deviceCompliancePolicies for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -110,7 +113,7 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device compliance policies.
+     * Update the navigation property deviceCompliancePolicies in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -128,7 +131,7 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The device compliance policies.
+     * Delete navigation property deviceCompliancePolicies for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -137,7 +140,11 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.deviceCompliancePolicies.item.deviceSettingStateSummaries.item collection
@@ -176,10 +183,14 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceCompliancePolicy>(requestInfo, DeviceCompliancePolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceCompliancePolicy>(requestInfo, createDeviceCompliancePolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The device compliance policies.
+     * Update the navigation property deviceCompliancePolicies in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -190,7 +201,11 @@ export class DeviceCompliancePolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.deviceCompliancePolicies.item.scheduledActionsForRule.item collection

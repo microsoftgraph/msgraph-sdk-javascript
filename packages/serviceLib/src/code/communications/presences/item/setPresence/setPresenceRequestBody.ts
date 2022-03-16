@@ -1,6 +1,7 @@
-import {Duration, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Duration, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SetPresenceRequestBody implements Parsable {
+/** Provides operations to call the setPresence method.  */
+export class SetPresenceRequestBody implements AdditionalDataHolder, Parsable {
     private _activity?: string | undefined;
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
@@ -8,17 +9,18 @@ export class SetPresenceRequestBody implements Parsable {
     private _expirationDuration?: Duration | undefined;
     private _sessionId?: string | undefined;
     /**
-     * Instantiates a new setPresenceRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the activity property value. 
      * @returns a string
      */
     public get activity() {
         return this._activity;
+    };
+    /**
+     * Sets the activity property value. 
+     * @param value Value to set for the activity property.
+     */
+    public set activity(value: string | undefined) {
+        this._activity = value;
     };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -28,11 +30,31 @@ export class SetPresenceRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Gets the availability property value. 
      * @returns a string
      */
     public get availability() {
         return this._availability;
+    };
+    /**
+     * Sets the availability property value. 
+     * @param value Value to set for the availability property.
+     */
+    public set availability(value: string | undefined) {
+        this._availability = value;
+    };
+    /**
+     * Instantiates a new setPresenceRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the expirationDuration property value. 
@@ -42,11 +64,11 @@ export class SetPresenceRequestBody implements Parsable {
         return this._expirationDuration;
     };
     /**
-     * Gets the sessionId property value. 
-     * @returns a string
+     * Sets the expirationDuration property value. 
+     * @param value Value to set for the expirationDuration property.
      */
-    public get sessionId() {
-        return this._sessionId;
+    public set expirationDuration(value: Duration | undefined) {
+        this._expirationDuration = value;
     };
     /**
      * The deserialization information for the current model
@@ -73,32 +95,11 @@ export class SetPresenceRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the activity property value. 
-     * @param value Value to set for the activity property.
+     * Gets the sessionId property value. 
+     * @returns a string
      */
-    public set activity(value: string | undefined) {
-        this._activity = value;
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the availability property value. 
-     * @param value Value to set for the availability property.
-     */
-    public set availability(value: string | undefined) {
-        this._availability = value;
-    };
-    /**
-     * Sets the expirationDuration property value. 
-     * @param value Value to set for the expirationDuration property.
-     */
-    public set expirationDuration(value: Duration | undefined) {
-        this._expirationDuration = value;
+    public get sessionId() {
+        return this._sessionId;
     };
     /**
      * Sets the sessionId property value. 

@@ -1,17 +1,14 @@
 import {InvitationParticipantInfo, ParticipantInfo} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createInvitationParticipantInfoFromDiscriminatorValue} from '../../../../models/microsoft/graph/createInvitationParticipantInfoFromDiscriminatorValue';
+import {createParticipantInfoFromDiscriminatorValue} from '../../../../models/microsoft/graph/createParticipantInfoFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TransferRequestBody implements Parsable {
+/** Provides operations to call the transfer method.  */
+export class TransferRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _transferee?: ParticipantInfo | undefined;
     private _transferTarget?: InvitationParticipantInfo | undefined;
-    /**
-     * Instantiates a new transferRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -20,18 +17,17 @@ export class TransferRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the transferee property value. 
-     * @returns a participantInfo
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get transferee() {
-        return this._transferee;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the transferTarget property value. 
-     * @returns a invitationParticipantInfo
+     * Instantiates a new transferRequestBody and sets the default values.
      */
-    public get transferTarget() {
-        return this._transferTarget;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -39,8 +35,8 @@ export class TransferRequestBody implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["transferee", (o, n) => { (o as unknown as TransferRequestBody).transferee = n.getObjectValue<ParticipantInfo>(ParticipantInfo); }],
-            ["transferTarget", (o, n) => { (o as unknown as TransferRequestBody).transferTarget = n.getObjectValue<InvitationParticipantInfo>(InvitationParticipantInfo); }],
+            ["transferee", (o, n) => { (o as unknown as TransferRequestBody).transferee = n.getObjectValue<ParticipantInfo>(createParticipantInfoFromDiscriminatorValue); }],
+            ["transferTarget", (o, n) => { (o as unknown as TransferRequestBody).transferTarget = n.getObjectValue<InvitationParticipantInfo>(createInvitationParticipantInfoFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -54,11 +50,11 @@ export class TransferRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the transferee property value. 
+     * @returns a participantInfo
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get transferee() {
+        return this._transferee;
     };
     /**
      * Sets the transferee property value. 
@@ -66,6 +62,13 @@ export class TransferRequestBody implements Parsable {
      */
     public set transferee(value: ParticipantInfo | undefined) {
         this._transferee = value;
+    };
+    /**
+     * Gets the transferTarget property value. 
+     * @returns a invitationParticipantInfo
+     */
+    public get transferTarget() {
+        return this._transferTarget;
     };
     /**
      * Sets the transferTarget property value. 

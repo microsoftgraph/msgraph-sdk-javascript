@@ -1,4 +1,7 @@
-import {AccessPackage, AccessPackageCatalogState, AccessPackageCatalogType, Entity} from './index';
+import {AccessPackageCatalogState} from './accessPackageCatalogState';
+import {AccessPackageCatalogType} from './accessPackageCatalogType';
+import {createAccessPackageFromDiscriminatorValue} from './createAccessPackageFromDiscriminatorValue';
+import {AccessPackage, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AccessPackageCatalog extends Entity implements Parsable {
@@ -19,17 +22,18 @@ export class AccessPackageCatalog extends Entity implements Parsable {
     /** Has the value published if the access packages are available for management. The possible values are: unpublished, published, unknownFutureValue.  */
     private _state?: AccessPackageCatalogState | undefined;
     /**
-     * Instantiates a new accessPackageCatalog and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the accessPackages property value. The access packages in this catalog. Read-only. Nullable.
      * @returns a accessPackage
      */
     public get accessPackages() {
         return this._accessPackages;
+    };
+    /**
+     * Sets the accessPackages property value. The access packages in this catalog. Read-only. Nullable.
+     * @param value Value to set for the accessPackages property.
+     */
+    public set accessPackages(value: AccessPackage[] | undefined) {
+        this._accessPackages = value;
     };
     /**
      * Gets the catalogType property value. Whether the catalog is created by a user or entitlement management. The possible values are: userManaged, serviceDefault, serviceManaged, unknownFutureValue.
@@ -39,11 +43,31 @@ export class AccessPackageCatalog extends Entity implements Parsable {
         return this._catalogType;
     };
     /**
+     * Sets the catalogType property value. Whether the catalog is created by a user or entitlement management. The possible values are: userManaged, serviceDefault, serviceManaged, unknownFutureValue.
+     * @param value Value to set for the catalogType property.
+     */
+    public set catalogType(value: AccessPackageCatalogType | undefined) {
+        this._catalogType = value;
+    };
+    /**
+     * Instantiates a new accessPackageCatalog and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the createdDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
      * @returns a Date
      */
     public get createdDateTime() {
         return this._createdDateTime;
+    };
+    /**
+     * Sets the createdDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
     };
     /**
      * Gets the description property value. The description of the access package catalog.
@@ -53,11 +77,41 @@ export class AccessPackageCatalog extends Entity implements Parsable {
         return this._description;
     };
     /**
+     * Sets the description property value. The description of the access package catalog.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
      * Gets the displayName property value. The display name of the access package catalog.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. The display name of the access package catalog.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["accessPackages", (o, n) => { (o as unknown as AccessPackageCatalog).accessPackages = n.getCollectionOfObjectValues<AccessPackage>(createAccessPackageFromDiscriminatorValue); }],
+            ["catalogType", (o, n) => { (o as unknown as AccessPackageCatalog).catalogType = n.getEnumValue<AccessPackageCatalogType>(AccessPackageCatalogType); }],
+            ["createdDateTime", (o, n) => { (o as unknown as AccessPackageCatalog).createdDateTime = n.getDateValue(); }],
+            ["description", (o, n) => { (o as unknown as AccessPackageCatalog).description = n.getStringValue(); }],
+            ["displayName", (o, n) => { (o as unknown as AccessPackageCatalog).displayName = n.getStringValue(); }],
+            ["isExternallyVisible", (o, n) => { (o as unknown as AccessPackageCatalog).isExternallyVisible = n.getBooleanValue(); }],
+            ["modifiedDateTime", (o, n) => { (o as unknown as AccessPackageCatalog).modifiedDateTime = n.getDateValue(); }],
+            ["state", (o, n) => { (o as unknown as AccessPackageCatalog).state = n.getEnumValue<AccessPackageCatalogState>(AccessPackageCatalogState); }],
+        ]);
     };
     /**
      * Gets the isExternallyVisible property value. Whether the access packages in this catalog can be requested by users outside of the tenant.
@@ -67,6 +121,13 @@ export class AccessPackageCatalog extends Entity implements Parsable {
         return this._isExternallyVisible;
     };
     /**
+     * Sets the isExternallyVisible property value. Whether the access packages in this catalog can be requested by users outside of the tenant.
+     * @param value Value to set for the isExternallyVisible property.
+     */
+    public set isExternallyVisible(value: boolean | undefined) {
+        this._isExternallyVisible = value;
+    };
+    /**
      * Gets the modifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
      * @returns a Date
      */
@@ -74,27 +135,11 @@ export class AccessPackageCatalog extends Entity implements Parsable {
         return this._modifiedDateTime;
     };
     /**
-     * Gets the state property value. Has the value published if the access packages are available for management. The possible values are: unpublished, published, unknownFutureValue.
-     * @returns a accessPackageCatalogState
+     * Sets the modifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
+     * @param value Value to set for the modifiedDateTime property.
      */
-    public get state() {
-        return this._state;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["accessPackages", (o, n) => { (o as unknown as AccessPackageCatalog).accessPackages = n.getCollectionOfObjectValues<AccessPackage>(AccessPackage); }],
-            ["catalogType", (o, n) => { (o as unknown as AccessPackageCatalog).catalogType = n.getEnumValue<AccessPackageCatalogType>(AccessPackageCatalogType); }],
-            ["createdDateTime", (o, n) => { (o as unknown as AccessPackageCatalog).createdDateTime = n.getDateValue(); }],
-            ["description", (o, n) => { (o as unknown as AccessPackageCatalog).description = n.getStringValue(); }],
-            ["displayName", (o, n) => { (o as unknown as AccessPackageCatalog).displayName = n.getStringValue(); }],
-            ["isExternallyVisible", (o, n) => { (o as unknown as AccessPackageCatalog).isExternallyVisible = n.getBooleanValue(); }],
-            ["modifiedDateTime", (o, n) => { (o as unknown as AccessPackageCatalog).modifiedDateTime = n.getDateValue(); }],
-            ["state", (o, n) => { (o as unknown as AccessPackageCatalog).state = n.getEnumValue<AccessPackageCatalogState>(AccessPackageCatalogState); }],
-        ]);
+    public set modifiedDateTime(value: Date | undefined) {
+        this._modifiedDateTime = value;
     };
     /**
      * Serializes information the current object
@@ -113,53 +158,11 @@ export class AccessPackageCatalog extends Entity implements Parsable {
         writer.writeEnumValue<AccessPackageCatalogState>("state", this.state);
     };
     /**
-     * Sets the accessPackages property value. The access packages in this catalog. Read-only. Nullable.
-     * @param value Value to set for the accessPackages property.
+     * Gets the state property value. Has the value published if the access packages are available for management. The possible values are: unpublished, published, unknownFutureValue.
+     * @returns a accessPackageCatalogState
      */
-    public set accessPackages(value: AccessPackage[] | undefined) {
-        this._accessPackages = value;
-    };
-    /**
-     * Sets the catalogType property value. Whether the catalog is created by a user or entitlement management. The possible values are: userManaged, serviceDefault, serviceManaged, unknownFutureValue.
-     * @param value Value to set for the catalogType property.
-     */
-    public set catalogType(value: AccessPackageCatalogType | undefined) {
-        this._catalogType = value;
-    };
-    /**
-     * Sets the createdDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the description property value. The description of the access package catalog.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. The display name of the access package catalog.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isExternallyVisible property value. Whether the access packages in this catalog can be requested by users outside of the tenant.
-     * @param value Value to set for the isExternallyVisible property.
-     */
-    public set isExternallyVisible(value: boolean | undefined) {
-        this._isExternallyVisible = value;
-    };
-    /**
-     * Sets the modifiedDateTime property value. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Read-only.
-     * @param value Value to set for the modifiedDateTime property.
-     */
-    public set modifiedDateTime(value: Date | undefined) {
-        this._modifiedDateTime = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. Has the value published if the access packages are available for management. The possible values are: unpublished, published, unknownFutureValue.

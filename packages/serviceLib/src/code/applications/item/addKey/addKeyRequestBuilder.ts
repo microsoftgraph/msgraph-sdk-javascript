@@ -1,8 +1,9 @@
 import {KeyCredential} from '../../../models/microsoft/graph/';
+import {createKeyCredentialFromDiscriminatorValue} from '../../../models/microsoft/graph/createKeyCredentialFromDiscriminatorValue';
 import {KeyCredentialRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /applications/{application-id}/microsoft.graph.addKey  */
+/** Provides operations to call the addKey method.  */
 export class AddKeyRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -54,6 +55,6 @@ export class AddKeyRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<KeyCredential>(requestInfo, KeyCredential, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<KeyCredential>(requestInfo, createKeyCredentialFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

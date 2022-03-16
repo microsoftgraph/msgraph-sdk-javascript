@@ -1,4 +1,5 @@
-import {AttestationLevel, AuthenticationMethod} from './index';
+import {AttestationLevel} from './attestationLevel';
+import {AuthenticationMethod} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Fido2AuthenticationMethod extends AuthenticationMethod implements Parsable {
@@ -15,17 +16,18 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
     /** The manufacturer-assigned model of the FIDO2 security key.  */
     private _model?: string | undefined;
     /**
-     * Instantiates a new fido2AuthenticationMethod and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the aaGuid property value. Authenticator Attestation GUID, an identifier that indicates the type (e.g. make and model) of the authenticator.
      * @returns a string
      */
     public get aaGuid() {
         return this._aaGuid;
+    };
+    /**
+     * Sets the aaGuid property value. Authenticator Attestation GUID, an identifier that indicates the type (e.g. make and model) of the authenticator.
+     * @param value Value to set for the aaGuid property.
+     */
+    public set aaGuid(value: string | undefined) {
+        this._aaGuid = value;
     };
     /**
      * Gets the attestationCertificates property value. The attestation certificate(s) attached to this security key.
@@ -35,11 +37,31 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
         return this._attestationCertificates;
     };
     /**
+     * Sets the attestationCertificates property value. The attestation certificate(s) attached to this security key.
+     * @param value Value to set for the attestationCertificates property.
+     */
+    public set attestationCertificates(value: string[] | undefined) {
+        this._attestationCertificates = value;
+    };
+    /**
      * Gets the attestationLevel property value. The attestation level of this FIDO2 security key. Possible values are: attested, or notAttested.
      * @returns a attestationLevel
      */
     public get attestationLevel() {
         return this._attestationLevel;
+    };
+    /**
+     * Sets the attestationLevel property value. The attestation level of this FIDO2 security key. Possible values are: attested, or notAttested.
+     * @param value Value to set for the attestationLevel property.
+     */
+    public set attestationLevel(value: AttestationLevel | undefined) {
+        this._attestationLevel = value;
+    };
+    /**
+     * Instantiates a new fido2AuthenticationMethod and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdDateTime property value. The timestamp when this key was registered to the user.
@@ -49,6 +71,13 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. The timestamp when this key was registered to the user.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the displayName property value. The display name of the key as given by the user.
      * @returns a string
      */
@@ -56,11 +85,11 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
         return this._displayName;
     };
     /**
-     * Gets the model property value. The manufacturer-assigned model of the FIDO2 security key.
-     * @returns a string
+     * Sets the displayName property value. The display name of the key as given by the user.
+     * @param value Value to set for the displayName property.
      */
-    public get model() {
-        return this._model;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -77,6 +106,20 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
         ]);
     };
     /**
+     * Gets the model property value. The manufacturer-assigned model of the FIDO2 security key.
+     * @returns a string
+     */
+    public get model() {
+        return this._model;
+    };
+    /**
+     * Sets the model property value. The manufacturer-assigned model of the FIDO2 security key.
+     * @param value Value to set for the model property.
+     */
+    public set model(value: string | undefined) {
+        this._model = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -89,47 +132,5 @@ export class Fido2AuthenticationMethod extends AuthenticationMethod implements P
         writer.writeDateValue("createdDateTime", this.createdDateTime);
         writer.writeStringValue("displayName", this.displayName);
         writer.writeStringValue("model", this.model);
-    };
-    /**
-     * Sets the aaGuid property value. Authenticator Attestation GUID, an identifier that indicates the type (e.g. make and model) of the authenticator.
-     * @param value Value to set for the aaGuid property.
-     */
-    public set aaGuid(value: string | undefined) {
-        this._aaGuid = value;
-    };
-    /**
-     * Sets the attestationCertificates property value. The attestation certificate(s) attached to this security key.
-     * @param value Value to set for the attestationCertificates property.
-     */
-    public set attestationCertificates(value: string[] | undefined) {
-        this._attestationCertificates = value;
-    };
-    /**
-     * Sets the attestationLevel property value. The attestation level of this FIDO2 security key. Possible values are: attested, or notAttested.
-     * @param value Value to set for the attestationLevel property.
-     */
-    public set attestationLevel(value: AttestationLevel | undefined) {
-        this._attestationLevel = value;
-    };
-    /**
-     * Sets the createdDateTime property value. The timestamp when this key was registered to the user.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the displayName property value. The display name of the key as given by the user.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the model property value. The manufacturer-assigned model of the FIDO2 security key.
-     * @param value Value to set for the model property.
-     */
-    public set model(value: string | undefined) {
-        this._model = value;
     };
 }

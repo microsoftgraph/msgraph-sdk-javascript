@@ -1,3 +1,4 @@
+/** Provides operations to manage the admin singleton.  */
 export enum ServiceHealthStatus {
     ServiceOperational = "serviceOperational",
     Investigating = "investigating",

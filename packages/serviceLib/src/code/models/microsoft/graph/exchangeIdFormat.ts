@@ -1,3 +1,4 @@
+/** Provides operations to call the translateExchangeIds method.  */
 export enum ExchangeIdFormat {
     EntryId = "entryId",
     EwsId = "ewsId",

@@ -1,7 +1,10 @@
 import {TimeOffReason} from '../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTimeOffReasonFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createTimeOffReasonFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/schedule/timeOffReasons/{timeOffReason-id}  */
+/** Provides operations to manage the timeOffReasons property of the microsoft.graph.schedule entity.  */
 export class TimeOffReasonItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class TimeOffReasonItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The set of reasons for a time off in the schedule.
+     * Delete navigation property timeOffReasons for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -57,7 +60,7 @@ export class TimeOffReasonItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The set of reasons for a time off in the schedule.
+     * Update the navigation property timeOffReasons in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -75,7 +78,7 @@ export class TimeOffReasonItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The set of reasons for a time off in the schedule.
+     * Delete navigation property timeOffReasons for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -84,7 +87,11 @@ export class TimeOffReasonItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The set of reasons for a time off in the schedule.
@@ -100,10 +107,14 @@ export class TimeOffReasonItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TimeOffReason>(requestInfo, TimeOffReason, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TimeOffReason>(requestInfo, createTimeOffReasonFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The set of reasons for a time off in the schedule.
+     * Update the navigation property timeOffReasons in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,6 +125,10 @@ export class TimeOffReasonItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

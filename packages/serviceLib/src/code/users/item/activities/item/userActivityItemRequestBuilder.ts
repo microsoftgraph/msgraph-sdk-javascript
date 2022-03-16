@@ -1,9 +1,12 @@
 import {UserActivity} from '../../../../models/microsoft/graph/';
-import {HistoryItemsRequestBuilder} from './historyItems/';
-import {ActivityHistoryItemItemRequestBuilder} from './historyItems/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserActivityFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUserActivityFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {HistoryItemsRequestBuilder} from './historyItems/historyItemsRequestBuilder';
+import {ActivityHistoryItemItemRequestBuilder} from './historyItems/item/activityHistoryItemItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/activities/{userActivity-id}  */
+/** Provides operations to manage the activities property of the microsoft.graph.user entity.  */
 export class UserActivityItemRequestBuilder {
     public get historyItems(): HistoryItemsRequestBuilder {
         return new HistoryItemsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class UserActivityItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The user's activities across devices. Read-only. Nullable.
+     * Delete navigation property activities for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class UserActivityItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The user's activities across devices. Read-only. Nullable.
+     * Update the navigation property activities in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class UserActivityItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The user's activities across devices. Read-only. Nullable.
+     * Delete navigation property activities for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class UserActivityItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The user's activities across devices. Read-only. Nullable.
@@ -107,7 +114,11 @@ export class UserActivityItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserActivity>(requestInfo, UserActivity, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserActivity>(requestInfo, createUserActivityFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.activities.item.historyItems.item collection
@@ -121,7 +132,7 @@ export class UserActivityItemRequestBuilder {
         return new ActivityHistoryItemItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The user's activities across devices. Read-only. Nullable.
+     * Update the navigation property activities in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class UserActivityItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

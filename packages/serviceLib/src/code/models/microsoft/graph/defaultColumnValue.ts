@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DefaultColumnValue implements Parsable {
+export class DefaultColumnValue implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The formula used to compute the default value for this column.  */
@@ -8,17 +8,24 @@ export class DefaultColumnValue implements Parsable {
     /** The direct value to use as the default value for this column.  */
     private _value?: string | undefined;
     /**
-     * Instantiates a new defaultColumnValue and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new defaultColumnValue and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the formula property value. The formula used to compute the default value for this column.
@@ -28,11 +35,11 @@ export class DefaultColumnValue implements Parsable {
         return this._formula;
     };
     /**
-     * Gets the value property value. The direct value to use as the default value for this column.
-     * @returns a string
+     * Sets the formula property value. The formula used to compute the default value for this column.
+     * @param value Value to set for the formula property.
      */
-    public get value() {
-        return this._value;
+    public set formula(value: string | undefined) {
+        this._formula = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class DefaultColumnValue implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the value property value. The direct value to use as the default value for this column.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the formula property value. The formula used to compute the default value for this column.
-     * @param value Value to set for the formula property.
-     */
-    public set formula(value: string | undefined) {
-        this._formula = value;
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. The direct value to use as the default value for this column.

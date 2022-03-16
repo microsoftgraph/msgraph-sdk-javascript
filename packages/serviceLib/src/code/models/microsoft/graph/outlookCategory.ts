@@ -1,4 +1,5 @@
-import {CategoryColor, Entity} from './index';
+import {CategoryColor} from './categoryColor';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class OutlookCategory extends Entity implements Parsable {
@@ -7,12 +8,6 @@ export class OutlookCategory extends Entity implements Parsable {
     /** A unique name that identifies a category in the user's mailbox. After a category is created, the name cannot be changed. Read-only.  */
     private _displayName?: string | undefined;
     /**
-     * Instantiates a new outlookCategory and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the color property value. A pre-set color constant that characterizes a category, and that is mapped to one of 25 predefined colors. See the note below.
      * @returns a categoryColor
      */
@@ -20,11 +15,31 @@ export class OutlookCategory extends Entity implements Parsable {
         return this._color;
     };
     /**
+     * Sets the color property value. A pre-set color constant that characterizes a category, and that is mapped to one of 25 predefined colors. See the note below.
+     * @param value Value to set for the color property.
+     */
+    public set color(value: CategoryColor | undefined) {
+        this._color = value;
+    };
+    /**
+     * Instantiates a new outlookCategory and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the displayName property value. A unique name that identifies a category in the user's mailbox. After a category is created, the name cannot be changed. Read-only.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. A unique name that identifies a category in the user's mailbox. After a category is created, the name cannot be changed. Read-only.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,19 +60,5 @@ export class OutlookCategory extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeEnumValue<CategoryColor>("color", this.color);
         writer.writeStringValue("displayName", this.displayName);
-    };
-    /**
-     * Sets the color property value. A pre-set color constant that characterizes a category, and that is mapped to one of 25 predefined colors. See the note below.
-     * @param value Value to set for the color property.
-     */
-    public set color(value: CategoryColor | undefined) {
-        this._color = value;
-    };
-    /**
-     * Sets the displayName property value. A unique name that identifies a category in the user's mailbox. After a category is created, the name cannot be changed. Read-only.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
     };
 }

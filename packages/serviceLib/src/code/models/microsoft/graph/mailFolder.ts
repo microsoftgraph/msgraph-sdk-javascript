@@ -1,3 +1,8 @@
+import {createMailFolderFromDiscriminatorValue} from './createMailFolderFromDiscriminatorValue';
+import {createMessageFromDiscriminatorValue} from './createMessageFromDiscriminatorValue';
+import {createMessageRuleFromDiscriminatorValue} from './createMessageRuleFromDiscriminatorValue';
+import {createMultiValueLegacyExtendedPropertyFromDiscriminatorValue} from './createMultiValueLegacyExtendedPropertyFromDiscriminatorValue';
+import {createSingleValueLegacyExtendedPropertyFromDiscriminatorValue} from './createSingleValueLegacyExtendedPropertyFromDiscriminatorValue';
 import {Entity, Message, MessageRule, MultiValueLegacyExtendedProperty, SingleValueLegacyExtendedProperty} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -25,17 +30,18 @@ export class MailFolder extends Entity implements Parsable {
     /** The number of items in the mailFolder marked as unread.  */
     private _unreadItemCount?: number | undefined;
     /**
-     * Instantiates a new mailFolder and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the childFolderCount property value. The number of immediate child mailFolders in the current mailFolder.
      * @returns a integer
      */
     public get childFolderCount() {
         return this._childFolderCount;
+    };
+    /**
+     * Sets the childFolderCount property value. The number of immediate child mailFolders in the current mailFolder.
+     * @param value Value to set for the childFolderCount property.
+     */
+    public set childFolderCount(value: number | undefined) {
+        this._childFolderCount = value;
     };
     /**
      * Gets the childFolders property value. The collection of child folders in the mailFolder.
@@ -45,11 +51,50 @@ export class MailFolder extends Entity implements Parsable {
         return this._childFolders;
     };
     /**
+     * Sets the childFolders property value. The collection of child folders in the mailFolder.
+     * @param value Value to set for the childFolders property.
+     */
+    public set childFolders(value: MailFolder[] | undefined) {
+        this._childFolders = value;
+    };
+    /**
+     * Instantiates a new mailFolder and sets the default values.
+     */
+    public constructor() {
+        super();
+    };
+    /**
      * Gets the displayName property value. The mailFolder's display name.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. The mailFolder's display name.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["childFolderCount", (o, n) => { (o as unknown as MailFolder).childFolderCount = n.getNumberValue(); }],
+            ["childFolders", (o, n) => { (o as unknown as MailFolder).childFolders = n.getCollectionOfObjectValues<MailFolder>(createMailFolderFromDiscriminatorValue); }],
+            ["displayName", (o, n) => { (o as unknown as MailFolder).displayName = n.getStringValue(); }],
+            ["isHidden", (o, n) => { (o as unknown as MailFolder).isHidden = n.getBooleanValue(); }],
+            ["messageRules", (o, n) => { (o as unknown as MailFolder).messageRules = n.getCollectionOfObjectValues<MessageRule>(createMessageRuleFromDiscriminatorValue); }],
+            ["messages", (o, n) => { (o as unknown as MailFolder).messages = n.getCollectionOfObjectValues<Message>(createMessageFromDiscriminatorValue); }],
+            ["multiValueExtendedProperties", (o, n) => { (o as unknown as MailFolder).multiValueExtendedProperties = n.getCollectionOfObjectValues<MultiValueLegacyExtendedProperty>(createMultiValueLegacyExtendedPropertyFromDiscriminatorValue); }],
+            ["parentFolderId", (o, n) => { (o as unknown as MailFolder).parentFolderId = n.getStringValue(); }],
+            ["singleValueExtendedProperties", (o, n) => { (o as unknown as MailFolder).singleValueExtendedProperties = n.getCollectionOfObjectValues<SingleValueLegacyExtendedProperty>(createSingleValueLegacyExtendedPropertyFromDiscriminatorValue); }],
+            ["totalItemCount", (o, n) => { (o as unknown as MailFolder).totalItemCount = n.getNumberValue(); }],
+            ["unreadItemCount", (o, n) => { (o as unknown as MailFolder).unreadItemCount = n.getNumberValue(); }],
+        ]);
     };
     /**
      * Gets the isHidden property value. Indicates whether the mailFolder is hidden. This property can be set only when creating the folder. Find more information in Hidden mail folders.
@@ -59,11 +104,25 @@ export class MailFolder extends Entity implements Parsable {
         return this._isHidden;
     };
     /**
+     * Sets the isHidden property value. Indicates whether the mailFolder is hidden. This property can be set only when creating the folder. Find more information in Hidden mail folders.
+     * @param value Value to set for the isHidden property.
+     */
+    public set isHidden(value: boolean | undefined) {
+        this._isHidden = value;
+    };
+    /**
      * Gets the messageRules property value. The collection of rules that apply to the user's Inbox folder.
      * @returns a messageRule
      */
     public get messageRules() {
         return this._messageRules;
+    };
+    /**
+     * Sets the messageRules property value. The collection of rules that apply to the user's Inbox folder.
+     * @param value Value to set for the messageRules property.
+     */
+    public set messageRules(value: MessageRule[] | undefined) {
+        this._messageRules = value;
     };
     /**
      * Gets the messages property value. The collection of messages in the mailFolder.
@@ -73,11 +132,25 @@ export class MailFolder extends Entity implements Parsable {
         return this._messages;
     };
     /**
+     * Sets the messages property value. The collection of messages in the mailFolder.
+     * @param value Value to set for the messages property.
+     */
+    public set messages(value: Message[] | undefined) {
+        this._messages = value;
+    };
+    /**
      * Gets the multiValueExtendedProperties property value. The collection of multi-value extended properties defined for the mailFolder. Read-only. Nullable.
      * @returns a multiValueLegacyExtendedProperty
      */
     public get multiValueExtendedProperties() {
         return this._multiValueExtendedProperties;
+    };
+    /**
+     * Sets the multiValueExtendedProperties property value. The collection of multi-value extended properties defined for the mailFolder. Read-only. Nullable.
+     * @param value Value to set for the multiValueExtendedProperties property.
+     */
+    public set multiValueExtendedProperties(value: MultiValueLegacyExtendedProperty[] | undefined) {
+        this._multiValueExtendedProperties = value;
     };
     /**
      * Gets the parentFolderId property value. The unique identifier for the mailFolder's parent mailFolder.
@@ -87,44 +160,11 @@ export class MailFolder extends Entity implements Parsable {
         return this._parentFolderId;
     };
     /**
-     * Gets the singleValueExtendedProperties property value. The collection of single-value extended properties defined for the mailFolder. Read-only. Nullable.
-     * @returns a singleValueLegacyExtendedProperty
+     * Sets the parentFolderId property value. The unique identifier for the mailFolder's parent mailFolder.
+     * @param value Value to set for the parentFolderId property.
      */
-    public get singleValueExtendedProperties() {
-        return this._singleValueExtendedProperties;
-    };
-    /**
-     * Gets the totalItemCount property value. The number of items in the mailFolder.
-     * @returns a integer
-     */
-    public get totalItemCount() {
-        return this._totalItemCount;
-    };
-    /**
-     * Gets the unreadItemCount property value. The number of items in the mailFolder marked as unread.
-     * @returns a integer
-     */
-    public get unreadItemCount() {
-        return this._unreadItemCount;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["childFolderCount", (o, n) => { (o as unknown as MailFolder).childFolderCount = n.getNumberValue(); }],
-            ["childFolders", (o, n) => { (o as unknown as MailFolder).childFolders = n.getCollectionOfObjectValues<MailFolder>(MailFolder); }],
-            ["displayName", (o, n) => { (o as unknown as MailFolder).displayName = n.getStringValue(); }],
-            ["isHidden", (o, n) => { (o as unknown as MailFolder).isHidden = n.getBooleanValue(); }],
-            ["messageRules", (o, n) => { (o as unknown as MailFolder).messageRules = n.getCollectionOfObjectValues<MessageRule>(MessageRule); }],
-            ["messages", (o, n) => { (o as unknown as MailFolder).messages = n.getCollectionOfObjectValues<Message>(Message); }],
-            ["multiValueExtendedProperties", (o, n) => { (o as unknown as MailFolder).multiValueExtendedProperties = n.getCollectionOfObjectValues<MultiValueLegacyExtendedProperty>(MultiValueLegacyExtendedProperty); }],
-            ["parentFolderId", (o, n) => { (o as unknown as MailFolder).parentFolderId = n.getStringValue(); }],
-            ["singleValueExtendedProperties", (o, n) => { (o as unknown as MailFolder).singleValueExtendedProperties = n.getCollectionOfObjectValues<SingleValueLegacyExtendedProperty>(SingleValueLegacyExtendedProperty); }],
-            ["totalItemCount", (o, n) => { (o as unknown as MailFolder).totalItemCount = n.getNumberValue(); }],
-            ["unreadItemCount", (o, n) => { (o as unknown as MailFolder).unreadItemCount = n.getNumberValue(); }],
-        ]);
+    public set parentFolderId(value: string | undefined) {
+        this._parentFolderId = value;
     };
     /**
      * Serializes information the current object
@@ -146,60 +186,11 @@ export class MailFolder extends Entity implements Parsable {
         writer.writeNumberValue("unreadItemCount", this.unreadItemCount);
     };
     /**
-     * Sets the childFolderCount property value. The number of immediate child mailFolders in the current mailFolder.
-     * @param value Value to set for the childFolderCount property.
+     * Gets the singleValueExtendedProperties property value. The collection of single-value extended properties defined for the mailFolder. Read-only. Nullable.
+     * @returns a singleValueLegacyExtendedProperty
      */
-    public set childFolderCount(value: number | undefined) {
-        this._childFolderCount = value;
-    };
-    /**
-     * Sets the childFolders property value. The collection of child folders in the mailFolder.
-     * @param value Value to set for the childFolders property.
-     */
-    public set childFolders(value: MailFolder[] | undefined) {
-        this._childFolders = value;
-    };
-    /**
-     * Sets the displayName property value. The mailFolder's display name.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isHidden property value. Indicates whether the mailFolder is hidden. This property can be set only when creating the folder. Find more information in Hidden mail folders.
-     * @param value Value to set for the isHidden property.
-     */
-    public set isHidden(value: boolean | undefined) {
-        this._isHidden = value;
-    };
-    /**
-     * Sets the messageRules property value. The collection of rules that apply to the user's Inbox folder.
-     * @param value Value to set for the messageRules property.
-     */
-    public set messageRules(value: MessageRule[] | undefined) {
-        this._messageRules = value;
-    };
-    /**
-     * Sets the messages property value. The collection of messages in the mailFolder.
-     * @param value Value to set for the messages property.
-     */
-    public set messages(value: Message[] | undefined) {
-        this._messages = value;
-    };
-    /**
-     * Sets the multiValueExtendedProperties property value. The collection of multi-value extended properties defined for the mailFolder. Read-only. Nullable.
-     * @param value Value to set for the multiValueExtendedProperties property.
-     */
-    public set multiValueExtendedProperties(value: MultiValueLegacyExtendedProperty[] | undefined) {
-        this._multiValueExtendedProperties = value;
-    };
-    /**
-     * Sets the parentFolderId property value. The unique identifier for the mailFolder's parent mailFolder.
-     * @param value Value to set for the parentFolderId property.
-     */
-    public set parentFolderId(value: string | undefined) {
-        this._parentFolderId = value;
+    public get singleValueExtendedProperties() {
+        return this._singleValueExtendedProperties;
     };
     /**
      * Sets the singleValueExtendedProperties property value. The collection of single-value extended properties defined for the mailFolder. Read-only. Nullable.
@@ -209,11 +200,25 @@ export class MailFolder extends Entity implements Parsable {
         this._singleValueExtendedProperties = value;
     };
     /**
+     * Gets the totalItemCount property value. The number of items in the mailFolder.
+     * @returns a integer
+     */
+    public get totalItemCount() {
+        return this._totalItemCount;
+    };
+    /**
      * Sets the totalItemCount property value. The number of items in the mailFolder.
      * @param value Value to set for the totalItemCount property.
      */
     public set totalItemCount(value: number | undefined) {
         this._totalItemCount = value;
+    };
+    /**
+     * Gets the unreadItemCount property value. The number of items in the mailFolder marked as unread.
+     * @returns a integer
+     */
+    public get unreadItemCount() {
+        return this._unreadItemCount;
     };
     /**
      * Sets the unreadItemCount property value. The number of items in the mailFolder marked as unread.

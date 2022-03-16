@@ -1,2 +1,1 @@
-export * from './AddCopyRequestBuilder'
-export * from './AddCopyRequestBody'
+export * from './addCopyRequestBody'

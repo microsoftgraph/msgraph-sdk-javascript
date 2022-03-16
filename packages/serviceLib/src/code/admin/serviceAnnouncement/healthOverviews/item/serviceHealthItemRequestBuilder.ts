@@ -1,9 +1,12 @@
 import {ServiceHealth} from '../../../../models/microsoft/graph/';
-import {IssuesRequestBuilder} from './issues/';
-import {ServiceHealthIssueItemRequestBuilder} from './issues/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createServiceHealthFromDiscriminatorValue} from '../../../../models/microsoft/graph/createServiceHealthFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {IssuesRequestBuilder} from './issues/issuesRequestBuilder';
+import {ServiceHealthIssueItemRequestBuilder} from './issues/item/serviceHealthIssueItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /admin/serviceAnnouncement/healthOverviews/{serviceHealth-id}  */
+/** Provides operations to manage the healthOverviews property of the microsoft.graph.serviceAnnouncement entity.  */
 export class ServiceHealthItemRequestBuilder {
     public get issues(): IssuesRequestBuilder {
         return new IssuesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class ServiceHealthItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of service health information for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Delete navigation property healthOverviews for admin
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class ServiceHealthItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of service health information for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Update the navigation property healthOverviews in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class ServiceHealthItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of service health information for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Delete navigation property healthOverviews for admin
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class ServiceHealthItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of service health information for tenant. This property is a contained navigation property, it is nullable and readonly.
@@ -107,7 +114,11 @@ export class ServiceHealthItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ServiceHealth>(requestInfo, ServiceHealth, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ServiceHealth>(requestInfo, createServiceHealthFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.admin.serviceAnnouncement.healthOverviews.item.issues.item collection
@@ -121,7 +132,7 @@ export class ServiceHealthItemRequestBuilder {
         return new ServiceHealthIssueItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * A collection of service health information for tenant. This property is a contained navigation property, it is nullable and readonly.
+     * Update the navigation property healthOverviews in admin
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class ServiceHealthItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

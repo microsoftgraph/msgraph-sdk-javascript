@@ -1,3 +1,4 @@
+import {createWorkbookChartLineFormatFromDiscriminatorValue} from './createWorkbookChartLineFormatFromDiscriminatorValue';
 import {Entity, WorkbookChartLineFormat} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -11,6 +12,15 @@ export class WorkbookChartGridlinesFormat extends Entity implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["line", (o, n) => { (o as unknown as WorkbookChartGridlinesFormat).line = n.getObjectValue<WorkbookChartLineFormat>(createWorkbookChartLineFormatFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the line property value. Represents chart line formatting. Read-only.
      * @returns a workbookChartLineFormat
      */
@@ -18,13 +28,11 @@ export class WorkbookChartGridlinesFormat extends Entity implements Parsable {
         return this._line;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the line property value. Represents chart line formatting. Read-only.
+     * @param value Value to set for the line property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["line", (o, n) => { (o as unknown as WorkbookChartGridlinesFormat).line = n.getObjectValue<WorkbookChartLineFormat>(WorkbookChartLineFormat); }],
-        ]);
+    public set line(value: WorkbookChartLineFormat | undefined) {
+        this._line = value;
     };
     /**
      * Serializes information the current object
@@ -34,12 +42,5 @@ export class WorkbookChartGridlinesFormat extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeObjectValue<WorkbookChartLineFormat>("line", this.line);
-    };
-    /**
-     * Sets the line property value. Represents chart line formatting. Read-only.
-     * @param value Value to set for the line property.
-     */
-    public set line(value: WorkbookChartLineFormat | undefined) {
-        this._line = value;
     };
 }

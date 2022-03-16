@@ -1,2 +1,1 @@
-export * from './SharedWithMeRequestBuilder'
-export * from './SharedWithMe'
+export * from './sharedWithMeResponse'

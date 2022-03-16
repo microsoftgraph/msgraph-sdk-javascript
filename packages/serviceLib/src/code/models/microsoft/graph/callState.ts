@@ -1,3 +1,4 @@
+/** Provides operations to manage the cloudCommunications singleton.  */
 export enum CallState {
     Incoming = "incoming",
     Establishing = "establishing",

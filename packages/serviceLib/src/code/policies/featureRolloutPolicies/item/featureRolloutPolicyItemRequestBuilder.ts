@@ -1,9 +1,12 @@
 import {FeatureRolloutPolicy} from '../../../models/microsoft/graph/';
-import {AppliesToRequestBuilder} from './appliesTo/';
-import {DirectoryObjectItemRequestBuilder} from './appliesTo/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createFeatureRolloutPolicyFromDiscriminatorValue} from '../../../models/microsoft/graph/createFeatureRolloutPolicyFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AppliesToRequestBuilder} from './appliesTo/appliesToRequestBuilder';
+import {DirectoryObjectItemRequestBuilder} from './appliesTo/item/directoryObjectItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /policies/featureRolloutPolicies/{featureRolloutPolicy-id}  */
+/** Provides operations to manage the featureRolloutPolicies property of the microsoft.graph.policyRoot entity.  */
 export class FeatureRolloutPolicyItemRequestBuilder {
     public get appliesTo(): AppliesToRequestBuilder {
         return new AppliesToRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -39,7 +42,7 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The feature rollout policy associated with a directory object.
+     * Delete navigation property featureRolloutPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -74,7 +77,7 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The feature rollout policy associated with a directory object.
+     * Update the navigation property featureRolloutPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -92,7 +95,7 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The feature rollout policy associated with a directory object.
+     * Delete navigation property featureRolloutPolicies for policies
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -101,7 +104,11 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The feature rollout policy associated with a directory object.
@@ -118,10 +125,14 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<FeatureRolloutPolicy>(requestInfo, FeatureRolloutPolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<FeatureRolloutPolicy>(requestInfo, createFeatureRolloutPolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The feature rollout policy associated with a directory object.
+     * Update the navigation property featureRolloutPolicies in policies
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class FeatureRolloutPolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

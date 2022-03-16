@@ -1,3 +1,4 @@
+/** Provides operations to manage the identityGovernance singleton.  */
 export enum AccessPackageRequestType {
     NotSpecified = "notSpecified",
     UserAdd = "userAdd",

@@ -1,0 +1,7 @@
+import {SearchAlterationOptions} from './index';
+import {ParseNode} from '@microsoft/kiota-abstractions';
+
+export function createSearchAlterationOptionsFromDiscriminatorValue(parseNode: ParseNode | undefined) : SearchAlterationOptions {
+    if(!parseNode) throw new Error("parseNode cannot be undefined");
+    return new SearchAlterationOptions();
+}

@@ -1,19 +1,18 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SecureScoreControlStateUpdate implements Parsable {
+export class SecureScoreControlStateUpdate implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
+    /** Assigns the control to the user who will take the action.  */
     private _assignedTo?: string | undefined;
+    /** Provides optional comment about the control.  */
     private _comment?: string | undefined;
+    /** State of the control, which can be modified via a PATCH command (for example, ignored, thirdParty).  */
     private _state?: string | undefined;
+    /** ID of the user who updated tenant state.  */
     private _updatedBy?: string | undefined;
+    /** Time at which the control state was updated.  */
     private _updatedDateTime?: Date | undefined;
-    /**
-     * Instantiates a new secureScoreControlStateUpdate and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -22,39 +21,45 @@ export class SecureScoreControlStateUpdate implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the assignedTo property value. 
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Gets the assignedTo property value. Assigns the control to the user who will take the action.
      * @returns a string
      */
     public get assignedTo() {
         return this._assignedTo;
     };
     /**
-     * Gets the comment property value. 
+     * Sets the assignedTo property value. Assigns the control to the user who will take the action.
+     * @param value Value to set for the assignedTo property.
+     */
+    public set assignedTo(value: string | undefined) {
+        this._assignedTo = value;
+    };
+    /**
+     * Gets the comment property value. Provides optional comment about the control.
      * @returns a string
      */
     public get comment() {
         return this._comment;
     };
     /**
-     * Gets the state property value. 
-     * @returns a string
+     * Sets the comment property value. Provides optional comment about the control.
+     * @param value Value to set for the comment property.
      */
-    public get state() {
-        return this._state;
+    public set comment(value: string | undefined) {
+        this._comment = value;
     };
     /**
-     * Gets the updatedBy property value. 
-     * @returns a string
+     * Instantiates a new secureScoreControlStateUpdate and sets the default values.
      */
-    public get updatedBy() {
-        return this._updatedBy;
-    };
-    /**
-     * Gets the updatedDateTime property value. 
-     * @returns a Date
-     */
-    public get updatedDateTime() {
-        return this._updatedDateTime;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -83,42 +88,42 @@ export class SecureScoreControlStateUpdate implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the state property value. State of the control, which can be modified via a PATCH command (for example, ignored, thirdParty).
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get state() {
+        return this._state;
     };
     /**
-     * Sets the assignedTo property value. 
-     * @param value Value to set for the assignedTo property.
-     */
-    public set assignedTo(value: string | undefined) {
-        this._assignedTo = value;
-    };
-    /**
-     * Sets the comment property value. 
-     * @param value Value to set for the comment property.
-     */
-    public set comment(value: string | undefined) {
-        this._comment = value;
-    };
-    /**
-     * Sets the state property value. 
+     * Sets the state property value. State of the control, which can be modified via a PATCH command (for example, ignored, thirdParty).
      * @param value Value to set for the state property.
      */
     public set state(value: string | undefined) {
         this._state = value;
     };
     /**
-     * Sets the updatedBy property value. 
+     * Gets the updatedBy property value. ID of the user who updated tenant state.
+     * @returns a string
+     */
+    public get updatedBy() {
+        return this._updatedBy;
+    };
+    /**
+     * Sets the updatedBy property value. ID of the user who updated tenant state.
      * @param value Value to set for the updatedBy property.
      */
     public set updatedBy(value: string | undefined) {
         this._updatedBy = value;
     };
     /**
-     * Sets the updatedDateTime property value. 
+     * Gets the updatedDateTime property value. Time at which the control state was updated.
+     * @returns a Date
+     */
+    public get updatedDateTime() {
+        return this._updatedDateTime;
+    };
+    /**
+     * Sets the updatedDateTime property value. Time at which the control state was updated.
      * @param value Value to set for the updatedDateTime property.
      */
     public set updatedDateTime(value: Date | undefined) {

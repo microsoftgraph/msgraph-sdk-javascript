@@ -1,1 +1,1 @@
-export * from './SupportedTimeZonesRequestBuilder'
+export * from './supportedTimeZonesResponse'

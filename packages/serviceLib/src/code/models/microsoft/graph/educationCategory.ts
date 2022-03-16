@@ -18,6 +18,13 @@ export class EducationCategory extends Entity implements Parsable {
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. Unique identifier for the category.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,12 +41,5 @@ export class EducationCategory extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("displayName", this.displayName);
-    };
-    /**
-     * Sets the displayName property value. Unique identifier for the category.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
     };
 }

@@ -10,13 +10,6 @@ export class RestrictedSignIn extends SignIn implements Parsable {
         super();
     };
     /**
-     * Gets the targetTenantId property value. 
-     * @returns a string
-     */
-    public get targetTenantId() {
-        return this._targetTenantId;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -33,6 +26,13 @@ export class RestrictedSignIn extends SignIn implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("targetTenantId", this.targetTenantId);
+    };
+    /**
+     * Gets the targetTenantId property value. 
+     * @returns a string
+     */
+    public get targetTenantId() {
+        return this._targetTenantId;
     };
     /**
      * Sets the targetTenantId property value. 

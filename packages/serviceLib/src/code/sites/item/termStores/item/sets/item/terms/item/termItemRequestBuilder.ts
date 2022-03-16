@@ -1,12 +1,15 @@
+import {ODataError} from '../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
 import {Term} from '../../../../../../../../models/microsoft/graph/termStore/';
-import {ChildrenRequestBuilder} from './children/';
-import {TermItemRequestBuilder as i08a53e0f5f9ab48a2c9d8d2617edc8fa18467e8677aeed0f26d51f0698d8fee3} from './children/item/';
-import {RelationsRequestBuilder} from './relations/';
-import {RelationItemRequestBuilder} from './relations/item/';
-import {SetRequestBuilder} from './set/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTermFromDiscriminatorValue} from '../../../../../../../../models/microsoft/graph/termStore/createTermFromDiscriminatorValue';
+import {ChildrenRequestBuilder} from './children/childrenRequestBuilder';
+import {TermItemRequestBuilder as i08a53e0f5f9ab48a2c9d8d2617edc8fa18467e8677aeed0f26d51f0698d8fee3} from './children/item/termItemRequestBuilder';
+import {RelationItemRequestBuilder} from './relations/item/relationItemRequestBuilder';
+import {RelationsRequestBuilder} from './relations/relationsRequestBuilder';
+import {SetRequestBuilder} from './set/setRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/termStores/{store-id}/sets/{set-id}/terms/{term-id}  */
+/** Provides operations to manage the terms property of the microsoft.graph.termStore.set entity.  */
 export class TermItemRequestBuilder {
     public get children(): ChildrenRequestBuilder {
         return new ChildrenRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -48,7 +51,7 @@ export class TermItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * All the terms under the set.
+     * Delete navigation property terms for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -83,7 +86,7 @@ export class TermItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All the terms under the set.
+     * Update the navigation property terms in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -101,7 +104,7 @@ export class TermItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * All the terms under the set.
+     * Delete navigation property terms for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -110,7 +113,11 @@ export class TermItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * All the terms under the set.
@@ -127,10 +134,14 @@ export class TermItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Term>(requestInfo, Term, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Term>(requestInfo, createTermFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * All the terms under the set.
+     * Update the navigation property terms in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -141,7 +152,11 @@ export class TermItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.sites.item.termStores.item.sets.item.terms.item.relations.item collection

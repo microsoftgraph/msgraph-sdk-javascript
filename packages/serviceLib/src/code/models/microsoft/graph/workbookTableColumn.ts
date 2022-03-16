@@ -1,3 +1,5 @@
+import {createJsonFromDiscriminatorValue} from './createJsonFromDiscriminatorValue';
+import {createWorkbookFilterFromDiscriminatorValue} from './createWorkbookFilterFromDiscriminatorValue';
 import {Entity, Json, WorkbookFilter} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -24,11 +26,37 @@ export class WorkbookTableColumn extends Entity implements Parsable {
         return this._filter;
     };
     /**
+     * Sets the filter property value. Retrieve the filter applied to the column. Read-only.
+     * @param value Value to set for the filter property.
+     */
+    public set filter(value: WorkbookFilter | undefined) {
+        this._filter = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["filter", (o, n) => { (o as unknown as WorkbookTableColumn).filter = n.getObjectValue<WorkbookFilter>(createWorkbookFilterFromDiscriminatorValue); }],
+            ["index", (o, n) => { (o as unknown as WorkbookTableColumn).index = n.getNumberValue(); }],
+            ["name", (o, n) => { (o as unknown as WorkbookTableColumn).name = n.getStringValue(); }],
+            ["values", (o, n) => { (o as unknown as WorkbookTableColumn).values = n.getObjectValue<Json>(createJsonFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the index property value. Returns the index number of the column within the columns collection of the table. Zero-indexed. Read-only.
      * @returns a integer
      */
     public get index() {
         return this._index;
+    };
+    /**
+     * Sets the index property value. Returns the index number of the column within the columns collection of the table. Zero-indexed. Read-only.
+     * @param value Value to set for the index property.
+     */
+    public set index(value: number | undefined) {
+        this._index = value;
     };
     /**
      * Gets the name property value. Returns the name of the table column.
@@ -38,23 +66,11 @@ export class WorkbookTableColumn extends Entity implements Parsable {
         return this._name;
     };
     /**
-     * Gets the values property value. Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
-     * @returns a Json
+     * Sets the name property value. Returns the name of the table column.
+     * @param value Value to set for the name property.
      */
-    public get values() {
-        return this._values;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["filter", (o, n) => { (o as unknown as WorkbookTableColumn).filter = n.getObjectValue<WorkbookFilter>(WorkbookFilter); }],
-            ["index", (o, n) => { (o as unknown as WorkbookTableColumn).index = n.getNumberValue(); }],
-            ["name", (o, n) => { (o as unknown as WorkbookTableColumn).name = n.getStringValue(); }],
-            ["values", (o, n) => { (o as unknown as WorkbookTableColumn).values = n.getObjectValue<Json>(Json); }],
-        ]);
+    public set name(value: string | undefined) {
+        this._name = value;
     };
     /**
      * Serializes information the current object
@@ -69,25 +85,11 @@ export class WorkbookTableColumn extends Entity implements Parsable {
         writer.writeObjectValue<Json>("values", this.values);
     };
     /**
-     * Sets the filter property value. Retrieve the filter applied to the column. Read-only.
-     * @param value Value to set for the filter property.
+     * Gets the values property value. Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
+     * @returns a Json
      */
-    public set filter(value: WorkbookFilter | undefined) {
-        this._filter = value;
-    };
-    /**
-     * Sets the index property value. Returns the index number of the column within the columns collection of the table. Zero-indexed. Read-only.
-     * @param value Value to set for the index property.
-     */
-    public set index(value: number | undefined) {
-        this._index = value;
-    };
-    /**
-     * Sets the name property value. Returns the name of the table column.
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get values() {
+        return this._values;
     };
     /**
      * Sets the values property value. Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.

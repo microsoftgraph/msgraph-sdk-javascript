@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class LookupColumn implements Parsable {
+export class LookupColumn implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Indicates whether multiple values can be selected from the source.  */
@@ -14,17 +14,18 @@ export class LookupColumn implements Parsable {
     /** If specified, this column is a secondary lookup, pulling an additional field from the list item looked up by the primary lookup. Use the list item looked up by the primary as the source for the column named here.  */
     private _primaryLookupColumnId?: string | undefined;
     /**
-     * Instantiates a new lookupColumn and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowMultipleValues property value. Indicates whether multiple values can be selected from the source.
@@ -34,11 +35,25 @@ export class LookupColumn implements Parsable {
         return this._allowMultipleValues;
     };
     /**
+     * Sets the allowMultipleValues property value. Indicates whether multiple values can be selected from the source.
+     * @param value Value to set for the allowMultipleValues property.
+     */
+    public set allowMultipleValues(value: boolean | undefined) {
+        this._allowMultipleValues = value;
+    };
+    /**
      * Gets the allowUnlimitedLength property value. Indicates whether values in the column should be able to exceed the standard limit of 255 characters.
      * @returns a boolean
      */
     public get allowUnlimitedLength() {
         return this._allowUnlimitedLength;
+    };
+    /**
+     * Sets the allowUnlimitedLength property value. Indicates whether values in the column should be able to exceed the standard limit of 255 characters.
+     * @param value Value to set for the allowUnlimitedLength property.
+     */
+    public set allowUnlimitedLength(value: boolean | undefined) {
+        this._allowUnlimitedLength = value;
     };
     /**
      * Gets the columnName property value. The name of the lookup source column.
@@ -48,18 +63,17 @@ export class LookupColumn implements Parsable {
         return this._columnName;
     };
     /**
-     * Gets the listId property value. The unique identifier of the lookup source list.
-     * @returns a string
+     * Sets the columnName property value. The name of the lookup source column.
+     * @param value Value to set for the columnName property.
      */
-    public get listId() {
-        return this._listId;
+    public set columnName(value: string | undefined) {
+        this._columnName = value;
     };
     /**
-     * Gets the primaryLookupColumnId property value. If specified, this column is a secondary lookup, pulling an additional field from the list item looked up by the primary lookup. Use the list item looked up by the primary as the source for the column named here.
-     * @returns a string
+     * Instantiates a new lookupColumn and sets the default values.
      */
-    public get primaryLookupColumnId() {
-        return this._primaryLookupColumnId;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -75,6 +89,34 @@ export class LookupColumn implements Parsable {
         ]);
     };
     /**
+     * Gets the listId property value. The unique identifier of the lookup source list.
+     * @returns a string
+     */
+    public get listId() {
+        return this._listId;
+    };
+    /**
+     * Sets the listId property value. The unique identifier of the lookup source list.
+     * @param value Value to set for the listId property.
+     */
+    public set listId(value: string | undefined) {
+        this._listId = value;
+    };
+    /**
+     * Gets the primaryLookupColumnId property value. If specified, this column is a secondary lookup, pulling an additional field from the list item looked up by the primary lookup. Use the list item looked up by the primary as the source for the column named here.
+     * @returns a string
+     */
+    public get primaryLookupColumnId() {
+        return this._primaryLookupColumnId;
+    };
+    /**
+     * Sets the primaryLookupColumnId property value. If specified, this column is a secondary lookup, pulling an additional field from the list item looked up by the primary lookup. Use the list item looked up by the primary as the source for the column named here.
+     * @param value Value to set for the primaryLookupColumnId property.
+     */
+    public set primaryLookupColumnId(value: string | undefined) {
+        this._primaryLookupColumnId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -86,47 +128,5 @@ export class LookupColumn implements Parsable {
         writer.writeStringValue("listId", this.listId);
         writer.writeStringValue("primaryLookupColumnId", this.primaryLookupColumnId);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowMultipleValues property value. Indicates whether multiple values can be selected from the source.
-     * @param value Value to set for the allowMultipleValues property.
-     */
-    public set allowMultipleValues(value: boolean | undefined) {
-        this._allowMultipleValues = value;
-    };
-    /**
-     * Sets the allowUnlimitedLength property value. Indicates whether values in the column should be able to exceed the standard limit of 255 characters.
-     * @param value Value to set for the allowUnlimitedLength property.
-     */
-    public set allowUnlimitedLength(value: boolean | undefined) {
-        this._allowUnlimitedLength = value;
-    };
-    /**
-     * Sets the columnName property value. The name of the lookup source column.
-     * @param value Value to set for the columnName property.
-     */
-    public set columnName(value: string | undefined) {
-        this._columnName = value;
-    };
-    /**
-     * Sets the listId property value. The unique identifier of the lookup source list.
-     * @param value Value to set for the listId property.
-     */
-    public set listId(value: string | undefined) {
-        this._listId = value;
-    };
-    /**
-     * Sets the primaryLookupColumnId property value. If specified, this column is a secondary lookup, pulling an additional field from the list item looked up by the primary lookup. Use the list item looked up by the primary as the source for the column named here.
-     * @param value Value to set for the primaryLookupColumnId property.
-     */
-    public set primaryLookupColumnId(value: string | undefined) {
-        this._primaryLookupColumnId = value;
     };
 }

@@ -11,13 +11,6 @@ export class BookingCurrency extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the symbol property value. The currency symbol. For example, the currency symbol for the US dollar and for the Australian dollar is $.
-     * @returns a string
-     */
-    public get symbol() {
-        return this._symbol;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -34,6 +27,13 @@ export class BookingCurrency extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeStringValue("symbol", this.symbol);
+    };
+    /**
+     * Gets the symbol property value. The currency symbol. For example, the currency symbol for the US dollar and for the Australian dollar is $.
+     * @returns a string
+     */
+    public get symbol() {
+        return this._symbol;
     };
     /**
      * Sets the symbol property value. The currency symbol. For example, the currency symbol for the US dollar and for the Australian dollar is $.

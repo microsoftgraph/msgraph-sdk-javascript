@@ -1,7 +1,7 @@
-import {ScheduleEntityTheme} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ScheduleEntityTheme} from './scheduleEntityTheme';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ShiftActivity implements Parsable {
+export class ShiftActivity implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Customer defined code for the shiftActivity. Required.  */
@@ -16,17 +16,18 @@ export class ShiftActivity implements Parsable {
     private _startDateTime?: Date | undefined;
     private _theme?: ScheduleEntityTheme | undefined;
     /**
-     * Instantiates a new shiftActivity and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the code property value. Customer defined code for the shiftActivity. Required.
@@ -36,11 +37,31 @@ export class ShiftActivity implements Parsable {
         return this._code;
     };
     /**
+     * Sets the code property value. Customer defined code for the shiftActivity. Required.
+     * @param value Value to set for the code property.
+     */
+    public set code(value: string | undefined) {
+        this._code = value;
+    };
+    /**
+     * Instantiates a new shiftActivity and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the displayName property value. The name of the shiftActivity. Required.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. The name of the shiftActivity. Required.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * Gets the endDateTime property value. The end date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
@@ -50,25 +71,11 @@ export class ShiftActivity implements Parsable {
         return this._endDateTime;
     };
     /**
-     * Gets the isPaid property value. Indicates whether the microsoft.graph.user should be paid for the activity during their shift. Required.
-     * @returns a boolean
+     * Sets the endDateTime property value. The end date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
+     * @param value Value to set for the endDateTime property.
      */
-    public get isPaid() {
-        return this._isPaid;
-    };
-    /**
-     * Gets the startDateTime property value. The start date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
-     * @returns a Date
-     */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the theme property value. 
-     * @returns a scheduleEntityTheme
-     */
-    public get theme() {
-        return this._theme;
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -85,6 +92,20 @@ export class ShiftActivity implements Parsable {
         ]);
     };
     /**
+     * Gets the isPaid property value. Indicates whether the microsoft.graph.user should be paid for the activity during their shift. Required.
+     * @returns a boolean
+     */
+    public get isPaid() {
+        return this._isPaid;
+    };
+    /**
+     * Sets the isPaid property value. Indicates whether the microsoft.graph.user should be paid for the activity during their shift. Required.
+     * @param value Value to set for the isPaid property.
+     */
+    public set isPaid(value: boolean | undefined) {
+        this._isPaid = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -99,39 +120,11 @@ export class ShiftActivity implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startDateTime property value. The start date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
+     * @returns a Date
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the code property value. Customer defined code for the shiftActivity. Required.
-     * @param value Value to set for the code property.
-     */
-    public set code(value: string | undefined) {
-        this._code = value;
-    };
-    /**
-     * Sets the displayName property value. The name of the shiftActivity. Required.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the endDateTime property value. The end date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the isPaid property value. Indicates whether the microsoft.graph.user should be paid for the activity during their shift. Required.
-     * @param value Value to set for the isPaid property.
-     */
-    public set isPaid(value: boolean | undefined) {
-        this._isPaid = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. The start date and time for the shiftActivity. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z. Required.
@@ -139,6 +132,13 @@ export class ShiftActivity implements Parsable {
      */
     public set startDateTime(value: Date | undefined) {
         this._startDateTime = value;
+    };
+    /**
+     * Gets the theme property value. 
+     * @returns a scheduleEntityTheme
+     */
+    public get theme() {
+        return this._theme;
     };
     /**
      * Sets the theme property value. 

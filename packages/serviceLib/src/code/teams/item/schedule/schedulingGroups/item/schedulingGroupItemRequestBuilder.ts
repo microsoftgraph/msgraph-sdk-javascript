@@ -1,7 +1,10 @@
 import {SchedulingGroup} from '../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createSchedulingGroupFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createSchedulingGroupFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/schedule/schedulingGroups/{schedulingGroup-id}  */
+/** Provides operations to manage the schedulingGroups property of the microsoft.graph.schedule entity.  */
 export class SchedulingGroupItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class SchedulingGroupItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The logical grouping of users in the schedule (usually by role).
+     * Delete navigation property schedulingGroups for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -57,7 +60,7 @@ export class SchedulingGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The logical grouping of users in the schedule (usually by role).
+     * Update the navigation property schedulingGroups in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -75,7 +78,7 @@ export class SchedulingGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The logical grouping of users in the schedule (usually by role).
+     * Delete navigation property schedulingGroups for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -84,7 +87,11 @@ export class SchedulingGroupItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The logical grouping of users in the schedule (usually by role).
@@ -100,10 +107,14 @@ export class SchedulingGroupItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<SchedulingGroup>(requestInfo, SchedulingGroup, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<SchedulingGroup>(requestInfo, createSchedulingGroupFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The logical grouping of users in the schedule (usually by role).
+     * Update the navigation property schedulingGroups in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -114,6 +125,10 @@ export class SchedulingGroupItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

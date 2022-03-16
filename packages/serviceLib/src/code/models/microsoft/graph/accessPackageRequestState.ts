@@ -1,3 +1,4 @@
+/** Provides operations to manage the identityGovernance singleton.  */
 export enum AccessPackageRequestState {
     Submitted = "submitted",
     PendingApproval = "pendingApproval",

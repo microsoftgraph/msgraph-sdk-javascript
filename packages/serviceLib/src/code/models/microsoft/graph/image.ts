@@ -1,18 +1,12 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Image implements Parsable {
+export class Image implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Optional. Height of the image, in pixels. Read-only.  */
     private _height?: number | undefined;
     /** Optional. Width of the image, in pixels. Read-only.  */
     private _width?: number | undefined;
-    /**
-     * Instantiates a new image and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -21,18 +15,17 @@ export class Image implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the height property value. Optional. Height of the image, in pixels. Read-only.
-     * @returns a integer
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get height() {
-        return this._height;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the width property value. Optional. Width of the image, in pixels. Read-only.
-     * @returns a integer
+     * Instantiates a new image and sets the default values.
      */
-    public get width() {
-        return this._width;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -45,6 +38,20 @@ export class Image implements Parsable {
         ]);
     };
     /**
+     * Gets the height property value. Optional. Height of the image, in pixels. Read-only.
+     * @returns a integer
+     */
+    public get height() {
+        return this._height;
+    };
+    /**
+     * Sets the height property value. Optional. Height of the image, in pixels. Read-only.
+     * @param value Value to set for the height property.
+     */
+    public set height(value: number | undefined) {
+        this._height = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -55,18 +62,11 @@ export class Image implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the width property value. Optional. Width of the image, in pixels. Read-only.
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the height property value. Optional. Height of the image, in pixels. Read-only.
-     * @param value Value to set for the height property.
-     */
-    public set height(value: number | undefined) {
-        this._height = value;
+    public get width() {
+        return this._width;
     };
     /**
      * Sets the width property value. Optional. Width of the image, in pixels. Read-only.

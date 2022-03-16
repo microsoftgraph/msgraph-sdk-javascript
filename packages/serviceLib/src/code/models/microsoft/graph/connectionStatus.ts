@@ -1,3 +1,4 @@
+/** Provides operations to manage the security singleton.  */
 export enum ConnectionStatus {
     Unknown = "unknown",
     Attempted = "attempted",

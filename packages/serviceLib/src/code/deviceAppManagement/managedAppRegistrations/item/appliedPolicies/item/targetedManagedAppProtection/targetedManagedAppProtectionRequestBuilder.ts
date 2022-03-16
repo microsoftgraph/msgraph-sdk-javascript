@@ -1,5 +1,5 @@
-import {AssignRequestBuilder} from './assign/';
-import {TargetAppsRequestBuilder} from './targetApps/';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {TargetAppsRequestBuilder} from './targetApps/targetAppsRequestBuilder';
 import {getPathParameters, RequestAdapter} from '@microsoft/kiota-abstractions';
 
 /** Builds and executes requests for operations under /deviceAppManagement/managedAppRegistrations/{managedAppRegistration-id}/appliedPolicies/{managedAppPolicy-id}/microsoft.graph.targetedManagedAppProtection  */

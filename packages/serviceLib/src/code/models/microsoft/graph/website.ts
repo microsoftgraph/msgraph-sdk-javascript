@@ -1,7 +1,7 @@
-import {WebsiteType} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {WebsiteType} from './websiteType';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Website implements Parsable {
+export class Website implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The URL of the website.  */
@@ -11,17 +11,18 @@ export class Website implements Parsable {
     /** The possible values are: other, home, work, blog, profile.  */
     private _type?: WebsiteType | undefined;
     /**
-     * Instantiates a new website and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the address property value. The URL of the website.
@@ -31,6 +32,19 @@ export class Website implements Parsable {
         return this._address;
     };
     /**
+     * Sets the address property value. The URL of the website.
+     * @param value Value to set for the address property.
+     */
+    public set address(value: string | undefined) {
+        this._address = value;
+    };
+    /**
+     * Instantiates a new website and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the displayName property value. The display name of the web site.
      * @returns a string
      */
@@ -38,11 +52,11 @@ export class Website implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the type property value. The possible values are: other, home, work, blog, profile.
-     * @returns a websiteType
+     * Sets the displayName property value. The display name of the web site.
+     * @param value Value to set for the displayName property.
      */
-    public get type() {
-        return this._type;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -67,25 +81,11 @@ export class Website implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the type property value. The possible values are: other, home, work, blog, profile.
+     * @returns a websiteType
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the address property value. The URL of the website.
-     * @param value Value to set for the address property.
-     */
-    public set address(value: string | undefined) {
-        this._address = value;
-    };
-    /**
-     * Sets the displayName property value. The display name of the web site.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. The possible values are: other, home, work, blog, profile.

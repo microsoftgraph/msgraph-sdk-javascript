@@ -1,9 +1,12 @@
 import {PrintTaskDefinition} from '../../../models/microsoft/graph/';
-import {TasksRequestBuilder} from './tasks/';
-import {PrintTaskItemRequestBuilder} from './tasks/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrintTaskDefinitionFromDiscriminatorValue} from '../../../models/microsoft/graph/createPrintTaskDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {PrintTaskItemRequestBuilder} from './tasks/item/printTaskItemRequestBuilder';
+import {TasksRequestBuilder} from './tasks/tasksRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/taskDefinitions/{printTaskDefinition-id}  */
+/** Provides operations to manage the taskDefinitions property of the microsoft.graph.print entity.  */
 export class PrintTaskDefinitionItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -28,7 +31,7 @@ export class PrintTaskDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * List of abstract definition for a task that can be triggered when various events occur within Universal Print.
+     * Delete navigation property taskDefinitions for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class PrintTaskDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of abstract definition for a task that can be triggered when various events occur within Universal Print.
+     * Update the navigation property taskDefinitions in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class PrintTaskDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * List of abstract definition for a task that can be triggered when various events occur within Universal Print.
+     * Delete navigation property taskDefinitions for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class PrintTaskDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * List of abstract definition for a task that can be triggered when various events occur within Universal Print.
@@ -107,10 +114,14 @@ export class PrintTaskDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintTaskDefinition>(requestInfo, PrintTaskDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintTaskDefinition>(requestInfo, createPrintTaskDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * List of abstract definition for a task that can be triggered when various events occur within Universal Print.
+     * Update the navigation property taskDefinitions in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -121,7 +132,11 @@ export class PrintTaskDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.print.taskDefinitions.item.tasks.item collection

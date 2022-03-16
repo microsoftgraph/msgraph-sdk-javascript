@@ -1,7 +1,9 @@
-import {IdentitySet, OnlineMeetingRole} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
+import {IdentitySet} from './index';
+import {OnlineMeetingRole} from './onlineMeetingRole';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class MeetingParticipantInfo implements Parsable {
+export class MeetingParticipantInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Identity information of the participant.  */
@@ -11,17 +13,35 @@ export class MeetingParticipantInfo implements Parsable {
     /** User principal name of the participant.  */
     private _upn?: string | undefined;
     /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Instantiates a new meetingParticipantInfo and sets the default values.
      */
     public constructor() {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["identity", (o, n) => { (o as unknown as MeetingParticipantInfo).identity = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["role", (o, n) => { (o as unknown as MeetingParticipantInfo).role = n.getEnumValue<OnlineMeetingRole>(OnlineMeetingRole); }],
+            ["upn", (o, n) => { (o as unknown as MeetingParticipantInfo).upn = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the identity property value. Identity information of the participant.
@@ -31,6 +51,13 @@ export class MeetingParticipantInfo implements Parsable {
         return this._identity;
     };
     /**
+     * Sets the identity property value. Identity information of the participant.
+     * @param value Value to set for the identity property.
+     */
+    public set identity(value: IdentitySet | undefined) {
+        this._identity = value;
+    };
+    /**
      * Gets the role property value. Specifies the participant's role in the meeting.  Possible values are attendee, presenter, producer, and unknownFutureValue.
      * @returns a onlineMeetingRole
      */
@@ -38,22 +65,11 @@ export class MeetingParticipantInfo implements Parsable {
         return this._role;
     };
     /**
-     * Gets the upn property value. User principal name of the participant.
-     * @returns a string
+     * Sets the role property value. Specifies the participant's role in the meeting.  Possible values are attendee, presenter, producer, and unknownFutureValue.
+     * @param value Value to set for the role property.
      */
-    public get upn() {
-        return this._upn;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["identity", (o, n) => { (o as unknown as MeetingParticipantInfo).identity = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["role", (o, n) => { (o as unknown as MeetingParticipantInfo).role = n.getEnumValue<OnlineMeetingRole>(OnlineMeetingRole); }],
-            ["upn", (o, n) => { (o as unknown as MeetingParticipantInfo).upn = n.getStringValue(); }],
-        ]);
+    public set role(value: OnlineMeetingRole | undefined) {
+        this._role = value;
     };
     /**
      * Serializes information the current object
@@ -67,25 +83,11 @@ export class MeetingParticipantInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the upn property value. User principal name of the participant.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the identity property value. Identity information of the participant.
-     * @param value Value to set for the identity property.
-     */
-    public set identity(value: IdentitySet | undefined) {
-        this._identity = value;
-    };
-    /**
-     * Sets the role property value. Specifies the participant's role in the meeting.  Possible values are attendee, presenter, producer, and unknownFutureValue.
-     * @param value Value to set for the role property.
-     */
-    public set role(value: OnlineMeetingRole | undefined) {
-        this._role = value;
+    public get upn() {
+        return this._upn;
     };
     /**
      * Sets the upn property value. User principal name of the participant.

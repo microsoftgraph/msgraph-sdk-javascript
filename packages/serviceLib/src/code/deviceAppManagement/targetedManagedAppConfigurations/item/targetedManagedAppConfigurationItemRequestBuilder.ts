@@ -1,14 +1,17 @@
 import {TargetedManagedAppConfiguration} from '../../../models/microsoft/graph/';
-import {AppsRequestBuilder} from './apps/';
-import {ManagedMobileAppItemRequestBuilder} from './apps/item/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {TargetedManagedAppPolicyAssignmentItemRequestBuilder} from './assignments/item/';
-import {DeploymentSummaryRequestBuilder} from './deploymentSummary/';
-import {TargetAppsRequestBuilder} from './targetApps/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTargetedManagedAppConfigurationFromDiscriminatorValue} from '../../../models/microsoft/graph/createTargetedManagedAppConfigurationFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AppsRequestBuilder} from './apps/appsRequestBuilder';
+import {ManagedMobileAppItemRequestBuilder} from './apps/item/managedMobileAppItemRequestBuilder';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {TargetedManagedAppPolicyAssignmentItemRequestBuilder} from './assignments/item/targetedManagedAppPolicyAssignmentItemRequestBuilder';
+import {DeploymentSummaryRequestBuilder} from './deploymentSummary/deploymentSummaryRequestBuilder';
+import {TargetAppsRequestBuilder} from './targetApps/targetAppsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/targetedManagedAppConfigurations/{targetedManagedAppConfiguration-id}  */
+/** Provides operations to manage the targetedManagedAppConfigurations property of the microsoft.graph.deviceAppManagement entity.  */
 export class TargetedManagedAppConfigurationItemRequestBuilder {
     public get apps(): AppsRequestBuilder {
         return new AppsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -67,7 +70,7 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Targeted managed app configurations.
+     * Delete navigation property targetedManagedAppConfigurations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -102,7 +105,7 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Targeted managed app configurations.
+     * Update the navigation property targetedManagedAppConfigurations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,7 +123,7 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Targeted managed app configurations.
+     * Delete navigation property targetedManagedAppConfigurations for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -129,7 +132,11 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Targeted managed app configurations.
@@ -146,10 +153,14 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<TargetedManagedAppConfiguration>(requestInfo, TargetedManagedAppConfiguration, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<TargetedManagedAppConfiguration>(requestInfo, createTargetedManagedAppConfigurationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Targeted managed app configurations.
+     * Update the navigation property targetedManagedAppConfigurations in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -160,6 +171,10 @@ export class TargetedManagedAppConfigurationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

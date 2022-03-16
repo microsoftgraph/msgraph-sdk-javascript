@@ -20,11 +20,25 @@ export class OnenoteResource extends OnenoteEntityBaseModel implements Parsable 
         return this._content;
     };
     /**
+     * Sets the content property value. The content stream
+     * @param value Value to set for the content property.
+     */
+    public set content(value: string | undefined) {
+        this._content = value;
+    };
+    /**
      * Gets the contentUrl property value. The URL for downloading the content
      * @returns a string
      */
     public get contentUrl() {
         return this._contentUrl;
+    };
+    /**
+     * Sets the contentUrl property value. The URL for downloading the content
+     * @param value Value to set for the contentUrl property.
+     */
+    public set contentUrl(value: string | undefined) {
+        this._contentUrl = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,19 +59,5 @@ export class OnenoteResource extends OnenoteEntityBaseModel implements Parsable 
         super.serialize(writer);
         writer.writeStringValue("content", this.content);
         writer.writeStringValue("contentUrl", this.contentUrl);
-    };
-    /**
-     * Sets the content property value. The content stream
-     * @param value Value to set for the content property.
-     */
-    public set content(value: string | undefined) {
-        this._content = value;
-    };
-    /**
-     * Sets the contentUrl property value. The URL for downloading the content
-     * @param value Value to set for the contentUrl property.
-     */
-    public set contentUrl(value: string | undefined) {
-        this._contentUrl = value;
     };
 }

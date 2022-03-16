@@ -1,2 +1,1 @@
-export * from './SetVerifiedPublisherRequestBuilder'
-export * from './SetVerifiedPublisherRequestBody'
+export * from './setVerifiedPublisherRequestBody'

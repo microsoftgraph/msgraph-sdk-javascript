@@ -1,11 +1,14 @@
 import {ManagedAppPolicy} from '../../../models/microsoft/graph/';
-import {ManagedAppProtectionRequestBuilder} from './managedAppProtection/';
-import {TargetAppsRequestBuilder} from './targetApps/';
-import {TargetedManagedAppProtectionRequestBuilder} from './targetedManagedAppProtection/';
-import {WindowsInformationProtectionRequestBuilder} from './windowsInformationProtection/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedAppPolicyFromDiscriminatorValue} from '../../../models/microsoft/graph/createManagedAppPolicyFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ManagedAppProtectionRequestBuilder} from './managedAppProtection/managedAppProtectionRequestBuilder';
+import {TargetAppsRequestBuilder} from './targetApps/targetAppsRequestBuilder';
+import {TargetedManagedAppProtectionRequestBuilder} from './targetedManagedAppProtection/targetedManagedAppProtectionRequestBuilder';
+import {WindowsInformationProtectionRequestBuilder} from './windowsInformationProtection/windowsInformationProtectionRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/managedAppPolicies/{managedAppPolicy-id}  */
+/** Provides operations to manage the managedAppPolicies property of the microsoft.graph.deviceAppManagement entity.  */
 export class ManagedAppPolicyItemRequestBuilder {
     public get managedAppProtection(): ManagedAppProtectionRequestBuilder {
         return new ManagedAppProtectionRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -39,7 +42,7 @@ export class ManagedAppPolicyItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Managed app policies.
+     * Delete navigation property managedAppPolicies for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -74,7 +77,7 @@ export class ManagedAppPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Managed app policies.
+     * Update the navigation property managedAppPolicies in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -92,7 +95,7 @@ export class ManagedAppPolicyItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Managed app policies.
+     * Delete navigation property managedAppPolicies for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -101,7 +104,11 @@ export class ManagedAppPolicyItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Managed app policies.
@@ -118,10 +125,14 @@ export class ManagedAppPolicyItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedAppPolicy>(requestInfo, ManagedAppPolicy, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedAppPolicy>(requestInfo, createManagedAppPolicyFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Managed app policies.
+     * Update the navigation property managedAppPolicies in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class ManagedAppPolicyItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

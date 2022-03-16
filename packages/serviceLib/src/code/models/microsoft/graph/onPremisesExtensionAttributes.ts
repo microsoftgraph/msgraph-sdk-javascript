@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class OnPremisesExtensionAttributes implements Parsable {
+export class OnPremisesExtensionAttributes implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** First customizable extension attribute.  */
@@ -34,17 +34,24 @@ export class OnPremisesExtensionAttributes implements Parsable {
     /** Ninth customizable extension attribute.  */
     private _extensionAttribute9?: string | undefined;
     /**
-     * Instantiates a new onPremisesExtensionAttributes and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new onPremisesExtensionAttributes and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the extensionAttribute1 property value. First customizable extension attribute.
@@ -54,11 +61,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute1;
     };
     /**
+     * Sets the extensionAttribute1 property value. First customizable extension attribute.
+     * @param value Value to set for the extensionAttribute1 property.
+     */
+    public set extensionAttribute1(value: string | undefined) {
+        this._extensionAttribute1 = value;
+    };
+    /**
      * Gets the extensionAttribute10 property value. Tenth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute10() {
         return this._extensionAttribute10;
+    };
+    /**
+     * Sets the extensionAttribute10 property value. Tenth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute10 property.
+     */
+    public set extensionAttribute10(value: string | undefined) {
+        this._extensionAttribute10 = value;
     };
     /**
      * Gets the extensionAttribute11 property value. Eleventh customizable extension attribute.
@@ -68,11 +89,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute11;
     };
     /**
+     * Sets the extensionAttribute11 property value. Eleventh customizable extension attribute.
+     * @param value Value to set for the extensionAttribute11 property.
+     */
+    public set extensionAttribute11(value: string | undefined) {
+        this._extensionAttribute11 = value;
+    };
+    /**
      * Gets the extensionAttribute12 property value. Twelfth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute12() {
         return this._extensionAttribute12;
+    };
+    /**
+     * Sets the extensionAttribute12 property value. Twelfth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute12 property.
+     */
+    public set extensionAttribute12(value: string | undefined) {
+        this._extensionAttribute12 = value;
     };
     /**
      * Gets the extensionAttribute13 property value. Thirteenth customizable extension attribute.
@@ -82,11 +117,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute13;
     };
     /**
+     * Sets the extensionAttribute13 property value. Thirteenth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute13 property.
+     */
+    public set extensionAttribute13(value: string | undefined) {
+        this._extensionAttribute13 = value;
+    };
+    /**
      * Gets the extensionAttribute14 property value. Fourteenth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute14() {
         return this._extensionAttribute14;
+    };
+    /**
+     * Sets the extensionAttribute14 property value. Fourteenth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute14 property.
+     */
+    public set extensionAttribute14(value: string | undefined) {
+        this._extensionAttribute14 = value;
     };
     /**
      * Gets the extensionAttribute15 property value. Fifteenth customizable extension attribute.
@@ -96,11 +145,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute15;
     };
     /**
+     * Sets the extensionAttribute15 property value. Fifteenth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute15 property.
+     */
+    public set extensionAttribute15(value: string | undefined) {
+        this._extensionAttribute15 = value;
+    };
+    /**
      * Gets the extensionAttribute2 property value. Second customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute2() {
         return this._extensionAttribute2;
+    };
+    /**
+     * Sets the extensionAttribute2 property value. Second customizable extension attribute.
+     * @param value Value to set for the extensionAttribute2 property.
+     */
+    public set extensionAttribute2(value: string | undefined) {
+        this._extensionAttribute2 = value;
     };
     /**
      * Gets the extensionAttribute3 property value. Third customizable extension attribute.
@@ -110,11 +173,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute3;
     };
     /**
+     * Sets the extensionAttribute3 property value. Third customizable extension attribute.
+     * @param value Value to set for the extensionAttribute3 property.
+     */
+    public set extensionAttribute3(value: string | undefined) {
+        this._extensionAttribute3 = value;
+    };
+    /**
      * Gets the extensionAttribute4 property value. Fourth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute4() {
         return this._extensionAttribute4;
+    };
+    /**
+     * Sets the extensionAttribute4 property value. Fourth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute4 property.
+     */
+    public set extensionAttribute4(value: string | undefined) {
+        this._extensionAttribute4 = value;
     };
     /**
      * Gets the extensionAttribute5 property value. Fifth customizable extension attribute.
@@ -124,11 +201,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute5;
     };
     /**
+     * Sets the extensionAttribute5 property value. Fifth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute5 property.
+     */
+    public set extensionAttribute5(value: string | undefined) {
+        this._extensionAttribute5 = value;
+    };
+    /**
      * Gets the extensionAttribute6 property value. Sixth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute6() {
         return this._extensionAttribute6;
+    };
+    /**
+     * Sets the extensionAttribute6 property value. Sixth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute6 property.
+     */
+    public set extensionAttribute6(value: string | undefined) {
+        this._extensionAttribute6 = value;
     };
     /**
      * Gets the extensionAttribute7 property value. Seventh customizable extension attribute.
@@ -138,6 +229,13 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute7;
     };
     /**
+     * Sets the extensionAttribute7 property value. Seventh customizable extension attribute.
+     * @param value Value to set for the extensionAttribute7 property.
+     */
+    public set extensionAttribute7(value: string | undefined) {
+        this._extensionAttribute7 = value;
+    };
+    /**
      * Gets the extensionAttribute8 property value. Eighth customizable extension attribute.
      * @returns a string
      */
@@ -145,11 +243,25 @@ export class OnPremisesExtensionAttributes implements Parsable {
         return this._extensionAttribute8;
     };
     /**
+     * Sets the extensionAttribute8 property value. Eighth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute8 property.
+     */
+    public set extensionAttribute8(value: string | undefined) {
+        this._extensionAttribute8 = value;
+    };
+    /**
      * Gets the extensionAttribute9 property value. Ninth customizable extension attribute.
      * @returns a string
      */
     public get extensionAttribute9() {
         return this._extensionAttribute9;
+    };
+    /**
+     * Sets the extensionAttribute9 property value. Ninth customizable extension attribute.
+     * @param value Value to set for the extensionAttribute9 property.
+     */
+    public set extensionAttribute9(value: string | undefined) {
+        this._extensionAttribute9 = value;
     };
     /**
      * The deserialization information for the current model
@@ -196,117 +308,5 @@ export class OnPremisesExtensionAttributes implements Parsable {
         writer.writeStringValue("extensionAttribute8", this.extensionAttribute8);
         writer.writeStringValue("extensionAttribute9", this.extensionAttribute9);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the extensionAttribute1 property value. First customizable extension attribute.
-     * @param value Value to set for the extensionAttribute1 property.
-     */
-    public set extensionAttribute1(value: string | undefined) {
-        this._extensionAttribute1 = value;
-    };
-    /**
-     * Sets the extensionAttribute10 property value. Tenth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute10 property.
-     */
-    public set extensionAttribute10(value: string | undefined) {
-        this._extensionAttribute10 = value;
-    };
-    /**
-     * Sets the extensionAttribute11 property value. Eleventh customizable extension attribute.
-     * @param value Value to set for the extensionAttribute11 property.
-     */
-    public set extensionAttribute11(value: string | undefined) {
-        this._extensionAttribute11 = value;
-    };
-    /**
-     * Sets the extensionAttribute12 property value. Twelfth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute12 property.
-     */
-    public set extensionAttribute12(value: string | undefined) {
-        this._extensionAttribute12 = value;
-    };
-    /**
-     * Sets the extensionAttribute13 property value. Thirteenth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute13 property.
-     */
-    public set extensionAttribute13(value: string | undefined) {
-        this._extensionAttribute13 = value;
-    };
-    /**
-     * Sets the extensionAttribute14 property value. Fourteenth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute14 property.
-     */
-    public set extensionAttribute14(value: string | undefined) {
-        this._extensionAttribute14 = value;
-    };
-    /**
-     * Sets the extensionAttribute15 property value. Fifteenth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute15 property.
-     */
-    public set extensionAttribute15(value: string | undefined) {
-        this._extensionAttribute15 = value;
-    };
-    /**
-     * Sets the extensionAttribute2 property value. Second customizable extension attribute.
-     * @param value Value to set for the extensionAttribute2 property.
-     */
-    public set extensionAttribute2(value: string | undefined) {
-        this._extensionAttribute2 = value;
-    };
-    /**
-     * Sets the extensionAttribute3 property value. Third customizable extension attribute.
-     * @param value Value to set for the extensionAttribute3 property.
-     */
-    public set extensionAttribute3(value: string | undefined) {
-        this._extensionAttribute3 = value;
-    };
-    /**
-     * Sets the extensionAttribute4 property value. Fourth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute4 property.
-     */
-    public set extensionAttribute4(value: string | undefined) {
-        this._extensionAttribute4 = value;
-    };
-    /**
-     * Sets the extensionAttribute5 property value. Fifth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute5 property.
-     */
-    public set extensionAttribute5(value: string | undefined) {
-        this._extensionAttribute5 = value;
-    };
-    /**
-     * Sets the extensionAttribute6 property value. Sixth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute6 property.
-     */
-    public set extensionAttribute6(value: string | undefined) {
-        this._extensionAttribute6 = value;
-    };
-    /**
-     * Sets the extensionAttribute7 property value. Seventh customizable extension attribute.
-     * @param value Value to set for the extensionAttribute7 property.
-     */
-    public set extensionAttribute7(value: string | undefined) {
-        this._extensionAttribute7 = value;
-    };
-    /**
-     * Sets the extensionAttribute8 property value. Eighth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute8 property.
-     */
-    public set extensionAttribute8(value: string | undefined) {
-        this._extensionAttribute8 = value;
-    };
-    /**
-     * Sets the extensionAttribute9 property value. Ninth customizable extension attribute.
-     * @param value Value to set for the extensionAttribute9 property.
-     */
-    public set extensionAttribute9(value: string | undefined) {
-        this._extensionAttribute9 = value;
     };
 }

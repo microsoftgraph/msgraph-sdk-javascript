@@ -1,24 +1,27 @@
-import {ActivityDomain, TimeSlot} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ActivityDomain} from './activityDomain';
+import {createTimeSlotFromDiscriminatorValue} from './createTimeSlotFromDiscriminatorValue';
+import {TimeSlot} from './index';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TimeConstraint implements Parsable {
+export class TimeConstraint implements AdditionalDataHolder, Parsable {
     /** The nature of the activity, optional. The possible values are: work, personal, unrestricted, or unknown.  */
     private _activityDomain?: ActivityDomain | undefined;
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _timeSlots?: TimeSlot[] | undefined;
     /**
-     * Instantiates a new timeConstraint and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the activityDomain property value. The nature of the activity, optional. The possible values are: work, personal, unrestricted, or unknown.
      * @returns a activityDomain
      */
     public get activityDomain() {
         return this._activityDomain;
+    };
+    /**
+     * Sets the activityDomain property value. The nature of the activity, optional. The possible values are: work, personal, unrestricted, or unknown.
+     * @param value Value to set for the activityDomain property.
+     */
+    public set activityDomain(value: ActivityDomain | undefined) {
+        this._activityDomain = value;
     };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -28,11 +31,17 @@ export class TimeConstraint implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the timeSlots property value. 
-     * @returns a timeSlot
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get timeSlots() {
-        return this._timeSlots;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new timeConstraint and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -41,7 +50,7 @@ export class TimeConstraint implements Parsable {
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["activityDomain", (o, n) => { (o as unknown as TimeConstraint).activityDomain = n.getEnumValue<ActivityDomain>(ActivityDomain); }],
-            ["timeSlots", (o, n) => { (o as unknown as TimeConstraint).timeSlots = n.getCollectionOfObjectValues<TimeSlot>(TimeSlot); }],
+            ["timeSlots", (o, n) => { (o as unknown as TimeConstraint).timeSlots = n.getCollectionOfObjectValues<TimeSlot>(createTimeSlotFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -55,18 +64,11 @@ export class TimeConstraint implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the activityDomain property value. The nature of the activity, optional. The possible values are: work, personal, unrestricted, or unknown.
-     * @param value Value to set for the activityDomain property.
+     * Gets the timeSlots property value. 
+     * @returns a timeSlot
      */
-    public set activityDomain(value: ActivityDomain | undefined) {
-        this._activityDomain = value;
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get timeSlots() {
+        return this._timeSlots;
     };
     /**
      * Sets the timeSlots property value. 

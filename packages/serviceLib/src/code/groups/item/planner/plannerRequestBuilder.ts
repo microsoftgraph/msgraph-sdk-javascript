@@ -1,9 +1,12 @@
 import {PlannerGroup} from '../../../models/microsoft/graph/';
-import {PlansRequestBuilder} from './plans/';
-import {PlannerPlanItemRequestBuilder} from './plans/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPlannerGroupFromDiscriminatorValue} from '../../../models/microsoft/graph/createPlannerGroupFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {PlannerPlanItemRequestBuilder} from './plans/item/plannerPlanItemRequestBuilder';
+import {PlansRequestBuilder} from './plans/plansRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/planner  */
+/** Provides operations to manage the planner property of the microsoft.graph.group entity.  */
 export class PlannerRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -28,7 +31,7 @@ export class PlannerRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Entry-point to Planner resource that might exist for a Unified Group.
+     * Delete navigation property planner for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class PlannerRequestBuilder {
         return requestInfo;
     };
     /**
-     * Entry-point to Planner resource that might exist for a Unified Group.
+     * Update the navigation property planner in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class PlannerRequestBuilder {
         return requestInfo;
     };
     /**
-     * Entry-point to Planner resource that might exist for a Unified Group.
+     * Delete navigation property planner for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Entry-point to Planner resource that might exist for a Unified Group.
@@ -107,10 +114,14 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PlannerGroup>(requestInfo, PlannerGroup, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PlannerGroup>(requestInfo, createPlannerGroupFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Entry-point to Planner resource that might exist for a Unified Group.
+     * Update the navigation property planner in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -121,7 +132,11 @@ export class PlannerRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.planner.plans.item collection

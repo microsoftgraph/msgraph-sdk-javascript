@@ -1,9 +1,12 @@
 import {ExternalGroup} from '../../../../models/microsoft/graph/externalConnectors/';
-import {MembersRequestBuilder} from './members/';
-import {IdentityItemRequestBuilder} from './members/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createExternalGroupFromDiscriminatorValue} from '../../../../models/microsoft/graph/externalConnectors/createExternalGroupFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {IdentityItemRequestBuilder} from './members/item/identityItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /connections/{externalConnection-id}/groups/{externalGroup-id}  */
+/** Provides operations to manage the groups property of the microsoft.graph.externalConnectors.externalConnection entity.  */
 export class ExternalGroupItemRequestBuilder {
     public get members(): MembersRequestBuilder {
         return new MembersRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class ExternalGroupItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Read-only. Nullable.
+     * Delete navigation property groups for connections
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class ExternalGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable.
+     * Update the navigation property groups in connections
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class ExternalGroupItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable.
+     * Delete navigation property groups for connections
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class ExternalGroupItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Read-only. Nullable.
@@ -107,7 +114,11 @@ export class ExternalGroupItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ExternalGroup>(requestInfo, ExternalGroup, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ExternalGroup>(requestInfo, createExternalGroupFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.connections.item.groups.item.members.item collection
@@ -121,7 +132,7 @@ export class ExternalGroupItemRequestBuilder {
         return new IdentityItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * Read-only. Nullable.
+     * Update the navigation property groups in connections
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class ExternalGroupItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

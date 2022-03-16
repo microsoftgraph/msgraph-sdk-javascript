@@ -1,7 +1,9 @@
+import {createEducationItemBodyFromDiscriminatorValue} from './createEducationItemBodyFromDiscriminatorValue';
+import {createRubricCriterionFromDiscriminatorValue} from './createRubricCriterionFromDiscriminatorValue';
 import {EducationItemBody, RubricCriterion} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class RubricQuality implements Parsable {
+export class RubricQuality implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The collection of criteria for this rubric quality.  */
@@ -15,17 +17,24 @@ export class RubricQuality implements Parsable {
     /** If present, a numerical weight for this quality.  Weights must add up to 100.  */
     private _weight?: number | undefined;
     /**
-     * Instantiates a new rubricQuality and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new rubricQuality and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the criteria property value. The collection of criteria for this rubric quality.
@@ -35,11 +44,25 @@ export class RubricQuality implements Parsable {
         return this._criteria;
     };
     /**
+     * Sets the criteria property value. The collection of criteria for this rubric quality.
+     * @param value Value to set for the criteria property.
+     */
+    public set criteria(value: RubricCriterion[] | undefined) {
+        this._criteria = value;
+    };
+    /**
      * Gets the description property value. The description of this rubric quality.
      * @returns a educationItemBody
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. The description of this rubric quality.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: EducationItemBody | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. The name of this rubric quality.
@@ -49,18 +72,11 @@ export class RubricQuality implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the qualityId property value. The ID of this resource.
-     * @returns a string
+     * Sets the displayName property value. The name of this rubric quality.
+     * @param value Value to set for the displayName property.
      */
-    public get qualityId() {
-        return this._qualityId;
-    };
-    /**
-     * Gets the weight property value. If present, a numerical weight for this quality.  Weights must add up to 100.
-     * @returns a float
-     */
-    public get weight() {
-        return this._weight;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -68,12 +84,26 @@ export class RubricQuality implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["criteria", (o, n) => { (o as unknown as RubricQuality).criteria = n.getCollectionOfObjectValues<RubricCriterion>(RubricCriterion); }],
-            ["description", (o, n) => { (o as unknown as RubricQuality).description = n.getObjectValue<EducationItemBody>(EducationItemBody); }],
+            ["criteria", (o, n) => { (o as unknown as RubricQuality).criteria = n.getCollectionOfObjectValues<RubricCriterion>(createRubricCriterionFromDiscriminatorValue); }],
+            ["description", (o, n) => { (o as unknown as RubricQuality).description = n.getObjectValue<EducationItemBody>(createEducationItemBodyFromDiscriminatorValue); }],
             ["displayName", (o, n) => { (o as unknown as RubricQuality).displayName = n.getStringValue(); }],
             ["qualityId", (o, n) => { (o as unknown as RubricQuality).qualityId = n.getStringValue(); }],
             ["weight", (o, n) => { (o as unknown as RubricQuality).weight = n.getNumberValue(); }],
         ]);
+    };
+    /**
+     * Gets the qualityId property value. The ID of this resource.
+     * @returns a string
+     */
+    public get qualityId() {
+        return this._qualityId;
+    };
+    /**
+     * Sets the qualityId property value. The ID of this resource.
+     * @param value Value to set for the qualityId property.
+     */
+    public set qualityId(value: string | undefined) {
+        this._qualityId = value;
     };
     /**
      * Serializes information the current object
@@ -89,39 +119,11 @@ export class RubricQuality implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the weight property value. If present, a numerical weight for this quality.  Weights must add up to 100.
+     * @returns a float
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the criteria property value. The collection of criteria for this rubric quality.
-     * @param value Value to set for the criteria property.
-     */
-    public set criteria(value: RubricCriterion[] | undefined) {
-        this._criteria = value;
-    };
-    /**
-     * Sets the description property value. The description of this rubric quality.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: EducationItemBody | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. The name of this rubric quality.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the qualityId property value. The ID of this resource.
-     * @param value Value to set for the qualityId property.
-     */
-    public set qualityId(value: string | undefined) {
-        this._qualityId = value;
+    public get weight() {
+        return this._weight;
     };
     /**
      * Sets the weight property value. If present, a numerical weight for this quality.  Weights must add up to 100.

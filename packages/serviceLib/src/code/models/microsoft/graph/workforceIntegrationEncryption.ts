@@ -1,19 +1,13 @@
-import {WorkforceIntegrationEncryptionProtocol} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {WorkforceIntegrationEncryptionProtocol} from './workforceIntegrationEncryptionProtocol';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class WorkforceIntegrationEncryption implements Parsable {
+export class WorkforceIntegrationEncryption implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Possible values are: sharedSecret, unknownFutureValue.  */
     private _protocol?: WorkforceIntegrationEncryptionProtocol | undefined;
     /** Encryption shared secret.  */
     private _secret?: string | undefined;
-    /**
-     * Instantiates a new workforceIntegrationEncryption and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -22,18 +16,17 @@ export class WorkforceIntegrationEncryption implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the protocol property value. Possible values are: sharedSecret, unknownFutureValue.
-     * @returns a workforceIntegrationEncryptionProtocol
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get protocol() {
-        return this._protocol;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the secret property value. Encryption shared secret.
-     * @returns a string
+     * Instantiates a new workforceIntegrationEncryption and sets the default values.
      */
-    public get secret() {
-        return this._secret;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -46,21 +39,11 @@ export class WorkforceIntegrationEncryption implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the protocol property value. Possible values are: sharedSecret, unknownFutureValue.
+     * @returns a workforceIntegrationEncryptionProtocol
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeEnumValue<WorkforceIntegrationEncryptionProtocol>("protocol", this.protocol);
-        writer.writeStringValue("secret", this.secret);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get protocol() {
+        return this._protocol;
     };
     /**
      * Sets the protocol property value. Possible values are: sharedSecret, unknownFutureValue.
@@ -70,10 +53,27 @@ export class WorkforceIntegrationEncryption implements Parsable {
         this._protocol = value;
     };
     /**
+     * Gets the secret property value. Encryption shared secret.
+     * @returns a string
+     */
+    public get secret() {
+        return this._secret;
+    };
+    /**
      * Sets the secret property value. Encryption shared secret.
      * @param value Value to set for the secret property.
      */
     public set secret(value: string | undefined) {
         this._secret = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeEnumValue<WorkforceIntegrationEncryptionProtocol>("protocol", this.protocol);
+        writer.writeStringValue("secret", this.secret);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

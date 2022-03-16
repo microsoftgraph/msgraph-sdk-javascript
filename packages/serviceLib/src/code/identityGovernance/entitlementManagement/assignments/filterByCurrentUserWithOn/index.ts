@@ -1,2 +1,1 @@
-export * from './FilterByCurrentUserWithOn'
-export * from './FilterByCurrentUserWithOnRequestBuilder'
+export * from './filterByCurrentUserWithOnResponse'

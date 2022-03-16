@@ -1,7 +1,9 @@
+import {createDateTimeTimeZoneFromDiscriminatorValue} from './createDateTimeTimeZoneFromDiscriminatorValue';
+import {createLocationFromDiscriminatorValue} from './createLocationFromDiscriminatorValue';
 import {DateTimeTimeZone, Location} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Reminder implements Parsable {
+export class Reminder implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Identifies the version of the reminder. Every time the reminder is changed, changeKey changes as well. This allows Exchange to apply changes to the correct version of the object.  */
@@ -21,17 +23,18 @@ export class Reminder implements Parsable {
     /** The date, time, and time zone that the reminder is set to occur.  */
     private _reminderFireTime?: DateTimeTimeZone | undefined;
     /**
-     * Instantiates a new Reminder and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the changeKey property value. Identifies the version of the reminder. Every time the reminder is changed, changeKey changes as well. This allows Exchange to apply changes to the correct version of the object.
@@ -41,11 +44,31 @@ export class Reminder implements Parsable {
         return this._changeKey;
     };
     /**
+     * Sets the changeKey property value. Identifies the version of the reminder. Every time the reminder is changed, changeKey changes as well. This allows Exchange to apply changes to the correct version of the object.
+     * @param value Value to set for the changeKey property.
+     */
+    public set changeKey(value: string | undefined) {
+        this._changeKey = value;
+    };
+    /**
+     * Instantiates a new reminder and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the eventEndTime property value. The date, time and time zone that the event ends.
      * @returns a dateTimeTimeZone
      */
     public get eventEndTime() {
         return this._eventEndTime;
+    };
+    /**
+     * Sets the eventEndTime property value. The date, time and time zone that the event ends.
+     * @param value Value to set for the eventEndTime property.
+     */
+    public set eventEndTime(value: DateTimeTimeZone | undefined) {
+        this._eventEndTime = value;
     };
     /**
      * Gets the eventId property value. The unique ID of the event. Read only.
@@ -55,11 +78,25 @@ export class Reminder implements Parsable {
         return this._eventId;
     };
     /**
+     * Sets the eventId property value. The unique ID of the event. Read only.
+     * @param value Value to set for the eventId property.
+     */
+    public set eventId(value: string | undefined) {
+        this._eventId = value;
+    };
+    /**
      * Gets the eventLocation property value. The location of the event.
      * @returns a location
      */
     public get eventLocation() {
         return this._eventLocation;
+    };
+    /**
+     * Sets the eventLocation property value. The location of the event.
+     * @param value Value to set for the eventLocation property.
+     */
+    public set eventLocation(value: Location | undefined) {
+        this._eventLocation = value;
     };
     /**
      * Gets the eventStartTime property value. The date, time, and time zone that the event starts.
@@ -69,11 +106,25 @@ export class Reminder implements Parsable {
         return this._eventStartTime;
     };
     /**
+     * Sets the eventStartTime property value. The date, time, and time zone that the event starts.
+     * @param value Value to set for the eventStartTime property.
+     */
+    public set eventStartTime(value: DateTimeTimeZone | undefined) {
+        this._eventStartTime = value;
+    };
+    /**
      * Gets the eventSubject property value. The text of the event's subject line.
      * @returns a string
      */
     public get eventSubject() {
         return this._eventSubject;
+    };
+    /**
+     * Sets the eventSubject property value. The text of the event's subject line.
+     * @param value Value to set for the eventSubject property.
+     */
+    public set eventSubject(value: string | undefined) {
+        this._eventSubject = value;
     };
     /**
      * Gets the eventWebLink property value. The URL to open the event in Outlook on the web.The event will open in the browser if you are logged in to your mailbox via Outlook on the web. You will be prompted to login if you are not already logged in with the browser.This URL cannot be accessed from within an iFrame.
@@ -83,11 +134,11 @@ export class Reminder implements Parsable {
         return this._eventWebLink;
     };
     /**
-     * Gets the reminderFireTime property value. The date, time, and time zone that the reminder is set to occur.
-     * @returns a dateTimeTimeZone
+     * Sets the eventWebLink property value. The URL to open the event in Outlook on the web.The event will open in the browser if you are logged in to your mailbox via Outlook on the web. You will be prompted to login if you are not already logged in with the browser.This URL cannot be accessed from within an iFrame.
+     * @param value Value to set for the eventWebLink property.
      */
-    public get reminderFireTime() {
-        return this._reminderFireTime;
+    public set eventWebLink(value: string | undefined) {
+        this._eventWebLink = value;
     };
     /**
      * The deserialization information for the current model
@@ -96,14 +147,28 @@ export class Reminder implements Parsable {
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["changeKey", (o, n) => { (o as unknown as Reminder).changeKey = n.getStringValue(); }],
-            ["eventEndTime", (o, n) => { (o as unknown as Reminder).eventEndTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
+            ["eventEndTime", (o, n) => { (o as unknown as Reminder).eventEndTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
             ["eventId", (o, n) => { (o as unknown as Reminder).eventId = n.getStringValue(); }],
-            ["eventLocation", (o, n) => { (o as unknown as Reminder).eventLocation = n.getObjectValue<Location>(Location); }],
-            ["eventStartTime", (o, n) => { (o as unknown as Reminder).eventStartTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
+            ["eventLocation", (o, n) => { (o as unknown as Reminder).eventLocation = n.getObjectValue<Location>(createLocationFromDiscriminatorValue); }],
+            ["eventStartTime", (o, n) => { (o as unknown as Reminder).eventStartTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
             ["eventSubject", (o, n) => { (o as unknown as Reminder).eventSubject = n.getStringValue(); }],
             ["eventWebLink", (o, n) => { (o as unknown as Reminder).eventWebLink = n.getStringValue(); }],
-            ["reminderFireTime", (o, n) => { (o as unknown as Reminder).reminderFireTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
+            ["reminderFireTime", (o, n) => { (o as unknown as Reminder).reminderFireTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the reminderFireTime property value. The date, time, and time zone that the reminder is set to occur.
+     * @returns a dateTimeTimeZone
+     */
+    public get reminderFireTime() {
+        return this._reminderFireTime;
+    };
+    /**
+     * Sets the reminderFireTime property value. The date, time, and time zone that the reminder is set to occur.
+     * @param value Value to set for the reminderFireTime property.
+     */
+    public set reminderFireTime(value: DateTimeTimeZone | undefined) {
+        this._reminderFireTime = value;
     };
     /**
      * Serializes information the current object
@@ -120,68 +185,5 @@ export class Reminder implements Parsable {
         writer.writeStringValue("eventWebLink", this.eventWebLink);
         writer.writeObjectValue<DateTimeTimeZone>("reminderFireTime", this.reminderFireTime);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the changeKey property value. Identifies the version of the reminder. Every time the reminder is changed, changeKey changes as well. This allows Exchange to apply changes to the correct version of the object.
-     * @param value Value to set for the changeKey property.
-     */
-    public set changeKey(value: string | undefined) {
-        this._changeKey = value;
-    };
-    /**
-     * Sets the eventEndTime property value. The date, time and time zone that the event ends.
-     * @param value Value to set for the eventEndTime property.
-     */
-    public set eventEndTime(value: DateTimeTimeZone | undefined) {
-        this._eventEndTime = value;
-    };
-    /**
-     * Sets the eventId property value. The unique ID of the event. Read only.
-     * @param value Value to set for the eventId property.
-     */
-    public set eventId(value: string | undefined) {
-        this._eventId = value;
-    };
-    /**
-     * Sets the eventLocation property value. The location of the event.
-     * @param value Value to set for the eventLocation property.
-     */
-    public set eventLocation(value: Location | undefined) {
-        this._eventLocation = value;
-    };
-    /**
-     * Sets the eventStartTime property value. The date, time, and time zone that the event starts.
-     * @param value Value to set for the eventStartTime property.
-     */
-    public set eventStartTime(value: DateTimeTimeZone | undefined) {
-        this._eventStartTime = value;
-    };
-    /**
-     * Sets the eventSubject property value. The text of the event's subject line.
-     * @param value Value to set for the eventSubject property.
-     */
-    public set eventSubject(value: string | undefined) {
-        this._eventSubject = value;
-    };
-    /**
-     * Sets the eventWebLink property value. The URL to open the event in Outlook on the web.The event will open in the browser if you are logged in to your mailbox via Outlook on the web. You will be prompted to login if you are not already logged in with the browser.This URL cannot be accessed from within an iFrame.
-     * @param value Value to set for the eventWebLink property.
-     */
-    public set eventWebLink(value: string | undefined) {
-        this._eventWebLink = value;
-    };
-    /**
-     * Sets the reminderFireTime property value. The date, time, and time zone that the reminder is set to occur.
-     * @param value Value to set for the reminderFireTime property.
-     */
-    public set reminderFireTime(value: DateTimeTimeZone | undefined) {
-        this._reminderFireTime = value;
     };
 }

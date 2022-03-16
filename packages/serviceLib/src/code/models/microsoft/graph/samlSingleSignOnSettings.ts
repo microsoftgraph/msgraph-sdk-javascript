@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SamlSingleSignOnSettings implements Parsable {
+export class SamlSingleSignOnSettings implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The relative URI the service provider would redirect to after completion of the single sign-on flow.  */
     private _relayState?: string | undefined;
-    /**
-     * Instantiates a new samlSingleSignOnSettings and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,17 @@ export class SamlSingleSignOnSettings implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the relayState property value. The relative URI the service provider would redirect to after completion of the single sign-on flow.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get relayState() {
-        return this._relayState;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new samlSingleSignOnSettings and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -35,20 +35,11 @@ export class SamlSingleSignOnSettings implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the relayState property value. The relative URI the service provider would redirect to after completion of the single sign-on flow.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("relayState", this.relayState);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get relayState() {
+        return this._relayState;
     };
     /**
      * Sets the relayState property value. The relative URI the service provider would redirect to after completion of the single sign-on flow.
@@ -56,5 +47,14 @@ export class SamlSingleSignOnSettings implements Parsable {
      */
     public set relayState(value: string | undefined) {
         this._relayState = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("relayState", this.relayState);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

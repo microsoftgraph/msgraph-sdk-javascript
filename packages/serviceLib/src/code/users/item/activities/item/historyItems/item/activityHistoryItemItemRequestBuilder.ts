@@ -1,8 +1,11 @@
 import {ActivityHistoryItem} from '../../../../../../models/microsoft/graph/';
-import {ActivityRequestBuilder} from './activity/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createActivityHistoryItemFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createActivityHistoryItemFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ActivityRequestBuilder} from './activity/activityRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/activities/{userActivity-id}/historyItems/{activityHistoryItem-id}  */
+/** Provides operations to manage the historyItems property of the microsoft.graph.userActivity entity.  */
 export class ActivityHistoryItemItemRequestBuilder {
     public get activity(): ActivityRequestBuilder {
         return new ActivityRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class ActivityHistoryItemItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Optional. NavigationProperty/Containment; navigation property to the activity's historyItems.
+     * Delete navigation property historyItems for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class ActivityHistoryItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Optional. NavigationProperty/Containment; navigation property to the activity's historyItems.
+     * Update the navigation property historyItems in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class ActivityHistoryItemItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Optional. NavigationProperty/Containment; navigation property to the activity's historyItems.
+     * Delete navigation property historyItems for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class ActivityHistoryItemItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Optional. NavigationProperty/Containment; navigation property to the activity's historyItems.
@@ -106,10 +113,14 @@ export class ActivityHistoryItemItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ActivityHistoryItem>(requestInfo, ActivityHistoryItem, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ActivityHistoryItem>(requestInfo, createActivityHistoryItemFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Optional. NavigationProperty/Containment; navigation property to the activity's historyItems.
+     * Update the navigation property historyItems in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class ActivityHistoryItemItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

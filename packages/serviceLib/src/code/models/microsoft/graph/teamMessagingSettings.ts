@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TeamMessagingSettings implements Parsable {
+export class TeamMessagingSettings implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** If set to true, @channel mentions are allowed.  */
@@ -14,17 +14,18 @@ export class TeamMessagingSettings implements Parsable {
     /** If set to true, users can edit their messages.  */
     private _allowUserEditMessages?: boolean | undefined;
     /**
-     * Instantiates a new teamMessagingSettings and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowChannelMentions property value. If set to true, @channel mentions are allowed.
@@ -34,11 +35,25 @@ export class TeamMessagingSettings implements Parsable {
         return this._allowChannelMentions;
     };
     /**
+     * Sets the allowChannelMentions property value. If set to true, @channel mentions are allowed.
+     * @param value Value to set for the allowChannelMentions property.
+     */
+    public set allowChannelMentions(value: boolean | undefined) {
+        this._allowChannelMentions = value;
+    };
+    /**
      * Gets the allowOwnerDeleteMessages property value. If set to true, owners can delete any message.
      * @returns a boolean
      */
     public get allowOwnerDeleteMessages() {
         return this._allowOwnerDeleteMessages;
+    };
+    /**
+     * Sets the allowOwnerDeleteMessages property value. If set to true, owners can delete any message.
+     * @param value Value to set for the allowOwnerDeleteMessages property.
+     */
+    public set allowOwnerDeleteMessages(value: boolean | undefined) {
+        this._allowOwnerDeleteMessages = value;
     };
     /**
      * Gets the allowTeamMentions property value. If set to true, @team mentions are allowed.
@@ -48,6 +63,13 @@ export class TeamMessagingSettings implements Parsable {
         return this._allowTeamMentions;
     };
     /**
+     * Sets the allowTeamMentions property value. If set to true, @team mentions are allowed.
+     * @param value Value to set for the allowTeamMentions property.
+     */
+    public set allowTeamMentions(value: boolean | undefined) {
+        this._allowTeamMentions = value;
+    };
+    /**
      * Gets the allowUserDeleteMessages property value. If set to true, users can delete their messages.
      * @returns a boolean
      */
@@ -55,11 +77,31 @@ export class TeamMessagingSettings implements Parsable {
         return this._allowUserDeleteMessages;
     };
     /**
+     * Sets the allowUserDeleteMessages property value. If set to true, users can delete their messages.
+     * @param value Value to set for the allowUserDeleteMessages property.
+     */
+    public set allowUserDeleteMessages(value: boolean | undefined) {
+        this._allowUserDeleteMessages = value;
+    };
+    /**
      * Gets the allowUserEditMessages property value. If set to true, users can edit their messages.
      * @returns a boolean
      */
     public get allowUserEditMessages() {
         return this._allowUserEditMessages;
+    };
+    /**
+     * Sets the allowUserEditMessages property value. If set to true, users can edit their messages.
+     * @param value Value to set for the allowUserEditMessages property.
+     */
+    public set allowUserEditMessages(value: boolean | undefined) {
+        this._allowUserEditMessages = value;
+    };
+    /**
+     * Instantiates a new teamMessagingSettings and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -86,47 +128,5 @@ export class TeamMessagingSettings implements Parsable {
         writer.writeBooleanValue("allowUserDeleteMessages", this.allowUserDeleteMessages);
         writer.writeBooleanValue("allowUserEditMessages", this.allowUserEditMessages);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowChannelMentions property value. If set to true, @channel mentions are allowed.
-     * @param value Value to set for the allowChannelMentions property.
-     */
-    public set allowChannelMentions(value: boolean | undefined) {
-        this._allowChannelMentions = value;
-    };
-    /**
-     * Sets the allowOwnerDeleteMessages property value. If set to true, owners can delete any message.
-     * @param value Value to set for the allowOwnerDeleteMessages property.
-     */
-    public set allowOwnerDeleteMessages(value: boolean | undefined) {
-        this._allowOwnerDeleteMessages = value;
-    };
-    /**
-     * Sets the allowTeamMentions property value. If set to true, @team mentions are allowed.
-     * @param value Value to set for the allowTeamMentions property.
-     */
-    public set allowTeamMentions(value: boolean | undefined) {
-        this._allowTeamMentions = value;
-    };
-    /**
-     * Sets the allowUserDeleteMessages property value. If set to true, users can delete their messages.
-     * @param value Value to set for the allowUserDeleteMessages property.
-     */
-    public set allowUserDeleteMessages(value: boolean | undefined) {
-        this._allowUserDeleteMessages = value;
-    };
-    /**
-     * Sets the allowUserEditMessages property value. If set to true, users can edit their messages.
-     * @param value Value to set for the allowUserEditMessages property.
-     */
-    public set allowUserEditMessages(value: boolean | undefined) {
-        this._allowUserEditMessages = value;
     };
 }

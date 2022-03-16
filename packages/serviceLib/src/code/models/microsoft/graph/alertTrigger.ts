@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AlertTrigger implements Parsable {
+export class AlertTrigger implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Name of the property serving as a detection trigger.  */
@@ -10,12 +10,6 @@ export class AlertTrigger implements Parsable {
     /** Value of the property serving as a detection trigger.  */
     private _value?: string | undefined;
     /**
-     * Instantiates a new alertTrigger and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -23,25 +17,17 @@ export class AlertTrigger implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the name property value. Name of the property serving as a detection trigger.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get name() {
-        return this._name;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the type property value. Type of the property in the key:value pair for interpretation. For example, String, Boolean etc.
-     * @returns a string
+     * Instantiates a new alertTrigger and sets the default values.
      */
-    public get type() {
-        return this._type;
-    };
-    /**
-     * Gets the value property value. Value of the property serving as a detection trigger.
-     * @returns a string
-     */
-    public get value() {
-        return this._value;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +41,20 @@ export class AlertTrigger implements Parsable {
         ]);
     };
     /**
+     * Gets the name property value. Name of the property serving as a detection trigger.
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
+     * Sets the name property value. Name of the property serving as a detection trigger.
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,18 +66,11 @@ export class AlertTrigger implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the type property value. Type of the property in the key:value pair for interpretation. For example, String, Boolean etc.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the name property value. Name of the property serving as a detection trigger.
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. Type of the property in the key:value pair for interpretation. For example, String, Boolean etc.
@@ -85,6 +78,13 @@ export class AlertTrigger implements Parsable {
      */
     public set type(value: string | undefined) {
         this._type = value;
+    };
+    /**
+     * Gets the value property value. Value of the property serving as a detection trigger.
+     * @returns a string
+     */
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. Value of the property serving as a detection trigger.

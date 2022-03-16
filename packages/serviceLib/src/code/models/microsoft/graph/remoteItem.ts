@@ -1,7 +1,18 @@
+import {createFileFromDiscriminatorValue} from './createFileFromDiscriminatorValue';
+import {createFileSystemInfoFromDiscriminatorValue} from './createFileSystemInfoFromDiscriminatorValue';
+import {createFolderFromDiscriminatorValue} from './createFolderFromDiscriminatorValue';
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
+import {createImageFromDiscriminatorValue} from './createImageFromDiscriminatorValue';
+import {createItemReferenceFromDiscriminatorValue} from './createItemReferenceFromDiscriminatorValue';
+import {createPackageFromDiscriminatorValue} from './createPackageFromDiscriminatorValue';
+import {createSharedFromDiscriminatorValue} from './createSharedFromDiscriminatorValue';
+import {createSharepointIdsFromDiscriminatorValue} from './createSharepointIdsFromDiscriminatorValue';
+import {createSpecialFolderFromDiscriminatorValue} from './createSpecialFolderFromDiscriminatorValue';
+import {createVideoFromDiscriminatorValue} from './createVideoFromDiscriminatorValue';
 import {File, FileSystemInfo, Folder, IdentitySet, Image, ItemReference, Package, Shared, SharepointIds, SpecialFolder, Video} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class RemoteItem implements Parsable {
+export class RemoteItem implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Identity of the user, device, and application which created the item. Read-only.  */
@@ -43,17 +54,24 @@ export class RemoteItem implements Parsable {
     /** URL that displays the resource in the browser. Read-only.  */
     private _webUrl?: string | undefined;
     /**
-     * Instantiates a new remoteItem and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new remoteItem and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the createdBy property value. Identity of the user, device, and application which created the item. Read-only.
@@ -63,11 +81,25 @@ export class RemoteItem implements Parsable {
         return this._createdBy;
     };
     /**
+     * Sets the createdBy property value. Identity of the user, device, and application which created the item. Read-only.
+     * @param value Value to set for the createdBy property.
+     */
+    public set createdBy(value: IdentitySet | undefined) {
+        this._createdBy = value;
+    };
+    /**
      * Gets the createdDateTime property value. Date and time of item creation. Read-only.
      * @returns a Date
      */
     public get createdDateTime() {
         return this._createdDateTime;
+    };
+    /**
+     * Sets the createdDateTime property value. Date and time of item creation. Read-only.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
     };
     /**
      * Gets the file property value. Indicates that the remote item is a file. Read-only.
@@ -77,11 +109,25 @@ export class RemoteItem implements Parsable {
         return this._file;
     };
     /**
+     * Sets the file property value. Indicates that the remote item is a file. Read-only.
+     * @param value Value to set for the file property.
+     */
+    public set file(value: File | undefined) {
+        this._file = value;
+    };
+    /**
      * Gets the fileSystemInfo property value. Information about the remote item from the local file system. Read-only.
      * @returns a fileSystemInfo
      */
     public get fileSystemInfo() {
         return this._fileSystemInfo;
+    };
+    /**
+     * Sets the fileSystemInfo property value. Information about the remote item from the local file system. Read-only.
+     * @param value Value to set for the fileSystemInfo property.
+     */
+    public set fileSystemInfo(value: FileSystemInfo | undefined) {
+        this._fileSystemInfo = value;
     };
     /**
      * Gets the folder property value. Indicates that the remote item is a folder. Read-only.
@@ -91,11 +137,52 @@ export class RemoteItem implements Parsable {
         return this._folder;
     };
     /**
+     * Sets the folder property value. Indicates that the remote item is a folder. Read-only.
+     * @param value Value to set for the folder property.
+     */
+    public set folder(value: Folder | undefined) {
+        this._folder = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["createdBy", (o, n) => { (o as unknown as RemoteItem).createdBy = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["createdDateTime", (o, n) => { (o as unknown as RemoteItem).createdDateTime = n.getDateValue(); }],
+            ["file", (o, n) => { (o as unknown as RemoteItem).file = n.getObjectValue<File>(createFileFromDiscriminatorValue); }],
+            ["fileSystemInfo", (o, n) => { (o as unknown as RemoteItem).fileSystemInfo = n.getObjectValue<FileSystemInfo>(createFileSystemInfoFromDiscriminatorValue); }],
+            ["folder", (o, n) => { (o as unknown as RemoteItem).folder = n.getObjectValue<Folder>(createFolderFromDiscriminatorValue); }],
+            ["id", (o, n) => { (o as unknown as RemoteItem).id = n.getStringValue(); }],
+            ["image", (o, n) => { (o as unknown as RemoteItem).image = n.getObjectValue<Image>(createImageFromDiscriminatorValue); }],
+            ["lastModifiedBy", (o, n) => { (o as unknown as RemoteItem).lastModifiedBy = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as RemoteItem).lastModifiedDateTime = n.getDateValue(); }],
+            ["name", (o, n) => { (o as unknown as RemoteItem).name = n.getStringValue(); }],
+            ["package", (o, n) => { (o as unknown as RemoteItem).package = n.getObjectValue<Package>(createPackageFromDiscriminatorValue); }],
+            ["parentReference", (o, n) => { (o as unknown as RemoteItem).parentReference = n.getObjectValue<ItemReference>(createItemReferenceFromDiscriminatorValue); }],
+            ["shared", (o, n) => { (o as unknown as RemoteItem).shared = n.getObjectValue<Shared>(createSharedFromDiscriminatorValue); }],
+            ["sharepointIds", (o, n) => { (o as unknown as RemoteItem).sharepointIds = n.getObjectValue<SharepointIds>(createSharepointIdsFromDiscriminatorValue); }],
+            ["size", (o, n) => { (o as unknown as RemoteItem).size = n.getNumberValue(); }],
+            ["specialFolder", (o, n) => { (o as unknown as RemoteItem).specialFolder = n.getObjectValue<SpecialFolder>(createSpecialFolderFromDiscriminatorValue); }],
+            ["video", (o, n) => { (o as unknown as RemoteItem).video = n.getObjectValue<Video>(createVideoFromDiscriminatorValue); }],
+            ["webDavUrl", (o, n) => { (o as unknown as RemoteItem).webDavUrl = n.getStringValue(); }],
+            ["webUrl", (o, n) => { (o as unknown as RemoteItem).webUrl = n.getStringValue(); }],
+        ]);
+    };
+    /**
      * Gets the id property value. Unique identifier for the remote item in its drive. Read-only.
      * @returns a string
      */
     public get id() {
         return this._id;
+    };
+    /**
+     * Sets the id property value. Unique identifier for the remote item in its drive. Read-only.
+     * @param value Value to set for the id property.
+     */
+    public set id(value: string | undefined) {
+        this._id = value;
     };
     /**
      * Gets the image property value. Image metadata, if the item is an image. Read-only.
@@ -105,11 +192,25 @@ export class RemoteItem implements Parsable {
         return this._image;
     };
     /**
+     * Sets the image property value. Image metadata, if the item is an image. Read-only.
+     * @param value Value to set for the image property.
+     */
+    public set image(value: Image | undefined) {
+        this._image = value;
+    };
+    /**
      * Gets the lastModifiedBy property value. Identity of the user, device, and application which last modified the item. Read-only.
      * @returns a identitySet
      */
     public get lastModifiedBy() {
         return this._lastModifiedBy;
+    };
+    /**
+     * Sets the lastModifiedBy property value. Identity of the user, device, and application which last modified the item. Read-only.
+     * @param value Value to set for the lastModifiedBy property.
+     */
+    public set lastModifiedBy(value: IdentitySet | undefined) {
+        this._lastModifiedBy = value;
     };
     /**
      * Gets the lastModifiedDateTime property value. Date and time the item was last modified. Read-only.
@@ -119,11 +220,25 @@ export class RemoteItem implements Parsable {
         return this._lastModifiedDateTime;
     };
     /**
+     * Sets the lastModifiedDateTime property value. Date and time the item was last modified. Read-only.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
      * Gets the name property value. Optional. Filename of the remote item. Read-only.
      * @returns a string
      */
     public get name() {
         return this._name;
+    };
+    /**
+     * Sets the name property value. Optional. Filename of the remote item. Read-only.
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
     };
     /**
      * Gets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
@@ -133,6 +248,13 @@ export class RemoteItem implements Parsable {
         return this._package;
     };
     /**
+     * Sets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
+     * @param value Value to set for the package property.
+     */
+    public set package(value: Package | undefined) {
+        this._package = value;
+    };
+    /**
      * Gets the parentReference property value. Properties of the parent of the remote item. Read-only.
      * @returns a itemReference
      */
@@ -140,80 +262,11 @@ export class RemoteItem implements Parsable {
         return this._parentReference;
     };
     /**
-     * Gets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
-     * @returns a shared
+     * Sets the parentReference property value. Properties of the parent of the remote item. Read-only.
+     * @param value Value to set for the parentReference property.
      */
-    public get shared() {
-        return this._shared;
-    };
-    /**
-     * Gets the sharepointIds property value. Provides interop between items in OneDrive for Business and SharePoint with the full set of item identifiers. Read-only.
-     * @returns a sharepointIds
-     */
-    public get sharepointIds() {
-        return this._sharepointIds;
-    };
-    /**
-     * Gets the size property value. Size of the remote item. Read-only.
-     * @returns a int64
-     */
-    public get size() {
-        return this._size;
-    };
-    /**
-     * Gets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
-     * @returns a specialFolder
-     */
-    public get specialFolder() {
-        return this._specialFolder;
-    };
-    /**
-     * Gets the video property value. Video metadata, if the item is a video. Read-only.
-     * @returns a video
-     */
-    public get video() {
-        return this._video;
-    };
-    /**
-     * Gets the webDavUrl property value. DAV compatible URL for the item.
-     * @returns a string
-     */
-    public get webDavUrl() {
-        return this._webDavUrl;
-    };
-    /**
-     * Gets the webUrl property value. URL that displays the resource in the browser. Read-only.
-     * @returns a string
-     */
-    public get webUrl() {
-        return this._webUrl;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["createdBy", (o, n) => { (o as unknown as RemoteItem).createdBy = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["createdDateTime", (o, n) => { (o as unknown as RemoteItem).createdDateTime = n.getDateValue(); }],
-            ["file", (o, n) => { (o as unknown as RemoteItem).file = n.getObjectValue<File>(File); }],
-            ["fileSystemInfo", (o, n) => { (o as unknown as RemoteItem).fileSystemInfo = n.getObjectValue<FileSystemInfo>(FileSystemInfo); }],
-            ["folder", (o, n) => { (o as unknown as RemoteItem).folder = n.getObjectValue<Folder>(Folder); }],
-            ["id", (o, n) => { (o as unknown as RemoteItem).id = n.getStringValue(); }],
-            ["image", (o, n) => { (o as unknown as RemoteItem).image = n.getObjectValue<Image>(Image); }],
-            ["lastModifiedBy", (o, n) => { (o as unknown as RemoteItem).lastModifiedBy = n.getObjectValue<IdentitySet>(IdentitySet); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as RemoteItem).lastModifiedDateTime = n.getDateValue(); }],
-            ["name", (o, n) => { (o as unknown as RemoteItem).name = n.getStringValue(); }],
-            ["package", (o, n) => { (o as unknown as RemoteItem).package = n.getObjectValue<Package>(Package); }],
-            ["parentReference", (o, n) => { (o as unknown as RemoteItem).parentReference = n.getObjectValue<ItemReference>(ItemReference); }],
-            ["shared", (o, n) => { (o as unknown as RemoteItem).shared = n.getObjectValue<Shared>(Shared); }],
-            ["sharepointIds", (o, n) => { (o as unknown as RemoteItem).sharepointIds = n.getObjectValue<SharepointIds>(SharepointIds); }],
-            ["size", (o, n) => { (o as unknown as RemoteItem).size = n.getNumberValue(); }],
-            ["specialFolder", (o, n) => { (o as unknown as RemoteItem).specialFolder = n.getObjectValue<SpecialFolder>(SpecialFolder); }],
-            ["video", (o, n) => { (o as unknown as RemoteItem).video = n.getObjectValue<Video>(Video); }],
-            ["webDavUrl", (o, n) => { (o as unknown as RemoteItem).webDavUrl = n.getStringValue(); }],
-            ["webUrl", (o, n) => { (o as unknown as RemoteItem).webUrl = n.getStringValue(); }],
-        ]);
+    public set parentReference(value: ItemReference | undefined) {
+        this._parentReference = value;
     };
     /**
      * Serializes information the current object
@@ -243,95 +296,11 @@ export class RemoteItem implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
+     * @returns a shared
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the createdBy property value. Identity of the user, device, and application which created the item. Read-only.
-     * @param value Value to set for the createdBy property.
-     */
-    public set createdBy(value: IdentitySet | undefined) {
-        this._createdBy = value;
-    };
-    /**
-     * Sets the createdDateTime property value. Date and time of item creation. Read-only.
-     * @param value Value to set for the createdDateTime property.
-     */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the file property value. Indicates that the remote item is a file. Read-only.
-     * @param value Value to set for the file property.
-     */
-    public set file(value: File | undefined) {
-        this._file = value;
-    };
-    /**
-     * Sets the fileSystemInfo property value. Information about the remote item from the local file system. Read-only.
-     * @param value Value to set for the fileSystemInfo property.
-     */
-    public set fileSystemInfo(value: FileSystemInfo | undefined) {
-        this._fileSystemInfo = value;
-    };
-    /**
-     * Sets the folder property value. Indicates that the remote item is a folder. Read-only.
-     * @param value Value to set for the folder property.
-     */
-    public set folder(value: Folder | undefined) {
-        this._folder = value;
-    };
-    /**
-     * Sets the id property value. Unique identifier for the remote item in its drive. Read-only.
-     * @param value Value to set for the id property.
-     */
-    public set id(value: string | undefined) {
-        this._id = value;
-    };
-    /**
-     * Sets the image property value. Image metadata, if the item is an image. Read-only.
-     * @param value Value to set for the image property.
-     */
-    public set image(value: Image | undefined) {
-        this._image = value;
-    };
-    /**
-     * Sets the lastModifiedBy property value. Identity of the user, device, and application which last modified the item. Read-only.
-     * @param value Value to set for the lastModifiedBy property.
-     */
-    public set lastModifiedBy(value: IdentitySet | undefined) {
-        this._lastModifiedBy = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Date and time the item was last modified. Read-only.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the name property value. Optional. Filename of the remote item. Read-only.
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
-    };
-    /**
-     * Sets the package property value. If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only.
-     * @param value Value to set for the package property.
-     */
-    public set package(value: Package | undefined) {
-        this._package = value;
-    };
-    /**
-     * Sets the parentReference property value. Properties of the parent of the remote item. Read-only.
-     * @param value Value to set for the parentReference property.
-     */
-    public set parentReference(value: ItemReference | undefined) {
-        this._parentReference = value;
+    public get shared() {
+        return this._shared;
     };
     /**
      * Sets the shared property value. Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only.
@@ -341,11 +310,25 @@ export class RemoteItem implements Parsable {
         this._shared = value;
     };
     /**
+     * Gets the sharepointIds property value. Provides interop between items in OneDrive for Business and SharePoint with the full set of item identifiers. Read-only.
+     * @returns a sharepointIds
+     */
+    public get sharepointIds() {
+        return this._sharepointIds;
+    };
+    /**
      * Sets the sharepointIds property value. Provides interop between items in OneDrive for Business and SharePoint with the full set of item identifiers. Read-only.
      * @param value Value to set for the sharepointIds property.
      */
     public set sharepointIds(value: SharepointIds | undefined) {
         this._sharepointIds = value;
+    };
+    /**
+     * Gets the size property value. Size of the remote item. Read-only.
+     * @returns a int64
+     */
+    public get size() {
+        return this._size;
     };
     /**
      * Sets the size property value. Size of the remote item. Read-only.
@@ -355,11 +338,25 @@ export class RemoteItem implements Parsable {
         this._size = value;
     };
     /**
+     * Gets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
+     * @returns a specialFolder
+     */
+    public get specialFolder() {
+        return this._specialFolder;
+    };
+    /**
      * Sets the specialFolder property value. If the current item is also available as a special folder, this facet is returned. Read-only.
      * @param value Value to set for the specialFolder property.
      */
     public set specialFolder(value: SpecialFolder | undefined) {
         this._specialFolder = value;
+    };
+    /**
+     * Gets the video property value. Video metadata, if the item is a video. Read-only.
+     * @returns a video
+     */
+    public get video() {
+        return this._video;
     };
     /**
      * Sets the video property value. Video metadata, if the item is a video. Read-only.
@@ -369,11 +366,25 @@ export class RemoteItem implements Parsable {
         this._video = value;
     };
     /**
+     * Gets the webDavUrl property value. DAV compatible URL for the item.
+     * @returns a string
+     */
+    public get webDavUrl() {
+        return this._webDavUrl;
+    };
+    /**
      * Sets the webDavUrl property value. DAV compatible URL for the item.
      * @param value Value to set for the webDavUrl property.
      */
     public set webDavUrl(value: string | undefined) {
         this._webDavUrl = value;
+    };
+    /**
+     * Gets the webUrl property value. URL that displays the resource in the browser. Read-only.
+     * @returns a string
+     */
+    public get webUrl() {
+        return this._webUrl;
     };
     /**
      * Sets the webUrl property value. URL that displays the resource in the browser. Read-only.

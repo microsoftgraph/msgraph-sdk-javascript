@@ -1,60 +1,71 @@
 import {Group} from '../../models/microsoft/graph/';
-import {AcceptedSendersRequestBuilder} from './acceptedSenders/';
-import {AddFavoriteRequestBuilder} from './addFavorite/';
-import {AppRoleAssignmentsRequestBuilder} from './appRoleAssignments/';
-import {AppRoleAssignmentItemRequestBuilder} from './appRoleAssignments/item/';
-import {AssignLicenseRequestBuilder} from './assignLicense/';
-import {CalendarRequestBuilder} from './calendar/';
-import {CalendarViewRequestBuilder} from './calendarView/';
-import {EventItemRequestBuilder as ib9a8c0963164bc38e895e76dfc9768bcbbc6c60b3fe44eccacb006e312f98107} from './calendarView/item/';
-import {CheckGrantedPermissionsForAppRequestBuilder} from './checkGrantedPermissionsForApp/';
-import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/';
-import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/';
-import {ConversationsRequestBuilder} from './conversations/';
-import {ConversationItemRequestBuilder} from './conversations/item/';
-import {CreatedOnBehalfOfRequestBuilder} from './createdOnBehalfOf/';
-import {DriveRequestBuilder} from './drive/';
-import {DrivesRequestBuilder} from './drives/';
-import {DriveItemRequestBuilder} from './drives/item/';
-import {EventsRequestBuilder} from './events/';
-import {EventItemRequestBuilder as ia32194b24bd5bb8d53aef1596ab896d4585378fe62d8e48eea5af6dc39c91b4c} from './events/item/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {GetMemberGroupsRequestBuilder} from './getMemberGroups/';
-import {GetMemberObjectsRequestBuilder} from './getMemberObjects/';
-import {GroupLifecyclePoliciesRequestBuilder} from './groupLifecyclePolicies/';
-import {GroupLifecyclePolicyItemRequestBuilder} from './groupLifecyclePolicies/item/';
-import {MemberOfRequestBuilder} from './memberOf/';
-import {MembersRequestBuilder} from './members/';
-import {MembersWithLicenseErrorsRequestBuilder} from './membersWithLicenseErrors/';
-import {OnenoteRequestBuilder} from './onenote/';
-import {OwnersRequestBuilder} from './owners/';
-import {PermissionGrantsRequestBuilder} from './permissionGrants/';
-import {ResourceSpecificPermissionGrantItemRequestBuilder} from './permissionGrants/item/';
-import {PhotoRequestBuilder} from './photo/';
-import {PhotosRequestBuilder} from './photos/';
-import {ProfilePhotoItemRequestBuilder} from './photos/item/';
-import {PlannerRequestBuilder} from './planner/';
-import {RejectedSendersRequestBuilder} from './rejectedSenders/';
-import {RemoveFavoriteRequestBuilder} from './removeFavorite/';
-import {RenewRequestBuilder} from './renew/';
-import {ResetUnseenCountRequestBuilder} from './resetUnseenCount/';
-import {RestoreRequestBuilder} from './restore/';
-import {SettingsRequestBuilder} from './settings/';
-import {GroupSettingItemRequestBuilder} from './settings/item/';
-import {SitesRequestBuilder} from './sites/';
-import {SiteItemRequestBuilder} from './sites/item/';
-import {SubscribeByMailRequestBuilder} from './subscribeByMail/';
-import {TeamRequestBuilder} from './team/';
-import {ThreadsRequestBuilder} from './threads/';
-import {ConversationThreadItemRequestBuilder} from './threads/item/';
-import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/';
-import {TransitiveMembersRequestBuilder} from './transitiveMembers/';
-import {UnsubscribeByMailRequestBuilder} from './unsubscribeByMail/';
-import {ValidatePropertiesRequestBuilder} from './validateProperties/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGroupFromDiscriminatorValue} from '../../models/microsoft/graph/createGroupFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AcceptedSendersRequestBuilder} from './acceptedSenders/acceptedSendersRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as id55889b8340ffa3c5ccdeb1ba47358d843ac4ea27e924612dce2af0aad12ba91} from './acceptedSenders/item/directoryObjectItemRequestBuilder';
+import {AddFavoriteRequestBuilder} from './addFavorite/addFavoriteRequestBuilder';
+import {AppRoleAssignmentsRequestBuilder} from './appRoleAssignments/appRoleAssignmentsRequestBuilder';
+import {AppRoleAssignmentItemRequestBuilder} from './appRoleAssignments/item/appRoleAssignmentItemRequestBuilder';
+import {AssignLicenseRequestBuilder} from './assignLicense/assignLicenseRequestBuilder';
+import {CalendarRequestBuilder} from './calendar/calendarRequestBuilder';
+import {CalendarViewRequestBuilder} from './calendarView/calendarViewRequestBuilder';
+import {EventItemRequestBuilder as ib9a8c0963164bc38e895e76dfc9768bcbbc6c60b3fe44eccacb006e312f98107} from './calendarView/item/eventItemRequestBuilder';
+import {CheckGrantedPermissionsForAppRequestBuilder} from './checkGrantedPermissionsForApp/checkGrantedPermissionsForAppRequestBuilder';
+import {CheckMemberGroupsRequestBuilder} from './checkMemberGroups/checkMemberGroupsRequestBuilder';
+import {CheckMemberObjectsRequestBuilder} from './checkMemberObjects/checkMemberObjectsRequestBuilder';
+import {ConversationsRequestBuilder} from './conversations/conversationsRequestBuilder';
+import {ConversationItemRequestBuilder} from './conversations/item/conversationItemRequestBuilder';
+import {CreatedOnBehalfOfRequestBuilder} from './createdOnBehalfOf/createdOnBehalfOfRequestBuilder';
+import {DriveRequestBuilder} from './drive/driveRequestBuilder';
+import {DrivesRequestBuilder} from './drives/drivesRequestBuilder';
+import {DriveItemRequestBuilder} from './drives/item/driveItemRequestBuilder';
+import {EventsRequestBuilder} from './events/eventsRequestBuilder';
+import {EventItemRequestBuilder as ia32194b24bd5bb8d53aef1596ab896d4585378fe62d8e48eea5af6dc39c91b4c} from './events/item/eventItemRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {GetMemberGroupsRequestBuilder} from './getMemberGroups/getMemberGroupsRequestBuilder';
+import {GetMemberObjectsRequestBuilder} from './getMemberObjects/getMemberObjectsRequestBuilder';
+import {GroupLifecyclePoliciesRequestBuilder} from './groupLifecyclePolicies/groupLifecyclePoliciesRequestBuilder';
+import {GroupLifecyclePolicyItemRequestBuilder} from './groupLifecyclePolicies/item/groupLifecyclePolicyItemRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i734c949cd58514503fa968d4922950db5d3c8b9ff9a10d364eaee62d2415bc86} from './memberOf/item/directoryObjectItemRequestBuilder';
+import {MemberOfRequestBuilder} from './memberOf/memberOfRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i544471a65995e51e7553fcbad7b16c54c4f826da58df34a11353b6c81e2a14cb} from './members/item/directoryObjectItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i8b97748b8fc2df6e68e67212e9d835277d2737e615ddb5305c399456a94dbe3f} from './membersWithLicenseErrors/item/directoryObjectItemRequestBuilder';
+import {MembersWithLicenseErrorsRequestBuilder} from './membersWithLicenseErrors/membersWithLicenseErrorsRequestBuilder';
+import {OnenoteRequestBuilder} from './onenote/onenoteRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as ia3f3955da110bcd6872d0421499caa7d13b5d9159818b7af577e927c859a6cf1} from './owners/item/directoryObjectItemRequestBuilder';
+import {OwnersRequestBuilder} from './owners/ownersRequestBuilder';
+import {ResourceSpecificPermissionGrantItemRequestBuilder} from './permissionGrants/item/resourceSpecificPermissionGrantItemRequestBuilder';
+import {PermissionGrantsRequestBuilder} from './permissionGrants/permissionGrantsRequestBuilder';
+import {PhotoRequestBuilder} from './photo/photoRequestBuilder';
+import {ProfilePhotoItemRequestBuilder} from './photos/item/profilePhotoItemRequestBuilder';
+import {PhotosRequestBuilder} from './photos/photosRequestBuilder';
+import {PlannerRequestBuilder} from './planner/plannerRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as ib572dc96af86eb5638cae6deb8609134c1134a7b63736bb4b5f7ec4eedc6b332} from './rejectedSenders/item/directoryObjectItemRequestBuilder';
+import {RejectedSendersRequestBuilder} from './rejectedSenders/rejectedSendersRequestBuilder';
+import {RemoveFavoriteRequestBuilder} from './removeFavorite/removeFavoriteRequestBuilder';
+import {RenewRequestBuilder} from './renew/renewRequestBuilder';
+import {ResetUnseenCountRequestBuilder} from './resetUnseenCount/resetUnseenCountRequestBuilder';
+import {RestoreRequestBuilder} from './restore/restoreRequestBuilder';
+import {GroupSettingItemRequestBuilder} from './settings/item/groupSettingItemRequestBuilder';
+import {SettingsRequestBuilder} from './settings/settingsRequestBuilder';
+import {SiteItemRequestBuilder} from './sites/item/siteItemRequestBuilder';
+import {SitesRequestBuilder} from './sites/sitesRequestBuilder';
+import {SubscribeByMailRequestBuilder} from './subscribeByMail/subscribeByMailRequestBuilder';
+import {TeamRequestBuilder} from './team/teamRequestBuilder';
+import {ConversationThreadItemRequestBuilder} from './threads/item/conversationThreadItemRequestBuilder';
+import {ThreadsRequestBuilder} from './threads/threadsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as iad775710cf3e3ee76b8eab1b472eeb576aace3161afe93cf08ad70b25874fdc0} from './transitiveMemberOf/item/directoryObjectItemRequestBuilder';
+import {TransitiveMemberOfRequestBuilder} from './transitiveMemberOf/transitiveMemberOfRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as ib6308f25f5dcc38d7e775b17137f28e445253ff4cdca1a79462eebc90dfa3734} from './transitiveMembers/item/directoryObjectItemRequestBuilder';
+import {TransitiveMembersRequestBuilder} from './transitiveMembers/transitiveMembersRequestBuilder';
+import {UnsubscribeByMailRequestBuilder} from './unsubscribeByMail/unsubscribeByMailRequestBuilder';
+import {ValidatePropertiesRequestBuilder} from './validateProperties/validatePropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}  */
+/** Provides operations to manage the collection of group entities.  */
 export class GroupItemRequestBuilder {
     public get acceptedSenders(): AcceptedSendersRequestBuilder {
         return new AcceptedSendersRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -186,6 +197,17 @@ export class GroupItemRequestBuilder {
         return new ValidatePropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /**
+     * Gets an item from the MicrosoftGraph.groups.item.acceptedSenders.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public acceptedSendersById(id: string) : id55889b8340ffa3c5ccdeb1ba47358d843ac4ea27e924612dce2af0aad12ba91 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new id55889b8340ffa3c5ccdeb1ba47358d843ac4ea27e924612dce2af0aad12ba91(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Gets an item from the MicrosoftGraph.groups.item.appRoleAssignments.item collection
      * @param id Unique identifier of the item
      * @returns a appRoleAssignmentItemRequestBuilder
@@ -294,7 +316,11 @@ export class GroupItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.drives.item collection
@@ -344,7 +370,11 @@ export class GroupItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Group>(requestInfo, Group, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Group>(requestInfo, createGroupFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.groupLifecyclePolicies.item collection
@@ -358,6 +388,50 @@ export class GroupItemRequestBuilder {
         return new GroupLifecyclePolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
+     * Gets an item from the MicrosoftGraph.groups.item.memberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public memberOfById(id: string) : i734c949cd58514503fa968d4922950db5d3c8b9ff9a10d364eaee62d2415bc86 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i734c949cd58514503fa968d4922950db5d3c8b9ff9a10d364eaee62d2415bc86(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.members.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public membersById(id: string) : i544471a65995e51e7553fcbad7b16c54c4f826da58df34a11353b6c81e2a14cb {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i544471a65995e51e7553fcbad7b16c54c4f826da58df34a11353b6c81e2a14cb(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.membersWithLicenseErrors.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public membersWithLicenseErrorsById(id: string) : i8b97748b8fc2df6e68e67212e9d835277d2737e615ddb5305c399456a94dbe3f {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new i8b97748b8fc2df6e68e67212e9d835277d2737e615ddb5305c399456a94dbe3f(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.owners.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public ownersById(id: string) : ia3f3955da110bcd6872d0421499caa7d13b5d9159818b7af577e927c859a6cf1 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new ia3f3955da110bcd6872d0421499caa7d13b5d9159818b7af577e927c859a6cf1(urlTplParams, this.requestAdapter);
+    };
+    /**
      * Update entity in groups
      * @param body 
      * @param h Request headers
@@ -369,7 +443,11 @@ export class GroupItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.permissionGrants.item collection
@@ -392,6 +470,17 @@ export class GroupItemRequestBuilder {
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["profilePhoto_id"] = id
         return new ProfilePhotoItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.rejectedSenders.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public rejectedSendersById(id: string) : ib572dc96af86eb5638cae6deb8609134c1134a7b63736bb4b5f7ec4eedc6b332 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new ib572dc96af86eb5638cae6deb8609134c1134a7b63736bb4b5f7ec4eedc6b332(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.settings.item collection
@@ -425,5 +514,27 @@ export class GroupItemRequestBuilder {
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["conversationThread_id"] = id
         return new ConversationThreadItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.transitiveMemberOf.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public transitiveMemberOfById(id: string) : iad775710cf3e3ee76b8eab1b472eeb576aace3161afe93cf08ad70b25874fdc0 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new iad775710cf3e3ee76b8eab1b472eeb576aace3161afe93cf08ad70b25874fdc0(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.transitiveMembers.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public transitiveMembersById(id: string) : ib6308f25f5dcc38d7e775b17137f28e445253ff4cdca1a79462eebc90dfa3734 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new ib6308f25f5dcc38d7e775b17137f28e445253ff4cdca1a79462eebc90dfa3734(urlTplParams, this.requestAdapter);
     };
 }

@@ -1,9 +1,12 @@
 import {RoleManagement} from '../models/microsoft/graph/';
-import {DirectoryRequestBuilder} from './directory/';
-import {EntitlementManagementRequestBuilder} from './entitlementManagement/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createRoleManagementFromDiscriminatorValue} from '../models/microsoft/graph/createRoleManagementFromDiscriminatorValue';
+import {ODataError} from '../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DirectoryRequestBuilder} from './directory/directoryRequestBuilder';
+import {EntitlementManagementRequestBuilder} from './entitlementManagement/entitlementManagementRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /roleManagement  */
+/** Provides operations to manage the roleManagement singleton.  */
 export class RoleManagementRequestBuilder {
     public get directory(): DirectoryRequestBuilder {
         return new DirectoryRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -83,7 +86,11 @@ export class RoleManagementRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<RoleManagement>(requestInfo, RoleManagement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<RoleManagement>(requestInfo, createRoleManagementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update roleManagement
@@ -97,6 +104,10 @@ export class RoleManagementRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,7 +1,8 @@
+import {createKeyValuePairFromDiscriminatorValue} from './createKeyValuePairFromDiscriminatorValue';
 import {KeyValuePair} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SubjectRightsRequestDetail implements Parsable {
+export class SubjectRightsRequestDetail implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Count of items that are excluded from the request.  */
@@ -19,17 +20,24 @@ export class SubjectRightsRequestDetail implements Parsable {
     /** Total item size in bytes.  */
     private _totalItemSize?: number | undefined;
     /**
-     * Instantiates a new subjectRightsRequestDetail and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new subjectRightsRequestDetail and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the excludedItemCount property value. Count of items that are excluded from the request.
@@ -39,11 +47,40 @@ export class SubjectRightsRequestDetail implements Parsable {
         return this._excludedItemCount;
     };
     /**
+     * Sets the excludedItemCount property value. Count of items that are excluded from the request.
+     * @param value Value to set for the excludedItemCount property.
+     */
+    public set excludedItemCount(value: number | undefined) {
+        this._excludedItemCount = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["excludedItemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).excludedItemCount = n.getNumberValue(); }],
+            ["insightCounts", (o, n) => { (o as unknown as SubjectRightsRequestDetail).insightCounts = n.getCollectionOfObjectValues<KeyValuePair>(createKeyValuePairFromDiscriminatorValue); }],
+            ["itemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).itemCount = n.getNumberValue(); }],
+            ["itemNeedReview", (o, n) => { (o as unknown as SubjectRightsRequestDetail).itemNeedReview = n.getNumberValue(); }],
+            ["productItemCounts", (o, n) => { (o as unknown as SubjectRightsRequestDetail).productItemCounts = n.getCollectionOfObjectValues<KeyValuePair>(createKeyValuePairFromDiscriminatorValue); }],
+            ["signedOffItemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).signedOffItemCount = n.getNumberValue(); }],
+            ["totalItemSize", (o, n) => { (o as unknown as SubjectRightsRequestDetail).totalItemSize = n.getNumberValue(); }],
+        ]);
+    };
+    /**
      * Gets the insightCounts property value. Count of items per insight.
      * @returns a keyValuePair
      */
     public get insightCounts() {
         return this._insightCounts;
+    };
+    /**
+     * Sets the insightCounts property value. Count of items per insight.
+     * @param value Value to set for the insightCounts property.
+     */
+    public set insightCounts(value: KeyValuePair[] | undefined) {
+        this._insightCounts = value;
     };
     /**
      * Gets the itemCount property value. Count of items found.
@@ -53,11 +90,25 @@ export class SubjectRightsRequestDetail implements Parsable {
         return this._itemCount;
     };
     /**
+     * Sets the itemCount property value. Count of items found.
+     * @param value Value to set for the itemCount property.
+     */
+    public set itemCount(value: number | undefined) {
+        this._itemCount = value;
+    };
+    /**
      * Gets the itemNeedReview property value. Count of item that need review.
      * @returns a int64
      */
     public get itemNeedReview() {
         return this._itemNeedReview;
+    };
+    /**
+     * Sets the itemNeedReview property value. Count of item that need review.
+     * @param value Value to set for the itemNeedReview property.
+     */
+    public set itemNeedReview(value: number | undefined) {
+        this._itemNeedReview = value;
     };
     /**
      * Gets the productItemCounts property value. Count of items per product, such as Exchange, SharePoint, OneDrive, and Teams.
@@ -67,33 +118,11 @@ export class SubjectRightsRequestDetail implements Parsable {
         return this._productItemCounts;
     };
     /**
-     * Gets the signedOffItemCount property value. Count of items signed off by the administrator.
-     * @returns a int64
+     * Sets the productItemCounts property value. Count of items per product, such as Exchange, SharePoint, OneDrive, and Teams.
+     * @param value Value to set for the productItemCounts property.
      */
-    public get signedOffItemCount() {
-        return this._signedOffItemCount;
-    };
-    /**
-     * Gets the totalItemSize property value. Total item size in bytes.
-     * @returns a int64
-     */
-    public get totalItemSize() {
-        return this._totalItemSize;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["excludedItemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).excludedItemCount = n.getNumberValue(); }],
-            ["insightCounts", (o, n) => { (o as unknown as SubjectRightsRequestDetail).insightCounts = n.getCollectionOfObjectValues<KeyValuePair>(KeyValuePair); }],
-            ["itemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).itemCount = n.getNumberValue(); }],
-            ["itemNeedReview", (o, n) => { (o as unknown as SubjectRightsRequestDetail).itemNeedReview = n.getNumberValue(); }],
-            ["productItemCounts", (o, n) => { (o as unknown as SubjectRightsRequestDetail).productItemCounts = n.getCollectionOfObjectValues<KeyValuePair>(KeyValuePair); }],
-            ["signedOffItemCount", (o, n) => { (o as unknown as SubjectRightsRequestDetail).signedOffItemCount = n.getNumberValue(); }],
-            ["totalItemSize", (o, n) => { (o as unknown as SubjectRightsRequestDetail).totalItemSize = n.getNumberValue(); }],
-        ]);
+    public set productItemCounts(value: KeyValuePair[] | undefined) {
+        this._productItemCounts = value;
     };
     /**
      * Serializes information the current object
@@ -111,46 +140,11 @@ export class SubjectRightsRequestDetail implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the signedOffItemCount property value. Count of items signed off by the administrator.
+     * @returns a int64
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the excludedItemCount property value. Count of items that are excluded from the request.
-     * @param value Value to set for the excludedItemCount property.
-     */
-    public set excludedItemCount(value: number | undefined) {
-        this._excludedItemCount = value;
-    };
-    /**
-     * Sets the insightCounts property value. Count of items per insight.
-     * @param value Value to set for the insightCounts property.
-     */
-    public set insightCounts(value: KeyValuePair[] | undefined) {
-        this._insightCounts = value;
-    };
-    /**
-     * Sets the itemCount property value. Count of items found.
-     * @param value Value to set for the itemCount property.
-     */
-    public set itemCount(value: number | undefined) {
-        this._itemCount = value;
-    };
-    /**
-     * Sets the itemNeedReview property value. Count of item that need review.
-     * @param value Value to set for the itemNeedReview property.
-     */
-    public set itemNeedReview(value: number | undefined) {
-        this._itemNeedReview = value;
-    };
-    /**
-     * Sets the productItemCounts property value. Count of items per product, such as Exchange, SharePoint, OneDrive, and Teams.
-     * @param value Value to set for the productItemCounts property.
-     */
-    public set productItemCounts(value: KeyValuePair[] | undefined) {
-        this._productItemCounts = value;
+    public get signedOffItemCount() {
+        return this._signedOffItemCount;
     };
     /**
      * Sets the signedOffItemCount property value. Count of items signed off by the administrator.
@@ -158,6 +152,13 @@ export class SubjectRightsRequestDetail implements Parsable {
      */
     public set signedOffItemCount(value: number | undefined) {
         this._signedOffItemCount = value;
+    };
+    /**
+     * Gets the totalItemSize property value. Total item size in bytes.
+     * @returns a int64
+     */
+    public get totalItemSize() {
+        return this._totalItemSize;
     };
     /**
      * Sets the totalItemSize property value. Total item size in bytes.

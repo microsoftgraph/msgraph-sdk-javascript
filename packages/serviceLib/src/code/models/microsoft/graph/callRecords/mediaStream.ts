@@ -1,7 +1,7 @@
-import {MediaStreamDirection} from './index';
-import {Duration, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {MediaStreamDirection} from './mediaStreamDirection';
+import {AdditionalDataHolder, Duration, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class MediaStream implements Parsable {
+export class MediaStream implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Average Network Mean Opinion Score degradation for stream. Represents how much the network loss and jitter has impacted the quality of received audio.  */
@@ -55,17 +55,18 @@ export class MediaStream implements Parsable {
     /** True if the media stream bypassed the Mediation Server and went straight between client and PSTN Gateway/PBX, false otherwise.  */
     private _wasMediaBypassed?: boolean | undefined;
     /**
-     * Instantiates a new mediaStream and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the averageAudioDegradation property value. Average Network Mean Opinion Score degradation for stream. Represents how much the network loss and jitter has impacted the quality of received audio.
@@ -75,11 +76,25 @@ export class MediaStream implements Parsable {
         return this._averageAudioDegradation;
     };
     /**
+     * Sets the averageAudioDegradation property value. Average Network Mean Opinion Score degradation for stream. Represents how much the network loss and jitter has impacted the quality of received audio.
+     * @param value Value to set for the averageAudioDegradation property.
+     */
+    public set averageAudioDegradation(value: number | undefined) {
+        this._averageAudioDegradation = value;
+    };
+    /**
      * Gets the averageAudioNetworkJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
      * @returns a Duration
      */
     public get averageAudioNetworkJitter() {
         return this._averageAudioNetworkJitter;
+    };
+    /**
+     * Sets the averageAudioNetworkJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the averageAudioNetworkJitter property.
+     */
+    public set averageAudioNetworkJitter(value: Duration | undefined) {
+        this._averageAudioNetworkJitter = value;
     };
     /**
      * Gets the averageBandwidthEstimate property value. Average estimated bandwidth available between two endpoints in bits per second.
@@ -89,11 +104,25 @@ export class MediaStream implements Parsable {
         return this._averageBandwidthEstimate;
     };
     /**
+     * Sets the averageBandwidthEstimate property value. Average estimated bandwidth available between two endpoints in bits per second.
+     * @param value Value to set for the averageBandwidthEstimate property.
+     */
+    public set averageBandwidthEstimate(value: number | undefined) {
+        this._averageBandwidthEstimate = value;
+    };
+    /**
      * Gets the averageJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
      * @returns a Duration
      */
     public get averageJitter() {
         return this._averageJitter;
+    };
+    /**
+     * Sets the averageJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the averageJitter property.
+     */
+    public set averageJitter(value: Duration | undefined) {
+        this._averageJitter = value;
     };
     /**
      * Gets the averagePacketLossRate property value. Average packet loss rate for stream.
@@ -103,11 +132,25 @@ export class MediaStream implements Parsable {
         return this._averagePacketLossRate;
     };
     /**
+     * Sets the averagePacketLossRate property value. Average packet loss rate for stream.
+     * @param value Value to set for the averagePacketLossRate property.
+     */
+    public set averagePacketLossRate(value: number | undefined) {
+        this._averagePacketLossRate = value;
+    };
+    /**
      * Gets the averageRatioOfConcealedSamples property value. Ratio of the number of audio frames with samples generated by packet loss concealment to the total number of audio frames.
      * @returns a float
      */
     public get averageRatioOfConcealedSamples() {
         return this._averageRatioOfConcealedSamples;
+    };
+    /**
+     * Sets the averageRatioOfConcealedSamples property value. Ratio of the number of audio frames with samples generated by packet loss concealment to the total number of audio frames.
+     * @param value Value to set for the averageRatioOfConcealedSamples property.
+     */
+    public set averageRatioOfConcealedSamples(value: number | undefined) {
+        this._averageRatioOfConcealedSamples = value;
     };
     /**
      * Gets the averageReceivedFrameRate property value. Average frames per second received for all video streams computed over the duration of the session.
@@ -117,11 +160,25 @@ export class MediaStream implements Parsable {
         return this._averageReceivedFrameRate;
     };
     /**
+     * Sets the averageReceivedFrameRate property value. Average frames per second received for all video streams computed over the duration of the session.
+     * @param value Value to set for the averageReceivedFrameRate property.
+     */
+    public set averageReceivedFrameRate(value: number | undefined) {
+        this._averageReceivedFrameRate = value;
+    };
+    /**
      * Gets the averageRoundTripTime property value. Average network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
      * @returns a Duration
      */
     public get averageRoundTripTime() {
         return this._averageRoundTripTime;
+    };
+    /**
+     * Sets the averageRoundTripTime property value. Average network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the averageRoundTripTime property.
+     */
+    public set averageRoundTripTime(value: Duration | undefined) {
+        this._averageRoundTripTime = value;
     };
     /**
      * Gets the averageVideoFrameLossPercentage property value. Average percentage of video frames lost as displayed to the user.
@@ -131,11 +188,25 @@ export class MediaStream implements Parsable {
         return this._averageVideoFrameLossPercentage;
     };
     /**
+     * Sets the averageVideoFrameLossPercentage property value. Average percentage of video frames lost as displayed to the user.
+     * @param value Value to set for the averageVideoFrameLossPercentage property.
+     */
+    public set averageVideoFrameLossPercentage(value: number | undefined) {
+        this._averageVideoFrameLossPercentage = value;
+    };
+    /**
      * Gets the averageVideoFrameRate property value. Average frames per second received for a video stream, computed over the duration of the session.
      * @returns a float
      */
     public get averageVideoFrameRate() {
         return this._averageVideoFrameRate;
+    };
+    /**
+     * Sets the averageVideoFrameRate property value. Average frames per second received for a video stream, computed over the duration of the session.
+     * @param value Value to set for the averageVideoFrameRate property.
+     */
+    public set averageVideoFrameRate(value: number | undefined) {
+        this._averageVideoFrameRate = value;
     };
     /**
      * Gets the averageVideoPacketLossRate property value. Average fraction of packets lost, as specified in [RFC 3550][], computed over the duration of the session.
@@ -145,6 +216,19 @@ export class MediaStream implements Parsable {
         return this._averageVideoPacketLossRate;
     };
     /**
+     * Sets the averageVideoPacketLossRate property value. Average fraction of packets lost, as specified in [RFC 3550][], computed over the duration of the session.
+     * @param value Value to set for the averageVideoPacketLossRate property.
+     */
+    public set averageVideoPacketLossRate(value: number | undefined) {
+        this._averageVideoPacketLossRate = value;
+    };
+    /**
+     * Instantiates a new mediaStream and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the endDateTime property value. UTC time when the stream ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
      * @returns a Date
      */
@@ -152,95 +236,11 @@ export class MediaStream implements Parsable {
         return this._endDateTime;
     };
     /**
-     * Gets the lowFrameRateRatio property value. Fraction of the call where frame rate is less than 7.5 frames per second.
-     * @returns a float
+     * Sets the endDateTime property value. UTC time when the stream ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @param value Value to set for the endDateTime property.
      */
-    public get lowFrameRateRatio() {
-        return this._lowFrameRateRatio;
-    };
-    /**
-     * Gets the lowVideoProcessingCapabilityRatio property value. Fraction of the call that the client is running less than 70% expected video processing capability.
-     * @returns a float
-     */
-    public get lowVideoProcessingCapabilityRatio() {
-        return this._lowVideoProcessingCapabilityRatio;
-    };
-    /**
-     * Gets the maxAudioNetworkJitter property value. Maximum of audio network jitter computed over each of the 20 second windows during the session, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @returns a Duration
-     */
-    public get maxAudioNetworkJitter() {
-        return this._maxAudioNetworkJitter;
-    };
-    /**
-     * Gets the maxJitter property value. Maximum jitter for the stream computed as specified in RFC 3550, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @returns a Duration
-     */
-    public get maxJitter() {
-        return this._maxJitter;
-    };
-    /**
-     * Gets the maxPacketLossRate property value. Maximum packet loss rate for the stream.
-     * @returns a float
-     */
-    public get maxPacketLossRate() {
-        return this._maxPacketLossRate;
-    };
-    /**
-     * Gets the maxRatioOfConcealedSamples property value. Maximum ratio of packets concealed by the healer.
-     * @returns a float
-     */
-    public get maxRatioOfConcealedSamples() {
-        return this._maxRatioOfConcealedSamples;
-    };
-    /**
-     * Gets the maxRoundTripTime property value. Maximum network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @returns a Duration
-     */
-    public get maxRoundTripTime() {
-        return this._maxRoundTripTime;
-    };
-    /**
-     * Gets the packetUtilization property value. Packet count for the stream.
-     * @returns a int64
-     */
-    public get packetUtilization() {
-        return this._packetUtilization;
-    };
-    /**
-     * Gets the postForwardErrorCorrectionPacketLossRate property value. Packet loss rate after FEC has been applied aggregated across all video streams and codecs.
-     * @returns a float
-     */
-    public get postForwardErrorCorrectionPacketLossRate() {
-        return this._postForwardErrorCorrectionPacketLossRate;
-    };
-    /**
-     * Gets the startDateTime property value. UTC time when the stream started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @returns a Date
-     */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the streamDirection property value. Indicates the direction of the media stream. Possible values are: callerToCallee, calleeToCaller.
-     * @returns a mediaStreamDirection
-     */
-    public get streamDirection() {
-        return this._streamDirection;
-    };
-    /**
-     * Gets the streamId property value. Unique identifier for the stream.
-     * @returns a string
-     */
-    public get streamId() {
-        return this._streamId;
-    };
-    /**
-     * Gets the wasMediaBypassed property value. True if the media stream bypassed the Mediation Server and went straight between client and PSTN Gateway/PBX, false otherwise.
-     * @returns a boolean
-     */
-    public get wasMediaBypassed() {
-        return this._wasMediaBypassed;
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -276,6 +276,132 @@ export class MediaStream implements Parsable {
         ]);
     };
     /**
+     * Gets the lowFrameRateRatio property value. Fraction of the call where frame rate is less than 7.5 frames per second.
+     * @returns a float
+     */
+    public get lowFrameRateRatio() {
+        return this._lowFrameRateRatio;
+    };
+    /**
+     * Sets the lowFrameRateRatio property value. Fraction of the call where frame rate is less than 7.5 frames per second.
+     * @param value Value to set for the lowFrameRateRatio property.
+     */
+    public set lowFrameRateRatio(value: number | undefined) {
+        this._lowFrameRateRatio = value;
+    };
+    /**
+     * Gets the lowVideoProcessingCapabilityRatio property value. Fraction of the call that the client is running less than 70% expected video processing capability.
+     * @returns a float
+     */
+    public get lowVideoProcessingCapabilityRatio() {
+        return this._lowVideoProcessingCapabilityRatio;
+    };
+    /**
+     * Sets the lowVideoProcessingCapabilityRatio property value. Fraction of the call that the client is running less than 70% expected video processing capability.
+     * @param value Value to set for the lowVideoProcessingCapabilityRatio property.
+     */
+    public set lowVideoProcessingCapabilityRatio(value: number | undefined) {
+        this._lowVideoProcessingCapabilityRatio = value;
+    };
+    /**
+     * Gets the maxAudioNetworkJitter property value. Maximum of audio network jitter computed over each of the 20 second windows during the session, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @returns a Duration
+     */
+    public get maxAudioNetworkJitter() {
+        return this._maxAudioNetworkJitter;
+    };
+    /**
+     * Sets the maxAudioNetworkJitter property value. Maximum of audio network jitter computed over each of the 20 second windows during the session, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the maxAudioNetworkJitter property.
+     */
+    public set maxAudioNetworkJitter(value: Duration | undefined) {
+        this._maxAudioNetworkJitter = value;
+    };
+    /**
+     * Gets the maxJitter property value. Maximum jitter for the stream computed as specified in RFC 3550, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @returns a Duration
+     */
+    public get maxJitter() {
+        return this._maxJitter;
+    };
+    /**
+     * Sets the maxJitter property value. Maximum jitter for the stream computed as specified in RFC 3550, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the maxJitter property.
+     */
+    public set maxJitter(value: Duration | undefined) {
+        this._maxJitter = value;
+    };
+    /**
+     * Gets the maxPacketLossRate property value. Maximum packet loss rate for the stream.
+     * @returns a float
+     */
+    public get maxPacketLossRate() {
+        return this._maxPacketLossRate;
+    };
+    /**
+     * Sets the maxPacketLossRate property value. Maximum packet loss rate for the stream.
+     * @param value Value to set for the maxPacketLossRate property.
+     */
+    public set maxPacketLossRate(value: number | undefined) {
+        this._maxPacketLossRate = value;
+    };
+    /**
+     * Gets the maxRatioOfConcealedSamples property value. Maximum ratio of packets concealed by the healer.
+     * @returns a float
+     */
+    public get maxRatioOfConcealedSamples() {
+        return this._maxRatioOfConcealedSamples;
+    };
+    /**
+     * Sets the maxRatioOfConcealedSamples property value. Maximum ratio of packets concealed by the healer.
+     * @param value Value to set for the maxRatioOfConcealedSamples property.
+     */
+    public set maxRatioOfConcealedSamples(value: number | undefined) {
+        this._maxRatioOfConcealedSamples = value;
+    };
+    /**
+     * Gets the maxRoundTripTime property value. Maximum network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @returns a Duration
+     */
+    public get maxRoundTripTime() {
+        return this._maxRoundTripTime;
+    };
+    /**
+     * Sets the maxRoundTripTime property value. Maximum network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
+     * @param value Value to set for the maxRoundTripTime property.
+     */
+    public set maxRoundTripTime(value: Duration | undefined) {
+        this._maxRoundTripTime = value;
+    };
+    /**
+     * Gets the packetUtilization property value. Packet count for the stream.
+     * @returns a int64
+     */
+    public get packetUtilization() {
+        return this._packetUtilization;
+    };
+    /**
+     * Sets the packetUtilization property value. Packet count for the stream.
+     * @param value Value to set for the packetUtilization property.
+     */
+    public set packetUtilization(value: number | undefined) {
+        this._packetUtilization = value;
+    };
+    /**
+     * Gets the postForwardErrorCorrectionPacketLossRate property value. Packet loss rate after FEC has been applied aggregated across all video streams and codecs.
+     * @returns a float
+     */
+    public get postForwardErrorCorrectionPacketLossRate() {
+        return this._postForwardErrorCorrectionPacketLossRate;
+    };
+    /**
+     * Sets the postForwardErrorCorrectionPacketLossRate property value. Packet loss rate after FEC has been applied aggregated across all video streams and codecs.
+     * @param value Value to set for the postForwardErrorCorrectionPacketLossRate property.
+     */
+    public set postForwardErrorCorrectionPacketLossRate(value: number | undefined) {
+        this._postForwardErrorCorrectionPacketLossRate = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -309,158 +435,11 @@ export class MediaStream implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startDateTime property value. UTC time when the stream started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
+     * @returns a Date
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the averageAudioDegradation property value. Average Network Mean Opinion Score degradation for stream. Represents how much the network loss and jitter has impacted the quality of received audio.
-     * @param value Value to set for the averageAudioDegradation property.
-     */
-    public set averageAudioDegradation(value: number | undefined) {
-        this._averageAudioDegradation = value;
-    };
-    /**
-     * Sets the averageAudioNetworkJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the averageAudioNetworkJitter property.
-     */
-    public set averageAudioNetworkJitter(value: Duration | undefined) {
-        this._averageAudioNetworkJitter = value;
-    };
-    /**
-     * Sets the averageBandwidthEstimate property value. Average estimated bandwidth available between two endpoints in bits per second.
-     * @param value Value to set for the averageBandwidthEstimate property.
-     */
-    public set averageBandwidthEstimate(value: number | undefined) {
-        this._averageBandwidthEstimate = value;
-    };
-    /**
-     * Sets the averageJitter property value. Average jitter for the stream computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the averageJitter property.
-     */
-    public set averageJitter(value: Duration | undefined) {
-        this._averageJitter = value;
-    };
-    /**
-     * Sets the averagePacketLossRate property value. Average packet loss rate for stream.
-     * @param value Value to set for the averagePacketLossRate property.
-     */
-    public set averagePacketLossRate(value: number | undefined) {
-        this._averagePacketLossRate = value;
-    };
-    /**
-     * Sets the averageRatioOfConcealedSamples property value. Ratio of the number of audio frames with samples generated by packet loss concealment to the total number of audio frames.
-     * @param value Value to set for the averageRatioOfConcealedSamples property.
-     */
-    public set averageRatioOfConcealedSamples(value: number | undefined) {
-        this._averageRatioOfConcealedSamples = value;
-    };
-    /**
-     * Sets the averageReceivedFrameRate property value. Average frames per second received for all video streams computed over the duration of the session.
-     * @param value Value to set for the averageReceivedFrameRate property.
-     */
-    public set averageReceivedFrameRate(value: number | undefined) {
-        this._averageReceivedFrameRate = value;
-    };
-    /**
-     * Sets the averageRoundTripTime property value. Average network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the averageRoundTripTime property.
-     */
-    public set averageRoundTripTime(value: Duration | undefined) {
-        this._averageRoundTripTime = value;
-    };
-    /**
-     * Sets the averageVideoFrameLossPercentage property value. Average percentage of video frames lost as displayed to the user.
-     * @param value Value to set for the averageVideoFrameLossPercentage property.
-     */
-    public set averageVideoFrameLossPercentage(value: number | undefined) {
-        this._averageVideoFrameLossPercentage = value;
-    };
-    /**
-     * Sets the averageVideoFrameRate property value. Average frames per second received for a video stream, computed over the duration of the session.
-     * @param value Value to set for the averageVideoFrameRate property.
-     */
-    public set averageVideoFrameRate(value: number | undefined) {
-        this._averageVideoFrameRate = value;
-    };
-    /**
-     * Sets the averageVideoPacketLossRate property value. Average fraction of packets lost, as specified in [RFC 3550][], computed over the duration of the session.
-     * @param value Value to set for the averageVideoPacketLossRate property.
-     */
-    public set averageVideoPacketLossRate(value: number | undefined) {
-        this._averageVideoPacketLossRate = value;
-    };
-    /**
-     * Sets the endDateTime property value. UTC time when the stream ended. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the lowFrameRateRatio property value. Fraction of the call where frame rate is less than 7.5 frames per second.
-     * @param value Value to set for the lowFrameRateRatio property.
-     */
-    public set lowFrameRateRatio(value: number | undefined) {
-        this._lowFrameRateRatio = value;
-    };
-    /**
-     * Sets the lowVideoProcessingCapabilityRatio property value. Fraction of the call that the client is running less than 70% expected video processing capability.
-     * @param value Value to set for the lowVideoProcessingCapabilityRatio property.
-     */
-    public set lowVideoProcessingCapabilityRatio(value: number | undefined) {
-        this._lowVideoProcessingCapabilityRatio = value;
-    };
-    /**
-     * Sets the maxAudioNetworkJitter property value. Maximum of audio network jitter computed over each of the 20 second windows during the session, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the maxAudioNetworkJitter property.
-     */
-    public set maxAudioNetworkJitter(value: Duration | undefined) {
-        this._maxAudioNetworkJitter = value;
-    };
-    /**
-     * Sets the maxJitter property value. Maximum jitter for the stream computed as specified in RFC 3550, denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the maxJitter property.
-     */
-    public set maxJitter(value: Duration | undefined) {
-        this._maxJitter = value;
-    };
-    /**
-     * Sets the maxPacketLossRate property value. Maximum packet loss rate for the stream.
-     * @param value Value to set for the maxPacketLossRate property.
-     */
-    public set maxPacketLossRate(value: number | undefined) {
-        this._maxPacketLossRate = value;
-    };
-    /**
-     * Sets the maxRatioOfConcealedSamples property value. Maximum ratio of packets concealed by the healer.
-     * @param value Value to set for the maxRatioOfConcealedSamples property.
-     */
-    public set maxRatioOfConcealedSamples(value: number | undefined) {
-        this._maxRatioOfConcealedSamples = value;
-    };
-    /**
-     * Sets the maxRoundTripTime property value. Maximum network propagation round-trip time computed as specified in [RFC 3550][], denoted in [ISO 8601][] format. For example, 1 second is denoted as 'PT1S', where 'P' is the duration designator, 'T' is the time designator, and 'S' is the second designator.
-     * @param value Value to set for the maxRoundTripTime property.
-     */
-    public set maxRoundTripTime(value: Duration | undefined) {
-        this._maxRoundTripTime = value;
-    };
-    /**
-     * Sets the packetUtilization property value. Packet count for the stream.
-     * @param value Value to set for the packetUtilization property.
-     */
-    public set packetUtilization(value: number | undefined) {
-        this._packetUtilization = value;
-    };
-    /**
-     * Sets the postForwardErrorCorrectionPacketLossRate property value. Packet loss rate after FEC has been applied aggregated across all video streams and codecs.
-     * @param value Value to set for the postForwardErrorCorrectionPacketLossRate property.
-     */
-    public set postForwardErrorCorrectionPacketLossRate(value: number | undefined) {
-        this._postForwardErrorCorrectionPacketLossRate = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. UTC time when the stream started. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 is 2014-01-01T00:00:00Z
@@ -470,6 +449,13 @@ export class MediaStream implements Parsable {
         this._startDateTime = value;
     };
     /**
+     * Gets the streamDirection property value. Indicates the direction of the media stream. Possible values are: callerToCallee, calleeToCaller.
+     * @returns a mediaStreamDirection
+     */
+    public get streamDirection() {
+        return this._streamDirection;
+    };
+    /**
      * Sets the streamDirection property value. Indicates the direction of the media stream. Possible values are: callerToCallee, calleeToCaller.
      * @param value Value to set for the streamDirection property.
      */
@@ -477,11 +463,25 @@ export class MediaStream implements Parsable {
         this._streamDirection = value;
     };
     /**
+     * Gets the streamId property value. Unique identifier for the stream.
+     * @returns a string
+     */
+    public get streamId() {
+        return this._streamId;
+    };
+    /**
      * Sets the streamId property value. Unique identifier for the stream.
      * @param value Value to set for the streamId property.
      */
     public set streamId(value: string | undefined) {
         this._streamId = value;
+    };
+    /**
+     * Gets the wasMediaBypassed property value. True if the media stream bypassed the Mediation Server and went straight between client and PSTN Gateway/PBX, false otherwise.
+     * @returns a boolean
+     */
+    public get wasMediaBypassed() {
+        return this._wasMediaBypassed;
     };
     /**
      * Sets the wasMediaBypassed property value. True if the media stream bypassed the Mediation Server and went straight between client and PSTN Gateway/PBX, false otherwise.

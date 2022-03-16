@@ -1,3 +1,6 @@
+import {createPrintConnectorFromDiscriminatorValue} from './createPrintConnectorFromDiscriminatorValue';
+import {createPrinterShareFromDiscriminatorValue} from './createPrinterShareFromDiscriminatorValue';
+import {createPrintTaskTriggerFromDiscriminatorValue} from './createPrintTaskTriggerFromDiscriminatorValue';
 import {PrintConnector, PrinterBase, PrinterShare, PrintTaskTrigger} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -17,17 +20,39 @@ export class Printer extends PrinterBase implements Parsable {
     /** A list of task triggers that are associated with the printer.  */
     private _taskTriggers?: PrintTaskTrigger[] | undefined;
     /**
+     * Gets the connectors property value. The connectors that are associated with the printer.
+     * @returns a printConnector
+     */
+    public get connectors() {
+        return this._connectors;
+    };
+    /**
+     * Sets the connectors property value. The connectors that are associated with the printer.
+     * @param value Value to set for the connectors property.
+     */
+    public set connectors(value: PrintConnector[] | undefined) {
+        this._connectors = value;
+    };
+    /**
      * Instantiates a new printer and sets the default values.
      */
     public constructor() {
         super();
     };
     /**
-     * Gets the connectors property value. The connectors that are associated with the printer.
-     * @returns a printConnector
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get connectors() {
-        return this._connectors;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["connectors", (o, n) => { (o as unknown as Printer).connectors = n.getCollectionOfObjectValues<PrintConnector>(createPrintConnectorFromDiscriminatorValue); }],
+            ["hasPhysicalDevice", (o, n) => { (o as unknown as Printer).hasPhysicalDevice = n.getBooleanValue(); }],
+            ["isShared", (o, n) => { (o as unknown as Printer).isShared = n.getBooleanValue(); }],
+            ["lastSeenDateTime", (o, n) => { (o as unknown as Printer).lastSeenDateTime = n.getDateValue(); }],
+            ["registeredDateTime", (o, n) => { (o as unknown as Printer).registeredDateTime = n.getDateValue(); }],
+            ["shares", (o, n) => { (o as unknown as Printer).shares = n.getCollectionOfObjectValues<PrinterShare>(createPrinterShareFromDiscriminatorValue); }],
+            ["taskTriggers", (o, n) => { (o as unknown as Printer).taskTriggers = n.getCollectionOfObjectValues<PrintTaskTrigger>(createPrintTaskTriggerFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the hasPhysicalDevice property value. True if the printer has a physical device for printing. Read-only.
@@ -37,11 +62,25 @@ export class Printer extends PrinterBase implements Parsable {
         return this._hasPhysicalDevice;
     };
     /**
+     * Sets the hasPhysicalDevice property value. True if the printer has a physical device for printing. Read-only.
+     * @param value Value to set for the hasPhysicalDevice property.
+     */
+    public set hasPhysicalDevice(value: boolean | undefined) {
+        this._hasPhysicalDevice = value;
+    };
+    /**
      * Gets the isShared property value. True if the printer is shared; false otherwise. Read-only.
      * @returns a boolean
      */
     public get isShared() {
         return this._isShared;
+    };
+    /**
+     * Sets the isShared property value. True if the printer is shared; false otherwise. Read-only.
+     * @param value Value to set for the isShared property.
+     */
+    public set isShared(value: boolean | undefined) {
+        this._isShared = value;
     };
     /**
      * Gets the lastSeenDateTime property value. The most recent dateTimeOffset when a printer interacted with Universal Print. Read-only.
@@ -51,6 +90,13 @@ export class Printer extends PrinterBase implements Parsable {
         return this._lastSeenDateTime;
     };
     /**
+     * Sets the lastSeenDateTime property value. The most recent dateTimeOffset when a printer interacted with Universal Print. Read-only.
+     * @param value Value to set for the lastSeenDateTime property.
+     */
+    public set lastSeenDateTime(value: Date | undefined) {
+        this._lastSeenDateTime = value;
+    };
+    /**
      * Gets the registeredDateTime property value. The DateTimeOffset when the printer was registered. Read-only.
      * @returns a Date
      */
@@ -58,33 +104,11 @@ export class Printer extends PrinterBase implements Parsable {
         return this._registeredDateTime;
     };
     /**
-     * Gets the shares property value. The list of printerShares that are associated with the printer. Currently, only one printerShare can be associated with the printer. Read-only. Nullable.
-     * @returns a printerShare
+     * Sets the registeredDateTime property value. The DateTimeOffset when the printer was registered. Read-only.
+     * @param value Value to set for the registeredDateTime property.
      */
-    public get shares() {
-        return this._shares;
-    };
-    /**
-     * Gets the taskTriggers property value. A list of task triggers that are associated with the printer.
-     * @returns a printTaskTrigger
-     */
-    public get taskTriggers() {
-        return this._taskTriggers;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["connectors", (o, n) => { (o as unknown as Printer).connectors = n.getCollectionOfObjectValues<PrintConnector>(PrintConnector); }],
-            ["hasPhysicalDevice", (o, n) => { (o as unknown as Printer).hasPhysicalDevice = n.getBooleanValue(); }],
-            ["isShared", (o, n) => { (o as unknown as Printer).isShared = n.getBooleanValue(); }],
-            ["lastSeenDateTime", (o, n) => { (o as unknown as Printer).lastSeenDateTime = n.getDateValue(); }],
-            ["registeredDateTime", (o, n) => { (o as unknown as Printer).registeredDateTime = n.getDateValue(); }],
-            ["shares", (o, n) => { (o as unknown as Printer).shares = n.getCollectionOfObjectValues<PrinterShare>(PrinterShare); }],
-            ["taskTriggers", (o, n) => { (o as unknown as Printer).taskTriggers = n.getCollectionOfObjectValues<PrintTaskTrigger>(PrintTaskTrigger); }],
-        ]);
+    public set registeredDateTime(value: Date | undefined) {
+        this._registeredDateTime = value;
     };
     /**
      * Serializes information the current object
@@ -102,39 +126,11 @@ export class Printer extends PrinterBase implements Parsable {
         writer.writeCollectionOfObjectValues<PrintTaskTrigger>("taskTriggers", this.taskTriggers);
     };
     /**
-     * Sets the connectors property value. The connectors that are associated with the printer.
-     * @param value Value to set for the connectors property.
+     * Gets the shares property value. The list of printerShares that are associated with the printer. Currently, only one printerShare can be associated with the printer. Read-only. Nullable.
+     * @returns a printerShare
      */
-    public set connectors(value: PrintConnector[] | undefined) {
-        this._connectors = value;
-    };
-    /**
-     * Sets the hasPhysicalDevice property value. True if the printer has a physical device for printing. Read-only.
-     * @param value Value to set for the hasPhysicalDevice property.
-     */
-    public set hasPhysicalDevice(value: boolean | undefined) {
-        this._hasPhysicalDevice = value;
-    };
-    /**
-     * Sets the isShared property value. True if the printer is shared; false otherwise. Read-only.
-     * @param value Value to set for the isShared property.
-     */
-    public set isShared(value: boolean | undefined) {
-        this._isShared = value;
-    };
-    /**
-     * Sets the lastSeenDateTime property value. The most recent dateTimeOffset when a printer interacted with Universal Print. Read-only.
-     * @param value Value to set for the lastSeenDateTime property.
-     */
-    public set lastSeenDateTime(value: Date | undefined) {
-        this._lastSeenDateTime = value;
-    };
-    /**
-     * Sets the registeredDateTime property value. The DateTimeOffset when the printer was registered. Read-only.
-     * @param value Value to set for the registeredDateTime property.
-     */
-    public set registeredDateTime(value: Date | undefined) {
-        this._registeredDateTime = value;
+    public get shares() {
+        return this._shares;
     };
     /**
      * Sets the shares property value. The list of printerShares that are associated with the printer. Currently, only one printerShare can be associated with the printer. Read-only. Nullable.
@@ -142,6 +138,13 @@ export class Printer extends PrinterBase implements Parsable {
      */
     public set shares(value: PrinterShare[] | undefined) {
         this._shares = value;
+    };
+    /**
+     * Gets the taskTriggers property value. A list of task triggers that are associated with the printer.
+     * @returns a printTaskTrigger
+     */
+    public get taskTriggers() {
+        return this._taskTriggers;
     };
     /**
      * Sets the taskTriggers property value. A list of task triggers that are associated with the printer.

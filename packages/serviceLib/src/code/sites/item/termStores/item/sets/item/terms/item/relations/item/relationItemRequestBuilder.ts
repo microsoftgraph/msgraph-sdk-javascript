@@ -1,10 +1,13 @@
+import {ODataError} from '../../../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
 import {Relation} from '../../../../../../../../../../models/microsoft/graph/termStore/';
-import {FromTermRequestBuilder} from './fromTerm/';
-import {SetRequestBuilder} from './set/';
-import {ToTermRequestBuilder} from './toTerm/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createRelationFromDiscriminatorValue} from '../../../../../../../../../../models/microsoft/graph/termStore/createRelationFromDiscriminatorValue';
+import {FromTermRequestBuilder} from './fromTerm/fromTermRequestBuilder';
+import {SetRequestBuilder} from './set/setRequestBuilder';
+import {ToTermRequestBuilder} from './toTerm/toTermRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /sites/{site-id}/termStores/{store-id}/sets/{set-id}/terms/{term-id}/relations/{relation-id}  */
+/** Provides operations to manage the relations property of the microsoft.graph.termStore.term entity.  */
 export class RelationItemRequestBuilder {
     public get fromTerm(): FromTermRequestBuilder {
         return new FromTermRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -35,7 +38,7 @@ export class RelationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * To indicate which terms are related to the current term as either pinned or reused.
+     * Delete navigation property relations for sites
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -70,7 +73,7 @@ export class RelationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * To indicate which terms are related to the current term as either pinned or reused.
+     * Update the navigation property relations in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -88,7 +91,7 @@ export class RelationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * To indicate which terms are related to the current term as either pinned or reused.
+     * Delete navigation property relations for sites
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -97,7 +100,11 @@ export class RelationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * To indicate which terms are related to the current term as either pinned or reused.
@@ -114,10 +121,14 @@ export class RelationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Relation>(requestInfo, Relation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Relation>(requestInfo, createRelationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * To indicate which terms are related to the current term as either pinned or reused.
+     * Update the navigation property relations in sites
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -128,6 +139,10 @@ export class RelationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

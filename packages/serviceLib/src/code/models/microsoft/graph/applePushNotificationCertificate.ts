@@ -15,17 +15,18 @@ export class ApplePushNotificationCertificate extends Entity implements Parsable
     /** Topic Id.  */
     private _topicIdentifier?: string | undefined;
     /**
-     * Instantiates a new applePushNotificationCertificate and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the appleIdentifier property value. Apple Id of the account used to create the MDM push certificate.
      * @returns a string
      */
     public get appleIdentifier() {
         return this._appleIdentifier;
+    };
+    /**
+     * Sets the appleIdentifier property value. Apple Id of the account used to create the MDM push certificate.
+     * @param value Value to set for the appleIdentifier property.
+     */
+    public set appleIdentifier(value: string | undefined) {
+        this._appleIdentifier = value;
     };
     /**
      * Gets the certificate property value. Not yet documented
@@ -35,11 +36,31 @@ export class ApplePushNotificationCertificate extends Entity implements Parsable
         return this._certificate;
     };
     /**
+     * Sets the certificate property value. Not yet documented
+     * @param value Value to set for the certificate property.
+     */
+    public set certificate(value: string | undefined) {
+        this._certificate = value;
+    };
+    /**
      * Gets the certificateSerialNumber property value. Certificate serial number. This property is read-only.
      * @returns a string
      */
     public get certificateSerialNumber() {
         return this._certificateSerialNumber;
+    };
+    /**
+     * Sets the certificateSerialNumber property value. Certificate serial number. This property is read-only.
+     * @param value Value to set for the certificateSerialNumber property.
+     */
+    public set certificateSerialNumber(value: string | undefined) {
+        this._certificateSerialNumber = value;
+    };
+    /**
+     * Instantiates a new applePushNotificationCertificate and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the expirationDateTime property value. The expiration date and time for Apple push notification certificate.
@@ -49,18 +70,11 @@ export class ApplePushNotificationCertificate extends Entity implements Parsable
         return this._expirationDateTime;
     };
     /**
-     * Gets the lastModifiedDateTime property value. Last modified date and time for Apple push notification certificate.
-     * @returns a Date
+     * Sets the expirationDateTime property value. The expiration date and time for Apple push notification certificate.
+     * @param value Value to set for the expirationDateTime property.
      */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the topicIdentifier property value. Topic Id.
-     * @returns a string
-     */
-    public get topicIdentifier() {
-        return this._topicIdentifier;
+    public set expirationDateTime(value: Date | undefined) {
+        this._expirationDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -77,6 +91,20 @@ export class ApplePushNotificationCertificate extends Entity implements Parsable
         ]);
     };
     /**
+     * Gets the lastModifiedDateTime property value. Last modified date and time for Apple push notification certificate.
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. Last modified date and time for Apple push notification certificate.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -91,39 +119,11 @@ export class ApplePushNotificationCertificate extends Entity implements Parsable
         writer.writeStringValue("topicIdentifier", this.topicIdentifier);
     };
     /**
-     * Sets the appleIdentifier property value. Apple Id of the account used to create the MDM push certificate.
-     * @param value Value to set for the appleIdentifier property.
+     * Gets the topicIdentifier property value. Topic Id.
+     * @returns a string
      */
-    public set appleIdentifier(value: string | undefined) {
-        this._appleIdentifier = value;
-    };
-    /**
-     * Sets the certificate property value. Not yet documented
-     * @param value Value to set for the certificate property.
-     */
-    public set certificate(value: string | undefined) {
-        this._certificate = value;
-    };
-    /**
-     * Sets the certificateSerialNumber property value. Certificate serial number. This property is read-only.
-     * @param value Value to set for the certificateSerialNumber property.
-     */
-    public set certificateSerialNumber(value: string | undefined) {
-        this._certificateSerialNumber = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. The expiration date and time for Apple push notification certificate.
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: Date | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. Last modified date and time for Apple push notification certificate.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
+    public get topicIdentifier() {
+        return this._topicIdentifier;
     };
     /**
      * Sets the topicIdentifier property value. Topic Id.

@@ -1,10 +1,13 @@
 import {UserTeamwork} from '../../../models/microsoft/graph/';
-import {InstalledAppsRequestBuilder} from './installedApps/';
-import {UserScopeTeamsAppInstallationItemRequestBuilder} from './installedApps/item/';
-import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserTeamworkFromDiscriminatorValue} from '../../../models/microsoft/graph/createUserTeamworkFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InstalledAppsRequestBuilder} from './installedApps/installedAppsRequestBuilder';
+import {UserScopeTeamsAppInstallationItemRequestBuilder} from './installedApps/item/userScopeTeamsAppInstallationItemRequestBuilder';
+import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/sendActivityNotificationRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/teamwork  */
+/** Provides operations to manage the teamwork property of the microsoft.graph.user entity.  */
 export class TeamworkRequestBuilder {
     public get installedApps(): InstalledAppsRequestBuilder {
         return new InstalledAppsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -32,7 +35,7 @@ export class TeamworkRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A container for Microsoft Teams features available for the user. Read-only. Nullable.
+     * Delete navigation property teamwork for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -67,7 +70,7 @@ export class TeamworkRequestBuilder {
         return requestInfo;
     };
     /**
-     * A container for Microsoft Teams features available for the user. Read-only. Nullable.
+     * Update the navigation property teamwork in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -85,7 +88,7 @@ export class TeamworkRequestBuilder {
         return requestInfo;
     };
     /**
-     * A container for Microsoft Teams features available for the user. Read-only. Nullable.
+     * Delete navigation property teamwork for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -94,7 +97,11 @@ export class TeamworkRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A container for Microsoft Teams features available for the user. Read-only. Nullable.
@@ -111,7 +118,11 @@ export class TeamworkRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserTeamwork>(requestInfo, UserTeamwork, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserTeamwork>(requestInfo, createUserTeamworkFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.users.item.teamwork.installedApps.item collection
@@ -125,7 +136,7 @@ export class TeamworkRequestBuilder {
         return new UserScopeTeamsAppInstallationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * A container for Microsoft Teams features available for the user. Read-only. Nullable.
+     * Update the navigation property teamwork in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,6 +147,10 @@ export class TeamworkRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

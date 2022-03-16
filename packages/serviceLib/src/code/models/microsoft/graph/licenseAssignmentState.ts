@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class LicenseAssignmentState implements Parsable {
+export class LicenseAssignmentState implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The id of the group that assigns this license. If the assignment is a direct-assigned license, this field will be Null. Read-Only.  */
@@ -16,17 +16,18 @@ export class LicenseAssignmentState implements Parsable {
     /** Indicate the current state of this assignment. Read-Only. The possible values are Active, ActiveWithError, Disabled, and Error.  */
     private _state?: string | undefined;
     /**
-     * Instantiates a new licenseAssignmentState and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the assignedByGroup property value. The id of the group that assigns this license. If the assignment is a direct-assigned license, this field will be Null. Read-Only.
@@ -36,11 +37,31 @@ export class LicenseAssignmentState implements Parsable {
         return this._assignedByGroup;
     };
     /**
+     * Sets the assignedByGroup property value. The id of the group that assigns this license. If the assignment is a direct-assigned license, this field will be Null. Read-Only.
+     * @param value Value to set for the assignedByGroup property.
+     */
+    public set assignedByGroup(value: string | undefined) {
+        this._assignedByGroup = value;
+    };
+    /**
+     * Instantiates a new licenseAssignmentState and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the disabledPlans property value. The service plans that are disabled in this assignment. Read-Only.
      * @returns a string
      */
     public get disabledPlans() {
         return this._disabledPlans;
+    };
+    /**
+     * Sets the disabledPlans property value. The service plans that are disabled in this assignment. Read-Only.
+     * @param value Value to set for the disabledPlans property.
+     */
+    public set disabledPlans(value: string[] | undefined) {
+        this._disabledPlans = value;
     };
     /**
      * Gets the error property value. License assignment failure error. If the license is assigned successfully, this field will be Null. Read-Only. The possible values are CountViolation, MutuallyExclusiveViolation, DependencyViolation, ProhibitedInUsageLocationViolation, UniquenessViolation, and Other. For more information on how to identify and resolve license assignment errors see here.
@@ -50,25 +71,11 @@ export class LicenseAssignmentState implements Parsable {
         return this._error_escaped;
     };
     /**
-     * Gets the lastUpdatedDateTime property value. The timestamp when the state of the license assignment was last updated.
-     * @returns a Date
+     * Sets the error property value. License assignment failure error. If the license is assigned successfully, this field will be Null. Read-Only. The possible values are CountViolation, MutuallyExclusiveViolation, DependencyViolation, ProhibitedInUsageLocationViolation, UniquenessViolation, and Other. For more information on how to identify and resolve license assignment errors see here.
+     * @param value Value to set for the error_escaped property.
      */
-    public get lastUpdatedDateTime() {
-        return this._lastUpdatedDateTime;
-    };
-    /**
-     * Gets the skuId property value. The unique identifier for the SKU. Read-Only.
-     * @returns a string
-     */
-    public get skuId() {
-        return this._skuId;
-    };
-    /**
-     * Gets the state property value. Indicate the current state of this assignment. Read-Only. The possible values are Active, ActiveWithError, Disabled, and Error.
-     * @returns a string
-     */
-    public get state() {
-        return this._state;
+    public set error_escaped(value: string | undefined) {
+        this._error_escaped = value;
     };
     /**
      * The deserialization information for the current model
@@ -85,6 +92,20 @@ export class LicenseAssignmentState implements Parsable {
         ]);
     };
     /**
+     * Gets the lastUpdatedDateTime property value. The timestamp when the state of the license assignment was last updated.
+     * @returns a Date
+     */
+    public get lastUpdatedDateTime() {
+        return this._lastUpdatedDateTime;
+    };
+    /**
+     * Sets the lastUpdatedDateTime property value. The timestamp when the state of the license assignment was last updated.
+     * @param value Value to set for the lastUpdatedDateTime property.
+     */
+    public set lastUpdatedDateTime(value: Date | undefined) {
+        this._lastUpdatedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -99,39 +120,11 @@ export class LicenseAssignmentState implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the skuId property value. The unique identifier for the SKU. Read-Only.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the assignedByGroup property value. The id of the group that assigns this license. If the assignment is a direct-assigned license, this field will be Null. Read-Only.
-     * @param value Value to set for the assignedByGroup property.
-     */
-    public set assignedByGroup(value: string | undefined) {
-        this._assignedByGroup = value;
-    };
-    /**
-     * Sets the disabledPlans property value. The service plans that are disabled in this assignment. Read-Only.
-     * @param value Value to set for the disabledPlans property.
-     */
-    public set disabledPlans(value: string[] | undefined) {
-        this._disabledPlans = value;
-    };
-    /**
-     * Sets the error property value. License assignment failure error. If the license is assigned successfully, this field will be Null. Read-Only. The possible values are CountViolation, MutuallyExclusiveViolation, DependencyViolation, ProhibitedInUsageLocationViolation, UniquenessViolation, and Other. For more information on how to identify and resolve license assignment errors see here.
-     * @param value Value to set for the error_escaped property.
-     */
-    public set error_escaped(value: string | undefined) {
-        this._error_escaped = value;
-    };
-    /**
-     * Sets the lastUpdatedDateTime property value. The timestamp when the state of the license assignment was last updated.
-     * @param value Value to set for the lastUpdatedDateTime property.
-     */
-    public set lastUpdatedDateTime(value: Date | undefined) {
-        this._lastUpdatedDateTime = value;
+    public get skuId() {
+        return this._skuId;
     };
     /**
      * Sets the skuId property value. The unique identifier for the SKU. Read-Only.
@@ -139,6 +132,13 @@ export class LicenseAssignmentState implements Parsable {
      */
     public set skuId(value: string | undefined) {
         this._skuId = value;
+    };
+    /**
+     * Gets the state property value. Indicate the current state of this assignment. Read-Only. The possible values are Active, ActiveWithError, Disabled, and Error.
+     * @returns a string
+     */
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. Indicate the current state of this assignment. Read-Only. The possible values are Active, ActiveWithError, Disabled, and Error.

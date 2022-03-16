@@ -1,13 +1,16 @@
 import {OnenotePage} from '../../../../../../../../../../models/microsoft/graph/';
-import {ContentRequestBuilder} from './content/';
-import {CopyToSectionRequestBuilder} from './copyToSection/';
-import {OnenotePatchContentRequestBuilder} from './onenotePatchContent/';
-import {ParentNotebookRequestBuilder} from './parentNotebook/';
-import {ParentSectionRequestBuilder} from './parentSection/';
-import {PreviewRequestBuilder} from './preview/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOnenotePageFromDiscriminatorValue} from '../../../../../../../../../../models/microsoft/graph/createOnenotePageFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ContentRequestBuilder} from './content/contentRequestBuilder';
+import {CopyToSectionRequestBuilder} from './copyToSection/copyToSectionRequestBuilder';
+import {OnenotePatchContentRequestBuilder} from './onenotePatchContent/onenotePatchContentRequestBuilder';
+import {ParentNotebookRequestBuilder} from './parentNotebook/parentNotebookRequestBuilder';
+import {ParentSectionRequestBuilder} from './parentSection/parentSectionRequestBuilder';
+import {PreviewRequestBuilder} from './preview/previewRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/onenote/notebooks/{notebook-id}/sectionGroups/{sectionGroup-id}/sections/{onenoteSection-id}/pages/{onenotePage-id}  */
+/** Provides operations to manage the pages property of the microsoft.graph.onenoteSection entity.  */
 export class OnenotePageItemRequestBuilder {
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -44,7 +47,7 @@ export class OnenotePageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of pages in the section.  Read-only. Nullable.
+     * Delete navigation property pages for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -79,7 +82,7 @@ export class OnenotePageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of pages in the section.  Read-only. Nullable.
+     * Update the navigation property pages in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -97,7 +100,7 @@ export class OnenotePageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of pages in the section.  Read-only. Nullable.
+     * Delete navigation property pages for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -106,7 +109,11 @@ export class OnenotePageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of pages in the section.  Read-only. Nullable.
@@ -123,10 +130,14 @@ export class OnenotePageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<OnenotePage>(requestInfo, OnenotePage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<OnenotePage>(requestInfo, createOnenotePageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of pages in the section.  Read-only. Nullable.
+     * Update the navigation property pages in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,10 +148,14 @@ export class OnenotePageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /me/onenote/notebooks/{notebook-id}/sectionGroups/{sectionGroup-id}/sections/{onenoteSection-id}/pages/{onenotePage-id}/microsoft.graph.preview()
+     * Provides operations to call the preview method.
      * @returns a previewRequestBuilder
      */
     public preview() : PreviewRequestBuilder {

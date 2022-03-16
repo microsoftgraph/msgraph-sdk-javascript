@@ -1,16 +1,11 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class RemoveKeyRequestBody implements Parsable {
+/** Provides operations to call the removeKey method.  */
+export class RemoveKeyRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _keyId?: string | undefined;
     private _proof?: string | undefined;
-    /**
-     * Instantiates a new removeKeyRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,18 +14,17 @@ export class RemoveKeyRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the keyId property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get keyId() {
-        return this._keyId;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the proof property value. 
-     * @returns a string
+     * Instantiates a new removeKeyRequestBody and sets the default values.
      */
-    public get proof() {
-        return this._proof;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -43,21 +37,11 @@ export class RemoveKeyRequestBody implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the keyId property value. 
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("keyId", this.keyId);
-        writer.writeStringValue("proof", this.proof);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get keyId() {
+        return this._keyId;
     };
     /**
      * Sets the keyId property value. 
@@ -67,10 +51,27 @@ export class RemoveKeyRequestBody implements Parsable {
         this._keyId = value;
     };
     /**
+     * Gets the proof property value. 
+     * @returns a string
+     */
+    public get proof() {
+        return this._proof;
+    };
+    /**
      * Sets the proof property value. 
      * @param value Value to set for the proof property.
      */
     public set proof(value: string | undefined) {
         this._proof = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("keyId", this.keyId);
+        writer.writeStringValue("proof", this.proof);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

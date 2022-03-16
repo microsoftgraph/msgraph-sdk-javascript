@@ -1,26 +1,29 @@
 import {Schedule} from '../../../models/microsoft/graph/';
-import {OfferShiftRequestsRequestBuilder} from './offerShiftRequests/';
-import {OfferShiftRequestItemRequestBuilder} from './offerShiftRequests/item/';
-import {OpenShiftChangeRequestsRequestBuilder} from './openShiftChangeRequests/';
-import {OpenShiftChangeRequestItemRequestBuilder} from './openShiftChangeRequests/item/';
-import {OpenShiftsRequestBuilder} from './openShifts/';
-import {OpenShiftItemRequestBuilder} from './openShifts/item/';
-import {SchedulingGroupsRequestBuilder} from './schedulingGroups/';
-import {SchedulingGroupItemRequestBuilder} from './schedulingGroups/item/';
-import {ShareRequestBuilder} from './share/';
-import {ShiftsRequestBuilder} from './shifts/';
-import {ShiftItemRequestBuilder} from './shifts/item/';
-import {SwapShiftsChangeRequestsRequestBuilder} from './swapShiftsChangeRequests/';
-import {SwapShiftsChangeRequestItemRequestBuilder} from './swapShiftsChangeRequests/item/';
-import {TimeOffReasonsRequestBuilder} from './timeOffReasons/';
-import {TimeOffReasonItemRequestBuilder} from './timeOffReasons/item/';
-import {TimeOffRequestsRequestBuilder} from './timeOffRequests/';
-import {TimeOffRequestItemRequestBuilder} from './timeOffRequests/item/';
-import {TimesOffRequestBuilder} from './timesOff/';
-import {TimeOffItemRequestBuilder} from './timesOff/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createScheduleFromDiscriminatorValue} from '../../../models/microsoft/graph/createScheduleFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {OfferShiftRequestItemRequestBuilder} from './offerShiftRequests/item/offerShiftRequestItemRequestBuilder';
+import {OfferShiftRequestsRequestBuilder} from './offerShiftRequests/offerShiftRequestsRequestBuilder';
+import {OpenShiftChangeRequestItemRequestBuilder} from './openShiftChangeRequests/item/openShiftChangeRequestItemRequestBuilder';
+import {OpenShiftChangeRequestsRequestBuilder} from './openShiftChangeRequests/openShiftChangeRequestsRequestBuilder';
+import {OpenShiftItemRequestBuilder} from './openShifts/item/openShiftItemRequestBuilder';
+import {OpenShiftsRequestBuilder} from './openShifts/openShiftsRequestBuilder';
+import {SchedulingGroupItemRequestBuilder} from './schedulingGroups/item/schedulingGroupItemRequestBuilder';
+import {SchedulingGroupsRequestBuilder} from './schedulingGroups/schedulingGroupsRequestBuilder';
+import {ShareRequestBuilder} from './share/shareRequestBuilder';
+import {ShiftItemRequestBuilder} from './shifts/item/shiftItemRequestBuilder';
+import {ShiftsRequestBuilder} from './shifts/shiftsRequestBuilder';
+import {SwapShiftsChangeRequestItemRequestBuilder} from './swapShiftsChangeRequests/item/swapShiftsChangeRequestItemRequestBuilder';
+import {SwapShiftsChangeRequestsRequestBuilder} from './swapShiftsChangeRequests/swapShiftsChangeRequestsRequestBuilder';
+import {TimeOffReasonItemRequestBuilder} from './timeOffReasons/item/timeOffReasonItemRequestBuilder';
+import {TimeOffReasonsRequestBuilder} from './timeOffReasons/timeOffReasonsRequestBuilder';
+import {TimeOffRequestItemRequestBuilder} from './timeOffRequests/item/timeOffRequestItemRequestBuilder';
+import {TimeOffRequestsRequestBuilder} from './timeOffRequests/timeOffRequestsRequestBuilder';
+import {TimeOffItemRequestBuilder} from './timesOff/item/timeOffItemRequestBuilder';
+import {TimesOffRequestBuilder} from './timesOff/timesOffRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}/schedule  */
+/** Provides operations to manage the schedule property of the microsoft.graph.team entity.  */
 export class ScheduleRequestBuilder {
     public get offerShiftRequests(): OfferShiftRequestsRequestBuilder {
         return new OfferShiftRequestsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -72,7 +75,7 @@ export class ScheduleRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The schedule of shifts for this team.
+     * Delete navigation property schedule for teams
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -107,7 +110,7 @@ export class ScheduleRequestBuilder {
         return requestInfo;
     };
     /**
-     * The schedule of shifts for this team.
+     * Update the navigation property schedule in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -125,7 +128,7 @@ export class ScheduleRequestBuilder {
         return requestInfo;
     };
     /**
-     * The schedule of shifts for this team.
+     * Delete navigation property schedule for teams
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -134,7 +137,11 @@ export class ScheduleRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The schedule of shifts for this team.
@@ -151,7 +158,11 @@ export class ScheduleRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Schedule>(requestInfo, Schedule, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Schedule>(requestInfo, createScheduleFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.offerShiftRequests.item collection
@@ -187,7 +198,7 @@ export class ScheduleRequestBuilder {
         return new OpenShiftItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The schedule of shifts for this team.
+     * Update the navigation property schedule in teams
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -198,7 +209,11 @@ export class ScheduleRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.schedule.schedulingGroups.item collection

@@ -1,8 +1,9 @@
 import {UpdateRecordingStatusOperation} from '../../../../models/microsoft/graph/';
+import {createUpdateRecordingStatusOperationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUpdateRecordingStatusOperationFromDiscriminatorValue';
 import {UpdateRecordingStatusRequestBody} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /communications/calls/{call-id}/microsoft.graph.updateRecordingStatus  */
+/** Provides operations to call the updateRecordingStatus method.  */
 export class UpdateRecordingStatusRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -47,13 +48,13 @@ export class UpdateRecordingStatusRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of UpdateRecordingStatusResponse
+     * @returns a Promise of UpdateRecordingStatusOperation
      */
     public post(body: UpdateRecordingStatusRequestBody | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<UpdateRecordingStatusOperation | undefined> {
         if(!body) throw new Error("body cannot be undefined");
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<UpdateRecordingStatusOperation>(requestInfo, UpdateRecordingStatusOperation, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<UpdateRecordingStatusOperation>(requestInfo, createUpdateRecordingStatusOperationFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,4 +1,6 @@
-import {DeviceManagementPartnerAppType, DeviceManagementPartnerTenantState, Entity} from './index';
+import {DeviceManagementPartnerAppType} from './deviceManagementPartnerAppType';
+import {DeviceManagementPartnerTenantState} from './deviceManagementPartnerTenantState';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class DeviceManagementPartner extends Entity implements Parsable {
@@ -32,53 +34,11 @@ export class DeviceManagementPartner extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the isConfigured property value. Whether device management partner is configured or not
-     * @returns a boolean
+     * Sets the displayName property value. Partner display name
+     * @param value Value to set for the displayName property.
      */
-    public get isConfigured() {
-        return this._isConfigured;
-    };
-    /**
-     * Gets the lastHeartbeatDateTime property value. Timestamp of last heartbeat after admin enabled option Connect to Device management Partner
-     * @returns a Date
-     */
-    public get lastHeartbeatDateTime() {
-        return this._lastHeartbeatDateTime;
-    };
-    /**
-     * Gets the partnerAppType property value. Partner App type. Possible values are: unknown, singleTenantApp, multiTenantApp.
-     * @returns a deviceManagementPartnerAppType
-     */
-    public get partnerAppType() {
-        return this._partnerAppType;
-    };
-    /**
-     * Gets the partnerState property value. Partner state of this tenant. Possible values are: unknown, unavailable, enabled, terminated, rejected, unresponsive.
-     * @returns a deviceManagementPartnerTenantState
-     */
-    public get partnerState() {
-        return this._partnerState;
-    };
-    /**
-     * Gets the singleTenantAppId property value. Partner Single tenant App id
-     * @returns a string
-     */
-    public get singleTenantAppId() {
-        return this._singleTenantAppId;
-    };
-    /**
-     * Gets the whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime property value. DateTime in UTC when PartnerDevices will be marked as NonCompliant
-     * @returns a Date
-     */
-    public get whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime() {
-        return this._whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime;
-    };
-    /**
-     * Gets the whenPartnerDevicesWillBeRemovedDateTime property value. DateTime in UTC when PartnerDevices will be removed
-     * @returns a Date
-     */
-    public get whenPartnerDevicesWillBeRemovedDateTime() {
-        return this._whenPartnerDevicesWillBeRemovedDateTime;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -97,6 +57,62 @@ export class DeviceManagementPartner extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the isConfigured property value. Whether device management partner is configured or not
+     * @returns a boolean
+     */
+    public get isConfigured() {
+        return this._isConfigured;
+    };
+    /**
+     * Sets the isConfigured property value. Whether device management partner is configured or not
+     * @param value Value to set for the isConfigured property.
+     */
+    public set isConfigured(value: boolean | undefined) {
+        this._isConfigured = value;
+    };
+    /**
+     * Gets the lastHeartbeatDateTime property value. Timestamp of last heartbeat after admin enabled option Connect to Device management Partner
+     * @returns a Date
+     */
+    public get lastHeartbeatDateTime() {
+        return this._lastHeartbeatDateTime;
+    };
+    /**
+     * Sets the lastHeartbeatDateTime property value. Timestamp of last heartbeat after admin enabled option Connect to Device management Partner
+     * @param value Value to set for the lastHeartbeatDateTime property.
+     */
+    public set lastHeartbeatDateTime(value: Date | undefined) {
+        this._lastHeartbeatDateTime = value;
+    };
+    /**
+     * Gets the partnerAppType property value. Partner App type. Possible values are: unknown, singleTenantApp, multiTenantApp.
+     * @returns a deviceManagementPartnerAppType
+     */
+    public get partnerAppType() {
+        return this._partnerAppType;
+    };
+    /**
+     * Sets the partnerAppType property value. Partner App type. Possible values are: unknown, singleTenantApp, multiTenantApp.
+     * @param value Value to set for the partnerAppType property.
+     */
+    public set partnerAppType(value: DeviceManagementPartnerAppType | undefined) {
+        this._partnerAppType = value;
+    };
+    /**
+     * Gets the partnerState property value. Partner state of this tenant. Possible values are: unknown, unavailable, enabled, terminated, rejected, unresponsive.
+     * @returns a deviceManagementPartnerTenantState
+     */
+    public get partnerState() {
+        return this._partnerState;
+    };
+    /**
+     * Sets the partnerState property value. Partner state of this tenant. Possible values are: unknown, unavailable, enabled, terminated, rejected, unresponsive.
+     * @param value Value to set for the partnerState property.
+     */
+    public set partnerState(value: DeviceManagementPartnerTenantState | undefined) {
+        this._partnerState = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -113,39 +129,11 @@ export class DeviceManagementPartner extends Entity implements Parsable {
         writer.writeDateValue("whenPartnerDevicesWillBeRemovedDateTime", this.whenPartnerDevicesWillBeRemovedDateTime);
     };
     /**
-     * Sets the displayName property value. Partner display name
-     * @param value Value to set for the displayName property.
+     * Gets the singleTenantAppId property value. Partner Single tenant App id
+     * @returns a string
      */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isConfigured property value. Whether device management partner is configured or not
-     * @param value Value to set for the isConfigured property.
-     */
-    public set isConfigured(value: boolean | undefined) {
-        this._isConfigured = value;
-    };
-    /**
-     * Sets the lastHeartbeatDateTime property value. Timestamp of last heartbeat after admin enabled option Connect to Device management Partner
-     * @param value Value to set for the lastHeartbeatDateTime property.
-     */
-    public set lastHeartbeatDateTime(value: Date | undefined) {
-        this._lastHeartbeatDateTime = value;
-    };
-    /**
-     * Sets the partnerAppType property value. Partner App type. Possible values are: unknown, singleTenantApp, multiTenantApp.
-     * @param value Value to set for the partnerAppType property.
-     */
-    public set partnerAppType(value: DeviceManagementPartnerAppType | undefined) {
-        this._partnerAppType = value;
-    };
-    /**
-     * Sets the partnerState property value. Partner state of this tenant. Possible values are: unknown, unavailable, enabled, terminated, rejected, unresponsive.
-     * @param value Value to set for the partnerState property.
-     */
-    public set partnerState(value: DeviceManagementPartnerTenantState | undefined) {
-        this._partnerState = value;
+    public get singleTenantAppId() {
+        return this._singleTenantAppId;
     };
     /**
      * Sets the singleTenantAppId property value. Partner Single tenant App id
@@ -155,11 +143,25 @@ export class DeviceManagementPartner extends Entity implements Parsable {
         this._singleTenantAppId = value;
     };
     /**
+     * Gets the whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime property value. DateTime in UTC when PartnerDevices will be marked as NonCompliant
+     * @returns a Date
+     */
+    public get whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime() {
+        return this._whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime;
+    };
+    /**
      * Sets the whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime property value. DateTime in UTC when PartnerDevices will be marked as NonCompliant
      * @param value Value to set for the whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime property.
      */
     public set whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime(value: Date | undefined) {
         this._whenPartnerDevicesWillBeMarkedAsNonCompliantDateTime = value;
+    };
+    /**
+     * Gets the whenPartnerDevicesWillBeRemovedDateTime property value. DateTime in UTC when PartnerDevices will be removed
+     * @returns a Date
+     */
+    public get whenPartnerDevicesWillBeRemovedDateTime() {
+        return this._whenPartnerDevicesWillBeRemovedDateTime;
     };
     /**
      * Sets the whenPartnerDevicesWillBeRemovedDateTime property value. DateTime in UTC when PartnerDevices will be removed

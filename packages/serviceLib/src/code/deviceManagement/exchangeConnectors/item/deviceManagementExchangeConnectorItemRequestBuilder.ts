@@ -1,8 +1,11 @@
 import {DeviceManagementExchangeConnector} from '../../../models/microsoft/graph/';
-import {SyncRequestBuilder} from './sync/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDeviceManagementExchangeConnectorFromDiscriminatorValue} from '../../../models/microsoft/graph/createDeviceManagementExchangeConnectorFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {SyncRequestBuilder} from './sync/syncRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/exchangeConnectors/{deviceManagementExchangeConnector-id}  */
+/** Provides operations to manage the exchangeConnectors property of the microsoft.graph.deviceManagement entity.  */
 export class DeviceManagementExchangeConnectorItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -27,7 +30,7 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of Exchange Connectors configured by the tenant.
+     * Delete navigation property exchangeConnectors for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of Exchange Connectors configured by the tenant.
+     * Update the navigation property exchangeConnectors in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of Exchange Connectors configured by the tenant.
+     * Delete navigation property exchangeConnectors for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of Exchange Connectors configured by the tenant.
@@ -106,10 +113,14 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DeviceManagementExchangeConnector>(requestInfo, DeviceManagementExchangeConnector, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DeviceManagementExchangeConnector>(requestInfo, createDeviceManagementExchangeConnectorFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of Exchange Connectors configured by the tenant.
+     * Update the navigation property exchangeConnectors in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class DeviceManagementExchangeConnectorItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

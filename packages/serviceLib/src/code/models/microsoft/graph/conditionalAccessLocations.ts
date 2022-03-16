@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ConditionalAccessLocations implements Parsable {
+export class ConditionalAccessLocations implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Location IDs excluded from scope of policy.  */
@@ -8,17 +8,24 @@ export class ConditionalAccessLocations implements Parsable {
     /** Location IDs in scope of policy unless explicitly excluded, All, or AllTrusted.  */
     private _includeLocations?: string[] | undefined;
     /**
-     * Instantiates a new conditionalAccessLocations and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new conditionalAccessLocations and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the excludeLocations property value. Location IDs excluded from scope of policy.
@@ -28,11 +35,11 @@ export class ConditionalAccessLocations implements Parsable {
         return this._excludeLocations;
     };
     /**
-     * Gets the includeLocations property value. Location IDs in scope of policy unless explicitly excluded, All, or AllTrusted.
-     * @returns a string
+     * Sets the excludeLocations property value. Location IDs excluded from scope of policy.
+     * @param value Value to set for the excludeLocations property.
      */
-    public get includeLocations() {
-        return this._includeLocations;
+    public set excludeLocations(value: string[] | undefined) {
+        this._excludeLocations = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,6 +52,20 @@ export class ConditionalAccessLocations implements Parsable {
         ]);
     };
     /**
+     * Gets the includeLocations property value. Location IDs in scope of policy unless explicitly excluded, All, or AllTrusted.
+     * @returns a string
+     */
+    public get includeLocations() {
+        return this._includeLocations;
+    };
+    /**
+     * Sets the includeLocations property value. Location IDs in scope of policy unless explicitly excluded, All, or AllTrusted.
+     * @param value Value to set for the includeLocations property.
+     */
+    public set includeLocations(value: string[] | undefined) {
+        this._includeLocations = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -53,26 +74,5 @@ export class ConditionalAccessLocations implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("excludeLocations", this.excludeLocations);
         writer.writeCollectionOfPrimitiveValues<string>("includeLocations", this.includeLocations);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the excludeLocations property value. Location IDs excluded from scope of policy.
-     * @param value Value to set for the excludeLocations property.
-     */
-    public set excludeLocations(value: string[] | undefined) {
-        this._excludeLocations = value;
-    };
-    /**
-     * Sets the includeLocations property value. Location IDs in scope of policy unless explicitly excluded, All, or AllTrusted.
-     * @param value Value to set for the includeLocations property.
-     */
-    public set includeLocations(value: string[] | undefined) {
-        this._includeLocations = value;
     };
 }

@@ -19,41 +19,6 @@ export class LocalizedNotificationMessage extends Entity implements Parsable {
         super();
     };
     /**
-     * Gets the isDefault property value. Flag to indicate whether or not this is the default locale for language fallback. This flag can only be set. To unset, set this property to true on another Localized Notification Message.
-     * @returns a boolean
-     */
-    public get isDefault() {
-        return this._isDefault;
-    };
-    /**
-     * Gets the lastModifiedDateTime property value. DateTime the object was last modified.
-     * @returns a Date
-     */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
-    };
-    /**
-     * Gets the locale property value. The Locale for which this message is destined.
-     * @returns a string
-     */
-    public get locale() {
-        return this._locale;
-    };
-    /**
-     * Gets the messageTemplate property value. The Message Template content.
-     * @returns a string
-     */
-    public get messageTemplate() {
-        return this._messageTemplate;
-    };
-    /**
-     * Gets the subject property value. The Message Template Subject.
-     * @returns a string
-     */
-    public get subject() {
-        return this._subject;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -65,6 +30,62 @@ export class LocalizedNotificationMessage extends Entity implements Parsable {
             ["messageTemplate", (o, n) => { (o as unknown as LocalizedNotificationMessage).messageTemplate = n.getStringValue(); }],
             ["subject", (o, n) => { (o as unknown as LocalizedNotificationMessage).subject = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the isDefault property value. Flag to indicate whether or not this is the default locale for language fallback. This flag can only be set. To unset, set this property to true on another Localized Notification Message.
+     * @returns a boolean
+     */
+    public get isDefault() {
+        return this._isDefault;
+    };
+    /**
+     * Sets the isDefault property value. Flag to indicate whether or not this is the default locale for language fallback. This flag can only be set. To unset, set this property to true on another Localized Notification Message.
+     * @param value Value to set for the isDefault property.
+     */
+    public set isDefault(value: boolean | undefined) {
+        this._isDefault = value;
+    };
+    /**
+     * Gets the lastModifiedDateTime property value. DateTime the object was last modified.
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. DateTime the object was last modified.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
+     * Gets the locale property value. The Locale for which this message is destined.
+     * @returns a string
+     */
+    public get locale() {
+        return this._locale;
+    };
+    /**
+     * Sets the locale property value. The Locale for which this message is destined.
+     * @param value Value to set for the locale property.
+     */
+    public set locale(value: string | undefined) {
+        this._locale = value;
+    };
+    /**
+     * Gets the messageTemplate property value. The Message Template content.
+     * @returns a string
+     */
+    public get messageTemplate() {
+        return this._messageTemplate;
+    };
+    /**
+     * Sets the messageTemplate property value. The Message Template content.
+     * @param value Value to set for the messageTemplate property.
+     */
+    public set messageTemplate(value: string | undefined) {
+        this._messageTemplate = value;
     };
     /**
      * Serializes information the current object
@@ -80,32 +101,11 @@ export class LocalizedNotificationMessage extends Entity implements Parsable {
         writer.writeStringValue("subject", this.subject);
     };
     /**
-     * Sets the isDefault property value. Flag to indicate whether or not this is the default locale for language fallback. This flag can only be set. To unset, set this property to true on another Localized Notification Message.
-     * @param value Value to set for the isDefault property.
+     * Gets the subject property value. The Message Template Subject.
+     * @returns a string
      */
-    public set isDefault(value: boolean | undefined) {
-        this._isDefault = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. DateTime the object was last modified.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
-    };
-    /**
-     * Sets the locale property value. The Locale for which this message is destined.
-     * @param value Value to set for the locale property.
-     */
-    public set locale(value: string | undefined) {
-        this._locale = value;
-    };
-    /**
-     * Sets the messageTemplate property value. The Message Template content.
-     * @param value Value to set for the messageTemplate property.
-     */
-    public set messageTemplate(value: string | undefined) {
-        this._messageTemplate = value;
+    public get subject() {
+        return this._subject;
     };
     /**
      * Sets the subject property value. The Message Template Subject.

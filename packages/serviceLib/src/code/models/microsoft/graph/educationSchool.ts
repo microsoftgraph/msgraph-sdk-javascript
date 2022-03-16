@@ -1,3 +1,8 @@
+import {createAdministrativeUnitFromDiscriminatorValue} from './createAdministrativeUnitFromDiscriminatorValue';
+import {createEducationClassFromDiscriminatorValue} from './createEducationClassFromDiscriminatorValue';
+import {createEducationUserFromDiscriminatorValue} from './createEducationUserFromDiscriminatorValue';
+import {createIdentitySetFromDiscriminatorValue} from './createIdentitySetFromDiscriminatorValue';
+import {createPhysicalAddressFromDiscriminatorValue} from './createPhysicalAddressFromDiscriminatorValue';
 import {AdministrativeUnit, EducationClass, EducationOrganization, EducationUser, IdentitySet, PhysicalAddress} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -30,17 +35,18 @@ export class EducationSchool extends EducationOrganization implements Parsable {
     /** Users in the school. Nullable.  */
     private _users?: EducationUser[] | undefined;
     /**
-     * Instantiates a new educationSchool and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the address property value. Address of the school.
      * @returns a physicalAddress
      */
     public get address() {
         return this._address;
+    };
+    /**
+     * Sets the address property value. Address of the school.
+     * @param value Value to set for the address property.
+     */
+    public set address(value: PhysicalAddress | undefined) {
+        this._address = value;
     };
     /**
      * Gets the administrativeUnit property value. The underlying administrativeUnit for this school.
@@ -50,11 +56,31 @@ export class EducationSchool extends EducationOrganization implements Parsable {
         return this._administrativeUnit;
     };
     /**
+     * Sets the administrativeUnit property value. The underlying administrativeUnit for this school.
+     * @param value Value to set for the administrativeUnit property.
+     */
+    public set administrativeUnit(value: AdministrativeUnit | undefined) {
+        this._administrativeUnit = value;
+    };
+    /**
      * Gets the classes property value. Classes taught at the school. Nullable.
      * @returns a educationClass
      */
     public get classes() {
         return this._classes;
+    };
+    /**
+     * Sets the classes property value. Classes taught at the school. Nullable.
+     * @param value Value to set for the classes property.
+     */
+    public set classes(value: EducationClass[] | undefined) {
+        this._classes = value;
+    };
+    /**
+     * Instantiates a new educationSchool and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the createdBy property value. Entity who created the school.
@@ -64,11 +90,25 @@ export class EducationSchool extends EducationOrganization implements Parsable {
         return this._createdBy;
     };
     /**
+     * Sets the createdBy property value. Entity who created the school.
+     * @param value Value to set for the createdBy property.
+     */
+    public set createdBy(value: IdentitySet | undefined) {
+        this._createdBy = value;
+    };
+    /**
      * Gets the externalId property value. ID of school in syncing system.
      * @returns a string
      */
     public get externalId() {
         return this._externalId;
+    };
+    /**
+     * Sets the externalId property value. ID of school in syncing system.
+     * @param value Value to set for the externalId property.
+     */
+    public set externalId(value: string | undefined) {
+        this._externalId = value;
     };
     /**
      * Gets the externalPrincipalId property value. ID of principal in syncing system.
@@ -78,6 +118,13 @@ export class EducationSchool extends EducationOrganization implements Parsable {
         return this._externalPrincipalId;
     };
     /**
+     * Sets the externalPrincipalId property value. ID of principal in syncing system.
+     * @param value Value to set for the externalPrincipalId property.
+     */
+    public set externalPrincipalId(value: string | undefined) {
+        this._externalPrincipalId = value;
+    };
+    /**
      * Gets the fax property value. 
      * @returns a string
      */
@@ -85,53 +132,11 @@ export class EducationSchool extends EducationOrganization implements Parsable {
         return this._fax;
     };
     /**
-     * Gets the highestGrade property value. Highest grade taught.
-     * @returns a string
+     * Sets the fax property value. 
+     * @param value Value to set for the fax property.
      */
-    public get highestGrade() {
-        return this._highestGrade;
-    };
-    /**
-     * Gets the lowestGrade property value. Lowest grade taught.
-     * @returns a string
-     */
-    public get lowestGrade() {
-        return this._lowestGrade;
-    };
-    /**
-     * Gets the phone property value. Phone number of school.
-     * @returns a string
-     */
-    public get phone() {
-        return this._phone;
-    };
-    /**
-     * Gets the principalEmail property value. Email address of the principal.
-     * @returns a string
-     */
-    public get principalEmail() {
-        return this._principalEmail;
-    };
-    /**
-     * Gets the principalName property value. Name of the principal.
-     * @returns a string
-     */
-    public get principalName() {
-        return this._principalName;
-    };
-    /**
-     * Gets the schoolNumber property value. School Number.
-     * @returns a string
-     */
-    public get schoolNumber() {
-        return this._schoolNumber;
-    };
-    /**
-     * Gets the users property value. Users in the school. Nullable.
-     * @returns a educationUser
-     */
-    public get users() {
-        return this._users;
+    public set fax(value: string | undefined) {
+        this._fax = value;
     };
     /**
      * The deserialization information for the current model
@@ -139,10 +144,10 @@ export class EducationSchool extends EducationOrganization implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["address", (o, n) => { (o as unknown as EducationSchool).address = n.getObjectValue<PhysicalAddress>(PhysicalAddress); }],
-            ["administrativeUnit", (o, n) => { (o as unknown as EducationSchool).administrativeUnit = n.getObjectValue<AdministrativeUnit>(AdministrativeUnit); }],
-            ["classes", (o, n) => { (o as unknown as EducationSchool).classes = n.getCollectionOfObjectValues<EducationClass>(EducationClass); }],
-            ["createdBy", (o, n) => { (o as unknown as EducationSchool).createdBy = n.getObjectValue<IdentitySet>(IdentitySet); }],
+            ["address", (o, n) => { (o as unknown as EducationSchool).address = n.getObjectValue<PhysicalAddress>(createPhysicalAddressFromDiscriminatorValue); }],
+            ["administrativeUnit", (o, n) => { (o as unknown as EducationSchool).administrativeUnit = n.getObjectValue<AdministrativeUnit>(createAdministrativeUnitFromDiscriminatorValue); }],
+            ["classes", (o, n) => { (o as unknown as EducationSchool).classes = n.getCollectionOfObjectValues<EducationClass>(createEducationClassFromDiscriminatorValue); }],
+            ["createdBy", (o, n) => { (o as unknown as EducationSchool).createdBy = n.getObjectValue<IdentitySet>(createIdentitySetFromDiscriminatorValue); }],
             ["externalId", (o, n) => { (o as unknown as EducationSchool).externalId = n.getStringValue(); }],
             ["externalPrincipalId", (o, n) => { (o as unknown as EducationSchool).externalPrincipalId = n.getStringValue(); }],
             ["fax", (o, n) => { (o as unknown as EducationSchool).fax = n.getStringValue(); }],
@@ -152,8 +157,92 @@ export class EducationSchool extends EducationOrganization implements Parsable {
             ["principalEmail", (o, n) => { (o as unknown as EducationSchool).principalEmail = n.getStringValue(); }],
             ["principalName", (o, n) => { (o as unknown as EducationSchool).principalName = n.getStringValue(); }],
             ["schoolNumber", (o, n) => { (o as unknown as EducationSchool).schoolNumber = n.getStringValue(); }],
-            ["users", (o, n) => { (o as unknown as EducationSchool).users = n.getCollectionOfObjectValues<EducationUser>(EducationUser); }],
+            ["users", (o, n) => { (o as unknown as EducationSchool).users = n.getCollectionOfObjectValues<EducationUser>(createEducationUserFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the highestGrade property value. Highest grade taught.
+     * @returns a string
+     */
+    public get highestGrade() {
+        return this._highestGrade;
+    };
+    /**
+     * Sets the highestGrade property value. Highest grade taught.
+     * @param value Value to set for the highestGrade property.
+     */
+    public set highestGrade(value: string | undefined) {
+        this._highestGrade = value;
+    };
+    /**
+     * Gets the lowestGrade property value. Lowest grade taught.
+     * @returns a string
+     */
+    public get lowestGrade() {
+        return this._lowestGrade;
+    };
+    /**
+     * Sets the lowestGrade property value. Lowest grade taught.
+     * @param value Value to set for the lowestGrade property.
+     */
+    public set lowestGrade(value: string | undefined) {
+        this._lowestGrade = value;
+    };
+    /**
+     * Gets the phone property value. Phone number of school.
+     * @returns a string
+     */
+    public get phone() {
+        return this._phone;
+    };
+    /**
+     * Sets the phone property value. Phone number of school.
+     * @param value Value to set for the phone property.
+     */
+    public set phone(value: string | undefined) {
+        this._phone = value;
+    };
+    /**
+     * Gets the principalEmail property value. Email address of the principal.
+     * @returns a string
+     */
+    public get principalEmail() {
+        return this._principalEmail;
+    };
+    /**
+     * Sets the principalEmail property value. Email address of the principal.
+     * @param value Value to set for the principalEmail property.
+     */
+    public set principalEmail(value: string | undefined) {
+        this._principalEmail = value;
+    };
+    /**
+     * Gets the principalName property value. Name of the principal.
+     * @returns a string
+     */
+    public get principalName() {
+        return this._principalName;
+    };
+    /**
+     * Sets the principalName property value. Name of the principal.
+     * @param value Value to set for the principalName property.
+     */
+    public set principalName(value: string | undefined) {
+        this._principalName = value;
+    };
+    /**
+     * Gets the schoolNumber property value. School Number.
+     * @returns a string
+     */
+    public get schoolNumber() {
+        return this._schoolNumber;
+    };
+    /**
+     * Sets the schoolNumber property value. School Number.
+     * @param value Value to set for the schoolNumber property.
+     */
+    public set schoolNumber(value: string | undefined) {
+        this._schoolNumber = value;
     };
     /**
      * Serializes information the current object
@@ -178,95 +267,11 @@ export class EducationSchool extends EducationOrganization implements Parsable {
         writer.writeCollectionOfObjectValues<EducationUser>("users", this.users);
     };
     /**
-     * Sets the address property value. Address of the school.
-     * @param value Value to set for the address property.
+     * Gets the users property value. Users in the school. Nullable.
+     * @returns a educationUser
      */
-    public set address(value: PhysicalAddress | undefined) {
-        this._address = value;
-    };
-    /**
-     * Sets the administrativeUnit property value. The underlying administrativeUnit for this school.
-     * @param value Value to set for the administrativeUnit property.
-     */
-    public set administrativeUnit(value: AdministrativeUnit | undefined) {
-        this._administrativeUnit = value;
-    };
-    /**
-     * Sets the classes property value. Classes taught at the school. Nullable.
-     * @param value Value to set for the classes property.
-     */
-    public set classes(value: EducationClass[] | undefined) {
-        this._classes = value;
-    };
-    /**
-     * Sets the createdBy property value. Entity who created the school.
-     * @param value Value to set for the createdBy property.
-     */
-    public set createdBy(value: IdentitySet | undefined) {
-        this._createdBy = value;
-    };
-    /**
-     * Sets the externalId property value. ID of school in syncing system.
-     * @param value Value to set for the externalId property.
-     */
-    public set externalId(value: string | undefined) {
-        this._externalId = value;
-    };
-    /**
-     * Sets the externalPrincipalId property value. ID of principal in syncing system.
-     * @param value Value to set for the externalPrincipalId property.
-     */
-    public set externalPrincipalId(value: string | undefined) {
-        this._externalPrincipalId = value;
-    };
-    /**
-     * Sets the fax property value. 
-     * @param value Value to set for the fax property.
-     */
-    public set fax(value: string | undefined) {
-        this._fax = value;
-    };
-    /**
-     * Sets the highestGrade property value. Highest grade taught.
-     * @param value Value to set for the highestGrade property.
-     */
-    public set highestGrade(value: string | undefined) {
-        this._highestGrade = value;
-    };
-    /**
-     * Sets the lowestGrade property value. Lowest grade taught.
-     * @param value Value to set for the lowestGrade property.
-     */
-    public set lowestGrade(value: string | undefined) {
-        this._lowestGrade = value;
-    };
-    /**
-     * Sets the phone property value. Phone number of school.
-     * @param value Value to set for the phone property.
-     */
-    public set phone(value: string | undefined) {
-        this._phone = value;
-    };
-    /**
-     * Sets the principalEmail property value. Email address of the principal.
-     * @param value Value to set for the principalEmail property.
-     */
-    public set principalEmail(value: string | undefined) {
-        this._principalEmail = value;
-    };
-    /**
-     * Sets the principalName property value. Name of the principal.
-     * @param value Value to set for the principalName property.
-     */
-    public set principalName(value: string | undefined) {
-        this._principalName = value;
-    };
-    /**
-     * Sets the schoolNumber property value. School Number.
-     * @param value Value to set for the schoolNumber property.
-     */
-    public set schoolNumber(value: string | undefined) {
-        this._schoolNumber = value;
+    public get users() {
+        return this._users;
     };
     /**
      * Sets the users property value. Users in the school. Nullable.

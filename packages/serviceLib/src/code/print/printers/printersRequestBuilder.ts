@@ -1,10 +1,17 @@
-import {Printer} from '../../models/microsoft/graph/';
-import {CreateRequestBuilder} from './create/';
-import {PrintersResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {Printer, PrinterCollectionResponse} from '../../models/microsoft/graph/';
+import {createPrinterCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createPrinterCollectionResponseFromDiscriminatorValue';
+import {createPrinterFromDiscriminatorValue} from '../../models/microsoft/graph/createPrinterFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {CreateRequestBuilder} from './create/createRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/printers  */
+/** Provides operations to manage the printers property of the microsoft.graph.print entity.  */
 export class PrintersRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get create(): CreateRequestBuilder {
         return new CreateRequestBuilder(this.pathParameters, this.requestAdapter);
     }
@@ -54,7 +61,7 @@ export class PrintersRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of printers registered in the tenant.
+     * Create new navigation property to printers for print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -77,7 +84,7 @@ export class PrintersRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of PrintersResponse
+     * @returns a Promise of PrinterCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -88,14 +95,18 @@ export class PrintersRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<PrintersResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<PrinterCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintersResponse>(requestInfo, PrintersResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrinterCollectionResponse>(requestInfo, createPrinterCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of printers registered in the tenant.
+     * Create new navigation property to printers for print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -107,6 +118,10 @@ export class PrintersRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<Printer>(requestInfo, Printer, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Printer>(requestInfo, createPrinterFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

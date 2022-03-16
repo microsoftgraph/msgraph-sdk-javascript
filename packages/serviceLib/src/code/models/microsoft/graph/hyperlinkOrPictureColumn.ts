@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class HyperlinkOrPictureColumn implements Parsable {
+export class HyperlinkOrPictureColumn implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Specifies whether the display format used for URL columns is an image or a hyperlink.  */
     private _isPicture?: boolean | undefined;
-    /**
-     * Instantiates a new hyperlinkOrPictureColumn and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,17 @@ export class HyperlinkOrPictureColumn implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the isPicture property value. Specifies whether the display format used for URL columns is an image or a hyperlink.
-     * @returns a boolean
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get isPicture() {
-        return this._isPicture;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new hyperlinkOrPictureColumn and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -35,20 +35,11 @@ export class HyperlinkOrPictureColumn implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the isPicture property value. Specifies whether the display format used for URL columns is an image or a hyperlink.
+     * @returns a boolean
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeBooleanValue("isPicture", this.isPicture);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get isPicture() {
+        return this._isPicture;
     };
     /**
      * Sets the isPicture property value. Specifies whether the display format used for URL columns is an image or a hyperlink.
@@ -56,5 +47,14 @@ export class HyperlinkOrPictureColumn implements Parsable {
      */
     public set isPicture(value: boolean | undefined) {
         this._isPicture = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeBooleanValue("isPicture", this.isPicture);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

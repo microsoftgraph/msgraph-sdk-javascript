@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class UserAttributeValuesItem implements Parsable {
+export class UserAttributeValuesItem implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Determines whether the value is set as the default.  */
@@ -10,12 +10,6 @@ export class UserAttributeValuesItem implements Parsable {
     /** The value that is set when this item is selected.  */
     private _value?: string | undefined;
     /**
-     * Instantiates a new userAttributeValuesItem and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -23,25 +17,17 @@ export class UserAttributeValuesItem implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the isDefault property value. Determines whether the value is set as the default.
-     * @returns a boolean
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get isDefault() {
-        return this._isDefault;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the name property value. The display name of the property displayed to the user in the user flow.
-     * @returns a string
+     * Instantiates a new userAttributeValuesItem and sets the default values.
      */
-    public get name() {
-        return this._name;
-    };
-    /**
-     * Gets the value property value. The value that is set when this item is selected.
-     * @returns a string
-     */
-    public get value() {
-        return this._value;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +41,34 @@ export class UserAttributeValuesItem implements Parsable {
         ]);
     };
     /**
+     * Gets the isDefault property value. Determines whether the value is set as the default.
+     * @returns a boolean
+     */
+    public get isDefault() {
+        return this._isDefault;
+    };
+    /**
+     * Sets the isDefault property value. Determines whether the value is set as the default.
+     * @param value Value to set for the isDefault property.
+     */
+    public set isDefault(value: boolean | undefined) {
+        this._isDefault = value;
+    };
+    /**
+     * Gets the name property value. The display name of the property displayed to the user in the user flow.
+     * @returns a string
+     */
+    public get name() {
+        return this._name;
+    };
+    /**
+     * Sets the name property value. The display name of the property displayed to the user in the user flow.
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,25 +80,11 @@ export class UserAttributeValuesItem implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the value property value. The value that is set when this item is selected.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the isDefault property value. Determines whether the value is set as the default.
-     * @param value Value to set for the isDefault property.
-     */
-    public set isDefault(value: boolean | undefined) {
-        this._isDefault = value;
-    };
-    /**
-     * Sets the name property value. The display name of the property displayed to the user in the user flow.
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. The value that is set when this item is selected.

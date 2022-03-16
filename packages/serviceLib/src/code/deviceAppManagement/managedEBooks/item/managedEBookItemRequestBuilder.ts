@@ -1,15 +1,18 @@
 import {ManagedEBook} from '../../../models/microsoft/graph/';
-import {AssignRequestBuilder} from './assign/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {ManagedEBookAssignmentItemRequestBuilder} from './assignments/item/';
-import {DeviceStatesRequestBuilder} from './deviceStates/';
-import {DeviceInstallStateItemRequestBuilder} from './deviceStates/item/';
-import {InstallSummaryRequestBuilder} from './installSummary/';
-import {UserStateSummaryRequestBuilder} from './userStateSummary/';
-import {UserInstallStateSummaryItemRequestBuilder} from './userStateSummary/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createManagedEBookFromDiscriminatorValue} from '../../../models/microsoft/graph/createManagedEBookFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignRequestBuilder} from './assign/assignRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {ManagedEBookAssignmentItemRequestBuilder} from './assignments/item/managedEBookAssignmentItemRequestBuilder';
+import {DeviceStatesRequestBuilder} from './deviceStates/deviceStatesRequestBuilder';
+import {DeviceInstallStateItemRequestBuilder} from './deviceStates/item/deviceInstallStateItemRequestBuilder';
+import {InstallSummaryRequestBuilder} from './installSummary/installSummaryRequestBuilder';
+import {UserInstallStateSummaryItemRequestBuilder} from './userStateSummary/item/userInstallStateSummaryItemRequestBuilder';
+import {UserStateSummaryRequestBuilder} from './userStateSummary/userStateSummaryRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/managedEBooks/{managedEBook-id}  */
+/** Provides operations to manage the managedEBooks property of the microsoft.graph.deviceAppManagement entity.  */
 export class ManagedEBookItemRequestBuilder {
     public get assign(): AssignRequestBuilder {
         return new AssignRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -57,7 +60,7 @@ export class ManagedEBookItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The Managed eBook.
+     * Delete navigation property managedEBooks for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -92,7 +95,7 @@ export class ManagedEBookItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Managed eBook.
+     * Update the navigation property managedEBooks in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -110,7 +113,7 @@ export class ManagedEBookItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Managed eBook.
+     * Delete navigation property managedEBooks for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -119,7 +122,11 @@ export class ManagedEBookItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedEBooks.item.deviceStates.item collection
@@ -147,10 +154,14 @@ export class ManagedEBookItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ManagedEBook>(requestInfo, ManagedEBook, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ManagedEBook>(requestInfo, createManagedEBookFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The Managed eBook.
+     * Update the navigation property managedEBooks in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -161,7 +172,11 @@ export class ManagedEBookItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedEBooks.item.userStateSummary.item collection

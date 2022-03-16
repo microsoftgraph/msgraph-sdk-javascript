@@ -1,16 +1,19 @@
 import {Chat} from '../../models/microsoft/graph/';
-import {InstalledAppsRequestBuilder} from './installedApps/';
-import {TeamsAppInstallationItemRequestBuilder} from './installedApps/item/';
-import {MembersRequestBuilder} from './members/';
-import {ConversationMemberItemRequestBuilder} from './members/item/';
-import {MessagesRequestBuilder} from './messages/';
-import {ChatMessageItemRequestBuilder} from './messages/item/';
-import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/';
-import {TabsRequestBuilder} from './tabs/';
-import {TeamsTabItemRequestBuilder} from './tabs/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createChatFromDiscriminatorValue} from '../../models/microsoft/graph/createChatFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InstalledAppsRequestBuilder} from './installedApps/installedAppsRequestBuilder';
+import {TeamsAppInstallationItemRequestBuilder} from './installedApps/item/teamsAppInstallationItemRequestBuilder';
+import {ConversationMemberItemRequestBuilder} from './members/item/conversationMemberItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {ChatMessageItemRequestBuilder} from './messages/item/chatMessageItemRequestBuilder';
+import {MessagesRequestBuilder} from './messages/messagesRequestBuilder';
+import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/sendActivityNotificationRequestBuilder';
+import {TeamsTabItemRequestBuilder} from './tabs/item/teamsTabItemRequestBuilder';
+import {TabsRequestBuilder} from './tabs/tabsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /chats/{chat-id}  */
+/** Provides operations to manage the collection of chat entities.  */
 export class ChatItemRequestBuilder {
     public get installedApps(): InstalledAppsRequestBuilder {
         return new InstalledAppsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -109,7 +112,11 @@ export class ChatItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entity from chats by key
@@ -126,7 +133,11 @@ export class ChatItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Chat>(requestInfo, Chat, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Chat>(requestInfo, createChatFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.chats.item.installedApps.item collection
@@ -173,7 +184,11 @@ export class ChatItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.chats.item.tabs.item collection

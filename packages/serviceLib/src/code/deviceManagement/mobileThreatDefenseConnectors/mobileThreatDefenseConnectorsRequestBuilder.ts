@@ -1,9 +1,16 @@
-import {MobileThreatDefenseConnector} from '../../models/microsoft/graph/';
-import {MobileThreatDefenseConnectorsResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {MobileThreatDefenseConnector, MobileThreatDefenseConnectorCollectionResponse} from '../../models/microsoft/graph/';
+import {createMobileThreatDefenseConnectorCollectionResponseFromDiscriminatorValue} from '../../models/microsoft/graph/createMobileThreatDefenseConnectorCollectionResponseFromDiscriminatorValue';
+import {createMobileThreatDefenseConnectorFromDiscriminatorValue} from '../../models/microsoft/graph/createMobileThreatDefenseConnectorFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/mobileThreatDefenseConnectors  */
+/** Provides operations to manage the mobileThreatDefenseConnectors property of the microsoft.graph.deviceManagement entity.  */
 export class MobileThreatDefenseConnectorsRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -50,7 +57,7 @@ export class MobileThreatDefenseConnectorsRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of Mobile threat Defense connectors configured by the tenant.
+     * Create new navigation property to mobileThreatDefenseConnectors for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -73,7 +80,7 @@ export class MobileThreatDefenseConnectorsRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of MobileThreatDefenseConnectorsResponse
+     * @returns a Promise of MobileThreatDefenseConnectorCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -84,14 +91,18 @@ export class MobileThreatDefenseConnectorsRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MobileThreatDefenseConnectorsResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<MobileThreatDefenseConnectorCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MobileThreatDefenseConnectorsResponse>(requestInfo, MobileThreatDefenseConnectorsResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MobileThreatDefenseConnectorCollectionResponse>(requestInfo, createMobileThreatDefenseConnectorCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of Mobile threat Defense connectors configured by the tenant.
+     * Create new navigation property to mobileThreatDefenseConnectors for deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -103,6 +114,10 @@ export class MobileThreatDefenseConnectorsRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<MobileThreatDefenseConnector>(requestInfo, MobileThreatDefenseConnector, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MobileThreatDefenseConnector>(requestInfo, createMobileThreatDefenseConnectorFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,7 +1,8 @@
+import {createPhoneFromDiscriminatorValue} from './createPhoneFromDiscriminatorValue';
 import {Phone} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class OnlineMeetingInfo implements Parsable {
+export class OnlineMeetingInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The ID of the conference.  */
@@ -17,17 +18,18 @@ export class OnlineMeetingInfo implements Parsable {
     /** The toll number that can be used to join the conference.  */
     private _tollNumber?: string | undefined;
     /**
-     * Instantiates a new onlineMeetingInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the conferenceId property value. The ID of the conference.
@@ -37,39 +39,17 @@ export class OnlineMeetingInfo implements Parsable {
         return this._conferenceId;
     };
     /**
-     * Gets the joinUrl property value. The external link that launches the online meeting. This is a URL that clients will launch into a browser and will redirect the user to join the meeting.
-     * @returns a string
+     * Sets the conferenceId property value. The ID of the conference.
+     * @param value Value to set for the conferenceId property.
      */
-    public get joinUrl() {
-        return this._joinUrl;
+    public set conferenceId(value: string | undefined) {
+        this._conferenceId = value;
     };
     /**
-     * Gets the phones property value. All of the phone numbers associated with this conference.
-     * @returns a phone
+     * Instantiates a new onlineMeetingInfo and sets the default values.
      */
-    public get phones() {
-        return this._phones;
-    };
-    /**
-     * Gets the quickDial property value. The pre-formatted quickdial for this call.
-     * @returns a string
-     */
-    public get quickDial() {
-        return this._quickDial;
-    };
-    /**
-     * Gets the tollFreeNumbers property value. The toll free numbers that can be used to join the conference.
-     * @returns a string
-     */
-    public get tollFreeNumbers() {
-        return this._tollFreeNumbers;
-    };
-    /**
-     * Gets the tollNumber property value. The toll number that can be used to join the conference.
-     * @returns a string
-     */
-    public get tollNumber() {
-        return this._tollNumber;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -79,11 +59,53 @@ export class OnlineMeetingInfo implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["conferenceId", (o, n) => { (o as unknown as OnlineMeetingInfo).conferenceId = n.getStringValue(); }],
             ["joinUrl", (o, n) => { (o as unknown as OnlineMeetingInfo).joinUrl = n.getStringValue(); }],
-            ["phones", (o, n) => { (o as unknown as OnlineMeetingInfo).phones = n.getCollectionOfObjectValues<Phone>(Phone); }],
+            ["phones", (o, n) => { (o as unknown as OnlineMeetingInfo).phones = n.getCollectionOfObjectValues<Phone>(createPhoneFromDiscriminatorValue); }],
             ["quickDial", (o, n) => { (o as unknown as OnlineMeetingInfo).quickDial = n.getStringValue(); }],
             ["tollFreeNumbers", (o, n) => { (o as unknown as OnlineMeetingInfo).tollFreeNumbers = n.getCollectionOfPrimitiveValues<string>(); }],
             ["tollNumber", (o, n) => { (o as unknown as OnlineMeetingInfo).tollNumber = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the joinUrl property value. The external link that launches the online meeting. This is a URL that clients will launch into a browser and will redirect the user to join the meeting.
+     * @returns a string
+     */
+    public get joinUrl() {
+        return this._joinUrl;
+    };
+    /**
+     * Sets the joinUrl property value. The external link that launches the online meeting. This is a URL that clients will launch into a browser and will redirect the user to join the meeting.
+     * @param value Value to set for the joinUrl property.
+     */
+    public set joinUrl(value: string | undefined) {
+        this._joinUrl = value;
+    };
+    /**
+     * Gets the phones property value. All of the phone numbers associated with this conference.
+     * @returns a phone
+     */
+    public get phones() {
+        return this._phones;
+    };
+    /**
+     * Sets the phones property value. All of the phone numbers associated with this conference.
+     * @param value Value to set for the phones property.
+     */
+    public set phones(value: Phone[] | undefined) {
+        this._phones = value;
+    };
+    /**
+     * Gets the quickDial property value. The pre-formatted quickdial for this call.
+     * @returns a string
+     */
+    public get quickDial() {
+        return this._quickDial;
+    };
+    /**
+     * Sets the quickDial property value. The pre-formatted quickdial for this call.
+     * @param value Value to set for the quickDial property.
+     */
+    public set quickDial(value: string | undefined) {
+        this._quickDial = value;
     };
     /**
      * Serializes information the current object
@@ -100,39 +122,11 @@ export class OnlineMeetingInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the tollFreeNumbers property value. The toll free numbers that can be used to join the conference.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the conferenceId property value. The ID of the conference.
-     * @param value Value to set for the conferenceId property.
-     */
-    public set conferenceId(value: string | undefined) {
-        this._conferenceId = value;
-    };
-    /**
-     * Sets the joinUrl property value. The external link that launches the online meeting. This is a URL that clients will launch into a browser and will redirect the user to join the meeting.
-     * @param value Value to set for the joinUrl property.
-     */
-    public set joinUrl(value: string | undefined) {
-        this._joinUrl = value;
-    };
-    /**
-     * Sets the phones property value. All of the phone numbers associated with this conference.
-     * @param value Value to set for the phones property.
-     */
-    public set phones(value: Phone[] | undefined) {
-        this._phones = value;
-    };
-    /**
-     * Sets the quickDial property value. The pre-formatted quickdial for this call.
-     * @param value Value to set for the quickDial property.
-     */
-    public set quickDial(value: string | undefined) {
-        this._quickDial = value;
+    public get tollFreeNumbers() {
+        return this._tollFreeNumbers;
     };
     /**
      * Sets the tollFreeNumbers property value. The toll free numbers that can be used to join the conference.
@@ -140,6 +134,13 @@ export class OnlineMeetingInfo implements Parsable {
      */
     public set tollFreeNumbers(value: string[] | undefined) {
         this._tollFreeNumbers = value;
+    };
+    /**
+     * Gets the tollNumber property value. The toll number that can be used to join the conference.
+     * @returns a string
+     */
+    public get tollNumber() {
+        return this._tollNumber;
     };
     /**
      * Sets the tollNumber property value. The toll number that can be used to join the conference.

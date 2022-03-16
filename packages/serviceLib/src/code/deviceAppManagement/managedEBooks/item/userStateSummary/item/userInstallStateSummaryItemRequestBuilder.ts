@@ -1,9 +1,12 @@
 import {UserInstallStateSummary} from '../../../../../models/microsoft/graph/';
-import {DeviceStatesRequestBuilder} from './deviceStates/';
-import {DeviceInstallStateItemRequestBuilder} from './deviceStates/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserInstallStateSummaryFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createUserInstallStateSummaryFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DeviceStatesRequestBuilder} from './deviceStates/deviceStatesRequestBuilder';
+import {DeviceInstallStateItemRequestBuilder} from './deviceStates/item/deviceInstallStateItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/managedEBooks/{managedEBook-id}/userStateSummary/{userInstallStateSummary-id}  */
+/** Provides operations to manage the userStateSummary property of the microsoft.graph.managedEBook entity.  */
 export class UserInstallStateSummaryItemRequestBuilder {
     public get deviceStates(): DeviceStatesRequestBuilder {
         return new DeviceStatesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class UserInstallStateSummaryItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of installation states for this eBook.
+     * Delete navigation property userStateSummary for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class UserInstallStateSummaryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of installation states for this eBook.
+     * Update the navigation property userStateSummary in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class UserInstallStateSummaryItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of installation states for this eBook.
+     * Delete navigation property userStateSummary for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class UserInstallStateSummaryItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceAppManagement.managedEBooks.item.userStateSummary.item.deviceStates.item collection
@@ -118,10 +125,14 @@ export class UserInstallStateSummaryItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserInstallStateSummary>(requestInfo, UserInstallStateSummary, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserInstallStateSummary>(requestInfo, createUserInstallStateSummaryFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of installation states for this eBook.
+     * Update the navigation property userStateSummary in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class UserInstallStateSummaryItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

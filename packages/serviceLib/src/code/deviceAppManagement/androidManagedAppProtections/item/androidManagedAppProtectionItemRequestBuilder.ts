@@ -1,10 +1,13 @@
 import {AndroidManagedAppProtection} from '../../../models/microsoft/graph/';
-import {AppsRequestBuilder} from './apps/';
-import {ManagedMobileAppItemRequestBuilder} from './apps/item/';
-import {DeploymentSummaryRequestBuilder} from './deploymentSummary/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAndroidManagedAppProtectionFromDiscriminatorValue} from '../../../models/microsoft/graph/createAndroidManagedAppProtectionFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AppsRequestBuilder} from './apps/appsRequestBuilder';
+import {ManagedMobileAppItemRequestBuilder} from './apps/item/managedMobileAppItemRequestBuilder';
+import {DeploymentSummaryRequestBuilder} from './deploymentSummary/deploymentSummaryRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceAppManagement/androidManagedAppProtections/{androidManagedAppProtection-id}  */
+/** Provides operations to manage the androidManagedAppProtections property of the microsoft.graph.deviceAppManagement entity.  */
 export class AndroidManagedAppProtectionItemRequestBuilder {
     public get apps(): AppsRequestBuilder {
         return new AppsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -43,7 +46,7 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Android managed app policies.
+     * Delete navigation property androidManagedAppProtections for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -78,7 +81,7 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Android managed app policies.
+     * Update the navigation property androidManagedAppProtections in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -96,7 +99,7 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Android managed app policies.
+     * Delete navigation property androidManagedAppProtections for deviceAppManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -105,7 +108,11 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Android managed app policies.
@@ -122,10 +129,14 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AndroidManagedAppProtection>(requestInfo, AndroidManagedAppProtection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AndroidManagedAppProtection>(requestInfo, createAndroidManagedAppProtectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Android managed app policies.
+     * Update the navigation property androidManagedAppProtections in deviceAppManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,6 +147,10 @@ export class AndroidManagedAppProtectionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

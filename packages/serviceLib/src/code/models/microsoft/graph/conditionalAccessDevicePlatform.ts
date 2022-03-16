@@ -1,3 +1,4 @@
+/** Provides operations to manage the identityContainer singleton.  */
 export enum ConditionalAccessDevicePlatform {
     Android = "android",
     IOS = "iOS",

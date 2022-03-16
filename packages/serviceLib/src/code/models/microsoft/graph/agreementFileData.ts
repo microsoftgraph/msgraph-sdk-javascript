@@ -1,15 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AgreementFileData implements Parsable {
+export class AgreementFileData implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
+    /** Data that represents the terms of use PDF document. Read-only.  */
     private _data?: string | undefined;
-    /**
-     * Instantiates a new agreementFileData and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -18,11 +13,31 @@ export class AgreementFileData implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the data property value. 
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new agreementFileData and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * Gets the data property value. Data that represents the terms of use PDF document. Read-only.
      * @returns a binary
      */
     public get data() {
         return this._data;
+    };
+    /**
+     * Sets the data property value. Data that represents the terms of use PDF document. Read-only.
+     * @param value Value to set for the data property.
+     */
+    public set data(value: string | undefined) {
+        this._data = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,19 +56,5 @@ export class AgreementFileData implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeStringValue("data", this.data);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the data property value. 
-     * @param value Value to set for the data property.
-     */
-    public set data(value: string | undefined) {
-        this._data = value;
     };
 }

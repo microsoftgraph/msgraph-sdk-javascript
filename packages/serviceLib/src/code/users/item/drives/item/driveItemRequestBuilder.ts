@@ -1,14 +1,56 @@
 import {Drive} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDriveFromDiscriminatorValue} from '../../../../models/microsoft/graph/createDriveFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BundlesRequestBuilder} from './bundles/bundlesRequestBuilder';
+import {DriveItemItemRequestBuilder as i10761018d607e59870645658dacaa464e200b562ec4e42964b5d2d808c6e0b78} from './bundles/item/driveItemItemRequestBuilder';
+import {FollowingRequestBuilder} from './following/followingRequestBuilder';
+import {DriveItemItemRequestBuilder as i15712a8c6e021d4d7e8cdf923d79d93bcc51fd7943e4933ab243dd5134a3d65a} from './following/item/driveItemItemRequestBuilder';
+import {DriveItemItemRequestBuilder as i81fcf2134d13b81e176a7abc8e74e13d947cddfe22b2a7b083f70ae9bcdd40c9} from './items/item/driveItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {ListRequestBuilder} from './list/listRequestBuilder';
+import {RootRequestBuilder} from './root/rootRequestBuilder';
+import {DriveItemItemRequestBuilder as i336719712999105ade96878fbc0aa73065a8ce1ac51c4e2e3973ae46a5772800} from './special/item/driveItemItemRequestBuilder';
+import {SpecialRequestBuilder} from './special/specialRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /users/{user-id}/drives/{drive-id}  */
+/** Provides operations to manage the drives property of the microsoft.graph.user entity.  */
 export class DriveItemRequestBuilder {
+    public get bundles(): BundlesRequestBuilder {
+        return new BundlesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get following(): FollowingRequestBuilder {
+        return new FollowingRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get items(): ItemsRequestBuilder {
+        return new ItemsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get list(): ListRequestBuilder {
+        return new ListRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get root(): RootRequestBuilder {
+        return new RootRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get special(): SpecialRequestBuilder {
+        return new SpecialRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.users.item.drives.item.bundles.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public bundlesById(id: string) : i10761018d607e59870645658dacaa464e200b562ec4e42964b5d2d808c6e0b78 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id"] = id
+        return new i10761018d607e59870645658dacaa464e200b562ec4e42964b5d2d808c6e0b78(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new DriveItemRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -23,7 +65,7 @@ export class DriveItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of drives available for this user. Read-only.
+     * Delete navigation property drives for users
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +100,7 @@ export class DriveItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of drives available for this user. Read-only.
+     * Update the navigation property drives in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +118,7 @@ export class DriveItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of drives available for this user. Read-only.
+     * Delete navigation property drives for users
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +127,22 @@ export class DriveItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.users.item.drives.item.following.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public followingById(id: string) : i15712a8c6e021d4d7e8cdf923d79d93bcc51fd7943e4933ab243dd5134a3d65a {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id"] = id
+        return new i15712a8c6e021d4d7e8cdf923d79d93bcc51fd7943e4933ab243dd5134a3d65a(urlTplParams, this.requestAdapter);
     };
     /**
      * A collection of drives available for this user. Read-only.
@@ -102,10 +159,25 @@ export class DriveItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Drive>(requestInfo, Drive, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Drive>(requestInfo, createDriveFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of drives available for this user. Read-only.
+     * Gets an item from the MicrosoftGraph.users.item.drives.item.items.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public itemsById(id: string) : i81fcf2134d13b81e176a7abc8e74e13d947cddfe22b2a7b083f70ae9bcdd40c9 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id"] = id
+        return new i81fcf2134d13b81e176a7abc8e74e13d947cddfe22b2a7b083f70ae9bcdd40c9(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property drives in users
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +188,21 @@ export class DriveItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.users.item.drives.item.special.item collection
+     * @param id Unique identifier of the item
+     * @returns a driveItemItemRequestBuilder
+     */
+    public specialById(id: string) : i336719712999105ade96878fbc0aa73065a8ce1ac51c4e2e3973ae46a5772800 {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["driveItem_id"] = id
+        return new i336719712999105ade96878fbc0aa73065a8ce1ac51c4e2e3973ae46a5772800(urlTplParams, this.requestAdapter);
     };
 }

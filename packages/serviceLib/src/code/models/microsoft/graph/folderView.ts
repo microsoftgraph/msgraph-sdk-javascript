@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class FolderView implements Parsable {
+export class FolderView implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The method by which the folder should be sorted.  */
@@ -10,12 +10,6 @@ export class FolderView implements Parsable {
     /** The type of view that should be used to represent the folder.  */
     private _viewType?: string | undefined;
     /**
-     * Instantiates a new folderView and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -23,25 +17,17 @@ export class FolderView implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the sortBy property value. The method by which the folder should be sorted.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get sortBy() {
-        return this._sortBy;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the sortOrder property value. If true, indicates that items should be sorted in descending order. Otherwise, items should be sorted ascending.
-     * @returns a string
+     * Instantiates a new folderView and sets the default values.
      */
-    public get sortOrder() {
-        return this._sortOrder;
-    };
-    /**
-     * Gets the viewType property value. The type of view that should be used to represent the folder.
-     * @returns a string
-     */
-    public get viewType() {
-        return this._viewType;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -66,11 +52,11 @@ export class FolderView implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sortBy property value. The method by which the folder should be sorted.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get sortBy() {
+        return this._sortBy;
     };
     /**
      * Sets the sortBy property value. The method by which the folder should be sorted.
@@ -80,11 +66,25 @@ export class FolderView implements Parsable {
         this._sortBy = value;
     };
     /**
+     * Gets the sortOrder property value. If true, indicates that items should be sorted in descending order. Otherwise, items should be sorted ascending.
+     * @returns a string
+     */
+    public get sortOrder() {
+        return this._sortOrder;
+    };
+    /**
      * Sets the sortOrder property value. If true, indicates that items should be sorted in descending order. Otherwise, items should be sorted ascending.
      * @param value Value to set for the sortOrder property.
      */
     public set sortOrder(value: string | undefined) {
         this._sortOrder = value;
+    };
+    /**
+     * Gets the viewType property value. The type of view that should be used to represent the folder.
+     * @returns a string
+     */
+    public get viewType() {
+        return this._viewType;
     };
     /**
      * Sets the viewType property value. The type of view that should be used to represent the folder.

@@ -1,2 +1,1 @@
-export * from './ForwardRequestBuilder'
-export * from './ForwardRequestBody'
+export * from './forwardRequestBody'

@@ -20,11 +20,11 @@ export class MobileAppCategory extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the lastModifiedDateTime property value. The date and time the mobileAppCategory was last modified.
-     * @returns a Date
+     * Sets the displayName property value. The name of the app category.
+     * @param value Value to set for the displayName property.
      */
-    public get lastModifiedDateTime() {
-        return this._lastModifiedDateTime;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -37,6 +37,20 @@ export class MobileAppCategory extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the lastModifiedDateTime property value. The date and time the mobileAppCategory was last modified.
+     * @returns a Date
+     */
+    public get lastModifiedDateTime() {
+        return this._lastModifiedDateTime;
+    };
+    /**
+     * Sets the lastModifiedDateTime property value. The date and time the mobileAppCategory was last modified.
+     * @param value Value to set for the lastModifiedDateTime property.
+     */
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -45,19 +59,5 @@ export class MobileAppCategory extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeStringValue("displayName", this.displayName);
         writer.writeDateValue("lastModifiedDateTime", this.lastModifiedDateTime);
-    };
-    /**
-     * Sets the displayName property value. The name of the app category.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. The date and time the mobileAppCategory was last modified.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
     };
 }

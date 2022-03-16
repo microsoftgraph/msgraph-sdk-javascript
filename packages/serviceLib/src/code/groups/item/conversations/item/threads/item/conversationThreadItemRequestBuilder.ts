@@ -1,10 +1,13 @@
 import {ConversationThread} from '../../../../../../models/microsoft/graph/';
-import {PostsRequestBuilder} from './posts/';
-import {PostItemRequestBuilder} from './posts/item/';
-import {ReplyRequestBuilder} from './reply/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createConversationThreadFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createConversationThreadFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {PostItemRequestBuilder} from './posts/item/postItemRequestBuilder';
+import {PostsRequestBuilder} from './posts/postsRequestBuilder';
+import {ReplyRequestBuilder} from './reply/replyRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/conversations/{conversation-id}/threads/{conversationThread-id}  */
+/** Provides operations to manage the threads property of the microsoft.graph.conversation entity.  */
 export class ConversationThreadItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -32,7 +35,7 @@ export class ConversationThreadItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of all the conversation threads in the conversation. A navigation property. Read-only. Nullable.
+     * Delete navigation property threads for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -67,7 +70,7 @@ export class ConversationThreadItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the conversation threads in the conversation. A navigation property. Read-only. Nullable.
+     * Update the navigation property threads in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -85,7 +88,7 @@ export class ConversationThreadItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the conversation threads in the conversation. A navigation property. Read-only. Nullable.
+     * Delete navigation property threads for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -94,7 +97,11 @@ export class ConversationThreadItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of all the conversation threads in the conversation. A navigation property. Read-only. Nullable.
@@ -111,10 +118,14 @@ export class ConversationThreadItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ConversationThread>(requestInfo, ConversationThread, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ConversationThread>(requestInfo, createConversationThreadFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A collection of all the conversation threads in the conversation. A navigation property. Read-only. Nullable.
+     * Update the navigation property threads in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -125,7 +136,11 @@ export class ConversationThreadItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.groups.item.conversations.item.threads.item.posts.item collection

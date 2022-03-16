@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class GetCachedReportRequestBody implements Parsable {
+/** Provides operations to call the getCachedReport method.  */
+export class GetCachedReportRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _groupBy?: string[] | undefined;
@@ -11,12 +12,6 @@ export class GetCachedReportRequestBody implements Parsable {
     private _skip?: number | undefined;
     private _top?: number | undefined;
     /**
-     * Instantiates a new getCachedReportRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -24,53 +19,17 @@ export class GetCachedReportRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the groupBy property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get groupBy() {
-        return this._groupBy;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the id property value. 
-     * @returns a string
+     * Instantiates a new getCachedReportRequestBody and sets the default values.
      */
-    public get id() {
-        return this._id;
-    };
-    /**
-     * Gets the orderBy property value. 
-     * @returns a string
-     */
-    public get orderBy() {
-        return this._orderBy;
-    };
-    /**
-     * Gets the search property value. 
-     * @returns a string
-     */
-    public get search() {
-        return this._search;
-    };
-    /**
-     * Gets the select property value. 
-     * @returns a string
-     */
-    public get select() {
-        return this._select;
-    };
-    /**
-     * Gets the skip property value. 
-     * @returns a integer
-     */
-    public get skip() {
-        return this._skip;
-    };
-    /**
-     * Gets the top property value. 
-     * @returns a integer
-     */
-    public get top() {
-        return this._top;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -88,6 +47,76 @@ export class GetCachedReportRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the groupBy property value. 
+     * @returns a string
+     */
+    public get groupBy() {
+        return this._groupBy;
+    };
+    /**
+     * Sets the groupBy property value. 
+     * @param value Value to set for the groupBy property.
+     */
+    public set groupBy(value: string[] | undefined) {
+        this._groupBy = value;
+    };
+    /**
+     * Gets the id property value. 
+     * @returns a string
+     */
+    public get id() {
+        return this._id;
+    };
+    /**
+     * Sets the id property value. 
+     * @param value Value to set for the id property.
+     */
+    public set id(value: string | undefined) {
+        this._id = value;
+    };
+    /**
+     * Gets the orderBy property value. 
+     * @returns a string
+     */
+    public get orderBy() {
+        return this._orderBy;
+    };
+    /**
+     * Sets the orderBy property value. 
+     * @param value Value to set for the orderBy property.
+     */
+    public set orderBy(value: string[] | undefined) {
+        this._orderBy = value;
+    };
+    /**
+     * Gets the search property value. 
+     * @returns a string
+     */
+    public get search() {
+        return this._search;
+    };
+    /**
+     * Sets the search property value. 
+     * @param value Value to set for the search property.
+     */
+    public set search(value: string | undefined) {
+        this._search = value;
+    };
+    /**
+     * Gets the select property value. 
+     * @returns a string
+     */
+    public get select() {
+        return this._select;
+    };
+    /**
+     * Sets the select property value. 
+     * @param value Value to set for the select property.
+     */
+    public set select(value: string[] | undefined) {
+        this._select = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -103,46 +132,11 @@ export class GetCachedReportRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the skip property value. 
+     * @returns a integer
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the groupBy property value. 
-     * @param value Value to set for the groupBy property.
-     */
-    public set groupBy(value: string[] | undefined) {
-        this._groupBy = value;
-    };
-    /**
-     * Sets the id property value. 
-     * @param value Value to set for the id property.
-     */
-    public set id(value: string | undefined) {
-        this._id = value;
-    };
-    /**
-     * Sets the orderBy property value. 
-     * @param value Value to set for the orderBy property.
-     */
-    public set orderBy(value: string[] | undefined) {
-        this._orderBy = value;
-    };
-    /**
-     * Sets the search property value. 
-     * @param value Value to set for the search property.
-     */
-    public set search(value: string | undefined) {
-        this._search = value;
-    };
-    /**
-     * Sets the select property value. 
-     * @param value Value to set for the select property.
-     */
-    public set select(value: string[] | undefined) {
-        this._select = value;
+    public get skip() {
+        return this._skip;
     };
     /**
      * Sets the skip property value. 
@@ -150,6 +144,13 @@ export class GetCachedReportRequestBody implements Parsable {
      */
     public set skip(value: number | undefined) {
         this._skip = value;
+    };
+    /**
+     * Gets the top property value. 
+     * @returns a integer
+     */
+    public get top() {
+        return this._top;
     };
     /**
      * Sets the top property value. 

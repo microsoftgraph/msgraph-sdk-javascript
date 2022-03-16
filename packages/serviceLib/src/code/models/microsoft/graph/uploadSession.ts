@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class UploadSession implements Parsable {
+export class UploadSession implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The date and time in UTC that the upload session will expire. The complete file must be uploaded before this expiration time is reached.  */
@@ -10,17 +10,24 @@ export class UploadSession implements Parsable {
     /** The URL endpoint that accepts PUT requests for byte ranges of the file.  */
     private _uploadUrl?: string | undefined;
     /**
-     * Instantiates a new uploadSession and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new uploadSession and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the expirationDateTime property value. The date and time in UTC that the upload session will expire. The complete file must be uploaded before this expiration time is reached.
@@ -30,18 +37,11 @@ export class UploadSession implements Parsable {
         return this._expirationDateTime;
     };
     /**
-     * Gets the nextExpectedRanges property value. A collection of byte ranges that the server is missing for the file. These ranges are zero indexed and of the format 'start-end' (e.g. '0-26' to indicate the first 27 bytes of the file). When uploading files as Outlook attachments, instead of a collection of ranges, this property always indicates a single value '{start}', the location in the file where the next upload should begin.
-     * @returns a string
+     * Sets the expirationDateTime property value. The date and time in UTC that the upload session will expire. The complete file must be uploaded before this expiration time is reached.
+     * @param value Value to set for the expirationDateTime property.
      */
-    public get nextExpectedRanges() {
-        return this._nextExpectedRanges;
-    };
-    /**
-     * Gets the uploadUrl property value. The URL endpoint that accepts PUT requests for byte ranges of the file.
-     * @returns a string
-     */
-    public get uploadUrl() {
-        return this._uploadUrl;
+    public set expirationDateTime(value: Date | undefined) {
+        this._expirationDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +55,20 @@ export class UploadSession implements Parsable {
         ]);
     };
     /**
+     * Gets the nextExpectedRanges property value. A collection of byte ranges that the server is missing for the file. These ranges are zero indexed and of the format 'start-end' (e.g. '0-26' to indicate the first 27 bytes of the file). When uploading files as Outlook attachments, instead of a collection of ranges, this property always indicates a single value '{start}', the location in the file where the next upload should begin.
+     * @returns a string
+     */
+    public get nextExpectedRanges() {
+        return this._nextExpectedRanges;
+    };
+    /**
+     * Sets the nextExpectedRanges property value. A collection of byte ranges that the server is missing for the file. These ranges are zero indexed and of the format 'start-end' (e.g. '0-26' to indicate the first 27 bytes of the file). When uploading files as Outlook attachments, instead of a collection of ranges, this property always indicates a single value '{start}', the location in the file where the next upload should begin.
+     * @param value Value to set for the nextExpectedRanges property.
+     */
+    public set nextExpectedRanges(value: string[] | undefined) {
+        this._nextExpectedRanges = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,25 +80,11 @@ export class UploadSession implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the uploadUrl property value. The URL endpoint that accepts PUT requests for byte ranges of the file.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. The date and time in UTC that the upload session will expire. The complete file must be uploaded before this expiration time is reached.
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: Date | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the nextExpectedRanges property value. A collection of byte ranges that the server is missing for the file. These ranges are zero indexed and of the format 'start-end' (e.g. '0-26' to indicate the first 27 bytes of the file). When uploading files as Outlook attachments, instead of a collection of ranges, this property always indicates a single value '{start}', the location in the file where the next upload should begin.
-     * @param value Value to set for the nextExpectedRanges property.
-     */
-    public set nextExpectedRanges(value: string[] | undefined) {
-        this._nextExpectedRanges = value;
+    public get uploadUrl() {
+        return this._uploadUrl;
     };
     /**
      * Sets the uploadUrl property value. The URL endpoint that accepts PUT requests for byte ranges of the file.

@@ -1,10 +1,17 @@
-import {AccessPackage} from '../../../../../models/microsoft/graph/';
-import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/';
-import {AccessPackagesResponse} from './index';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {AccessPackage, AccessPackageCollectionResponse} from '../../../../../models/microsoft/graph/';
+import {createAccessPackageCollectionResponseFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAccessPackageCollectionResponseFromDiscriminatorValue';
+import {createAccessPackageFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createAccessPackageFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {CountRequestBuilder} from './count/countRequestBuilder';
+import {FilterByCurrentUserWithOnRequestBuilder} from './filterByCurrentUserWithOn/filterByCurrentUserWithOnRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/catalogs/{accessPackageCatalog-id}/accessPackages  */
+/** Provides operations to manage the accessPackages property of the microsoft.graph.accessPackageCatalog entity.  */
 export class AccessPackagesRequestBuilder {
+    public get count(): CountRequestBuilder {
+        return new CountRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -51,7 +58,7 @@ export class AccessPackagesRequestBuilder {
         return requestInfo;
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Create new navigation property to accessPackages for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -69,8 +76,8 @@ export class AccessPackagesRequestBuilder {
         return requestInfo;
     };
     /**
-     * Builds and executes requests for operations under /identityGovernance/entitlementManagement/catalogs/{accessPackageCatalog-id}/accessPackages/microsoft.graph.filterByCurrentUser(on={on})
-     * @param on Usage: on={on}
+     * Provides operations to call the filterByCurrentUser method.
+     * @param on Usage: on='{on}'
      * @returns a filterByCurrentUserWithOnRequestBuilder
      */
     public filterByCurrentUserWithOn(on: string | undefined) : FilterByCurrentUserWithOnRequestBuilder {
@@ -83,7 +90,7 @@ export class AccessPackagesRequestBuilder {
      * @param o Request options
      * @param q Request query parameters
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of AccessPackagesResponse
+     * @returns a Promise of AccessPackageCollectionResponse
      */
     public get(q?: {
                     count?: boolean,
@@ -94,14 +101,18 @@ export class AccessPackagesRequestBuilder {
                     select?: string[],
                     skip?: number,
                     top?: number
-                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AccessPackagesResponse | undefined> {
+                    } | undefined, h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<AccessPackageCollectionResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessPackagesResponse>(requestInfo, AccessPackagesResponse, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackageCollectionResponse>(requestInfo, createAccessPackageCollectionResponseFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The access packages in this catalog. Read-only. Nullable.
+     * Create new navigation property to accessPackages for identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -113,6 +124,10 @@ export class AccessPackagesRequestBuilder {
         const requestInfo = this.createPostRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendAsync<AccessPackage>(requestInfo, AccessPackage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AccessPackage>(requestInfo, createAccessPackageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

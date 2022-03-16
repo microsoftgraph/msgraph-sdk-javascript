@@ -1,5 +1,7 @@
 import {Entity} from '../';
-import {Set, TermGroupScope} from './index';
+import {createSetFromDiscriminatorValue} from './createSetFromDiscriminatorValue';
+import {Set} from './index';
+import {TermGroupScope} from './termGroupScope';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Group extends Entity implements Parsable {
@@ -29,11 +31,25 @@ export class Group extends Entity implements Parsable {
         return this._createdDateTime;
     };
     /**
+     * Sets the createdDateTime property value. Date and time of the group creation. Read-only.
+     * @param value Value to set for the createdDateTime property.
+     */
+    public set createdDateTime(value: Date | undefined) {
+        this._createdDateTime = value;
+    };
+    /**
      * Gets the description property value. Description that gives details on the term usage.
      * @returns a string
      */
     public get description() {
         return this._description;
+    };
+    /**
+     * Sets the description property value. Description that gives details on the term usage.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
     };
     /**
      * Gets the displayName property value. Name of the group.
@@ -43,25 +59,11 @@ export class Group extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the parentSiteId property value. ID of the parent site of this group.
-     * @returns a string
+     * Sets the displayName property value. Name of the group.
+     * @param value Value to set for the displayName property.
      */
-    public get parentSiteId() {
-        return this._parentSiteId;
-    };
-    /**
-     * Gets the scope property value. Returns the type of the group. Possible values are global, system, and siteCollection.
-     * @returns a termGroupScope
-     */
-    public get scope() {
-        return this._scope;
-    };
-    /**
-     * Gets the sets property value. All sets under the group in a term [store].
-     * @returns a set
-     */
-    public get sets() {
-        return this._sets;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -74,8 +76,36 @@ export class Group extends Entity implements Parsable {
             ["displayName", (o, n) => { (o as unknown as Group).displayName = n.getStringValue(); }],
             ["parentSiteId", (o, n) => { (o as unknown as Group).parentSiteId = n.getStringValue(); }],
             ["scope", (o, n) => { (o as unknown as Group).scope = n.getEnumValue<TermGroupScope>(TermGroupScope); }],
-            ["sets", (o, n) => { (o as unknown as Group).sets = n.getCollectionOfObjectValues<Set>(Set); }],
+            ["sets", (o, n) => { (o as unknown as Group).sets = n.getCollectionOfObjectValues<Set>(createSetFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the parentSiteId property value. ID of the parent site of this group.
+     * @returns a string
+     */
+    public get parentSiteId() {
+        return this._parentSiteId;
+    };
+    /**
+     * Sets the parentSiteId property value. ID of the parent site of this group.
+     * @param value Value to set for the parentSiteId property.
+     */
+    public set parentSiteId(value: string | undefined) {
+        this._parentSiteId = value;
+    };
+    /**
+     * Gets the scope property value. Returns the type of the group. Possible values are global, system, and siteCollection.
+     * @returns a termGroupScope
+     */
+    public get scope() {
+        return this._scope;
+    };
+    /**
+     * Sets the scope property value. Returns the type of the group. Possible values are global, system, and siteCollection.
+     * @param value Value to set for the scope property.
+     */
+    public set scope(value: TermGroupScope | undefined) {
+        this._scope = value;
     };
     /**
      * Serializes information the current object
@@ -92,39 +122,11 @@ export class Group extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<Set>("sets", this.sets);
     };
     /**
-     * Sets the createdDateTime property value. Date and time of the group creation. Read-only.
-     * @param value Value to set for the createdDateTime property.
+     * Gets the sets property value. All sets under the group in a term [store].
+     * @returns a set
      */
-    public set createdDateTime(value: Date | undefined) {
-        this._createdDateTime = value;
-    };
-    /**
-     * Sets the description property value. Description that gives details on the term usage.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. Name of the group.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the parentSiteId property value. ID of the parent site of this group.
-     * @param value Value to set for the parentSiteId property.
-     */
-    public set parentSiteId(value: string | undefined) {
-        this._parentSiteId = value;
-    };
-    /**
-     * Sets the scope property value. Returns the type of the group. Possible values are global, system, and siteCollection.
-     * @param value Value to set for the scope property.
-     */
-    public set scope(value: TermGroupScope | undefined) {
-        this._scope = value;
+    public get sets() {
+        return this._sets;
     };
     /**
      * Sets the sets property value. All sets under the group in a term [store].

@@ -1,3 +1,4 @@
+import {createKeyValuePairFromDiscriminatorValue} from './createKeyValuePairFromDiscriminatorValue';
 import {Entity, KeyValuePair} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -26,11 +27,38 @@ export class ServiceAnnouncementBase extends Entity implements Parsable {
         return this._details;
     };
     /**
+     * Sets the details property value. Additional details about service event. This property doesn't support filters.
+     * @param value Value to set for the details property.
+     */
+    public set details(value: KeyValuePair[] | undefined) {
+        this._details = value;
+    };
+    /**
      * Gets the endDateTime property value. The end time of the service event.
      * @returns a Date
      */
     public get endDateTime() {
         return this._endDateTime;
+    };
+    /**
+     * Sets the endDateTime property value. The end time of the service event.
+     * @param value Value to set for the endDateTime property.
+     */
+    public set endDateTime(value: Date | undefined) {
+        this._endDateTime = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["details", (o, n) => { (o as unknown as ServiceAnnouncementBase).details = n.getCollectionOfObjectValues<KeyValuePair>(createKeyValuePairFromDiscriminatorValue); }],
+            ["endDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).endDateTime = n.getDateValue(); }],
+            ["lastModifiedDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).lastModifiedDateTime = n.getDateValue(); }],
+            ["startDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).startDateTime = n.getDateValue(); }],
+            ["title", (o, n) => { (o as unknown as ServiceAnnouncementBase).title = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the lastModifiedDateTime property value. The last modified time of the service event.
@@ -40,31 +68,11 @@ export class ServiceAnnouncementBase extends Entity implements Parsable {
         return this._lastModifiedDateTime;
     };
     /**
-     * Gets the startDateTime property value. The start time of the service event.
-     * @returns a Date
+     * Sets the lastModifiedDateTime property value. The last modified time of the service event.
+     * @param value Value to set for the lastModifiedDateTime property.
      */
-    public get startDateTime() {
-        return this._startDateTime;
-    };
-    /**
-     * Gets the title property value. The title of the service event.
-     * @returns a string
-     */
-    public get title() {
-        return this._title;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["details", (o, n) => { (o as unknown as ServiceAnnouncementBase).details = n.getCollectionOfObjectValues<KeyValuePair>(KeyValuePair); }],
-            ["endDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).endDateTime = n.getDateValue(); }],
-            ["lastModifiedDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).lastModifiedDateTime = n.getDateValue(); }],
-            ["startDateTime", (o, n) => { (o as unknown as ServiceAnnouncementBase).startDateTime = n.getDateValue(); }],
-            ["title", (o, n) => { (o as unknown as ServiceAnnouncementBase).title = n.getStringValue(); }],
-        ]);
+    public set lastModifiedDateTime(value: Date | undefined) {
+        this._lastModifiedDateTime = value;
     };
     /**
      * Serializes information the current object
@@ -80,25 +88,11 @@ export class ServiceAnnouncementBase extends Entity implements Parsable {
         writer.writeStringValue("title", this.title);
     };
     /**
-     * Sets the details property value. Additional details about service event. This property doesn't support filters.
-     * @param value Value to set for the details property.
+     * Gets the startDateTime property value. The start time of the service event.
+     * @returns a Date
      */
-    public set details(value: KeyValuePair[] | undefined) {
-        this._details = value;
-    };
-    /**
-     * Sets the endDateTime property value. The end time of the service event.
-     * @param value Value to set for the endDateTime property.
-     */
-    public set endDateTime(value: Date | undefined) {
-        this._endDateTime = value;
-    };
-    /**
-     * Sets the lastModifiedDateTime property value. The last modified time of the service event.
-     * @param value Value to set for the lastModifiedDateTime property.
-     */
-    public set lastModifiedDateTime(value: Date | undefined) {
-        this._lastModifiedDateTime = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. The start time of the service event.
@@ -106,6 +100,13 @@ export class ServiceAnnouncementBase extends Entity implements Parsable {
      */
     public set startDateTime(value: Date | undefined) {
         this._startDateTime = value;
+    };
+    /**
+     * Gets the title property value. The title of the service event.
+     * @returns a string
+     */
+    public get title() {
+        return this._title;
     };
     /**
      * Sets the title property value. The title of the service event.

@@ -1,16 +1,11 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class GetByIdsRequestBody implements Parsable {
+/** Provides operations to call the getByIds method.  */
+export class GetByIdsRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _ids?: string[] | undefined;
     private _types?: string[] | undefined;
-    /**
-     * Instantiates a new getByIdsRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,18 +14,17 @@ export class GetByIdsRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the ids property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get ids() {
-        return this._ids;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the types property value. 
-     * @returns a string
+     * Instantiates a new getByIdsRequestBody and sets the default values.
      */
-    public get types() {
-        return this._types;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -43,6 +37,20 @@ export class GetByIdsRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the ids property value. 
+     * @returns a string
+     */
+    public get ids() {
+        return this._ids;
+    };
+    /**
+     * Sets the ids property value. 
+     * @param value Value to set for the ids property.
+     */
+    public set ids(value: string[] | undefined) {
+        this._ids = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -53,18 +61,11 @@ export class GetByIdsRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the types property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the ids property value. 
-     * @param value Value to set for the ids property.
-     */
-    public set ids(value: string[] | undefined) {
-        this._ids = value;
+    public get types() {
+        return this._types;
     };
     /**
      * Sets the types property value. 

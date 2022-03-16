@@ -1,10 +1,13 @@
 import {NotificationMessageTemplate} from '../../../models/microsoft/graph/';
-import {LocalizedNotificationMessagesRequestBuilder} from './localizedNotificationMessages/';
-import {LocalizedNotificationMessageItemRequestBuilder} from './localizedNotificationMessages/item/';
-import {SendTestMessageRequestBuilder} from './sendTestMessage/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createNotificationMessageTemplateFromDiscriminatorValue} from '../../../models/microsoft/graph/createNotificationMessageTemplateFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {LocalizedNotificationMessageItemRequestBuilder} from './localizedNotificationMessages/item/localizedNotificationMessageItemRequestBuilder';
+import {LocalizedNotificationMessagesRequestBuilder} from './localizedNotificationMessages/localizedNotificationMessagesRequestBuilder';
+import {SendTestMessageRequestBuilder} from './sendTestMessage/sendTestMessageRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/notificationMessageTemplates/{notificationMessageTemplate-id}  */
+/** Provides operations to manage the notificationMessageTemplates property of the microsoft.graph.deviceManagement entity.  */
 export class NotificationMessageTemplateItemRequestBuilder {
     public get localizedNotificationMessages(): LocalizedNotificationMessagesRequestBuilder {
         return new LocalizedNotificationMessagesRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -32,7 +35,7 @@ export class NotificationMessageTemplateItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The Notification Message Templates.
+     * Delete navigation property notificationMessageTemplates for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -67,7 +70,7 @@ export class NotificationMessageTemplateItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Notification Message Templates.
+     * Update the navigation property notificationMessageTemplates in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -85,7 +88,7 @@ export class NotificationMessageTemplateItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The Notification Message Templates.
+     * Delete navigation property notificationMessageTemplates for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -94,7 +97,11 @@ export class NotificationMessageTemplateItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The Notification Message Templates.
@@ -111,7 +118,11 @@ export class NotificationMessageTemplateItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<NotificationMessageTemplate>(requestInfo, NotificationMessageTemplate, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<NotificationMessageTemplate>(requestInfo, createNotificationMessageTemplateFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.deviceManagement.notificationMessageTemplates.item.localizedNotificationMessages.item collection
@@ -125,7 +136,7 @@ export class NotificationMessageTemplateItemRequestBuilder {
         return new LocalizedNotificationMessageItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * The Notification Message Templates.
+     * Update the navigation property notificationMessageTemplates in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -136,6 +147,10 @@ export class NotificationMessageTemplateItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

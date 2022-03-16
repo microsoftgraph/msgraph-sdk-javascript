@@ -1,3 +1,4 @@
+/** Provides operations to manage the collection of drive entities.  */
 export enum CalendarColor {
     Auto = "auto",
     LightBlue = "lightBlue",

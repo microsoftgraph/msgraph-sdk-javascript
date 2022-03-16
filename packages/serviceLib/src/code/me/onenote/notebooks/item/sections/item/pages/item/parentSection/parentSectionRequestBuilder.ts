@@ -1,22 +1,13 @@
 import {OnenoteSection} from '../../../../../../../../../models/microsoft/graph/';
-import {CopyToNotebookRequestBuilder} from './copyToNotebook/';
-import {CopyToSectionGroupRequestBuilder} from './copyToSectionGroup/';
-import {RefRequestBuilder} from './ref/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOnenoteSectionFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/createOnenoteSectionFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/onenote/notebooks/{notebook-id}/sections/{onenoteSection-id}/pages/{onenotePage-id}/parentSection  */
+/** Provides operations to manage the parentSection property of the microsoft.graph.onenotePage entity.  */
 export class ParentSectionRequestBuilder {
-    public get copyToNotebook(): CopyToNotebookRequestBuilder {
-        return new CopyToNotebookRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    public get copyToSectionGroup(): CopyToSectionGroupRequestBuilder {
-        return new CopyToSectionGroupRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
-    public get ref(): RefRequestBuilder {
-        return new RefRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
     /** Url template to use to build the URL for the current request builder  */
@@ -69,6 +60,10 @@ export class ParentSectionRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<OnenoteSection>(requestInfo, OnenoteSection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<OnenoteSection>(requestInfo, createOnenoteSectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

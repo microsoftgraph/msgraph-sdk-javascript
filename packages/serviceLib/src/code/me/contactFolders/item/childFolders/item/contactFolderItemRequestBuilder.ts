@@ -1,12 +1,30 @@
 import {ContactFolder} from '../../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createContactFolderFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createContactFolderFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ContactsRequestBuilder} from './contacts/contactsRequestBuilder';
+import {ContactItemRequestBuilder} from './contacts/item/contactItemRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/contactFolders/{contactFolder-id}/childFolders/{contactFolder-id1}  */
+/** Provides operations to manage the childFolders property of the microsoft.graph.contactFolder entity.  */
 export class ContactFolderItemRequestBuilder {
+    public get contacts(): ContactsRequestBuilder {
+        return new ContactsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get multiValueExtendedProperties(): MultiValueExtendedPropertiesRequestBuilder {
+        return new MultiValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get singleValueExtendedProperties(): SingleValueExtendedPropertiesRequestBuilder {
+        return new SingleValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
@@ -23,7 +41,18 @@ export class ContactFolderItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The collection of child folders in the folder. Navigation property. Read-only. Nullable.
+     * Gets an item from the MicrosoftGraph.me.contactFolders.item.childFolders.item.contacts.item collection
+     * @param id Unique identifier of the item
+     * @returns a contactItemRequestBuilder
+     */
+    public contactsById(id: string) : ContactItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["contact_id"] = id
+        return new ContactItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Delete navigation property childFolders for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +87,7 @@ export class ContactFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of child folders in the folder. Navigation property. Read-only. Nullable.
+     * Update the navigation property childFolders in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +105,7 @@ export class ContactFolderItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The collection of child folders in the folder. Navigation property. Read-only. Nullable.
+     * Delete navigation property childFolders for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +114,11 @@ export class ContactFolderItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The collection of child folders in the folder. Navigation property. Read-only. Nullable.
@@ -102,10 +135,25 @@ export class ContactFolderItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ContactFolder>(requestInfo, ContactFolder, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ContactFolder>(requestInfo, createContactFolderFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The collection of child folders in the folder. Navigation property. Read-only. Nullable.
+     * Gets an item from the MicrosoftGraph.me.contactFolders.item.childFolders.item.multiValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a multiValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["multiValueLegacyExtendedProperty_id"] = id
+        return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property childFolders in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +164,21 @@ export class ContactFolderItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.me.contactFolders.item.childFolders.item.singleValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a singleValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["singleValueLegacyExtendedProperty_id"] = id
+        return new SingleValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

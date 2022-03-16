@@ -1,3 +1,4 @@
+import {createTimeOffItemFromDiscriminatorValue} from './createTimeOffItemFromDiscriminatorValue';
 import {ChangeTrackedEntity, TimeOffItem} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -22,18 +23,11 @@ export class TimeOff extends ChangeTrackedEntity implements Parsable {
         return this._draftTimeOff;
     };
     /**
-     * Gets the sharedTimeOff property value. The shared version of this timeOff that is viewable by both employees and managers. Required.
-     * @returns a timeOffItem
+     * Sets the draftTimeOff property value. The draft version of this timeOff that is viewable by managers. Required.
+     * @param value Value to set for the draftTimeOff property.
      */
-    public get sharedTimeOff() {
-        return this._sharedTimeOff;
-    };
-    /**
-     * Gets the userId property value. ID of the user assigned to the timeOff. Required.
-     * @returns a string
-     */
-    public get userId() {
-        return this._userId;
+    public set draftTimeOff(value: TimeOffItem | undefined) {
+        this._draftTimeOff = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,8 +35,8 @@ export class TimeOff extends ChangeTrackedEntity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["draftTimeOff", (o, n) => { (o as unknown as TimeOff).draftTimeOff = n.getObjectValue<TimeOffItem>(TimeOffItem); }],
-            ["sharedTimeOff", (o, n) => { (o as unknown as TimeOff).sharedTimeOff = n.getObjectValue<TimeOffItem>(TimeOffItem); }],
+            ["draftTimeOff", (o, n) => { (o as unknown as TimeOff).draftTimeOff = n.getObjectValue<TimeOffItem>(createTimeOffItemFromDiscriminatorValue); }],
+            ["sharedTimeOff", (o, n) => { (o as unknown as TimeOff).sharedTimeOff = n.getObjectValue<TimeOffItem>(createTimeOffItemFromDiscriminatorValue); }],
             ["userId", (o, n) => { (o as unknown as TimeOff).userId = n.getStringValue(); }],
         ]);
     };
@@ -58,11 +52,11 @@ export class TimeOff extends ChangeTrackedEntity implements Parsable {
         writer.writeStringValue("userId", this.userId);
     };
     /**
-     * Sets the draftTimeOff property value. The draft version of this timeOff that is viewable by managers. Required.
-     * @param value Value to set for the draftTimeOff property.
+     * Gets the sharedTimeOff property value. The shared version of this timeOff that is viewable by both employees and managers. Required.
+     * @returns a timeOffItem
      */
-    public set draftTimeOff(value: TimeOffItem | undefined) {
-        this._draftTimeOff = value;
+    public get sharedTimeOff() {
+        return this._sharedTimeOff;
     };
     /**
      * Sets the sharedTimeOff property value. The shared version of this timeOff that is viewable by both employees and managers. Required.
@@ -70,6 +64,13 @@ export class TimeOff extends ChangeTrackedEntity implements Parsable {
      */
     public set sharedTimeOff(value: TimeOffItem | undefined) {
         this._sharedTimeOff = value;
+    };
+    /**
+     * Gets the userId property value. ID of the user assigned to the timeOff. Required.
+     * @returns a string
+     */
+    public get userId() {
+        return this._userId;
     };
     /**
      * Sets the userId property value. ID of the user assigned to the timeOff. Required.

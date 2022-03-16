@@ -1,11 +1,27 @@
 import {ItemReference} from '../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createItemReferenceFromDiscriminatorValue} from '../../../models/microsoft/graph/createItemReferenceFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CopyRequestBody implements Parsable {
+/** Provides operations to call the copy method.  */
+export class CopyRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _name?: string | undefined;
     private _parentReference?: ItemReference | undefined;
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
     /**
      * Instantiates a new copyRequestBody and sets the default values.
      */
@@ -13,11 +29,14 @@ export class CopyRequestBody implements Parsable {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["name", (o, n) => { (o as unknown as CopyRequestBody).name = n.getStringValue(); }],
+            ["parentReference", (o, n) => { (o as unknown as CopyRequestBody).parentReference = n.getObjectValue<ItemReference>(createItemReferenceFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the name property value. 
@@ -27,6 +46,13 @@ export class CopyRequestBody implements Parsable {
         return this._name;
     };
     /**
+     * Sets the name property value. 
+     * @param value Value to set for the name property.
+     */
+    public set name(value: string | undefined) {
+        this._name = value;
+    };
+    /**
      * Gets the parentReference property value. 
      * @returns a itemReference
      */
@@ -34,14 +60,11 @@ export class CopyRequestBody implements Parsable {
         return this._parentReference;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the parentReference property value. 
+     * @param value Value to set for the parentReference property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["name", (o, n) => { (o as unknown as CopyRequestBody).name = n.getStringValue(); }],
-            ["parentReference", (o, n) => { (o as unknown as CopyRequestBody).parentReference = n.getObjectValue<ItemReference>(ItemReference); }],
-        ]);
+    public set parentReference(value: ItemReference | undefined) {
+        this._parentReference = value;
     };
     /**
      * Serializes information the current object
@@ -52,26 +75,5 @@ export class CopyRequestBody implements Parsable {
         writer.writeStringValue("name", this.name);
         writer.writeObjectValue<ItemReference>("parentReference", this.parentReference);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the name property value. 
-     * @param value Value to set for the name property.
-     */
-    public set name(value: string | undefined) {
-        this._name = value;
-    };
-    /**
-     * Sets the parentReference property value. 
-     * @param value Value to set for the parentReference property.
-     */
-    public set parentReference(value: ItemReference | undefined) {
-        this._parentReference = value;
     };
 }

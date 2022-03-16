@@ -1,4 +1,5 @@
-import {AuthenticationMethodState, Entity} from './index';
+import {AuthenticationMethodState} from './authenticationMethodState';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class AuthenticationMethodConfiguration extends Entity implements Parsable {
@@ -9,13 +10,6 @@ export class AuthenticationMethodConfiguration extends Entity implements Parsabl
      */
     public constructor() {
         super();
-    };
-    /**
-     * Gets the state property value. The state of the policy. Possible values are: enabled, disabled.
-     * @returns a authenticationMethodState
-     */
-    public get state() {
-        return this._state;
     };
     /**
      * The deserialization information for the current model
@@ -34,6 +28,13 @@ export class AuthenticationMethodConfiguration extends Entity implements Parsabl
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeEnumValue<AuthenticationMethodState>("state", this.state);
+    };
+    /**
+     * Gets the state property value. The state of the policy. Possible values are: enabled, disabled.
+     * @returns a authenticationMethodState
+     */
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. The state of the policy. Possible values are: enabled, disabled.

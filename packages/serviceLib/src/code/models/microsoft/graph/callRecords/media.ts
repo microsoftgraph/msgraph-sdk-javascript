@@ -1,7 +1,10 @@
+import {createDeviceInfoFromDiscriminatorValue} from './createDeviceInfoFromDiscriminatorValue';
+import {createMediaStreamFromDiscriminatorValue} from './createMediaStreamFromDiscriminatorValue';
+import {createNetworkInfoFromDiscriminatorValue} from './createNetworkInfoFromDiscriminatorValue';
 import {DeviceInfo, MediaStream, NetworkInfo} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class Media implements Parsable {
+export class Media implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Device information associated with the callee endpoint of this media.  */
@@ -17,17 +20,18 @@ export class Media implements Parsable {
     /** Network streams associated with this media.  */
     private _streams?: MediaStream[] | undefined;
     /**
-     * Instantiates a new media and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the calleeDevice property value. Device information associated with the callee endpoint of this media.
@@ -37,11 +41,25 @@ export class Media implements Parsable {
         return this._calleeDevice;
     };
     /**
+     * Sets the calleeDevice property value. Device information associated with the callee endpoint of this media.
+     * @param value Value to set for the calleeDevice property.
+     */
+    public set calleeDevice(value: DeviceInfo | undefined) {
+        this._calleeDevice = value;
+    };
+    /**
      * Gets the calleeNetwork property value. Network information associated with the callee endpoint of this media.
      * @returns a networkInfo
      */
     public get calleeNetwork() {
         return this._calleeNetwork;
+    };
+    /**
+     * Sets the calleeNetwork property value. Network information associated with the callee endpoint of this media.
+     * @param value Value to set for the calleeNetwork property.
+     */
+    public set calleeNetwork(value: NetworkInfo | undefined) {
+        this._calleeNetwork = value;
     };
     /**
      * Gets the callerDevice property value. Device information associated with the caller endpoint of this media.
@@ -51,11 +69,45 @@ export class Media implements Parsable {
         return this._callerDevice;
     };
     /**
+     * Sets the callerDevice property value. Device information associated with the caller endpoint of this media.
+     * @param value Value to set for the callerDevice property.
+     */
+    public set callerDevice(value: DeviceInfo | undefined) {
+        this._callerDevice = value;
+    };
+    /**
      * Gets the callerNetwork property value. Network information associated with the caller endpoint of this media.
      * @returns a networkInfo
      */
     public get callerNetwork() {
         return this._callerNetwork;
+    };
+    /**
+     * Sets the callerNetwork property value. Network information associated with the caller endpoint of this media.
+     * @param value Value to set for the callerNetwork property.
+     */
+    public set callerNetwork(value: NetworkInfo | undefined) {
+        this._callerNetwork = value;
+    };
+    /**
+     * Instantiates a new media and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["calleeDevice", (o, n) => { (o as unknown as Media).calleeDevice = n.getObjectValue<DeviceInfo>(createDeviceInfoFromDiscriminatorValue); }],
+            ["calleeNetwork", (o, n) => { (o as unknown as Media).calleeNetwork = n.getObjectValue<NetworkInfo>(createNetworkInfoFromDiscriminatorValue); }],
+            ["callerDevice", (o, n) => { (o as unknown as Media).callerDevice = n.getObjectValue<DeviceInfo>(createDeviceInfoFromDiscriminatorValue); }],
+            ["callerNetwork", (o, n) => { (o as unknown as Media).callerNetwork = n.getObjectValue<NetworkInfo>(createNetworkInfoFromDiscriminatorValue); }],
+            ["label", (o, n) => { (o as unknown as Media).label = n.getStringValue(); }],
+            ["streams", (o, n) => { (o as unknown as Media).streams = n.getCollectionOfObjectValues<MediaStream>(createMediaStreamFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the label property value. How the media was identified during media negotiation stage.
@@ -65,25 +117,11 @@ export class Media implements Parsable {
         return this._label;
     };
     /**
-     * Gets the streams property value. Network streams associated with this media.
-     * @returns a mediaStream
+     * Sets the label property value. How the media was identified during media negotiation stage.
+     * @param value Value to set for the label property.
      */
-    public get streams() {
-        return this._streams;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["calleeDevice", (o, n) => { (o as unknown as Media).calleeDevice = n.getObjectValue<DeviceInfo>(DeviceInfo); }],
-            ["calleeNetwork", (o, n) => { (o as unknown as Media).calleeNetwork = n.getObjectValue<NetworkInfo>(NetworkInfo); }],
-            ["callerDevice", (o, n) => { (o as unknown as Media).callerDevice = n.getObjectValue<DeviceInfo>(DeviceInfo); }],
-            ["callerNetwork", (o, n) => { (o as unknown as Media).callerNetwork = n.getObjectValue<NetworkInfo>(NetworkInfo); }],
-            ["label", (o, n) => { (o as unknown as Media).label = n.getStringValue(); }],
-            ["streams", (o, n) => { (o as unknown as Media).streams = n.getCollectionOfObjectValues<MediaStream>(MediaStream); }],
-        ]);
+    public set label(value: string | undefined) {
+        this._label = value;
     };
     /**
      * Serializes information the current object
@@ -100,46 +138,11 @@ export class Media implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the streams property value. Network streams associated with this media.
+     * @returns a mediaStream
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the calleeDevice property value. Device information associated with the callee endpoint of this media.
-     * @param value Value to set for the calleeDevice property.
-     */
-    public set calleeDevice(value: DeviceInfo | undefined) {
-        this._calleeDevice = value;
-    };
-    /**
-     * Sets the calleeNetwork property value. Network information associated with the callee endpoint of this media.
-     * @param value Value to set for the calleeNetwork property.
-     */
-    public set calleeNetwork(value: NetworkInfo | undefined) {
-        this._calleeNetwork = value;
-    };
-    /**
-     * Sets the callerDevice property value. Device information associated with the caller endpoint of this media.
-     * @param value Value to set for the callerDevice property.
-     */
-    public set callerDevice(value: DeviceInfo | undefined) {
-        this._callerDevice = value;
-    };
-    /**
-     * Sets the callerNetwork property value. Network information associated with the caller endpoint of this media.
-     * @param value Value to set for the callerNetwork property.
-     */
-    public set callerNetwork(value: NetworkInfo | undefined) {
-        this._callerNetwork = value;
-    };
-    /**
-     * Sets the label property value. How the media was identified during media negotiation stage.
-     * @param value Value to set for the label property.
-     */
-    public set label(value: string | undefined) {
-        this._label = value;
+    public get streams() {
+        return this._streams;
     };
     /**
      * Sets the streams property value. Network streams associated with this media.

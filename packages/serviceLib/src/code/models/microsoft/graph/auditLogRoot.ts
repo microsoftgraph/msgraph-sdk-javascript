@@ -1,6 +1,11 @@
+import {createDirectoryAuditFromDiscriminatorValue} from './createDirectoryAuditFromDiscriminatorValue';
+import {createProvisioningObjectSummaryFromDiscriminatorValue} from './createProvisioningObjectSummaryFromDiscriminatorValue';
+import {createRestrictedSignInFromDiscriminatorValue} from './createRestrictedSignInFromDiscriminatorValue';
+import {createSignInFromDiscriminatorValue} from './createSignInFromDiscriminatorValue';
 import {DirectoryAudit, Entity, ProvisioningObjectSummary, RestrictedSignIn, SignIn} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
+/** Provides operations to manage the auditLogRoot singleton.  */
 export class AuditLogRoot extends Entity implements Parsable {
     /** Read-only. Nullable.  */
     private _directoryAudits?: DirectoryAudit[] | undefined;
@@ -22,11 +27,37 @@ export class AuditLogRoot extends Entity implements Parsable {
         return this._directoryAudits;
     };
     /**
+     * Sets the directoryAudits property value. Read-only. Nullable.
+     * @param value Value to set for the directoryAudits property.
+     */
+    public set directoryAudits(value: DirectoryAudit[] | undefined) {
+        this._directoryAudits = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["directoryAudits", (o, n) => { (o as unknown as AuditLogRoot).directoryAudits = n.getCollectionOfObjectValues<DirectoryAudit>(createDirectoryAuditFromDiscriminatorValue); }],
+            ["provisioning", (o, n) => { (o as unknown as AuditLogRoot).provisioning = n.getCollectionOfObjectValues<ProvisioningObjectSummary>(createProvisioningObjectSummaryFromDiscriminatorValue); }],
+            ["restrictedSignIns", (o, n) => { (o as unknown as AuditLogRoot).restrictedSignIns = n.getCollectionOfObjectValues<RestrictedSignIn>(createRestrictedSignInFromDiscriminatorValue); }],
+            ["signIns", (o, n) => { (o as unknown as AuditLogRoot).signIns = n.getCollectionOfObjectValues<SignIn>(createSignInFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the provisioning property value. 
      * @returns a provisioningObjectSummary
      */
     public get provisioning() {
         return this._provisioning;
+    };
+    /**
+     * Sets the provisioning property value. 
+     * @param value Value to set for the provisioning property.
+     */
+    public set provisioning(value: ProvisioningObjectSummary[] | undefined) {
+        this._provisioning = value;
     };
     /**
      * Gets the restrictedSignIns property value. 
@@ -36,23 +67,11 @@ export class AuditLogRoot extends Entity implements Parsable {
         return this._restrictedSignIns;
     };
     /**
-     * Gets the signIns property value. Read-only. Nullable.
-     * @returns a signIn
+     * Sets the restrictedSignIns property value. 
+     * @param value Value to set for the restrictedSignIns property.
      */
-    public get signIns() {
-        return this._signIns;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["directoryAudits", (o, n) => { (o as unknown as AuditLogRoot).directoryAudits = n.getCollectionOfObjectValues<DirectoryAudit>(DirectoryAudit); }],
-            ["provisioning", (o, n) => { (o as unknown as AuditLogRoot).provisioning = n.getCollectionOfObjectValues<ProvisioningObjectSummary>(ProvisioningObjectSummary); }],
-            ["restrictedSignIns", (o, n) => { (o as unknown as AuditLogRoot).restrictedSignIns = n.getCollectionOfObjectValues<RestrictedSignIn>(RestrictedSignIn); }],
-            ["signIns", (o, n) => { (o as unknown as AuditLogRoot).signIns = n.getCollectionOfObjectValues<SignIn>(SignIn); }],
-        ]);
+    public set restrictedSignIns(value: RestrictedSignIn[] | undefined) {
+        this._restrictedSignIns = value;
     };
     /**
      * Serializes information the current object
@@ -67,25 +86,11 @@ export class AuditLogRoot extends Entity implements Parsable {
         writer.writeCollectionOfObjectValues<SignIn>("signIns", this.signIns);
     };
     /**
-     * Sets the directoryAudits property value. Read-only. Nullable.
-     * @param value Value to set for the directoryAudits property.
+     * Gets the signIns property value. Read-only. Nullable.
+     * @returns a signIn
      */
-    public set directoryAudits(value: DirectoryAudit[] | undefined) {
-        this._directoryAudits = value;
-    };
-    /**
-     * Sets the provisioning property value. 
-     * @param value Value to set for the provisioning property.
-     */
-    public set provisioning(value: ProvisioningObjectSummary[] | undefined) {
-        this._provisioning = value;
-    };
-    /**
-     * Sets the restrictedSignIns property value. 
-     * @param value Value to set for the restrictedSignIns property.
-     */
-    public set restrictedSignIns(value: RestrictedSignIn[] | undefined) {
-        this._restrictedSignIns = value;
+    public get signIns() {
+        return this._signIns;
     };
     /**
      * Sets the signIns property value. Read-only. Nullable.

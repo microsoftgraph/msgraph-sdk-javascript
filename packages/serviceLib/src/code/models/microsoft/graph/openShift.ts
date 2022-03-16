@@ -1,3 +1,4 @@
+import {createOpenShiftItemFromDiscriminatorValue} from './createOpenShiftItemFromDiscriminatorValue';
 import {ChangeTrackedEntity, OpenShiftItem} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -22,18 +23,11 @@ export class OpenShift extends ChangeTrackedEntity implements Parsable {
         return this._draftOpenShift;
     };
     /**
-     * Gets the schedulingGroupId property value. ID for the scheduling group that the open shift belongs to.
-     * @returns a string
+     * Sets the draftOpenShift property value. An unpublished open shift.
+     * @param value Value to set for the draftOpenShift property.
      */
-    public get schedulingGroupId() {
-        return this._schedulingGroupId;
-    };
-    /**
-     * Gets the sharedOpenShift property value. A published open shift.
-     * @returns a openShiftItem
-     */
-    public get sharedOpenShift() {
-        return this._sharedOpenShift;
+    public set draftOpenShift(value: OpenShiftItem | undefined) {
+        this._draftOpenShift = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,10 +35,24 @@ export class OpenShift extends ChangeTrackedEntity implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["draftOpenShift", (o, n) => { (o as unknown as OpenShift).draftOpenShift = n.getObjectValue<OpenShiftItem>(OpenShiftItem); }],
+            ["draftOpenShift", (o, n) => { (o as unknown as OpenShift).draftOpenShift = n.getObjectValue<OpenShiftItem>(createOpenShiftItemFromDiscriminatorValue); }],
             ["schedulingGroupId", (o, n) => { (o as unknown as OpenShift).schedulingGroupId = n.getStringValue(); }],
-            ["sharedOpenShift", (o, n) => { (o as unknown as OpenShift).sharedOpenShift = n.getObjectValue<OpenShiftItem>(OpenShiftItem); }],
+            ["sharedOpenShift", (o, n) => { (o as unknown as OpenShift).sharedOpenShift = n.getObjectValue<OpenShiftItem>(createOpenShiftItemFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the schedulingGroupId property value. ID for the scheduling group that the open shift belongs to.
+     * @returns a string
+     */
+    public get schedulingGroupId() {
+        return this._schedulingGroupId;
+    };
+    /**
+     * Sets the schedulingGroupId property value. ID for the scheduling group that the open shift belongs to.
+     * @param value Value to set for the schedulingGroupId property.
+     */
+    public set schedulingGroupId(value: string | undefined) {
+        this._schedulingGroupId = value;
     };
     /**
      * Serializes information the current object
@@ -58,18 +66,11 @@ export class OpenShift extends ChangeTrackedEntity implements Parsable {
         writer.writeObjectValue<OpenShiftItem>("sharedOpenShift", this.sharedOpenShift);
     };
     /**
-     * Sets the draftOpenShift property value. An unpublished open shift.
-     * @param value Value to set for the draftOpenShift property.
+     * Gets the sharedOpenShift property value. A published open shift.
+     * @returns a openShiftItem
      */
-    public set draftOpenShift(value: OpenShiftItem | undefined) {
-        this._draftOpenShift = value;
-    };
-    /**
-     * Sets the schedulingGroupId property value. ID for the scheduling group that the open shift belongs to.
-     * @param value Value to set for the schedulingGroupId property.
-     */
-    public set schedulingGroupId(value: string | undefined) {
-        this._schedulingGroupId = value;
+    public get sharedOpenShift() {
+        return this._sharedOpenShift;
     };
     /**
      * Sets the sharedOpenShift property value. A published open shift.

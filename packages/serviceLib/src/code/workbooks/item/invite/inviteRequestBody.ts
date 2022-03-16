@@ -1,7 +1,9 @@
 import {DriveRecipient} from '../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createDriveRecipientFromDiscriminatorValue} from '../../../models/microsoft/graph/createDriveRecipientFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class InviteRequestBody implements Parsable {
+/** Provides operations to call the invite method.  */
+export class InviteRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _expirationDateTime?: string | undefined;
@@ -13,17 +15,24 @@ export class InviteRequestBody implements Parsable {
     private _roles?: string[] | undefined;
     private _sendInvitation?: boolean | undefined;
     /**
-     * Instantiates a new inviteRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new inviteRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the expirationDateTime property value. 
@@ -33,53 +42,11 @@ export class InviteRequestBody implements Parsable {
         return this._expirationDateTime;
     };
     /**
-     * Gets the message property value. 
-     * @returns a string
+     * Sets the expirationDateTime property value. 
+     * @param value Value to set for the expirationDateTime property.
      */
-    public get message() {
-        return this._message;
-    };
-    /**
-     * Gets the password property value. 
-     * @returns a string
-     */
-    public get password() {
-        return this._password;
-    };
-    /**
-     * Gets the recipients property value. 
-     * @returns a driveRecipient
-     */
-    public get recipients() {
-        return this._recipients;
-    };
-    /**
-     * Gets the requireSignIn property value. 
-     * @returns a boolean
-     */
-    public get requireSignIn() {
-        return this._requireSignIn;
-    };
-    /**
-     * Gets the retainInheritedPermissions property value. 
-     * @returns a boolean
-     */
-    public get retainInheritedPermissions() {
-        return this._retainInheritedPermissions;
-    };
-    /**
-     * Gets the roles property value. 
-     * @returns a string
-     */
-    public get roles() {
-        return this._roles;
-    };
-    /**
-     * Gets the sendInvitation property value. 
-     * @returns a boolean
-     */
-    public get sendInvitation() {
-        return this._sendInvitation;
+    public set expirationDateTime(value: string | undefined) {
+        this._expirationDateTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -90,12 +57,110 @@ export class InviteRequestBody implements Parsable {
             ["expirationDateTime", (o, n) => { (o as unknown as InviteRequestBody).expirationDateTime = n.getStringValue(); }],
             ["message", (o, n) => { (o as unknown as InviteRequestBody).message = n.getStringValue(); }],
             ["password", (o, n) => { (o as unknown as InviteRequestBody).password = n.getStringValue(); }],
-            ["recipients", (o, n) => { (o as unknown as InviteRequestBody).recipients = n.getCollectionOfObjectValues<DriveRecipient>(DriveRecipient); }],
+            ["recipients", (o, n) => { (o as unknown as InviteRequestBody).recipients = n.getCollectionOfObjectValues<DriveRecipient>(createDriveRecipientFromDiscriminatorValue); }],
             ["requireSignIn", (o, n) => { (o as unknown as InviteRequestBody).requireSignIn = n.getBooleanValue(); }],
             ["retainInheritedPermissions", (o, n) => { (o as unknown as InviteRequestBody).retainInheritedPermissions = n.getBooleanValue(); }],
             ["roles", (o, n) => { (o as unknown as InviteRequestBody).roles = n.getCollectionOfPrimitiveValues<string>(); }],
             ["sendInvitation", (o, n) => { (o as unknown as InviteRequestBody).sendInvitation = n.getBooleanValue(); }],
         ]);
+    };
+    /**
+     * Gets the message property value. 
+     * @returns a string
+     */
+    public get message() {
+        return this._message;
+    };
+    /**
+     * Sets the message property value. 
+     * @param value Value to set for the message property.
+     */
+    public set message(value: string | undefined) {
+        this._message = value;
+    };
+    /**
+     * Gets the password property value. 
+     * @returns a string
+     */
+    public get password() {
+        return this._password;
+    };
+    /**
+     * Sets the password property value. 
+     * @param value Value to set for the password property.
+     */
+    public set password(value: string | undefined) {
+        this._password = value;
+    };
+    /**
+     * Gets the recipients property value. 
+     * @returns a driveRecipient
+     */
+    public get recipients() {
+        return this._recipients;
+    };
+    /**
+     * Sets the recipients property value. 
+     * @param value Value to set for the recipients property.
+     */
+    public set recipients(value: DriveRecipient[] | undefined) {
+        this._recipients = value;
+    };
+    /**
+     * Gets the requireSignIn property value. 
+     * @returns a boolean
+     */
+    public get requireSignIn() {
+        return this._requireSignIn;
+    };
+    /**
+     * Sets the requireSignIn property value. 
+     * @param value Value to set for the requireSignIn property.
+     */
+    public set requireSignIn(value: boolean | undefined) {
+        this._requireSignIn = value;
+    };
+    /**
+     * Gets the retainInheritedPermissions property value. 
+     * @returns a boolean
+     */
+    public get retainInheritedPermissions() {
+        return this._retainInheritedPermissions;
+    };
+    /**
+     * Sets the retainInheritedPermissions property value. 
+     * @param value Value to set for the retainInheritedPermissions property.
+     */
+    public set retainInheritedPermissions(value: boolean | undefined) {
+        this._retainInheritedPermissions = value;
+    };
+    /**
+     * Gets the roles property value. 
+     * @returns a string
+     */
+    public get roles() {
+        return this._roles;
+    };
+    /**
+     * Sets the roles property value. 
+     * @param value Value to set for the roles property.
+     */
+    public set roles(value: string[] | undefined) {
+        this._roles = value;
+    };
+    /**
+     * Gets the sendInvitation property value. 
+     * @returns a boolean
+     */
+    public get sendInvitation() {
+        return this._sendInvitation;
+    };
+    /**
+     * Sets the sendInvitation property value. 
+     * @param value Value to set for the sendInvitation property.
+     */
+    public set sendInvitation(value: boolean | undefined) {
+        this._sendInvitation = value;
     };
     /**
      * Serializes information the current object
@@ -112,68 +177,5 @@ export class InviteRequestBody implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("roles", this.roles);
         writer.writeBooleanValue("sendInvitation", this.sendInvitation);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the expirationDateTime property value. 
-     * @param value Value to set for the expirationDateTime property.
-     */
-    public set expirationDateTime(value: string | undefined) {
-        this._expirationDateTime = value;
-    };
-    /**
-     * Sets the message property value. 
-     * @param value Value to set for the message property.
-     */
-    public set message(value: string | undefined) {
-        this._message = value;
-    };
-    /**
-     * Sets the password property value. 
-     * @param value Value to set for the password property.
-     */
-    public set password(value: string | undefined) {
-        this._password = value;
-    };
-    /**
-     * Sets the recipients property value. 
-     * @param value Value to set for the recipients property.
-     */
-    public set recipients(value: DriveRecipient[] | undefined) {
-        this._recipients = value;
-    };
-    /**
-     * Sets the requireSignIn property value. 
-     * @param value Value to set for the requireSignIn property.
-     */
-    public set requireSignIn(value: boolean | undefined) {
-        this._requireSignIn = value;
-    };
-    /**
-     * Sets the retainInheritedPermissions property value. 
-     * @param value Value to set for the retainInheritedPermissions property.
-     */
-    public set retainInheritedPermissions(value: boolean | undefined) {
-        this._retainInheritedPermissions = value;
-    };
-    /**
-     * Sets the roles property value. 
-     * @param value Value to set for the roles property.
-     */
-    public set roles(value: string[] | undefined) {
-        this._roles = value;
-    };
-    /**
-     * Sets the sendInvitation property value. 
-     * @param value Value to set for the sendInvitation property.
-     */
-    public set sendInvitation(value: boolean | undefined) {
-        this._sendInvitation = value;
     };
 }

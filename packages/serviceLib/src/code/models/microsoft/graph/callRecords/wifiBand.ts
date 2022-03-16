@@ -1,3 +1,4 @@
+/** Provides operations to manage the cloudCommunications singleton.  */
 export enum WifiBand {
     Unknown = "unknown",
     Frequency24GHz = "frequency24GHz",

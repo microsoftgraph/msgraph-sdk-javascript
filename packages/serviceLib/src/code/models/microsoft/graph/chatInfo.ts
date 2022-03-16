@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ChatInfo implements Parsable {
+export class ChatInfo implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The unique identifier of a message in a Microsoft Teams channel.  */
@@ -10,12 +10,6 @@ export class ChatInfo implements Parsable {
     /** The unique identifier for a thread in Microsoft Teams.  */
     private _threadId?: string | undefined;
     /**
-     * Instantiates a new chatInfo and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -23,25 +17,17 @@ export class ChatInfo implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the messageId property value. The unique identifier of a message in a Microsoft Teams channel.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get messageId() {
-        return this._messageId;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the replyChainMessageId property value. The ID of the reply message.
-     * @returns a string
+     * Instantiates a new chatInfo and sets the default values.
      */
-    public get replyChainMessageId() {
-        return this._replyChainMessageId;
-    };
-    /**
-     * Gets the threadId property value. The unique identifier for a thread in Microsoft Teams.
-     * @returns a string
-     */
-    public get threadId() {
-        return this._threadId;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,6 +41,34 @@ export class ChatInfo implements Parsable {
         ]);
     };
     /**
+     * Gets the messageId property value. The unique identifier of a message in a Microsoft Teams channel.
+     * @returns a string
+     */
+    public get messageId() {
+        return this._messageId;
+    };
+    /**
+     * Sets the messageId property value. The unique identifier of a message in a Microsoft Teams channel.
+     * @param value Value to set for the messageId property.
+     */
+    public set messageId(value: string | undefined) {
+        this._messageId = value;
+    };
+    /**
+     * Gets the replyChainMessageId property value. The ID of the reply message.
+     * @returns a string
+     */
+    public get replyChainMessageId() {
+        return this._replyChainMessageId;
+    };
+    /**
+     * Sets the replyChainMessageId property value. The ID of the reply message.
+     * @param value Value to set for the replyChainMessageId property.
+     */
+    public set replyChainMessageId(value: string | undefined) {
+        this._replyChainMessageId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -66,25 +80,11 @@ export class ChatInfo implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the threadId property value. The unique identifier for a thread in Microsoft Teams.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the messageId property value. The unique identifier of a message in a Microsoft Teams channel.
-     * @param value Value to set for the messageId property.
-     */
-    public set messageId(value: string | undefined) {
-        this._messageId = value;
-    };
-    /**
-     * Sets the replyChainMessageId property value. The ID of the reply message.
-     * @param value Value to set for the replyChainMessageId property.
-     */
-    public set replyChainMessageId(value: string | undefined) {
-        this._replyChainMessageId = value;
+    public get threadId() {
+        return this._threadId;
     };
     /**
      * Sets the threadId property value. The unique identifier for a thread in Microsoft Teams.

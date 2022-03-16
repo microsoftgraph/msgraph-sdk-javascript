@@ -1,3 +1,5 @@
+import {createRoleAssignmentFromDiscriminatorValue} from './createRoleAssignmentFromDiscriminatorValue';
+import {createRolePermissionFromDiscriminatorValue} from './createRolePermissionFromDiscriminatorValue';
 import {Entity, RoleAssignment, RolePermission} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -26,6 +28,13 @@ export class RoleDefinition extends Entity implements Parsable {
         return this._description;
     };
     /**
+     * Sets the description property value. Description of the Role definition.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
      * Gets the displayName property value. Display Name of the Role definition.
      * @returns a string
      */
@@ -33,25 +42,11 @@ export class RoleDefinition extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the isBuiltIn property value. Type of Role. Set to True if it is built-in, or set to False if it is a custom role definition.
-     * @returns a boolean
+     * Sets the displayName property value. Display Name of the Role definition.
+     * @param value Value to set for the displayName property.
      */
-    public get isBuiltIn() {
-        return this._isBuiltIn;
-    };
-    /**
-     * Gets the roleAssignments property value. List of Role assignments for this role definition.
-     * @returns a roleAssignment
-     */
-    public get roleAssignments() {
-        return this._roleAssignments;
-    };
-    /**
-     * Gets the rolePermissions property value. List of Role Permissions this role is allowed to perform. These must match the actionName that is defined as part of the rolePermission.
-     * @returns a rolePermission
-     */
-    public get rolePermissions() {
-        return this._rolePermissions;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -62,9 +57,51 @@ export class RoleDefinition extends Entity implements Parsable {
             ["description", (o, n) => { (o as unknown as RoleDefinition).description = n.getStringValue(); }],
             ["displayName", (o, n) => { (o as unknown as RoleDefinition).displayName = n.getStringValue(); }],
             ["isBuiltIn", (o, n) => { (o as unknown as RoleDefinition).isBuiltIn = n.getBooleanValue(); }],
-            ["roleAssignments", (o, n) => { (o as unknown as RoleDefinition).roleAssignments = n.getCollectionOfObjectValues<RoleAssignment>(RoleAssignment); }],
-            ["rolePermissions", (o, n) => { (o as unknown as RoleDefinition).rolePermissions = n.getCollectionOfObjectValues<RolePermission>(RolePermission); }],
+            ["roleAssignments", (o, n) => { (o as unknown as RoleDefinition).roleAssignments = n.getCollectionOfObjectValues<RoleAssignment>(createRoleAssignmentFromDiscriminatorValue); }],
+            ["rolePermissions", (o, n) => { (o as unknown as RoleDefinition).rolePermissions = n.getCollectionOfObjectValues<RolePermission>(createRolePermissionFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the isBuiltIn property value. Type of Role. Set to True if it is built-in, or set to False if it is a custom role definition.
+     * @returns a boolean
+     */
+    public get isBuiltIn() {
+        return this._isBuiltIn;
+    };
+    /**
+     * Sets the isBuiltIn property value. Type of Role. Set to True if it is built-in, or set to False if it is a custom role definition.
+     * @param value Value to set for the isBuiltIn property.
+     */
+    public set isBuiltIn(value: boolean | undefined) {
+        this._isBuiltIn = value;
+    };
+    /**
+     * Gets the roleAssignments property value. List of Role assignments for this role definition.
+     * @returns a roleAssignment
+     */
+    public get roleAssignments() {
+        return this._roleAssignments;
+    };
+    /**
+     * Sets the roleAssignments property value. List of Role assignments for this role definition.
+     * @param value Value to set for the roleAssignments property.
+     */
+    public set roleAssignments(value: RoleAssignment[] | undefined) {
+        this._roleAssignments = value;
+    };
+    /**
+     * Gets the rolePermissions property value. List of Role Permissions this role is allowed to perform. These must match the actionName that is defined as part of the rolePermission.
+     * @returns a rolePermission
+     */
+    public get rolePermissions() {
+        return this._rolePermissions;
+    };
+    /**
+     * Sets the rolePermissions property value. List of Role Permissions this role is allowed to perform. These must match the actionName that is defined as part of the rolePermission.
+     * @param value Value to set for the rolePermissions property.
+     */
+    public set rolePermissions(value: RolePermission[] | undefined) {
+        this._rolePermissions = value;
     };
     /**
      * Serializes information the current object
@@ -78,40 +115,5 @@ export class RoleDefinition extends Entity implements Parsable {
         writer.writeBooleanValue("isBuiltIn", this.isBuiltIn);
         writer.writeCollectionOfObjectValues<RoleAssignment>("roleAssignments", this.roleAssignments);
         writer.writeCollectionOfObjectValues<RolePermission>("rolePermissions", this.rolePermissions);
-    };
-    /**
-     * Sets the description property value. Description of the Role definition.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. Display Name of the Role definition.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isBuiltIn property value. Type of Role. Set to True if it is built-in, or set to False if it is a custom role definition.
-     * @param value Value to set for the isBuiltIn property.
-     */
-    public set isBuiltIn(value: boolean | undefined) {
-        this._isBuiltIn = value;
-    };
-    /**
-     * Sets the roleAssignments property value. List of Role assignments for this role definition.
-     * @param value Value to set for the roleAssignments property.
-     */
-    public set roleAssignments(value: RoleAssignment[] | undefined) {
-        this._roleAssignments = value;
-    };
-    /**
-     * Sets the rolePermissions property value. List of Role Permissions this role is allowed to perform. These must match the actionName that is defined as part of the rolePermission.
-     * @param value Value to set for the rolePermissions property.
-     */
-    public set rolePermissions(value: RolePermission[] | undefined) {
-        this._rolePermissions = value;
     };
 }

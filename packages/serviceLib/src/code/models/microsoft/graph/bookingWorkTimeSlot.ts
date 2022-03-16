@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter, TimeOnly} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter, TimeOnly} from '@microsoft/kiota-abstractions';
 
-export class BookingWorkTimeSlot implements Parsable {
+export class BookingWorkTimeSlot implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The time of the day when work stops. For example, 17:00:00.0000000.  */
@@ -8,17 +8,24 @@ export class BookingWorkTimeSlot implements Parsable {
     /** The time of the day when work starts. For example, 08:00:00.0000000.  */
     private _startTime?: TimeOnly | undefined;
     /**
-     * Instantiates a new bookingWorkTimeSlot and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new bookingWorkTimeSlot and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the endTime property value. The time of the day when work stops. For example, 17:00:00.0000000.
@@ -28,11 +35,11 @@ export class BookingWorkTimeSlot implements Parsable {
         return this._endTime;
     };
     /**
-     * Gets the startTime property value. The time of the day when work starts. For example, 08:00:00.0000000.
-     * @returns a TimeOnly
+     * Sets the endTime property value. The time of the day when work stops. For example, 17:00:00.0000000.
+     * @param value Value to set for the endTime property.
      */
-    public get startTime() {
-        return this._startTime;
+    public set endTime(value: TimeOnly | undefined) {
+        this._endTime = value;
     };
     /**
      * The deserialization information for the current model
@@ -55,18 +62,11 @@ export class BookingWorkTimeSlot implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the startTime property value. The time of the day when work starts. For example, 08:00:00.0000000.
+     * @returns a TimeOnly
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the endTime property value. The time of the day when work stops. For example, 17:00:00.0000000.
-     * @param value Value to set for the endTime property.
-     */
-    public set endTime(value: TimeOnly | undefined) {
-        this._endTime = value;
+    public get startTime() {
+        return this._startTime;
     };
     /**
      * Sets the startTime property value. The time of the day when work starts. For example, 08:00:00.0000000.

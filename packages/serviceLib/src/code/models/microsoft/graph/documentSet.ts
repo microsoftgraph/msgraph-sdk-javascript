@@ -1,7 +1,10 @@
+import {createColumnDefinitionFromDiscriminatorValue} from './createColumnDefinitionFromDiscriminatorValue';
+import {createContentTypeInfoFromDiscriminatorValue} from './createContentTypeInfoFromDiscriminatorValue';
+import {createDocumentSetContentFromDiscriminatorValue} from './createDocumentSetContentFromDiscriminatorValue';
 import {ColumnDefinition, ContentTypeInfo, DocumentSetContent} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DocumentSet implements Parsable {
+export class DocumentSet implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Content types allowed in document set.  */
@@ -17,17 +20,18 @@ export class DocumentSet implements Parsable {
     /** Welcome page absolute URL.  */
     private _welcomePageUrl?: string | undefined;
     /**
-     * Instantiates a new documentSet and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the allowedContentTypes property value. Content types allowed in document set.
@@ -37,11 +41,46 @@ export class DocumentSet implements Parsable {
         return this._allowedContentTypes;
     };
     /**
+     * Sets the allowedContentTypes property value. Content types allowed in document set.
+     * @param value Value to set for the allowedContentTypes property.
+     */
+    public set allowedContentTypes(value: ContentTypeInfo[] | undefined) {
+        this._allowedContentTypes = value;
+    };
+    /**
+     * Instantiates a new documentSet and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the defaultContents property value. Default contents of document set.
      * @returns a documentSetContent
      */
     public get defaultContents() {
         return this._defaultContents;
+    };
+    /**
+     * Sets the defaultContents property value. Default contents of document set.
+     * @param value Value to set for the defaultContents property.
+     */
+    public set defaultContents(value: DocumentSetContent[] | undefined) {
+        this._defaultContents = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["allowedContentTypes", (o, n) => { (o as unknown as DocumentSet).allowedContentTypes = n.getCollectionOfObjectValues<ContentTypeInfo>(createContentTypeInfoFromDiscriminatorValue); }],
+            ["defaultContents", (o, n) => { (o as unknown as DocumentSet).defaultContents = n.getCollectionOfObjectValues<DocumentSetContent>(createDocumentSetContentFromDiscriminatorValue); }],
+            ["propagateWelcomePageChanges", (o, n) => { (o as unknown as DocumentSet).propagateWelcomePageChanges = n.getBooleanValue(); }],
+            ["sharedColumns", (o, n) => { (o as unknown as DocumentSet).sharedColumns = n.getCollectionOfObjectValues<ColumnDefinition>(createColumnDefinitionFromDiscriminatorValue); }],
+            ["shouldPrefixNameToFile", (o, n) => { (o as unknown as DocumentSet).shouldPrefixNameToFile = n.getBooleanValue(); }],
+            ["welcomePageColumns", (o, n) => { (o as unknown as DocumentSet).welcomePageColumns = n.getCollectionOfObjectValues<ColumnDefinition>(createColumnDefinitionFromDiscriminatorValue); }],
+            ["welcomePageUrl", (o, n) => { (o as unknown as DocumentSet).welcomePageUrl = n.getStringValue(); }],
+        ]);
     };
     /**
      * Gets the propagateWelcomePageChanges property value. Specifies whether to push welcome page changes to inherited content types.
@@ -51,47 +90,11 @@ export class DocumentSet implements Parsable {
         return this._propagateWelcomePageChanges;
     };
     /**
-     * Gets the sharedColumns property value. 
-     * @returns a columnDefinition
+     * Sets the propagateWelcomePageChanges property value. Specifies whether to push welcome page changes to inherited content types.
+     * @param value Value to set for the propagateWelcomePageChanges property.
      */
-    public get sharedColumns() {
-        return this._sharedColumns;
-    };
-    /**
-     * Gets the shouldPrefixNameToFile property value. Add the name of the document set to each file name.
-     * @returns a boolean
-     */
-    public get shouldPrefixNameToFile() {
-        return this._shouldPrefixNameToFile;
-    };
-    /**
-     * Gets the welcomePageColumns property value. 
-     * @returns a columnDefinition
-     */
-    public get welcomePageColumns() {
-        return this._welcomePageColumns;
-    };
-    /**
-     * Gets the welcomePageUrl property value. Welcome page absolute URL.
-     * @returns a string
-     */
-    public get welcomePageUrl() {
-        return this._welcomePageUrl;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["allowedContentTypes", (o, n) => { (o as unknown as DocumentSet).allowedContentTypes = n.getCollectionOfObjectValues<ContentTypeInfo>(ContentTypeInfo); }],
-            ["defaultContents", (o, n) => { (o as unknown as DocumentSet).defaultContents = n.getCollectionOfObjectValues<DocumentSetContent>(DocumentSetContent); }],
-            ["propagateWelcomePageChanges", (o, n) => { (o as unknown as DocumentSet).propagateWelcomePageChanges = n.getBooleanValue(); }],
-            ["sharedColumns", (o, n) => { (o as unknown as DocumentSet).sharedColumns = n.getCollectionOfObjectValues<ColumnDefinition>(ColumnDefinition); }],
-            ["shouldPrefixNameToFile", (o, n) => { (o as unknown as DocumentSet).shouldPrefixNameToFile = n.getBooleanValue(); }],
-            ["welcomePageColumns", (o, n) => { (o as unknown as DocumentSet).welcomePageColumns = n.getCollectionOfObjectValues<ColumnDefinition>(ColumnDefinition); }],
-            ["welcomePageUrl", (o, n) => { (o as unknown as DocumentSet).welcomePageUrl = n.getStringValue(); }],
-        ]);
+    public set propagateWelcomePageChanges(value: boolean | undefined) {
+        this._propagateWelcomePageChanges = value;
     };
     /**
      * Serializes information the current object
@@ -109,32 +112,11 @@ export class DocumentSet implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sharedColumns property value. 
+     * @returns a columnDefinition
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the allowedContentTypes property value. Content types allowed in document set.
-     * @param value Value to set for the allowedContentTypes property.
-     */
-    public set allowedContentTypes(value: ContentTypeInfo[] | undefined) {
-        this._allowedContentTypes = value;
-    };
-    /**
-     * Sets the defaultContents property value. Default contents of document set.
-     * @param value Value to set for the defaultContents property.
-     */
-    public set defaultContents(value: DocumentSetContent[] | undefined) {
-        this._defaultContents = value;
-    };
-    /**
-     * Sets the propagateWelcomePageChanges property value. Specifies whether to push welcome page changes to inherited content types.
-     * @param value Value to set for the propagateWelcomePageChanges property.
-     */
-    public set propagateWelcomePageChanges(value: boolean | undefined) {
-        this._propagateWelcomePageChanges = value;
+    public get sharedColumns() {
+        return this._sharedColumns;
     };
     /**
      * Sets the sharedColumns property value. 
@@ -144,6 +126,13 @@ export class DocumentSet implements Parsable {
         this._sharedColumns = value;
     };
     /**
+     * Gets the shouldPrefixNameToFile property value. Add the name of the document set to each file name.
+     * @returns a boolean
+     */
+    public get shouldPrefixNameToFile() {
+        return this._shouldPrefixNameToFile;
+    };
+    /**
      * Sets the shouldPrefixNameToFile property value. Add the name of the document set to each file name.
      * @param value Value to set for the shouldPrefixNameToFile property.
      */
@@ -151,11 +140,25 @@ export class DocumentSet implements Parsable {
         this._shouldPrefixNameToFile = value;
     };
     /**
+     * Gets the welcomePageColumns property value. 
+     * @returns a columnDefinition
+     */
+    public get welcomePageColumns() {
+        return this._welcomePageColumns;
+    };
+    /**
      * Sets the welcomePageColumns property value. 
      * @param value Value to set for the welcomePageColumns property.
      */
     public set welcomePageColumns(value: ColumnDefinition[] | undefined) {
         this._welcomePageColumns = value;
+    };
+    /**
+     * Gets the welcomePageUrl property value. Welcome page absolute URL.
+     * @returns a string
+     */
+    public get welcomePageUrl() {
+        return this._welcomePageUrl;
     };
     /**
      * Sets the welcomePageUrl property value. Welcome page absolute URL.

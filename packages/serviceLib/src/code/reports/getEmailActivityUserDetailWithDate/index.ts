@@ -1,1 +1,1 @@
-export * from './GetEmailActivityUserDetailWithDateRequestBuilder'
+export * from './getEmailActivityUserDetailWithDateResponse'

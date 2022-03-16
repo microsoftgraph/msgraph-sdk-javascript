@@ -1,4 +1,6 @@
-import {ChangeTrackedEntity, WorkforceIntegrationEncryption, WorkforceIntegrationSupportedEntities} from './index';
+import {createWorkforceIntegrationEncryptionFromDiscriminatorValue} from './createWorkforceIntegrationEncryptionFromDiscriminatorValue';
+import {ChangeTrackedEntity, WorkforceIntegrationEncryption} from './index';
+import {WorkforceIntegrationSupportedEntities} from './workforceIntegrationSupportedEntities';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class WorkforceIntegration extends ChangeTrackedEntity implements Parsable {
@@ -15,17 +17,24 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
     /** Workforce Integration URL for callbacks from the Shifts service.  */
     private _url?: string | undefined;
     /**
-     * Instantiates a new workforceIntegration and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the apiVersion property value. API version for the call back URL. Start with 1.
      * @returns a integer
      */
     public get apiVersion() {
         return this._apiVersion;
+    };
+    /**
+     * Sets the apiVersion property value. API version for the call back URL. Start with 1.
+     * @param value Value to set for the apiVersion property.
+     */
+    public set apiVersion(value: number | undefined) {
+        this._apiVersion = value;
+    };
+    /**
+     * Instantiates a new workforceIntegration and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the displayName property value. Name of the workforce integration.
@@ -35,6 +44,13 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
         return this._displayName;
     };
     /**
+     * Sets the displayName property value. Name of the workforce integration.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
      * Gets the encryption property value. The workforce integration encryption resource.
      * @returns a workforceIntegrationEncryption
      */
@@ -42,25 +58,11 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
         return this._encryption;
     };
     /**
-     * Gets the isActive property value. Indicates whether this workforce integration is currently active and available.
-     * @returns a boolean
+     * Sets the encryption property value. The workforce integration encryption resource.
+     * @param value Value to set for the encryption property.
      */
-    public get isActive() {
-        return this._isActive;
-    };
-    /**
-     * Gets the supportedEntities property value. The Shifts entities supported for synchronous change notifications. Shifts will make a call back to the url provided on client changes on those entities added here. By default, no entities are supported for change notifications. Possible values are: none, shift, swapRequest, userShiftPreferences, openshift, openShiftRequest, offerShiftRequest, unknownFutureValue.
-     * @returns a workforceIntegrationSupportedEntities
-     */
-    public get supportedEntities() {
-        return this._supportedEntities;
-    };
-    /**
-     * Gets the url property value. Workforce Integration URL for callbacks from the Shifts service.
-     * @returns a string
-     */
-    public get url() {
-        return this._url;
+    public set encryption(value: WorkforceIntegrationEncryption | undefined) {
+        this._encryption = value;
     };
     /**
      * The deserialization information for the current model
@@ -70,11 +72,25 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["apiVersion", (o, n) => { (o as unknown as WorkforceIntegration).apiVersion = n.getNumberValue(); }],
             ["displayName", (o, n) => { (o as unknown as WorkforceIntegration).displayName = n.getStringValue(); }],
-            ["encryption", (o, n) => { (o as unknown as WorkforceIntegration).encryption = n.getObjectValue<WorkforceIntegrationEncryption>(WorkforceIntegrationEncryption); }],
+            ["encryption", (o, n) => { (o as unknown as WorkforceIntegration).encryption = n.getObjectValue<WorkforceIntegrationEncryption>(createWorkforceIntegrationEncryptionFromDiscriminatorValue); }],
             ["isActive", (o, n) => { (o as unknown as WorkforceIntegration).isActive = n.getBooleanValue(); }],
             ["supportedEntities", (o, n) => { (o as unknown as WorkforceIntegration).supportedEntities = n.getEnumValue<WorkforceIntegrationSupportedEntities>(WorkforceIntegrationSupportedEntities); }],
             ["url", (o, n) => { (o as unknown as WorkforceIntegration).url = n.getStringValue(); }],
         ]);
+    };
+    /**
+     * Gets the isActive property value. Indicates whether this workforce integration is currently active and available.
+     * @returns a boolean
+     */
+    public get isActive() {
+        return this._isActive;
+    };
+    /**
+     * Sets the isActive property value. Indicates whether this workforce integration is currently active and available.
+     * @param value Value to set for the isActive property.
+     */
+    public set isActive(value: boolean | undefined) {
+        this._isActive = value;
     };
     /**
      * Serializes information the current object
@@ -91,32 +107,11 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
         writer.writeStringValue("url", this.url);
     };
     /**
-     * Sets the apiVersion property value. API version for the call back URL. Start with 1.
-     * @param value Value to set for the apiVersion property.
+     * Gets the supportedEntities property value. The Shifts entities supported for synchronous change notifications. Shifts will make a call back to the url provided on client changes on those entities added here. By default, no entities are supported for change notifications. Possible values are: none, shift, swapRequest, userShiftPreferences, openshift, openShiftRequest, offerShiftRequest, unknownFutureValue.
+     * @returns a workforceIntegrationSupportedEntities
      */
-    public set apiVersion(value: number | undefined) {
-        this._apiVersion = value;
-    };
-    /**
-     * Sets the displayName property value. Name of the workforce integration.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the encryption property value. The workforce integration encryption resource.
-     * @param value Value to set for the encryption property.
-     */
-    public set encryption(value: WorkforceIntegrationEncryption | undefined) {
-        this._encryption = value;
-    };
-    /**
-     * Sets the isActive property value. Indicates whether this workforce integration is currently active and available.
-     * @param value Value to set for the isActive property.
-     */
-    public set isActive(value: boolean | undefined) {
-        this._isActive = value;
+    public get supportedEntities() {
+        return this._supportedEntities;
     };
     /**
      * Sets the supportedEntities property value. The Shifts entities supported for synchronous change notifications. Shifts will make a call back to the url provided on client changes on those entities added here. By default, no entities are supported for change notifications. Possible values are: none, shift, swapRequest, userShiftPreferences, openshift, openShiftRequest, offerShiftRequest, unknownFutureValue.
@@ -124,6 +119,13 @@ export class WorkforceIntegration extends ChangeTrackedEntity implements Parsabl
      */
     public set supportedEntities(value: WorkforceIntegrationSupportedEntities | undefined) {
         this._supportedEntities = value;
+    };
+    /**
+     * Gets the url property value. Workforce Integration URL for callbacks from the Shifts service.
+     * @returns a string
+     */
+    public get url() {
+        return this._url;
     };
     /**
      * Sets the url property value. Workforce Integration URL for callbacks from the Shifts service.

@@ -1,3 +1,4 @@
+import {createEducationResourceFromDiscriminatorValue} from './createEducationResourceFromDiscriminatorValue';
 import {EducationResource, Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -20,11 +21,11 @@ export class EducationAssignmentResource extends Entity implements Parsable {
         return this._distributeForStudentWork;
     };
     /**
-     * Gets the resource property value. Resource object that has been associated with this assignment.
-     * @returns a educationResource
+     * Sets the distributeForStudentWork property value. Indicates whether this resource should be copied to each student submission for modification and submission. Required
+     * @param value Value to set for the distributeForStudentWork property.
      */
-    public get resource() {
-        return this._resource;
+    public set distributeForStudentWork(value: boolean | undefined) {
+        this._distributeForStudentWork = value;
     };
     /**
      * The deserialization information for the current model
@@ -33,8 +34,22 @@ export class EducationAssignmentResource extends Entity implements Parsable {
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["distributeForStudentWork", (o, n) => { (o as unknown as EducationAssignmentResource).distributeForStudentWork = n.getBooleanValue(); }],
-            ["resource", (o, n) => { (o as unknown as EducationAssignmentResource).resource = n.getObjectValue<EducationResource>(EducationResource); }],
+            ["resource", (o, n) => { (o as unknown as EducationAssignmentResource).resource = n.getObjectValue<EducationResource>(createEducationResourceFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the resource property value. Resource object that has been associated with this assignment.
+     * @returns a educationResource
+     */
+    public get resource() {
+        return this._resource;
+    };
+    /**
+     * Sets the resource property value. Resource object that has been associated with this assignment.
+     * @param value Value to set for the resource property.
+     */
+    public set resource(value: EducationResource | undefined) {
+        this._resource = value;
     };
     /**
      * Serializes information the current object
@@ -45,19 +60,5 @@ export class EducationAssignmentResource extends Entity implements Parsable {
         super.serialize(writer);
         writer.writeBooleanValue("distributeForStudentWork", this.distributeForStudentWork);
         writer.writeObjectValue<EducationResource>("resource", this.resource);
-    };
-    /**
-     * Sets the distributeForStudentWork property value. Indicates whether this resource should be copied to each student submission for modification and submission. Required
-     * @param value Value to set for the distributeForStudentWork property.
-     */
-    public set distributeForStudentWork(value: boolean | undefined) {
-        this._distributeForStudentWork = value;
-    };
-    /**
-     * Sets the resource property value. Resource object that has been associated with this assignment.
-     * @param value Value to set for the resource property.
-     */
-    public set resource(value: EducationResource | undefined) {
-        this._resource = value;
     };
 }

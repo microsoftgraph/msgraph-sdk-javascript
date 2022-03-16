@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AppIdentity implements Parsable {
+export class AppIdentity implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Refers to the Unique GUID representing Application Id in the Azure Active Directory.  */
@@ -12,17 +12,18 @@ export class AppIdentity implements Parsable {
     /** Refers to the Service Principal Name is the Application name in the tenant.  */
     private _servicePrincipalName?: string | undefined;
     /**
-     * Instantiates a new appIdentity and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the appId property value. Refers to the Unique GUID representing Application Id in the Azure Active Directory.
@@ -32,6 +33,19 @@ export class AppIdentity implements Parsable {
         return this._appId;
     };
     /**
+     * Sets the appId property value. Refers to the Unique GUID representing Application Id in the Azure Active Directory.
+     * @param value Value to set for the appId property.
+     */
+    public set appId(value: string | undefined) {
+        this._appId = value;
+    };
+    /**
+     * Instantiates a new appIdentity and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the displayName property value. Refers to the Application Name displayed in the Azure Portal.
      * @returns a string
      */
@@ -39,18 +53,11 @@ export class AppIdentity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the servicePrincipalId property value. Refers to the Unique GUID indicating Service Principal Id in Azure Active Directory for the corresponding App.
-     * @returns a string
+     * Sets the displayName property value. Refers to the Application Name displayed in the Azure Portal.
+     * @param value Value to set for the displayName property.
      */
-    public get servicePrincipalId() {
-        return this._servicePrincipalId;
-    };
-    /**
-     * Gets the servicePrincipalName property value. Refers to the Service Principal Name is the Application name in the tenant.
-     * @returns a string
-     */
-    public get servicePrincipalName() {
-        return this._servicePrincipalName;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -77,25 +84,11 @@ export class AppIdentity implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the servicePrincipalId property value. Refers to the Unique GUID indicating Service Principal Id in Azure Active Directory for the corresponding App.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the appId property value. Refers to the Unique GUID representing Application Id in the Azure Active Directory.
-     * @param value Value to set for the appId property.
-     */
-    public set appId(value: string | undefined) {
-        this._appId = value;
-    };
-    /**
-     * Sets the displayName property value. Refers to the Application Name displayed in the Azure Portal.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get servicePrincipalId() {
+        return this._servicePrincipalId;
     };
     /**
      * Sets the servicePrincipalId property value. Refers to the Unique GUID indicating Service Principal Id in Azure Active Directory for the corresponding App.
@@ -103,6 +96,13 @@ export class AppIdentity implements Parsable {
      */
     public set servicePrincipalId(value: string | undefined) {
         this._servicePrincipalId = value;
+    };
+    /**
+     * Gets the servicePrincipalName property value. Refers to the Service Principal Name is the Application name in the tenant.
+     * @returns a string
+     */
+    public get servicePrincipalName() {
+        return this._servicePrincipalName;
     };
     /**
      * Sets the servicePrincipalName property value. Refers to the Service Principal Name is the Application name in the tenant.

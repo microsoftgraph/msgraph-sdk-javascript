@@ -1,2 +1,1 @@
-export * from './OnenotePatchContentRequestBuilder'
-export * from './OnenotePatchContentRequestBody'
+export * from './onenotePatchContentRequestBody'

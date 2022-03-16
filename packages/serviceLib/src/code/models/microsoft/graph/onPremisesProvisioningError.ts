@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class OnPremisesProvisioningError implements Parsable {
+export class OnPremisesProvisioningError implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Category of the provisioning error. Note: Currently, there is only one possible value. Possible value: PropertyConflict - indicates a property value is not unique. Other objects contain the same value for the property.  */
@@ -12,17 +12,18 @@ export class OnPremisesProvisioningError implements Parsable {
     /** Value of the property causing the error.  */
     private _value?: string | undefined;
     /**
-     * Instantiates a new onPremisesProvisioningError and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the category property value. Category of the provisioning error. Note: Currently, there is only one possible value. Possible value: PropertyConflict - indicates a property value is not unique. Other objects contain the same value for the property.
@@ -32,25 +33,17 @@ export class OnPremisesProvisioningError implements Parsable {
         return this._category;
     };
     /**
-     * Gets the occurredDateTime property value. The date and time at which the error occurred.
-     * @returns a Date
+     * Sets the category property value. Category of the provisioning error. Note: Currently, there is only one possible value. Possible value: PropertyConflict - indicates a property value is not unique. Other objects contain the same value for the property.
+     * @param value Value to set for the category property.
      */
-    public get occurredDateTime() {
-        return this._occurredDateTime;
+    public set category(value: string | undefined) {
+        this._category = value;
     };
     /**
-     * Gets the propertyCausingError property value. Name of the directory property causing the error. Current possible values: UserPrincipalName or ProxyAddress
-     * @returns a string
+     * Instantiates a new onPremisesProvisioningError and sets the default values.
      */
-    public get propertyCausingError() {
-        return this._propertyCausingError;
-    };
-    /**
-     * Gets the value property value. Value of the property causing the error.
-     * @returns a string
-     */
-    public get value() {
-        return this._value;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -65,6 +58,34 @@ export class OnPremisesProvisioningError implements Parsable {
         ]);
     };
     /**
+     * Gets the occurredDateTime property value. The date and time at which the error occurred.
+     * @returns a Date
+     */
+    public get occurredDateTime() {
+        return this._occurredDateTime;
+    };
+    /**
+     * Sets the occurredDateTime property value. The date and time at which the error occurred.
+     * @param value Value to set for the occurredDateTime property.
+     */
+    public set occurredDateTime(value: Date | undefined) {
+        this._occurredDateTime = value;
+    };
+    /**
+     * Gets the propertyCausingError property value. Name of the directory property causing the error. Current possible values: UserPrincipalName or ProxyAddress
+     * @returns a string
+     */
+    public get propertyCausingError() {
+        return this._propertyCausingError;
+    };
+    /**
+     * Sets the propertyCausingError property value. Name of the directory property causing the error. Current possible values: UserPrincipalName or ProxyAddress
+     * @param value Value to set for the propertyCausingError property.
+     */
+    public set propertyCausingError(value: string | undefined) {
+        this._propertyCausingError = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -77,32 +98,11 @@ export class OnPremisesProvisioningError implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the value property value. Value of the property causing the error.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the category property value. Category of the provisioning error. Note: Currently, there is only one possible value. Possible value: PropertyConflict - indicates a property value is not unique. Other objects contain the same value for the property.
-     * @param value Value to set for the category property.
-     */
-    public set category(value: string | undefined) {
-        this._category = value;
-    };
-    /**
-     * Sets the occurredDateTime property value. The date and time at which the error occurred.
-     * @param value Value to set for the occurredDateTime property.
-     */
-    public set occurredDateTime(value: Date | undefined) {
-        this._occurredDateTime = value;
-    };
-    /**
-     * Sets the propertyCausingError property value. Name of the directory property causing the error. Current possible values: UserPrincipalName or ProxyAddress
-     * @param value Value to set for the propertyCausingError property.
-     */
-    public set propertyCausingError(value: string | undefined) {
-        this._propertyCausingError = value;
+    public get value() {
+        return this._value;
     };
     /**
      * Sets the value property value. Value of the property causing the error.

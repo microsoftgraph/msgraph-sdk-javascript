@@ -1,15 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CancelRequestBody implements Parsable {
+/** Provides operations to call the cancel method.  */
+export class CancelRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _cancellationMessage?: string | undefined;
-    /**
-     * Instantiates a new cancelRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -18,11 +13,31 @@ export class CancelRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Gets the cancellationMessage property value. 
      * @returns a string
      */
     public get cancellationMessage() {
         return this._cancellationMessage;
+    };
+    /**
+     * Sets the cancellationMessage property value. 
+     * @param value Value to set for the cancellationMessage property.
+     */
+    public set cancellationMessage(value: string | undefined) {
+        this._cancellationMessage = value;
+    };
+    /**
+     * Instantiates a new cancelRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -41,19 +56,5 @@ export class CancelRequestBody implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeStringValue("cancellationMessage", this.cancellationMessage);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the cancellationMessage property value. 
-     * @param value Value to set for the cancellationMessage property.
-     */
-    public set cancellationMessage(value: string | undefined) {
-        this._cancellationMessage = value;
     };
 }

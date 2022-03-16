@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SharepointIds implements Parsable {
+export class SharepointIds implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The unique identifier (guid) for the item's list in SharePoint.  */
@@ -18,12 +18,6 @@ export class SharepointIds implements Parsable {
     /** The unique identifier (guid) for the item's site (SPWeb).  */
     private _webId?: string | undefined;
     /**
-     * Instantiates a new sharepointIds and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -31,53 +25,17 @@ export class SharepointIds implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the listId property value. The unique identifier (guid) for the item's list in SharePoint.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get listId() {
-        return this._listId;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the listItemId property value. An integer identifier for the item within the containing list.
-     * @returns a string
+     * Instantiates a new sharepointIds and sets the default values.
      */
-    public get listItemId() {
-        return this._listItemId;
-    };
-    /**
-     * Gets the listItemUniqueId property value. The unique identifier (guid) for the item within OneDrive for Business or a SharePoint site.
-     * @returns a string
-     */
-    public get listItemUniqueId() {
-        return this._listItemUniqueId;
-    };
-    /**
-     * Gets the siteId property value. The unique identifier (guid) for the item's site collection (SPSite).
-     * @returns a string
-     */
-    public get siteId() {
-        return this._siteId;
-    };
-    /**
-     * Gets the siteUrl property value. The SharePoint URL for the site that contains the item.
-     * @returns a string
-     */
-    public get siteUrl() {
-        return this._siteUrl;
-    };
-    /**
-     * Gets the tenantId property value. The unique identifier (guid) for the tenancy.
-     * @returns a string
-     */
-    public get tenantId() {
-        return this._tenantId;
-    };
-    /**
-     * Gets the webId property value. The unique identifier (guid) for the item's site (SPWeb).
-     * @returns a string
-     */
-    public get webId() {
-        return this._webId;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -95,6 +53,48 @@ export class SharepointIds implements Parsable {
         ]);
     };
     /**
+     * Gets the listId property value. The unique identifier (guid) for the item's list in SharePoint.
+     * @returns a string
+     */
+    public get listId() {
+        return this._listId;
+    };
+    /**
+     * Sets the listId property value. The unique identifier (guid) for the item's list in SharePoint.
+     * @param value Value to set for the listId property.
+     */
+    public set listId(value: string | undefined) {
+        this._listId = value;
+    };
+    /**
+     * Gets the listItemId property value. An integer identifier for the item within the containing list.
+     * @returns a string
+     */
+    public get listItemId() {
+        return this._listItemId;
+    };
+    /**
+     * Sets the listItemId property value. An integer identifier for the item within the containing list.
+     * @param value Value to set for the listItemId property.
+     */
+    public set listItemId(value: string | undefined) {
+        this._listItemId = value;
+    };
+    /**
+     * Gets the listItemUniqueId property value. The unique identifier (guid) for the item within OneDrive for Business or a SharePoint site.
+     * @returns a string
+     */
+    public get listItemUniqueId() {
+        return this._listItemUniqueId;
+    };
+    /**
+     * Sets the listItemUniqueId property value. The unique identifier (guid) for the item within OneDrive for Business or a SharePoint site.
+     * @param value Value to set for the listItemUniqueId property.
+     */
+    public set listItemUniqueId(value: string | undefined) {
+        this._listItemUniqueId = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -110,32 +110,11 @@ export class SharepointIds implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the siteId property value. The unique identifier (guid) for the item's site collection (SPSite).
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the listId property value. The unique identifier (guid) for the item's list in SharePoint.
-     * @param value Value to set for the listId property.
-     */
-    public set listId(value: string | undefined) {
-        this._listId = value;
-    };
-    /**
-     * Sets the listItemId property value. An integer identifier for the item within the containing list.
-     * @param value Value to set for the listItemId property.
-     */
-    public set listItemId(value: string | undefined) {
-        this._listItemId = value;
-    };
-    /**
-     * Sets the listItemUniqueId property value. The unique identifier (guid) for the item within OneDrive for Business or a SharePoint site.
-     * @param value Value to set for the listItemUniqueId property.
-     */
-    public set listItemUniqueId(value: string | undefined) {
-        this._listItemUniqueId = value;
+    public get siteId() {
+        return this._siteId;
     };
     /**
      * Sets the siteId property value. The unique identifier (guid) for the item's site collection (SPSite).
@@ -145,6 +124,13 @@ export class SharepointIds implements Parsable {
         this._siteId = value;
     };
     /**
+     * Gets the siteUrl property value. The SharePoint URL for the site that contains the item.
+     * @returns a string
+     */
+    public get siteUrl() {
+        return this._siteUrl;
+    };
+    /**
      * Sets the siteUrl property value. The SharePoint URL for the site that contains the item.
      * @param value Value to set for the siteUrl property.
      */
@@ -152,11 +138,25 @@ export class SharepointIds implements Parsable {
         this._siteUrl = value;
     };
     /**
+     * Gets the tenantId property value. The unique identifier (guid) for the tenancy.
+     * @returns a string
+     */
+    public get tenantId() {
+        return this._tenantId;
+    };
+    /**
      * Sets the tenantId property value. The unique identifier (guid) for the tenancy.
      * @param value Value to set for the tenantId property.
      */
     public set tenantId(value: string | undefined) {
         this._tenantId = value;
+    };
+    /**
+     * Gets the webId property value. The unique identifier (guid) for the item's site (SPWeb).
+     * @returns a string
+     */
+    public get webId() {
+        return this._webId;
     };
     /**
      * Sets the webId property value. The unique identifier (guid) for the item's site (SPWeb).

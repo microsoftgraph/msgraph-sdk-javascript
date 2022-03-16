@@ -1,9 +1,12 @@
 import {PrintTask} from '../../../../../models/microsoft/graph/';
-import {DefinitionRequestBuilder} from './definition/';
-import {TriggerRequestBuilder} from './trigger/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrintTaskFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createPrintTaskFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DefinitionRequestBuilder} from './definition/definitionRequestBuilder';
+import {TriggerRequestBuilder} from './trigger/triggerRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/taskDefinitions/{printTaskDefinition-id}/tasks/{printTask-id}  */
+/** Provides operations to manage the tasks property of the microsoft.graph.printTaskDefinition entity.  */
 export class PrintTaskItemRequestBuilder {
     public get definition(): DefinitionRequestBuilder {
         return new DefinitionRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -31,7 +34,7 @@ export class PrintTaskItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
+     * Delete navigation property tasks for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +69,7 @@ export class PrintTaskItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
+     * Update the navigation property tasks in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +87,7 @@ export class PrintTaskItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
+     * Delete navigation property tasks for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +96,11 @@ export class PrintTaskItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
@@ -110,10 +117,14 @@ export class PrintTaskItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintTask>(requestInfo, PrintTask, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintTask>(requestInfo, createPrintTaskFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A list of tasks that have been created based on this definition. The list includes currently running tasks and recently completed tasks. Read-only.
+     * Update the navigation property tasks in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +135,10 @@ export class PrintTaskItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

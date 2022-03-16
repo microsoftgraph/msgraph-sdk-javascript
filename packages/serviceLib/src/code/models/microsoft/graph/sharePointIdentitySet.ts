@@ -1,3 +1,5 @@
+import {createIdentityFromDiscriminatorValue} from './createIdentityFromDiscriminatorValue';
+import {createSharePointIdentityFromDiscriminatorValue} from './createSharePointIdentityFromDiscriminatorValue';
 import {Identity, IdentitySet, SharePointIdentity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -15,6 +17,17 @@ export class SharePointIdentitySet extends IdentitySet implements Parsable {
         super();
     };
     /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["group", (o, n) => { (o as unknown as SharePointIdentitySet).group = n.getObjectValue<Identity>(createIdentityFromDiscriminatorValue); }],
+            ["siteGroup", (o, n) => { (o as unknown as SharePointIdentitySet).siteGroup = n.getObjectValue<SharePointIdentity>(createSharePointIdentityFromDiscriminatorValue); }],
+            ["siteUser", (o, n) => { (o as unknown as SharePointIdentitySet).siteUser = n.getObjectValue<SharePointIdentity>(createSharePointIdentityFromDiscriminatorValue); }],
+        ]);
+    };
+    /**
      * Gets the group property value. The group associated with this action. Optional.
      * @returns a identity
      */
@@ -22,29 +35,11 @@ export class SharePointIdentitySet extends IdentitySet implements Parsable {
         return this._group;
     };
     /**
-     * Gets the siteGroup property value. The SharePoint group associated with this action. Optional.
-     * @returns a sharePointIdentity
+     * Sets the group property value. The group associated with this action. Optional.
+     * @param value Value to set for the group property.
      */
-    public get siteGroup() {
-        return this._siteGroup;
-    };
-    /**
-     * Gets the siteUser property value. The SharePoint user associated with this action. Optional.
-     * @returns a sharePointIdentity
-     */
-    public get siteUser() {
-        return this._siteUser;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["group", (o, n) => { (o as unknown as SharePointIdentitySet).group = n.getObjectValue<Identity>(Identity); }],
-            ["siteGroup", (o, n) => { (o as unknown as SharePointIdentitySet).siteGroup = n.getObjectValue<SharePointIdentity>(SharePointIdentity); }],
-            ["siteUser", (o, n) => { (o as unknown as SharePointIdentitySet).siteUser = n.getObjectValue<SharePointIdentity>(SharePointIdentity); }],
-        ]);
+    public set group(value: Identity | undefined) {
+        this._group = value;
     };
     /**
      * Serializes information the current object
@@ -58,11 +53,11 @@ export class SharePointIdentitySet extends IdentitySet implements Parsable {
         writer.writeObjectValue<SharePointIdentity>("siteUser", this.siteUser);
     };
     /**
-     * Sets the group property value. The group associated with this action. Optional.
-     * @param value Value to set for the group property.
+     * Gets the siteGroup property value. The SharePoint group associated with this action. Optional.
+     * @returns a sharePointIdentity
      */
-    public set group(value: Identity | undefined) {
-        this._group = value;
+    public get siteGroup() {
+        return this._siteGroup;
     };
     /**
      * Sets the siteGroup property value. The SharePoint group associated with this action. Optional.
@@ -70,6 +65,13 @@ export class SharePointIdentitySet extends IdentitySet implements Parsable {
      */
     public set siteGroup(value: SharePointIdentity | undefined) {
         this._siteGroup = value;
+    };
+    /**
+     * Gets the siteUser property value. The SharePoint user associated with this action. Optional.
+     * @returns a sharePointIdentity
+     */
+    public get siteUser() {
+        return this._siteUser;
     };
     /**
      * Sets the siteUser property value. The SharePoint user associated with this action. Optional.

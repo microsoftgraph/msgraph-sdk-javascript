@@ -1,2 +1,1 @@
-export * from './InstantiateRequestBody'
-export * from './InstantiateRequestBuilder'
+export * from './instantiateRequestBody'

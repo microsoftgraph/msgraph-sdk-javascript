@@ -1,7 +1,9 @@
+import {createDateTimeTimeZoneFromDiscriminatorValue} from './createDateTimeTimeZoneFromDiscriminatorValue';
+import {createLocaleInfoFromDiscriminatorValue} from './createLocaleInfoFromDiscriminatorValue';
 import {DateTimeTimeZone, LocaleInfo} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AutomaticRepliesMailTips implements Parsable {
+export class AutomaticRepliesMailTips implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The automatic reply message.  */
@@ -13,17 +15,36 @@ export class AutomaticRepliesMailTips implements Parsable {
     /** The date and time that automatic replies are set to begin.  */
     private _scheduledStartTime?: DateTimeTimeZone | undefined;
     /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
      * Instantiates a new automaticRepliesMailTips and sets the default values.
      */
     public constructor() {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["message", (o, n) => { (o as unknown as AutomaticRepliesMailTips).message = n.getStringValue(); }],
+            ["messageLanguage", (o, n) => { (o as unknown as AutomaticRepliesMailTips).messageLanguage = n.getObjectValue<LocaleInfo>(createLocaleInfoFromDiscriminatorValue); }],
+            ["scheduledEndTime", (o, n) => { (o as unknown as AutomaticRepliesMailTips).scheduledEndTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+            ["scheduledStartTime", (o, n) => { (o as unknown as AutomaticRepliesMailTips).scheduledStartTime = n.getObjectValue<DateTimeTimeZone>(createDateTimeTimeZoneFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the message property value. The automatic reply message.
@@ -33,11 +54,25 @@ export class AutomaticRepliesMailTips implements Parsable {
         return this._message;
     };
     /**
+     * Sets the message property value. The automatic reply message.
+     * @param value Value to set for the message property.
+     */
+    public set message(value: string | undefined) {
+        this._message = value;
+    };
+    /**
      * Gets the messageLanguage property value. The language that the automatic reply message is in.
      * @returns a localeInfo
      */
     public get messageLanguage() {
         return this._messageLanguage;
+    };
+    /**
+     * Sets the messageLanguage property value. The language that the automatic reply message is in.
+     * @param value Value to set for the messageLanguage property.
+     */
+    public set messageLanguage(value: LocaleInfo | undefined) {
+        this._messageLanguage = value;
     };
     /**
      * Gets the scheduledEndTime property value. The date and time that automatic replies are set to end.
@@ -47,6 +82,13 @@ export class AutomaticRepliesMailTips implements Parsable {
         return this._scheduledEndTime;
     };
     /**
+     * Sets the scheduledEndTime property value. The date and time that automatic replies are set to end.
+     * @param value Value to set for the scheduledEndTime property.
+     */
+    public set scheduledEndTime(value: DateTimeTimeZone | undefined) {
+        this._scheduledEndTime = value;
+    };
+    /**
      * Gets the scheduledStartTime property value. The date and time that automatic replies are set to begin.
      * @returns a dateTimeTimeZone
      */
@@ -54,16 +96,11 @@ export class AutomaticRepliesMailTips implements Parsable {
         return this._scheduledStartTime;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the scheduledStartTime property value. The date and time that automatic replies are set to begin.
+     * @param value Value to set for the scheduledStartTime property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["message", (o, n) => { (o as unknown as AutomaticRepliesMailTips).message = n.getStringValue(); }],
-            ["messageLanguage", (o, n) => { (o as unknown as AutomaticRepliesMailTips).messageLanguage = n.getObjectValue<LocaleInfo>(LocaleInfo); }],
-            ["scheduledEndTime", (o, n) => { (o as unknown as AutomaticRepliesMailTips).scheduledEndTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-            ["scheduledStartTime", (o, n) => { (o as unknown as AutomaticRepliesMailTips).scheduledStartTime = n.getObjectValue<DateTimeTimeZone>(DateTimeTimeZone); }],
-        ]);
+    public set scheduledStartTime(value: DateTimeTimeZone | undefined) {
+        this._scheduledStartTime = value;
     };
     /**
      * Serializes information the current object
@@ -76,40 +113,5 @@ export class AutomaticRepliesMailTips implements Parsable {
         writer.writeObjectValue<DateTimeTimeZone>("scheduledEndTime", this.scheduledEndTime);
         writer.writeObjectValue<DateTimeTimeZone>("scheduledStartTime", this.scheduledStartTime);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the message property value. The automatic reply message.
-     * @param value Value to set for the message property.
-     */
-    public set message(value: string | undefined) {
-        this._message = value;
-    };
-    /**
-     * Sets the messageLanguage property value. The language that the automatic reply message is in.
-     * @param value Value to set for the messageLanguage property.
-     */
-    public set messageLanguage(value: LocaleInfo | undefined) {
-        this._messageLanguage = value;
-    };
-    /**
-     * Sets the scheduledEndTime property value. The date and time that automatic replies are set to end.
-     * @param value Value to set for the scheduledEndTime property.
-     */
-    public set scheduledEndTime(value: DateTimeTimeZone | undefined) {
-        this._scheduledEndTime = value;
-    };
-    /**
-     * Sets the scheduledStartTime property value. The date and time that automatic replies are set to begin.
-     * @param value Value to set for the scheduledStartTime property.
-     */
-    public set scheduledStartTime(value: DateTimeTimeZone | undefined) {
-        this._scheduledStartTime = value;
     };
 }

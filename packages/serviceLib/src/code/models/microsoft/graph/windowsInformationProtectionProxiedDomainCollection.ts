@@ -1,7 +1,9 @@
+import {createProxiedDomainFromDiscriminatorValue} from './createProxiedDomainFromDiscriminatorValue';
 import {ProxiedDomain} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class WindowsInformationProtectionProxiedDomainCollection implements Parsable {
+/** Windows Information Protection Proxied Domain Collection  */
+export class WindowsInformationProtectionProxiedDomainCollection implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Display name  */
@@ -9,17 +11,24 @@ export class WindowsInformationProtectionProxiedDomainCollection implements Pars
     /** Collection of proxied domains  */
     private _proxiedDomains?: ProxiedDomain[] | undefined;
     /**
-     * Instantiates a new windowsInformationProtectionProxiedDomainCollection and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new windowsInformationProtectionProxiedDomainCollection and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the displayName property value. Display name
@@ -29,11 +38,11 @@ export class WindowsInformationProtectionProxiedDomainCollection implements Pars
         return this._displayName;
     };
     /**
-     * Gets the proxiedDomains property value. Collection of proxied domains
-     * @returns a proxiedDomain
+     * Sets the displayName property value. Display name
+     * @param value Value to set for the displayName property.
      */
-    public get proxiedDomains() {
-        return this._proxiedDomains;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -42,8 +51,22 @@ export class WindowsInformationProtectionProxiedDomainCollection implements Pars
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
             ["displayName", (o, n) => { (o as unknown as WindowsInformationProtectionProxiedDomainCollection).displayName = n.getStringValue(); }],
-            ["proxiedDomains", (o, n) => { (o as unknown as WindowsInformationProtectionProxiedDomainCollection).proxiedDomains = n.getCollectionOfObjectValues<ProxiedDomain>(ProxiedDomain); }],
+            ["proxiedDomains", (o, n) => { (o as unknown as WindowsInformationProtectionProxiedDomainCollection).proxiedDomains = n.getCollectionOfObjectValues<ProxiedDomain>(createProxiedDomainFromDiscriminatorValue); }],
         ]);
+    };
+    /**
+     * Gets the proxiedDomains property value. Collection of proxied domains
+     * @returns a proxiedDomain
+     */
+    public get proxiedDomains() {
+        return this._proxiedDomains;
+    };
+    /**
+     * Sets the proxiedDomains property value. Collection of proxied domains
+     * @param value Value to set for the proxiedDomains property.
+     */
+    public set proxiedDomains(value: ProxiedDomain[] | undefined) {
+        this._proxiedDomains = value;
     };
     /**
      * Serializes information the current object
@@ -54,26 +77,5 @@ export class WindowsInformationProtectionProxiedDomainCollection implements Pars
         writer.writeStringValue("displayName", this.displayName);
         writer.writeCollectionOfObjectValues<ProxiedDomain>("proxiedDomains", this.proxiedDomains);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the displayName property value. Display name
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the proxiedDomains property value. Collection of proxied domains
-     * @param value Value to set for the proxiedDomains property.
-     */
-    public set proxiedDomains(value: ProxiedDomain[] | undefined) {
-        this._proxiedDomains = value;
     };
 }

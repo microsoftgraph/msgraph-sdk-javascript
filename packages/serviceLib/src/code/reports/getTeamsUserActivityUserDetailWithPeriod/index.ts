@@ -1,1 +1,1 @@
-export * from './GetTeamsUserActivityUserDetailWithPeriodRequestBuilder'
+export * from './getTeamsUserActivityUserDetailWithPeriodResponse'

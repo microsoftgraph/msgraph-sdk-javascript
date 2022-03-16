@@ -1,7 +1,9 @@
-import {BucketAggregationRange, BucketAggregationSortProperty} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {BucketAggregationSortProperty} from './bucketAggregationSortProperty';
+import {createBucketAggregationRangeFromDiscriminatorValue} from './createBucketAggregationRangeFromDiscriminatorValue';
+import {BucketAggregationRange} from './index';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class BucketAggregationDefinition implements Parsable {
+export class BucketAggregationDefinition implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** True to specify the sort order as descending. The default is false, with the sort order as ascending. Optional.  */
@@ -15,12 +17,6 @@ export class BucketAggregationDefinition implements Parsable {
     /** The possible values are count to sort by the number of matches in the aggregation, keyAsStringto sort alphabeticaly based on the key in the aggregation, keyAsNumber for numerical sorting based on the key in the aggregation. Required.  */
     private _sortBy?: BucketAggregationSortProperty | undefined;
     /**
-     * Instantiates a new bucketAggregationDefinition and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -28,39 +24,17 @@ export class BucketAggregationDefinition implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the isDescending property value. True to specify the sort order as descending. The default is false, with the sort order as ascending. Optional.
-     * @returns a boolean
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get isDescending() {
-        return this._isDescending;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the minimumCount property value. The minimum number of items that should be present in the aggregation to be returned in a bucket. Optional.
-     * @returns a integer
+     * Instantiates a new bucketAggregationDefinition and sets the default values.
      */
-    public get minimumCount() {
-        return this._minimumCount;
-    };
-    /**
-     * Gets the prefixFilter property value. A filter to define a matching criteria. The key should start with the specified prefix to be returned in the response. Optional.
-     * @returns a string
-     */
-    public get prefixFilter() {
-        return this._prefixFilter;
-    };
-    /**
-     * Gets the ranges property value. Specifies the manual ranges to compute the aggregations. This is only valid for non-string refiners of date or numeric type. Optional.
-     * @returns a bucketAggregationRange
-     */
-    public get ranges() {
-        return this._ranges;
-    };
-    /**
-     * Gets the sortBy property value. The possible values are count to sort by the number of matches in the aggregation, keyAsStringto sort alphabeticaly based on the key in the aggregation, keyAsNumber for numerical sorting based on the key in the aggregation. Required.
-     * @returns a bucketAggregationSortProperty
-     */
-    public get sortBy() {
-        return this._sortBy;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -71,9 +45,65 @@ export class BucketAggregationDefinition implements Parsable {
             ["isDescending", (o, n) => { (o as unknown as BucketAggregationDefinition).isDescending = n.getBooleanValue(); }],
             ["minimumCount", (o, n) => { (o as unknown as BucketAggregationDefinition).minimumCount = n.getNumberValue(); }],
             ["prefixFilter", (o, n) => { (o as unknown as BucketAggregationDefinition).prefixFilter = n.getStringValue(); }],
-            ["ranges", (o, n) => { (o as unknown as BucketAggregationDefinition).ranges = n.getCollectionOfObjectValues<BucketAggregationRange>(BucketAggregationRange); }],
+            ["ranges", (o, n) => { (o as unknown as BucketAggregationDefinition).ranges = n.getCollectionOfObjectValues<BucketAggregationRange>(createBucketAggregationRangeFromDiscriminatorValue); }],
             ["sortBy", (o, n) => { (o as unknown as BucketAggregationDefinition).sortBy = n.getEnumValue<BucketAggregationSortProperty>(BucketAggregationSortProperty); }],
         ]);
+    };
+    /**
+     * Gets the isDescending property value. True to specify the sort order as descending. The default is false, with the sort order as ascending. Optional.
+     * @returns a boolean
+     */
+    public get isDescending() {
+        return this._isDescending;
+    };
+    /**
+     * Sets the isDescending property value. True to specify the sort order as descending. The default is false, with the sort order as ascending. Optional.
+     * @param value Value to set for the isDescending property.
+     */
+    public set isDescending(value: boolean | undefined) {
+        this._isDescending = value;
+    };
+    /**
+     * Gets the minimumCount property value. The minimum number of items that should be present in the aggregation to be returned in a bucket. Optional.
+     * @returns a integer
+     */
+    public get minimumCount() {
+        return this._minimumCount;
+    };
+    /**
+     * Sets the minimumCount property value. The minimum number of items that should be present in the aggregation to be returned in a bucket. Optional.
+     * @param value Value to set for the minimumCount property.
+     */
+    public set minimumCount(value: number | undefined) {
+        this._minimumCount = value;
+    };
+    /**
+     * Gets the prefixFilter property value. A filter to define a matching criteria. The key should start with the specified prefix to be returned in the response. Optional.
+     * @returns a string
+     */
+    public get prefixFilter() {
+        return this._prefixFilter;
+    };
+    /**
+     * Sets the prefixFilter property value. A filter to define a matching criteria. The key should start with the specified prefix to be returned in the response. Optional.
+     * @param value Value to set for the prefixFilter property.
+     */
+    public set prefixFilter(value: string | undefined) {
+        this._prefixFilter = value;
+    };
+    /**
+     * Gets the ranges property value. Specifies the manual ranges to compute the aggregations. This is only valid for non-string refiners of date or numeric type. Optional.
+     * @returns a bucketAggregationRange
+     */
+    public get ranges() {
+        return this._ranges;
+    };
+    /**
+     * Sets the ranges property value. Specifies the manual ranges to compute the aggregations. This is only valid for non-string refiners of date or numeric type. Optional.
+     * @param value Value to set for the ranges property.
+     */
+    public set ranges(value: BucketAggregationRange[] | undefined) {
+        this._ranges = value;
     };
     /**
      * Serializes information the current object
@@ -89,39 +119,11 @@ export class BucketAggregationDefinition implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the sortBy property value. The possible values are count to sort by the number of matches in the aggregation, keyAsStringto sort alphabeticaly based on the key in the aggregation, keyAsNumber for numerical sorting based on the key in the aggregation. Required.
+     * @returns a bucketAggregationSortProperty
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the isDescending property value. True to specify the sort order as descending. The default is false, with the sort order as ascending. Optional.
-     * @param value Value to set for the isDescending property.
-     */
-    public set isDescending(value: boolean | undefined) {
-        this._isDescending = value;
-    };
-    /**
-     * Sets the minimumCount property value. The minimum number of items that should be present in the aggregation to be returned in a bucket. Optional.
-     * @param value Value to set for the minimumCount property.
-     */
-    public set minimumCount(value: number | undefined) {
-        this._minimumCount = value;
-    };
-    /**
-     * Sets the prefixFilter property value. A filter to define a matching criteria. The key should start with the specified prefix to be returned in the response. Optional.
-     * @param value Value to set for the prefixFilter property.
-     */
-    public set prefixFilter(value: string | undefined) {
-        this._prefixFilter = value;
-    };
-    /**
-     * Sets the ranges property value. Specifies the manual ranges to compute the aggregations. This is only valid for non-string refiners of date or numeric type. Optional.
-     * @param value Value to set for the ranges property.
-     */
-    public set ranges(value: BucketAggregationRange[] | undefined) {
-        this._ranges = value;
+    public get sortBy() {
+        return this._sortBy;
     };
     /**
      * Sets the sortBy property value. The possible values are count to sort by the number of matches in the aggregation, keyAsStringto sort alphabeticaly based on the key in the aggregation, keyAsNumber for numerical sorting based on the key in the aggregation. Required.

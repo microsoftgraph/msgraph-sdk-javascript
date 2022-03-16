@@ -1,8 +1,11 @@
 import {PrintTaskTrigger} from '../../../../../models/microsoft/graph/';
-import {DefinitionRequestBuilder} from './definition/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPrintTaskTriggerFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createPrintTaskTriggerFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DefinitionRequestBuilder} from './definition/definitionRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /print/printers/{printer-id}/taskTriggers/{printTaskTrigger-id}  */
+/** Provides operations to manage the taskTriggers property of the microsoft.graph.printer entity.  */
 export class PrintTaskTriggerItemRequestBuilder {
     public get definition(): DefinitionRequestBuilder {
         return new DefinitionRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class PrintTaskTriggerItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A list of task triggers that are associated with the printer.
+     * Delete navigation property taskTriggers for print
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class PrintTaskTriggerItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of task triggers that are associated with the printer.
+     * Update the navigation property taskTriggers in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class PrintTaskTriggerItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A list of task triggers that are associated with the printer.
+     * Delete navigation property taskTriggers for print
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class PrintTaskTriggerItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A list of task triggers that are associated with the printer.
@@ -106,10 +113,14 @@ export class PrintTaskTriggerItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PrintTaskTrigger>(requestInfo, PrintTaskTrigger, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PrintTaskTrigger>(requestInfo, createPrintTaskTriggerFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * A list of task triggers that are associated with the printer.
+     * Update the navigation property taskTriggers in print
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class PrintTaskTriggerItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

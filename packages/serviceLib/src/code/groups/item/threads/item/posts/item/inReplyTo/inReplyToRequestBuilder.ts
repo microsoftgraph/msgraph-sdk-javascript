@@ -1,12 +1,32 @@
 import {Post} from '../../../../../../../models/microsoft/graph/';
-import {ForwardRequestBuilder} from './forward/';
-import {ReplyRequestBuilder} from './reply/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPostFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/createPostFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AttachmentsRequestBuilder} from './attachments/attachmentsRequestBuilder';
+import {AttachmentItemRequestBuilder} from './attachments/item/attachmentItemRequestBuilder';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {ForwardRequestBuilder} from './forward/forwardRequestBuilder';
+import {MultiValueLegacyExtendedPropertyItemRequestBuilder} from './multiValueExtendedProperties/item/multiValueLegacyExtendedPropertyItemRequestBuilder';
+import {MultiValueExtendedPropertiesRequestBuilder} from './multiValueExtendedProperties/multiValueExtendedPropertiesRequestBuilder';
+import {ReplyRequestBuilder} from './reply/replyRequestBuilder';
+import {SingleValueLegacyExtendedPropertyItemRequestBuilder} from './singleValueExtendedProperties/item/singleValueLegacyExtendedPropertyItemRequestBuilder';
+import {SingleValueExtendedPropertiesRequestBuilder} from './singleValueExtendedProperties/singleValueExtendedPropertiesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/threads/{conversationThread-id}/posts/{post-id}/inReplyTo  */
+/** Provides operations to manage the inReplyTo property of the microsoft.graph.post entity.  */
 export class InReplyToRequestBuilder {
+    public get attachments(): AttachmentsRequestBuilder {
+        return new AttachmentsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get extensions(): ExtensionsRequestBuilder {
+        return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     public get forward(): ForwardRequestBuilder {
         return new ForwardRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get multiValueExtendedProperties(): MultiValueExtendedPropertiesRequestBuilder {
+        return new MultiValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -15,8 +35,22 @@ export class InReplyToRequestBuilder {
     }
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get singleValueExtendedProperties(): SingleValueExtendedPropertiesRequestBuilder {
+        return new SingleValueExtendedPropertiesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.threads.item.posts.item.inReplyTo.attachments.item collection
+     * @param id Unique identifier of the item
+     * @returns a attachmentItemRequestBuilder
+     */
+    public attachmentsById(id: string) : AttachmentItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["attachment_id"] = id
+        return new AttachmentItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
     /**
      * Instantiates a new InReplyToRequestBuilder and sets the default values.
      * @param pathParameters The raw url or the Url template parameters for the request.
@@ -31,7 +65,7 @@ export class InReplyToRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Read-only. Supports $expand.
+     * Delete navigation property inReplyTo for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +100,7 @@ export class InReplyToRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Supports $expand.
+     * Update the navigation property inReplyTo in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +118,7 @@ export class InReplyToRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Supports $expand.
+     * Delete navigation property inReplyTo for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +127,22 @@ export class InReplyToRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.threads.item.posts.item.inReplyTo.extensions.item collection
+     * @param id Unique identifier of the item
+     * @returns a extensionItemRequestBuilder
+     */
+    public extensionsById(id: string) : ExtensionItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["extension_id"] = id
+        return new ExtensionItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Read-only. Supports $expand.
@@ -110,10 +159,25 @@ export class InReplyToRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Post>(requestInfo, Post, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Post>(requestInfo, createPostFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Read-only. Supports $expand.
+     * Gets an item from the MicrosoftGraph.groups.item.threads.item.posts.item.inReplyTo.multiValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a multiValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public multiValueExtendedPropertiesById(id: string) : MultiValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["multiValueLegacyExtendedProperty_id"] = id
+        return new MultiValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property inReplyTo in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +188,21 @@ export class InReplyToRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.groups.item.threads.item.posts.item.inReplyTo.singleValueExtendedProperties.item collection
+     * @param id Unique identifier of the item
+     * @returns a singleValueLegacyExtendedPropertyItemRequestBuilder
+     */
+    public singleValueExtendedPropertiesById(id: string) : SingleValueLegacyExtendedPropertyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["singleValueLegacyExtendedProperty_id"] = id
+        return new SingleValueLegacyExtendedPropertyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
 }

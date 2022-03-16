@@ -1,9 +1,12 @@
 import {DriveItemVersion} from '../../../../models/microsoft/graph/';
-import {ContentRequestBuilder} from './content/';
-import {RestoreVersionRequestBuilder} from './restoreVersion/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createDriveItemVersionFromDiscriminatorValue} from '../../../../models/microsoft/graph/createDriveItemVersionFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ContentRequestBuilder} from './content/contentRequestBuilder';
+import {RestoreVersionRequestBuilder} from './restoreVersion/restoreVersionRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /workbooks/{driveItem-id}/versions/{driveItemVersion-id}  */
+/** Provides operations to manage the versions property of the microsoft.graph.driveItem entity.  */
 export class DriveItemVersionItemRequestBuilder {
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -31,7 +34,7 @@ export class DriveItemVersionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
+     * Delete navigation property versions for workbooks
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -66,7 +69,7 @@ export class DriveItemVersionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
+     * Update the navigation property versions in workbooks
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -84,7 +87,7 @@ export class DriveItemVersionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
+     * Delete navigation property versions for workbooks
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -93,7 +96,11 @@ export class DriveItemVersionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
@@ -110,10 +117,14 @@ export class DriveItemVersionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<DriveItemVersion>(requestInfo, DriveItemVersion, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<DriveItemVersion>(requestInfo, createDriveItemVersionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The list of previous versions of the item. For more info, see [getting previous versions][]. Read-only. Nullable.
+     * Update the navigation property versions in workbooks
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +135,10 @@ export class DriveItemVersionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ContentTypeOrder implements Parsable {
+export class ContentTypeOrder implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Whether this is the default Content Type  */
@@ -8,17 +8,24 @@ export class ContentTypeOrder implements Parsable {
     /** Specifies the position in which the Content Type appears in the selection UI.  */
     private _position?: number | undefined;
     /**
-     * Instantiates a new contentTypeOrder and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new contentTypeOrder and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * Gets the default property value. Whether this is the default Content Type
@@ -28,11 +35,11 @@ export class ContentTypeOrder implements Parsable {
         return this._default_escaped;
     };
     /**
-     * Gets the position property value. Specifies the position in which the Content Type appears in the selection UI.
-     * @returns a integer
+     * Sets the default property value. Whether this is the default Content Type
+     * @param value Value to set for the default_escaped property.
      */
-    public get position() {
-        return this._position;
+    public set default_escaped(value: boolean | undefined) {
+        this._default_escaped = value;
     };
     /**
      * The deserialization information for the current model
@@ -45,6 +52,20 @@ export class ContentTypeOrder implements Parsable {
         ]);
     };
     /**
+     * Gets the position property value. Specifies the position in which the Content Type appears in the selection UI.
+     * @returns a integer
+     */
+    public get position() {
+        return this._position;
+    };
+    /**
+     * Sets the position property value. Specifies the position in which the Content Type appears in the selection UI.
+     * @param value Value to set for the position property.
+     */
+    public set position(value: number | undefined) {
+        this._position = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -53,26 +74,5 @@ export class ContentTypeOrder implements Parsable {
         writer.writeBooleanValue("default", this.default_escaped);
         writer.writeNumberValue("position", this.position);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the default property value. Whether this is the default Content Type
-     * @param value Value to set for the default_escaped property.
-     */
-    public set default_escaped(value: boolean | undefined) {
-        this._default_escaped = value;
-    };
-    /**
-     * Sets the position property value. Specifies the position in which the Content Type appears in the selection UI.
-     * @param value Value to set for the position property.
-     */
-    public set position(value: number | undefined) {
-        this._position = value;
     };
 }

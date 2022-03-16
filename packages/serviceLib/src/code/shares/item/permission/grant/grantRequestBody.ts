@@ -1,11 +1,27 @@
 import {DriveRecipient} from '../../../../models/microsoft/graph/';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {createDriveRecipientFromDiscriminatorValue} from '../../../../models/microsoft/graph/createDriveRecipientFromDiscriminatorValue';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class GrantRequestBody implements Parsable {
+/** Provides operations to call the grant method.  */
+export class GrantRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _recipients?: DriveRecipient[] | undefined;
     private _roles?: string[] | undefined;
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
     /**
      * Instantiates a new grantRequestBody and sets the default values.
      */
@@ -13,11 +29,14 @@ export class GrantRequestBody implements Parsable {
         this._additionalData = new Map<string, unknown>();
     };
     /**
-     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @returns a Map<string, unknown>
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
-    public get additionalData() {
-        return this._additionalData;
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["recipients", (o, n) => { (o as unknown as GrantRequestBody).recipients = n.getCollectionOfObjectValues<DriveRecipient>(createDriveRecipientFromDiscriminatorValue); }],
+            ["roles", (o, n) => { (o as unknown as GrantRequestBody).roles = n.getCollectionOfPrimitiveValues<string>(); }],
+        ]);
     };
     /**
      * Gets the recipients property value. 
@@ -27,6 +46,13 @@ export class GrantRequestBody implements Parsable {
         return this._recipients;
     };
     /**
+     * Sets the recipients property value. 
+     * @param value Value to set for the recipients property.
+     */
+    public set recipients(value: DriveRecipient[] | undefined) {
+        this._recipients = value;
+    };
+    /**
      * Gets the roles property value. 
      * @returns a string
      */
@@ -34,14 +60,11 @@ export class GrantRequestBody implements Parsable {
         return this._roles;
     };
     /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     * Sets the roles property value. 
+     * @param value Value to set for the roles property.
      */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([
-            ["recipients", (o, n) => { (o as unknown as GrantRequestBody).recipients = n.getCollectionOfObjectValues<DriveRecipient>(DriveRecipient); }],
-            ["roles", (o, n) => { (o as unknown as GrantRequestBody).roles = n.getCollectionOfPrimitiveValues<string>(); }],
-        ]);
+    public set roles(value: string[] | undefined) {
+        this._roles = value;
     };
     /**
      * Serializes information the current object
@@ -52,26 +75,5 @@ export class GrantRequestBody implements Parsable {
         writer.writeCollectionOfObjectValues<DriveRecipient>("recipients", this.recipients);
         writer.writeCollectionOfPrimitiveValues<string>("roles", this.roles);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the recipients property value. 
-     * @param value Value to set for the recipients property.
-     */
-    public set recipients(value: DriveRecipient[] | undefined) {
-        this._recipients = value;
-    };
-    /**
-     * Sets the roles property value. 
-     * @param value Value to set for the roles property.
-     */
-    public set roles(value: string[] | undefined) {
-        this._roles = value;
     };
 }

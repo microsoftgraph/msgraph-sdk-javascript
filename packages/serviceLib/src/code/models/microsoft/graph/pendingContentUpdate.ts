@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PendingContentUpdate implements Parsable {
+export class PendingContentUpdate implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Date and time the pending binary operation was queued in UTC time. Read-only.  */
     private _queuedDateTime?: Date | undefined;
-    /**
-     * Instantiates a new pendingContentUpdate and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,17 @@ export class PendingContentUpdate implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the queuedDateTime property value. Date and time the pending binary operation was queued in UTC time. Read-only.
-     * @returns a Date
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get queuedDateTime() {
-        return this._queuedDateTime;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new pendingContentUpdate and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -35,20 +35,11 @@ export class PendingContentUpdate implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the queuedDateTime property value. Date and time the pending binary operation was queued in UTC time. Read-only.
+     * @returns a Date
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeDateValue("queuedDateTime", this.queuedDateTime);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get queuedDateTime() {
+        return this._queuedDateTime;
     };
     /**
      * Sets the queuedDateTime property value. Date and time the pending binary operation was queued in UTC time. Read-only.
@@ -56,5 +47,14 @@ export class PendingContentUpdate implements Parsable {
      */
     public set queuedDateTime(value: Date | undefined) {
         this._queuedDateTime = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeDateValue("queuedDateTime", this.queuedDateTime);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

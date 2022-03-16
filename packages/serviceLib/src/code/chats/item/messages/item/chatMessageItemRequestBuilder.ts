@@ -1,11 +1,14 @@
 import {ChatMessage} from '../../../../models/microsoft/graph/';
-import {HostedContentsRequestBuilder} from './hostedContents/';
-import {ChatMessageHostedContentItemRequestBuilder} from './hostedContents/item/';
-import {RepliesRequestBuilder} from './replies/';
-import {ChatMessageItemRequestBuilder as i159aae6b4339ad4566b3d3441c02b1c30accb160227acf0783088660d4fb018e} from './replies/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createChatMessageFromDiscriminatorValue} from '../../../../models/microsoft/graph/createChatMessageFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {HostedContentsRequestBuilder} from './hostedContents/hostedContentsRequestBuilder';
+import {ChatMessageHostedContentItemRequestBuilder} from './hostedContents/item/chatMessageHostedContentItemRequestBuilder';
+import {ChatMessageItemRequestBuilder as i159aae6b4339ad4566b3d3441c02b1c30accb160227acf0783088660d4fb018e} from './replies/item/chatMessageItemRequestBuilder';
+import {RepliesRequestBuilder} from './replies/repliesRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /chats/{chat-id}/messages/{chatMessage-id}  */
+/** Provides operations to manage the messages property of the microsoft.graph.chat entity.  */
 export class ChatMessageItemRequestBuilder {
     public get hostedContents(): HostedContentsRequestBuilder {
         return new HostedContentsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class ChatMessageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * A collection of all the messages in the chat. Nullable.
+     * Delete navigation property messages for chats
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class ChatMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the messages in the chat. Nullable.
+     * Update the navigation property messages in chats
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class ChatMessageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * A collection of all the messages in the chat. Nullable.
+     * Delete navigation property messages for chats
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * A collection of all the messages in the chat. Nullable.
@@ -112,7 +119,11 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ChatMessage>(requestInfo, ChatMessage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ChatMessage>(requestInfo, createChatMessageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.chats.item.messages.item.hostedContents.item collection
@@ -126,7 +137,7 @@ export class ChatMessageItemRequestBuilder {
         return new ChatMessageHostedContentItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
-     * A collection of all the messages in the chat. Nullable.
+     * Update the navigation property messages in chats
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -137,7 +148,11 @@ export class ChatMessageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.chats.item.messages.item.replies.item collection

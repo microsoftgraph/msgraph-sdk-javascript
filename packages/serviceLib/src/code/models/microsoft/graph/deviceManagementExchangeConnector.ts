@@ -1,4 +1,6 @@
-import {DeviceManagementExchangeConnectorStatus, DeviceManagementExchangeConnectorType, Entity} from './index';
+import {DeviceManagementExchangeConnectorStatus} from './deviceManagementExchangeConnectorStatus';
+import {DeviceManagementExchangeConnectorType} from './deviceManagementExchangeConnectorType';
+import {Entity} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class DeviceManagementExchangeConnector extends Entity implements Parsable {
@@ -21,17 +23,24 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
     /** The version of the ExchangeConnectorAgent  */
     private _version?: string | undefined;
     /**
-     * Instantiates a new deviceManagementExchangeConnector and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the connectorServerName property value. The name of the server hosting the Exchange Connector.
      * @returns a string
      */
     public get connectorServerName() {
         return this._connectorServerName;
+    };
+    /**
+     * Sets the connectorServerName property value. The name of the server hosting the Exchange Connector.
+     * @param value Value to set for the connectorServerName property.
+     */
+    public set connectorServerName(value: string | undefined) {
+        this._connectorServerName = value;
+    };
+    /**
+     * Instantiates a new deviceManagementExchangeConnector and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the exchangeAlias property value. An alias assigned to the Exchange server
@@ -41,11 +50,25 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
         return this._exchangeAlias;
     };
     /**
+     * Sets the exchangeAlias property value. An alias assigned to the Exchange server
+     * @param value Value to set for the exchangeAlias property.
+     */
+    public set exchangeAlias(value: string | undefined) {
+        this._exchangeAlias = value;
+    };
+    /**
      * Gets the exchangeConnectorType property value. The type of Exchange Connector Configured. Possible values are: onPremises, hosted, serviceToService, dedicated.
      * @returns a deviceManagementExchangeConnectorType
      */
     public get exchangeConnectorType() {
         return this._exchangeConnectorType;
+    };
+    /**
+     * Sets the exchangeConnectorType property value. The type of Exchange Connector Configured. Possible values are: onPremises, hosted, serviceToService, dedicated.
+     * @param value Value to set for the exchangeConnectorType property.
+     */
+    public set exchangeConnectorType(value: DeviceManagementExchangeConnectorType | undefined) {
+        this._exchangeConnectorType = value;
     };
     /**
      * Gets the exchangeOrganization property value. Exchange Organization to the Exchange server
@@ -55,39 +78,11 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
         return this._exchangeOrganization;
     };
     /**
-     * Gets the lastSyncDateTime property value. Last sync time for the Exchange Connector
-     * @returns a Date
+     * Sets the exchangeOrganization property value. Exchange Organization to the Exchange server
+     * @param value Value to set for the exchangeOrganization property.
      */
-    public get lastSyncDateTime() {
-        return this._lastSyncDateTime;
-    };
-    /**
-     * Gets the primarySmtpAddress property value. Email address used to configure the Service To Service Exchange Connector.
-     * @returns a string
-     */
-    public get primarySmtpAddress() {
-        return this._primarySmtpAddress;
-    };
-    /**
-     * Gets the serverName property value. The name of the Exchange server.
-     * @returns a string
-     */
-    public get serverName() {
-        return this._serverName;
-    };
-    /**
-     * Gets the status property value. Exchange Connector Status. Possible values are: none, connectionPending, connected, disconnected.
-     * @returns a deviceManagementExchangeConnectorStatus
-     */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * Gets the version property value. The version of the ExchangeConnectorAgent
-     * @returns a string
-     */
-    public get version() {
-        return this._version;
+    public set exchangeOrganization(value: string | undefined) {
+        this._exchangeOrganization = value;
     };
     /**
      * The deserialization information for the current model
@@ -107,6 +102,34 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
         ]);
     };
     /**
+     * Gets the lastSyncDateTime property value. Last sync time for the Exchange Connector
+     * @returns a Date
+     */
+    public get lastSyncDateTime() {
+        return this._lastSyncDateTime;
+    };
+    /**
+     * Sets the lastSyncDateTime property value. Last sync time for the Exchange Connector
+     * @param value Value to set for the lastSyncDateTime property.
+     */
+    public set lastSyncDateTime(value: Date | undefined) {
+        this._lastSyncDateTime = value;
+    };
+    /**
+     * Gets the primarySmtpAddress property value. Email address used to configure the Service To Service Exchange Connector.
+     * @returns a string
+     */
+    public get primarySmtpAddress() {
+        return this._primarySmtpAddress;
+    };
+    /**
+     * Sets the primarySmtpAddress property value. Email address used to configure the Service To Service Exchange Connector.
+     * @param value Value to set for the primarySmtpAddress property.
+     */
+    public set primarySmtpAddress(value: string | undefined) {
+        this._primarySmtpAddress = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -124,46 +147,11 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
         writer.writeStringValue("version", this.version);
     };
     /**
-     * Sets the connectorServerName property value. The name of the server hosting the Exchange Connector.
-     * @param value Value to set for the connectorServerName property.
+     * Gets the serverName property value. The name of the Exchange server.
+     * @returns a string
      */
-    public set connectorServerName(value: string | undefined) {
-        this._connectorServerName = value;
-    };
-    /**
-     * Sets the exchangeAlias property value. An alias assigned to the Exchange server
-     * @param value Value to set for the exchangeAlias property.
-     */
-    public set exchangeAlias(value: string | undefined) {
-        this._exchangeAlias = value;
-    };
-    /**
-     * Sets the exchangeConnectorType property value. The type of Exchange Connector Configured. Possible values are: onPremises, hosted, serviceToService, dedicated.
-     * @param value Value to set for the exchangeConnectorType property.
-     */
-    public set exchangeConnectorType(value: DeviceManagementExchangeConnectorType | undefined) {
-        this._exchangeConnectorType = value;
-    };
-    /**
-     * Sets the exchangeOrganization property value. Exchange Organization to the Exchange server
-     * @param value Value to set for the exchangeOrganization property.
-     */
-    public set exchangeOrganization(value: string | undefined) {
-        this._exchangeOrganization = value;
-    };
-    /**
-     * Sets the lastSyncDateTime property value. Last sync time for the Exchange Connector
-     * @param value Value to set for the lastSyncDateTime property.
-     */
-    public set lastSyncDateTime(value: Date | undefined) {
-        this._lastSyncDateTime = value;
-    };
-    /**
-     * Sets the primarySmtpAddress property value. Email address used to configure the Service To Service Exchange Connector.
-     * @param value Value to set for the primarySmtpAddress property.
-     */
-    public set primarySmtpAddress(value: string | undefined) {
-        this._primarySmtpAddress = value;
+    public get serverName() {
+        return this._serverName;
     };
     /**
      * Sets the serverName property value. The name of the Exchange server.
@@ -173,11 +161,25 @@ export class DeviceManagementExchangeConnector extends Entity implements Parsabl
         this._serverName = value;
     };
     /**
+     * Gets the status property value. Exchange Connector Status. Possible values are: none, connectionPending, connected, disconnected.
+     * @returns a deviceManagementExchangeConnectorStatus
+     */
+    public get status() {
+        return this._status;
+    };
+    /**
      * Sets the status property value. Exchange Connector Status. Possible values are: none, connectionPending, connected, disconnected.
      * @param value Value to set for the status property.
      */
     public set status(value: DeviceManagementExchangeConnectorStatus | undefined) {
         this._status = value;
+    };
+    /**
+     * Gets the version property value. The version of the ExchangeConnectorAgent
+     * @returns a string
+     */
+    public get version() {
+        return this._version;
     };
     /**
      * Sets the version property value. The version of the ExchangeConnectorAgent

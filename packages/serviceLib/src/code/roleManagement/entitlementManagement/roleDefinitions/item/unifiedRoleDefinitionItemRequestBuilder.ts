@@ -1,9 +1,12 @@
 import {UnifiedRoleDefinition} from '../../../../models/microsoft/graph/';
-import {InheritsPermissionsFromRequestBuilder} from './inheritsPermissionsFrom/';
-import {UnifiedRoleDefinitionItemRequestBuilder as i75e992201509e21cd0fd18926ba467ef74f7a3ce615aa9aa4c6f51aba00890b7} from './inheritsPermissionsFrom/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUnifiedRoleDefinitionFromDiscriminatorValue} from '../../../../models/microsoft/graph/createUnifiedRoleDefinitionFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {InheritsPermissionsFromRequestBuilder} from './inheritsPermissionsFrom/inheritsPermissionsFromRequestBuilder';
+import {UnifiedRoleDefinitionItemRequestBuilder as i75e992201509e21cd0fd18926ba467ef74f7a3ce615aa9aa4c6f51aba00890b7} from './inheritsPermissionsFrom/item/unifiedRoleDefinitionItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /roleManagement/entitlementManagement/roleDefinitions/{unifiedRoleDefinition-id}  */
+/** Provides operations to manage the roleDefinitions property of the microsoft.graph.rbacApplication entity.  */
 export class UnifiedRoleDefinitionItemRequestBuilder {
     public get inheritsPermissionsFrom(): InheritsPermissionsFromRequestBuilder {
         return new InheritsPermissionsFromRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -28,7 +31,7 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Delete navigation property roleDefinitions for roleManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -63,7 +66,7 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Update the navigation property roleDefinitions in roleManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -81,7 +84,7 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Delete navigation property roleDefinitions for roleManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -90,7 +93,11 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
@@ -107,7 +114,11 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UnifiedRoleDefinition>(requestInfo, UnifiedRoleDefinition, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UnifiedRoleDefinition>(requestInfo, createUnifiedRoleDefinitionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.roleManagement.entitlementManagement.roleDefinitions.item.inheritsPermissionsFrom.item collection
@@ -121,7 +132,7 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         return new i75e992201509e21cd0fd18926ba467ef74f7a3ce615aa9aa4c6f51aba00890b7(urlTplParams, this.requestAdapter);
     };
     /**
-     * Resource representing the roles allowed by RBAC providers and the permissions assigned to the roles.
+     * Update the navigation property roleDefinitions in roleManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class UnifiedRoleDefinitionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

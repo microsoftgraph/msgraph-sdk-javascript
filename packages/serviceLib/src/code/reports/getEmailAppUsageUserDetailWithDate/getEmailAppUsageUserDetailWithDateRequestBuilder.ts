@@ -1,6 +1,8 @@
-import {DateOnly, getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createGetEmailAppUsageUserDetailWithDateResponseFromDiscriminatorValue} from './createGetEmailAppUsageUserDetailWithDateResponseFromDiscriminatorValue';
+import {GetEmailAppUsageUserDetailWithDateResponse} from './index';
+import {DateOnly, getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /reports/microsoft.graph.getEmailAppUsageUserDetail(date={date})  */
+/** Provides operations to call the getEmailAppUsageUserDetail method.  */
 export class GetEmailAppUsageUserDetailWithDateRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -43,12 +45,12 @@ export class GetEmailAppUsageUserDetailWithDateRequestBuilder {
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
-     * @returns a Promise of ArrayBuffer
+     * @returns a Promise of GetEmailAppUsageUserDetailWithDateResponse
      */
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<ArrayBuffer | undefined> {
+    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<GetEmailAppUsageUserDetailWithDateResponse | undefined> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        return this.requestAdapter?.sendAsync<GetEmailAppUsageUserDetailWithDateResponse>(requestInfo, createGetEmailAppUsageUserDetailWithDateResponseFromDiscriminatorValue, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
     };
 }

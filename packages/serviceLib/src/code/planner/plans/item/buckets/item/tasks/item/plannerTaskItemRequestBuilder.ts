@@ -1,11 +1,14 @@
 import {PlannerTask} from '../../../../../../../models/microsoft/graph/';
-import {AssignedToTaskBoardFormatRequestBuilder} from './assignedToTaskBoardFormat/';
-import {BucketTaskBoardFormatRequestBuilder} from './bucketTaskBoardFormat/';
-import {DetailsRequestBuilder} from './details/';
-import {ProgressTaskBoardFormatRequestBuilder} from './progressTaskBoardFormat/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createPlannerTaskFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/createPlannerTaskFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AssignedToTaskBoardFormatRequestBuilder} from './assignedToTaskBoardFormat/assignedToTaskBoardFormatRequestBuilder';
+import {BucketTaskBoardFormatRequestBuilder} from './bucketTaskBoardFormat/bucketTaskBoardFormatRequestBuilder';
+import {DetailsRequestBuilder} from './details/detailsRequestBuilder';
+import {ProgressTaskBoardFormatRequestBuilder} from './progressTaskBoardFormat/progressTaskBoardFormatRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /planner/plans/{plannerPlan-id}/buckets/{plannerBucket-id}/tasks/{plannerTask-id}  */
+/** Provides operations to manage the tasks property of the microsoft.graph.plannerBucket entity.  */
 export class PlannerTaskItemRequestBuilder {
     public get assignedToTaskBoardFormat(): AssignedToTaskBoardFormatRequestBuilder {
         return new AssignedToTaskBoardFormatRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -39,7 +42,7 @@ export class PlannerTaskItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Read-only. Nullable. The collection of tasks in the bucket.
+     * Delete navigation property tasks for planner
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -74,7 +77,7 @@ export class PlannerTaskItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable. The collection of tasks in the bucket.
+     * Update the navigation property tasks in planner
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -92,7 +95,7 @@ export class PlannerTaskItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Read-only. Nullable. The collection of tasks in the bucket.
+     * Delete navigation property tasks for planner
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -101,7 +104,11 @@ export class PlannerTaskItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Read-only. Nullable. The collection of tasks in the bucket.
@@ -118,10 +125,14 @@ export class PlannerTaskItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<PlannerTask>(requestInfo, PlannerTask, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<PlannerTask>(requestInfo, createPlannerTaskFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Read-only. Nullable. The collection of tasks in the bucket.
+     * Update the navigation property tasks in planner
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class PlannerTaskItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

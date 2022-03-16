@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PhysicalOfficeAddress implements Parsable {
+export class PhysicalOfficeAddress implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The city.  */
@@ -16,17 +16,18 @@ export class PhysicalOfficeAddress implements Parsable {
     /** The street.  */
     private _street?: string | undefined;
     /**
-     * Instantiates a new physicalOfficeAddress and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the city property value. The city.
@@ -36,6 +37,19 @@ export class PhysicalOfficeAddress implements Parsable {
         return this._city;
     };
     /**
+     * Sets the city property value. The city.
+     * @param value Value to set for the city property.
+     */
+    public set city(value: string | undefined) {
+        this._city = value;
+    };
+    /**
+     * Instantiates a new physicalOfficeAddress and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the countryOrRegion property value. The country or region. It's a free-format string value, for example, 'United States'.
      * @returns a string
      */
@@ -43,32 +57,11 @@ export class PhysicalOfficeAddress implements Parsable {
         return this._countryOrRegion;
     };
     /**
-     * Gets the officeLocation property value. Office location such as building and office number for an organizational contact.
-     * @returns a string
+     * Sets the countryOrRegion property value. The country or region. It's a free-format string value, for example, 'United States'.
+     * @param value Value to set for the countryOrRegion property.
      */
-    public get officeLocation() {
-        return this._officeLocation;
-    };
-    /**
-     * Gets the postalCode property value. The postal code.
-     * @returns a string
-     */
-    public get postalCode() {
-        return this._postalCode;
-    };
-    /**
-     * Gets the state property value. The state.
-     * @returns a string
-     */
-    public get state() {
-        return this._state;
-    };
-    /**
-     * Gets the street property value. The street.
-     * @returns a string
-     */
-    public get street() {
-        return this._street;
+    public set countryOrRegion(value: string | undefined) {
+        this._countryOrRegion = value;
     };
     /**
      * The deserialization information for the current model
@@ -85,6 +78,34 @@ export class PhysicalOfficeAddress implements Parsable {
         ]);
     };
     /**
+     * Gets the officeLocation property value. Office location such as building and office number for an organizational contact.
+     * @returns a string
+     */
+    public get officeLocation() {
+        return this._officeLocation;
+    };
+    /**
+     * Sets the officeLocation property value. Office location such as building and office number for an organizational contact.
+     * @param value Value to set for the officeLocation property.
+     */
+    public set officeLocation(value: string | undefined) {
+        this._officeLocation = value;
+    };
+    /**
+     * Gets the postalCode property value. The postal code.
+     * @returns a string
+     */
+    public get postalCode() {
+        return this._postalCode;
+    };
+    /**
+     * Sets the postalCode property value. The postal code.
+     * @param value Value to set for the postalCode property.
+     */
+    public set postalCode(value: string | undefined) {
+        this._postalCode = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -99,39 +120,11 @@ export class PhysicalOfficeAddress implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the state property value. The state.
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the city property value. The city.
-     * @param value Value to set for the city property.
-     */
-    public set city(value: string | undefined) {
-        this._city = value;
-    };
-    /**
-     * Sets the countryOrRegion property value. The country or region. It's a free-format string value, for example, 'United States'.
-     * @param value Value to set for the countryOrRegion property.
-     */
-    public set countryOrRegion(value: string | undefined) {
-        this._countryOrRegion = value;
-    };
-    /**
-     * Sets the officeLocation property value. Office location such as building and office number for an organizational contact.
-     * @param value Value to set for the officeLocation property.
-     */
-    public set officeLocation(value: string | undefined) {
-        this._officeLocation = value;
-    };
-    /**
-     * Sets the postalCode property value. The postal code.
-     * @param value Value to set for the postalCode property.
-     */
-    public set postalCode(value: string | undefined) {
-        this._postalCode = value;
+    public get state() {
+        return this._state;
     };
     /**
      * Sets the state property value. The state.
@@ -139,6 +132,13 @@ export class PhysicalOfficeAddress implements Parsable {
      */
     public set state(value: string | undefined) {
         this._state = value;
+    };
+    /**
+     * Gets the street property value. The street.
+     * @returns a string
+     */
+    public get street() {
+        return this._street;
     };
     /**
      * Sets the street property value. The street.

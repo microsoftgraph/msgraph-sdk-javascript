@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class SignInStatus implements Parsable {
+export class SignInStatus implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Provides additional details on the sign-in activity  */
@@ -10,17 +10,18 @@ export class SignInStatus implements Parsable {
     /** Provides the error message or the reason for failure for the corresponding sign-in activity. Check out the list of error codes and messages.  */
     private _failureReason?: string | undefined;
     /**
-     * Instantiates a new signInStatus and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the additionalDetails property value. Provides additional details on the sign-in activity
@@ -30,6 +31,19 @@ export class SignInStatus implements Parsable {
         return this._additionalDetails;
     };
     /**
+     * Sets the additionalDetails property value. Provides additional details on the sign-in activity
+     * @param value Value to set for the additionalDetails property.
+     */
+    public set additionalDetails(value: string | undefined) {
+        this._additionalDetails = value;
+    };
+    /**
+     * Instantiates a new signInStatus and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the errorCode property value. Provides the 5-6 digit error code that's generated during a sign-in failure. Check out the list of error codes and messages.
      * @returns a integer
      */
@@ -37,11 +51,25 @@ export class SignInStatus implements Parsable {
         return this._errorCode;
     };
     /**
+     * Sets the errorCode property value. Provides the 5-6 digit error code that's generated during a sign-in failure. Check out the list of error codes and messages.
+     * @param value Value to set for the errorCode property.
+     */
+    public set errorCode(value: number | undefined) {
+        this._errorCode = value;
+    };
+    /**
      * Gets the failureReason property value. Provides the error message or the reason for failure for the corresponding sign-in activity. Check out the list of error codes and messages.
      * @returns a string
      */
     public get failureReason() {
         return this._failureReason;
+    };
+    /**
+     * Sets the failureReason property value. Provides the error message or the reason for failure for the corresponding sign-in activity. Check out the list of error codes and messages.
+     * @param value Value to set for the failureReason property.
+     */
+    public set failureReason(value: string | undefined) {
+        this._failureReason = value;
     };
     /**
      * The deserialization information for the current model
@@ -64,33 +92,5 @@ export class SignInStatus implements Parsable {
         writer.writeNumberValue("errorCode", this.errorCode);
         writer.writeStringValue("failureReason", this.failureReason);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the additionalDetails property value. Provides additional details on the sign-in activity
-     * @param value Value to set for the additionalDetails property.
-     */
-    public set additionalDetails(value: string | undefined) {
-        this._additionalDetails = value;
-    };
-    /**
-     * Sets the errorCode property value. Provides the 5-6 digit error code that's generated during a sign-in failure. Check out the list of error codes and messages.
-     * @param value Value to set for the errorCode property.
-     */
-    public set errorCode(value: number | undefined) {
-        this._errorCode = value;
-    };
-    /**
-     * Sets the failureReason property value. Provides the error message or the reason for failure for the corresponding sign-in activity. Check out the list of error codes and messages.
-     * @param value Value to set for the failureReason property.
-     */
-    public set failureReason(value: string | undefined) {
-        this._failureReason = value;
     };
 }

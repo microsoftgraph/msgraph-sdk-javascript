@@ -1,12 +1,16 @@
 import {AdministrativeUnit} from '../../../models/microsoft/graph/';
-import {ExtensionsRequestBuilder} from './extensions/';
-import {ExtensionItemRequestBuilder} from './extensions/item/';
-import {MembersRequestBuilder} from './members/';
-import {ScopedRoleMembersRequestBuilder} from './scopedRoleMembers/';
-import {ScopedRoleMembershipItemRequestBuilder} from './scopedRoleMembers/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createAdministrativeUnitFromDiscriminatorValue} from '../../../models/microsoft/graph/createAdministrativeUnitFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ExtensionsRequestBuilder} from './extensions/extensionsRequestBuilder';
+import {ExtensionItemRequestBuilder} from './extensions/item/extensionItemRequestBuilder';
+import {DirectoryObjectItemRequestBuilder} from './members/item/directoryObjectItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {ScopedRoleMembershipItemRequestBuilder} from './scopedRoleMembers/item/scopedRoleMembershipItemRequestBuilder';
+import {ScopedRoleMembersRequestBuilder} from './scopedRoleMembers/scopedRoleMembersRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /directory/administrativeUnits/{administrativeUnit-id}  */
+/** Provides operations to manage the administrativeUnits property of the microsoft.graph.directory entity.  */
 export class AdministrativeUnitItemRequestBuilder {
     public get extensions(): ExtensionsRequestBuilder {
         return new ExtensionsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -37,7 +41,7 @@ export class AdministrativeUnitItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Conceptual container for user and group directory objects.
+     * Delete navigation property administrativeUnits for directory
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -72,7 +76,7 @@ export class AdministrativeUnitItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Conceptual container for user and group directory objects.
+     * Update the navigation property administrativeUnits in directory
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -90,7 +94,7 @@ export class AdministrativeUnitItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Conceptual container for user and group directory objects.
+     * Delete navigation property administrativeUnits for directory
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -99,7 +103,11 @@ export class AdministrativeUnitItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.directory.administrativeUnits.item.extensions.item collection
@@ -127,10 +135,25 @@ export class AdministrativeUnitItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<AdministrativeUnit>(requestInfo, AdministrativeUnit, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<AdministrativeUnit>(requestInfo, createAdministrativeUnitFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Conceptual container for user and group directory objects.
+     * Gets an item from the MicrosoftGraph.directory.administrativeUnits.item.members.item collection
+     * @param id Unique identifier of the item
+     * @returns a directoryObjectItemRequestBuilder
+     */
+    public membersById(id: string) : DirectoryObjectItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["directoryObject_id"] = id
+        return new DirectoryObjectItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Update the navigation property administrativeUnits in directory
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -141,7 +164,11 @@ export class AdministrativeUnitItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.directory.administrativeUnits.item.scopedRoleMembers.item collection

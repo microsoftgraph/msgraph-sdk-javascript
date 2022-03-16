@@ -1,8 +1,11 @@
 import {ApplePushNotificationCertificate} from '../../models/microsoft/graph/';
-import {DownloadApplePushNotificationCertificateSigningRequestRequestBuilder} from './downloadApplePushNotificationCertificateSigningRequest/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createApplePushNotificationCertificateFromDiscriminatorValue} from '../../models/microsoft/graph/createApplePushNotificationCertificateFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {DownloadApplePushNotificationCertificateSigningRequestRequestBuilder} from './downloadApplePushNotificationCertificateSigningRequest/downloadApplePushNotificationCertificateSigningRequestRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /deviceManagement/applePushNotificationCertificate  */
+/** Provides operations to manage the applePushNotificationCertificate property of the microsoft.graph.deviceManagement entity.  */
 export class ApplePushNotificationCertificateRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -24,7 +27,7 @@ export class ApplePushNotificationCertificateRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Apple push notification certificate.
+     * Delete navigation property applePushNotificationCertificate for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -59,7 +62,7 @@ export class ApplePushNotificationCertificateRequestBuilder {
         return requestInfo;
     };
     /**
-     * Apple push notification certificate.
+     * Update the navigation property applePushNotificationCertificate in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -77,7 +80,7 @@ export class ApplePushNotificationCertificateRequestBuilder {
         return requestInfo;
     };
     /**
-     * Apple push notification certificate.
+     * Delete navigation property applePushNotificationCertificate for deviceManagement
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -86,10 +89,14 @@ export class ApplePushNotificationCertificateRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Builds and executes requests for operations under /deviceManagement/applePushNotificationCertificate/microsoft.graph.downloadApplePushNotificationCertificateSigningRequest()
+     * Provides operations to call the downloadApplePushNotificationCertificateSigningRequest method.
      * @returns a downloadApplePushNotificationCertificateSigningRequestRequestBuilder
      */
     public downloadApplePushNotificationCertificateSigningRequest() : DownloadApplePushNotificationCertificateSigningRequestRequestBuilder {
@@ -110,10 +117,14 @@ export class ApplePushNotificationCertificateRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ApplePushNotificationCertificate>(requestInfo, ApplePushNotificationCertificate, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ApplePushNotificationCertificate>(requestInfo, createApplePushNotificationCertificateFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Apple push notification certificate.
+     * Update the navigation property applePushNotificationCertificate in deviceManagement
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -124,6 +135,10 @@ export class ApplePushNotificationCertificateRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

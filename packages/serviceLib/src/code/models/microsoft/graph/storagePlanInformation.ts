@@ -1,16 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class StoragePlanInformation implements Parsable {
+export class StoragePlanInformation implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Indicates whether there are higher storage quota plans available. Read-only.  */
     private _upgradeAvailable?: boolean | undefined;
-    /**
-     * Instantiates a new storagePlanInformation and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,11 +13,17 @@ export class StoragePlanInformation implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the upgradeAvailable property value. Indicates whether there are higher storage quota plans available. Read-only.
-     * @returns a boolean
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get upgradeAvailable() {
-        return this._upgradeAvailable;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new storagePlanInformation and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -44,11 +44,11 @@ export class StoragePlanInformation implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the upgradeAvailable property value. Indicates whether there are higher storage quota plans available. Read-only.
+     * @returns a boolean
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get upgradeAvailable() {
+        return this._upgradeAvailable;
     };
     /**
      * Sets the upgradeAvailable property value. Indicates whether there are higher storage quota plans available. Read-only.

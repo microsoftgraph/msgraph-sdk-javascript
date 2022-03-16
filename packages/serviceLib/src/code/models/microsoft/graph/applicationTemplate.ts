@@ -19,17 +19,24 @@ export class ApplicationTemplate extends Entity implements Parsable {
     /** The list of single sign-on modes supported by this application. The supported values are oidc, password, saml, and notSupported.  */
     private _supportedSingleSignOnModes?: string[] | undefined;
     /**
-     * Instantiates a new applicationTemplate and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the categories property value. The list of categories for the application. Supported values can be: Collaboration, Business Management, Consumer, Content management, CRM, Data services, Developer services, E-commerce, Education, ERP, Finance, Health, Human resources, IT infrastructure, Mail, Management, Marketing, Media, Productivity, Project management, Telecommunications, Tools, Travel, and Web design & hosting.
      * @returns a string
      */
     public get categories() {
         return this._categories;
+    };
+    /**
+     * Sets the categories property value. The list of categories for the application. Supported values can be: Collaboration, Business Management, Consumer, Content management, CRM, Data services, Developer services, E-commerce, Education, ERP, Finance, Health, Human resources, IT infrastructure, Mail, Management, Marketing, Media, Productivity, Project management, Telecommunications, Tools, Travel, and Web design & hosting.
+     * @param value Value to set for the categories property.
+     */
+    public set categories(value: string[] | undefined) {
+        this._categories = value;
+    };
+    /**
+     * Instantiates a new applicationTemplate and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the description property value. A description of the application.
@@ -39,6 +46,13 @@ export class ApplicationTemplate extends Entity implements Parsable {
         return this._description;
     };
     /**
+     * Sets the description property value. A description of the application.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
      * Gets the displayName property value. The name of the application.
      * @returns a string
      */
@@ -46,39 +60,11 @@ export class ApplicationTemplate extends Entity implements Parsable {
         return this._displayName;
     };
     /**
-     * Gets the homePageUrl property value. The home page URL of the application.
-     * @returns a string
+     * Sets the displayName property value. The name of the application.
+     * @param value Value to set for the displayName property.
      */
-    public get homePageUrl() {
-        return this._homePageUrl;
-    };
-    /**
-     * Gets the logoUrl property value. The URL to get the logo for this application.
-     * @returns a string
-     */
-    public get logoUrl() {
-        return this._logoUrl;
-    };
-    /**
-     * Gets the publisher property value. The name of the publisher for this application.
-     * @returns a string
-     */
-    public get publisher() {
-        return this._publisher;
-    };
-    /**
-     * Gets the supportedProvisioningTypes property value. The list of provisioning modes supported by this application. The only valid value is sync.
-     * @returns a string
-     */
-    public get supportedProvisioningTypes() {
-        return this._supportedProvisioningTypes;
-    };
-    /**
-     * Gets the supportedSingleSignOnModes property value. The list of single sign-on modes supported by this application. The supported values are oidc, password, saml, and notSupported.
-     * @returns a string
-     */
-    public get supportedSingleSignOnModes() {
-        return this._supportedSingleSignOnModes;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -97,6 +83,48 @@ export class ApplicationTemplate extends Entity implements Parsable {
         ]);
     };
     /**
+     * Gets the homePageUrl property value. The home page URL of the application.
+     * @returns a string
+     */
+    public get homePageUrl() {
+        return this._homePageUrl;
+    };
+    /**
+     * Sets the homePageUrl property value. The home page URL of the application.
+     * @param value Value to set for the homePageUrl property.
+     */
+    public set homePageUrl(value: string | undefined) {
+        this._homePageUrl = value;
+    };
+    /**
+     * Gets the logoUrl property value. The URL to get the logo for this application.
+     * @returns a string
+     */
+    public get logoUrl() {
+        return this._logoUrl;
+    };
+    /**
+     * Sets the logoUrl property value. The URL to get the logo for this application.
+     * @param value Value to set for the logoUrl property.
+     */
+    public set logoUrl(value: string | undefined) {
+        this._logoUrl = value;
+    };
+    /**
+     * Gets the publisher property value. The name of the publisher for this application.
+     * @returns a string
+     */
+    public get publisher() {
+        return this._publisher;
+    };
+    /**
+     * Sets the publisher property value. The name of the publisher for this application.
+     * @param value Value to set for the publisher property.
+     */
+    public set publisher(value: string | undefined) {
+        this._publisher = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -113,46 +141,11 @@ export class ApplicationTemplate extends Entity implements Parsable {
         writer.writeCollectionOfPrimitiveValues<string>("supportedSingleSignOnModes", this.supportedSingleSignOnModes);
     };
     /**
-     * Sets the categories property value. The list of categories for the application. Supported values can be: Collaboration, Business Management, Consumer, Content management, CRM, Data services, Developer services, E-commerce, Education, ERP, Finance, Health, Human resources, IT infrastructure, Mail, Management, Marketing, Media, Productivity, Project management, Telecommunications, Tools, Travel, and Web design & hosting.
-     * @param value Value to set for the categories property.
+     * Gets the supportedProvisioningTypes property value. The list of provisioning modes supported by this application. The only valid value is sync.
+     * @returns a string
      */
-    public set categories(value: string[] | undefined) {
-        this._categories = value;
-    };
-    /**
-     * Sets the description property value. A description of the application.
-     * @param value Value to set for the description property.
-     */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. The name of the application.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the homePageUrl property value. The home page URL of the application.
-     * @param value Value to set for the homePageUrl property.
-     */
-    public set homePageUrl(value: string | undefined) {
-        this._homePageUrl = value;
-    };
-    /**
-     * Sets the logoUrl property value. The URL to get the logo for this application.
-     * @param value Value to set for the logoUrl property.
-     */
-    public set logoUrl(value: string | undefined) {
-        this._logoUrl = value;
-    };
-    /**
-     * Sets the publisher property value. The name of the publisher for this application.
-     * @param value Value to set for the publisher property.
-     */
-    public set publisher(value: string | undefined) {
-        this._publisher = value;
+    public get supportedProvisioningTypes() {
+        return this._supportedProvisioningTypes;
     };
     /**
      * Sets the supportedProvisioningTypes property value. The list of provisioning modes supported by this application. The only valid value is sync.
@@ -160,6 +153,13 @@ export class ApplicationTemplate extends Entity implements Parsable {
      */
     public set supportedProvisioningTypes(value: string[] | undefined) {
         this._supportedProvisioningTypes = value;
+    };
+    /**
+     * Gets the supportedSingleSignOnModes property value. The list of single sign-on modes supported by this application. The supported values are oidc, password, saml, and notSupported.
+     * @returns a string
+     */
+    public get supportedSingleSignOnModes() {
+        return this._supportedSingleSignOnModes;
     };
     /**
      * Sets the supportedSingleSignOnModes property value. The list of single sign-on modes supported by this application. The supported values are oidc, password, saml, and notSupported.

@@ -1,9 +1,12 @@
 import {MeetingAttendanceReport} from '../../../../../models/microsoft/graph/';
-import {AttendanceRecordsRequestBuilder} from './attendanceRecords/';
-import {AttendanceRecordItemRequestBuilder} from './attendanceRecords/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createMeetingAttendanceReportFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createMeetingAttendanceReportFromDiscriminatorValue';
+import {ODataError} from '../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AttendanceRecordsRequestBuilder} from './attendanceRecords/attendanceRecordsRequestBuilder';
+import {AttendanceRecordItemRequestBuilder} from './attendanceRecords/item/attendanceRecordItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/onlineMeetings/{onlineMeeting-id}/attendanceReports/{meetingAttendanceReport-id}  */
+/** Provides operations to manage the attendanceReports property of the microsoft.graph.onlineMeeting entity.  */
 export class MeetingAttendanceReportItemRequestBuilder {
     public get attendanceRecords(): AttendanceRecordsRequestBuilder {
         return new AttendanceRecordsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -39,7 +42,7 @@ export class MeetingAttendanceReportItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The attendance reports of an online meeting. Read-only.
+     * Delete navigation property attendanceReports for me
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -74,7 +77,7 @@ export class MeetingAttendanceReportItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The attendance reports of an online meeting. Read-only.
+     * Update the navigation property attendanceReports in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -92,7 +95,7 @@ export class MeetingAttendanceReportItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The attendance reports of an online meeting. Read-only.
+     * Delete navigation property attendanceReports for me
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -101,7 +104,11 @@ export class MeetingAttendanceReportItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The attendance reports of an online meeting. Read-only.
@@ -118,10 +125,14 @@ export class MeetingAttendanceReportItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<MeetingAttendanceReport>(requestInfo, MeetingAttendanceReport, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<MeetingAttendanceReport>(requestInfo, createMeetingAttendanceReportFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The attendance reports of an online meeting. Read-only.
+     * Update the navigation property attendanceReports in me
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -132,6 +143,10 @@ export class MeetingAttendanceReportItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

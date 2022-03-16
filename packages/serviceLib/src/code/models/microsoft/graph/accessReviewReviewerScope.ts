@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AccessReviewReviewerScope implements Parsable {
+export class AccessReviewReviewerScope implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** The query specifying who will be the reviewer. See table for examples.  */
@@ -10,12 +10,6 @@ export class AccessReviewReviewerScope implements Parsable {
     /** The type of query. Examples include MicrosoftGraph and ARM.  */
     private _queryType?: string | undefined;
     /**
-     * Instantiates a new accessReviewReviewerScope and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -23,25 +17,17 @@ export class AccessReviewReviewerScope implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the query property value. The query specifying who will be the reviewer. See table for examples.
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get query() {
-        return this._query;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the queryRoot property value. In the scenario where reviewers need to be specified dynamically, this property is used to indicate the relative source of the query. This property is only required if a relative query, for example, ./manager, is specified. Possible value: decisions.
-     * @returns a string
+     * Instantiates a new accessReviewReviewerScope and sets the default values.
      */
-    public get queryRoot() {
-        return this._queryRoot;
-    };
-    /**
-     * Gets the queryType property value. The type of query. Examples include MicrosoftGraph and ARM.
-     * @returns a string
-     */
-    public get queryType() {
-        return this._queryType;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -55,22 +41,11 @@ export class AccessReviewReviewerScope implements Parsable {
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the query property value. The query specifying who will be the reviewer. See table for examples.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        writer.writeStringValue("query", this.query);
-        writer.writeStringValue("queryRoot", this.queryRoot);
-        writer.writeStringValue("queryType", this.queryType);
-        writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
+    public get query() {
+        return this._query;
     };
     /**
      * Sets the query property value. The query specifying who will be the reviewer. See table for examples.
@@ -80,6 +55,13 @@ export class AccessReviewReviewerScope implements Parsable {
         this._query = value;
     };
     /**
+     * Gets the queryRoot property value. In the scenario where reviewers need to be specified dynamically, this property is used to indicate the relative source of the query. This property is only required if a relative query, for example, ./manager, is specified. Possible value: decisions.
+     * @returns a string
+     */
+    public get queryRoot() {
+        return this._queryRoot;
+    };
+    /**
      * Sets the queryRoot property value. In the scenario where reviewers need to be specified dynamically, this property is used to indicate the relative source of the query. This property is only required if a relative query, for example, ./manager, is specified. Possible value: decisions.
      * @param value Value to set for the queryRoot property.
      */
@@ -87,10 +69,28 @@ export class AccessReviewReviewerScope implements Parsable {
         this._queryRoot = value;
     };
     /**
+     * Gets the queryType property value. The type of query. Examples include MicrosoftGraph and ARM.
+     * @returns a string
+     */
+    public get queryType() {
+        return this._queryType;
+    };
+    /**
      * Sets the queryType property value. The type of query. Examples include MicrosoftGraph and ARM.
      * @param value Value to set for the queryType property.
      */
     public set queryType(value: string | undefined) {
         this._queryType = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeStringValue("query", this.query);
+        writer.writeStringValue("queryRoot", this.queryRoot);
+        writer.writeStringValue("queryType", this.queryType);
+        writer.writeAdditionalData(this.additionalData);
     };
 }

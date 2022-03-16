@@ -1,3 +1,8 @@
+import {createPrinterCapabilitiesFromDiscriminatorValue} from './createPrinterCapabilitiesFromDiscriminatorValue';
+import {createPrinterDefaultsFromDiscriminatorValue} from './createPrinterDefaultsFromDiscriminatorValue';
+import {createPrinterLocationFromDiscriminatorValue} from './createPrinterLocationFromDiscriminatorValue';
+import {createPrinterStatusFromDiscriminatorValue} from './createPrinterStatusFromDiscriminatorValue';
+import {createPrintJobFromDiscriminatorValue} from './createPrintJobFromDiscriminatorValue';
 import {Entity, PrinterCapabilities, PrinterDefaults, PrinterLocation, PrinterStatus, PrintJob} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -20,17 +25,24 @@ export class PrinterBase extends Entity implements Parsable {
     private _model?: string | undefined;
     private _status?: PrinterStatus | undefined;
     /**
-     * Instantiates a new printerBase and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the capabilities property value. The capabilities of the printer/printerShare.
      * @returns a printerCapabilities
      */
     public get capabilities() {
         return this._capabilities;
+    };
+    /**
+     * Sets the capabilities property value. The capabilities of the printer/printerShare.
+     * @param value Value to set for the capabilities property.
+     */
+    public set capabilities(value: PrinterCapabilities | undefined) {
+        this._capabilities = value;
+    };
+    /**
+     * Instantiates a new printerBase and sets the default values.
+     */
+    public constructor() {
+        super();
     };
     /**
      * Gets the defaults property value. The default print settings of printer/printerShare.
@@ -40,11 +52,42 @@ export class PrinterBase extends Entity implements Parsable {
         return this._defaults;
     };
     /**
+     * Sets the defaults property value. The default print settings of printer/printerShare.
+     * @param value Value to set for the defaults property.
+     */
+    public set defaults(value: PrinterDefaults | undefined) {
+        this._defaults = value;
+    };
+    /**
      * Gets the displayName property value. The name of the printer/printerShare.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. The name of the printer/printerShare.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
+            ["capabilities", (o, n) => { (o as unknown as PrinterBase).capabilities = n.getObjectValue<PrinterCapabilities>(createPrinterCapabilitiesFromDiscriminatorValue); }],
+            ["defaults", (o, n) => { (o as unknown as PrinterBase).defaults = n.getObjectValue<PrinterDefaults>(createPrinterDefaultsFromDiscriminatorValue); }],
+            ["displayName", (o, n) => { (o as unknown as PrinterBase).displayName = n.getStringValue(); }],
+            ["isAcceptingJobs", (o, n) => { (o as unknown as PrinterBase).isAcceptingJobs = n.getBooleanValue(); }],
+            ["jobs", (o, n) => { (o as unknown as PrinterBase).jobs = n.getCollectionOfObjectValues<PrintJob>(createPrintJobFromDiscriminatorValue); }],
+            ["location", (o, n) => { (o as unknown as PrinterBase).location = n.getObjectValue<PrinterLocation>(createPrinterLocationFromDiscriminatorValue); }],
+            ["manufacturer", (o, n) => { (o as unknown as PrinterBase).manufacturer = n.getStringValue(); }],
+            ["model", (o, n) => { (o as unknown as PrinterBase).model = n.getStringValue(); }],
+            ["status", (o, n) => { (o as unknown as PrinterBase).status = n.getObjectValue<PrinterStatus>(createPrinterStatusFromDiscriminatorValue); }],
+        ]);
     };
     /**
      * Gets the isAcceptingJobs property value. Whether the printer/printerShare is currently accepting new print jobs.
@@ -54,11 +97,25 @@ export class PrinterBase extends Entity implements Parsable {
         return this._isAcceptingJobs;
     };
     /**
+     * Sets the isAcceptingJobs property value. Whether the printer/printerShare is currently accepting new print jobs.
+     * @param value Value to set for the isAcceptingJobs property.
+     */
+    public set isAcceptingJobs(value: boolean | undefined) {
+        this._isAcceptingJobs = value;
+    };
+    /**
      * Gets the jobs property value. The list of jobs that are queued for printing by the printer/printerShare.
      * @returns a printJob
      */
     public get jobs() {
         return this._jobs;
+    };
+    /**
+     * Sets the jobs property value. The list of jobs that are queued for printing by the printer/printerShare.
+     * @param value Value to set for the jobs property.
+     */
+    public set jobs(value: PrintJob[] | undefined) {
+        this._jobs = value;
     };
     /**
      * Gets the location property value. The physical and/or organizational location of the printer/printerShare.
@@ -68,11 +125,25 @@ export class PrinterBase extends Entity implements Parsable {
         return this._location;
     };
     /**
+     * Sets the location property value. The physical and/or organizational location of the printer/printerShare.
+     * @param value Value to set for the location property.
+     */
+    public set location(value: PrinterLocation | undefined) {
+        this._location = value;
+    };
+    /**
      * Gets the manufacturer property value. The manufacturer of the printer/printerShare.
      * @returns a string
      */
     public get manufacturer() {
         return this._manufacturer;
+    };
+    /**
+     * Sets the manufacturer property value. The manufacturer of the printer/printerShare.
+     * @param value Value to set for the manufacturer property.
+     */
+    public set manufacturer(value: string | undefined) {
+        this._manufacturer = value;
     };
     /**
      * Gets the model property value. The model name of the printer/printerShare.
@@ -82,28 +153,11 @@ export class PrinterBase extends Entity implements Parsable {
         return this._model;
     };
     /**
-     * Gets the status property value. 
-     * @returns a printerStatus
+     * Sets the model property value. The model name of the printer/printerShare.
+     * @param value Value to set for the model property.
      */
-    public get status() {
-        return this._status;
-    };
-    /**
-     * The deserialization information for the current model
-     * @returns a Map<string, (item: T, node: ParseNode) => void>
-     */
-    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
-        return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
-            ["capabilities", (o, n) => { (o as unknown as PrinterBase).capabilities = n.getObjectValue<PrinterCapabilities>(PrinterCapabilities); }],
-            ["defaults", (o, n) => { (o as unknown as PrinterBase).defaults = n.getObjectValue<PrinterDefaults>(PrinterDefaults); }],
-            ["displayName", (o, n) => { (o as unknown as PrinterBase).displayName = n.getStringValue(); }],
-            ["isAcceptingJobs", (o, n) => { (o as unknown as PrinterBase).isAcceptingJobs = n.getBooleanValue(); }],
-            ["jobs", (o, n) => { (o as unknown as PrinterBase).jobs = n.getCollectionOfObjectValues<PrintJob>(PrintJob); }],
-            ["location", (o, n) => { (o as unknown as PrinterBase).location = n.getObjectValue<PrinterLocation>(PrinterLocation); }],
-            ["manufacturer", (o, n) => { (o as unknown as PrinterBase).manufacturer = n.getStringValue(); }],
-            ["model", (o, n) => { (o as unknown as PrinterBase).model = n.getStringValue(); }],
-            ["status", (o, n) => { (o as unknown as PrinterBase).status = n.getObjectValue<PrinterStatus>(PrinterStatus); }],
-        ]);
+    public set model(value: string | undefined) {
+        this._model = value;
     };
     /**
      * Serializes information the current object
@@ -123,60 +177,11 @@ export class PrinterBase extends Entity implements Parsable {
         writer.writeObjectValue<PrinterStatus>("status", this.status);
     };
     /**
-     * Sets the capabilities property value. The capabilities of the printer/printerShare.
-     * @param value Value to set for the capabilities property.
+     * Gets the status property value. 
+     * @returns a printerStatus
      */
-    public set capabilities(value: PrinterCapabilities | undefined) {
-        this._capabilities = value;
-    };
-    /**
-     * Sets the defaults property value. The default print settings of printer/printerShare.
-     * @param value Value to set for the defaults property.
-     */
-    public set defaults(value: PrinterDefaults | undefined) {
-        this._defaults = value;
-    };
-    /**
-     * Sets the displayName property value. The name of the printer/printerShare.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
-    };
-    /**
-     * Sets the isAcceptingJobs property value. Whether the printer/printerShare is currently accepting new print jobs.
-     * @param value Value to set for the isAcceptingJobs property.
-     */
-    public set isAcceptingJobs(value: boolean | undefined) {
-        this._isAcceptingJobs = value;
-    };
-    /**
-     * Sets the jobs property value. The list of jobs that are queued for printing by the printer/printerShare.
-     * @param value Value to set for the jobs property.
-     */
-    public set jobs(value: PrintJob[] | undefined) {
-        this._jobs = value;
-    };
-    /**
-     * Sets the location property value. The physical and/or organizational location of the printer/printerShare.
-     * @param value Value to set for the location property.
-     */
-    public set location(value: PrinterLocation | undefined) {
-        this._location = value;
-    };
-    /**
-     * Sets the manufacturer property value. The manufacturer of the printer/printerShare.
-     * @param value Value to set for the manufacturer property.
-     */
-    public set manufacturer(value: string | undefined) {
-        this._manufacturer = value;
-    };
-    /**
-     * Sets the model property value. The model name of the printer/printerShare.
-     * @param value Value to set for the model property.
-     */
-    public set model(value: string | undefined) {
-        this._model = value;
+    public get status() {
+        return this._status;
     };
     /**
      * Sets the status property value. 

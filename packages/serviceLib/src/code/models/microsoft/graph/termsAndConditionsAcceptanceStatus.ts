@@ -1,3 +1,4 @@
+import {createTermsAndConditionsFromDiscriminatorValue} from './createTermsAndConditionsFromDiscriminatorValue';
 import {Entity, TermsAndConditions} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
@@ -13,17 +14,18 @@ export class TermsAndConditionsAcceptanceStatus extends Entity implements Parsab
     /** The userPrincipalName of the User that accepted the term.  */
     private _userPrincipalName?: string | undefined;
     /**
-     * Instantiates a new termsAndConditionsAcceptanceStatus and sets the default values.
-     */
-    public constructor() {
-        super();
-    };
-    /**
      * Gets the acceptedDateTime property value. DateTime when the terms were last accepted by the user.
      * @returns a Date
      */
     public get acceptedDateTime() {
         return this._acceptedDateTime;
+    };
+    /**
+     * Sets the acceptedDateTime property value. DateTime when the terms were last accepted by the user.
+     * @param value Value to set for the acceptedDateTime property.
+     */
+    public set acceptedDateTime(value: Date | undefined) {
+        this._acceptedDateTime = value;
     };
     /**
      * Gets the acceptedVersion property value. Most recent version number of the T&C accepted by the user.
@@ -33,25 +35,17 @@ export class TermsAndConditionsAcceptanceStatus extends Entity implements Parsab
         return this._acceptedVersion;
     };
     /**
-     * Gets the termsAndConditions property value. Navigation link to the terms and conditions that are assigned.
-     * @returns a termsAndConditions
+     * Sets the acceptedVersion property value. Most recent version number of the T&C accepted by the user.
+     * @param value Value to set for the acceptedVersion property.
      */
-    public get termsAndConditions() {
-        return this._termsAndConditions;
+    public set acceptedVersion(value: number | undefined) {
+        this._acceptedVersion = value;
     };
     /**
-     * Gets the userDisplayName property value. Display name of the user whose acceptance the entity represents.
-     * @returns a string
+     * Instantiates a new termsAndConditionsAcceptanceStatus and sets the default values.
      */
-    public get userDisplayName() {
-        return this._userDisplayName;
-    };
-    /**
-     * Gets the userPrincipalName property value. The userPrincipalName of the User that accepted the term.
-     * @returns a string
-     */
-    public get userPrincipalName() {
-        return this._userPrincipalName;
+    public constructor() {
+        super();
     };
     /**
      * The deserialization information for the current model
@@ -61,7 +55,7 @@ export class TermsAndConditionsAcceptanceStatus extends Entity implements Parsab
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["acceptedDateTime", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).acceptedDateTime = n.getDateValue(); }],
             ["acceptedVersion", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).acceptedVersion = n.getNumberValue(); }],
-            ["termsAndConditions", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).termsAndConditions = n.getObjectValue<TermsAndConditions>(TermsAndConditions); }],
+            ["termsAndConditions", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).termsAndConditions = n.getObjectValue<TermsAndConditions>(createTermsAndConditionsFromDiscriminatorValue); }],
             ["userDisplayName", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).userDisplayName = n.getStringValue(); }],
             ["userPrincipalName", (o, n) => { (o as unknown as TermsAndConditionsAcceptanceStatus).userPrincipalName = n.getStringValue(); }],
         ]);
@@ -80,18 +74,11 @@ export class TermsAndConditionsAcceptanceStatus extends Entity implements Parsab
         writer.writeStringValue("userPrincipalName", this.userPrincipalName);
     };
     /**
-     * Sets the acceptedDateTime property value. DateTime when the terms were last accepted by the user.
-     * @param value Value to set for the acceptedDateTime property.
+     * Gets the termsAndConditions property value. Navigation link to the terms and conditions that are assigned.
+     * @returns a termsAndConditions
      */
-    public set acceptedDateTime(value: Date | undefined) {
-        this._acceptedDateTime = value;
-    };
-    /**
-     * Sets the acceptedVersion property value. Most recent version number of the T&C accepted by the user.
-     * @param value Value to set for the acceptedVersion property.
-     */
-    public set acceptedVersion(value: number | undefined) {
-        this._acceptedVersion = value;
+    public get termsAndConditions() {
+        return this._termsAndConditions;
     };
     /**
      * Sets the termsAndConditions property value. Navigation link to the terms and conditions that are assigned.
@@ -101,11 +88,25 @@ export class TermsAndConditionsAcceptanceStatus extends Entity implements Parsab
         this._termsAndConditions = value;
     };
     /**
+     * Gets the userDisplayName property value. Display name of the user whose acceptance the entity represents.
+     * @returns a string
+     */
+    public get userDisplayName() {
+        return this._userDisplayName;
+    };
+    /**
      * Sets the userDisplayName property value. Display name of the user whose acceptance the entity represents.
      * @param value Value to set for the userDisplayName property.
      */
     public set userDisplayName(value: string | undefined) {
         this._userDisplayName = value;
+    };
+    /**
+     * Gets the userPrincipalName property value. The userPrincipalName of the User that accepted the term.
+     * @returns a string
+     */
+    public get userPrincipalName() {
+        return this._userPrincipalName;
     };
     /**
      * Sets the userPrincipalName property value. The userPrincipalName of the User that accepted the term.

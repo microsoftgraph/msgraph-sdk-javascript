@@ -1,26 +1,34 @@
 import {EntitlementManagement} from '../../models/microsoft/graph/';
-import {AccessPackageAssignmentApprovalsRequestBuilder} from './accessPackageAssignmentApprovals/';
-import {ApprovalItemRequestBuilder} from './accessPackageAssignmentApprovals/item/';
-import {AccessPackagesRequestBuilder} from './accessPackages/';
-import {AccessPackageItemRequestBuilder} from './accessPackages/item/';
-import {AssignmentRequestsRequestBuilder} from './assignmentRequests/';
-import {AccessPackageAssignmentRequestItemRequestBuilder} from './assignmentRequests/item/';
-import {AssignmentsRequestBuilder} from './assignments/';
-import {AccessPackageAssignmentItemRequestBuilder} from './assignments/item/';
-import {CatalogsRequestBuilder} from './catalogs/';
-import {AccessPackageCatalogItemRequestBuilder} from './catalogs/item/';
-import {ConnectedOrganizationsRequestBuilder} from './connectedOrganizations/';
-import {ConnectedOrganizationItemRequestBuilder} from './connectedOrganizations/item/';
-import {SettingsRequestBuilder} from './settings/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createEntitlementManagementFromDiscriminatorValue} from '../../models/microsoft/graph/createEntitlementManagementFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {AccessPackageAssignmentApprovalsRequestBuilder} from './accessPackageAssignmentApprovals/accessPackageAssignmentApprovalsRequestBuilder';
+import {ApprovalItemRequestBuilder} from './accessPackageAssignmentApprovals/item/approvalItemRequestBuilder';
+import {AccessPackagesRequestBuilder} from './accessPackages/accessPackagesRequestBuilder';
+import {AccessPackageItemRequestBuilder} from './accessPackages/item/accessPackageItemRequestBuilder';
+import {AssignmentPoliciesRequestBuilder} from './assignmentPolicies/assignmentPoliciesRequestBuilder';
+import {AccessPackageAssignmentPolicyItemRequestBuilder} from './assignmentPolicies/item/accessPackageAssignmentPolicyItemRequestBuilder';
+import {AssignmentRequestsRequestBuilder} from './assignmentRequests/assignmentRequestsRequestBuilder';
+import {AccessPackageAssignmentRequestItemRequestBuilder} from './assignmentRequests/item/accessPackageAssignmentRequestItemRequestBuilder';
+import {AssignmentsRequestBuilder} from './assignments/assignmentsRequestBuilder';
+import {AccessPackageAssignmentItemRequestBuilder} from './assignments/item/accessPackageAssignmentItemRequestBuilder';
+import {CatalogsRequestBuilder} from './catalogs/catalogsRequestBuilder';
+import {AccessPackageCatalogItemRequestBuilder} from './catalogs/item/accessPackageCatalogItemRequestBuilder';
+import {ConnectedOrganizationsRequestBuilder} from './connectedOrganizations/connectedOrganizationsRequestBuilder';
+import {ConnectedOrganizationItemRequestBuilder} from './connectedOrganizations/item/connectedOrganizationItemRequestBuilder';
+import {SettingsRequestBuilder} from './settings/settingsRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement  */
+/** Provides operations to manage the entitlementManagement property of the microsoft.graph.identityGovernance entity.  */
 export class EntitlementManagementRequestBuilder {
     public get accessPackageAssignmentApprovals(): AccessPackageAssignmentApprovalsRequestBuilder {
         return new AccessPackageAssignmentApprovalsRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get accessPackages(): AccessPackagesRequestBuilder {
         return new AccessPackagesRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get assignmentPolicies(): AssignmentPoliciesRequestBuilder {
+        return new AssignmentPoliciesRequestBuilder(this.pathParameters, this.requestAdapter);
     }
     public get assignmentRequests(): AssignmentRequestsRequestBuilder {
         return new AssignmentRequestsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -64,6 +72,17 @@ export class EntitlementManagementRequestBuilder {
         const urlTplParams = getPathParameters(this.pathParameters);
         urlTplParams["accessPackage_id"] = id
         return new AccessPackageItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.assignmentPolicies.item collection
+     * @param id Unique identifier of the item
+     * @returns a accessPackageAssignmentPolicyItemRequestBuilder
+     */
+    public assignmentPoliciesById(id: string) : AccessPackageAssignmentPolicyItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["accessPackageAssignmentPolicy_id"] = id
+        return new AccessPackageAssignmentPolicyItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.assignmentRequests.item collection
@@ -185,7 +204,11 @@ export class EntitlementManagementRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entitlementManagement from identityGovernance
@@ -202,7 +225,11 @@ export class EntitlementManagementRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<EntitlementManagement>(requestInfo, EntitlementManagement, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<EntitlementManagement>(requestInfo, createEntitlementManagementFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Update the navigation property entitlementManagement in identityGovernance
@@ -216,6 +243,10 @@ export class EntitlementManagementRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

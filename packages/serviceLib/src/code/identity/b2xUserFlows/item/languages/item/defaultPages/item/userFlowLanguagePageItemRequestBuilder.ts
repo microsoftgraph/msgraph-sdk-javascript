@@ -1,8 +1,11 @@
 import {UserFlowLanguagePage} from '../../../../../../../models/microsoft/graph/';
-import {ContentRequestBuilder} from './value/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createUserFlowLanguagePageFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/createUserFlowLanguagePageFromDiscriminatorValue';
+import {ODataError} from '../../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ContentRequestBuilder} from './value/contentRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identity/b2xUserFlows/{b2xIdentityUserFlow-id}/languages/{userFlowLanguageConfiguration-id}/defaultPages/{userFlowLanguagePage-id}  */
+/** Provides operations to manage the defaultPages property of the microsoft.graph.userFlowLanguageConfiguration entity.  */
 export class UserFlowLanguagePageItemRequestBuilder {
     public get content(): ContentRequestBuilder {
         return new ContentRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -27,7 +30,7 @@ export class UserFlowLanguagePageItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Collection of pages with the default content to display in a user flow for a specified language. This collection does not allow any kind of modification.
+     * Delete navigation property defaultPages for identity
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -62,7 +65,7 @@ export class UserFlowLanguagePageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Collection of pages with the default content to display in a user flow for a specified language. This collection does not allow any kind of modification.
+     * Update the navigation property defaultPages in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -80,7 +83,7 @@ export class UserFlowLanguagePageItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Collection of pages with the default content to display in a user flow for a specified language. This collection does not allow any kind of modification.
+     * Delete navigation property defaultPages for identity
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -89,7 +92,11 @@ export class UserFlowLanguagePageItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Collection of pages with the default content to display in a user flow for a specified language. This collection does not allow any kind of modification.
@@ -106,10 +113,14 @@ export class UserFlowLanguagePageItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<UserFlowLanguagePage>(requestInfo, UserFlowLanguagePage, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<UserFlowLanguagePage>(requestInfo, createUserFlowLanguagePageFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Collection of pages with the default content to display in a user flow for a specified language. This collection does not allow any kind of modification.
+     * Update the navigation property defaultPages in identity
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -120,6 +131,10 @@ export class UserFlowLanguagePageItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

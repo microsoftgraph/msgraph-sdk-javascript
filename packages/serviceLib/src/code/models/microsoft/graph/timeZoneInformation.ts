@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class TimeZoneInformation implements Parsable {
+export class TimeZoneInformation implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** An identifier for the time zone.  */
@@ -8,17 +8,18 @@ export class TimeZoneInformation implements Parsable {
     /** A display string that represents the time zone.  */
     private _displayName?: string | undefined;
     /**
-     * Instantiates a new TimeZoneInformation and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the alias property value. An identifier for the time zone.
@@ -28,11 +29,31 @@ export class TimeZoneInformation implements Parsable {
         return this._alias;
     };
     /**
+     * Sets the alias property value. An identifier for the time zone.
+     * @param value Value to set for the alias property.
+     */
+    public set alias(value: string | undefined) {
+        this._alias = value;
+    };
+    /**
+     * Instantiates a new timeZoneInformation and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the displayName property value. A display string that represents the time zone.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
+    };
+    /**
+     * Sets the displayName property value. A display string that represents the time zone.
+     * @param value Value to set for the displayName property.
+     */
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -53,26 +74,5 @@ export class TimeZoneInformation implements Parsable {
         writer.writeStringValue("alias", this.alias);
         writer.writeStringValue("displayName", this.displayName);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the alias property value. An identifier for the time zone.
-     * @param value Value to set for the alias property.
-     */
-    public set alias(value: string | undefined) {
-        this._alias = value;
-    };
-    /**
-     * Sets the displayName property value. A display string that represents the time zone.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
     };
 }

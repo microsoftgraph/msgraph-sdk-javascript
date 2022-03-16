@@ -1,2 +1,1 @@
-export * from './CheckinRequestBody'
-export * from './CheckinRequestBuilder'
+export * from './checkinRequestBody'

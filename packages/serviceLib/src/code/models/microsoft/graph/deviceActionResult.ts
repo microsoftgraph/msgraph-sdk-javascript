@@ -1,7 +1,8 @@
-import {ActionState} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {ActionState} from './actionState';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class DeviceActionResult implements Parsable {
+/** Device action result  */
+export class DeviceActionResult implements AdditionalDataHolder, Parsable {
     /** Action name  */
     private _actionName?: string | undefined;
     /** State of the action. Possible values are: none, pending, canceled, active, done, failed, notSupported.  */
@@ -13,17 +14,18 @@ export class DeviceActionResult implements Parsable {
     /** Time the action was initiated  */
     private _startDateTime?: Date | undefined;
     /**
-     * Instantiates a new deviceActionResult and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the actionName property value. Action name
      * @returns a string
      */
     public get actionName() {
         return this._actionName;
+    };
+    /**
+     * Sets the actionName property value. Action name
+     * @param value Value to set for the actionName property.
+     */
+    public set actionName(value: string | undefined) {
+        this._actionName = value;
     };
     /**
      * Gets the actionState property value. State of the action. Possible values are: none, pending, canceled, active, done, failed, notSupported.
@@ -33,6 +35,13 @@ export class DeviceActionResult implements Parsable {
         return this._actionState;
     };
     /**
+     * Sets the actionState property value. State of the action. Possible values are: none, pending, canceled, active, done, failed, notSupported.
+     * @param value Value to set for the actionState property.
+     */
+    public set actionState(value: ActionState | undefined) {
+        this._actionState = value;
+    };
+    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -40,18 +49,17 @@ export class DeviceActionResult implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the lastUpdatedDateTime property value. Time the action state was last updated
-     * @returns a Date
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get lastUpdatedDateTime() {
-        return this._lastUpdatedDateTime;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the startDateTime property value. Time the action was initiated
-     * @returns a Date
+     * Instantiates a new deviceActionResult and sets the default values.
      */
-    public get startDateTime() {
-        return this._startDateTime;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -66,6 +74,20 @@ export class DeviceActionResult implements Parsable {
         ]);
     };
     /**
+     * Gets the lastUpdatedDateTime property value. Time the action state was last updated
+     * @returns a Date
+     */
+    public get lastUpdatedDateTime() {
+        return this._lastUpdatedDateTime;
+    };
+    /**
+     * Sets the lastUpdatedDateTime property value. Time the action state was last updated
+     * @param value Value to set for the lastUpdatedDateTime property.
+     */
+    public set lastUpdatedDateTime(value: Date | undefined) {
+        this._lastUpdatedDateTime = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -78,32 +100,11 @@ export class DeviceActionResult implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the actionName property value. Action name
-     * @param value Value to set for the actionName property.
+     * Gets the startDateTime property value. Time the action was initiated
+     * @returns a Date
      */
-    public set actionName(value: string | undefined) {
-        this._actionName = value;
-    };
-    /**
-     * Sets the actionState property value. State of the action. Possible values are: none, pending, canceled, active, done, failed, notSupported.
-     * @param value Value to set for the actionState property.
-     */
-    public set actionState(value: ActionState | undefined) {
-        this._actionState = value;
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the lastUpdatedDateTime property value. Time the action state was last updated
-     * @param value Value to set for the lastUpdatedDateTime property.
-     */
-    public set lastUpdatedDateTime(value: Date | undefined) {
-        this._lastUpdatedDateTime = value;
+    public get startDateTime() {
+        return this._startDateTime;
     };
     /**
      * Sets the startDateTime property value. Time the action was initiated

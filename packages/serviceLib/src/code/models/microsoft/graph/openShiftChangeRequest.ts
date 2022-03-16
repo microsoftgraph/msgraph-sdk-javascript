@@ -11,13 +11,6 @@ export class OpenShiftChangeRequest extends ScheduleChangeRequest implements Par
         super();
     };
     /**
-     * Gets the openShiftId property value. ID for the open shift.
-     * @returns a string
-     */
-    public get openShiftId() {
-        return this._openShiftId;
-    };
-    /**
      * The deserialization information for the current model
      * @returns a Map<string, (item: T, node: ParseNode) => void>
      */
@@ -27,13 +20,11 @@ export class OpenShiftChangeRequest extends ScheduleChangeRequest implements Par
         ]);
     };
     /**
-     * Serializes information the current object
-     * @param writer Serialization writer to use to serialize this model
+     * Gets the openShiftId property value. ID for the open shift.
+     * @returns a string
      */
-    public serialize(writer: SerializationWriter) : void {
-        if(!writer) throw new Error("writer cannot be undefined");
-        super.serialize(writer);
-        writer.writeStringValue("openShiftId", this.openShiftId);
+    public get openShiftId() {
+        return this._openShiftId;
     };
     /**
      * Sets the openShiftId property value. ID for the open shift.
@@ -41,5 +32,14 @@ export class OpenShiftChangeRequest extends ScheduleChangeRequest implements Par
      */
     public set openShiftId(value: string | undefined) {
         this._openShiftId = value;
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        super.serialize(writer);
+        writer.writeStringValue("openShiftId", this.openShiftId);
     };
 }

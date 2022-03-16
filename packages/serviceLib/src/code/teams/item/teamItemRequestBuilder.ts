@@ -1,24 +1,27 @@
 import {Team} from '../../models/microsoft/graph/';
-import {ArchiveRequestBuilder} from './archive/';
-import {ChannelsRequestBuilder} from './channels/';
-import {ChannelItemRequestBuilder} from './channels/item/';
-import {CloneRequestBuilder} from './clone/';
-import {CompleteMigrationRequestBuilder} from './completeMigration/';
-import {GroupRequestBuilder} from './group/';
-import {InstalledAppsRequestBuilder} from './installedApps/';
-import {TeamsAppInstallationItemRequestBuilder} from './installedApps/item/';
-import {MembersRequestBuilder} from './members/';
-import {ConversationMemberItemRequestBuilder} from './members/item/';
-import {OperationsRequestBuilder} from './operations/';
-import {TeamsAsyncOperationItemRequestBuilder} from './operations/item/';
-import {PrimaryChannelRequestBuilder} from './primaryChannel/';
-import {ScheduleRequestBuilder} from './schedule/';
-import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/';
-import {TemplateRequestBuilder} from './template/';
-import {UnarchiveRequestBuilder} from './unarchive/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createTeamFromDiscriminatorValue} from '../../models/microsoft/graph/createTeamFromDiscriminatorValue';
+import {ODataError} from '../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ArchiveRequestBuilder} from './archive/archiveRequestBuilder';
+import {ChannelsRequestBuilder} from './channels/channelsRequestBuilder';
+import {ChannelItemRequestBuilder} from './channels/item/channelItemRequestBuilder';
+import {CloneRequestBuilder} from './clone/cloneRequestBuilder';
+import {CompleteMigrationRequestBuilder} from './completeMigration/completeMigrationRequestBuilder';
+import {GroupRequestBuilder} from './group/groupRequestBuilder';
+import {InstalledAppsRequestBuilder} from './installedApps/installedAppsRequestBuilder';
+import {TeamsAppInstallationItemRequestBuilder} from './installedApps/item/teamsAppInstallationItemRequestBuilder';
+import {ConversationMemberItemRequestBuilder} from './members/item/conversationMemberItemRequestBuilder';
+import {MembersRequestBuilder} from './members/membersRequestBuilder';
+import {TeamsAsyncOperationItemRequestBuilder} from './operations/item/teamsAsyncOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {PrimaryChannelRequestBuilder} from './primaryChannel/primaryChannelRequestBuilder';
+import {ScheduleRequestBuilder} from './schedule/scheduleRequestBuilder';
+import {SendActivityNotificationRequestBuilder} from './sendActivityNotification/sendActivityNotificationRequestBuilder';
+import {TemplateRequestBuilder} from './template/templateRequestBuilder';
+import {UnarchiveRequestBuilder} from './unarchive/unarchiveRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /teams/{team-id}  */
+/** Provides operations to manage the collection of team entities.  */
 export class TeamItemRequestBuilder {
     public get archive(): ArchiveRequestBuilder {
         return new ArchiveRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -152,7 +155,11 @@ export class TeamItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get entity from teams by key
@@ -169,7 +176,11 @@ export class TeamItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<Team>(requestInfo, Team, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<Team>(requestInfo, createTeamFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.teams.item.installedApps.item collection
@@ -216,6 +227,10 @@ export class TeamItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

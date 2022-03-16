@@ -1,12 +1,34 @@
 import {ExternalConnection} from '../../../models/microsoft/graph/externalConnectors/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createExternalConnectionFromDiscriminatorValue} from '../../../models/microsoft/graph/externalConnectors/createExternalConnectionFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {GroupsRequestBuilder} from './groups/groupsRequestBuilder';
+import {ExternalGroupItemRequestBuilder} from './groups/item/externalGroupItemRequestBuilder';
+import {ExternalItemItemRequestBuilder} from './items/item/externalItemItemRequestBuilder';
+import {ItemsRequestBuilder} from './items/itemsRequestBuilder';
+import {ConnectionOperationItemRequestBuilder} from './operations/item/connectionOperationItemRequestBuilder';
+import {OperationsRequestBuilder} from './operations/operationsRequestBuilder';
+import {SchemaRequestBuilder} from './schema/schemaRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /external/connections/{externalConnection-id}  */
+/** Provides operations to manage the connections property of the microsoft.graph.externalConnectors.external entity.  */
 export class ExternalConnectionItemRequestBuilder {
+    public get groups(): GroupsRequestBuilder {
+        return new GroupsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get items(): ItemsRequestBuilder {
+        return new ItemsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get operations(): OperationsRequestBuilder {
+        return new OperationsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get schema(): SchemaRequestBuilder {
+        return new SchemaRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
@@ -85,7 +107,11 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get connections from external
@@ -102,7 +128,44 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ExternalConnection>(requestInfo, ExternalConnection, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ExternalConnection>(requestInfo, createExternalConnectionFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.external.connections.item.groups.item collection
+     * @param id Unique identifier of the item
+     * @returns a externalGroupItemRequestBuilder
+     */
+    public groupsById(id: string) : ExternalGroupItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["externalGroup_id"] = id
+        return new ExternalGroupItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.external.connections.item.items.item collection
+     * @param id Unique identifier of the item
+     * @returns a externalItemItemRequestBuilder
+     */
+    public itemsById(id: string) : ExternalItemItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["externalItem_id"] = id
+        return new ExternalItemItemRequestBuilder(urlTplParams, this.requestAdapter);
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.external.connections.item.operations.item collection
+     * @param id Unique identifier of the item
+     * @returns a connectionOperationItemRequestBuilder
+     */
+    public operationsById(id: string) : ConnectionOperationItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["connectionOperation_id"] = id
+        return new ConnectionOperationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update the navigation property connections in external
@@ -116,6 +179,10 @@ export class ExternalConnectionItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

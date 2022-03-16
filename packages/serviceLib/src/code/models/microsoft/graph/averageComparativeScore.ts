@@ -1,6 +1,6 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class AverageComparativeScore implements Parsable {
+export class AverageComparativeScore implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** Average score within specified basis.  */
@@ -8,17 +8,18 @@ export class AverageComparativeScore implements Parsable {
     /** Scope type. The possible values are: AllTenants, TotalSeats, IndustryTypes.  */
     private _basis?: string | undefined;
     /**
-     * Instantiates a new averageComparativeScore and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the averageScore property value. Average score within specified basis.
@@ -28,11 +29,31 @@ export class AverageComparativeScore implements Parsable {
         return this._averageScore;
     };
     /**
+     * Sets the averageScore property value. Average score within specified basis.
+     * @param value Value to set for the averageScore property.
+     */
+    public set averageScore(value: number | undefined) {
+        this._averageScore = value;
+    };
+    /**
      * Gets the basis property value. Scope type. The possible values are: AllTenants, TotalSeats, IndustryTypes.
      * @returns a string
      */
     public get basis() {
         return this._basis;
+    };
+    /**
+     * Sets the basis property value. Scope type. The possible values are: AllTenants, TotalSeats, IndustryTypes.
+     * @param value Value to set for the basis property.
+     */
+    public set basis(value: string | undefined) {
+        this._basis = value;
+    };
+    /**
+     * Instantiates a new averageComparativeScore and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -53,26 +74,5 @@ export class AverageComparativeScore implements Parsable {
         writer.writeNumberValue("averageScore", this.averageScore);
         writer.writeStringValue("basis", this.basis);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the averageScore property value. Average score within specified basis.
-     * @param value Value to set for the averageScore property.
-     */
-    public set averageScore(value: number | undefined) {
-        this._averageScore = value;
-    };
-    /**
-     * Sets the basis property value. Scope type. The possible values are: AllTenants, TotalSeats, IndustryTypes.
-     * @param value Value to set for the basis property.
-     */
-    public set basis(value: string | undefined) {
-        this._basis = value;
     };
 }

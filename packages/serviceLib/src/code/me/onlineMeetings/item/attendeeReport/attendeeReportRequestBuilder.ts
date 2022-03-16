@@ -1,6 +1,8 @@
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /me/onlineMeetings/{onlineMeeting-id}/attendeeReport  */
+/** Provides operations to manage the media for the user entity.  */
 export class AttendeeReportRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -22,7 +24,7 @@ export class AttendeeReportRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Get media content for the navigation property onlineMeetings from me
+     * The content stream of the attendee report of a Microsoft Teams live event. Read-only.
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -37,7 +39,7 @@ export class AttendeeReportRequestBuilder {
         return requestInfo;
     };
     /**
-     * Update media content for the navigation property onlineMeetings in me
+     * The content stream of the attendee report of a Microsoft Teams live event. Read-only.
      * @param body Binary request body
      * @param h Request headers
      * @param o Request options
@@ -55,7 +57,7 @@ export class AttendeeReportRequestBuilder {
         return requestInfo;
     };
     /**
-     * Get media content for the navigation property onlineMeetings from me
+     * The content stream of the attendee report of a Microsoft Teams live event. Read-only.
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -65,10 +67,14 @@ export class AttendeeReportRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendPrimitiveAsync<ArrayBuffer>(requestInfo, "ArrayBuffer", responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * Update media content for the navigation property onlineMeetings in me
+     * The content stream of the attendee report of a Microsoft Teams live event. Read-only.
      * @param body Binary request body
      * @param h Request headers
      * @param o Request options
@@ -79,6 +85,10 @@ export class AttendeeReportRequestBuilder {
         const requestInfo = this.createPutRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

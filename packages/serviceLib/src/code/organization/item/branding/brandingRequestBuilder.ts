@@ -1,12 +1,32 @@
 import {OrganizationalBranding} from '../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createOrganizationalBrandingFromDiscriminatorValue} from '../../../models/microsoft/graph/createOrganizationalBrandingFromDiscriminatorValue';
+import {ODataError} from '../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {BackgroundImageRequestBuilder} from './backgroundImage/backgroundImageRequestBuilder';
+import {BannerLogoRequestBuilder} from './bannerLogo/bannerLogoRequestBuilder';
+import {OrganizationalBrandingLocalizationItemRequestBuilder} from './localizations/item/organizationalBrandingLocalizationItemRequestBuilder';
+import {LocalizationsRequestBuilder} from './localizations/localizationsRequestBuilder';
+import {SquareLogoRequestBuilder} from './squareLogo/squareLogoRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /organization/{organization-id}/branding  */
+/** Provides operations to manage the branding property of the microsoft.graph.organization entity.  */
 export class BrandingRequestBuilder {
+    public get backgroundImage(): BackgroundImageRequestBuilder {
+        return new BackgroundImageRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get bannerLogo(): BannerLogoRequestBuilder {
+        return new BannerLogoRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
+    public get localizations(): LocalizationsRequestBuilder {
+        return new LocalizationsRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
+    public get squareLogo(): SquareLogoRequestBuilder {
+        return new SquareLogoRequestBuilder(this.pathParameters, this.requestAdapter);
+    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
@@ -85,7 +105,11 @@ export class BrandingRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Get branding from organization
@@ -102,7 +126,22 @@ export class BrandingRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<OrganizationalBranding>(requestInfo, OrganizationalBranding, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<OrganizationalBranding>(requestInfo, createOrganizationalBrandingFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
+    };
+    /**
+     * Gets an item from the MicrosoftGraph.organization.item.branding.localizations.item collection
+     * @param id Unique identifier of the item
+     * @returns a organizationalBrandingLocalizationItemRequestBuilder
+     */
+    public localizationsById(id: string) : OrganizationalBrandingLocalizationItemRequestBuilder {
+        if(!id) throw new Error("id cannot be undefined");
+        const urlTplParams = getPathParameters(this.pathParameters);
+        urlTplParams["organizationalBrandingLocalization_id"] = id
+        return new OrganizationalBrandingLocalizationItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
     /**
      * Update the navigation property branding in organization
@@ -116,6 +155,10 @@ export class BrandingRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

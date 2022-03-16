@@ -1,2 +1,1 @@
-export * from './ClearPresenceRequestBody'
-export * from './ClearPresenceRequestBuilder'
+export * from './clearPresenceRequestBody'

@@ -1,5 +1,5 @@
 import {Entity} from '../';
-import {IdentityType} from './index';
+import {IdentityType} from './identityType';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Identity extends Entity implements Parsable {
@@ -10,13 +10,6 @@ export class Identity extends Entity implements Parsable {
      */
     public constructor() {
         super();
-    };
-    /**
-     * Gets the type property value. The type of identity. Possible values are: user or group for Azure AD identities and externalgroup for groups in an external system.
-     * @returns a identityType
-     */
-    public get type() {
-        return this._type;
     };
     /**
      * The deserialization information for the current model
@@ -35,6 +28,13 @@ export class Identity extends Entity implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         super.serialize(writer);
         writer.writeEnumValue<IdentityType>("type", this.type);
+    };
+    /**
+     * Gets the type property value. The type of identity. Possible values are: user or group for Azure AD identities and externalgroup for groups in an external system.
+     * @returns a identityType
+     */
+    public get type() {
+        return this._type;
     };
     /**
      * Sets the type property value. The type of identity. Possible values are: user or group for Azure AD identities and externalgroup for groups in an external system.

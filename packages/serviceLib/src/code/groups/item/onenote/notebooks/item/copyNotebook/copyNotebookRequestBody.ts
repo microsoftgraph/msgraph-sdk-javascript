@@ -1,6 +1,7 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CopyNotebookRequestBody implements Parsable {
+/** Provides operations to call the copyNotebook method.  */
+export class CopyNotebookRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _groupId?: string | undefined;
@@ -9,12 +10,6 @@ export class CopyNotebookRequestBody implements Parsable {
     private _siteCollectionId?: string | undefined;
     private _siteId?: string | undefined;
     /**
-     * Instantiates a new copyNotebookRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
-    /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
@@ -22,39 +17,17 @@ export class CopyNotebookRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the groupId property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get groupId() {
-        return this._groupId;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the notebookFolder property value. 
-     * @returns a string
+     * Instantiates a new copyNotebookRequestBody and sets the default values.
      */
-    public get notebookFolder() {
-        return this._notebookFolder;
-    };
-    /**
-     * Gets the renameAs property value. 
-     * @returns a string
-     */
-    public get renameAs() {
-        return this._renameAs;
-    };
-    /**
-     * Gets the siteCollectionId property value. 
-     * @returns a string
-     */
-    public get siteCollectionId() {
-        return this._siteCollectionId;
-    };
-    /**
-     * Gets the siteId property value. 
-     * @returns a string
-     */
-    public get siteId() {
-        return this._siteId;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -70,6 +43,48 @@ export class CopyNotebookRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the groupId property value. 
+     * @returns a string
+     */
+    public get groupId() {
+        return this._groupId;
+    };
+    /**
+     * Sets the groupId property value. 
+     * @param value Value to set for the groupId property.
+     */
+    public set groupId(value: string | undefined) {
+        this._groupId = value;
+    };
+    /**
+     * Gets the notebookFolder property value. 
+     * @returns a string
+     */
+    public get notebookFolder() {
+        return this._notebookFolder;
+    };
+    /**
+     * Sets the notebookFolder property value. 
+     * @param value Value to set for the notebookFolder property.
+     */
+    public set notebookFolder(value: string | undefined) {
+        this._notebookFolder = value;
+    };
+    /**
+     * Gets the renameAs property value. 
+     * @returns a string
+     */
+    public get renameAs() {
+        return this._renameAs;
+    };
+    /**
+     * Sets the renameAs property value. 
+     * @param value Value to set for the renameAs property.
+     */
+    public set renameAs(value: string | undefined) {
+        this._renameAs = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -83,32 +98,11 @@ export class CopyNotebookRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the siteCollectionId property value. 
+     * @returns a string
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the groupId property value. 
-     * @param value Value to set for the groupId property.
-     */
-    public set groupId(value: string | undefined) {
-        this._groupId = value;
-    };
-    /**
-     * Sets the notebookFolder property value. 
-     * @param value Value to set for the notebookFolder property.
-     */
-    public set notebookFolder(value: string | undefined) {
-        this._notebookFolder = value;
-    };
-    /**
-     * Sets the renameAs property value. 
-     * @param value Value to set for the renameAs property.
-     */
-    public set renameAs(value: string | undefined) {
-        this._renameAs = value;
+    public get siteCollectionId() {
+        return this._siteCollectionId;
     };
     /**
      * Sets the siteCollectionId property value. 
@@ -116,6 +110,13 @@ export class CopyNotebookRequestBody implements Parsable {
      */
     public set siteCollectionId(value: string | undefined) {
         this._siteCollectionId = value;
+    };
+    /**
+     * Gets the siteId property value. 
+     * @returns a string
+     */
+    public get siteId() {
+        return this._siteId;
     };
     /**
      * Sets the siteId property value. 

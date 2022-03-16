@@ -1,33 +1,15 @@
 import {ContentType} from '../../../../../../models/microsoft/graph/';
-import {AssociateWithHubSitesRequestBuilder} from './associateWithHubSites/';
-import {CopyToDefaultContentLocationRequestBuilder} from './copyToDefaultContentLocation/';
-import {IsPublishedRequestBuilder} from './isPublished/';
-import {PublishRequestBuilder} from './publish/';
-import {RefRequestBuilder} from './ref/';
-import {UnpublishRequestBuilder} from './unpublish/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createContentTypeFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/createContentTypeFromDiscriminatorValue';
+import {ODataError} from '../../../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /shares/{sharedDriveItem-id}/list/contentTypes/{contentType-id}/base  */
+/** Provides operations to manage the base property of the microsoft.graph.contentType entity.  */
 export class BaseRequestBuilder {
-    public get associateWithHubSites(): AssociateWithHubSitesRequestBuilder {
-        return new AssociateWithHubSitesRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    public get copyToDefaultContentLocation(): CopyToDefaultContentLocationRequestBuilder {
-        return new CopyToDefaultContentLocationRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
-    public get publish(): PublishRequestBuilder {
-        return new PublishRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
-    public get ref(): RefRequestBuilder {
-        return new RefRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
     /** The request adapter to use to execute the requests.  */
     private readonly requestAdapter: RequestAdapter;
-    public get unpublish(): UnpublishRequestBuilder {
-        return new UnpublishRequestBuilder(this.pathParameters, this.requestAdapter);
-    }
     /** Url template to use to build the URL for the current request builder  */
     private readonly urlTemplate: string;
     /**
@@ -78,13 +60,10 @@ export class BaseRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, ContentType, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
-    };
-    /**
-     * Builds and executes requests for operations under /shares/{sharedDriveItem-id}/list/contentTypes/{contentType-id}/base/microsoft.graph.isPublished()
-     * @returns a isPublishedRequestBuilder
-     */
-    public isPublished() : IsPublishedRequestBuilder {
-        return new IsPublishedRequestBuilder(this.pathParameters, this.requestAdapter);
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ContentType>(requestInfo, createContentTypeFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

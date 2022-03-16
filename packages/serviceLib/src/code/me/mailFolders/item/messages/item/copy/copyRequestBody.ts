@@ -1,15 +1,10 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class CopyRequestBody implements Parsable {
+/** Provides operations to call the copy method.  */
+export class CopyRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _destinationId?: string | undefined;
-    /**
-     * Instantiates a new copyRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -18,11 +13,31 @@ export class CopyRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Instantiates a new copyRequestBody and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
      * Gets the destinationId property value. 
      * @returns a string
      */
     public get destinationId() {
         return this._destinationId;
+    };
+    /**
+     * Sets the destinationId property value. 
+     * @param value Value to set for the DestinationId property.
+     */
+    public set destinationId(value: string | undefined) {
+        this._destinationId = value;
     };
     /**
      * The deserialization information for the current model
@@ -41,19 +56,5 @@ export class CopyRequestBody implements Parsable {
         if(!writer) throw new Error("writer cannot be undefined");
         writer.writeStringValue("destinationId", this.destinationId);
         writer.writeAdditionalData(this.additionalData);
-    };
-    /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
-     */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the destinationId property value. 
-     * @param value Value to set for the DestinationId property.
-     */
-    public set destinationId(value: string | undefined) {
-        this._destinationId = value;
     };
 }

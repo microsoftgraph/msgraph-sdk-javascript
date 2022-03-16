@@ -1,7 +1,10 @@
 import {ResourceSpecificPermissionGrant} from '../../../../models/microsoft/graph/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createResourceSpecificPermissionGrantFromDiscriminatorValue} from '../../../../models/microsoft/graph/createResourceSpecificPermissionGrantFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /groups/{group-id}/permissionGrants/{resourceSpecificPermissionGrant-id}  */
+/** Provides operations to manage the permissionGrants property of the microsoft.graph.group entity.  */
 export class ResourceSpecificPermissionGrantItemRequestBuilder {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
@@ -23,7 +26,7 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * The permission that has been granted for a group to a specific application. Supports $expand.
+     * Delete navigation property permissionGrants for groups
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -58,7 +61,7 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The permission that has been granted for a group to a specific application. Supports $expand.
+     * Update the navigation property permissionGrants in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -76,7 +79,7 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * The permission that has been granted for a group to a specific application. Supports $expand.
+     * Delete navigation property permissionGrants for groups
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -85,7 +88,11 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * The permission that has been granted for a group to a specific application. Supports $expand.
@@ -102,10 +109,14 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ResourceSpecificPermissionGrant>(requestInfo, ResourceSpecificPermissionGrant, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ResourceSpecificPermissionGrant>(requestInfo, createResourceSpecificPermissionGrantFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
-     * The permission that has been granted for a group to a specific application. Supports $expand.
+     * Update the navigation property permissionGrants in groups
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -116,6 +127,10 @@ export class ResourceSpecificPermissionGrantItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

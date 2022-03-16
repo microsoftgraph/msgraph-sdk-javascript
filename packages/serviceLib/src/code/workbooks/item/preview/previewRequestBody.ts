@@ -1,16 +1,11 @@
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class PreviewRequestBody implements Parsable {
+/** Provides operations to call the preview method.  */
+export class PreviewRequestBody implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _page?: string | undefined;
     private _zoom?: number | undefined;
-    /**
-     * Instantiates a new previewRequestBody and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
@@ -19,18 +14,17 @@ export class PreviewRequestBody implements Parsable {
         return this._additionalData;
     };
     /**
-     * Gets the page property value. 
-     * @returns a string
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
      */
-    public get page() {
-        return this._page;
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
-     * Gets the zoom property value. 
-     * @returns a double
+     * Instantiates a new previewRequestBody and sets the default values.
      */
-    public get zoom() {
-        return this._zoom;
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -43,6 +37,20 @@ export class PreviewRequestBody implements Parsable {
         ]);
     };
     /**
+     * Gets the page property value. 
+     * @returns a string
+     */
+    public get page() {
+        return this._page;
+    };
+    /**
+     * Sets the page property value. 
+     * @param value Value to set for the page property.
+     */
+    public set page(value: string | undefined) {
+        this._page = value;
+    };
+    /**
      * Serializes information the current object
      * @param writer Serialization writer to use to serialize this model
      */
@@ -53,18 +61,11 @@ export class PreviewRequestBody implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the zoom property value. 
+     * @returns a double
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the page property value. 
-     * @param value Value to set for the page property.
-     */
-    public set page(value: string | undefined) {
-        this._page = value;
+    public get zoom() {
+        return this._zoom;
     };
     /**
      * Sets the zoom property value. 

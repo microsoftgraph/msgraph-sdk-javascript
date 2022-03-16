@@ -1,23 +1,26 @@
+import {createApplicationFromDiscriminatorValue} from './createApplicationFromDiscriminatorValue';
+import {createServicePrincipalFromDiscriminatorValue} from './createServicePrincipalFromDiscriminatorValue';
 import {Application, ServicePrincipal} from './index';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class ApplicationServicePrincipal implements Parsable {
+export class ApplicationServicePrincipal implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     private _application?: Application | undefined;
     private _servicePrincipal?: ServicePrincipal | undefined;
-    /**
-     * Instantiates a new applicationServicePrincipal and sets the default values.
-     */
-    public constructor() {
-        this._additionalData = new Map<string, unknown>();
-    };
     /**
      * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      * @returns a Map<string, unknown>
      */
     public get additionalData() {
         return this._additionalData;
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
     };
     /**
      * Gets the application property value. 
@@ -27,11 +30,17 @@ export class ApplicationServicePrincipal implements Parsable {
         return this._application;
     };
     /**
-     * Gets the servicePrincipal property value. 
-     * @returns a servicePrincipal
+     * Sets the application property value. 
+     * @param value Value to set for the application property.
      */
-    public get servicePrincipal() {
-        return this._servicePrincipal;
+    public set application(value: Application | undefined) {
+        this._application = value;
+    };
+    /**
+     * Instantiates a new applicationServicePrincipal and sets the default values.
+     */
+    public constructor() {
+        this._additionalData = new Map<string, unknown>();
     };
     /**
      * The deserialization information for the current model
@@ -39,8 +48,8 @@ export class ApplicationServicePrincipal implements Parsable {
      */
     public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
         return new Map<string, (item: T, node: ParseNode) => void>([
-            ["application", (o, n) => { (o as unknown as ApplicationServicePrincipal).application = n.getObjectValue<Application>(Application); }],
-            ["servicePrincipal", (o, n) => { (o as unknown as ApplicationServicePrincipal).servicePrincipal = n.getObjectValue<ServicePrincipal>(ServicePrincipal); }],
+            ["application", (o, n) => { (o as unknown as ApplicationServicePrincipal).application = n.getObjectValue<Application>(createApplicationFromDiscriminatorValue); }],
+            ["servicePrincipal", (o, n) => { (o as unknown as ApplicationServicePrincipal).servicePrincipal = n.getObjectValue<ServicePrincipal>(createServicePrincipalFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -54,18 +63,11 @@ export class ApplicationServicePrincipal implements Parsable {
         writer.writeAdditionalData(this.additionalData);
     };
     /**
-     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
-     * @param value Value to set for the AdditionalData property.
+     * Gets the servicePrincipal property value. 
+     * @returns a servicePrincipal
      */
-    public set additionalData(value: Map<string, unknown>) {
-        this._additionalData = value;
-    };
-    /**
-     * Sets the application property value. 
-     * @param value Value to set for the application property.
-     */
-    public set application(value: Application | undefined) {
-        this._application = value;
+    public get servicePrincipal() {
+        return this._servicePrincipal;
     };
     /**
      * Sets the servicePrincipal property value. 

@@ -1,11 +1,14 @@
 import {ConnectedOrganization} from '../../../../models/microsoft/graph/';
-import {ExternalSponsorsRequestBuilder} from './externalSponsors/';
-import {DirectoryObjectItemRequestBuilder as i5208b59191ec8df9c463782bc2cf4ce6216f7ae66c6360600c8e81757edfcbef} from './externalSponsors/item/';
-import {InternalSponsorsRequestBuilder} from './internalSponsors/';
-import {DirectoryObjectItemRequestBuilder as i85dad207545ce2553cc34a9773b5647376bd669d16a717b781acc57d7578395a} from './internalSponsors/item/';
-import {getPathParameters, HttpMethod, Parsable, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
+import {createConnectedOrganizationFromDiscriminatorValue} from '../../../../models/microsoft/graph/createConnectedOrganizationFromDiscriminatorValue';
+import {ODataError} from '../../../../models/microsoft/graph/oDataErrors/';
+import {createODataErrorFromDiscriminatorValue} from '../../../../models/microsoft/graph/oDataErrors/createODataErrorFromDiscriminatorValue';
+import {ExternalSponsorsRequestBuilder} from './externalSponsors/externalSponsorsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i5208b59191ec8df9c463782bc2cf4ce6216f7ae66c6360600c8e81757edfcbef} from './externalSponsors/item/directoryObjectItemRequestBuilder';
+import {InternalSponsorsRequestBuilder} from './internalSponsors/internalSponsorsRequestBuilder';
+import {DirectoryObjectItemRequestBuilder as i85dad207545ce2553cc34a9773b5647376bd669d16a717b781acc57d7578395a} from './internalSponsors/item/directoryObjectItemRequestBuilder';
+import {getPathParameters, HttpMethod, Parsable, ParsableFactory, RequestAdapter, RequestInformation, RequestOption, ResponseHandler} from '@microsoft/kiota-abstractions';
 
-/** Builds and executes requests for operations under /identityGovernance/entitlementManagement/connectedOrganizations/{connectedOrganization-id}  */
+/** Provides operations to manage the connectedOrganizations property of the microsoft.graph.entitlementManagement entity.  */
 export class ConnectedOrganizationItemRequestBuilder {
     public get externalSponsors(): ExternalSponsorsRequestBuilder {
         return new ExternalSponsorsRequestBuilder(this.pathParameters, this.requestAdapter);
@@ -33,7 +36,7 @@ export class ConnectedOrganizationItemRequestBuilder {
         this.requestAdapter = requestAdapter;
     };
     /**
-     * Represents references to a directory or domain of another organization whose users can request access.
+     * Delete navigation property connectedOrganizations for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @returns a RequestInformation
@@ -68,7 +71,7 @@ export class ConnectedOrganizationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents references to a directory or domain of another organization whose users can request access.
+     * Update the navigation property connectedOrganizations in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -86,7 +89,7 @@ export class ConnectedOrganizationItemRequestBuilder {
         return requestInfo;
     };
     /**
-     * Represents references to a directory or domain of another organization whose users can request access.
+     * Delete navigation property connectedOrganizations for identityGovernance
      * @param h Request headers
      * @param o Request options
      * @param responseHandler Response handler to use in place of the default response handling provided by the core service
@@ -95,7 +98,11 @@ export class ConnectedOrganizationItemRequestBuilder {
         const requestInfo = this.createDeleteRequestInformation(
             h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.connectedOrganizations.item.externalSponsors.item collection
@@ -123,7 +130,11 @@ export class ConnectedOrganizationItemRequestBuilder {
         const requestInfo = this.createGetRequestInformation(
             q, h, o
         );
-        return this.requestAdapter?.sendAsync<ConnectedOrganization>(requestInfo, ConnectedOrganization, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendAsync<ConnectedOrganization>(requestInfo, createConnectedOrganizationFromDiscriminatorValue, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
     /**
      * Gets an item from the MicrosoftGraph.identityGovernance.entitlementManagement.connectedOrganizations.item.internalSponsors.item collection
@@ -137,7 +148,7 @@ export class ConnectedOrganizationItemRequestBuilder {
         return new i85dad207545ce2553cc34a9773b5647376bd669d16a717b781acc57d7578395a(urlTplParams, this.requestAdapter);
     };
     /**
-     * Represents references to a directory or domain of another organization whose users can request access.
+     * Update the navigation property connectedOrganizations in identityGovernance
      * @param body 
      * @param h Request headers
      * @param o Request options
@@ -148,6 +159,10 @@ export class ConnectedOrganizationItemRequestBuilder {
         const requestInfo = this.createPatchRequestInformation(
             body, h, o
         );
-        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, undefined) ?? Promise.reject(new Error('http core is null'));
+        const errorMapping: Record<string, ParsableFactory<Parsable>> = {
+            "4XX": createODataErrorFromDiscriminatorValue,
+            "5XX": createODataErrorFromDiscriminatorValue,
+        };
+        return this.requestAdapter?.sendNoResponseContentAsync(requestInfo, responseHandler, errorMapping) ?? Promise.reject(new Error('http core is null'));
     };
 }

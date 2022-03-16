@@ -1,2 +1,1 @@
-export * from './CancelMediaProcessingRequestBuilder'
-export * from './CancelMediaProcessingRequestBody'
+export * from './cancelMediaProcessingRequestBody'

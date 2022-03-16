@@ -1,10 +1,11 @@
+import {createSettingTemplateValueFromDiscriminatorValue} from './createSettingTemplateValueFromDiscriminatorValue';
 import {DirectoryObject, SettingTemplateValue} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class GroupSettingTemplate extends DirectoryObject implements Parsable {
     /** Description of the template.  */
     private _description?: string | undefined;
-    /** Display name of the template.  */
+    /** Display name of the template. The template named Group.Unified can be used to configure tenant-wide Microsoft 365 group settings, while the template named Group.Unified.Guest can be used to configure group-specific settings.  */
     private _displayName?: string | undefined;
     /** Collection of settingTemplateValues that list the set of available settings, defaults and types that make up this template.  */
     private _values?: SettingTemplateValue[] | undefined;
@@ -22,18 +23,25 @@ export class GroupSettingTemplate extends DirectoryObject implements Parsable {
         return this._description;
     };
     /**
-     * Gets the displayName property value. Display name of the template.
+     * Sets the description property value. Description of the template.
+     * @param value Value to set for the description property.
+     */
+    public set description(value: string | undefined) {
+        this._description = value;
+    };
+    /**
+     * Gets the displayName property value. Display name of the template. The template named Group.Unified can be used to configure tenant-wide Microsoft 365 group settings, while the template named Group.Unified.Guest can be used to configure group-specific settings.
      * @returns a string
      */
     public get displayName() {
         return this._displayName;
     };
     /**
-     * Gets the values property value. Collection of settingTemplateValues that list the set of available settings, defaults and types that make up this template.
-     * @returns a settingTemplateValue
+     * Sets the displayName property value. Display name of the template. The template named Group.Unified can be used to configure tenant-wide Microsoft 365 group settings, while the template named Group.Unified.Guest can be used to configure group-specific settings.
+     * @param value Value to set for the displayName property.
      */
-    public get values() {
-        return this._values;
+    public set displayName(value: string | undefined) {
+        this._displayName = value;
     };
     /**
      * The deserialization information for the current model
@@ -43,7 +51,7 @@ export class GroupSettingTemplate extends DirectoryObject implements Parsable {
         return new Map<string, (item: T, node: ParseNode) => void>([...super.getFieldDeserializers<T>(),
             ["description", (o, n) => { (o as unknown as GroupSettingTemplate).description = n.getStringValue(); }],
             ["displayName", (o, n) => { (o as unknown as GroupSettingTemplate).displayName = n.getStringValue(); }],
-            ["values", (o, n) => { (o as unknown as GroupSettingTemplate).values = n.getCollectionOfObjectValues<SettingTemplateValue>(SettingTemplateValue); }],
+            ["values", (o, n) => { (o as unknown as GroupSettingTemplate).values = n.getCollectionOfObjectValues<SettingTemplateValue>(createSettingTemplateValueFromDiscriminatorValue); }],
         ]);
     };
     /**
@@ -58,18 +66,11 @@ export class GroupSettingTemplate extends DirectoryObject implements Parsable {
         writer.writeCollectionOfObjectValues<SettingTemplateValue>("values", this.values);
     };
     /**
-     * Sets the description property value. Description of the template.
-     * @param value Value to set for the description property.
+     * Gets the values property value. Collection of settingTemplateValues that list the set of available settings, defaults and types that make up this template.
+     * @returns a settingTemplateValue
      */
-    public set description(value: string | undefined) {
-        this._description = value;
-    };
-    /**
-     * Sets the displayName property value. Display name of the template.
-     * @param value Value to set for the displayName property.
-     */
-    public set displayName(value: string | undefined) {
-        this._displayName = value;
+    public get values() {
+        return this._values;
     };
     /**
      * Sets the values property value. Collection of settingTemplateValues that list the set of available settings, defaults and types that make up this template.
