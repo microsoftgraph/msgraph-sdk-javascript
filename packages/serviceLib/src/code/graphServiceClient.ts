@@ -444,13 +444,13 @@ export class GraphServiceClient {
         urlTplParams["contract_id"] = id
         return new ContractItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
-    public createGetRequestInformation(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined) : RequestInformation {
+    public createGetRequestInformation(h?: Record<string, string> | undefined, o?: RequestOption[] | undefined) : RequestInformation {
         const requestInfo = new RequestInformation();
         requestInfo.urlTemplate = this.urlTemplate;
         requestInfo.pathParameters = this.pathParameters;
         requestInfo.httpMethod = HttpMethod.GET;
         if(h) requestInfo.headers = h;
-        o && requestInfo.addRequestOptions(o);
+        o && requestInfo.addRequestOptions(...o);
         return requestInfo;
     };
     /**
@@ -541,7 +541,7 @@ export class GraphServiceClient {
         urlTplParams["drive_id"] = id
         return new DriveItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
-    public get(h?: Record<string, string> | undefined, o?: Record<string,RequestOption> | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
+    public get(h?: Record<string, string> | undefined, o?: RequestOption[] | undefined, responseHandler?: ResponseHandler | undefined) : Promise<void> {
         const requestInfo = this.createGetRequestInformation(
             h, o
         );

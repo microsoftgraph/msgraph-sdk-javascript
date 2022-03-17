@@ -1,4 +1,4 @@
-/** Provides operations to manage the educationRoot singleton.  */
+/** Provides operations to manage the collection of group entities.  */
 export enum TeamsAsyncOperationType {
     Invalid = "invalid",
     CloneTeam = "cloneTeam",

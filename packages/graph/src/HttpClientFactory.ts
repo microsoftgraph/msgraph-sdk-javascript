@@ -8,6 +8,7 @@ import { getGraphTelemetryConfigurator, GraphTelemetry } from "./middleware/Tele
 
 
 export function getDefaultMiddlewareChain( clientOptions: ClientOptions): Middleware[] {
+    console.log("called here");
 		const middlewareArray: Middleware[] = [];
         const redirectHandler = new RedirectHandler();
         middlewareArray.push(redirectHandler);

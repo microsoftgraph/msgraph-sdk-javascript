@@ -1,4 +1,4 @@
-/** Provides operations to manage the educationRoot singleton.  */
+/** Provides operations to manage the collection of group entities.  */
 export enum TeamSpecialization {
     None = "none",
     EducationStandard = "educationStandard",

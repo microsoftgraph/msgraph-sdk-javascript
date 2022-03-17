@@ -7,8 +7,9 @@ import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 import { ClientOptions } from "@microsoft/microsoft-graph-client";
 import { GraphBaseClient } from '@microsoft/microsoft-graph-client';
 
+
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
-export class GraphServiceClient  extends GraphBaseClient{
+export class GraphServiceClient extends GraphBaseClient {
     /** Path parameters for the request  */
     private readonly pathParameters: Record<string, unknown>;
     /** The request adapter to use to execute the requests.  */
@@ -26,9 +27,7 @@ export class GraphServiceClient  extends GraphBaseClient{
         clientOptions.SDKNameWithVersion = "ServiceLibraryVersion";
         super(clientOptions);
         // change to this.authprovider
-        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider, undefined, undefined, this.httpClient);    ;
-            if(!requestAdapter) throw new Error("requestAdapter cannot be undefined");
-        this.pathParameters = {};
+        const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider, undefined, undefined, this.httpClient);        this.pathParameters = {};
         this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
         registerDefaultSerializer(JsonSerializationWriterFactory);
@@ -46,12 +45,4 @@ export class GraphServiceClient  extends GraphBaseClient{
         urlTplParams["user_id"] = id
         return new UserItemRequestBuilder(urlTplParams, this.requestAdapter);
     };
-    // public static init(clientOptions: ClientOptions): GraphServiceClient {
-    //     const client = new GraphServiceClient(clientOptions);
-    //     return client;
-    // }
-
-    // public api(path: string): GraphRequest {
-    //     return super.api(path);
-    // }
 }

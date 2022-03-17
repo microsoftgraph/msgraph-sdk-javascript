@@ -1,9 +1,9 @@
 import {createRecipientFromDiscriminatorValue} from './createRecipientFromDiscriminatorValue';
 import {Importance} from './importance';
 import {Recipient} from './recipient';
-import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
+import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
-export class MessageRuleActions implements Parsable {
+export class MessageRuleActions implements AdditionalDataHolder, Parsable {
     /** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
     private _additionalData: Map<string, unknown>;
     /** A list of categories to be assigned to a message.  */

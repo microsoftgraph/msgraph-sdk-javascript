@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\packages\\graph\\dist\\cjs\\test.js",
+            "program": "${workspaceFolder}\\packages\\serviceLib\\dist\\cjs\\src\\main\\main.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

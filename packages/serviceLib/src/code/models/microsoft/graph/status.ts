@@ -1,4 +1,4 @@
-/** Provides operations to manage the activities property of the microsoft.graph.user entity.  */
+/** Provides operations to manage the collection of drive entities.  */
 export enum Status {
     Active = "active",
     Updated = "updated",

@@ -1,4 +1,4 @@
-/** Provides operations to call the getGroupArchivedPrintJobs method.  */
+/** Provides operations to manage the print singleton.  */
 export enum PrintJobProcessingState {
     Unknown = "unknown",
     Pending = "pending",

@@ -71,7 +71,7 @@ export class Client {
          
 			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions)));
 		} else  {
-			httpClient = new HttpClient(...[].concat(clientOptions.middleware, clientOptions.customFetch));
+			httpClient = new HttpClient( clientOptions.customFetch,...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
 	}
