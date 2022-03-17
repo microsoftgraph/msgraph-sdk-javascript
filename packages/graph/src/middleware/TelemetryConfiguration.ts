@@ -1,6 +1,7 @@
 // export function telemetryConfigurator(){
 
 import { RequestOption } from "@microsoft/kiota-abstractions";
+import { FetchRequestInit } from "@microsoft/kiota-http-fetchlibrary";
 import { appendRequestHeader, getRequestHeader, setRequestHeader, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 import {isCustomHost, isGraphURL} from "../GraphRequestUtil"; 
 import { generateUUID } from "./MiddlewareUtil";
@@ -38,14 +39,14 @@ export const graphTelemetryConfigurator = (url: string, requestInit: RequestInit
     if (isGraphURL(url) || (graphTelemetry.customHosts && isCustomHost(url, graphTelemetry.customHosts))) {
         // Add telemetry only if the request url is a Graph URL.
         // Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
-        let clientRequestId: string = getRequestHeader(requestInit, CLIENT_REQUEST_ID_HEADER);
+        let clientRequestId: string = getRequestHeader(requestInit as FetchRequestInit, CLIENT_REQUEST_ID_HEADER);
         if (!clientRequestId) {
             clientRequestId = generateUUID();
-            setRequestHeader(requestInit, CLIENT_REQUEST_ID_HEADER, clientRequestId);
+            setRequestHeader(requestInit as FetchRequestInit, CLIENT_REQUEST_ID_HEADER, clientRequestId);
         }
        
 
-        appendRequestHeader(requestInit, SDK_VERSION_HEADER, graphTelemetry.SDKNameWithVersion);
+        appendRequestHeader(requestInit as FetchRequestInit, SDK_VERSION_HEADER, graphTelemetry.SDKNameWithVersion);
     } else {
         // Remove telemetry headers if present during redirection.
         delete requestInit.headers[CLIENT_REQUEST_ID_HEADER];

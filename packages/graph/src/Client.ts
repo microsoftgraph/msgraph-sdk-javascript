@@ -69,7 +69,7 @@ export class Client {
         this.authProvider = clientOptions.authProvider;
         if (!clientOptions.middleware) {
          
-			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions)));
+			httpClient = new HttpClient(clientOptions.customFetch, ...[].concat(getDefaultMiddlewareChain(clientOptions)));
 		} else  {
 			httpClient = new HttpClient( clientOptions.customFetch,...[].concat(clientOptions.middleware));
 		}

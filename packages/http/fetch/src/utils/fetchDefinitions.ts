@@ -41,8 +41,8 @@ export type FetchHeaders = Headers & {
 };
 
 export type FetchResponse = Omit<Response, "headers"> & {
-    headers: FetchHeaders;
-}
+	headers: FetchHeaders;
+};
 
 export type FetchRequestInit = Omit<RequestInit, "body" | "headers" | "redirect"> & {
 	/**
