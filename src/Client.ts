@@ -8,17 +8,16 @@
 /**
  * @module Client
  */
-
 import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
-import { appendGraphAndCustomHosts } from "./GraphRequestUtil";
-import { HTTPClient } from "./HTTPClient";
-import { HTTPClientFactory } from "./HTTPClientFactory";
+import { mergeGraphAndCustomHosts } from "./GraphRequestUtil";
+import { getDefaultMiddlewareChain } from "./MiddlewareFactory";
 import { ClientOptions } from "./IClientOptions";
-import { validatePolyFilling } from "./ValidatePolyFilling";
+import { GraphSDKConfig } from "./requestBuilderUtils/GraphSDKConfig";
 
 export class Client {
 	/**
@@ -35,9 +34,9 @@ export class Client {
 	 * @private
 	 * A member which holds the HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	protected httpClient: HttpClient;
 
-	private authProvider: BaseBearerTokenAuthenticationProvider;
+	protected authProvider: BaseBearerTokenAuthenticationProvider;
 
 	/**
 	 * @public
@@ -56,31 +55,35 @@ export class Client {
 	 * Creates an instance of Client
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
-	private constructor(clientOptions: ClientOptions) {
-		validatePolyFilling();
+	protected constructor(clientOptions: ClientOptions, graphSDKOptions?: GraphSDKConfig) {
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];
 			}
 		}
-		let httpClient: HTTPClient;
+		let httpClient: HttpClient;
 		if (clientOptions.authProvider === undefined) {
 			const error = new GraphClientError();
-			error.name = "Client Initialization Failed";
+			error.name = "AmbiguityInInitialization";
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
+
 		this.authProvider = clientOptions.authProvider;
-		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
-		const allowedHosts = clientOptions.customHosts ? new Set([...clientOptions.customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
-		const hostSetWithGraphandCustomHosts = appendGraphAndCustomHosts(allowedHosts);
-		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
+		this.updateAuthProviderHosts(clientOptions);
 		if (!clientOptions.middleware) {
-			httpClient = HTTPClientFactory.createWithDefaultMiddleware(this.authProvider);
+			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, graphSDKOptions)));
 		} else {
-			httpClient = new HTTPClient(...[].concat(clientOptions.middleware));
+			httpClient = new HttpClient(clientOptions.customFetch, ...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
+	}
+
+	private updateAuthProviderHosts(clientOptions: ClientOptions) {
+		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
+		const allowedHosts = clientOptions.customHosts ? new Set([...clientOptions.customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
+		const hostSetWithGraphandCustomHosts = mergeGraphAndCustomHosts(allowedHosts);
+		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
 	}
 
 	/**

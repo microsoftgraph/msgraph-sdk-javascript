@@ -23,15 +23,14 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 	 * @public
 	 * @constructor
 	 * Creates an instance of SimpleAccessTokenProvider
-     * @param {()=>Promise<string>}getAccessTokenCallback  - The callback function to get the access token
+	 * @param {()=>Promise<string>}getAccessTokenCallback  - The callback function to get the access token
 	 * @param {string[]} scopes - The scopes for the access token
-     * @param {allowedHosts} allowedhosts -  A set of custom host names. Should contain hostnames only.
+	 * @param {allowedHosts} allowedhosts -  A set of custom host names. Should contain hostnames only.
 	 * @returns An instance of SimpleAccessTokenProvider
 	 */
-	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes: string[], private allowedhosts?: Set<string>) {
+	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes?: string[], private allowedhosts?: Set<string>) {
 		this.allowedHostsValidator = new AllowedHostsValidator(allowedhosts);
 	}
-    validateProtocol(url);
 	private readonly allowedHostsValidator: AllowedHostsValidator;
 	public getAllowedHostsValidator = () => this.allowedHostsValidator;
 
@@ -45,6 +44,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 		if (!url || !this.allowedHostsValidator.isUrlHostValid(url)) {
 			throw new GraphClientError("The request url is not present in the allowed hosts list or is not a valid host");
 		}
+        validateProtocol(url);
 		let token = "";
 		if (this.getAccessTokenCallback) {
 			token = await this.getAccessTokenCallback(this.scopes);
@@ -52,8 +52,6 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 		if (!token) {
 			throw new GraphClientError("Please provide a valid access token");
 		}
-
-		console.log(token);
 		return token;
 	}
 }

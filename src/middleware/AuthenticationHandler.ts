@@ -9,13 +9,8 @@
  * @module AuthenticationHandler
  */
 
-import { AccessTokenProvider } from "@microsoft/kiota-abstractions";
-
-import { isCustomHost, isGraphURL } from "../GraphRequestUtil";
-import { Context } from "../IContext";
-import { Middleware } from "./IMiddleware";
-import { appendRequestHeader } from "./MiddlewareUtil";
-import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
+import { BaseBearerTokenAuthenticationProvider, RequestOption } from "@microsoft/kiota-abstractions";
+import { Middleware, appendRequestHeader, FetchRequestInit } from "@microsoft/kiota-http-fetchlibrary";
 
 /**
  * @class
@@ -33,15 +28,15 @@ export class AuthenticationHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	next: Middleware;
 
 	/**
 	 * @public
 	 * @constructor
 	 * Creates an instance of AuthenticationHandler
-	 * @param {AccessTokenProvider} accessTokenProvider - The access token provider used to retrieve the access token and add it to the request header
+	 * @param {AuthenticationProvider} authenticationProvider - The authentication provider for the authentication handler
 	 */
-	public constructor(private accessTokenProvider: AccessTokenProvider) {}
+	public constructor(private authenticationProvider : BaseBearerTokenAuthenticationProvider) {}
 
 	/**
 	 * @public
@@ -50,28 +45,10 @@ export class AuthenticationHandler implements Middleware {
 	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
-	public async execute(context: Context): Promise<void> {
-		const url = typeof context.request === "string" ? context.request : context.request.url;
-		if (isGraphURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
-			const token: string = await this.accessTokenProvider.getAuthorizationToken(url);
+	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
+			const token: string = await this.authenticationProvider.accessTokenProvider.getAuthorizationToken(url);
 			const bearerKey = `Bearer ${token}`;
-			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
-		} else {
-			if (context.options.headers) {
-				delete context.options.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
-			}
-		}
-		return await this.nextMiddleware.execute(context);
-	}
-
-	/**
-	 * @public
-	 * To set the next middleware in the chain
-	 * @param {Middleware} next - The middleware instance
-	 * @returns Nothing
-	 */
-	public setNext(next: Middleware): void {
-		this.nextMiddleware = next;
+			appendRequestHeader(requestInit as FetchRequestInit, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+		return await this.next.execute(url, requestInit, requestOptions);
 	}
 }

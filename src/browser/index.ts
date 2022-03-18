@@ -4,22 +4,20 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path= "../../shims.d.ts" />
-export { AuthenticationProvider, AccessTokenProvider } from "@microsoft/kiota-abstractions";
+
+ export { AuthenticationProvider, AccessTokenProvider  } from "@microsoft/kiota-abstractions";
+ 
 
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
-export { HTTPMessageHandler } from "../middleware/HTTPMessageHandler";
 export { Middleware } from "../middleware/IMiddleware";
-export { RetryHandler } from "../middleware/RetryHandler";
-export { RedirectHandler } from "../middleware/RedirectHandler";
-export { TelemetryHandler } from "../middleware/TelemetryHandler";
-export { MiddlewareFactory } from "../middleware/MiddlewareFactory";
+export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+export { RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
+export { MiddlewareFactory } from "@microsoft/kiota-http-fetchlibrary";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
-export { ShouldRetry, RetryHandlerOptions } from "../middleware/options/RetryHandlerOptions";
-export { ShouldRedirect, RedirectHandlerOptions } from "../middleware/options/RedirectHandlerOptions";
+export { ShouldRetry, RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+export { ShouldRedirect, RedirectHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 export { FeatureUsageFlag, TelemetryHandlerOptions } from "../middleware/options/TelemetryHandlerOptions";
 export { ChaosHandlerOptions } from "../middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "../middleware/options/ChaosStrategy";
@@ -46,6 +44,3 @@ export { NodeFetchInit, FetchOptions } from "../IFetchOptions";
 export { GraphRequestCallback } from "../IGraphRequestCallback";
 
 export { ResponseType } from "../ResponseType";
-
-export { SimpleAuthenticationProvider } from "../authentication/SimpleAuthentication/SimpleAuthenticationProvider";
-export { SimpleAccessTokenProvider } from "../authentication/SimpleAuthentication/SimpleAccessTokenProvider";

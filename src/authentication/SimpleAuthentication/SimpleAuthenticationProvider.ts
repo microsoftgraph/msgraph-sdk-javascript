@@ -18,7 +18,7 @@ export class SimpleAuthenticationProvider extends BaseBearerTokenAuthenticationP
 	 * @param {allowedHosts} allowedhosts -  A set of custom host names. Should contain hostnames only.
 	 * @returns An instance of SimpleAuthenticationProvider
 	 */
-	constructor(getAccessTokenCallback: (scopes?: string[]) => Promise<string>, scopes: string[], allowedHosts?: Set<string>) {
+	constructor(getAccessTokenCallback: (scopes?: string[]) => Promise<string>, scopes?: string[], allowedHosts?: Set<string>) {
 		super(new SimpleAccessTokenProvider(getAccessTokenCallback, scopes, allowedHosts));
 	}
 }
