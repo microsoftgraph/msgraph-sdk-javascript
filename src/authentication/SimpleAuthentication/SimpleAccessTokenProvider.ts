@@ -9,7 +9,7 @@
  * @module SimpleAccessTokenProvider
  */
 
-import { AccessTokenProvider, AllowedHostsValidator } from "@microsoft/kiota-abstractions";
+import { AccessTokenProvider, AllowedHostsValidator, validateProtocol } from "@microsoft/kiota-abstractions";
 
 import { GraphClientError } from "../../GraphClientError";
 
@@ -31,6 +31,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes: string[], private allowedhosts?: Set<string>) {
 		this.allowedHostsValidator = new AllowedHostsValidator(allowedhosts);
 	}
+    validateProtocol(url);
 	private readonly allowedHostsValidator: AllowedHostsValidator;
 	public getAllowedHostsValidator = () => this.allowedHostsValidator;
 

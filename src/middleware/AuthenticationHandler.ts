@@ -39,7 +39,7 @@ export class AuthenticationHandler implements Middleware {
 	 * @public
 	 * @constructor
 	 * Creates an instance of AuthenticationHandler
-	 * @param {AuthenticationProvider} authenticationProvider - The authentication provider for the authentication handler
+	 * @param {AccessTokenProvider} accessTokenProvider - The access token provider used to retrieve the access token and add it to the request header
 	 */
 	public constructor(private accessTokenProvider: AccessTokenProvider) {}
 
