@@ -1,6 +1,5 @@
 import {createInferenceClassificationOverrideFromDiscriminatorValue} from './createInferenceClassificationOverrideFromDiscriminatorValue';
-import {Entity} from './entity';
-import {InferenceClassificationOverride} from './inferenceClassificationOverride';
+import {Entity, InferenceClassificationOverride} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class InferenceClassification extends Entity implements Parsable {

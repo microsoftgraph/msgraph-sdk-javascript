@@ -1,6 +1,6 @@
 import {createRecipientFromDiscriminatorValue} from './createRecipientFromDiscriminatorValue';
 import {Importance} from './importance';
-import {Recipient} from './recipient';
+import {Recipient} from './index';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MessageRuleActions implements AdditionalDataHolder, Parsable {

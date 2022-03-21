@@ -1,4 +1,4 @@
-import {MessagesResponse} from './messagesResponse';
+import {MessagesResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createMessagesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : MessagesResponse {

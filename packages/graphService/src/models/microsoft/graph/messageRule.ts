@@ -1,8 +1,6 @@
 import {createMessageRuleActionsFromDiscriminatorValue} from './createMessageRuleActionsFromDiscriminatorValue';
 import {createMessageRulePredicatesFromDiscriminatorValue} from './createMessageRulePredicatesFromDiscriminatorValue';
-import {Entity} from './entity';
-import {MessageRuleActions} from './messageRuleActions';
-import {MessageRulePredicates} from './messageRulePredicates';
+import {Entity, MessageRuleActions, MessageRulePredicates} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MessageRule extends Entity implements Parsable {

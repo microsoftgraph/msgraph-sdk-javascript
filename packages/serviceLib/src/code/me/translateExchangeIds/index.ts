@@ -1,2 +1,2 @@
-export * from './translateExchangeIdsRequestBody'
 export * from './translateExchangeIdsResponse'
+export * from './translateExchangeIdsRequestBody'

@@ -4,7 +4,8 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path= "./../shims.d.ts" />
 export { RetryHandler, RedirectHandler} from "@microsoft/kiota-http-fetchlibrary" ;
 
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
@@ -12,7 +13,6 @@ export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponse
 
 export { Middleware } from "./middleware/IMiddleware";
 
-export { TelemetryHandler } from "./middleware/TelemetryHandler";
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 export { FeatureUsageFlag, TelemetryHandlerOptions } from "./middleware/options/TelemetryHandlerOptions";
 export { ChaosHandlerOptions } from "./middleware/options/ChaosHandlerOptions";
@@ -33,8 +33,6 @@ export { Client } from "./Client";
 export { GraphError } from "./GraphError";
 export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
-
-
 
 export { ClientOptions } from "./IClientOptions";
 export { Context } from "./IContext";

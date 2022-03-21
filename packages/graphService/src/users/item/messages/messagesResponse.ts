@@ -1,5 +1,5 @@
+import {Message} from '../../../models/microsoft/graph/';
 import {createMessageFromDiscriminatorValue} from '../../../models/microsoft/graph/createMessageFromDiscriminatorValue';
-import {Message} from '../../../models/microsoft/graph/message';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MessagesResponse implements AdditionalDataHolder, Parsable {

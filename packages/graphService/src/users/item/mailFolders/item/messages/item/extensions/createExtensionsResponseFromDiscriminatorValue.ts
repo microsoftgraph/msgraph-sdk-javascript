@@ -1,4 +1,4 @@
-import {ExtensionsResponse} from './extensionsResponse';
+import {ExtensionsResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createExtensionsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ExtensionsResponse {

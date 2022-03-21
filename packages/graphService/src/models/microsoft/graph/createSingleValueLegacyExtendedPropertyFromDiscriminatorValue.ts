@@ -1,4 +1,4 @@
-import {SingleValueLegacyExtendedProperty} from './singleValueLegacyExtendedProperty';
+import {SingleValueLegacyExtendedProperty} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createSingleValueLegacyExtendedPropertyFromDiscriminatorValue(parseNode: ParseNode | undefined) : SingleValueLegacyExtendedProperty {

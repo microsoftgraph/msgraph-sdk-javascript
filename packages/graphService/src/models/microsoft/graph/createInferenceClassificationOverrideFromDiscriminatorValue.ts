@@ -1,4 +1,4 @@
-import {InferenceClassificationOverride} from './inferenceClassificationOverride';
+import {InferenceClassificationOverride} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createInferenceClassificationOverrideFromDiscriminatorValue(parseNode: ParseNode | undefined) : InferenceClassificationOverride {

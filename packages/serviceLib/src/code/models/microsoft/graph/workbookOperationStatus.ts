@@ -1,4 +1,4 @@
-/** Provides operations to manage the collection of group entities.  */
+/** Provides operations to manage the collection of drive entities.  */
 export enum WorkbookOperationStatus {
     NotStarted = "notStarted",
     Running = "running",

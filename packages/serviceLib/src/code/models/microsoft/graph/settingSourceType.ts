@@ -1,4 +1,4 @@
-/** Provides operations to manage the collection of drive entities.  */
+/** Provides operations to manage the deviceManagement singleton.  */
 export enum SettingSourceType {
     DeviceConfiguration = "deviceConfiguration",
     DeviceIntent = "deviceIntent",

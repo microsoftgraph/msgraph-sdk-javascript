@@ -1,4 +1,4 @@
-/** Provides operations to manage the collection of drive entities.  */
+/** Provides operations to manage the drive singleton.  */
 export enum WebsiteType {
     Other = "other",
     Home = "home",

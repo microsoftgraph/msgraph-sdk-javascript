@@ -21,6 +21,9 @@
             "@microsoft/microsoft-graph-client": [
                 "../graph"
             ],
+            "@microsoft/kiota-serialization-text": [
+                "../serialization/text"
+            ],
         },
         "files": [],
     "references": [
@@ -29,6 +32,9 @@
         },
         {
             "path": "../serialization/json/tsconfig.cjs.json"
+        },
+        {
+            "path": "../serialization/text/tsconfig.cjs.json"
         },
         {
             "path": "../http/fetch/tsconfig.cjs.json"

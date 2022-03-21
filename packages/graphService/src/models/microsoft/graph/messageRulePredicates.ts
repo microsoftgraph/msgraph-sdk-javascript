@@ -1,10 +1,9 @@
 import {createRecipientFromDiscriminatorValue} from './createRecipientFromDiscriminatorValue';
 import {createSizeRangeFromDiscriminatorValue} from './createSizeRangeFromDiscriminatorValue';
 import {Importance} from './importance';
+import {Recipient, SizeRange} from './index';
 import {MessageActionFlag} from './messageActionFlag';
-import {Recipient} from './recipient';
 import {Sensitivity} from './sensitivity';
-import {SizeRange} from './sizeRange';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MessageRulePredicates implements AdditionalDataHolder, Parsable {

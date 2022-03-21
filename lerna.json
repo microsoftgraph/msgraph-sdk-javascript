@@ -5,6 +5,7 @@
         "packages/http/*",
         "packages/graph/*",
         "packages/serialization/json/",
+        "packages/serialization/text/",
         "packages/graphService",
         "packages/serviceLib"
         

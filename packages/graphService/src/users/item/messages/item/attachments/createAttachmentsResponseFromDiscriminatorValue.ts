@@ -1,4 +1,4 @@
-import {AttachmentsResponse} from './attachmentsResponse';
+import {AttachmentsResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createAttachmentsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : AttachmentsResponse {

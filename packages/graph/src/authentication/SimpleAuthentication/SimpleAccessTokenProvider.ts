@@ -6,38 +6,54 @@
  */
 
 /**
- * @module CustomAuthenticationProvider
+ * @module SimpleAccessTokenProvider
  */
 
-import { AccessTokenProvider, AllowedHostsValidator } from "@microsoft/kiota-abstractions";
+import { AccessTokenProvider, AllowedHostsValidator, validateProtocol } from "@microsoft/kiota-abstractions";
+
+import { GraphClientError } from "../../GraphClientError";
 
 /**
  * @class
- * Class representing CustomAuthenticationProvider
+ * Simple Access Token Provider that returns an access token.
  * @extends AuthenticationProvider
  */
 export class SimpleAccessTokenProvider implements AccessTokenProvider {
+	/**
+	 * @public
+	 * @constructor
+	 * Creates an instance of SimpleAccessTokenProvider
+	 * @param {()=>Promise<string>}getAccessTokenCallback  - The callback function to get the access token
+	 * @param {string[]} scopes - The scopes for the access token
+	 * @param {allowedHosts} allowedhosts -  A set of custom host names. Should contain hostnames only.
+	 * @returns An instance of SimpleAccessTokenProvider
+	 */
+	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes: string[], private allowedhosts?: Set<string>) {
+		this.allowedHostsValidator = new AllowedHostsValidator(allowedhosts);
+	}
+	private readonly allowedHostsValidator: AllowedHostsValidator;
+	public getAllowedHostsValidator = () => this.allowedHostsValidator;
 
-    /**
-     * @public
-     * @constructor
-     * Creates an instance of CustomAuthenticationProvider
-     * @param {AuthProviderCallback} provider - An authProvider function
-     * @returns An instance of CustomAuthenticationProvider
-     */
-    public constructor(private authProviderCallback: (scopes?: string[]) => Promise<string>) { }
-    getAllowedHostsValidator: () => AllowedHostsValidator;
+	/**
+	 * @public
+	 * @async
+	 * To get the access token
+	 * @returns The promise that resolves to an access token
+	 */
+	public async getAuthorizationToken(url: string): Promise<string> {
+		if (!url || !this.allowedHostsValidator.isUrlHostValid(url)) {
+			throw new GraphClientError("The request url is not present in the allowed hosts list or is not a valid host");
+		}
+        validateProtocol(url);
+		let token = "";
+		if (this.getAccessTokenCallback) {
+			token = await this.getAccessTokenCallback(this.scopes);
+		}
+		if (!token) {
+			throw new GraphClientError("Please provide a valid access token");
+		}
 
-    /**
-     * @public
-     * @async
-     * To get the access token
-     * @returns The promise that resolves to an access token
-     */
-    public getAuthorizationToken(): Promise<string> {
-const token = this.authProviderCallback();
-console.log(token);
-        return this.authProviderCallback();
-    }
-    
+		console.log(token);
+		return token;
+	}
 }

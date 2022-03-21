@@ -121,3 +121,9 @@ const isCustomHostValid = (host: string) => {
 		throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
 	}
 };
+
+export const appendGraphAndCustomHosts = (customHosts: Set<string>): Set<string> => {
+    if (!customHosts) return GRAPH_URLS;
+
+    return new Set([...customHosts, ...GRAPH_URLS]);
+};

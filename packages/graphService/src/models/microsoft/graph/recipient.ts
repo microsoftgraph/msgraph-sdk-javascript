@@ -1,5 +1,5 @@
 import {createEmailAddressFromDiscriminatorValue} from './createEmailAddressFromDiscriminatorValue';
-import {EmailAddress} from './emailAddress';
+import {EmailAddress} from './index';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class Recipient implements AdditionalDataHolder, Parsable {

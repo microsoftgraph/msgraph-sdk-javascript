@@ -1,4 +1,4 @@
-import {MessageRulePredicates} from './messageRulePredicates';
+import {MessageRulePredicates} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createMessageRulePredicatesFromDiscriminatorValue(parseNode: ParseNode | undefined) : MessageRulePredicates {

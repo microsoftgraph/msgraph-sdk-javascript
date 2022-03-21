@@ -1,4 +1,4 @@
-import {DateTimeTimeZone} from './dateTimeTimeZone';
+import {DateTimeTimeZone} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createDateTimeTimeZoneFromDiscriminatorValue(parseNode: ParseNode | undefined) : DateTimeTimeZone {

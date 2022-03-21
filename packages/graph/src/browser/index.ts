@@ -14,7 +14,6 @@ export { BatchResponseBody, BatchResponseContent } from "../content/BatchRespons
 export { Middleware } from "../middleware/IMiddleware";
 export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 export { RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
-export { TelemetryHandler } from "../middleware/TelemetryHandler";
 export { MiddlewareFactory } from "@microsoft/kiota-http-fetchlibrary";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 export { ShouldRetry, RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";

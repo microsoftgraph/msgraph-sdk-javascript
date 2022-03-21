@@ -1,4 +1,4 @@
-import {OverridesResponse} from './overridesResponse';
+import {OverridesResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createOverridesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : OverridesResponse {

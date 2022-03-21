@@ -8,8 +8,8 @@
 /**
  * @module GraphRequest
  */
-import { AuthenticationProvider, RequestInformation, RequestOption } from "@microsoft/kiota-abstractions";
-import {HttpClient} from "@microsoft/kiota-http-fetchlibrary"
+import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
+
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
@@ -18,6 +18,7 @@ import { GraphResponseHandler } from "./GraphResponseHandler";
 import { ClientOptions } from "./IClientOptions";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 /**
@@ -61,7 +62,6 @@ export class GraphRequest {
 	 */
 	private httpClient: HttpClient;
 
-    private authenticationProvider: AuthenticationProvider
 
 	/**
 	 * @private
@@ -91,7 +91,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-	private _middlewareOptions: Record<string, RequestOption>;
+     private _middlewareOptions: MiddlewareOptions[];
 
 	/**
 	 * @private
@@ -107,9 +107,8 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HttpClient, authProvider: AuthenticationProvider, config: ClientOptions, path: string) {
+	public constructor(httpClient: HttpClient, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
-        this.authenticationProvider = authProvider;
 		this.config = config;
 		this.urlComponents = {
 			host: this.config.baseUrl,
@@ -120,7 +119,7 @@ export class GraphRequest {
 		};
 		this._headers = {};
 		this._options = {};
-		this._middlewareOptions = {};
+		this._middlewareOptions = [];
 		this.parsePath(path);
 	}
 
@@ -338,7 +337,7 @@ export class GraphRequest {
 	 * @param {FetchOptions} options - The request options object
 	 * @returns Nothing
 	 */
-	private updateRequestInitOptions(options: FetchOptions): void {
+	private updateRequestOptions(options: FetchOptions): void {
 		const optionsHeaders: HeadersInit = { ...options.headers };
 		if (this.config.fetchOptions !== undefined) {
 			const fetchOptions: FetchOptions = { ...this.config.fetchOptions };
@@ -366,28 +365,10 @@ export class GraphRequest {
 	 */
 	private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
 		let rawResponse: Response;
-		this.updateRequestInitOptions(options);
-        const requestInfo = new RequestInformation();
+		this.updateRequestOptions(options);
 
-        requestInfo.URL = request as string;
-        requestInfo.headers = options.headers as Record<string,string>;
-        console.log(options.headers);
-        
-       await this.authenticationProvider.authenticateRequest(requestInfo);
-       // options.headers = requestInfo.headers;
 		try {
-			// const context: Context = await this.httpClient.fetch({
-			// 	request,
-			// 	options,
-			// 	middlewareControl,
-			// 	customHosts,
-			// });
-
-            const rawResponse = await this.httpClient.executeFetch(
-				request as string,
-				options,
-                this._middlewareOptions
-			);
+			const rawResponse = await this.httpClient.executeFetch(request as string, options);
 
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
@@ -479,14 +460,13 @@ export class GraphRequest {
 		}
 		return this;
 	}
-
 	/**
 	 * @public
 	 * Sets the middleware options for a request
 	 * @param {MiddlewareOptions[]} options - The array of middleware options
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public middlewareOptions(options: Record<string,RequestOption>): GraphRequest {
+	public middlewareOptions(options: MiddlewareOptions[]): GraphRequest {
 		this._middlewareOptions = options;
 		return this;
 	}

@@ -1,4 +1,4 @@
-import {MailFolder} from './mailFolder';
+import {MailFolder} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createMailFolderFromDiscriminatorValue(parseNode: ParseNode | undefined) : MailFolder {

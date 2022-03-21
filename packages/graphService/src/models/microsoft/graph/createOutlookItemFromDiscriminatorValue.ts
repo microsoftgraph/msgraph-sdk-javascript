@@ -1,4 +1,4 @@
-import {OutlookItem} from './outlookItem';
+import {OutlookItem} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createOutlookItemFromDiscriminatorValue(parseNode: ParseNode | undefined) : OutlookItem {

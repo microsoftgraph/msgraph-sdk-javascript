@@ -1,4 +1,4 @@
-import {Entity} from './entity';
+import {Entity} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createEntityFromDiscriminatorValue(parseNode: ParseNode | undefined) : Entity {

@@ -1,4 +1,4 @@
-import {MessageRuleActions} from './messageRuleActions';
+import {MessageRuleActions} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createMessageRuleActionsFromDiscriminatorValue(parseNode: ParseNode | undefined) : MessageRuleActions {

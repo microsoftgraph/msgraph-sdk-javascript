@@ -1,4 +1,4 @@
-import {InternetMessageHeader} from './internetMessageHeader';
+import {InternetMessageHeader} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createInternetMessageHeaderFromDiscriminatorValue(parseNode: ParseNode | undefined) : InternetMessageHeader {

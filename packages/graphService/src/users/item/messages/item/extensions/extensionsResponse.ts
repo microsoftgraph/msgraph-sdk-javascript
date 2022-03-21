@@ -1,5 +1,5 @@
+import {Extension} from '../../../../../models/microsoft/graph/';
 import {createExtensionFromDiscriminatorValue} from '../../../../../models/microsoft/graph/createExtensionFromDiscriminatorValue';
-import {Extension} from '../../../../../models/microsoft/graph/extension';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class ExtensionsResponse implements AdditionalDataHolder, Parsable {

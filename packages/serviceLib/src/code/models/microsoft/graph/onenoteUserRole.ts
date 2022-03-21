@@ -1,4 +1,4 @@
-/** Provides operations to manage the collection of drive entities.  */
+/** Provides operations to manage the collection of group entities.  */
 export enum OnenoteUserRole {
     None = "None",
     Owner = "Owner",

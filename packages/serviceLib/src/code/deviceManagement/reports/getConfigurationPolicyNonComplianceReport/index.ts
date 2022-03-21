@@ -1,2 +1,2 @@
-export * from './getConfigurationPolicyNonComplianceReportResponse'
 export * from './getConfigurationPolicyNonComplianceReportRequestBody'
+export * from './getConfigurationPolicyNonComplianceReportResponse'

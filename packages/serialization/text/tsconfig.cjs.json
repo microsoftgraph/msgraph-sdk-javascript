@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions":{
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "./dist/cjs",
+        "composite": true,
+        "rootDir": "./src",
+        "paths": {
+            "@microsoft/kiota-abstractions": [
+                "../../abstractions/*"
+            ]
+        }
+    },
+	"exclude": ["node_modules", "dist"],
+	"include": ["./src/**/*.ts"],
+    "files": [],
+    "references": [
+        {
+            "path": "../../abstractions/tsconfig.cjs.json"
+        }
+    ]
+}

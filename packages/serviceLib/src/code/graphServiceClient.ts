@@ -108,6 +108,7 @@ import {DriveItemItemRequestBuilder} from './workbooks/item/driveItemItemRequest
 import {WorkbooksRequestBuilder} from './workbooks/workbooksRequestBuilder';
 import {enableBackingStoreForSerializationWriterFactory, getPathParameters, HttpMethod, Parsable, ParsableFactory, ParseNodeFactoryRegistry, registerDefaultDeserializer, registerDefaultSerializer, RequestAdapter, RequestInformation, RequestOption, ResponseHandler, SerializationWriterFactoryRegistry} from '@microsoft/kiota-abstractions';
 import {JsonParseNodeFactory, JsonSerializationWriterFactory} from '@microsoft/kiota-serialization-json';
+import {TextParseNodeFactory, TextSerializationWriterFactory} from '@microsoft/kiota-serialization-text';
 
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
 export class GraphServiceClient {
@@ -419,7 +420,9 @@ export class GraphServiceClient {
         this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
         registerDefaultSerializer(JsonSerializationWriterFactory);
+        registerDefaultSerializer(TextSerializationWriterFactory);
         registerDefaultDeserializer(JsonParseNodeFactory);
+        registerDefaultDeserializer(TextParseNodeFactory);
         requestAdapter.baseUrl = "https://graph.microsoft.com/v1.0";
     };
     /**

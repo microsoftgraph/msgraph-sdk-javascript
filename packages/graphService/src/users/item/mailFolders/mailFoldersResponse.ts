@@ -1,5 +1,5 @@
+import {MailFolder} from '../../../models/microsoft/graph/';
 import {createMailFolderFromDiscriminatorValue} from '../../../models/microsoft/graph/createMailFolderFromDiscriminatorValue';
-import {MailFolder} from '../../../models/microsoft/graph/mailFolder';
 import {AdditionalDataHolder, Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MailFoldersResponse implements AdditionalDataHolder, Parsable {

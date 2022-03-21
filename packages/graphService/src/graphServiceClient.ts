@@ -6,6 +6,7 @@ import {FetchRequestAdapter} from "@microsoft/kiota-http-fetchlibrary"
 
 import { ClientOptions } from "@microsoft/microsoft-graph-client";
 import { GraphBaseClient } from '@microsoft/microsoft-graph-client';
+import { GraphSDKConfig } from '@microsoft/microsoft-graph-client/src/requestBuilderUtils/GraphSDKConfig';
 
 
 /** The main entry point of the SDK, exposes the configuration and the fluent API.  */
@@ -24,11 +25,13 @@ export class GraphServiceClient extends GraphBaseClient {
      * @param requestAdapter The request adapter to use to execute the requests.
      */
      public constructor(clientOptions: ClientOptions) {
-        clientOptions.SDKNameWithVersion = "ServiceLibraryVersion";
-        super(clientOptions);
+        const c : GraphSDKConfig = {
+            sdkTelemetryVersion: "graph-js-sdk-v1/0.0.0"
+        }
+        super(clientOptions, c);
         // change to this.authprovider
         const requestAdapter = new FetchRequestAdapter(clientOptions.authProvider, undefined, undefined, this.httpClient);        this.pathParameters = {};
-        this.urlTemplate = "{+baseurl}";
+                this.urlTemplate = "{+baseurl}";
         this.requestAdapter = requestAdapter;
         registerDefaultSerializer(JsonSerializationWriterFactory);
         registerDefaultDeserializer(JsonParseNodeFactory);

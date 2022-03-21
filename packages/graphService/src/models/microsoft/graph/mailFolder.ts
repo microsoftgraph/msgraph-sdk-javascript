@@ -3,11 +3,7 @@ import {createMessageFromDiscriminatorValue} from './createMessageFromDiscrimina
 import {createMessageRuleFromDiscriminatorValue} from './createMessageRuleFromDiscriminatorValue';
 import {createMultiValueLegacyExtendedPropertyFromDiscriminatorValue} from './createMultiValueLegacyExtendedPropertyFromDiscriminatorValue';
 import {createSingleValueLegacyExtendedPropertyFromDiscriminatorValue} from './createSingleValueLegacyExtendedPropertyFromDiscriminatorValue';
-import {Entity} from './entity';
-import {Message} from './message';
-import {MessageRule} from './messageRule';
-import {MultiValueLegacyExtendedProperty} from './multiValueLegacyExtendedProperty';
-import {SingleValueLegacyExtendedProperty} from './singleValueLegacyExtendedProperty';
+import {Entity, Message, MessageRule, MultiValueLegacyExtendedProperty, SingleValueLegacyExtendedProperty} from './index';
 import {Parsable, ParseNode, SerializationWriter} from '@microsoft/kiota-abstractions';
 
 export class MailFolder extends Entity implements Parsable {

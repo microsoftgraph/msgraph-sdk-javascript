@@ -8,14 +8,16 @@
 /**
  * @module Client
  */
-
-import { AuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
 import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
+
 import { GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
-import { getDefaultMiddlewareChain } from "./HttpClientFactory";
+import { appendGraphAndCustomHosts } from "./GraphRequestUtil";
+import { getDefaultMiddlewareChain } from "./MiddlewareFactory";
 import { ClientOptions } from "./IClientOptions";
+import { GraphSDKConfig } from "./requestBuilderUtils/GraphSDKConfig";
 
 export class Client {
 	/**
@@ -34,7 +36,7 @@ export class Client {
 	 */
 	protected httpClient: HttpClient;
 
-    protected authProvider:AuthenticationProvider
+	protected authProvider: BaseBearerTokenAuthenticationProvider;
 
 	/**
 	 * @public
@@ -53,7 +55,7 @@ export class Client {
 	 * Creates an instance of Client
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
-	public constructor(clientOptions: ClientOptions) {
+	protected constructor(clientOptions: ClientOptions, graphSDKOptions?: GraphSDKConfig) {
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];
@@ -66,14 +68,22 @@ export class Client {
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
-        this.authProvider = clientOptions.authProvider;
-        if (!clientOptions.middleware) {
-         
-			httpClient = new HttpClient(clientOptions.customFetch, ...[].concat(getDefaultMiddlewareChain(clientOptions)));
-		} else  {
-			httpClient = new HttpClient( clientOptions.customFetch,...[].concat(clientOptions.middleware));
+
+		this.authProvider = clientOptions.authProvider;
+		this.updateAuthProviderHosts(clientOptions);
+		if (!clientOptions.middleware) {
+			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, graphSDKOptions)));
+		} else {
+			httpClient = new HttpClient(clientOptions.customFetch, ...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
+	}
+
+	private updateAuthProviderHosts(clientOptions: ClientOptions) {
+		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
+		const allowedHosts = clientOptions.customHosts ? new Set([...clientOptions.customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
+		const hostSetWithGraphandCustomHosts = appendGraphAndCustomHosts(allowedHosts);
+		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
 	}
 
 	/**
@@ -83,6 +93,6 @@ export class Client {
 	 * @returns The graph request instance
 	 */
 	public api(path: string): GraphRequest {
-		return new GraphRequest(this.httpClient, this.authProvider,this.config, path);
+		return new GraphRequest(this.httpClient, this.config, path);
 	}
 }

@@ -1,4 +1,4 @@
-import {ChildFoldersResponse} from './childFoldersResponse';
+import {ChildFoldersResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createChildFoldersResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ChildFoldersResponse {

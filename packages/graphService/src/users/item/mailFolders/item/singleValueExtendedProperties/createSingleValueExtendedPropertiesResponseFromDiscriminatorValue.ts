@@ -1,4 +1,4 @@
-import {SingleValueExtendedPropertiesResponse} from './singleValueExtendedPropertiesResponse';
+import {SingleValueExtendedPropertiesResponse} from './index';
 import {ParseNode} from '@microsoft/kiota-abstractions';
 
 export function createSingleValueExtendedPropertiesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : SingleValueExtendedPropertiesResponse {
