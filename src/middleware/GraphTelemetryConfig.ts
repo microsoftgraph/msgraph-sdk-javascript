@@ -6,6 +6,6 @@
  */
 
 export interface GraphTelemetryConfig {
-	customHosts: Set<string>;
+	allowedHosts: Set<string>;
 	SDKNameWithVersion: string;
 }

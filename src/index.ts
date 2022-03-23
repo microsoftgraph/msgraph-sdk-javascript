@@ -6,7 +6,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path= "./../shims.d.ts" />
-export { RetryHandler, RedirectHandler} from "@microsoft/kiota-http-fetchlibrary" ;
+export { RetryHandler, RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
 
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
@@ -40,7 +40,7 @@ export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
 
 export { ResponseType } from "./ResponseType";
-export {SimpleAuthenticationProvider} from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
-export {SimpleAccessTokenProvider} from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
+export { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
+export { SimpleAccessTokenProvider } from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
 
-export {GraphBaseClient} from "./requestBuilderUtils/GraphBaseClient";
+export { GraphBaseClient } from "./requestBuilderUtils/GraphBaseClient";

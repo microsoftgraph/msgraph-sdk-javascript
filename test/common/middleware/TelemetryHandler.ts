@@ -5,24 +5,31 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 import { assert } from "chai";
 
-import { GRAPH_BASE_URL } from "../../../src/Constants";
+import { GRAPH_BASE_URL, GRAPH_URLS } from "../../../src/Constants";
 import { Context } from "../../../src/IContext";
+import { GraphTelemetryConfig } from "../../../src/middleware/GraphTelemetryConfig";
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "../../../src/middleware/options/TelemetryHandlerOptions";
-import { TelemetryHandler } from "../../../src/middleware/TelemetryHandler";
+import { getgraphTelemetryCallback } from "../../../src/middleware/TelemetryUtil";
 import { PACKAGE_VERSION } from "../../../src/Version";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
 describe("TelemetryHandler.ts", () => {
-	describe("execute", function() {
+	describe("execute", function () {
 		this.timeout(20 * 1000);
-		const telemetryHandler = new TelemetryHandler();
+		const telemetryHandler = new TelemetryHandler(
+			getgraphTelemetryCallback({
+				allowedHosts: GRAPH_URLS,
+				SDKNameWithVersion: "TEST VERSION",
+			} as GraphTelemetryConfig),
+		);
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
 		const uuid = "dummy_uuid";
 		const sdkVersion = "dummy_version";
-		telemetryHandler.setNext(dummyHTTPHandler);
+		telemetryHandler.next = dummyHTTPHandler;
 		const okayResponse = new Response("", {
 			status: 200,
 			statusText: "OK",

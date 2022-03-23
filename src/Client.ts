@@ -11,15 +11,14 @@
 import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
 import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 
-import { GraphClientError } from ".";
+import { GraphBaseClient, GraphClientError } from ".";
 import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
 import { GraphRequest } from "./GraphRequest";
-import { mergeGraphAndCustomHosts } from "./GraphRequestUtil";
-import { getDefaultMiddlewareChain } from "./MiddlewareFactory";
+import { updateAndReturnAllAllowedHosts } from "./GraphRequestUtil";
 import { ClientOptions } from "./IClientOptions";
-import { GraphSDKConfig } from "./requestBuilderUtils/GraphSDKConfig";
+import { getDefaultMiddlewareChain } from "./MiddlewareFactory";
 
-export class Client {
+export class Client implements GraphBaseClient {
 	/**
 	 * @private
 	 * A member which stores the Client instance options
@@ -55,7 +54,7 @@ export class Client {
 	 * Creates an instance of Client
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
-	protected constructor(clientOptions: ClientOptions, graphSDKOptions?: GraphSDKConfig) {
+	private constructor(clientOptions: ClientOptions) {
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];
@@ -68,22 +67,15 @@ export class Client {
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
-
+		const allowedHosts = updateAndReturnAllAllowedHosts(clientOptions.authProvider, this.config.customHosts);
 		this.authProvider = clientOptions.authProvider;
-		this.updateAuthProviderHosts(clientOptions);
+
 		if (!clientOptions.middleware) {
-			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, graphSDKOptions)));
+			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, allowedHosts)));
 		} else {
 			httpClient = new HttpClient(clientOptions.customFetch, ...[].concat(clientOptions.middleware));
 		}
 		this.httpClient = httpClient;
-	}
-
-	private updateAuthProviderHosts(clientOptions: ClientOptions) {
-		const hostsValidator = this.authProvider.accessTokenProvider.getAllowedHostsValidator();
-		const allowedHosts = clientOptions.customHosts ? new Set([...clientOptions.customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
-		const hostSetWithGraphandCustomHosts = mergeGraphAndCustomHosts(allowedHosts);
-		hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
 	}
 
 	/**

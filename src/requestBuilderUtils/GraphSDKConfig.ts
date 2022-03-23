@@ -9,5 +9,5 @@
  * Configuration options passed to the Graph core library by SDK.
  */
 export interface GraphSDKConfig {
-    sdkTelemetryVersion?: string;
+	sdkTelemetryVersion?: string;
 }

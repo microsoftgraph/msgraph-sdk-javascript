@@ -9,7 +9,7 @@ import "isomorphic-fetch";
 
 import { assert } from "chai";
 
-import { SimpleAuthenticationProvider, TelemetryHandler } from "../../../src";
+import { SimpleAuthenticationProvider } from "../../../src";
 import { Client } from "../../../src/Client";
 import { GraphClientError } from "../../../src/GraphClientError";
 import { ClientOptions } from "../../../src/IClientOptions";

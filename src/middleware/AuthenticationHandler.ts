@@ -46,9 +46,11 @@ export class AuthenticationHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
+         if(requestInit?.headers && !requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER]) {
 			const token: string = await this.authenticationProvider.accessTokenProvider.getAuthorizationToken(url);
 			const bearerKey = `Bearer ${token}`;
 			appendRequestHeader(requestInit as FetchRequestInit, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+        }
 		return await this.next.execute(url, requestInit, requestOptions);
 	}
 }

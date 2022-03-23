@@ -32,12 +32,12 @@ const SDK_VERSION_HEADER = "SdkVersion";
  * @static
  * A member holding the language prefix for the sdk version header value
  */
-const PRODUCT_NAME = "graph-js";
-const coreSdkVersionValue = `${PRODUCT_NAME}/${PACKAGE_VERSION}`;
+const CORE_PRODUCT_NAME = "graph-js-core";
+const coreSdkVersionValue = `${CORE_PRODUCT_NAME}/${PACKAGE_VERSION}`;
 
-export const graphTelemetryConfigurator = (url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>, telemetryInfomation?: unknown) => {
+export const graphTelemetryCallback = (url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>, telemetryInfomation?: unknown) => {
 	const graphTelemetry = telemetryInfomation as GraphTelemetryConfig;
-	if (isGraphURL(url) || (graphTelemetry.customHosts && isCustomHost(url, graphTelemetry.customHosts))) {
+	if (isGraphURL(url) || (graphTelemetry.allowedHosts && isCustomHost(url, graphTelemetry.allowedHosts))) {
 		// Add telemetry only if the request url is a Graph URL.
 		// Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
 		let clientRequestId: string = getRequestHeader(requestInit as FetchRequestInit, CLIENT_REQUEST_ID_HEADER);
@@ -54,11 +54,11 @@ export const graphTelemetryConfigurator = (url: string, requestInit: RequestInit
 	}
 };
 
-export const getGraphTelemetryConfigurator = (graphTelemetry: GraphTelemetryConfig): TelemetryHandlerOptions => {
-	graphTelemetry.SDKNameWithVersion = graphTelemetry.SDKNameWithVersion + " " + coreSdkVersionValue;
+export const getgraphTelemetryCallback = (graphTelemetry: GraphTelemetryConfig): TelemetryHandlerOptions => {
+	graphTelemetry.SDKNameWithVersion = graphTelemetry.SDKNameWithVersion ? graphTelemetry.SDKNameWithVersion + " " + coreSdkVersionValue : coreSdkVersionValue;
 	return {
-		telemetryConfigurator: graphTelemetryConfigurator,
+		telemetryConfigurator: graphTelemetryCallback,
 		telemetryInfomation: graphTelemetry,
-        getKey: undefined
+		getKey: undefined,
 	};
 };

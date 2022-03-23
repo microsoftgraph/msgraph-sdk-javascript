@@ -8,6 +8,8 @@
 /**
  * @module GraphRequestUtil
  */
+import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
+
 import { GRAPH_URLS } from "./Constants";
 import { GraphClientError } from "./GraphClientError";
 /**
@@ -123,12 +125,14 @@ const isCustomHostValid = (host: string) => {
 };
 
 /**
- * 
- * @param customHosts 
- * @returns 
+ *
+ * @param customHosts
+ * @returns
  */
-export const mergeGraphAndCustomHosts = (customHosts: Set<string>): Set<string> => {
-    if (!customHosts) return GRAPH_URLS;
-
-    return new Set([...customHosts, ...GRAPH_URLS]);
+export const updateAndReturnAllAllowedHosts = (authProvider: BaseBearerTokenAuthenticationProvider, customHosts: Set<string>): Set<string> => {
+	const hostsValidator = authProvider.accessTokenProvider.getAllowedHostsValidator();
+	const allowedHosts = customHosts ? new Set([...customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
+	const hostSetWithGraphandCustomHosts = customHosts ? new Set([...allowedHosts, ...GRAPH_URLS, ...customHosts]) : new Set([...allowedHosts, ...GRAPH_URLS]);
+	hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
+    return hostSetWithGraphandCustomHosts;
 };
