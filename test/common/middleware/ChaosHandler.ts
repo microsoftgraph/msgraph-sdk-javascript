@@ -1,17 +1,14 @@
 import { assert } from "chai";
 
-import { Context } from "../../../src/IContext";
 import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
-import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
 import { RequestMethod } from "../../../src/RequestMethod";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
-const chaosHandlerOptions = new ChaosHandlerOptions();
-const chaosHandler = new ChaosHandler();
-
 describe("ChaosHandler.ts", () => {
+	const chaosHandlerOptions = new ChaosHandlerOptions();
+	const chaosHandler = new ChaosHandler(chaosHandlerOptions);
 	describe("constructor", () => {
 		it("Should create an instance with given options", () => {
 			const handler = new ChaosHandler(chaosHandlerOptions);
@@ -27,13 +24,15 @@ describe("ChaosHandler.ts", () => {
 	describe("createResponseHeaders", () => {
 		it("Should have request-id for every random statusCode", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "testStatusCode", 204);
-			const responseHeader = chaosHandler["createResponseHeaders"](options, "xxxxxxxxxxxxxxxx", new Date().toString());
+			const chaosHandler = new ChaosHandler(options);
+			const responseHeader = chaosHandler["createResponseHeaders"]("xxxxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseHeader.get("request-id"));
 		});
 
 		it("Should have retry-after for 429 case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "testStatusCode", 429);
-			const responseHeader = chaosHandler["createResponseHeaders"](options, "xxxxxxxxxxxxxxxx", new Date().toString());
+			const chaosHandler = new ChaosHandler(options);
+			const responseHeader = chaosHandler["createResponseHeaders"]("xxxxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseHeader.get("retry-after"));
 		});
 	});
@@ -41,42 +40,39 @@ describe("ChaosHandler.ts", () => {
 	describe("createResponseBody", () => {
 		it("Should return error in response body for error scenarios", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Not Found", 404);
-			const responseBody = chaosHandler["createResponseBody"](options, "xxxxxxxxxxxxxx", new Date().toString());
+			const chaosHandler = new ChaosHandler(options);
+			const responseBody = chaosHandler["createResponseBody"]("xxxxxxxxxxxxxx", new Date().toString());
 			assert.isDefined(responseBody["error"]);
 		});
 
 		it("Should return empty response body for success scenarios", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Not Found", 200);
-			const responseBody = chaosHandler["createResponseBody"](options, "xxxxxxxxxxxxxx", new Date().toString());
+			const chaosHandler = new ChaosHandler(options);
+			const responseBody = chaosHandler["createResponseBody"]("xxxxxxxxxxxxxx", new Date().toString());
 			assert.equal(Object.keys(responseBody).length, 0);
 		});
 	});
 
 	describe("createResponse", () => {
-		const cxt: Context = {
-			request: "https://graph.microsoft.com/v1.0/me",
-			options: {
-				method: "GET",
-			},
-		};
+		const url = "https://graph.microsoft.com/v1.0/me";
 
 		it("Should return a valid response object for MANUAL case", () => {
-			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual response", 404), cxt);
-			assert.isDefined(cxt.response);
+			const chaosHandler = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual response", 404));
+			const response = chaosHandler["createResponse"](url);
+			assert.isDefined(response);
 		});
 
 		it("Should return a valid response object for RANDOM case", () => {
-			chaosHandler["createResponse"](new ChaosHandlerOptions(ChaosStrategy.RANDOM), cxt);
-			assert.isDefined(cxt.response);
+			const chaosHandler = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.RANDOM));
+			const response = chaosHandler["createResponse"](url);
+			assert.isDefined(response);
 		});
 	});
 
 	describe("sendRequest", () => {
-		const cxt: Context = {
-			request: "https://graph.microsoft.com/v1.0/me",
-			options: {
-				method: "GET",
-			},
+		const requestUrl = "https://graph.microsoft.com/v1.0/me";
+		const requestInit: RequestInit = {
+			method: "GET",
 		};
 
 		const manualMap: Map<string, Map<string, number>> = new Map([["/me", new Map([["GET", 500]])]]);
@@ -84,17 +80,18 @@ describe("ChaosHandler.ts", () => {
 		const tempChaosHandler = new ChaosHandler(tempManualOptions, manualMap);
 
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
-		const handler = new ChaosHandler();
-		handler.setNext(dummyHTTPHandler);
 
 		it("Should return a response after creating it", () => {
-			tempChaosHandler["sendRequest"](tempManualOptions, cxt);
-			assert.isDefined(cxt.response);
+			const response = tempChaosHandler["sendRequest"](requestUrl, requestInit);
+			assert.isDefined(response);
 		});
 
-		it("Should send the request to the graph", () => {
-			handler["sendRequest"](new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100), cxt);
-			assert.isDefined(cxt.response);
+		it("Should send the request to the graph", async () => {
+			const handler = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100));
+			const response = await handler["sendRequest"](requestUrl, requestInit);
+			handler.setNext(dummyHTTPHandler);
+
+			assert.isDefined(response);
 		});
 	});
 
@@ -162,56 +159,24 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Set status code", 404);
-			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
+			chaosHandler["setStatusCode"]("https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100);
-			chaosHandler["setStatusCode"](tempOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
+			chaosHandler["setStatusCode"]("https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap", () => {
-			tempChaosHandlerManual["setStatusCode"](tempManualOptions, "https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
+			tempChaosHandlerManual["setStatusCode"]("https://graph.microsoft.com/v1.0/me", RequestMethod.PATCH);
 			assert.equal(tempManualOptions.statusCode, 201);
 		});
 
 		it("Should set a statusCode for MANUAL mode with manualMap matching regex", () => {
-			tempChaosHandlerManualRegex["setStatusCode"](tempManualOptionsRegex, "https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
+			tempChaosHandlerManualRegex["setStatusCode"]("https://graph.microsoft.com/v1.0/me/messages/abc123-xxxxx-xxxxx", RequestMethod.GET);
 			assert.equal(tempManualOptionsRegex.statusCode, 500);
-		});
-	});
-
-	describe("getOptions", () => {
-		it("Should return the options in the context object", () => {
-			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Get options", 405);
-			const cxt: Context = {
-				request: "url",
-				middlewareControl: new MiddlewareControl([options]),
-			};
-			const o = chaosHandler["getOptions"](cxt);
-			assert.equal(o.chaosStrategy, ChaosStrategy.MANUAL);
-			assert.equal(o.statusCode, 405);
-		});
-
-		it("Should return the default set of options with RANDOM in the middleware", () => {
-			const cxt: Context = {
-				request: "url",
-			};
-			const o = chaosHandler["getOptions"](cxt);
-			assert.equal(o.chaosStrategy, ChaosStrategy.RANDOM);
-			assert.equal(o.statusCode, undefined);
-		});
-
-		it("Should return the default set of options with DEFAULT in the middleware", () => {
-			const tempChaosHandler = new ChaosHandler(new ChaosHandlerOptions(ChaosStrategy.MANUAL));
-			const cxt: Context = {
-				request: "url",
-			};
-			const o = tempChaosHandler["getOptions"](cxt);
-			assert.equal(o.chaosStrategy, ChaosStrategy.MANUAL);
-			assert.equal(o.statusCode, undefined);
 		});
 	});
 
@@ -232,61 +197,42 @@ describe("ChaosHandler.ts", () => {
 		tempChaosHandlerDefault.setNext(dummyHTTPHandler);
 		tempChaosHandlerRandom.setNext(dummyHTTPHandler);
 		tempChaosHandlerManual.setNext(dummyHTTPHandler);
-
+		const requestURL = "https://graph.microsoft.com/v1.0/me";
+		const requestInit = {
+			method: "GET",
+		};
 		it("Should return response for Default Case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.RANDOM);
-			const cxt: Context = {
-				request: "https://graph.microsoft.com/v1.0/me",
-				options: {
-					method: "GET",
-				},
-				middlewareControl: new MiddlewareControl([options]),
-			};
-			assert.isDefined(tempChaosHandlerDefault["execute"](cxt));
+
+			const requestOptions = { ChaosHandlerOptionKey: options };
+
+			assert.isDefined(tempChaosHandlerDefault["execute"](requestURL, requestInit, requestOptions));
 		});
 
 		it("Should return response for Random case", () => {
-			const cxt: Context = {
-				request: "https://graph.microsoft.com/v1.0/me",
-				options: {
-					method: "GET",
-				},
-			};
-			assert.isDefined(tempChaosHandlerRandom["execute"](cxt));
+			assert.isDefined(tempChaosHandlerRandom["execute"](requestURL, requestInit));
 		});
 
 		it("Should return response for Manual Global case", () => {
-			const cxt: Context = {
-				request: "https://graph.microsoft.com/v1.0/me",
-				options: {
-					method: "GET",
-				},
-			};
-			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
+			assert.isDefined(tempChaosHandlerManual["execute"](requestURL, requestInit));
 		});
 
 		it("Should return response for Manual Request Level case", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 200);
-			const cxt: Context = {
-				request: "https://graph.microsoft.com/v1.0/me",
-				options: {
-					method: "GET",
-				},
-				middlewareControl: new MiddlewareControl([options]),
+			const requestOptions = {
+				ChaosHandlerOptionKey: options,
 			};
-			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
+
+			assert.isDefined(tempChaosHandlerManual["execute"](requestURL, requestInit, requestOptions));
 		});
 
 		it("Should return response for Manual Request Level case 100%", () => {
 			const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Manual Request level case", 429, 100);
-			const cxt: Context = {
-				request: "https://graph.microsoft.com/v1.0/me",
-				options: {
-					method: "GET",
-				},
-				middlewareControl: new MiddlewareControl([options]),
+			const requestOptions = {
+				ChaosHandlerOptionKey: options,
 			};
-			assert.isDefined(tempChaosHandlerManual["execute"](cxt));
+
+			assert.isDefined(tempChaosHandlerManual["execute"](requestURL, requestInit, requestOptions));
 		});
 	});
 });

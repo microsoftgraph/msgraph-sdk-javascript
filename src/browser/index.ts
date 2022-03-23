@@ -5,13 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
- export { AuthenticationProvider, AccessTokenProvider  } from "@microsoft/kiota-abstractions";
- 
+export { BaseBearerTokenAuthenticationProvider, AccessTokenProvider } from "@microsoft/kiota-abstractions";
 
 export { BatchRequestStep, BatchRequestData, BatchRequestContent, RequestData, BatchRequestBody } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
-export { Middleware } from "../middleware/IMiddleware";
 export { RetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 export { RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
 export { MiddlewareFactory } from "@microsoft/kiota-http-fetchlibrary";
@@ -39,7 +37,6 @@ export { GraphClientError } from "../GraphClientError";
 export { GraphRequest } from "../GraphRequest";
 
 export { ClientOptions } from "../IClientOptions";
-export { Context } from "../IContext";
 export { NodeFetchInit, FetchOptions } from "../IFetchOptions";
 export { GraphRequestCallback } from "../IGraphRequestCallback";
 

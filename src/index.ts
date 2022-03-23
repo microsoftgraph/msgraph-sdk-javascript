@@ -11,8 +11,6 @@ export { RetryHandler, RedirectHandler } from "@microsoft/kiota-http-fetchlibrar
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
-export { Middleware } from "./middleware/IMiddleware";
-
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 export { FeatureUsageFlag, TelemetryHandlerOptions } from "./middleware/options/TelemetryHandlerOptions";
 export { ChaosHandlerOptions } from "./middleware/options/ChaosHandlerOptions";
@@ -35,7 +33,6 @@ export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
 
 export { ClientOptions } from "./IClientOptions";
-export { Context } from "./IContext";
 export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
 

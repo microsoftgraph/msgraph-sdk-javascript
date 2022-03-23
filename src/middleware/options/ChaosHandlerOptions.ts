@@ -9,8 +9,10 @@
  * @module ChaosHandlerOptions
  */
 
+import { RequestOption } from "@microsoft/kiota-abstractions";
+
+import { ChaosHandlerOptionKey } from "../ChaosHandler";
 import { ChaosStrategy } from "./ChaosStrategy";
-import { MiddlewareOptions } from "./IMiddlewareOptions";
 
 /**
  * Class representing ChaosHandlerOptions
@@ -18,7 +20,7 @@ import { MiddlewareOptions } from "./IMiddlewareOptions";
  * Class
  * @implements MiddlewareOptions
  */
-export class ChaosHandlerOptions implements MiddlewareOptions {
+export class ChaosHandlerOptions implements RequestOption {
 	/**
 	 * Specifies the startegy used for the Testing Handler -> RANDOM/MANUAL
 	 *
@@ -83,5 +85,8 @@ export class ChaosHandlerOptions implements MiddlewareOptions {
 		if (this.chaosPercentage > 100) {
 			throw new Error("Error Pecentage can not be more than 100");
 		}
+	}
+	public getKey(): string {
+		return ChaosHandlerOptionKey;
 	}
 }

@@ -9,8 +9,8 @@
  * @module DummyHTTPMessageHandler
  */
 
-import { Context } from "../src/IContext";
-import { Middleware } from "../src/middleware/IMiddleware";
+import { RequestOption } from "@microsoft/kiota-abstractions";
+import { Middleware } from "@microsoft/kiota-http-fetchlibrary";
 
 /**
  * @class
@@ -24,6 +24,7 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 */
 	private responses: Response[];
 
+    next: Middleware | undefined;
 	/**
 	 * @public
 	 * @constructor
@@ -52,8 +53,8 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 * @param {Context} context - The request context object
 	 * @returns A promise that resolves to nothing
 	 */
-	public async execute(context: Context) {
-		context.response = this.responses.shift();
-		return;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>) {
+        return this.responses.shift();
 	}
 }

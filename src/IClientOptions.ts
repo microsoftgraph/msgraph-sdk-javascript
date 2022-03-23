@@ -6,8 +6,9 @@
  */
 
 import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { Middleware } from "@microsoft/kiota-http-fetchlibrary";
+
 import { FetchOptions } from "./IFetchOptions";
-import { Middleware } from "./middleware/IMiddleware";
 
 /**
  * @interface
@@ -28,9 +29,9 @@ export interface ClientOptions {
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 	middleware?: Middleware | Middleware[];
-    customFetch?: (input: string, init?: RequestInit) => Promise<Response>;
-    /**
+	customFetch?: (input: string, init?: RequestInit) => Promise<Response>;
+	/**
 	 * Example - If URL is "https://test_host/v1.0", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
 	 */
-    customHosts?: Set<string>;
+	customHosts?: Set<string>;
 }
