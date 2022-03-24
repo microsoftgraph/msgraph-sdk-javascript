@@ -28,7 +28,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 	 * @param {allowedHosts} allowedhosts -  A set of custom host names. Should contain hostnames only.
 	 * @returns An instance of SimpleAccessTokenProvider
 	 */
-	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes?: string[], private allowedhosts?: Set<string>) {
+	public constructor(private getAccessTokenCallback: (scopes?: string[]) => Promise<string>, private scopes: string[] | undefined = ["https://graph.microsoft.com/.default"], private allowedhosts?: Set<string>) {
 		this.allowedHostsValidator = new AllowedHostsValidator(allowedhosts);
 	}
 	private readonly allowedHostsValidator: AllowedHostsValidator;
