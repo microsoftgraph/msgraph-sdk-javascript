@@ -6,7 +6,8 @@
  */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path= "./../shims.d.ts" />
-export { RetryHandler, RedirectHandler } from "@microsoft/kiota-http-fetchlibrary";
+export { BaseBearerTokenAuthenticationProvider, AccessTokenProvider, RequestOption } from "@microsoft/kiota-abstractions";
+export { RetryHandler, RedirectHandler, TelemetryHandler, RedirectHandlerOptionKey, RetryHandlerOptions, HttpClient, RedirectHandlerOptions, TelemetryHandlerOptions, TelemetryHandlerOptionsKey, RetryHandlerOptionKey } from "@microsoft/kiota-http-fetchlibrary";
 
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
@@ -41,3 +42,11 @@ export { SimpleAuthenticationProvider } from "./authentication/SimpleAuthenticat
 export { SimpleAccessTokenProvider } from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
 
 export { GraphBaseClient } from "./requestBuilderUtils/GraphBaseClient";
+export { GraphSDKConfig } from "./requestBuilderUtils/GraphSDKConfig";
+
+export { coreSdkVersionValue, getGraphTelemetryCallback, CORE_PRODUCT_NAME, graphTelemetryCallback } from "./middleware/Telemetry/TelemetryUtil";
+export { GraphTelemetryConfig } from "./middleware/Telemetry/GraphTelemetryConfig";
+
+export { getDefaultMiddlewareChain } from "./MiddlewareFactory";
+export { GRAPH_API_VERSION, GRAPH_BASE_URL, GRAPH_URLS } from "./Constants";
+export { isCustomHost, isGraphURL, updateAndReturnAllAllowedHosts } from "./GraphRequestUtil";
