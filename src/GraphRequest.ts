@@ -8,17 +8,16 @@
 /**
  * @module GraphRequest
  */
+import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
+
 import { GraphClientError } from "./GraphClientError";
 import { GraphError } from "./GraphError";
 import { GraphErrorHandler } from "./GraphErrorHandler";
 import { oDataQueryNames, serializeContent, urlJoin } from "./GraphRequestUtil";
 import { GraphResponseHandler } from "./GraphResponseHandler";
-import { HTTPClient } from "./HTTPClient";
 import { ClientOptions } from "./IClientOptions";
-import { Context } from "./IContext";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
-import { MiddlewareControl } from "./middleware/MiddlewareControl";
 import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
@@ -61,7 +60,8 @@ export class GraphRequest {
 	 * @private
 	 * A member variable to hold HTTPClient instance
 	 */
-	private httpClient: HTTPClient;
+	private httpClient: HttpClient;
+
 
 	/**
 	 * @private
@@ -91,7 +91,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-	private _middlewareOptions: MiddlewareOptions[];
+     private _middlewareOptions: MiddlewareOptions[];
 
 	/**
 	 * @private
@@ -107,7 +107,7 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HTTPClient, config: ClientOptions, path: string) {
+	public constructor(httpClient: HttpClient, config: ClientOptions, path: string) {
 		this.httpClient = httpClient;
 		this.config = config;
 		this.urlComponents = {
@@ -365,18 +365,11 @@ export class GraphRequest {
 	 */
 	private async send(request: RequestInfo, options: FetchOptions, callback?: GraphRequestCallback): Promise<any> {
 		let rawResponse: Response;
-		const middlewareControl = new MiddlewareControl(this._middlewareOptions);
 		this.updateRequestOptions(options);
-		const customHosts = this.config?.customHosts;
-		try {
-			const context: Context = await this.httpClient.sendRequest({
-				request,
-				options,
-				middlewareControl,
-				customHosts,
-			});
 
-			rawResponse = context.response;
+		try {
+			const rawResponse = await this.httpClient.executeFetch(request as string, options);
+
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {
@@ -467,7 +460,6 @@ export class GraphRequest {
 		}
 		return this;
 	}
-
 	/**
 	 * @public
 	 * Sets the middleware options for a request

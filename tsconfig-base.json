@@ -7,5 +7,6 @@
         "removeComments": false,
         "sourceMap": true,
         "declaration": true,
+        "downlevelIteration": true,
     }
 }

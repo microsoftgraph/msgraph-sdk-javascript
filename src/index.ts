@@ -4,25 +4,16 @@
  * See License in the project root for license information.
  * -------------------------------------------------------------------------------------------
  */
-
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path= "./../shims.d.ts" />
+export { BaseBearerTokenAuthenticationProvider, AccessTokenProvider, RequestOption } from "@microsoft/kiota-abstractions";
+export { RetryHandler, RedirectHandler, TelemetryHandler, RedirectHandlerOptionKey, RetryHandlerOptions, HttpClient, RedirectHandlerOptions, TelemetryHandlerOptions, TelemetryHandlerOptionsKey, RetryHandlerOptionKey } from "@microsoft/kiota-http-fetchlibrary";
 
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "./content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
-export { AuthenticationHandler } from "./middleware/AuthenticationHandler";
-export { HTTPMessageHandler } from "./middleware/HTTPMessageHandler";
-export { Middleware } from "./middleware/IMiddleware";
-export { RetryHandler } from "./middleware/RetryHandler";
-export { RedirectHandler } from "./middleware/RedirectHandler";
-export { TelemetryHandler } from "./middleware/TelemetryHandler";
-export { MiddlewareFactory } from "./middleware/MiddlewareFactory";
-export { AuthenticationHandlerOptions } from "./middleware/options/AuthenticationHandlerOptions";
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
-export { RetryHandlerOptions, ShouldRetry } from "./middleware/options/RetryHandlerOptions";
-export { RedirectHandlerOptions, ShouldRedirect } from "./middleware/options/RedirectHandlerOptions";
-export { FeatureUsageFlag, TelemetryHandlerOptions } from "./middleware/options/TelemetryHandlerOptions";
+export { FeatureUsageFlag } from "./middleware/Telemetry/TelemetryFeatureUsageFlag";
 export { ChaosHandlerOptions } from "./middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "./middleware/options/ChaosStrategy";
 export { ChaosHandler } from "./middleware/ChaosHandler";
@@ -38,17 +29,24 @@ export { Range } from "./tasks/FileUploadTask/Range";
 export { GraphRequestOptions, PageCollection, PageIterator, PageIteratorCallback } from "./tasks/PageIterator";
 
 export { Client } from "./Client";
-export { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
 export { GraphError } from "./GraphError";
 export { GraphClientError } from "./GraphClientError";
 export { GraphRequest, URLComponents } from "./GraphRequest";
-export { AuthProvider } from "./IAuthProvider";
-export { AuthenticationProvider } from "./IAuthenticationProvider";
-export { AuthenticationProviderOptions } from "./IAuthenticationProviderOptions";
-export { AuthProviderCallback } from "./IAuthProviderCallback";
+
 export { ClientOptions } from "./IClientOptions";
-export { Context } from "./IContext";
 export { FetchOptions, NodeFetchInit } from "./IFetchOptions";
 export { GraphRequestCallback } from "./IGraphRequestCallback";
-export { Options } from "./IOptions";
+
 export { ResponseType } from "./ResponseType";
+export { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
+export { SimpleAccessTokenProvider } from "./authentication/SimpleAuthentication/SimpleAccessTokenProvider";
+
+export { GraphBaseClient } from "./requestBuilderUtils/GraphBaseClient";
+export { GraphSDKConfig } from "./requestBuilderUtils/GraphSDKConfig";
+
+export { coreSdkVersionValue, getGraphTelemetryCallback, CORE_PRODUCT_NAME, graphTelemetryCallback } from "./middleware/Telemetry/TelemetryUtil";
+export { GraphTelemetryConfig } from "./middleware/Telemetry/GraphTelemetryConfig";
+
+export { getDefaultMiddlewareChain } from "./MiddlewareFactory";
+export { GRAPH_API_VERSION, GRAPH_BASE_URL, GRAPH_URLS } from "./Constants";
+export { isCustomHost, isGraphURL, updateAndReturnAllAllowedHosts } from "./GraphRequestUtil";

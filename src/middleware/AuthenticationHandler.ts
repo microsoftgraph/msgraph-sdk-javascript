@@ -9,15 +9,8 @@
  * @module AuthenticationHandler
  */
 
-import { isCustomHost, isGraphURL } from "../GraphRequestUtil";
-import { AuthenticationProvider } from "../IAuthenticationProvider";
-import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
-import { Context } from "../IContext";
-import { Middleware } from "./IMiddleware";
-import { MiddlewareControl } from "./MiddlewareControl";
-import { appendRequestHeader } from "./MiddlewareUtil";
-import { AuthenticationHandlerOptions } from "./options/AuthenticationHandlerOptions";
-import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
+import { BaseBearerTokenAuthenticationProvider, RequestOption } from "@microsoft/kiota-abstractions";
+import { appendRequestHeader, FetchRequestInit, Middleware } from "@microsoft/kiota-http-fetchlibrary";
 
 /**
  * @class
@@ -33,15 +26,9 @@ export class AuthenticationHandler implements Middleware {
 
 	/**
 	 * @private
-	 * A member to hold an AuthenticationProvider instance
-	 */
-	private authenticationProvider: AuthenticationProvider;
-
-	/**
-	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	next: Middleware;
 
 	/**
 	 * @public
@@ -49,9 +36,7 @@ export class AuthenticationHandler implements Middleware {
 	 * Creates an instance of AuthenticationHandler
 	 * @param {AuthenticationProvider} authenticationProvider - The authentication provider for the authentication handler
 	 */
-	public constructor(authenticationProvider: AuthenticationProvider) {
-		this.authenticationProvider = authenticationProvider;
-	}
+	public constructor(private authenticationProvider: BaseBearerTokenAuthenticationProvider) {}
 
 	/**
 	 * @public
@@ -60,41 +45,20 @@ export class AuthenticationHandler implements Middleware {
 	 * @param {Context} context - The context object of the request
 	 * @returns A Promise that resolves to nothing
 	 */
-	public async execute(context: Context): Promise<void> {
-		const url = typeof context.request === "string" ? context.request : context.request.url;
-		if (isGraphURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
-			let options: AuthenticationHandlerOptions;
-			if (context.middlewareControl instanceof MiddlewareControl) {
-				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;
+	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
+		if (this.authenticationProvider.accessTokenProvider.getAllowedHostsValidator().isUrlHostValid(url)) {
+			if (requestInit?.headers && !requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER]) {
+				const token: string = await this.authenticationProvider.accessTokenProvider.getAuthorizationToken(url);
+				const bearerKey = `Bearer ${token}`;
+				appendRequestHeader(requestInit as FetchRequestInit, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
 			}
-			let authenticationProvider: AuthenticationProvider;
-			let authenticationProviderOptions: AuthenticationProviderOptions;
-			if (options) {
-				authenticationProvider = options.authenticationProvider;
-				authenticationProviderOptions = options.authenticationProviderOptions;
-			}
-			if (!authenticationProvider) {
-				authenticationProvider = this.authenticationProvider;
-			}
-			const token: string = await authenticationProvider.getAccessToken(authenticationProviderOptions);
-			const bearerKey = `Bearer ${token}`;
-			appendRequestHeader(context.request, context.options, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
-			TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 		} else {
-			if (context.options.headers) {
-				delete context.options.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
-			}
+			/**
+			 * deleting auth headers because the tasks such as LargeFileUpload use client.api() to upload to redirected url
+			 * delete the auth header and allow the request to go through with the rest of the middleware chain
+			 **/
+			delete requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
 		}
-		return await this.nextMiddleware.execute(context);
-	}
-
-	/**
-	 * @public
-	 * To set the next middleware in the chain
-	 * @param {Middleware} next - The middleware instance
-	 * @returns Nothing
-	 */
-	public setNext(next: Middleware): void {
-		this.nextMiddleware = next;
+		return await this.next.execute(url, requestInit, requestOptions);
 	}
 }

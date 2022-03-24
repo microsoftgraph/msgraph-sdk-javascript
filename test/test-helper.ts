@@ -5,17 +5,16 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Client } from "../src/index";
-import { DummyAuthenticationProvider } from "./DummyAuthenticationProvider";
+import { Client, SimpleAuthenticationProvider } from "../src/index";
 
 export function getClient(): Client {
-	return Client.initWithMiddleware({
-		authProvider: new DummyAuthenticationProvider(),
+	return Client.init({
+		authProvider: new SimpleAuthenticationProvider(async () => {
+			return "DUMMY_ACCESS_TOKEN";
+		}, ["scope1", "scope2"]),
 	});
 }
 
 export function randomString() {
-	return Math.random()
-		.toString(36)
-		.substring(7);
+	return Math.random().toString(36).substring(7);
 }

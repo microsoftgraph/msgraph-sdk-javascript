@@ -5,11 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-/**
- * @interface
- * A signature represents the Authentication provider options
- * @property {string[]} [scopes] - The array of scopes
- */
-export interface AuthenticationProviderOptions {
-	scopes?: string[];
+export interface GraphTelemetryConfig {
+	allowedHosts: Set<string>;
+	SDKNameWithVersion: string;
 }

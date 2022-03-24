@@ -5,11 +5,9 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { AuthProviderCallback } from "./IAuthProviderCallback";
-
 /**
- * @interface
- * Signature that holds authProvider
- * @callback - The anonymous callback function which takes a single param
+ * Configuration options passed to the Graph core library by SDK.
  */
-export type AuthProvider = (done: AuthProviderCallback) => void;
+export interface GraphSDKConfig {
+	sdkTelemetryVersion?: string;
+}

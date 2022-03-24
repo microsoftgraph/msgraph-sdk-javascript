@@ -2,10 +2,9 @@
 	"extends": "./tsconfig-base.json",
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es5",
+		"target": "es6",
 		"lib": ["dom", "esnext"],
-		"outDir": "lib",
-		"composite": true
+		"outDir": "lib"
 	},
 	"exclude": ["node_modules", "lib", "samples", "test/development"],
 	"include": ["./src/**/*.ts", "./test"]

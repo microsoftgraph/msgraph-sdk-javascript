@@ -9,15 +9,16 @@
  * @module ChaosHandler
  */
 
-import { Context } from "../IContext";
+import { RequestOption } from "@microsoft/kiota-abstractions";
+import { Middleware } from "@microsoft/kiota-http-fetchlibrary";
+
 import { RequestMethod } from "../RequestMethod";
-import { Middleware } from "./IMiddleware";
-import { MiddlewareControl } from "./MiddlewareControl";
 import { generateUUID } from "./MiddlewareUtil";
 import { httpStatusCode, methodStatusCode } from "./options/ChaosHandlerData";
 import { ChaosHandlerOptions } from "./options/ChaosHandlerOptions";
 import { ChaosStrategy } from "./options/ChaosStrategy";
 
+export const ChaosHandlerOptionKey = "ChaosHandlerOptionKey";
 /**
  * Class representing ChaosHandler
  * @class
@@ -25,25 +26,7 @@ import { ChaosStrategy } from "./options/ChaosStrategy";
  * @implements Middleware
  */
 export class ChaosHandler implements Middleware {
-	/**
-	 * A member holding options to customize the handler behavior
-	 *
-	 * @private
-	 */
-	private options: ChaosHandlerOptions;
-
-	/**
-	 * container for the manual map that has been written by the client
-	 *
-	 * @private
-	 */
-	private manualMap: Map<string, Map<string, number>>;
-
-	/**
-	 * @private
-	 * A member to hold next middleware in the middleware chain
-	 */
-	private nextMiddleware: Middleware;
+	next: Middleware | undefined;
 
 	/**
 	 * @public
@@ -53,9 +36,13 @@ export class ChaosHandler implements Middleware {
 	 * @param manualMap - The Map passed by user containing url-statusCode info
 	 * @returns An instance of Testing Handler
 	 */
-	public constructor(options: ChaosHandlerOptions = new ChaosHandlerOptions(), manualMap?: Map<string, Map<string, number>>) {
-		this.options = options;
-		this.manualMap = manualMap;
+	public constructor(private chaosHandlerOptions: ChaosHandlerOptions = new ChaosHandlerOptions(), private manualMap?: Map<string, Map<string, number>>) {}
+
+	execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
+		if (requestOptions && requestOptions[ChaosHandlerOptionKey]) {
+			this.chaosHandlerOptions = requestOptions[ChaosHandlerOptionKey] as ChaosHandlerOptions;
+		}
+		return this.sendRequest(url, requestInit, requestOptions);
 	}
 
 	/**
@@ -66,8 +53,8 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestDate - date of the request
 	 * @returns response Header
 	 */
-	private createResponseHeaders(chaosHandlerOptions: ChaosHandlerOptions, requestID: string, requestDate: string) {
-		const responseHeader: Headers = chaosHandlerOptions.headers ? new Headers(chaosHandlerOptions.headers) : new Headers();
+	private createResponseHeaders(requestID: string, requestDate: string) {
+		const responseHeader: Headers = this.chaosHandlerOptions.headers ? new Headers(this.chaosHandlerOptions.headers) : new Headers();
 		responseHeader.append("Cache-Control", "no-store");
 		responseHeader.append("request-id", requestID);
 		responseHeader.append("client-request-id", requestID);
@@ -75,7 +62,7 @@ export class ChaosHandler implements Middleware {
 		responseHeader.append("Date", requestDate);
 		responseHeader.append("Strict-Transport-Security", "");
 
-		if (chaosHandlerOptions.statusCode === 429) {
+		if (this.chaosHandlerOptions.statusCode === 429) {
 			// throttling case has to have a timeout scenario
 			responseHeader.append("retry-after", "3");
 		}
@@ -91,14 +78,14 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestDate - date of the request
 	 *  * @returns response body
 	 */
-	private createResponseBody(chaosHandlerOptions: ChaosHandlerOptions, requestID: string, requestDate: string) {
-		if (chaosHandlerOptions.responseBody) {
-			return chaosHandlerOptions.responseBody;
+	private createResponseBody(requestID: string, requestDate: string) {
+		if (this.chaosHandlerOptions.responseBody) {
+			return this.chaosHandlerOptions.responseBody;
 		}
 		let body: any;
-		if (chaosHandlerOptions.statusCode >= 400) {
-			const codeMessage: string = httpStatusCode[chaosHandlerOptions.statusCode];
-			const errMessage: string = chaosHandlerOptions.statusMessage;
+		if (this.chaosHandlerOptions.statusCode >= 400) {
+			const codeMessage: string = httpStatusCode[this.chaosHandlerOptions.statusCode];
+			const errMessage: string = this.chaosHandlerOptions.statusMessage;
 
 			body = {
 				error: {
@@ -122,14 +109,13 @@ export class ChaosHandler implements Middleware {
 	 * @param {ChaosHandlerOptions} chaosHandlerOptions - The ChaosHandlerOptions object
 	 * @param {Context} context - Contains the context of the request
 	 */
-	private createResponse(chaosHandlerOptions: ChaosHandlerOptions, context: Context) {
-		const requestURL = context.request as string;
+	private createResponse(requestURL: string): Response {
 		const requestID = generateUUID();
 		const requestDate = new Date();
-		const responseHeader = this.createResponseHeaders(chaosHandlerOptions, requestID, requestDate.toString());
-		const responseBody = this.createResponseBody(chaosHandlerOptions, requestID, requestDate.toString());
-		const init: any = { url: requestURL, status: chaosHandlerOptions.statusCode, statusText: chaosHandlerOptions.statusMessage, headers: responseHeader };
-		context.response = new Response(typeof responseBody === "string" ? responseBody : JSON.stringify(responseBody), init);
+		const responseHeader = this.createResponseHeaders(requestID, requestDate.toString());
+		const responseBody = this.createResponseBody(requestID, requestDate.toString());
+		const init: any = { url: requestURL, status: this.chaosHandlerOptions.statusCode, statusText: this.chaosHandlerOptions.statusMessage, headers: responseHeader };
+		return new Response(typeof responseBody === "string" ? responseBody : JSON.stringify(responseBody), init);
 	}
 
 	/**
@@ -139,12 +125,12 @@ export class ChaosHandler implements Middleware {
 	 * @param {Context} context - Contains the context of the request
 	 * @returns nothing
 	 */
-	private async sendRequest(chaosHandlerOptions: ChaosHandlerOptions, context: Context): Promise<void> {
-		this.setStatusCode(chaosHandlerOptions, context.request as string, context.options.method as RequestMethod);
-		if ((chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL && !this.nextMiddleware) || Math.floor(Math.random() * 100) < chaosHandlerOptions.chaosPercentage) {
-			this.createResponse(chaosHandlerOptions, context);
-		} else if (this.nextMiddleware) {
-			await this.nextMiddleware.execute(context);
+	private async sendRequest(url: string, requestInit?: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
+		this.setStatusCode(url, requestInit?.method as RequestMethod);
+		if ((this.chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL && !this.next) || Math.floor(Math.random() * 100) < this.chaosHandlerOptions.chaosPercentage) {
+			return this.createResponse(url);
+		} else if (this.next) {
+			await this.next.execute(url, requestInit, requestOptions);
 		}
 	}
 
@@ -181,15 +167,15 @@ export class ChaosHandler implements Middleware {
 	 * @param {string} requestURL - the URL for the request
 	 * @param {string} requestMethod - the API method for the request
 	 */
-	private setStatusCode(chaosHandlerOptions: ChaosHandlerOptions, requestURL: string, requestMethod: RequestMethod) {
-		if (chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL) {
-			if (chaosHandlerOptions.statusCode === undefined) {
+	private setStatusCode(requestURL: string, requestMethod: RequestMethod) {
+		if (this.chaosHandlerOptions.chaosStrategy === ChaosStrategy.MANUAL) {
+			if (this.chaosHandlerOptions.statusCode === undefined) {
 				// manual mode with no status code, can be a global level or request level without statusCode
 				const relativeURL: string = this.getRelativeURL(requestURL);
 				if (this.manualMap.get(relativeURL) !== undefined) {
 					// checking Manual Map for exact match
 					if (this.manualMap.get(relativeURL).get(requestMethod) !== undefined) {
-						chaosHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
+						this.chaosHandlerOptions.statusCode = this.manualMap.get(relativeURL).get(requestMethod);
 					}
 					// else statusCode would be undefined
 				} else {
@@ -198,7 +184,7 @@ export class ChaosHandler implements Middleware {
 						const regexURL = new RegExp(key + "$");
 						if (regexURL.test(relativeURL)) {
 							if (this.manualMap.get(key).get(requestMethod) !== undefined) {
-								chaosHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
+								this.chaosHandlerOptions.statusCode = this.manualMap.get(key).get(requestMethod);
 							}
 							// else statusCode would be undefined
 						}
@@ -209,39 +195,9 @@ export class ChaosHandler implements Middleware {
 			}
 		} else {
 			// Handling the case of Random here
-			chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
+			this.chaosHandlerOptions.statusCode = this.getRandomStatusCode(requestMethod);
 			// else statusCode would be undefined
 		}
-	}
-
-	/**
-	 * To get the options for execution of the middleware
-	 * @private
-	 * @param {Context} context - The context object
-	 * @returns options for middleware execution
-	 */
-	private getOptions(context: Context): ChaosHandlerOptions {
-		let options: ChaosHandlerOptions;
-		if (context.middlewareControl instanceof MiddlewareControl) {
-			options = context.middlewareControl.getMiddlewareOptions(ChaosHandlerOptions) as ChaosHandlerOptions;
-		}
-		if (typeof options === "undefined") {
-			options = Object.assign(new ChaosHandlerOptions(), this.options);
-		}
-
-		return options;
-	}
-
-	/**
-	 * To execute the current middleware
-	 * @public
-	 * @async
-	 * @param {Context} context - The context object of the request
-	 * @returns A Promise that resolves to nothing
-	 */
-	public async execute(context: Context): Promise<void> {
-		const chaosHandlerOptions: ChaosHandlerOptions = this.getOptions(context);
-		return await this.sendRequest(chaosHandlerOptions, context);
 	}
 
 	/**
@@ -251,6 +207,6 @@ export class ChaosHandler implements Middleware {
 	 * @returns Nothing
 	 */
 	public setNext(next: Middleware): void {
-		this.nextMiddleware = next;
+		this.next = next;
 	}
 }

@@ -8,6 +8,8 @@
 /**
  * @module GraphRequestUtil
  */
+import { BaseBearerTokenAuthenticationProvider } from "@microsoft/kiota-abstractions";
+
 import { GRAPH_URLS } from "./Constants";
 import { GraphClientError } from "./GraphClientError";
 /**
@@ -120,4 +122,17 @@ const isCustomHostValid = (host: string) => {
 	if (host.indexOf("/") !== -1) {
 		throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
 	}
+};
+
+/**
+ *
+ * @param customHosts
+ * @returns
+ */
+export const updateAndReturnAllAllowedHosts = (authProvider: BaseBearerTokenAuthenticationProvider, customHosts: Set<string>): Set<string> => {
+	const hostsValidator = authProvider.accessTokenProvider.getAllowedHostsValidator();
+	const allowedHosts = customHosts ? new Set([...customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
+	const hostSetWithGraphandCustomHosts = customHosts ? new Set([...allowedHosts, ...GRAPH_URLS, ...customHosts]) : new Set([...allowedHosts, ...GRAPH_URLS]);
+	hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
+    return hostSetWithGraphandCustomHosts;
 };
