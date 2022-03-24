@@ -10,7 +10,7 @@
  */
 
 import { BaseBearerTokenAuthenticationProvider, RequestOption } from "@microsoft/kiota-abstractions";
-import { Middleware, appendRequestHeader, FetchRequestInit } from "@microsoft/kiota-http-fetchlibrary";
+import { appendRequestHeader, FetchRequestInit, Middleware } from "@microsoft/kiota-http-fetchlibrary";
 
 /**
  * @class
@@ -36,7 +36,7 @@ export class AuthenticationHandler implements Middleware {
 	 * Creates an instance of AuthenticationHandler
 	 * @param {AuthenticationProvider} authenticationProvider - The authentication provider for the authentication handler
 	 */
-	public constructor(private authenticationProvider : BaseBearerTokenAuthenticationProvider) {}
+	public constructor(private authenticationProvider: BaseBearerTokenAuthenticationProvider) {}
 
 	/**
 	 * @public
@@ -46,11 +46,19 @@ export class AuthenticationHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
-         if(requestInit?.headers && !requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER]) {
-			const token: string = await this.authenticationProvider.accessTokenProvider.getAuthorizationToken(url);
-			const bearerKey = `Bearer ${token}`;
-			appendRequestHeader(requestInit as FetchRequestInit, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
-        }
+		if (this.authenticationProvider.accessTokenProvider.getAllowedHostsValidator().isUrlHostValid(url)) {
+			if (requestInit?.headers && !requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER]) {
+				const token: string = await this.authenticationProvider.accessTokenProvider.getAuthorizationToken(url);
+				const bearerKey = `Bearer ${token}`;
+				appendRequestHeader(requestInit as FetchRequestInit, AuthenticationHandler.AUTHORIZATION_HEADER, bearerKey);
+			}
+		} else {
+			/**
+			 * deleting auth headers because the tasks such as LargeFileUpload use client.api() to upload to redirected url
+			 * delete the auth header and allow the request to go through with the rest of the middleware chain
+			 **/
+			delete requestInit.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
+		}
 		return await this.next.execute(url, requestInit, requestOptions);
 	}
 }

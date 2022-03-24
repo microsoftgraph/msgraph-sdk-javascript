@@ -142,46 +142,6 @@ describe("Client.ts", () => {
 
 			assert.isTrue(allowedHosts.includes(customHost));
 		});
-
-		it("Pass invalid custom hosts", async () => {
-			try {
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const accessToken = "DUMMY_TOKEN";
-
-				const options = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Testing chained middleware array", 200, 100, "");
-				const customHost = "https://test_custom/v1.0/me";
-				const customHosts = new Set<string>([customHost]);
-				const chaosHandler = new ChaosHandler(options);
-				const authProvider = new SimpleAuthenticationProvider(
-					async () => {
-						return "";
-					},
-					["scope1", "scope2"],
-					customHosts,
-				);
-				const authenticationHandler = new AuthenticationHandler(authProvider);
-				const middleware = [authenticationHandler, chaosHandler];
-
-				const client = Client.init({
-					middleware,
-					authProvider: new SimpleAuthenticationProvider(
-						async () => {
-							return accessToken;
-						},
-						["scope1", "scope2"],
-						customHosts,
-					),
-				});
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const response = await client.api(`https://test_custom/v1.0/me`).get();
-
-				throw new Error("Test fails - Error expected when custom host is not valid");
-			} catch (error) {
-				assert.isDefined(error);
-				assert.isDefined(error.message);
-				assert.equal(error.message, "The request url is not present in the allowed hosts list or is not a valid host");
-			}
-		});
 	});
 
 	describe("init", () => {
