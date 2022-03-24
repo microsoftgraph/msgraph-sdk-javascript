@@ -10,8 +10,8 @@ import fetch from "node-fetch";
 
 import { ClientOptions } from "../IClientOptions";
 import { AuthenticationHandler } from "../middleware/AuthenticationHandler";
-import { GraphTelemetryConfig } from "../middleware/GraphTelemetryConfig";
-import { getgraphTelemetryCallback } from "../middleware/TelemetryUtil";
+import { GraphTelemetryConfig } from "../middleware/Telemetry/GraphTelemetryConfig";
+import { getGraphTelemetryCallback } from "../middleware/Telemetry/TelemetryUtil";
 import { GraphSDKConfig } from "../requestBuilderUtils/GraphSDKConfig";
 
 export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedHosts: Set<string>, graphSDKConfig?: GraphSDKConfig): Middleware[] {
@@ -23,10 +23,12 @@ export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedH
 	const retryHandler = new RetryHandler(new RetryHandlerOptions());
 	middlewareArray.push(retryHandler);
 
-	const telemetryHandlerOptions: TelemetryHandlerOptions = getgraphTelemetryCallback({
+	const graphTelemetryConfig: GraphTelemetryConfig = {
 		allowedHosts,
 		SDKNameWithVersion: graphSDKConfig?.sdkTelemetryVersion,
-	} as GraphTelemetryConfig);
+	};
+
+	const telemetryHandlerOptions: TelemetryHandlerOptions = getGraphTelemetryCallback(graphTelemetryConfig);
 	const telemetryHandler = new TelemetryHandler(telemetryHandlerOptions);
 
 	middlewareArray.push(telemetryHandler);

@@ -36,9 +36,7 @@ export class ChaosHandler implements Middleware {
 	 * @param manualMap - The Map passed by user containing url-statusCode info
 	 * @returns An instance of Testing Handler
 	 */
-	public constructor(private chaosHandlerOptions: ChaosHandlerOptions = new ChaosHandlerOptions(), private manualMap?: Map<string, Map<string, number>>) {
-		this.manualMap = manualMap;
-	}
+	public constructor(private chaosHandlerOptions: ChaosHandlerOptions = new ChaosHandlerOptions(), private manualMap?: Map<string, Map<string, number>>) {}
 
 	execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>): Promise<Response> {
 		if (requestOptions && requestOptions[ChaosHandlerOptionKey]) {

@@ -9,8 +9,8 @@ import { TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 import { assert } from "chai";
 
 import { GRAPH_BASE_URL, GRAPH_URLS } from "../../../src/Constants";
-import { GraphTelemetryConfig } from "../../../src/middleware/GraphTelemetryConfig";
-import { getgraphTelemetryCallback } from "../../../src/middleware/TelemetryUtil";
+import { GraphTelemetryConfig } from "../../../src/middleware/Telemetry/GraphTelemetryConfig";
+import { coreSdkVersionValue, getGraphTelemetryCallback } from "../../../src/middleware/Telemetry/TelemetryUtil";
 import { PACKAGE_VERSION } from "../../../src/Version";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
 
@@ -18,9 +18,8 @@ describe("TelemetryHandler.ts", () => {
 	describe("execute", function () {
 		this.timeout(20 * 1000);
 		const telemetryHandler = new TelemetryHandler(
-			getgraphTelemetryCallback({
+			getGraphTelemetryCallback({
 				allowedHosts: GRAPH_URLS,
-				SDKNameWithVersion: "TEST VERSION",
 			} as GraphTelemetryConfig),
 		);
 		const dummyHTTPHandler = new DummyHTTPMessageHandler();
@@ -67,7 +66,7 @@ describe("TelemetryHandler.ts", () => {
 
 			dummyHTTPHandler.setResponses([okayResponse]);
 			await telemetryHandler.execute(request, options);
-			assert.equal(options["SdkVersion"], `graph-js/${PACKAGE_VERSION}`);
+			assert.equal(options.headers["SdkVersion"], coreSdkVersionValue);
 		});
 
 		it("Should not set telemetry for non-graph url", async () => {
@@ -85,7 +84,7 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(options.headers["setFeatureUsage"], undefined);
 		});
 
-		it("Should not disturb client-request-id in the header when Request object is passed with Graph URL", async () => {
+		it("Should not disturb client-request-id in the header when Request url is passed with Graph URL", async () => {
 			const request = GRAPH_BASE_URL;
 			const options = {
 				headers: {
@@ -96,10 +95,10 @@ describe("TelemetryHandler.ts", () => {
 			dummyHTTPHandler.setResponses([okayResponse]);
 			await telemetryHandler.execute(request, options);
 			assert.equal(options.headers["client-request-id"], uuid);
-			assert.equal(options.headers["SdkVersion"], sdkVersion);
+			assert.equal(options.headers["SdkVersion"], sdkVersion + ", " + coreSdkVersionValue);
 		});
 
-		it("Should delete Telemetry in the header when Request object is passed with non Graph URL", async () => {
+		it("Should delete Telemetry in the header when Request url is passed with non Graph URL", async () => {
 			const request = "test_url";
 
 			const options = {

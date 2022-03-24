@@ -12,7 +12,7 @@ export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, B
 export { BatchResponseBody, BatchResponseContent } from "./content/BatchResponseContent";
 
 export { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
-export { FeatureUsageFlag, TelemetryHandlerOptions } from "./middleware/options/TelemetryHandlerOptions";
+export { FeatureUsageFlag } from "./middleware/Telemetry/TelemetryFeatureUsageFlag";
 export { ChaosHandlerOptions } from "./middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "./middleware/options/ChaosStrategy";
 export { ChaosHandler } from "./middleware/ChaosHandler";

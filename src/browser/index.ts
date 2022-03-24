@@ -16,7 +16,7 @@ export { MiddlewareFactory } from "@microsoft/kiota-http-fetchlibrary";
 export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 export { ShouldRetry, RetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 export { ShouldRedirect, RedirectHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
-export { FeatureUsageFlag, TelemetryHandlerOptions } from "../middleware/options/TelemetryHandlerOptions";
+export { FeatureUsageFlag } from "../middleware/Telemetry/TelemetryFeatureUsageFlag";
 export { ChaosHandlerOptions } from "../middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "../middleware/options/ChaosStrategy";
 export { ChaosHandler } from "../middleware/ChaosHandler";

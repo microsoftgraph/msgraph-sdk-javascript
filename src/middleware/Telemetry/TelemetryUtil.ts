@@ -8,10 +8,10 @@
 import { RequestOption } from "@microsoft/kiota-abstractions";
 import { appendRequestHeader, FetchHeadersInit, FetchRequestInit, getRequestHeader, setRequestHeader, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 
-import { isCustomHost, isGraphURL } from "../GraphRequestUtil";
-import { PACKAGE_VERSION } from "../Version";
+import { isCustomHost, isGraphURL } from "../../GraphRequestUtil";
+import { PACKAGE_VERSION } from "../../Version";
+import { generateUUID } from "../MiddlewareUtil";
 import { GraphTelemetryConfig } from "./GraphTelemetryConfig";
-import { generateUUID } from "./MiddlewareUtil";
 
 /**
  * @private
@@ -32,8 +32,8 @@ const SDK_VERSION_HEADER = "SdkVersion";
  * @static
  * A member holding the language prefix for the sdk version header value
  */
-const CORE_PRODUCT_NAME = "graph-js-core";
-const coreSdkVersionValue = `${CORE_PRODUCT_NAME}/${PACKAGE_VERSION}`;
+export const CORE_PRODUCT_NAME = "graph-js-core";
+export const coreSdkVersionValue = `${CORE_PRODUCT_NAME}/${PACKAGE_VERSION}`;
 
 export const graphTelemetryCallback = (url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>, telemetryInfomation?: unknown) => {
 	const graphTelemetry = telemetryInfomation as GraphTelemetryConfig;
@@ -54,8 +54,12 @@ export const graphTelemetryCallback = (url: string, requestInit: RequestInit, re
 	}
 };
 
-export const getgraphTelemetryCallback = (graphTelemetry: GraphTelemetryConfig): TelemetryHandlerOptions => {
-	graphTelemetry.SDKNameWithVersion = graphTelemetry.SDKNameWithVersion ? graphTelemetry.SDKNameWithVersion + " " + coreSdkVersionValue : coreSdkVersionValue;
+export const getGraphTelemetryCallback = (graphTelemetry: GraphTelemetryConfig): TelemetryHandlerOptions => {
+	/** As per https://github.com/microsoftgraph/msgraph-sdk-design/blob/master/middleware/TelemetryHandler.md
+	 * The value should look like:
+	 * graph-sdk-js/1.0.0, graph-js-core/4.0.0
+	 **/
+	graphTelemetry.SDKNameWithVersion = graphTelemetry.SDKNameWithVersion ? graphTelemetry.SDKNameWithVersion + ", " + coreSdkVersionValue : coreSdkVersionValue;
 	return {
 		telemetryConfigurator: graphTelemetryCallback,
 		telemetryInfomation: graphTelemetry,

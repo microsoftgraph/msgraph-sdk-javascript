@@ -63,12 +63,11 @@ export class Client implements GraphBaseClient {
 		let httpClient: HttpClient;
 		if (clientOptions.authProvider === undefined) {
 			const error = new GraphClientError();
-			error.name = "AmbiguityInInitialization";
+			error.name = "Client Initialization Failed";
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
 		const allowedHosts = updateAndReturnAllAllowedHosts(clientOptions.authProvider, this.config.customHosts);
-		this.authProvider = clientOptions.authProvider;
 
 		if (!clientOptions.middleware) {
 			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, allowedHosts)));
