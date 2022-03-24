@@ -5,8 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { CustomFetchHandler, Middleware, RedirectHandler, RedirectHandlerOptions, RetryHandler, RetryHandlerOptions, TelemetryHandler, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
-import fetch from "node-fetch";
+import { Middleware, MiddlewareFactory as KiotaMiddlewareFactory, TelemetryHandler, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 
 import { ClientOptions } from "./IClientOptions";
 import { AuthenticationHandler } from "./middleware/AuthenticationHandler";
@@ -20,12 +19,6 @@ export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedH
 	const authenticationHandler = new AuthenticationHandler(clientOptions.authProvider);
 	middlewareArray.push(authenticationHandler);
 
-	const retryHandler = new RetryHandler(new RetryHandlerOptions());
-	middlewareArray.push(retryHandler);
-
-	const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
-	middlewareArray.push(redirectHandler);
-
 	const graphTelemetryConfig: GraphTelemetryConfig = {
 		allowedHosts,
 		SDKNameWithVersion: graphSDKConfig?.sdkTelemetryVersion,
@@ -33,8 +26,12 @@ export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedH
 
 	const telemetryHandlerOptions: TelemetryHandlerOptions = getGraphTelemetryCallback(graphTelemetryConfig);
 	const telemetryHandler = new TelemetryHandler(telemetryHandlerOptions);
+	const kiotaDefaultMiddleware = KiotaMiddlewareFactory.getDefaultMiddlewareChain(clientOptions.customFetch);
 
-	middlewareArray.push(telemetryHandler);
-	middlewareArray.push(new CustomFetchHandler(clientOptions.customFetch ?? fetch));
-	return middlewareArray;
+	/**  insert telemetry handler before custom fetch handler as the telemetry
+	 * headers need to be deleted in case the request is redirected to a non-graph endpoint
+	 */
+
+	kiotaDefaultMiddleware.splice(kiotaDefaultMiddleware.length - 1, 0, telemetryHandler);
+	return middlewareArray.concat(kiotaDefaultMiddleware);
 }

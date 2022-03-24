@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { CustomFetchHandler, Middleware, RetryHandler, RetryHandlerOptions, TelemetryHandler, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
+import { CustomFetchHandler, Middleware, MiddlewareFactory as KiotaMiddlewareFactory, RetryHandler, RetryHandlerOptions, TelemetryHandler, TelemetryHandlerOptions } from "@microsoft/kiota-http-fetchlibrary";
 import fetch from "node-fetch";
 
 import { ClientOptions } from "../IClientOptions";
@@ -20,18 +20,17 @@ export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedH
 	const authenticationHandler = new AuthenticationHandler(clientOptions.authProvider);
 	middlewareArray.push(authenticationHandler);
 
-	const retryHandler = new RetryHandler(new RetryHandlerOptions());
-	middlewareArray.push(retryHandler);
-
 	const graphTelemetryConfig: GraphTelemetryConfig = {
 		allowedHosts,
 		SDKNameWithVersion: graphSDKConfig?.sdkTelemetryVersion,
 	};
-
 	const telemetryHandlerOptions: TelemetryHandlerOptions = getGraphTelemetryCallback(graphTelemetryConfig);
 	const telemetryHandler = new TelemetryHandler(telemetryHandlerOptions);
-
-	middlewareArray.push(telemetryHandler);
-	middlewareArray.push(new CustomFetchHandler(clientOptions.customFetch ?? fetch));
-	return middlewareArray;
+	
+    /**  insert telemetry handler before custom fetch handler as the telemetry
+    * headers need to be deleted in case the request is redirected to a non-graph endpoint
+    */
+    const kiotaDefaultMiddleware = KiotaMiddlewareFactory.getDefaultMiddlewareChain(clientOptions.customFetch);
+	kiotaDefaultMiddleware.splice(kiotaDefaultMiddleware.length - 1, 0, telemetryHandler);
+	return middlewareArray.concat(kiotaDefaultMiddleware);
 }
