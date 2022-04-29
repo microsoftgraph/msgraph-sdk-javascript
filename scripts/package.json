@@ -3,7 +3,7 @@
 		"update:version": "gulp  --gulpfile ./src/gulpfile.js ReplaceVersion"
 	},
 	"devDependencies": {
-		"gulp": "^4.0.0",
+		"gulp": "^4.0.2",
 		"gulp-json-modify": "^1.0.2",
 		"gulp-replace": "^1.0.0",
 		"yargs": "^13.2.2"
