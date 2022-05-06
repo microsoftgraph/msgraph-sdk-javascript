@@ -110,7 +110,7 @@ In case your browser doesn't have support for [Fetch](https://developer.mozilla.
 To call Microsoft Graph, your app must acquire an access token from the Microsoft identity platform. Learn more about this -
 
 -   [Authentication and authorization basics for Microsoft Graph](https://docs.microsoft.com/graph/auth/auth-concepts)
--   [Register your app with the Microsoft identity platform](https://docs.microsoft.com/graph/auth/auth-concepts)
+-   [Register your app with the Microsoft identity platform](https://docs.microsoft.com/graph/auth-register-app-v2)
 
 ### 2. Create a Client Instance
 
