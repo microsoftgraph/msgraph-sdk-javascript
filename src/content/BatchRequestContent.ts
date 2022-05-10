@@ -8,6 +8,8 @@
 /**
  * @module BatchRequestContent
  */
+import { RequestInformation } from "@microsoft/kiota-abstractions";
+
 import { RequestMethod } from "../RequestMethod";
 
 /**
@@ -38,6 +40,12 @@ export interface BatchRequestStep {
 	id: string;
 	dependsOn?: string[];
 	request: Request;
+}
+
+export interface BatchRequestInformationStep {
+	id: string;
+	dependsOn?: string[];
+	request: RequestInformation;
 }
 
 /**
@@ -275,6 +283,18 @@ export class BatchRequestContent {
 		return body;
 	}
 
+	private convertToBatchRequestStep(requestInfoStep: BatchRequestInformationStep): BatchRequestStep {
+		const batchRequestStep: BatchRequestStep = {
+			dependsOn: requestInfoStep.dependsOn,
+			id: requestInfoStep.id,
+			request: this.convertFetchRequestToRequestInformation(requestInfoStep.request),
+		};
+		return batchRequestStep;
+	}
+	private convertFetchRequestToRequestInformation(requestInfo: RequestInformation): Request {
+		const fetchRequest = new Request(requestInfo.URL, { headers: requestInfo.headers, method: requestInfo.httpMethod?.toString(), body: requestInfo.content });
+		return fetchRequest;
+	}
 	/**
 	 * @public
 	 * @constructor
@@ -282,18 +302,19 @@ export class BatchRequestContent {
 	 * @param {BatchRequestStep[]} [requests] - Array of requests value
 	 * @returns An instance of a BatchRequestContent
 	 */
-	public constructor(requests?: BatchRequestStep[]) {
+	public constructor(requests?: BatchRequestStep[], requestInformationSteps?: BatchRequestInformationStep[]) {
 		this.requests = new Map();
-		if (typeof requests !== "undefined") {
-			const limit = BatchRequestContent.requestLimit;
-			if (requests.length > limit) {
-				const error = new Error(`Maximum requests limit exceeded, Max allowed number of requests are ${limit}`);
-				error.name = "Limit Exceeded Error";
-				throw error;
-			}
-			for (const req of requests) {
-				this.addRequest(req);
-			}
+		if (requests) {
+			requests.forEach((fetchRequestStep) => {
+				this.addRequest(fetchRequestStep);
+			});
+		}
+
+		if (requestInformationSteps) {
+			requestInformationSteps.forEach((element) => {
+				const fetchRequest = this.convertToBatchRequestStep(element);
+				this.addRequest(fetchRequest);
+			});
 		}
 	}
 
@@ -322,6 +343,10 @@ export class BatchRequestContent {
 		}
 		this.requests.set(request.id, request);
 		return request.id;
+	}
+
+	public addRequestInformationStep(requestInfo: BatchRequestInformationStep): string {
+		return this.addRequest(this.convertToBatchRequestStep(requestInfo));
 	}
 
 	/**
