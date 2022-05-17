@@ -10,7 +10,7 @@
  */
 
 import { FetchOptions } from "../IFetchOptions";
-import { Client } from "../index";
+import { GraphBaseClient } from "../index";
 import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 
 /**
@@ -55,38 +55,38 @@ export class PageIterator {
 	 * @private
 	 * Member holding the GraphClient instance
 	 */
-	private client: Client;
+	protected client: GraphBaseClient;
 
 	/**
 	 * @private
 	 * Member holding the page collection
 	 */
-	private collection: any[];
+	protected collection: any[];
 
 	/**
 	 * @private
 	 * Member variable referring to nextLink of the page collection
 	 */
-	private nextLink: string | undefined;
+	protected nextLink: string | undefined;
 
 	/**
 	 * @private
 	 * Member variable referring to deltaLink of the request
 	 */
-	private deltaLink: string | undefined;
+	protected deltaLink: string | undefined;
 
 	/**
 	 * @private
 	 * Holding callback for Iteration.
 	 */
 
-	private callback: PageIteratorCallback;
+	protected callback: PageIteratorCallback;
 
 	/**
 	 * @private
 	 * Member holding a complete/incomplete status of an iterator
 	 */
-	private complete: boolean;
+	protected complete: boolean;
 
 	/**
 	 * Information to be added to the request
@@ -103,7 +103,7 @@ export class PageIterator {
 	 * @param {GraphRequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
+	public constructor(client: GraphBaseClient, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
@@ -136,7 +136,7 @@ export class PageIterator {
 	 * Helper to make a get request to fetch next page with nextLink url and update the page iterator instance with the returned response
 	 * @returns A promise that resolves to a response data with next page collection
 	 */
-	private async fetchAndUpdateNextPageData(): Promise<any> {
+	protected async fetchAndUpdateNextPageData(): Promise<any> {
 		let graphRequest = this.client.api(this.nextLink);
 		if (this.requestOptions) {
 			if (this.requestOptions.headers) {
