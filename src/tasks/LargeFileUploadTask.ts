@@ -11,7 +11,7 @@
 
 import { GraphClientError } from "../GraphClientError";
 import { GraphResponseHandler } from "../GraphResponseHandler";
-import { Client } from "../index";
+import { GraphBaseClient } from "../index";
 import { ResponseType } from "../ResponseType";
 import { UploadEventHandlers } from "./FileUploadTask/Interfaces/IUploadEventHandlers";
 import { Range } from "./FileUploadTask/Range";
@@ -95,7 +95,7 @@ export class LargeFileUploadTask<T> {
 	 * @protected
 	 * The GraphClient instance
 	 */
-	protected client: Client;
+	protected client: GraphBaseClient;
 
 	/**
 	 * @protected
@@ -132,11 +132,8 @@ export class LargeFileUploadTask<T> {
 	 * @param {KeyValuePairObjectStringNumber} headers - The headers that needs to be sent
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<LargeFileUploadSession> {
-		const session = await client
-			.api(requestUrl)
-			.headers(headers)
-			.post(payload);
+	public static async createUploadSession(client: GraphBaseClient, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<LargeFileUploadSession> {
+		const session = await client.api(requestUrl).headers(headers).post(payload);
 		const largeFileUploadSession: LargeFileUploadSession = {
 			url: session.uploadUrl,
 			expiry: new Date(session.expirationDateTime),
@@ -155,7 +152,7 @@ export class LargeFileUploadTask<T> {
 	 * @param {LargeFileUploadTaskOptions} options - The upload task options
 	 * @returns An instance of LargeFileUploadTask
 	 */
-	public constructor(client: Client, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
+	public constructor(client: GraphBaseClient, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions = {}) {
 		this.client = client;
 
 		if (!file.sliceFile) {
@@ -329,10 +326,7 @@ export class LargeFileUploadTask<T> {
 	 * @returns The promise resolves to cancelled response
 	 */
 	public async cancel(): Promise<unknown> {
-		const cancelResponse = await this.client
-			.api(this.uploadSession.url)
-			.responseType(ResponseType.RAW)
-			.delete();
+		const cancelResponse = await this.client.api(this.uploadSession.url).responseType(ResponseType.RAW).delete();
 		if (cancelResponse.status === 204) {
 			this.uploadSession.isCancelled = true;
 		}
