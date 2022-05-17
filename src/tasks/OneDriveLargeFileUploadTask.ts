@@ -10,7 +10,7 @@
  */
 
 import { GraphClientError } from "../GraphClientError";
-import { Client } from "../index";
+import { GraphBaseClient } from "../index";
 import { FileUpload } from "./FileUploadTask/FileObjectClasses/FileUpload";
 import { UploadEventHandlers } from "./FileUploadTask/Interfaces/IUploadEventHandlers";
 import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
@@ -137,7 +137,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async create(client: Client, file: Blob | Uint8Array | File, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<Blob | ArrayBuffer | Uint8Array>> {
+	public static async create(client: GraphBaseClient, file: Blob | Uint8Array | File, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<Blob | ArrayBuffer | Uint8Array>> {
 		if (!client || !file || !options) {
 			throw new GraphClientError("Please provide the Graph client instance, file object and OneDriveLargeFileUploadOptions value");
 		}
@@ -157,7 +157,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {OneDriveLargeFileUploadOptions} options - The options for upload task
 	 * @returns The promise that will be resolves to OneDriveLargeFileUploadTask instance
 	 */
-	public static async createTaskWithFileObject<T>(client: Client, fileObject: FileObject<T>, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<T>> {
+	public static async createTaskWithFileObject<T>(client: GraphBaseClient, fileObject: FileObject<T>, options: OneDriveLargeFileUploadOptions): Promise<OneDriveLargeFileUploadTask<T>> {
 		if (!client || !fileObject || !options) {
 			throw new GraphClientError("Please provide the Graph client instance, FileObject interface implementation and OneDriveLargeFileUploadOptions value");
 		}
@@ -185,7 +185,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {string} payloadOptions - The payload option. Default conflictBehavior is 'rename'
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: Client, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<LargeFileUploadSession> {
+	public static async createUploadSession(client: GraphBaseClient, requestUrl: string, payloadOptions: OneDriveFileUploadSessionPayLoad): Promise<LargeFileUploadSession> {
 		const payload = {
 			item: {
 				"@microsoft.graph.conflictBehavior": payloadOptions?.conflictBehavior || "rename",
@@ -206,7 +206,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 	 * @param {LargeFileUploadTaskOptions} options - The upload task options
 	 * @returns An instance of OneDriveLargeFileUploadTask
 	 */
-	public constructor(client: Client, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
+	public constructor(client: GraphBaseClient, file: FileObject<T>, uploadSession: LargeFileUploadSession, options: LargeFileUploadTaskOptions) {
 		super(client, file, uploadSession, options);
 	}
 
