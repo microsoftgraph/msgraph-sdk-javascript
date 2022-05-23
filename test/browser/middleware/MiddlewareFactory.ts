@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { CustomFetchHandler, RedirectHandler, RetryHandler, TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
+import { CustomFetchHandler, ParametersNameDecodingHandler, RedirectHandler, RetryHandler, TelemetryHandler } from "@microsoft/kiota-http-fetchlibrary";
 import { assert } from "chai";
 
 import { ClientOptions, SimpleAuthenticationProvider } from "../../../src";
@@ -25,7 +25,8 @@ describe("MiddlewareFactory", () => {
 
 		assert.isTrue(defaultMiddleWareArray[0] instanceof AuthenticationHandler);
 		assert.isTrue(defaultMiddleWareArray[1] instanceof RetryHandler);
-		assert.isTrue(defaultMiddleWareArray[2] instanceof TelemetryHandler);
-		assert.isTrue(defaultMiddleWareArray[3] instanceof CustomFetchHandler);
+		assert.isTrue(defaultMiddleWareArray[2] instanceof ParametersNameDecodingHandler);
+		assert.isTrue(defaultMiddleWareArray[3] instanceof TelemetryHandler);
+		assert.isTrue(defaultMiddleWareArray[4] instanceof CustomFetchHandler);
 	});
 });

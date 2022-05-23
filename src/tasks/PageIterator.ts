@@ -9,9 +9,10 @@
  * @module PageIterator
  */
 
+import { RequestOption } from "@microsoft/kiota-abstractions/src/requestOption";
+
 import { FetchOptions } from "../IFetchOptions";
-import { Client } from "../index";
-import { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
+import { GraphBaseClient } from "../requestBuilderUtils/GraphBaseClient";
 
 /**
  * Signature representing PageCollection
@@ -31,12 +32,12 @@ export interface PageCollection {
  * Signature to define the request options to be sent during request.
  * The values of the GraphRequestOptions properties are passed to the Graph Request object.
  * @property {HeadersInit} headers - the header options for the request
- * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
+ * @property { Record<string, RequestOption>} middlewareoptions - The middleware options for the request
  * @property {FetchOptions} options - The fetch options for the request
  */
 export interface GraphRequestOptions {
-	headers?: HeadersInit;
-	middlewareOptions?: MiddlewareOptions[];
+	headers?: Record<string, string>;
+	middlewareOptions?: Record<string, RequestOption>;
 	options?: FetchOptions;
 }
 
@@ -55,7 +56,7 @@ export class PageIterator {
 	 * @private
 	 * Member holding the GraphClient instance
 	 */
-	private client: Client;
+	private client: GraphBaseClient;
 
 	/**
 	 * @private
@@ -103,7 +104,7 @@ export class PageIterator {
 	 * @param {GraphRequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
+	public constructor(client: GraphBaseClient, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];

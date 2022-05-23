@@ -12,7 +12,6 @@ export { RetryHandler, RedirectHandler, TelemetryHandler, RetryHandlerOptions, H
 export { BatchRequestBody, RequestData, BatchRequestContent, BatchRequestData, BatchRequestStep } from "../content/BatchRequestContent";
 export { BatchResponseBody, BatchResponseContent } from "../content/BatchResponseContent";
 
-export { MiddlewareOptions } from "../middleware/options/IMiddlewareOptions";
 export { FeatureUsageFlag } from "../middleware/Telemetry/TelemetryFeatureUsageFlag";
 export { ChaosHandlerOptions } from "../middleware/options/ChaosHandlerOptions";
 export { ChaosStrategy } from "../middleware/options/ChaosStrategy";

@@ -27,6 +27,7 @@ export class Client implements GraphBaseClient {
 		baseUrl: GRAPH_BASE_URL,
 		debugLogging: false,
 		defaultVersion: GRAPH_API_VERSION,
+        authProvider: undefined
 	};
 
 	/**
@@ -67,7 +68,7 @@ export class Client implements GraphBaseClient {
 			error.message = "Unable to Create Client, Please provide an authentication provider";
 			throw error;
 		}
-		const allowedHosts = updateAndReturnAllAllowedHosts(clientOptions.authProvider, this.config.customHosts);
+		const allowedHosts = updateAndReturnAllAllowedHosts(clientOptions.authProvider);
 
 		if (!clientOptions.middleware) {
 			httpClient = new HttpClient(undefined, ...[].concat(getDefaultMiddlewareChain(clientOptions, allowedHosts)));

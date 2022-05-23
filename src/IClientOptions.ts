@@ -23,15 +23,11 @@ import { FetchOptions } from "./IFetchOptions";
  */
 
 export interface ClientOptions {
-	authProvider?: BaseBearerTokenAuthenticationProvider;
+	authProvider: BaseBearerTokenAuthenticationProvider;
 	baseUrl?: string;
 	debugLogging?: boolean;
 	defaultVersion?: string;
 	fetchOptions?: FetchOptions;
 	middleware?: Middleware | Middleware[];
 	customFetch?: (input: string, init?: RequestInit) => Promise<Response>;
-	/**
-	 * Example - If URL is "https://test_host/v1.0", then set property "customHosts" as "customHosts: Set<string>(["test_host"])"
-	 */
-	customHosts?: Set<string>;
 }
