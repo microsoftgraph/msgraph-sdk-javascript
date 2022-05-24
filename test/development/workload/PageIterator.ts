@@ -8,7 +8,7 @@
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
-import { Client, ClientOptions } from "../../../src";
+import { Client, ClientOptions, SimpleAccessTokenProvider, SimpleAuthenticationProvider } from "../../../src";
 import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
 import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
 import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
@@ -21,7 +21,7 @@ describe("PageIterator", () => {
 	const pst = "Pacific Standard Time";
 	const testURL = "/me/events";
 
-	before(async function() {
+	before(async function () {
 		this.timeout(20000);
 
 		const response = await client.api(testURL + "?count=true").get();
@@ -46,11 +46,7 @@ describe("PageIterator", () => {
 	});
 
 	it("same headers passed with pageIterator", async () => {
-		const response = await client
-			.api(`${testURL}?$top=2`)
-			.headers(pstHeader)
-			.select("id,start,end")
-			.get();
+		const response = await client.api(`${testURL}?$top=2`).headers(pstHeader).select("id,start,end").get();
 
 		const callback: PageIteratorCallback = (eventResponse) => {
 			const event = eventResponse as Event;
@@ -63,7 +59,7 @@ describe("PageIterator", () => {
 			await pageIterator.iterate();
 			assert.isTrue(pageIterator.isComplete());
 		}
-	}).timeout(30 * 1000);
+	}).timeout(0);
 
 	it("different headers passed with pageIterator", async () => {
 		const response = await client
@@ -90,7 +86,7 @@ describe("PageIterator", () => {
 			await pageIterator.iterate();
 			assert.isTrue(pageIterator.isComplete());
 		}
-	}).timeout(30 * 1000);
+	}).timeout(0);
 
 	// TODO - Temporariliy commenting this test.
 	it("setting middleware with pageIterator", async () => {
@@ -103,6 +99,9 @@ describe("PageIterator", () => {
 			};
 		};
 		const clientOptions: ClientOptions = {
+			authProvider: new SimpleAuthenticationProvider(async () => {
+				return "Dummy_Token";
+			}),
 			middleware,
 		};
 		const responseBody = { value: [{ event1: "value1" }, { event2: "value2" }] };
@@ -113,8 +112,9 @@ describe("PageIterator", () => {
 			return true;
 		};
 
-		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
-		const requestOptions = { middlewareOptions };
+		const middlewareOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }));
+		const key = middlewareOptions.getKey();
+		const requestOptions: GraphRequestOptions = { middlewareOptions: { [key]: middlewareOptions } };
 
 		const client = Client.init(clientOptions);
 		const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);

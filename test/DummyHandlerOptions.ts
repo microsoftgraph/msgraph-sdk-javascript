@@ -5,11 +5,11 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { RequestOption } from "@microsoft/kiota-abstractions";
+
 /**
  * @module DummyHandlerOptions
  */
-
-import { MiddlewareOptions } from "../src/middleware/options/IMiddlewareOptions";
 
 /**
  * @class
@@ -17,7 +17,7 @@ import { MiddlewareOptions } from "../src/middleware/options/IMiddlewareOptions"
  * Class for DummyHandlerOptions
  */
 
-export class DummyHandlerOptions implements MiddlewareOptions {
+export class DummyHandlerOptions implements RequestOption {
 	/**
 	 * @public
 	 * A member holding a dummy string
@@ -33,5 +33,9 @@ export class DummyHandlerOptions implements MiddlewareOptions {
 	 */
 	public constructor(dummyString = "dummy") {
 		this.dummyString = dummyString;
+	}
+
+	public getKey(): string {
+		return "DummyHandlerOptions";
 	}
 }

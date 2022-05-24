@@ -8,6 +8,7 @@
 /**
  * @module GraphRequest
  */
+import { RequestOption } from "@microsoft/kiota-abstractions";
 import { HttpClient } from "@microsoft/kiota-http-fetchlibrary";
 
 import { GraphClientError } from "./GraphClientError";
@@ -18,7 +19,6 @@ import { GraphResponseHandler } from "./GraphResponseHandler";
 import { ClientOptions } from "./IClientOptions";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
-import { MiddlewareOptions } from "./middleware/options/IMiddlewareOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 /**
@@ -62,7 +62,6 @@ export class GraphRequest {
 	 */
 	private httpClient: HttpClient;
 
-
 	/**
 	 * @private
 	 * A member variable to hold client options
@@ -91,7 +90,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold the array of middleware options for a request
 	 */
-     private _middlewareOptions: MiddlewareOptions[];
+	private _middlewareOptions: Record<string, RequestOption>;
 
 	/**
 	 * @private
@@ -119,7 +118,7 @@ export class GraphRequest {
 		};
 		this._headers = {};
 		this._options = {};
-		this._middlewareOptions = [];
+		this._middlewareOptions = {};
 		this.parsePath(path);
 	}
 
@@ -368,7 +367,7 @@ export class GraphRequest {
 		this.updateRequestOptions(options);
 
 		try {
-			const rawResponse = await this.httpClient.executeFetch(request as string, options);
+			const rawResponse = await this.httpClient.executeFetch(request as string, options, this._middlewareOptions);
 
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
@@ -466,7 +465,7 @@ export class GraphRequest {
 	 * @param {MiddlewareOptions[]} options - The array of middleware options
 	 * @returns The same GraphRequest instance that is being called with
 	 */
-	public middlewareOptions(options: MiddlewareOptions[]): GraphRequest {
+	public middlewareOptions(options: Record<string, RequestOption>): GraphRequest {
 		this._middlewareOptions = options;
 		return this;
 	}

@@ -129,10 +129,9 @@ const isCustomHostValid = (host: string) => {
  * @param customHosts
  * @returns
  */
-export const updateAndReturnAllAllowedHosts = (authProvider: BaseBearerTokenAuthenticationProvider, customHosts: Set<string>): Set<string> => {
+export const updateAndReturnAllAllowedHosts = (authProvider: BaseBearerTokenAuthenticationProvider): Set<string> => {
 	const hostsValidator = authProvider.accessTokenProvider.getAllowedHostsValidator();
-	const allowedHosts = customHosts ? new Set([...customHosts, ...hostsValidator.getAllowedHosts()]) : new Set(hostsValidator.getAllowedHosts());
-	const hostSetWithGraphandCustomHosts = customHosts ? new Set([...allowedHosts, ...GRAPH_URLS, ...customHosts]) : new Set([...allowedHosts, ...GRAPH_URLS]);
+	const hostSetWithGraphandCustomHosts = new Set([...hostsValidator.getAllowedHosts(), ...GRAPH_URLS])
 	hostsValidator.setAllowedHosts(hostSetWithGraphandCustomHosts);
     return hostSetWithGraphandCustomHosts;
 };
