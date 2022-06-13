@@ -12,7 +12,7 @@
 	"types": "./lib/src/index.d.ts",
 	"dependencies": {
 		"es6-promise": "^4.2.6",
-		"isomorphic-fetch": "^2.2.1",
+		"isomorphic-fetch": "^3.0.0",
 		"tslib": "^1.9.3"
 	},
 	"devDependencies": {
@@ -55,7 +55,7 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build && npm run test"
+		"prepack": "npm install && npm run build"
 	},
 	"repository": {
 		"type": "git",
