@@ -13,7 +13,7 @@ import { getClient, randomString } from "../test-helper";
 const client = getClient();
 
 describe("Groups", function() {
-	this.timeout(10 * 1000);
+	this.timeout(50 * 1000);
 	it("Fetch a list of groups and access properties on a collection item", async () => {
 		try {
 			const res = await client.api("/groups").get();

@@ -29,10 +29,6 @@ describe("GraphResponseHandler.ts", () => {
 		status: 204,
 		statusText: "OK",
 	};
-	const status500 = {
-		status: 500,
-		statusText: "Internal Server Error",
-	};
 	const status202 = {
 		status: 202,
 		statusText: "OK",
@@ -51,27 +47,14 @@ describe("GraphResponseHandler.ts", () => {
 			"Content-Type": "application/json",
 		},
 	};
-	const status200Image = {
-		status: 200,
-		stautsText: "OK",
-		headers: {
-			"Content-Type": "image/jpeg",
-		},
-	};
-	const status200Unknown = {
-		status: 200,
-		statusText: "OK",
-		headers: {
-			"Content-Type": "dummy/unknown",
-		},
-	};
+
 	/* tslint:disable: no-string-literal */
 	describe("parseDocumentResponse", () => {
 		it("Should return the html string", async () => {
 			const response = new Response(htmlString, status200);
 			const dom = await GraphResponseHandler["parseDocumentResponse"](response, DocumentType.TEXT_HTML);
 			assert.isDefined(dom);
-			assert.equal(typeof dom, "string");
+			assert.equal(typeof dom, "object");
 		});
 	});
 
@@ -85,7 +68,7 @@ describe("GraphResponseHandler.ts", () => {
 		it("Should return empty text value for empty response", async () => {
 			const response = new Response(undefined, status202);
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
-			assert.isUndefined(responseValue);
+			assert.equal(responseValue, null);
 		});
 
 		it("Should return text data for text/plain content-type", async () => {
@@ -104,24 +87,9 @@ describe("GraphResponseHandler.ts", () => {
 			assert.equal(responseValue.test, data.test);
 		});
 
-		it("Should return raw response incase of unknown content-type", async () => {
-			const data = "test data";
-			const response = new Response(data, status200Unknown);
-			const responseValue = await GraphResponseHandler["convertResponse"](response);
-			assert.equal(responseValue, data);
-		});
-
 		it("Should return response value as text", async () => {
 			const response = new Response(htmlString, status200);
 			const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.TEXT);
-			assert.isDefined(responseValue);
-			assert.equal(typeof responseValue, "string");
-			assert.equal(responseValue, htmlString);
-		});
-
-		it("Should return response value as text for text/html return type", async () => {
-			const response = new Response(htmlString, status200);
-			const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.DOCUMENT);
 			assert.isDefined(responseValue);
 			assert.equal(typeof responseValue, "string");
 			assert.equal(responseValue, htmlString);
