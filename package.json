@@ -22,6 +22,12 @@
 		"browserify": "^16.2.3",
 		"chai": "^4.2.0",
 		"husky": "^1.3.1",
+		"karma": "^6.3.2",
+		"karma-chai": "^0.1.0",
+		"karma-chrome-launcher": "^3.1.0",
+		"karma-firefox-launcher": "^2.1.0",
+		"karma-mocha": "^2.0.1",
+		"karma-typescript": "^5.2.0",
 		"lint-staged": "^8.1.5",
 		"mocha": "^6.1.3",
 		"msal": "^0.2.4",
@@ -39,9 +45,9 @@
 		"build:es": "tsc --p tsconfig-es.json",
 		"build:cjs": "tsc --p tsconfig-cjs.json",
 		"build": "npm run build:cjs && npm run build:es && rollup -c && npm run web:js && npm run core:js",
-		"test": "npm run build:cjs && mocha lib/spec/content && mocha lib/spec/core && mocha lib/spec/middleware && mocha lib/spec/tasks",
-		"test:content": "tsc --p spec/tsconfig.json && mocha spec/content",
-		"test:core": "tsc --p spec/tsconfig.json && mocha spec/core",
+		"test": "npm run build:cjs && mocha lib/spec/content && mocha lib/spec/content/node && mocha lib/spec/core && mocha lib/spec/core/node && mocha lib/spec/middleware && mocha lib/spec/tasks",
+		"test:content": "tsc --p spec/tsconfig.json && mocha spec/content && mocha spec/content/node",
+		"test:core": "tsc --p spec/tsconfig.json && mocha spec/core && mocha spec/core/node",
 		"test:middleware": "tsc --p spec/tsconfig.json && mocha spec/middleware",
 		"test:tasks": "tsc --p spec/tsconfig.json && mocha spec/tasks",
 		"test:development": "tsc --p spec/tsconfig.json && mocha spec/development/workload",
@@ -55,10 +61,12 @@
 		"format:rc": "prettier --write --parser json \"**/.*rc\"",
 		"format:ts": "prettier --write \"**/*.ts\"",
 		"format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
-		"prepack": "npm install && npm run build"
+		"prepack": "npm install && npm run build",
+		"karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/microsoftgraph/msgraph-sdk-javascript.git"
-	}
+	},
+	"_id": "@microsoft/microsoft-graph-client@1.7.0"
 }

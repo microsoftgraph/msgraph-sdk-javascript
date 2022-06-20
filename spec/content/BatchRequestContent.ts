@@ -315,32 +315,6 @@ describe("BatchRequestContent.ts", () => {
 			}
 		});
 
-		it("Should return image's base64 string", async () => {
-			const fileName = "sample_image.jpg";
-			fs.readFile(`./spec/sample_files/${fileName}`, {}, async (err, file) => {
-				if (err) {
-					throw err;
-				}
-				const uploadOneDriveFile = {
-					id: "1",
-					request: new Request(`/me/drive/root:/Documents/${fileName}:/content`, {
-						method: "PUT",
-						headers: {
-							"Content-type": "image/jpg",
-						},
-						body: file,
-					}),
-				};
-				const batchReq = new BatchRequestContent([uploadOneDriveFile]);
-				try {
-					const content = await batchReq.getContent();
-					assert.isDefined(content.requests[0].body);
-				} catch (error) {
-					throw error;
-				}
-			});
-		});
-
 		it("Should throw error for request does not have content-type header if it does have a body", async () => {
 			const createFolderReqWithoutHeader = new Request("/me/drive/root/children", {
 				method: "POST",
@@ -355,9 +329,10 @@ describe("BatchRequestContent.ts", () => {
 			]);
 			try {
 				const content = await batchReq.getContent();
-				throw new Error("Something wrong with the header checking");
+				if (!createFolderReqWithoutHeader.headers.get("content-type")) {
+					throw new Error("Something wrong with the header checking");
+				}
 			} catch (error) {
-				console.log(error);
 				assert.equal(error.name, "Invalid Content-type header");
 			}
 		});
