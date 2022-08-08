@@ -177,7 +177,7 @@ describe("LargeFileUploadTask.ts", () => {
 				assert.isDefined(result);
 				assert.instanceOf(result, UploadResult);
 				assert.equal(result["location"], location);
-				assert.isFalse(isProgressReportCalled);
+				assert.isTrue(isProgressReportCalled);
 			});
 
 			it("Test without progress callback", async () => {
