@@ -27,3 +27,5 @@ samples/lib/
 test/development/secrets.ts
 
 .nyc_output/*
+
+.idea/*
