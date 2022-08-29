@@ -11,8 +11,8 @@ import { AuthenticationProviderOptions } from "../../IAuthenticationProviderOpti
 /**
  * @interface
  * A signature represents the Authentication provider options for Token Credentials
- * @property {getTokenoptions} [GetTokenOptions] - Defines options for TokenCredential.getToken.
+ * @property {getTokenOptions} [GetTokenOptions] - Defines options for TokenCredential.getToken.
  */
 export interface TokenCredentialAuthenticationProviderOptions extends AuthenticationProviderOptions {
-	getTokenoptions?: GetTokenOptions;
+	getTokenOptions?: GetTokenOptions;
 }

@@ -23,7 +23,7 @@ describe("TokenCredentialAuthenticationProvider.ts", () => {
 		}
 
 		const authProviderOptions: TokenCredentialAuthenticationProviderOptions = {
-			getTokenoptions: null,
+			getTokenOptions: null,
 			scopes,
 		};
 		const accessToken: AccessToken = { token: "dummy_valid_token", expiresOnTimestamp: 1 };
@@ -43,7 +43,7 @@ describe("TokenCredentialAuthenticationProvider.ts", () => {
 				throw new Error("Method definition for getToken is not found");
 			}
 			const authProviderOptions: TokenCredentialAuthenticationProviderOptions = {
-				getTokenoptions: null,
+				getTokenOptions: null,
 				scopes,
 			};
 			const accessToken: AccessToken = undefined;
