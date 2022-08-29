@@ -70,7 +70,7 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 			error.message = "Scopes cannot be empty, Please provide scopes";
 			throw error;
 		}
-		const response = await this.tokenCredential.getToken(scopes, this.authenticationProviderOptions.getTokenoptions);
+		const response = await this.tokenCredential.getToken(scopes, this.authenticationProviderOptions.getTokenOptions);
 		if (response) {
 			return response.token;
 		}
