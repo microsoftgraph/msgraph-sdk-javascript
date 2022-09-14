@@ -79,6 +79,13 @@ describe("PageIterator.ts", () => {
 			assert.isTrue(pageIterator.isComplete());
 		});
 
+		it("Should not mutate the collection", async () => {
+			const collection = getPageCollection();
+			const pageIterator = new PageIterator(client, collection, truthyCallback);
+			await pageIterator.iterate();
+			assert.deepEqual(collection, getPageCollection());
+		});
+
 		it("Should not iterate over an empty collection", async () => {
 			const pageIterator = new PageIterator(client, getEmptyPageCollection(), truthyCallback);
 			halfWayCallbackCounter = 1;
