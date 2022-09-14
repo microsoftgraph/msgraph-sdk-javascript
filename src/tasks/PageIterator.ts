@@ -140,9 +140,6 @@ export class PageIterator {
 	private async fetchAndUpdateNextPageData(): Promise<any> {
 		let graphRequest = this.client.api(this.nextLink);
 		if (this.requestOptions) {
-			if (this.requestOptions.headers) {
-				graphRequest = graphRequest.headers(this.requestOptions.headers);
-			}
 			if (this.requestOptions.middlewareOptions) {
 				graphRequest = graphRequest.middlewareOptions(this.requestOptions.middlewareOptions);
 			}
@@ -151,7 +148,7 @@ export class PageIterator {
 			}
 		}
 
-		const response: PageCollection = await graphRequest.get();
+		const response: PageCollection = await graphRequest.get(this.requestOptions.headers);
 		this.collection = response.value;
 		this.nextLink = response["@odata.nextLink"];
 		this.deltaLink = response["@odata.deltaLink"];

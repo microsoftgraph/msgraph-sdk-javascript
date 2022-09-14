@@ -132,8 +132,8 @@ export class LargeFileUploadTask<T> {
 	 * @param {KeyValuePairObjectStringNumber} headers - The headers that needs to be sent
 	 * @returns The promise that resolves to LargeFileUploadSession
 	 */
-	public static async createUploadSession(client: GraphBaseClient, requestUrl: string, payload: any, headers: KeyValuePairObjectStringNumber = {}): Promise<LargeFileUploadSession> {
-		const session = await client.api(requestUrl).headers(headers).post(payload);
+	public static async createUploadSession(client: GraphBaseClient, requestUrl: string, payload: any, headers: Record<string, string> = {}): Promise<LargeFileUploadSession> {
+		const session = await client.api(requestUrl).post(payload, headers);
 		const largeFileUploadSession: LargeFileUploadSession = {
 			url: session.uploadUrl,
 			expiry: new Date(session.expirationDateTime),
@@ -288,14 +288,11 @@ export class LargeFileUploadTask<T> {
 	 * @returns The response body of the upload slice result
 	 */
 	public async uploadSlice(fileSlice: ArrayBuffer | Blob | File, range: Range, totalSize: number): Promise<unknown> {
-		return await this.client
-			.api(this.uploadSession.url)
-			.headers({
-				"Content-Length": `${range.maxValue - range.minValue + 1}`,
-				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
-				"Content-Type": "application/octet-stream",
-			})
-			.put(fileSlice);
+		return await this.client.api(this.uploadSession.url).put(fileSlice, {
+			"Content-Length": `${range.maxValue - range.minValue + 1}`,
+			"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
+			"Content-Type": "application/octet-stream",
+		});
 	}
 
 	/**
@@ -310,13 +307,12 @@ export class LargeFileUploadTask<T> {
 	public async uploadSliceGetRawResponse(fileSlice: unknown, range: Range, totalSize: number): Promise<Response> {
 		return await this.client
 			.api(this.uploadSession.url)
-			.headers({
+			.responseType(ResponseType.RAW)
+			.put(fileSlice, {
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
 				"Content-Type": "application/octet-stream",
-			})
-			.responseType(ResponseType.RAW)
-			.put(fileSlice);
+			});
 	}
 
 	/**

@@ -5,17 +5,25 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Client } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
+
+import { Client } from "@microsoft/microsoft-graph-client";
 
 import { SimpleAuthenticationProvider } from "./authentication/SimpleAuthentication/SimpleAuthenticationProvider";
 
 const token = "";
-const simpleAuthenticationProvider = new SimpleAuthenticationProvider({getAccessTokenCallback:async () => { return token;}});
+const simpleAuthenticationProvider = new SimpleAuthenticationProvider({
+	getAccessTokenCallback: async () => {
+		return token;
+	},
+});
 const client = Client.init({
-    authProvider: simpleAuthenticationProvider
+	authProvider: simpleAuthenticationProvider,
 });
 
-client.api('/me').get().then(res => {
-    console.log(res);
-});
+client
+	.api("/me")
+	.get(undefined, { $select: "displayName" })
+	.then((res) => {
+		console.log(res);
+	});

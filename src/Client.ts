@@ -27,7 +27,7 @@ export class Client implements GraphBaseClient {
 		baseUrl: GRAPH_BASE_URL,
 		debugLogging: false,
 		defaultVersion: GRAPH_API_VERSION,
-        authProvider: undefined
+		authProvider: undefined,
 	};
 
 	/**
@@ -84,7 +84,7 @@ export class Client implements GraphBaseClient {
 	 * @param {string} path - The path string value
 	 * @returns The graph request instance
 	 */
-	public api(path: string): GraphRequest {
-		return new GraphRequest(this.httpClient, this.config, path);
+	public api(path: string, ...args: string[]): GraphRequest {
+		return new GraphRequest(this.httpClient, this.config, path, ...args);
 	}
 }

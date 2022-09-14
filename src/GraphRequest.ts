@@ -19,6 +19,7 @@ import { GraphResponseHandler } from "./GraphResponseHandler";
 import { ClientOptions } from "./IClientOptions";
 import { FetchOptions } from "./IFetchOptions";
 import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { QueryOptions } from "./QueryOptions";
 import { RequestMethod } from "./RequestMethod";
 import { ResponseType } from "./ResponseType";
 /**
@@ -78,7 +79,7 @@ export class GraphRequest {
 	 * @private
 	 * A member to hold custom header options for a request
 	 */
-	private _headers: HeadersInit;
+	private _headers: Record<string, string>;
 
 	/**
 	 * @private
@@ -106,7 +107,7 @@ export class GraphRequest {
 	 * @param {ClientOptions} config - The options for making request
 	 * @param {string} path - A path string
 	 */
-	public constructor(httpClient: HttpClient, config: ClientOptions, path: string) {
+	public constructor(httpClient: HttpClient, config: ClientOptions, path: string, ...args: string[]) {
 		this.httpClient = httpClient;
 		this.config = config;
 		this.urlComponents = {
@@ -119,7 +120,7 @@ export class GraphRequest {
 		this._headers = {};
 		this._options = {};
 		this._middlewareOptions = {};
-		this.parsePath(path);
+		this.parsePath(path, ...args);
 	}
 
 	/**
@@ -128,7 +129,7 @@ export class GraphRequest {
 	 * @param {string} path - The request path string
 	 * @returns Nothing
 	 */
-	private parsePath = (path: string): void => {
+	private parsePath = (path: string, ...embeddedParamValues: string[]): void => {
 		// Strips out the base of the url if they passed in
 		if (path.indexOf("https://") !== -1) {
 			path = path.replace("https://", "");
@@ -170,6 +171,11 @@ export class GraphRequest {
 				this.parseQueryParameter(queryParam);
 			}
 		}
+
+		// should only replace {} in paths and not query param part
+		embeddedParamValues.forEach((val: string) => {
+			this.urlComponents.path = this.urlComponents.path?.replace(/{([^/]+)}/, val);
+		});
 	};
 
 	/**
@@ -180,21 +186,10 @@ export class GraphRequest {
 	 * @param {IArguments} additionalProperties - The additional properties
 	 * @returns Nothing
 	 */
-	private addCsvQueryParameter(propertyName: string, propertyValue: string | string[], additionalProperties: IArguments): void {
+	private addCsvQueryParameter(propertyName: string, ...propertyValue: string[]): void {
 		// If there are already $propertyName value there, append a ","
 		this.urlComponents.oDataQueryParams[propertyName] = this.urlComponents.oDataQueryParams[propertyName] ? this.urlComponents.oDataQueryParams[propertyName] + "," : "";
-
-		let allValues: string[] = [];
-
-		if (additionalProperties.length > 1 && typeof propertyValue === "string") {
-			allValues = Array.prototype.slice.call(additionalProperties);
-		} else if (typeof propertyValue === "string") {
-			allValues.push(propertyValue);
-		} else {
-			allValues = allValues.concat(propertyValue);
-		}
-
-		this.urlComponents.oDataQueryParams[propertyName] += allValues.join(",");
+		this.urlComponents.oDataQueryParams[propertyName] += propertyValue.join(",");
 	}
 
 	/**
@@ -393,7 +388,9 @@ export class GraphRequest {
 	 */
 	private setHeaderContentType(): void {
 		if (!this._headers) {
-			this.header("Content-Type", "application/json");
+			this._headers = {
+				"Content-Type": "application/json",
+			};
 			return;
 		}
 		const headerKeys = Object.keys(this._headers);
@@ -403,34 +400,7 @@ export class GraphRequest {
 			}
 		}
 		// Default the content-type to application/json in case the content-type is not present in the header
-		this.header("Content-Type", "application/json");
-	}
-
-	/**
-	 * @public
-	 * Sets the custom header for a request
-	 * @param {string} headerKey - A header key
-	 * @param {string} headerValue - A header value
-	 * @returns The same GraphRequest instance that is being called with
-	 */
-	public header(headerKey: string, headerValue: string): GraphRequest {
-		this._headers[headerKey] = headerValue;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * Sets the custom headers for a request
-	 * @param {KeyValuePairObjectStringNumber | HeadersInit} headers - The request headers
-	 * @returns The same GraphRequest instance that is being called with
-	 */
-	public headers(headers: KeyValuePairObjectStringNumber | HeadersInit): GraphRequest {
-		for (const key in headers) {
-			if (Object.prototype.hasOwnProperty.call(headers, key)) {
-				this._headers[key] = headers[key] as string;
-			}
-		}
-		return this;
+		this._headers["Content-Type"] = "application/json";
 	}
 
 	/**
@@ -504,8 +474,8 @@ export class GraphRequest {
 	 *     and .select("displayName", "birthday")
 	 *
 	 */
-	public select(properties: string | string[]): GraphRequest {
-		this.addCsvQueryParameter("$select", properties, arguments);
+	public select(...properties: string[]): GraphRequest {
+		this.addCsvQueryParameter("$select", ...properties);
 		return this;
 	}
 
@@ -515,8 +485,8 @@ export class GraphRequest {
 	 * @param {string|string[]} properties - The Properties value
 	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $expand query
 	 */
-	public expand(properties: string | string[]): GraphRequest {
-		this.addCsvQueryParameter("$expand", properties, arguments);
+	public expand(...properties: string[]): GraphRequest {
+		this.addCsvQueryParameter("$expand", ...properties);
 		return this;
 	}
 
@@ -526,8 +496,8 @@ export class GraphRequest {
 	 * @param {string|string[]} properties - The Properties value
 	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $orderby query
 	 */
-	public orderby(properties: string | string[]): GraphRequest {
-		this.addCsvQueryParameter("$orderby", properties, arguments);
+	public orderby(...properties: string[]): GraphRequest {
+		this.addCsvQueryParameter("$orderby", ...properties);
 		return this;
 	}
 
@@ -618,10 +588,16 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the get response
 	 */
-	public async get(callback?: GraphRequestCallback): Promise<any> {
+	public async get(headers?: Record<string, string>, oDataQueryOptions?: QueryOptions, callback?: GraphRequestCallback): Promise<any> {
+		if (oDataQueryOptions) {
+			for (const key in oDataQueryOptions) {
+				this.addCsvQueryParameter(key, String(oDataQueryOptions[key]));
+			}
+		}
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.GET,
+			headers,
 		};
 		const response = await this.send(url, options, callback);
 		return response;
@@ -635,13 +611,14 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the post response
 	 */
-	public async post(content: any, callback?: GraphRequestCallback): Promise<any> {
+	public async post(content: unknown, headers: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
+			headers,
 		};
-		const className: string = content && content.constructor && content.constructor.name;
+		const className: string = (content && content.constructor && content.constructor.name) as string;
 		if (className === "FormData") {
 			// Content-Type headers should not be specified in case the of FormData type content
 			options.headers = {};
@@ -660,8 +637,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the post response
 	 */
-	public async create(content: any, callback?: GraphRequestCallback): Promise<any> {
-		return await this.post(content, callback);
+	public async create(content: any, headers: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		return await this.post(content, headers, callback);
 	}
 
 	/**
@@ -672,12 +649,13 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the put response
 	 */
-	public async put(content: any, callback?: GraphRequestCallback): Promise<any> {
+	public async put(content: any, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
+			headers,
 		};
 		return await this.send(url, options, callback);
 	}
@@ -690,7 +668,7 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the patch response
 	 */
-	public async patch(content: any, callback?: GraphRequestCallback): Promise<any> {
+	public async patch(headers: Record<string, string>, content: unknown, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		this.setHeaderContentType();
 		const options: FetchOptions = {
@@ -708,8 +686,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the patch response
 	 */
-	public async update(content: any, callback?: GraphRequestCallback): Promise<any> {
-		return await this.patch(content, callback);
+	public async update(headers: Record<string, string>, content: unknown, callback?: GraphRequestCallback): Promise<any> {
+		return await this.patch(headers, content, callback);
 	}
 
 	/**
@@ -719,10 +697,11 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the delete response
 	 */
-	public async delete(callback?: GraphRequestCallback): Promise<any> {
+	public async delete(headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.DELETE,
+			headers,
 		};
 		return await this.send(url, options, callback);
 	}
