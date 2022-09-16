@@ -95,7 +95,8 @@ export class GraphResponseHandler {
 	private static async convertResponse(rawResponse: Response, responseType?: ResponseType): Promise<any> {
 		if (rawResponse.status === 204) {
 			// NO CONTENT
-			return Promise.resolve();
+			// check what to with no content response
+			return "Success";
 		}
 		let responseValue: any;
 		const contentType = rawResponse.headers.get("Content-type");

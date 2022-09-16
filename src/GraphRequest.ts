@@ -713,8 +713,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the delete response
 	 */
-	public async del(callback?: GraphRequestCallback): Promise<any> {
-		return await this.delete(callback);
+	public async del(headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		return await this.delete(headers, callback);
 	}
 
 	/**

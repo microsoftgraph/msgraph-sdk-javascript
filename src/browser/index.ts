@@ -49,3 +49,5 @@ export { GraphTelemetryConfig } from "../middleware/Telemetry/GraphTelemetryConf
 export { getDefaultMiddlewareChain } from "./MiddlewareFactory";
 export { GRAPH_API_VERSION, GRAPH_BASE_URL, GRAPH_URLS } from "../Constants";
 export { isCustomHost, isGraphURL, updateAndReturnAllAllowedHosts } from "../GraphRequestUtil";
+
+export { QueryOptions } from "../QueryOptions";
