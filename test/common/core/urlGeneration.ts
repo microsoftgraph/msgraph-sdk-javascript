@@ -29,19 +29,12 @@ cases.push({
 
 cases.push({
 	url: "https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle",
-	request: client
-		.api("/me")
-		.select("displayName")
-		.select("jobTitle"),
+	request: client.api("/me").select("displayName").select("jobTitle"),
 });
 
 cases.push({
 	url: "https://graph.microsoft.com/beta/me?$select=displayName,jobTitle",
-	request: client
-		.api("/me")
-		.version("beta")
-		.select("displayName")
-		.select("jobTitle"),
+	request: client.api("/me").version("beta").select("displayName").select("jobTitle"),
 });
 
 cases.push({
@@ -93,14 +86,7 @@ cases.push({
 
 cases.push({
 	url: "https://graph.microsoft.com/beta/me/people?$select=displayName,title,id&$count=false&$expand=a($expand=a,b)",
-	request: client
-		.api("/me/people")
-		.version("beta")
-		.select("displayName", "title")
-		.count(true)
-		.expand("a($expand=a,b)")
-		.query("$select=id")
-		.query("$count=false"),
+	request: client.api("/me/people").version("beta").select("displayName", "title").count(true).expand("a($expand=a,b)").query("$select=id").query("$count=false"),
 });
 
 cases.push({
@@ -146,10 +132,7 @@ cases.push({
 
 cases.push({
 	url: "https://graph.microsoft.com/v1.0/me/drive/root?$expand=children($select=name),permissions",
-	request: client
-		.api("me/drive/root")
-		.expand("children($select=name)")
-		.expand("permissions"),
+	request: client.api("me/drive/root").expand("children($select=name)").expand("permissions"),
 });
 
 describe("urlGeneration.ts", () => {

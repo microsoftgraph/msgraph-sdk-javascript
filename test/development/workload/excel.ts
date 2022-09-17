@@ -15,7 +15,7 @@ const client = getClient();
 
 const ExcelFilename = `empty-spreadsheet-${randomString()}.xlsx`;
 
-describe("Excel", function() {
+describe("Excel", function () {
 	this.timeout(10 * 1000);
 	beforeEach((done) => {
 		setTimeout(() => {

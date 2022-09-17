@@ -26,11 +26,11 @@ export function getDefaultMiddlewareChain(clientOptions: ClientOptions, allowedH
 	};
 	const telemetryHandlerOptions: TelemetryHandlerOptions = getGraphTelemetryCallback(graphTelemetryConfig);
 	const telemetryHandler = new TelemetryHandler(telemetryHandlerOptions);
-	
-    /**  insert telemetry handler before custom fetch handler as the telemetry
-    * headers need to be deleted in case the request is redirected to a non-graph endpoint
-    */
-    const kiotaDefaultMiddleware = KiotaMiddlewareFactory.getDefaultMiddlewareChain(clientOptions.customFetch);
+
+	/**  insert telemetry handler before custom fetch handler as the telemetry
+	 * headers need to be deleted in case the request is redirected to a non-graph endpoint
+	 */
+	const kiotaDefaultMiddleware = KiotaMiddlewareFactory.getDefaultMiddlewareChain(clientOptions.customFetch);
 	kiotaDefaultMiddleware.splice(kiotaDefaultMiddleware.length - 1, 0, telemetryHandler);
 	return middlewareArray.concat(kiotaDefaultMiddleware);
 }

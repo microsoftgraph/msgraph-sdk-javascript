@@ -26,7 +26,7 @@ describe("MiddlewareFactory", () => {
 		assert.isTrue(defaultMiddleWareArray[0] instanceof AuthenticationHandler);
 		assert.isTrue(defaultMiddleWareArray[1] instanceof RetryHandler);
 		assert.isTrue(defaultMiddleWareArray[2] instanceof RedirectHandler);
-        assert.isTrue(defaultMiddleWareArray[3] instanceof ParametersNameDecodingHandler);
+		assert.isTrue(defaultMiddleWareArray[3] instanceof ParametersNameDecodingHandler);
 		assert.isTrue(defaultMiddleWareArray[4] instanceof TelemetryHandler);
 		assert.isTrue(defaultMiddleWareArray[5] instanceof CustomFetchHandler);
 	});

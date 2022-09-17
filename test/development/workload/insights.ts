@@ -12,7 +12,7 @@ import { getClient } from "../test-helper";
 
 const client = getClient();
 
-describe("Social and Insights", function() {
+describe("Social and Insights", function () {
 	this.timeout(10 * 1000);
 	it("Fetch a list of people", async () => {
 		const res = await client.api("/me/people").get();
@@ -24,23 +24,14 @@ describe("Social and Insights", function() {
 	});
 
 	it("Searches the people list", async () => {
-		await client
-			.api("/me/people")
-			.query("$search=j")
-			.get();
+		await client.api("/me/people").query("$search=j").get();
 	});
 
 	it("Searches the people list with a topic", async () => {
-		await client
-			.api("/me/people")
-			.query(`$search="topic: planning"`)
-			.get();
+		await client.api("/me/people").query(`$search="topic: planning"`).get();
 	});
 
 	it("Finds items trending around me", async () => {
-		await client
-			.api("/me/insights/trending")
-			.version("beta")
-			.get();
+		await client.api("/me/insights/trending").version("beta").get();
 	});
 });

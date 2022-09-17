@@ -22,7 +22,7 @@
  * @implements MiddlewareOptions
  * Class for TelemetryHandlerOptions
  */
- export enum FeatureUsageFlag {
+export enum FeatureUsageFlag {
 	/* eslint-disable  @typescript-eslint/naming-convention */
 	NONE = 0x0,
 	REDIRECT_HANDLER_ENABLED = 0x1,

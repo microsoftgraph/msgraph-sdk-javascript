@@ -15,7 +15,7 @@ describe("MiddlewareUtil.ts", async () => {
 		return headers
 			.get(key)
 			.split(",")
-			.map(function(item) {
+			.map(function (item) {
 				return item.trim();
 			});
 	}

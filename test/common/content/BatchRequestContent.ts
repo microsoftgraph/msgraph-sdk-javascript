@@ -44,7 +44,7 @@ const getCreateFolderRequestWithDependsOnCopy = () => {
 };
 
 describe("BatchRequestContent.ts", () => {
-	describe("Create", function() {
+	describe("Create", function () {
 		this.timeout(20 * 1000);
 		it("Should Create BatchRequestContent instance with no requests", (done) => {
 			const batchReq = new BatchRequestContent();
@@ -98,7 +98,7 @@ describe("BatchRequestContent.ts", () => {
 		});
 	});
 
-	describe("addRequest", function() {
+	describe("addRequest", function () {
 		this.timeout(20 * 1000);
 		it("Should emit size exceed error", (done) => {
 			const requests = [];
@@ -215,7 +215,7 @@ describe("BatchRequestContent.ts", () => {
 		});
 	});
 
-	describe("removeDependency", function() {
+	describe("removeDependency", function () {
 		this.timeout(20 * 1000);
 
 		it("Should return false for dependent not present", (done) => {

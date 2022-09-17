@@ -159,15 +159,15 @@ describe("ChaosHandler.ts", () => {
 
 		it("Should set a statusCode for MANUAL mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "Set status code", 404);
-            const chaosHandler = new ChaosHandler(tempOptions);
+			const chaosHandler = new ChaosHandler(tempOptions);
 			chaosHandler["setStatusCode"]("https://graph.microsoft.com/v1.0/me", RequestMethod.GET);
-           
+
 			assert.isDefined(tempOptions.statusCode);
 		});
 
 		it("Should  set a statusCode for RANDOM mode", () => {
 			const tempOptions = new ChaosHandlerOptions(ChaosStrategy.RANDOM, "I generated the error", undefined, 100);
-            const chaosHandler = new ChaosHandler(tempOptions);
+			const chaosHandler = new ChaosHandler(tempOptions);
 			chaosHandler["setStatusCode"]("https://graph.microsoft.com/v1.0/me", RequestMethod.POST);
 			assert.isDefined(tempOptions.statusCode);
 		});

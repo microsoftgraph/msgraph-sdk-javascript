@@ -14,7 +14,7 @@ import { getClient, randomString } from "../test-helper";
 
 const client = getClient();
 
-describe("Delta Query", function() {
+describe("Delta Query", function () {
 	this.timeout(10 * 1000);
 	const today = new Date();
 	const tomorrow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000);

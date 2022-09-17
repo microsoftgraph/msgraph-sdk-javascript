@@ -44,7 +44,7 @@ export class SimpleAccessTokenProvider implements AccessTokenProvider {
 		if (!url || !this.allowedHostsValidator.isUrlHostValid(url)) {
 			throw new GraphClientError("The request url is not present in the allowed hosts list or is not a valid host");
 		}
-        validateProtocol(url);
+		validateProtocol(url);
 		let token = "";
 		if (this.getAccessTokenCallback) {
 			token = await this.getAccessTokenCallback(this.scopes);

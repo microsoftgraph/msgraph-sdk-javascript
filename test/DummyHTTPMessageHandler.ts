@@ -24,7 +24,7 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 */
 	private responses: Response[];
 
-    next: Middleware | undefined;
+	next: Middleware | undefined;
 	/**
 	 * @public
 	 * @constructor
@@ -55,6 +55,6 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public async execute(url: string, requestInit: RequestInit, requestOptions?: Record<string, RequestOption>) {
-        return this.responses.shift();
+		return this.responses.shift();
 	}
 }

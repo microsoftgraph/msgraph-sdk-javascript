@@ -41,7 +41,7 @@ const okWithoutBody = {
 };
 
 describe("BatchResponseContent.ts", () => {
-	describe("update", function() {
+	describe("update", function () {
 		this.timeout(20 * 1000);
 
 		it("Should update instance with nextLink responses", (done) => {
@@ -61,7 +61,7 @@ describe("BatchResponseContent.ts", () => {
 		});
 	});
 
-	describe("createResponseObject", function() {
+	describe("createResponseObject", function () {
 		this.timeout(20 * 1000);
 
 		it("Should create batch response content instance for 302, 402, 202, 204 responses", (done) => {
@@ -76,7 +76,7 @@ describe("BatchResponseContent.ts", () => {
 		});
 	});
 
-	describe("getResponseById", function() {
+	describe("getResponseById", function () {
 		this.timeout(20 * 1000);
 
 		it("Should return response object for given id", (done) => {
@@ -96,7 +96,7 @@ describe("BatchResponseContent.ts", () => {
 		});
 	});
 
-	describe("getResponses", function() {
+	describe("getResponses", function () {
 		this.timeout(20 * 1000);
 
 		it("Should return responses map", (done) => {
@@ -108,7 +108,7 @@ describe("BatchResponseContent.ts", () => {
 		});
 	});
 
-	describe("getResponsesIterator", function() {
+	describe("getResponsesIterator", function () {
 		this.timeout(20 * 1000);
 
 		it("Should return iterator", (done) => {

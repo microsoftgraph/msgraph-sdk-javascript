@@ -14,7 +14,7 @@ import { getClient, randomString } from "../test-helper";
 
 const client = getClient();
 
-describe("OneNote", function() {
+describe("OneNote", function () {
 	this.timeout(20 * 1000);
 	let notebook: Notebook = {
 		displayName: "Sample notebook - " + randomString(),
@@ -48,10 +48,7 @@ describe("OneNote", function() {
 	});
 
 	it("Create a OneNote page in a section with basic text content", async () => {
-		const json = await client
-			.api(`/me/onenote/sections/${section.id}/pages`)
-			.header("Content-Type", "text/html")
-			.post(PageContent);
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).header("Content-Type", "text/html").post(PageContent);
 		createdPage = json as OnenotePage;
 		assert.isDefined(createdPage.id);
 		assert.isDefined(createdPage.contentUrl);
@@ -71,10 +68,7 @@ describe("OneNote", function() {
 
 	it("Create a OneNote page with application/xhtml+xml page content", async () => {
 		const body = "<!DOCTYPE html><html><head><title>A page with a block of HTML</title></head><body><p>This page contains some <i>formatted</i> <b>text</b>.</p></body></html>";
-		const json = await client
-			.api(`/me/onenote/sections/${section.id}/pages`)
-			.header("content-type", "application/xhtml+xml")
-			.post(body);
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).header("content-type", "application/xhtml+xml").post(body);
 		const createdPageFromHTML = json as OnenotePage;
 		assert.isDefined(createdPageFromHTML.id);
 		assert.isDefined(createdPageFromHTML.contentUrl);

@@ -14,7 +14,7 @@ import { getClient, randomString } from "../test-helper";
 
 const client = getClient();
 
-describe("Users", function() {
+describe("Users", function () {
 	this.timeout(10 * 1000);
 
 	it("Fetch the authenticated user and access entity properties", async () => {
@@ -70,9 +70,6 @@ describe("Users", function() {
 	});
 
 	it("Filters on users list", async () => {
-		await client
-			.api("/users")
-			.filter("Department eq 'Finance'")
-			.get();
+		await client.api("/users").filter("Department eq 'Finance'").get();
 	});
 });
