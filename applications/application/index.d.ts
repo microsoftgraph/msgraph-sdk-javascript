@@ -1,6 +1,6 @@
 import { GraphApis } from "../../lib/src/rest/graphAPIs";
 
-import { operation100, operation101, operation102, operation103, operation104, operation105, operation106, operation107, operation108, operation56, operation57, operation58, operation59, operation60, operation61, operation62, operation63, operation64, operation65, operation66, operation67, operation68, operation69, operation70, operation71, operation72, operation73, operation74, operation75, operation76, operation77, operation78, operation79, operation80, operation81, operation82, operation83, operation84, operation85, operation86, operation87, operation88, operation89, operation90, operation91, operation92, operation93, operation94, operation95, operation96, operation97, operation98, operation99 } from "../../lib/src/rest/operations";
+import { operation100, operation101, operation102, operation103, operation104, operation105, operation106, operation107, operation108, operation109, operation110, operation111, operation112, operation56, operation57, operation58, operation59, operation60, operation61, operation62, operation63, operation64, operation65, operation66, operation67, operation68, operation69, operation70, operation71, operation72, operation73, operation74, operation75, operation76, operation77, operation78, operation79, operation80, operation81, operation82, operation83, operation84, operation85, operation86, operation87, operation88, operation89, operation90, operation91, operation92, operation93, operation94, operation95, operation96, operation97, operation98, operation99 } from "../../lib/src/rest/operations";
 
 declare module "../../lib/src/rest/graphAPIs" {
     export interface GraphApis {
@@ -57,6 +57,11 @@ declare module "../../lib/src/rest/graphAPIs" {
         (api: "/applications/microsoft.graph.getAvailableExtensionProperties"): operation106,
         (api: "/applications/microsoft.graph.getByIds"): operation107,
         (api: "/applications/microsoft.graph.validateProperties"): operation108,
+
+        (api: "/applicationTemplates"): operation109,
+        (api: "/applicationTemplates/{applicationTemplate-id}", applicationTemplateid: string): operation110,
+        (api: "/applicationTemplates/{applicationTemplate-id}/microsoft.graph.instantiate", applicationTemplateid: string): operation111,
+        (api: "/applicationTemplates/$count"): operation112,
     }
 }
 export { };

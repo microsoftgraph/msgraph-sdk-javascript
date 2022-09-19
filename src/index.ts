@@ -6,6 +6,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path= "./../shims.d.ts" />
+
 export { BaseBearerTokenAuthenticationProvider, AccessTokenProvider, RequestOption } from "@microsoft/kiota-abstractions";
 export { RetryHandler, RedirectHandler, TelemetryHandler, RedirectHandlerOptionKey, RetryHandlerOptions, HttpClient, RedirectHandlerOptions, TelemetryHandlerOptions, TelemetryHandlerOptionsKey, RetryHandlerOptionKey } from "@microsoft/kiota-http-fetchlibrary";
 
@@ -51,3 +52,6 @@ export { GRAPH_API_VERSION, GRAPH_BASE_URL, GRAPH_URLS } from "./Constants";
 export { isCustomHost, isGraphURL, updateAndReturnAllAllowedHosts } from "./GraphRequestUtil";
 
 export { QueryOptions } from "./QueryOptions";
+
+export { getGraphRestSDKClient, GraphRestSDKClient } from "./rest/graphRestClient";
+export { GraphApis } from "./rest/graphAPIs";

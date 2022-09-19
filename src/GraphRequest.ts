@@ -611,7 +611,7 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the post response
 	 */
-	public async post(content: unknown, headers: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+	public async post(content: unknown, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.POST,
@@ -637,7 +637,7 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the post response
 	 */
-	public async create(content: any, headers: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+	public async create(content: any, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		return await this.post(content, headers, callback);
 	}
 
@@ -668,7 +668,7 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the patch response
 	 */
-	public async patch(headers: Record<string, string>, content: unknown, callback?: GraphRequestCallback): Promise<any> {
+	public async patch(content: unknown, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
 		this.setHeaderContentType();
 		const options: FetchOptions = {
@@ -686,8 +686,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the patch response
 	 */
-	public async update(headers: Record<string, string>, content: unknown, callback?: GraphRequestCallback): Promise<any> {
-		return await this.patch(headers, content, callback);
+	public async update(content: unknown, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		return await this.patch(content, headers, callback);
 	}
 
 	/**

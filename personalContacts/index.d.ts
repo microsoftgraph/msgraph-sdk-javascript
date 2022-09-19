@@ -4,8 +4,6 @@ import { operation3775, operation3776, operation3777, operation3778, operation37
 
 declare module "../lib/src/rest/graphAPIs" {
     export interface GraphApis {
-
-        // me contacts
         (api: "/me/contactFolders"): operation3775,
         (api: "/me/contactFolders/{contactFolder-id}", contactFolderid: string): operation3776,
         (api: "/me/contactFolders/{contactFolder-id}/childFolders", contactFolderid: string): operation3777,

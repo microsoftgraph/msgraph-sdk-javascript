@@ -51,3 +51,6 @@ export { GRAPH_API_VERSION, GRAPH_BASE_URL, GRAPH_URLS } from "../Constants";
 export { isCustomHost, isGraphURL, updateAndReturnAllAllowedHosts } from "../GraphRequestUtil";
 
 export { QueryOptions } from "../QueryOptions";
+export { getGraphRestSDKClient, GraphRestSDKClient } from "../rest/graphRestClient";
+export { GraphApis } from "../rest/graphAPIs";
+
