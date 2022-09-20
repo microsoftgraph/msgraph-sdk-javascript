@@ -1,0 +1,45 @@
+name: Publish packages to npm
+on:
+  workflow_dispatch:
+  push:
+    branches: [ nikithauc/rest-gen ]
+  pull_request:
+
+jobs:
+    buildAndTest:
+        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            node-version: [14.x, 16.x, 18.x]
+        steps:
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+        - run: npm ci
+        - run: npm run build 
+        - run: npm test
+        - name: Archive artifact folders # archive dist folders to verify if they are transpiled correctly and available for publishing
+          uses: actions/upload-artifact@v3
+          with:
+            name: artifact to be published
+    
+    publish-npm:
+        if: ${{ !contains(github.event.head_commit.message, 'auto dependabot')}}
+        needs: buildAndTest
+        environment:
+          name: publish-to-npm
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: '16.x'
+              registry-url: 'https://registry.npmjs.org'
+          - run: npm ci
+          - run: npm run build
+          - run: npm run test
+          - run: npm publish
+            env:
+              NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
