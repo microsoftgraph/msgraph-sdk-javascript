@@ -464,111 +464,6 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * To add properties for select OData Query param
-	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $select query
-	 */
-	/*
-	 * Accepts .select("displayName,birthday")
-	 *     and .select(["displayName", "birthday"])
-	 *     and .select("displayName", "birthday")
-	 *
-	 */
-	public select(...properties: string[]): GraphRequest {
-		this.addCsvQueryParameter("$select", ...properties);
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add properties for expand OData Query param
-	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $expand query
-	 */
-	public expand(...properties: string[]): GraphRequest {
-		this.addCsvQueryParameter("$expand", ...properties);
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add properties for orderby OData Query param
-	 * @param {string|string[]} properties - The Properties value
-	 * @returns The same GraphRequest instance that is being called with, after adding the properties for $orderby query
-	 */
-	public orderby(...properties: string[]): GraphRequest {
-		this.addCsvQueryParameter("$orderby", ...properties);
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add query string for filter OData Query param. The request URL accepts only one $filter Odata Query option and its value is set to the most recently passed filter query string.
-	 * @param {string} filterStr - The filter query string
-	 * @returns The same GraphRequest instance that is being called with, after adding the $filter query
-	 */
-	public filter(filterStr: string): GraphRequest {
-		this.urlComponents.oDataQueryParams.$filter = filterStr;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add criterion for search OData Query param. The request URL accepts only one $search Odata Query option and its value is set to the most recently passed search criterion string.
-	 * @param {string} searchStr - The search criterion string
-	 * @returns The same GraphRequest instance that is being called with, after adding the $search query criteria
-	 */
-	public search(searchStr: string): GraphRequest {
-		this.urlComponents.oDataQueryParams.$search = searchStr;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add number for top OData Query param. The request URL accepts only one $top Odata Query option and its value is set to the most recently passed number value.
-	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with, after adding the number for $top query
-	 */
-	public top(n: number): GraphRequest {
-		this.urlComponents.oDataQueryParams.$top = n;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add number for skip OData Query param. The request URL accepts only one $skip Odata Query option and its value is set to the most recently passed number value.
-	 * @param {number} n - The number value
-	 * @returns The same GraphRequest instance that is being called with, after adding the number for the $skip query
-	 */
-	public skip(n: number): GraphRequest {
-		this.urlComponents.oDataQueryParams.$skip = n;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add token string for skipToken OData Query param. The request URL accepts only one $skipToken Odata Query option and its value is set to the most recently passed token value.
-	 * @param {string} token - The token value
-	 * @returns The same GraphRequest instance that is being called with, after adding the token string for $skipToken query option
-	 */
-	public skipToken(token: string): GraphRequest {
-		this.urlComponents.oDataQueryParams.$skipToken = token;
-		return this;
-	}
-
-	/**
-	 * @public
-	 * To add boolean for count OData Query param. The URL accepts only one $count Odata Query option and its value is set to the most recently passed boolean value.
-	 * @param {boolean} isCount - The count boolean
-	 * @returns The same GraphRequest instance that is being called with, after adding the boolean value for the $count query option
-	 */
-	public count(isCount = true): GraphRequest {
-		this.urlComponents.oDataQueryParams.$count = isCount.toString();
-		return this;
-	}
-
-	/**
-	 * @public
 	 * Appends query string to the urlComponent
 	 * @param {string|KeyValuePairObjectStringNumber} queryDictionaryOrString - The query value
 	 * @returns The same GraphRequest instance that is being called with, after appending the query string to the url component
@@ -594,10 +489,10 @@ export class GraphRequest {
 				this.addCsvQueryParameter(key, String(oDataQueryOptions[key]));
 			}
 		}
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.GET,
-			headers,
 		};
 		const response = await this.send(url, options, callback);
 		return response;
@@ -613,10 +508,10 @@ export class GraphRequest {
 	 */
 	public async post(content: unknown, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
 		const url = this.buildFullUrl();
+		this.setHeaders(headers);
 		const options: FetchOptions = {
 			method: RequestMethod.POST,
 			body: serializeContent(content),
-			headers,
 		};
 		const className: string = (content && content.constructor && content.constructor.name) as string;
 		if (className === "FormData") {
@@ -627,6 +522,12 @@ export class GraphRequest {
 			options.headers = this._headers;
 		}
 		return await this.send(url, options, callback);
+	}
+
+	private setHeaders(headers?: Record<string, string>) {
+		for (const key in headers) {
+			this._headers[key] = headers[key];
+		}
 	}
 
 	/**
@@ -650,12 +551,12 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the put response
 	 */
 	public async put(content: any, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		this.setHeaderContentType();
 		const options: FetchOptions = {
 			method: RequestMethod.PUT,
 			body: serializeContent(content),
-			headers,
 		};
 		return await this.send(url, options, callback);
 	}
@@ -669,6 +570,7 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the patch response
 	 */
 	public async patch(content: unknown, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		this.setHeaderContentType();
 		const options: FetchOptions = {
@@ -698,10 +600,10 @@ export class GraphRequest {
 	 * @returns A promise that resolves to the delete response
 	 */
 	public async delete(headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		const options: FetchOptions = {
 			method: RequestMethod.DELETE,
-			headers,
 		};
 		return await this.send(url, options, callback);
 	}
@@ -724,7 +626,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the getStream response
 	 */
-	public async getStream(callback?: GraphRequestCallback): Promise<any> {
+	public async getStream(headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		const options = {
 			method: RequestMethod.GET,
@@ -741,7 +644,8 @@ export class GraphRequest {
 	 * @param {GraphRequestCallback} [callback] - The callback function to be called in response with async call
 	 * @returns A promise that resolves to the putStream response
 	 */
-	public async putStream(stream: any, callback?: GraphRequestCallback): Promise<any> {
+	public async putStream(stream: any, headers?: Record<string, string>, callback?: GraphRequestCallback): Promise<any> {
+		this.setHeaders(headers);
 		const url = this.buildFullUrl();
 		const options = {
 			method: RequestMethod.PUT,

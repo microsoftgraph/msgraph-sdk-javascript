@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Group } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphGroup as Group } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { getClient, randomString } from "../test-helper";

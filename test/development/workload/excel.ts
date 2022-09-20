@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { WorkbookRange, WorkbookWorksheet } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphWorkbookRange as WorkbookRange, MicrosoftGraphWorkbookWorksheet as WorkbookWorksheet } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import * as fs from "fs";
 
@@ -38,17 +38,17 @@ describe("Excel", function () {
 		assert.isUndefined(sheet1["random fake property that should be null"]);
 	});
 
-	it("Updates workbook worksheet range", async () => {
-		const sampleData: WorkbookRange = {
-			values: [
-				["cell a1", "cell a2"],
-				["cell b1", "cell b2"],
-			],
-		};
-		const response = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range(address='A1:B2')`).patch(sampleData);
-		assert.isDefined(response["@odata.id"]);
-		assert.isDefined(response.values);
-	});
+	// it("Updates workbook worksheet range", async () => {
+	// 	const sampleData: WorkbookRange = {
+	// 		values: [
+	// 			["cell a1", "cell a2"],
+	// 			["cell b1", "cell b2"],
+	// 		],
+	// 	};
+	// 	const response = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range(address='A1:B2')`).patch(sampleData);
+	// 	assert.isDefined(response["@odata.id"]);
+	// 	assert.isDefined(response.values);
+	// });
 
 	it("GETs the used range of the worksheet", async () => {
 		const res: WorkbookRange = await client.api(`/me/drive/root:/${ExcelFilename}:/workbook/worksheets/Sheet1/range/usedrange`).get();

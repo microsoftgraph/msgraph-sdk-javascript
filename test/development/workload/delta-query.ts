@@ -7,7 +7,7 @@
 
 import "isomorphic-fetch";
 
-import { Event } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphEvent as Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { getClient, randomString } from "../test-helper";

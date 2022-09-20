@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Notebook, OnenotePage, OnenoteSection } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphNotebook as Notebook, MicrosoftGraphOnenotePage as OnenotePage, MicrosoftGraphOnenoteSection as OnenoteSection } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 import FormData from "form-data";
 import fs from "fs";
@@ -48,12 +48,13 @@ describe("OneNote", function () {
 	});
 
 	it("Create a OneNote page in a section with basic text content", async () => {
-		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).header("Content-Type", "text/html").post(PageContent);
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(PageContent, { "Content-Type": "text/html" });
 		createdPage = json as OnenotePage;
 		assert.isDefined(createdPage.id);
 		assert.isDefined(createdPage.contentUrl);
 		assert.isUndefined(createdPage["random fake property that should be null"]);
 	});
+    
 	it("Create a OneNote page with html page content", async () => {
 		const formData = new FormData();
 		formData.append("Presentation", fs.createReadStream("./test/sample_files/onenotepage.html"));
@@ -68,7 +69,7 @@ describe("OneNote", function () {
 
 	it("Create a OneNote page with application/xhtml+xml page content", async () => {
 		const body = "<!DOCTYPE html><html><head><title>A page with a block of HTML</title></head><body><p>This page contains some <i>formatted</i> <b>text</b>.</p></body></html>";
-		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).header("content-type", "application/xhtml+xml").post(body);
+		const json = await client.api(`/me/onenote/sections/${section.id}/pages`).post(body, { "content-type": "application/xhtml+xml" });
 		const createdPageFromHTML = json as OnenotePage;
 		assert.isDefined(createdPageFromHTML.id);
 		assert.isDefined(createdPageFromHTML.contentUrl);

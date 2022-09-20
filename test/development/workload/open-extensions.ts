@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { OpenTypeExtension } from "@microsoft/microsoft-graph-types";
+import {  MicrosoftGraphOpenTypeExtension as OpenTypeExtension } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { getClient, randomString } from "../test-helper";

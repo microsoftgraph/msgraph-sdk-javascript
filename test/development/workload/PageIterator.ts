@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Event } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphEvent as Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { Client, ClientOptions, SimpleAccessTokenProvider, SimpleAuthenticationProvider } from "../../../src";
@@ -46,7 +46,7 @@ describe("PageIterator", () => {
 	});
 
 	it("same headers passed with pageIterator", async () => {
-		const response = await client.api(`${testURL}?$top=2`).headers(pstHeader).select("id,start,end").get();
+		const response = await client.api(`${testURL}?$top=2`).get(pstHeader, { $select: "id,start,end" });
 
 		const callback: PageIteratorCallback = (eventResponse) => {
 			const event = eventResponse as Event;
@@ -62,11 +62,7 @@ describe("PageIterator", () => {
 	}).timeout(0);
 
 	it("different headers passed with pageIterator", async () => {
-		const response = await client
-			.api(`${testURL}?$top=2`)
-			.headers({ Prefer: `outlook.timezone= "${utc}"` })
-			.select("id,start,end")
-			.get();
+		const response = await client.api(`${testURL}?$top=2`).get({ Prefer: `outlook.timezone= "${utc}"` }, { $select: "id,start,end" });
 
 		let counter = 0;
 		const callback: PageIteratorCallback = (eventResponse) => {

@@ -64,7 +64,7 @@ describe("GraphResponseHandler.ts", () => {
 		it("Should return empty response for the NO CONTENT (204 response)", async () => {
 			const response = new Response(undefined, status204);
 			const responseValue = await GraphResponseHandler["convertResponse"](response);
-			assert.isUndefined(responseValue);
+			assert.equal(responseValue, "Success");
 		});
 
 		it("Should return internal server error (500 response)", async () => {

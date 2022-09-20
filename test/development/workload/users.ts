@@ -7,7 +7,7 @@
 
 import "isomorphic-fetch";
 
-import { User } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphUser as User } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { getClient, randomString } from "../test-helper";
@@ -70,6 +70,6 @@ describe("Users", function () {
 	});
 
 	it("Filters on users list", async () => {
-		await client.api("/users").filter("Department eq 'Finance'").get();
+		await client.api("/users").get(undefined, { $filter: "Department eq 'Finance'" });
 	});
 });

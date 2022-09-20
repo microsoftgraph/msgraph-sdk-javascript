@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Person } from "@microsoft/microsoft-graph-types";
+import { MicrosoftGraphPerson as Person } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
 import { getClient } from "../test-helper";

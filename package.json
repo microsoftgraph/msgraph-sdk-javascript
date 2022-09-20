@@ -89,9 +89,9 @@
 		]
 	},
 	"dependencies": {
-		"@microsoft/kiota-abstractions": "^1.0.0-preview.5",
-		"@microsoft/kiota-http-fetchlibrary": "^1.0.0-preview.6",
-		"@microsoft/microsoft-graph-types": "file:microsoft-microsoft-graph-types-3.0.0-RestPreview.1.tgz",
+		"@microsoft/kiota-abstractions": "1.0.0-preview.5",
+		"@microsoft/kiota-http-fetchlibrary": "1.0.0-preview.6",
+		"@microsoft/microsoft-graph-types": "3.0.0-RestPreview.1",
 		"tslib": "^2.2.0"
 	},
 	"devDependencies": {
