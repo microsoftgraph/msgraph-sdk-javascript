@@ -24,7 +24,35 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: artifact to be published
-    
+            path: |
+              lib
+              src
+              authProviders
+              shims.d.ts
+              applications
+              calendars
+              changeNotifications
+              compliance
+              crossDeviceExperiences
+              customerBooking
+              customerBooking
+              deviceAppManagement
+              education
+              extensions
+              files
+              groups
+              identityAndAccess
+              mail
+              notes
+              personalContacts
+              reports
+              search
+              security
+              sitesAndLists
+              tasksAndPlans
+              to-doTasks
+              users
+              workbooksAndCharts
     publish-npm:
         if: ${{ !contains(github.event.head_commit.message, 'auto dependabot')}}
         needs: buildAndTest
