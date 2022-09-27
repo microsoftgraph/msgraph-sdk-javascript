@@ -14,3 +14,17 @@ async function getUser(): Promise<MicrosoftGraphUser[]>  {
 }
 
 
+async function patchUser(id){
+    const patchResponse = await graphRestClient.api("/users/{user-id}","52a29f04-dfa9-4347-9a1f-7113879bd272").patch({
+        "department": "Sales & Marketing"
+    })
+
+    console.log(patchResponse);
+}
+
+
+getUser().then((response) => console.log(response));
+getMe().then((response) => console.log(response));
+
+patchUser("some-user-id").then();
+

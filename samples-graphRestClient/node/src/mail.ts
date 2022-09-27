@@ -7,27 +7,4 @@ async function getMyMessages(): Promise<MicrosoftGraphMessage[]> {
     return messageCollectionResponse.value!;
 }
 
-async function createMessage(){
-    const message: MicrosoftGraphMessage =  {
-            subject: "Meet for lunch?",
-            body: {
-                contentType: "text",
-                content: "The new cafeteria is open."
-            },
-            toRecipients: [
-                {
-                    "emailAddress": {
-                        "address": "garthf@contoso.com"
-                    }
-                }
-            ]
-    }
-    const requestBody = {
-        Message: message
-    }
-    const sendMailResponse = await graphRestClient.api("/me/microsoft.graph.sendMail").post(requestBody);
-    console.log(sendMailResponse);
-}
-
-createMessage();
-
+getMyMessages().then((response) => console.log(response));

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:groups": "tsc && node ./lib/groups.js",
+    "test:mail": "tsc && node ./lib/mail.js",
+    "test:users": "tsc && node ./lib/meAndUsers.js"
   },
   "keywords": [],
   "author": "",
