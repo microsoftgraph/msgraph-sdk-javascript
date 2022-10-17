@@ -59,12 +59,12 @@ describe("LargeFileUpload", () => {
 		assert.isDefined(response.responseBody["id"]);
 	}).timeout(30 * 1000);
 
-    it("Test OneDrive File Upload to custom url", async () => {
+	it("Test OneDrive File Upload to custom url", async () => {
 		const options: OneDriveLargeFileUploadOptions = {
 			path: "/Documents",
 			fileName,
 			rangeSize: 1024 * 1024,
-            uploadSessionURL: `https://graph.microsoft.com/v1.0/me/drive/special/createUploadSession`
+			uploadSessionURL: `https://graph.microsoft.com/v1.0/me/drive/special/approot:/sampleTest/${fileName}:/createUploadSession`,
 		};
 		const file = fs.readFileSync(`./test/sample_files/${fileName}`);
 		const uploadTask = await OneDriveLargeFileUploadTask.create(client, file, options);
