@@ -137,6 +137,7 @@ const options: OneDriveLargeFileUploadOptions = {
 	fileName,
 	rangeSize: 1024 * 1024,
 	uploadEventHandlers,
+    uploadSessionURL: "optional_custom_uploadSessionURL" //if undefined defaults to "/me/drive/root:/{file-path}:/createUploadSession"
 };
 const readStream = fs.createReadStream(`./fileName`);
 const fileObject = new StreamUpload(readStream, fileName, totalsize);
