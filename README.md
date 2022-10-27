@@ -61,6 +61,8 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 Node.js 12 LTS or higher. The active Long Term Service (LTS) version of Node.js is used for on-going testing of existing and upcoming product features.
 
+For Node.js 18 users, it is recommended to disable the experimental `fetch` feature  by supplying the `--no-experimental-fetch` command-line flag while using the Microsoft Graph JavaScript client library.
+
 ## Installation
 
 ### Via npm
