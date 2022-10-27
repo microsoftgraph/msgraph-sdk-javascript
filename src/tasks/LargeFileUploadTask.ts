@@ -263,8 +263,8 @@ export class LargeFileUploadTask<T> {
 			 * (rawResponse.status === 200 && responseBody.id) -> This additional condition is applicable only for OneDrive API.
 			 */
 			if (rawResponse.status === 201 || (rawResponse.status === 200 && responseBody.id)) {
-				const uploadResult = UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
-				return uploadResult;
+				this.reportProgress(uploadEventHandlers, nextRange);
+				return UploadResult.CreateUploadResult(responseBody, rawResponse.headers);
 			}
 
 			/* Handling the API issue where the case of Outlook upload response property -'nextExpectedRanges'  is not uniform.
@@ -275,9 +275,13 @@ export class LargeFileUploadTask<T> {
 				nextExpectedRanges: responseBody.NextExpectedRanges || responseBody.nextExpectedRanges,
 			};
 			this.updateTaskStatus(res);
-			if (uploadEventHandlers && uploadEventHandlers.progress) {
-				uploadEventHandlers.progress(nextRange, uploadEventHandlers.extraCallbackParam);
-			}
+			this.reportProgress(uploadEventHandlers, nextRange);
+		}
+	}
+
+	private reportProgress(uploadEventHandlers: UploadEventHandlers, nextRange: Range) {
+		if (uploadEventHandlers && uploadEventHandlers.progress) {
+			uploadEventHandlers.progress(nextRange, uploadEventHandlers.extraCallbackParam);
 		}
 	}
 
