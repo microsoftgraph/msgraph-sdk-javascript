@@ -32,7 +32,7 @@ stages:
     - template: ./common-templates/security-pre-checks.yml
     - task: NodeTool@0
       inputs:
-        versionSpec: NODE_VERSION
+        versionSpec: $(NODE_VERSION)
       displayName: 'Install Node.js'
 
     - script: |
@@ -41,6 +41,13 @@ stages:
         npm run test
         npm run karma
       displayName: 'Test the branch'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Unit Test Results'
+      inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/testResult.xml'
+          failTaskOnFailedTests: true
 
     - template: ./common-templates/security-post-checks.yml
 
