@@ -12,42 +12,52 @@ trigger:
 
 pr: none
 
-pool:
-    vmImage: ubuntu-latest
 
 stages:
 - stage: "Test"
   jobs:
   - job:
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
+    strategy:
+      matrix:
+        Node 12:
+          NODE_VERSION: '12.x'
+        Node 14:
+          NODE_VERSION: '14.x'
+        Node 16:
+          NODE_VERSION: '16.x'
+      maxParallel: 2 
     steps:
+    - template: ./common-templates/security-pre-checks.yml
     - task: NodeTool@0
       inputs:
-        versionSpec: '16.x'
+        versionSpec: NODE_VERSION
       displayName: 'Install Node.js'
 
     - script: |
-        npm install
+        npm ci
         npm run build
         npm run test
         npm run karma
       displayName: 'Test the branch'
 
+    - template: ./common-templates/security-post-checks.yml
+
 - stage: "Build"
   jobs:
   - job:
+  
     pool:
       vmImage: ubuntu-latest
     steps:
-    - template: ./common-templates/security-pre-checks.yml
     - task: NodeTool@0
       inputs:
         versionSpec: '16.x'
       displayName: 'Install Node.js'
 
     - script: |
-        npm install
+        npm ci
         npm run build
       displayName: 'Build for production artifact'
     - task: CopyFiles@2
@@ -62,4 +72,4 @@ stages:
         artifactName: "release-drop"
       displayName: 'Publish artifacts'
 
-    - template: ./common-templates/security-post-checks.yml
+    
