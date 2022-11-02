@@ -36,10 +36,13 @@ stages:
       displayName: 'Install Node.js'
 
     - script: npm ci
+      displayName: 'npm install for tests'
     - script: npm run build
+      displayName: 'npm build for tests'
     - script: npm run test
+      displayName: 'Run the node tests'
     - script: npm run karma
-      displayName: 'Test the branch'
+      displayName: 'Run karma tests'
 
     - task: PublishTestResults@2
       displayName: 'Publish Unit Test Results'
