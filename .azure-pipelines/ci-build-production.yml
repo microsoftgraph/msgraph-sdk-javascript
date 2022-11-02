@@ -46,7 +46,7 @@ stages:
       displayName: 'Publish Unit Test Results'
       inputs:
           testResultsFormat: 'JUnit'
-          testResultsFiles: '**/testResult.xml'
+          testResultsFiles: 'testResult.xml'
           failTaskOnFailedTests: true
 
     - template: ./common-templates/security-post-checks.yml
@@ -71,6 +71,14 @@ stages:
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
         targetFolder: $(Build.ArtifactStagingDirectory)
+        Contents: |
+          **/*
+          !test/**
+          !.azure-pipelines/**
+          !.github/**
+          !.git/**
+          !.vscode/**
+          !node_modules/**
       displayName: 'Copy npm package'
 
     - task: PublishBuildArtifacts@1
