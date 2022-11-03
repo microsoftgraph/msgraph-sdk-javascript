@@ -12,7 +12,6 @@ trigger:
 
 pr: none
 
-
 stages:
 - stage: "Test"
   jobs:
@@ -75,12 +74,10 @@ stages:
         targetFolder: $(Build.ArtifactStagingDirectory)
         Contents: |
           **/*
-          !test/**
           !.azure-pipelines/**
           !.github/**
           !.git/**
           !.vscode/**
-          !node_modules/**
       displayName: 'Copy npm package'
 
     - task: PublishBuildArtifacts@1
@@ -88,5 +85,4 @@ stages:
         pathtoPublish: $(Build.ArtifactStagingDirectory)
         artifactName: "release-drop"
       displayName: 'Publish artifacts'
-
-    
+   
