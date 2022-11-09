@@ -112,7 +112,6 @@ export class PageIterator {
 	 */
 	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
 		this.client = client;
-        //this.collection = pageCollection.value;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
@@ -135,7 +134,6 @@ export class PageIterator {
 		while (advance && this.cursor < this.collection.length) {
 			const item = this.collection[this.cursor];
 			advance = this.callback(item);
-            console.log( this.cursor + "value of cursor");
 			this.cursor++;
 		}
 		return advance;
@@ -163,7 +161,7 @@ export class PageIterator {
 
 		const response: PageCollection = await graphRequest.get();
 		this.collection = response.value;
-        this.cursor = 0;
+		this.cursor = 0;
 		this.nextLink = response["@odata.nextLink"];
 		this.deltaLink = response["@odata.deltaLink"];
 	}
