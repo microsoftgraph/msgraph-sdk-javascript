@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { Client } from "../../../src/index";
+import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "../../../src/index";
 import { PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { getClient } from "../../test-helper";
 
@@ -42,6 +42,8 @@ const getEmptyPageCollectionWithNext = () => {
 		"@odata.nextLink": "nextURL",
 	};
 };
+
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const truthyCallback: PageIteratorCallback = (data) => {
@@ -133,5 +135,44 @@ describe("PageIterator.ts", () => {
 			await pageIterator.iterate();
 			assert.isTrue(pageIterator.isComplete());
 		});
+	});
+
+    it("setting middleware with pageIterator", async () => {
+		const middleware = new ChaosHandler();
+		const getPageCollection = () => {
+			return {
+				value: [{ event1: "value1" }, { event2: "value2" }],
+				"@odata.nextLink": "nextURL",
+				additionalContent: "additional content",
+			};
+		};
+		const clientOptions: ClientOptions = {
+			middleware,
+		};
+		const responseBody = { value: [{ event3: "value3" }, { event4: "value4" }] };
+		let counter = 1;
+        let countNextlink = 0;
+		const callback: PageIteratorCallback = (data) => {
+			assert.equal(data["event" + counter], "value" + counter);
+            
+            if(data["event"+ counter] == "value3"){
+                countNextlink++;
+            }
+
+            if(data["event"+ counter] == "value4"){
+                countNextlink++;
+            }
+			counter++;
+			return true;
+		};
+
+		const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
+		const requestOptions = { middlewareOptions };
+
+		const client = Client.initWithMiddleware(clientOptions);
+		const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
+		await pageIterator.iterate();
+
+        assert.equal(countNextlink, 2);
 	});
 });
