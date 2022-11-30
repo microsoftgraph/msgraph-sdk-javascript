@@ -29,11 +29,9 @@
         "shims.d.ts"
     ],
     "scripts": {
-        "build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup -c",
+        "build": "npm run pre-build && npm run build:cjs && npm run build:es && rollup -c",
         "build:cjs": "tsc --p tsconfig-cjs.json",
         "build:es": "tsc --p tsconfig-es.json",
-        "build:sub_cjs": "tsc -b tsconfig-sub-cjs.json",
-        "build:sub_es": "tsc -b tsconfig-sub-es.json",
         "format": "npm run format:css && npm run format:html && npm run format:js && npm run format:json && npm run format:md && npm run format:rc && npm run format:ts",
         "format:css": "prettier --write \"**/*.css\"",
         "format:html": "prettier --write \"**/*.html\"",
@@ -45,22 +43,32 @@
         "karma": "karma  start --single-run --browsers ChromeHeadless karma.conf.js",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --ext .ts --fix",
-        "prepack": "npm install && npm run build && npm run test",
+        "prepack": "npm install && npm run build",
         "pre-build": "npm run setVersion",
         "setVersion": "gulp setVersion",
         "test": "npm run test:cjs && npm run test:esm",
-        "test:cjs": "npm run build:sub_cjs && mocha",
+        "test:cjs": "npm run build:cjs   && mocha  'lib/test/common/**/*.js' --require  isomorphic-fetch &&  mocha  'lib/test/node/**/*.js' --require  isomorphic-fetch",
         "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
         "test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-        "test:esm": "npm run build:sub_es  && mocha --require esm"
+        "test:esm": "npm run build:es  && mocha  'lib/es/test/common/**/*.js' --require  esm --require  isomorphic-fetch &&  mocha  'lib/es/test/node/**/*.js' --require  esm --require  isomorphic-fetch"
     },
     "mocha": {
-        "reporter": ["mocha-junit-reporter"],
+        "reporter": [
+            "mocha-junit-reporter"
+        ],
         "reporterOptions": {
             "mochaFile": "./testResult.xml"
         },
-        "spec": ["lib/test/common/**/*.js", "lib/test/node/**/*.js", "lib/es/test/common/**/*.js", "lib/es/test/node/**/*.js"],
-        "require": ["isomorphic-fetch","esm"]
+        "spec": [
+            "lib/test/common/**/*.js",
+            "lib/test/node/**/*.js",
+            "lib/es/test/common/**/*.js",
+            "lib/es/test/node/**/*.js"
+        ],
+        "require": [
+            "isomorphic-fetch",
+            "esm"
+        ]
     },
     "nyc": {
         "all": true,
@@ -76,6 +84,8 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.12.5",
+        "@microsoft/kiota-abstractions": "^1.0.0-preview.8",
+        "@microsoft/kiota-http-fetchlibrary": "^1.0.0-preview.9",
         "tslib": "^2.2.0"
     },
     "devDependencies": {
