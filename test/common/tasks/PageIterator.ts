@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { Client } from "../../../src/index";
+import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "../../../src/index";
 import { PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { getClient } from "../../test-helper";
 
@@ -79,6 +79,13 @@ describe("PageIterator.ts", () => {
 			assert.isTrue(pageIterator.isComplete());
 		});
 
+		it("Should not mutate the collection", async () => {
+			const collection = getPageCollection();
+			const pageIterator = new PageIterator(client, collection, truthyCallback);
+			await pageIterator.iterate();
+			assert.deepEqual(collection, getPageCollection());
+		});
+
 		it("Should not iterate over an empty collection", async () => {
 			const pageIterator = new PageIterator(client, getEmptyPageCollection(), truthyCallback);
 			halfWayCallbackCounter = 1;
@@ -125,6 +132,90 @@ describe("PageIterator.ts", () => {
 			const pageIterator = new PageIterator(client, getPageCollection(), truthyCallback);
 			await pageIterator.iterate();
 			assert.isTrue(pageIterator.isComplete());
+		});
+	});
+	describe("Test iteration using ChaosHandler", () => {
+		it("testing with 5000 results in initial and next page", async () => {
+			const middleware = new ChaosHandler();
+
+			const getPageCollection = () => {
+				const initialPageResultValues: any[] = [];
+				for (let i = 0; i < 5000; i++) {
+					initialPageResultValues[i] = { event: "value" + i };
+				}
+				return {
+					value: initialPageResultValues,
+					"@odata.nextLink": "nextURL",
+					additionalContent: "additional content",
+				};
+			};
+			const clientOptions: ClientOptions = {
+				middleware,
+			};
+
+			const nextPageResultValues: any[] = [];
+
+			for (let i = 0; i < 5000; i++) {
+				nextPageResultValues[i] = { event: "valueNext" + i };
+			}
+			const responseBody = { value: nextPageResultValues };
+			let countNextPageResult = 0;
+			const callback: PageIteratorCallback = (data) => {
+
+				if (data["event"] === "valueNext" + countNextPageResult) {
+					countNextPageResult++;
+				}
+
+				return true;
+			};
+
+			const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
+			const requestOptions = { middlewareOptions };
+
+			const client = Client.initWithMiddleware(clientOptions);
+			const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
+			await pageIterator.iterate();
+
+			assert.equal(countNextPageResult, 5000);
+		});
+
+		it("Evaluate next page result being fetched", async () => {
+			const middleware = new ChaosHandler();
+			const getPageCollection = () => {
+				return {
+					value: [{ event1: "value1" }, { event2: "value2" }],
+					"@odata.nextLink": "nextURL",
+					additionalContent: "additional content",
+				};
+			};
+			const clientOptions: ClientOptions = {
+				middleware,
+			};
+			const responseBody = { value: [{ event3: "value3" }, { event4: "value4" }] };
+			let counter = 1;
+			let countNextPageResult = 0;
+			const callback: PageIteratorCallback = (data) => {
+				assert.equal(data["event" + counter], "value" + counter);
+
+				if (data["event" + counter] === "value3") {
+					countNextPageResult++;
+				}
+
+				if (data["event" + counter] === "value4") {
+					countNextPageResult++;
+				}
+				counter++;
+				return true;
+			};
+
+			const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
+			const requestOptions = { middlewareOptions };
+
+			const client = Client.initWithMiddleware(clientOptions);
+			const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
+			await pageIterator.iterate();
+
+			assert.equal(countNextPageResult, 2);
 		});
 	});
 });

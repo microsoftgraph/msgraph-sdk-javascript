@@ -90,9 +90,16 @@ export class PageIterator {
 	private complete: boolean;
 
 	/**
+	 * @private
 	 * Information to be added to the request
 	 */
 	private requestOptions: GraphRequestOptions;
+
+	/**
+	 * @private
+	 * Member holding the current position on the collection
+	 */
+	private cursor: number;
 
 	/**
 	 * @public
@@ -110,6 +117,7 @@ export class PageIterator {
 		this.nextLink = pageCollection["@odata.nextLink"];
 		this.deltaLink = pageCollection["@odata.deltaLink"];
 		this.callback = callback;
+		this.cursor = 0;
 		this.complete = false;
 		this.requestOptions = requestOptions;
 	}
@@ -124,9 +132,10 @@ export class PageIterator {
 			return false;
 		}
 		let advance = true;
-		while (advance && this.collection.length !== 0) {
-			const item = this.collection.shift();
+		while (advance && this.cursor < this.collection.length) {
+			const item = this.collection[this.cursor];
 			advance = this.callback(item);
+			this.cursor++;
 		}
 		return advance;
 	}
@@ -153,6 +162,7 @@ export class PageIterator {
 
 		const response: PageCollection = await graphRequest.get();
 		this.collection = response.value;
+		this.cursor = 0;
 		this.nextLink = response["@odata.nextLink"];
 		this.deltaLink = response["@odata.deltaLink"];
 	}
@@ -183,7 +193,7 @@ export class PageIterator {
 				advance = false;
 			}
 		}
-		if (this.nextLink === undefined && this.collection.length === 0) {
+		if (this.nextLink === undefined && this.cursor >= this.collection.length) {
 			this.complete = true;
 		}
 	}

@@ -68,7 +68,7 @@ Can use own middlewares and the ones shipped with the library [[Here](../src/mid
 
 Using AuthenticationHandler [one shipped with the library] and MyLoggingHandler, and MyHttpMessageHandler [custom ones] to create a middleware chain here.
 
-NOTE: Instead of ImplicitMSALAuthenticationProvider, one can provide his own Authentication Handler. For more about using custom authentication provider, refer [here](./CustomAuthenticationProvider.md).
+NOTE: Instead of ImplicitMSALAuthenticationProvider, one can provide their own Authentication Handler. For more about using custom authentication provider, refer [here](./CustomAuthenticationProvider.md).
 
 ```typescript
 import { ImplicitMSALAuthenticationProvider } from "@microsoft/microsoft-graph-client";

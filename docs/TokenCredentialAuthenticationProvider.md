@@ -16,6 +16,7 @@
 // Import the TokenCredential class that you wish to use. This example uses a Client SecretCredential
 
 import { ClientSecretCredential } from "@azure/identity";
+import { Client } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider, TokenCredentialAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 
 // Create an instance of the TokenCredential class that is imported

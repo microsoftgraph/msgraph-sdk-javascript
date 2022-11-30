@@ -1,0 +1,88 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none
+
+stages:
+- stage: "Test"
+  jobs:
+  - job:
+    pool:
+      vmImage: windows-latest
+    strategy:
+      matrix:
+        Node 12:
+          NODE_VERSION: '12.x'
+        Node 14:
+          NODE_VERSION: '14.x'
+        Node 16:
+          NODE_VERSION: '16.x'
+      maxParallel: 2 
+    steps:
+    - template: ./common-templates/security-pre-checks.yml
+    - task: NodeTool@0
+      inputs:
+        versionSpec: $(NODE_VERSION)
+      displayName: 'Install Node.js'
+
+    - script: npm ci
+      displayName: 'npm install for tests'
+    - script: npm run build
+      displayName: 'npm build for tests'
+    - script: npm run test
+      displayName: 'Run the node tests'
+    - script: npm run karma
+      displayName: 'Run karma tests'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Unit Test Results'
+      inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/testResult.xml'
+          failTaskOnFailedTests: true
+
+    - template: ./common-templates/security-post-checks.yml
+
+- stage: "Build"
+  jobs:
+  - job:
+  
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '16.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm ci
+        npm run build
+      displayName: 'Build for production artifact'
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: '$(Build.SourcesDirectory)'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+        Contents: |
+          **/*
+          !.azure-pipelines/**
+          !.github/**
+          !.git/**
+          !.vscode/**
+      displayName: 'Copy npm package'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: "release-drop"
+      displayName: 'Publish artifacts'
+   

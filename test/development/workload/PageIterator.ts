@@ -8,10 +8,6 @@
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
-import { Client, ClientOptions, SimpleAccessTokenProvider, SimpleAuthenticationProvider } from "../../../src";
-import { ChaosHandler } from "../../../src/middleware/ChaosHandler";
-import { ChaosHandlerOptions } from "../../../src/middleware/options/ChaosHandlerOptions";
-import { ChaosStrategy } from "../../../src/middleware/options/ChaosStrategy";
 import { GraphRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { getClient } from "../test-helper";
 const client = getClient();
@@ -86,38 +82,5 @@ describe("PageIterator", () => {
 			await pageIterator.iterate();
 			assert.isTrue(pageIterator.isComplete());
 		}
-	}).timeout(0);
-
-	// TODO - Temporariliy commenting this test.
-	it("setting middleware with pageIterator", async () => {
-		const middleware = new ChaosHandler();
-		const getPageCollection = () => {
-			return {
-				value: [],
-				"@odata.nextLink": "nextURL",
-				additionalContent: "additional content",
-			};
-		};
-		const clientOptions: ClientOptions = {
-			authProvider: new SimpleAuthenticationProvider(async () => {
-				return "Dummy_Token";
-			}),
-			middleware,
-		};
-		const responseBody = { value: [{ event1: "value1" }, { event2: "value2" }] };
-		let counter = 1;
-		const callback: PageIteratorCallback = (data) => {
-			assert.equal(data["event" + counter], "value" + counter);
-			counter++;
-			return true;
-		};
-
-		const middlewareOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }));
-		const key = middlewareOptions.getKey();
-		const requestOptions: GraphRequestOptions = { middlewareOptions: { [key]: middlewareOptions } };
-
-		const client = Client.init(clientOptions);
-		const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
-		await pageIterator.iterate();
-	});
+	}).timeout(30 * 1000);
 });

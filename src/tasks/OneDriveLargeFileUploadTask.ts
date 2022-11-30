@@ -33,6 +33,11 @@ export interface OneDriveLargeFileUploadOptions {
 	rangeSize?: number;
 	conflictBehavior?: string;
 	uploadEventHandlers?: UploadEventHandlers;
+    /// <summary>
+    /// Default upload session url is : "/me/drive/root:/{file-path}:/createUploadSession"
+    /// Set this property to override the default upload session url. Example: "/me/drive/special/{name}"
+    /// </summary>
+    uploadSessionURL?: string;
 }
 
 /**
@@ -161,7 +166,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 		if (!client || !fileObject || !options) {
 			throw new GraphClientError("Please provide the Graph client instance, FileObject interface implementation and OneDriveLargeFileUploadOptions value");
 		}
-		const requestUrl = OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
+		const requestUrl = options.uploadSessionURL ? options.uploadSessionURL: OneDriveLargeFileUploadTask.constructCreateSessionUrl(options.fileName, options.path);
 		const uploadSessionPayload: OneDriveFileUploadSessionPayLoad = {
 			fileName: options.fileName,
 			fileDescription: options.fileDescription,
