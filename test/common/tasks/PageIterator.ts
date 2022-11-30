@@ -5,9 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
+import { AllowedHostsValidator } from "@microsoft/kiota-abstractions";
 import { assert } from "chai";
 
-import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "../../../src/index";
+import { BaseBearerTokenAuthenticationProvider, ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "../../../src/index";
 import { PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { getClient } from "../../test-helper";
 
@@ -44,13 +45,13 @@ const getEmptyPageCollectionWithNext = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const truthyCallback: PageIteratorCallback = (data) => {
+const truthyCallback: PageIteratorCallback = (_data) => {
 	return true;
 };
 
 let halfWayCallbackCounter = 5;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const halfWayCallback: PageIteratorCallback = (data) => {
+const halfWayCallback: PageIteratorCallback = (_data) => {
 	halfWayCallbackCounter--;
 	if (halfWayCallbackCounter === 0) {
 		return false;
@@ -151,6 +152,13 @@ describe("PageIterator.ts", () => {
 			};
 			const clientOptions: ClientOptions = {
 				middleware,
+				authProvider: new BaseBearerTokenAuthenticationProvider({
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					getAuthorizationToken: async (_url?: string, _additionalAuthenticationContext?: Record<string, unknown>) => {
+						return "";
+					},
+					getAllowedHostsValidator: () => new AllowedHostsValidator(),
+				}),
 			};
 
 			const nextPageResultValues: any[] = [];
@@ -168,11 +176,13 @@ describe("PageIterator.ts", () => {
 
 				return true;
 			};
-
-			const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
+			const chaosOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }));
+			const middlewareOptions = {
+				[chaosOptions.getKey()]: chaosOptions,
+			};
 			const requestOptions = { middlewareOptions };
 
-			const client = Client.initWithMiddleware(clientOptions);
+			const client = Client.init(clientOptions);
 			const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
 			await pageIterator.iterate();
 
@@ -190,6 +200,13 @@ describe("PageIterator.ts", () => {
 			};
 			const clientOptions: ClientOptions = {
 				middleware,
+				authProvider: new BaseBearerTokenAuthenticationProvider({
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					getAuthorizationToken: async (_url?: string, _additionalAuthenticationContext?: Record<string, unknown>) => {
+						return "";
+					},
+					getAllowedHostsValidator: () => new AllowedHostsValidator(),
+				}),
 			};
 			const responseBody = { value: [{ event3: "value3" }, { event4: "value4" }] };
 			let counter = 1;
@@ -207,11 +224,13 @@ describe("PageIterator.ts", () => {
 				counter++;
 				return true;
 			};
-
-			const middlewareOptions = [new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }))];
+			const chaosOptions = new ChaosHandlerOptions(ChaosStrategy.MANUAL, "middleware options for pageIterator", 200, 0, JSON.stringify(responseBody), new Headers({ "Content-Type": "application/json", "content-length": "100" }));
+			const middlewareOptions = {
+				[chaosOptions.getKey()]: chaosOptions,
+			};
 			const requestOptions = { middlewareOptions };
 
-			const client = Client.initWithMiddleware(clientOptions);
+			const client = Client.init(clientOptions);
 			const pageIterator = new PageIterator(client, getPageCollection(), callback, requestOptions);
 			await pageIterator.iterate();
 
