@@ -118,7 +118,7 @@
         "prettier": "^2.5.1",
         "rollup": "^2.36.2",
         "rollup-plugin-terser": "^7.0.2",
-        "sinon": "^14.0.0",
+        "sinon": "^15.0.0",
         "source-map-support": "^0.5.19",
         "stream-browserify": "^3.0.0",
         "ts-node": "^10.4.0",
