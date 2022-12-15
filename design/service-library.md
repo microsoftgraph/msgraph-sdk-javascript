@@ -75,86 +75,63 @@ Models are also available in this package and should reflect the underlying vers
 
 Because of the richness of the Graph APIs, we are making a decision to allow developers to selectively import the areas of Graph they care about. This will provide a lightweight bundle size while still offering a good developer experience.
 
-### Selective Imports of the Graph area needed
+### Selective Imports of the Graph areas needed
 
 To offer a bundle size that fair to the developer, we are using a selective imports strategy. This strategy enables developers to bring only the endpoints they need from Graph. Developers would only see the root paths of Graph when using the API Client by default, and would need to import additional path with selective imports.
 
-<details>
-	<summary>Using the service library without any selective imports</summary>
-<p>
+#### Using the service library without any selective imports
 
-> **Note**
-> This example works because `me` is at the root of the Graph Client
-
-```typescript
-const me = await graphClient.me.get();
-```
-> **Note**
-> This example works because `users` is at the root of the Graph Client
-
-```typescript
-const users = await graphClient.users.get();
-```
-> **Warning**
+> ❌ **Fails** <br />
 > This example does not work because `usersById().directReports` is not available at the root of the Graph Client
 
 ```typescript
 const directReports = await graphClient.usersById("ab677c1b-50c6-4013-aa9f-792ed42c59c8").directReports.get();
 ```
 
-</p>
-</details>
+> ✅ **Succeeds** <br />
+> This example succeeds because `me` is at the root of the Graph Client
 
-<details>
-	<summary>Using the service library with selective imports</summary>
-<p>
+```typescript
+const me = await graphClient.me.get();
+```
+> ✅ **Succeeds** <br />
+> This example succeeds because `users` is at the root of the Graph Client
 
-> **Note**
-> This example works because `/users` is imported, making it available at the root of the Graph Client
+```typescript
+const users = await graphClient.users.get();
+```
+
+#### Using the service library with selective imports
+
+> ❌ **Fails** <br />
+> This example fails because `@microsoft/microsoft-graph-client/users/item` is not imported and therefore not available on the Graph Client
 
 ```typescript
 import "@microsoft/microsoft-graph-client/users";
 const directReports = await graphClient.usersById("ab677c1b-50c6-4013-aa9f-792ed42c59c8").directReports.get();
 ```
 
-> **Note**
-> This example does not work because `/me` is imported, making it available at the root of the Graph Client
+> ✅ **Succeeds** <br />
+> This example succeeds because `/users/item` is imported, making it available on the Graph Client
+
+```typescript
+import "@microsoft/microsoft-graph-client/users/item";
+const directReports = await graphClient.usersById("ab677c1b-50c6-4013-aa9f-792ed42c59c8").directReports.get();
+const extensions = await graphClient.usersById("ab677c1b-50c6-4013-aa9f-792ed42c59c8").extensions.get();
+```
+
+> ✅ **Succeeds** <br />
+> This example succeeds because `/me` is imported, making it available at the root of the Graph Client
 
 ```typescript
 import "@microsoft/microsoft-graph-client/me";
 const joinedTeams = await graphClient.me.joinedTeams.get();
 ```
 
-</p>
-</details>
-
+> ✅ **Succeeds** <br />
+> This example succeeds because `/me` is imported, making it available at the root of the Graph Client
 
 ```typescript
-import "@microsoft/msgraph-sdk-javascript/me";
-
-const me: User | undefined = await getMe();
-await sendMail();
-
-async function getMe(): Promise<User | undefined> {
-	return await graphClient.me.get();
-}
-
-async function sendMail(): Promise<void> {
-	const message: Message = {
-		subject: "Hello Graph TypeScript SDK!",
-		body: {
-			contentType: BodyType.Html,
-			content: "<bold>Hello Graph TypeScript SDK!</bold>",
-		},
-		toRecipients: [
-			{
-				emailAddress: {
-					address: "admin@m365x263716.onmicrosoft.com",
-				},
-			},
-		],
-	};
-
-	return await client.me.sendMail.post(message);
-}
+import "@microsoft/microsoft-graph-client/me/insights";
+const trending = await graphClient.me.insights.trending.get();
 ```
