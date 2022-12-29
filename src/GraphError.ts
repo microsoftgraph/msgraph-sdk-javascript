@@ -42,6 +42,8 @@ export class GraphError extends Error {
 	 */
 	public date: Date;
 
+    public headers?: Headers;
+
 	/**
 	 * @public
 	 * A member holding original error response by the graph service

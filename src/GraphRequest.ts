@@ -377,6 +377,9 @@ export class GraphRequest {
 			});
 
 			rawResponse = context.response;
+			// if (rawResponse.status >= 400 && rawResponse.status < 500) {
+            //     throw new GraphError(rawResponse.status,)
+			// }
 			const response: any = await GraphResponseHandler.getResponse(rawResponse, this._responseType, callback);
 			return response;
 		} catch (error) {
@@ -388,7 +391,7 @@ export class GraphRequest {
 			if (rawResponse) {
 				statusCode = rawResponse.status;
 			}
-			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
+			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback, rawResponse);
 			throw gError;
 		}
 	}
