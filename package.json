@@ -48,19 +48,25 @@
         "prepack": "npm install && npm run build && npm run test",
         "pre-build": "npm run setVersion",
         "setVersion": "gulp setVersion",
-        "test": "npm run test:cjs && npm run test:esm",
+        "test": "npm run test:cjs && npm run karma",
         "test:cjs": "npm run build:sub_cjs && mocha",
         "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
-        "test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch",
-        "test:esm": "npm run build:sub_es  && mocha --require esm"
+        "test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch"
     },
     "mocha": {
-        "reporter": ["mocha-junit-reporter"],
+        "reporter": [
+            "mocha-junit-reporter"
+        ],
         "reporterOptions": {
             "mochaFile": "./testResult.xml"
         },
-        "spec": ["lib/test/common/**/*.js", "lib/test/node/**/*.js", "lib/es/test/common/**/*.js", "lib/es/test/node/**/*.js"],
-        "require": ["isomorphic-fetch","esm"]
+        "spec": [
+            "lib/test/common/**/*.js",
+            "lib/test/node/**/*.js"
+        ],
+        "require": [
+            "isomorphic-fetch"
+        ]
     },
     "nyc": {
         "all": true,
@@ -90,7 +96,7 @@
         "@rollup/plugin-commonjs": "^24.0.0",
         "@rollup/plugin-node-resolve": "^15.0.0",
         "@types/chai": "^4.2.14",
-        "@types/mocha": "^9.0.0",
+        "@types/mocha": "^10.0.1",
         "@types/node": "^18.0.0",
         "@types/sinon": "^10.0.8",
         "@typescript-eslint/eslint-plugin": "^5.12.1",
@@ -100,7 +106,6 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-simple-import-sort": "^8.0.0",
-        "esm": "^3.2.25",
         "form-data": "^4.0.0",
         "gulp": "^4.0.2",
         "husky": "^8.0.0",
@@ -112,7 +117,7 @@
         "karma-mocha": "^2.0.1",
         "karma-typescript": "^5.2.0",
         "lint-staged": "^13.0.0",
-        "mocha": "^6.2.3",
+        "mocha": "^10.2.0",
         "mocha-junit-reporter": "^2.1.1",
         "nyc": "^15.1.0",
         "prettier": "^2.5.1",
