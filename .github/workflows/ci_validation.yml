@@ -37,5 +37,5 @@ jobs:
       if: matrix.node-version == '16.x'
       working-directory: './test-esm'
       run: |
-        npm run ci
+        npm ci
         npm test
