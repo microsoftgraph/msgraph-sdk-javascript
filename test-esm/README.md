@@ -1,0 +1,1 @@
+The test-esm project verifies if the Graph JS Client compiles with ESM projects successfully.
