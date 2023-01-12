@@ -42,7 +42,7 @@ export class GraphError extends Error {
 	 */
 	public date: Date;
 
-    public headers?: Headers;
+    public headers?: Record<string, string>;
 
 	/**
 	 * @public
