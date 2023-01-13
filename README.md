@@ -205,6 +205,11 @@ Please see the [contributing guidelines](CONTRIBUTING.md).
 -   [Microsoft Graph Toolkit: UI Components and Authentication Providers for Microsoft Graph](https://docs.microsoft.com/graph/toolkit/overview)
 -   [Office Dev Center](http://dev.office.com/)
 
+## Tips and Tricks
+
+- [Microsoft Graph SDK `n.call is not a function` by Lee Ford](https://www.lee-ford.co.uk/posts/graph-sdk-is-not-a-function/)
+- [Example of using the Graph JS library with ESM and `importmaps` ](https://github.com/waldekmastykarz/js-graph-101/blob/main/index_esm.html)
+
 ## Third Party Notices
 
 See [Third Party Notices](./THIRD%20PARTY%20NOTICES) for information on the packages that are included in the [package.json](./package.json)
