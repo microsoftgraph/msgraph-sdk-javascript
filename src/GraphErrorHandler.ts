@@ -47,7 +47,7 @@ export class GraphErrorHandler {
 		}
 		gError.body = error.toString();
 		gError.date = new Date();
-		this.setErrorHeaders(gError, rawResponse?.headers);
+		gError.headers = rawResponse?.headers;
 		return gError;
 	}
 
@@ -82,28 +82,11 @@ export class GraphErrorHandler {
 		}
 
 		gError.body = JSON.stringify(error);
-		//if(rawResponse?.headers){}
-		this.setErrorHeaders(gError, rawResponse?.headers);
+		gError.headers = rawResponse?.headers;
 
 		return gError;
 	}
 
-	private static setErrorHeaders(gError: GraphError, headers?: Headers) {
-		if (headers) {
-			gError.headers = {};
-		} else return;
-		if (typeof Headers !== "undefined" && headers instanceof Headers) {
-			headers.forEach((val, key) => {
-				if (gError.headers) gError.headers[val] = key;
-			});
-		} else if (headers instanceof Array) {
-			for (let i = 0, l = headers.length; i < l; i++) {
-				gError.headers[headers[i][0]] = headers[i][1];
-			}
-		} else {
-			gError.headers = headers as unknown as Record<string, string>;
-		}
-	}
 	/**
 	 * @public
 	 * @static

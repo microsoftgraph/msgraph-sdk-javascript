@@ -121,11 +121,11 @@ describe("GraphErrorHandler.ts", () => {
 				},
 			};
 			const rawResponse = new Response(undefined, {
-				headers,
+				headers: new Headers(headers),
 			});
 			const gError = await GraphErrorHandler.getError(errorResponse, 500, undefined, rawResponse);
 			assert.isDefined(gError.headers);
-			assert.equal(gError.headers, headers);
+			assert.equal(gError.headers?.get("keyTest"), headers.keyTest);
 		});
 	});
 });

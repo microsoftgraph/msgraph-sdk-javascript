@@ -19,3 +19,5 @@ interface NodeStream {
     read(size?: number): any;
     on(event: string | symbol, listener: (...args: any[]) => void): this;
 }
+
+interface Headers{}
