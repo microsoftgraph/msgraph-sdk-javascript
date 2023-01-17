@@ -34,7 +34,7 @@ Using npm:
     import { AuthCodeMSALBrowserAuthenticationProvider, AuthCodeMSALBrowserAuthenticationProviderOptions } from "@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser";
     import { Client } from "@microsoft/microsoft-graph-client";
 
-    const options:AuthCodeMSALBrowserAuthenticationProviderOptions: {
+    const options: AuthCodeMSALBrowserAuthenticationProviderOptions = {
         account: account, // the AccountInfo instance to acquire the token for.
         interactionType: InteractionType.PopUp , // msal-browser InteractionType
         scopes: ["user.read", "mail.send"] // example of the scopes to be passed
