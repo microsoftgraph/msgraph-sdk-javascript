@@ -36,12 +36,12 @@ Using npm:
 
     const options: AuthCodeMSALBrowserAuthenticationProviderOptions = {
         account: account, // the AccountInfo instance to acquire the token for.
-        interactionType: InteractionType.PopUp , // msal-browser InteractionType
+        interactionType: InteractionType.Popup, // msal-browser InteractionType
         scopes: ["user.read", "mail.send"] // example of the scopes to be passed
-    }
+    };
 
     // Pass the PublicClientApplication instance from step 2 to create AuthCodeMSALBrowserAuthenticationProvider instance
-    const authProvider: new AuthCodeMSALBrowserAuthenticationProvider(publicClientApplication, options),
+    const authProvider: new AuthCodeMSALBrowserAuthenticationProvider(publicClientApplication, options);
 
 
     // Initialize the Graph client
