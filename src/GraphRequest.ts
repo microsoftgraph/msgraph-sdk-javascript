@@ -388,7 +388,7 @@ export class GraphRequest {
 			if (rawResponse) {
 				statusCode = rawResponse.status;
 			}
-			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback);
+			const gError: GraphError = await GraphErrorHandler.getError(error, statusCode, callback, rawResponse);
 			throw gError;
 		}
 	}

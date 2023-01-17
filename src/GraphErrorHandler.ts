@@ -40,13 +40,14 @@ export class GraphErrorHandler {
 	 * @param {number} [statusCode] - The status code of the response
 	 * @returns The GraphError instance
 	 */
-	private static constructError(error: Error, statusCode?: number): GraphError {
+	private static constructError(error: Error, statusCode?: number, rawResponse?: Response): GraphError {
 		const gError = new GraphError(statusCode, "", error);
 		if (error.name !== undefined) {
 			gError.code = error.name;
 		}
 		gError.body = error.toString();
 		gError.date = new Date();
+		gError.headers = rawResponse?.headers;
 		return gError;
 	}
 
@@ -71,7 +72,7 @@ export class GraphErrorHandler {
 	 *      }
 	 *  }
 	 */
-	private static constructErrorFromResponse(graphError: GraphAPIErrorResponse, statusCode: number): GraphError {
+	private static constructErrorFromResponse(graphError: GraphAPIErrorResponse, statusCode: number, rawResponse?: Response): GraphError {
 		const error = graphError.error;
 		const gError = new GraphError(statusCode, error.message);
 		gError.code = error.code;
@@ -81,6 +82,7 @@ export class GraphErrorHandler {
 		}
 
 		gError.body = JSON.stringify(error);
+		gError.headers = rawResponse?.headers;
 
 		return gError;
 	}
@@ -96,12 +98,12 @@ export class GraphErrorHandler {
 	 * @param {GraphRequestCallback} [callback] - The graph request callback function
 	 * @returns A promise that resolves to GraphError instance
 	 */
-	public static async getError(error: any = null, statusCode = -1, callback?: GraphRequestCallback): Promise<GraphError> {
+	public static async getError(error: any = null, statusCode = -1, callback?: GraphRequestCallback, rawResponse?: Response): Promise<GraphError> {
 		let gError: GraphError;
 		if (error && error.error) {
-			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode);
+			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode, rawResponse);
 		} else if (error instanceof Error) {
-			gError = GraphErrorHandler.constructError(error, statusCode);
+			gError = GraphErrorHandler.constructError(error, statusCode, rawResponse);
 		} else {
 			gError = new GraphError(statusCode);
 			gError.body = error; // if a custom error is passed which is not instance of Error object or a graph API response
