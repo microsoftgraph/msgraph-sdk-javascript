@@ -41,12 +41,12 @@ Using npm:
     };
 
     // Pass the PublicClientApplication instance from step 2 to create AuthCodeMSALBrowserAuthenticationProvider instance
-    const authProvider: new AuthCodeMSALBrowserAuthenticationProvider(publicClientApplication, options);
+    const authProvider = new AuthCodeMSALBrowserAuthenticationProvider(publicClientApplication, options);
 
 
     // Initialize the Graph client
     const graphClient = Client.initWithMiddleware({
-        authprovider
+        authProvider
     });
 
 ```
