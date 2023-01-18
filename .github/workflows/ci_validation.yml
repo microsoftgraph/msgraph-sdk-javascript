@@ -32,3 +32,10 @@ jobs:
     
     - name: Run unit tests
       run: npm test
+
+    - name: Verify ESM compatibility
+      if: matrix.node-version == '16.x'
+      working-directory: './test-esm'
+      run: |
+        npm ci
+        npm test
