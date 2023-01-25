@@ -137,7 +137,9 @@ const joinedTeams = await graphClient.me.joinedTeams.get();
 > This example succeeds because `/me` is imported, making it available at the root of the Graph Client
 
 ```typescript
+import "@microsoft/microsoft-graph-client/me";
 import "@microsoft/microsoft-graph-client/me/insights";
+import "@microsoft/microsoft-graph-client/me/insights/trending";
 const trending = await graphClient.me.insights.trending.get();
 ```
 
