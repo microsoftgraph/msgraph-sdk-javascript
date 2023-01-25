@@ -16,7 +16,7 @@ Before we jump into the end-to-end walk-through, it's important to set some cons
 
 | Type      | Environment | Description                                                                                       |
 | --------- | ----------- | ------------------------------------------------------------------------------------------------- |
-| Platforms | Node        | Current and 2 Previous LTS (14 / 16 / 18)                                                         |
+| Platforms | Node        | Current and 2 Previous LTS (16 / 18)                                                         |
 | Platforms | Web         | Edge, Chrome, Firefox and Safari (Latest released version + immediate previous version)           |
 | Modules   | Node        | ESM2019 + CJS                                                                                     |
 | Modules   | Web         | ESM2019                                                                                           |
