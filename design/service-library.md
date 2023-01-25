@@ -129,6 +129,7 @@ const joinedTeams = await graphClient.me.joinedTeams.get();
 
 ```typescript
 import "@microsoft/microsoft-graph-client/me";
+import "@microsoft/microsoft-graph-client/me/joinedTeams";
 const joinedTeams = await graphClient.me.joinedTeams.get();
 ```
 
