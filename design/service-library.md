@@ -71,7 +71,7 @@ const graphClient = Client.init({
 
 ### Calling Microsoft Graph via the Graph JavaScript Service Library
 
-The core value of the Microsoft Graph JavaScript Service Library is the availability of the chaned request builder pattern (fluent API). This provides developers with typechecking and discoverability when building on Microsoft Graph. This would highlight the full spectrum of capabilities on Microsoft Graph directly in the API Client.
+The core value of the Microsoft Graph JavaScript Service Library is the availability of the chained request builder pattern (fluent API). This provides developers with typechecking and discoverability when building on Microsoft Graph. This would highlight the full spectrum of capabilities on Microsoft Graph directly in the API Client.
 
 Models are also available in this package and should reflect the underlying version of Graph we are targeting. Developers using our types should do it in a way that will be familiar to how they are used to with other API Clients and APIs. We should provide an easy-to-use model that feels natural in the JavaScript world. This means we should not be forcing developers to use Classes and / or other structures that will make their code less natural to them.
 
