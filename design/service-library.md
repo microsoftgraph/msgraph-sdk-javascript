@@ -173,7 +173,7 @@ const users = await graphClient.users.get({
 		search: 'displayName:room'
 	},
 	headers: {
-		ConsistencyLevel: "Eventual"
+		ConsistencyLevel: ["Eventual"]
 	}
 });
 ```
