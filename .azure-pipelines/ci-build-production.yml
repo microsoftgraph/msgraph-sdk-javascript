@@ -20,8 +20,6 @@ stages:
       vmImage: windows-latest
     strategy:
       matrix:
-        Node 12:
-          NODE_VERSION: '12.x'
         Node 14:
           NODE_VERSION: '14.x'
         Node 16:
