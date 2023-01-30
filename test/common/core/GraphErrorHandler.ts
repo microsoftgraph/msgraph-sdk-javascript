@@ -108,5 +108,24 @@ describe("GraphErrorHandler.ts", () => {
 			assert.equal(gError.body, null);
 			assert.equal(gError.requestId, null);
 		});
+
+		it("Should get header from response", async () => {
+			const headers = { keyTest: "valueTest" };
+			const errorResponse = {
+				error: {
+					code: "500",
+					message: "Internal Server Error",
+					innerError: {
+						"request-id": "some random id",
+					},
+				},
+			};
+			const rawResponse = new Response(undefined, {
+				headers: new Headers(headers),
+			});
+			const gError = await GraphErrorHandler.getError(errorResponse, 500, undefined, rawResponse);
+			assert.isDefined(gError.headers);
+			assert.equal(gError.headers?.get("keyTest"), headers.keyTest);
+		});
 	});
 });
