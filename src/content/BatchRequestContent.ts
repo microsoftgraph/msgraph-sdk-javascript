@@ -198,9 +198,25 @@ export class BatchRequestContent {
 		const requestData: RequestData = {
 			url: "",
 		};
-		const hasHttpRegex = new RegExp("^https?://");
+
 		// Stripping off hostname, port and url scheme
-		requestData.url = hasHttpRegex.test(request.url) ? "/" + request.url.split(/.*?\/\/.*?\//)[1] : request.url;
+		const hasHttpRegex = new RegExp("^https?://");
+
+		if (hasHttpRegex.test(request.url)) {
+			// Strip away host segment
+			let path = request.url.split(/.*?\/\/.*?\//)[1];
+
+			// Strip away version
+			const endOfVersionStrPos = path.indexOf("/");
+			if (endOfVersionStrPos !== -1) {
+				path = path.substring(0, endOfVersionStrPos);
+			}
+
+			requestData.url = request.url;
+		} else {
+			requestData.url = request.url;
+		}
+
 		requestData.method = request.method;
 		const headers = {};
 		request.headers.forEach((value, key) => {
