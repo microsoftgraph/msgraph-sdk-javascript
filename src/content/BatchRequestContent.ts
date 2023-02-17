@@ -209,10 +209,10 @@ export class BatchRequestContent {
 			// Strip away version
 			const endOfVersionStrPos = path.indexOf("/");
 			if (endOfVersionStrPos !== -1) {
-				path = path.substring(0, endOfVersionStrPos);
+				path = path.substring(endOfVersionStrPos, path.length);
 			}
 
-			requestData.url = request.url;
+			requestData.url = path;
 		} else {
 			requestData.url = request.url;
 		}
