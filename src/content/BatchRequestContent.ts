@@ -200,22 +200,7 @@ export class BatchRequestContent {
 		};
 
 		// Stripping off hostname, port and url scheme
-		const hasHttpRegex = new RegExp("^https?://");
-
-		if (hasHttpRegex.test(request.url)) {
-			// Strip away host segment
-			let path = request.url.split(/.*?\/\/.*?\//)[1];
-
-			// Strip away version
-			const endOfVersionStrPos = path.indexOf("/");
-			if (endOfVersionStrPos !== -1) {
-				path = path.substring(endOfVersionStrPos, path.length);
-			}
-
-			requestData.url = path;
-		} else {
-			requestData.url = request.url;
-		}
+		requestData.url = request.url.replace(/^(?:http)?s?:?(?:\/\/)?[^\/]+\/(?:v1.0|beta)?/i, ''); // replaces <scheme>?<?>?<//><hostname:port>+</>?<version>+ by an empty string
 
 		requestData.method = request.method;
 		const headers = {};
