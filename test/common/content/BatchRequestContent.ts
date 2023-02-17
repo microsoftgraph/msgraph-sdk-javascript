@@ -213,6 +213,14 @@ describe("BatchRequestContent.ts", () => {
 			assert.isDefined(content.requests[0].body);
 			assert.equal(typeof content.requests[0].body, "object");
 		});
+
+		it("Should parse path with url", async () => {
+			const req = getCreateFolderRequestCopy();
+			req.request = new Request("https://graph.microsoft.com/v1.0" + req.request.url);
+			const batchReq = new BatchRequestContent([req]);
+			const content = await batchReq.getContent();
+			assert.equal(content.requests[0].url, "/me/drive/root/children");
+		});
 	});
 
 	describe("removeDependency", function() {
