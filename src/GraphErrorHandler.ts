@@ -94,11 +94,11 @@ export class GraphErrorHandler {
 	 * To get the GraphError object
 	 * Reference - https://docs.microsoft.com/en-us/graph/errors
 	 * @param {any} [error = null] - The error returned by graph service or some native error
-	 * @param {number} [statusCode = -1] - The status code of the response
+	 * @param {number} [statusCode = 500] - The status code of the response. Default is 500 as internal server error
 	 * @param {GraphRequestCallback} [callback] - The graph request callback function
 	 * @returns A promise that resolves to GraphError instance
 	 */
-	public static async getError(error: any = null, statusCode = -1, callback?: GraphRequestCallback, rawResponse?: Response): Promise<GraphError> {
+	public static async getError(error: any = null, statusCode = 500, callback?: GraphRequestCallback, rawResponse?: Response): Promise<GraphError> {
 		let gError: GraphError;
 		if (error && error.error) {
 			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode, rawResponse);
