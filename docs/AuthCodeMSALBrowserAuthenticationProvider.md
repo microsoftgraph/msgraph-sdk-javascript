@@ -9,18 +9,19 @@
 
 Steps to use `AuthCodeMSALBrowserAuthenticationProvider`;
 
-1.  Using npm: `npm install @azure/msal-browser @microsoft/microsoft-graph-client`
+1. Installation
 
-        Using html:
+- Using npm: `npm install @azure/msal-browser @microsoft/microsoft-graph-client`
 
-        ```html
-        <!--Using script tag to include the bundled file or the CDN source-->
-        <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.15.0/js/msal-browser.min.js"></script>
-        <script src="graph-js-sdk.js"></script>
-        <script src="graph-client-msalBrowserAuthProvider.js"></script>
-        ```
+- Using CDN:
 
-    Reference : [MSAL Browser CDN usage](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/cdn-usage.md)
+```html
+<!--Using script tag to include the bundled file or the CDN source-->
+<script type="text/javascript" src="https://alcdn.msauth.net/browser/2.15.0/js/msal-browser.min.js"></script>
+<script src="graph-js-sdk.js"></script>
+<script src="graph-client-msalBrowserAuthProvider.js"></script>
+```
+Reference : [MSAL Browser CDN usage](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/cdn-usage.md)
 
 2.  Initialize the `msal-browser` `PublicClientApplication` instance: Learn more [how to initialize msal](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/initialization.md)
 
