@@ -1,6 +1,6 @@
 {
     "name": "@microsoft/microsoft-graph-client",
-    "version": "3.0.0-Preview.3",
+    "version": "3.0.0-Preview.4",
     "description": "Microsoft Graph Client Library",
     "keywords": [
         "Microsoft",
@@ -26,7 +26,8 @@
         "lib/",
         "src/",
         "authProviders/",
-        "shims.d.ts"
+        "shims.d.ts",
+        "authProviderOptions"
     ],
     "scripts": {
         "build": "npm run pre-build && npm run build:sub_cjs && npm run build:sub_es && rollup --bundleConfigAsCjs -c",
