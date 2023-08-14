@@ -37,7 +37,7 @@ The Microsoft Graph JavaScript Client Library has an adapter implementation for 
 
     > Learn how to [create an instance of TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md).
 
--   ([AuthCodeMSALBrowserAuthenticationProvider](../src/authentication/msal/ImplicitMSALAuthenticationProvider.ts)) for [msal-browser](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser) (Microsoft Authentication Library) which takes care of getting the `accessToken`. `msal-browser` library does not ship with this library, user has to include it externally.
+-   ([AuthCodeMSALBrowserAuthenticationProvider](../src/authentication/msal-browser/AuthCodeMSALBrowserAuthenticationProvider.ts) for [msal-browser](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser) (Microsoft Authentication Library) which takes care of getting the `accessToken`. `msal-browser` library does not ship with this library, user has to include it externally.
 
     > Learn how to [create an instance of AuthCodeMSALBrowserAuthenticationProvider](./AuthCodeMSALBrowserAuthenticationProvider.md).
 
