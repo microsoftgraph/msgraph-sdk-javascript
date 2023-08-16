@@ -9,7 +9,7 @@ import { assert } from "chai";
 
 import { FetchOptions } from "../../../src/IFetchOptions";
 import { appendRequestHeader, generateUUID, getRequestHeader, setRequestHeader } from "../../../src/middleware/MiddlewareUtil";
-import { GRAPH_BASE_URL } from "../../../src/Constants";
+import { DUMMY_BASE_URL } from "../../test-helper";
 
 describe("MiddlewareUtil.ts", async () => {
 	function getMultipleValuesForHeader(headers: Headers, key: string): string[] {
@@ -24,7 +24,7 @@ describe("MiddlewareUtil.ts", async () => {
 	describe("getRequestHeader", () => {
 		const key = "Content-Type";
 		const value = "application/json";
-		const url = GRAPH_BASE_URL + "/dummy_url";
+		const url = DUMMY_BASE_URL + "/dummy_url";
 		it("Should get header from request object", () => {
 			const request: Request = new Request(url, {
 				method: "test",
@@ -77,7 +77,7 @@ describe("MiddlewareUtil.ts", async () => {
 	describe("setRequestHeader", () => {
 		const key = "Content-Type";
 		const value = "application/json";
-		const url = GRAPH_BASE_URL + "dummy_url";
+		const url = DUMMY_BASE_URL + "/dummy_url";
 		it("Should set header in request object", () => {
 			const request: Request = new Request(url, {
 				method: "test",
@@ -180,7 +180,7 @@ describe("MiddlewareUtil.ts", async () => {
 		const key = "Content-Type";
 		const value = "application/json";
 		const firstValue = "text/html";
-		const url = GRAPH_BASE_URL + "dummy_url";
+		const url = DUMMY_BASE_URL + "/dummy_url";
 		it("Should set header in request object if the header is not present", () => {
 			const request: Request = new Request(url, {
 				method: "test",
