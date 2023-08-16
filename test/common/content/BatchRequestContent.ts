@@ -11,6 +11,7 @@ import { assert } from "chai";
 
 import { BatchRequestContent, BatchRequestStep } from "../../../src/content/BatchRequestContent";
 import { randomString } from "../../test-helper";
+import { GRAPH_BASE_URL } from "../../../src/Constants";
 
 const folderName = randomString();
 const folderDetails = {
@@ -18,7 +19,7 @@ const folderDetails = {
 	folder: {},
 };
 
-const createFolderRequest = new Request("/me/drive/root/children", {
+const createFolderRequest = new Request(GRAPH_BASE_URL + "/me/drive/root/children", {
 	method: "POST",
 	headers: {
 		"Content-type": "application/json",

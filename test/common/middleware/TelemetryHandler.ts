@@ -121,7 +121,7 @@ describe("TelemetryHandler.ts", () => {
 		});
 
 		it("Should delete Telemetry in the header when Request object is passed with non Graph URL", async () => {
-			const request = new Request("test_url");
+			const request = new Request(GRAPH_BASE_URL + "test_url");
 			const context: Context = {
 				request,
 				options: {
