@@ -35,9 +35,9 @@ configuration:
     requiresLinearHistory: false
     # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
     requiredStatusChecks:
-    - build (12.x)
-    - build (14.x)
     - build (16.x)
+    - build (18.x)
+    - build (20.x)
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: true
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
@@ -71,6 +71,9 @@ configuration:
     requiresLinearHistory: false
     # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
     requiredStatusChecks:
+    - build (16.x)
+    - build (18.x)
+    - build (20.x)
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: true
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
@@ -98,6 +101,11 @@ configuration:
     requiresConversationResolution: false
     # Are merge commits prohibited from being pushed to this branch. boolean
     requiresLinearHistory: false
+    # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
+    requiredStatusChecks:
+    - build (16.x)
+    - build (18.x)
+    - build (20.x)    
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: true
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
@@ -129,6 +137,11 @@ configuration:
     requiresConversationResolution: false
     # Are merge commits prohibited from being pushed to this branch. boolean
     requiresLinearHistory: false
+    # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
+    requiredStatusChecks:
+    - build (16.x)
+    - build (18.x)
+    - build (20.x)    
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: true
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
@@ -162,6 +175,9 @@ configuration:
     requiresLinearHistory: false
     # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
     requiredStatusChecks:
+    - build (16.x)
+    - build (18.x)
+    - build (20.x)
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: false
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
@@ -195,9 +211,9 @@ configuration:
     requiresLinearHistory: false
     # Required status checks to pass before merging. Values can be any string, but if the value does not correspond to any existing status check, the status check will be stuck on pending for status since nothing exists to push an actual status
     requiredStatusChecks:
-    - build (14.x)
     - build (16.x)
-    - build (12.x)
+    - build (18.x)
+    - build (20.x)
     # Require branches to be up to date before merging. Requires requiredStatusChecks. boolean
     requiresStrictStatusChecks: true
     # Indicates whether there are restrictions on who can push. boolean. Should be set with whoCanPush.
