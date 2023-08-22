@@ -10,7 +10,7 @@ import "isomorphic-fetch";
 import { assert } from "chai";
 
 import { BatchRequestContent, BatchRequestStep } from "../../../src/content/BatchRequestContent";
-import { randomString } from "../../test-helper";
+import { DUMMY_BASE_URL, randomString } from "../../test-helper";
 
 const folderName = randomString();
 const folderDetails = {
@@ -18,7 +18,7 @@ const folderDetails = {
 	folder: {},
 };
 
-const createFolderRequest = new Request("/me/drive/root/children", {
+const createFolderRequest = new Request(DUMMY_BASE_URL + "/me/drive/root/children", {
 	method: "POST",
 	headers: {
 		"Content-type": "application/json",

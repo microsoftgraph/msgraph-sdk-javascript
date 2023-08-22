@@ -19,3 +19,5 @@ export function randomString() {
 		.toString(36)
 		.substring(7);
 }
+
+export const DUMMY_BASE_URL = "https://localhost";

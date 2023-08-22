@@ -11,6 +11,7 @@ import { HTTPClient } from "../../../src/HTTPClient";
 import { Context } from "../../../src/IContext";
 import { FetchOptions } from "../../../src/IFetchOptions";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
+import { DUMMY_BASE_URL } from "../../test-helper";
 
 describe("HTTPClient.ts", () => {
 	const httpMessageHandler: DummyHTTPMessageHandler = new DummyHTTPMessageHandler();
@@ -63,7 +64,7 @@ describe("HTTPClient.ts", () => {
 		});
 
 		it("Should execute for context object with Request instance", async () => {
-			const request: Request = new Request("dummy_url", {
+			const request: Request = new Request(DUMMY_BASE_URL + "/dummy_url", {
 				method: "GET",
 			});
 			const context: Context = {
