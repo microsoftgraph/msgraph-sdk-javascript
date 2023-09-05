@@ -11,6 +11,7 @@ import { assert } from "chai";
 import * as fs from "fs";
 
 import { BatchRequestContent } from "../../../src/content/BatchRequestContent";
+import { GRAPH_BASE_URL } from "../../../src/Constants";
 
 describe("BatchRequestContent.ts", () => {
 	describe("getContent", () => {
@@ -22,7 +23,7 @@ describe("BatchRequestContent.ts", () => {
 				}
 				const uploadOneDriveFile = {
 					id: "1",
-					request: new Request(`/me/drive/root:/Documents/${fileName}:/content`, {
+					request: new Request(`${GRAPH_BASE_URL}me/drive/root:/Documents/${fileName}:/content`, {
 						method: "PUT",
 						headers: {
 							"Content-type": "image/jpg",

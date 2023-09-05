@@ -12,6 +12,7 @@ import { GRAPH_BASE_URL } from "../../../src/Constants";
 import { Context } from "../../../src/IContext";
 import { AuthenticationHandler } from "../../../src/middleware/AuthenticationHandler";
 import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
+import { DUMMY_BASE_URL } from "../../test-helper";
 
 const dummyAuthProvider = new DummyAuthenticationProvider();
 const authHandler = new AuthenticationHandler(dummyAuthProvider);
@@ -26,7 +27,7 @@ describe("AuthenticationHandler.ts", async () => {
 	});
 	describe("Auth Headers", () => {
 		it("Should delete Auth header when Request object is passed with non Graph URL", async () => {
-			const request = new Request("test_url");
+			const request = new Request(DUMMY_BASE_URL + "/test_url");
 			const context: Context = {
 				request,
 				options: {

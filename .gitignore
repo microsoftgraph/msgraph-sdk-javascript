@@ -31,5 +31,6 @@ test/development/secrets.ts
 .idea/*
 
 testResult.xml
+test-results.xml
 
 test-esm/lib/*

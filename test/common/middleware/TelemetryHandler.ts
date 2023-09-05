@@ -14,6 +14,7 @@ import { FeatureUsageFlag, TelemetryHandlerOptions } from "../../../src/middlewa
 import { TelemetryHandler } from "../../../src/middleware/TelemetryHandler";
 import { PACKAGE_VERSION } from "../../../src/Version";
 import { DummyHTTPMessageHandler } from "../../DummyHTTPMessageHandler";
+import { DUMMY_BASE_URL } from "../../test-helper";
 
 describe("TelemetryHandler.ts", () => {
 	describe("execute", function() {
@@ -121,7 +122,7 @@ describe("TelemetryHandler.ts", () => {
 		});
 
 		it("Should delete Telemetry in the header when Request object is passed with non Graph URL", async () => {
-			const request = new Request("test_url");
+			const request = new Request(DUMMY_BASE_URL + "/test_url");
 			const context: Context = {
 				request,
 				options: {
