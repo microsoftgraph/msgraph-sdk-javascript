@@ -98,7 +98,7 @@ export class PageIterator {
 	 * @private
 	 * Member holding the current position on the collection
 	 */
-	private cursor: number
+	private cursor: number;
 
 	/**
 	 * @public
@@ -161,6 +161,7 @@ export class PageIterator {
 
 		const response: PageCollection = await graphRequest.get();
 		this.collection = response.value;
+		this.cursor = 0;
 		this.nextLink = response["@odata.nextLink"];
 		this.deltaLink = response["@odata.deltaLink"];
 	}
