@@ -199,7 +199,7 @@ export class BatchRequestContent {
 			url: "",
 		};
 		// Stripping off hostname, port and url scheme
-		requestData.url = request.url.replace(/^(?:http)?s?:?(?:\/\/)?[^\/]+\/(?:v1.0|beta)?/i, ''); // replaces <scheme>?<?>?<//><hostname:port>+</>?<version>+ by an empty string
+		requestData.url = request.url.replace(/^(?:http)?s?:?(?:\/\/)?[^/]+\/(?:v1.0|beta)?/i, ""); // replaces <scheme>?<?>?<//><hostname:port>+</>?<version>+ by an empty string
 		requestData.method = request.method;
 		const headers = {};
 		request.headers.forEach((value, key) => {
