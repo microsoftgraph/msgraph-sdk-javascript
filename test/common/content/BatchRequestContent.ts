@@ -17,8 +17,9 @@ const folderDetails = {
 	name: folderName,
 	folder: {},
 };
+const driveRootChildrenPath = "/me/drive/root/children";
 
-const createFolderRequest = new Request(DUMMY_BASE_URL + "/me/drive/root/children", {
+const createFolderRequest = new Request(DUMMY_BASE_URL + driveRootChildrenPath, {
 	method: "POST",
 	headers: {
 		"Content-type": "application/json",
@@ -212,6 +213,14 @@ describe("BatchRequestContent.ts", () => {
 			const content = await batchReq.getContent();
 			assert.isDefined(content.requests[0].body);
 			assert.equal(typeof content.requests[0].body, "object");
+		});
+
+		it("Should parse path with url", async () => {
+			const req = getCreateFolderRequestCopy();
+			req.request = new Request("https://graph.microsoft.com/v1.0" + driveRootChildrenPath);
+			const batchReq = new BatchRequestContent([req]);
+			const content = await batchReq.getContent();
+			assert.equal(content.requests[0].url, "/me/drive/root/children");
 		});
 	});
 
