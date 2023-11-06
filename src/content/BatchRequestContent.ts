@@ -44,7 +44,7 @@ export interface BatchRequestStep {
  * @interface
  * Signature representing single request in a Batching
  * @extends RequestInit
- * @see {@link https://github.com/Microsoft/TypeScript/blob/master/lib/lib.dom.d.ts#L1337} and {@link https://fetch.spec.whatwg.org/#requestinit}
+ * @see {@link https://github.com/Microsoft/TypeScript/blob/main/lib/lib.dom.d.ts#L1337} and {@link https://fetch.spec.whatwg.org/#requestinit}
  *
  * @property {string} url - The url value of the request
  */

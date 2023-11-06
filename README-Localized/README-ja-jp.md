@@ -6,7 +6,7 @@ Microsoft Graph JavaScript クライアント ライブラリは、Microsoft Gra
 
 **モデル (ユーザー、グループなど) で IntelliSense を探していますか ?[Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings) リポジトリをご覧ください !**
 
-[![TypeScript でも](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![TypeScript でも](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## インストール
 
