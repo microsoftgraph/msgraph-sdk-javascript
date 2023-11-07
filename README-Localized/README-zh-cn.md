@@ -6,7 +6,7 @@ Microsoft Graph JavaScript 客户端库轻型 Microsoft Graph API 包装器，�
 
 **正常查找模型上的 IntelliSense（用户、组等）？查看 [Microsoft Graph 类型](https://github.com/microsoftgraph/msgraph-typescript-typings)存储库！**
 
-[![TypeScript 演示](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![TypeScript 演示](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## 安装
 

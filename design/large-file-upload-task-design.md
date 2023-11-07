@@ -71,7 +71,7 @@ sliceFile(range: Range): ArrayBuffer | Blob {
 ###### 2. Support large file uploads to Outlook API
 
 -   Bug in the current implemenation - `response.id !== undefined` this condition to mark the completion of an upload does not work for Outlook API since the final response does not contain a response body.
--   An upload task should be marked as completed if the response status is a 201. [SDK-design document](https://github.com/microsoftgraph/msgraph-sdk-design/blob/master/tasks/FileUploadTask.md).
+-   An upload task should be marked as completed if the response status is a 201. [SDK-design document](https://github.com/microsoftgraph/msgraph-sdk-design/blob/main/tasks/FileUploadTask.md).
 -   The LargeFileUploadTask should allow uploads to OneDrive API, Outlook API and PrintDocument API.
 -   Proposed changes-
     -   Add class `UploadResult` containing `location` and `responseBody` properties.
