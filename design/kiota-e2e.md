@@ -23,8 +23,155 @@ Before we jump into the end-to-end walk-through, it's important to set some cons
 
 ## Table of Contents
 
--   [NodeJS e2e using the Service library](#node-service-library)
--   [NodeJS e2e using the Core library](#node-core-library)
+- [Foudation](#foundation)
+- [NodeJS e2e using the Service library](#node-service-library)
+- [NodeJS e2e using the Core library](#node-core-library)
+
+## <a id="foundation"></a> Foundation
+
+This section lists all the foundation elements of the Graph JS SDK and how it affects the developer's experience.
+
+### Models
+
+The models should be easily consumable by developers in a natural format. For JavaScript and TypeScript developers, interfaces are the most common way to understand, represent and send data to endpoints.
+
+Thanks to the TypeScript nature of allowing merging of Classes and Interfaces with the same name, models are represented in a way that allows both rich capabilities of the classes (backing stores, dirty tracking, etc.) and simplicity of using interfaces. 
+
+```typescript
+export class SendMailRequestBody implements Parsable, SendMailRequestBody {
+	/** Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.  */
+    private _additionalData: Map<string, unknown>;
+    private _message?: Message | undefined;
+    private _saveToSentItems?: boolean | undefined;
+    /**
+     * Instantiates a new sendMailRequestBody and sets the default values.
+     */
+    public constructor(value?: Partial<SendMailRequestBody>) {
+        if(value) {
+            Object.assign(this, value);
+        }        
+        this._additionalData = new Map<string, unknown>();
+    };
+    /**
+     * Gets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @returns a Map<string, unknown>
+     */
+    public get additionalData() {
+        return this._additionalData;
+    };
+    /**
+     * Gets the message property value. 
+     * @returns a message
+     */
+    public get message() {
+        return this._message;
+    };
+    /**
+     * Gets the saveToSentItems property value. 
+     * @returns a boolean
+     */
+    public get saveToSentItems() {
+        return this._saveToSentItems;
+    };
+    /**
+     * The deserialization information for the current model
+     * @returns a Map<string, (item: T, node: ParseNode) => void>
+     */
+    public getFieldDeserializers<T>() : Map<string, (item: T, node: ParseNode) => void> {
+        return new Map<string, (item: T, node: ParseNode) => void>([
+            ["message", (o, n) => { (o as unknown as SendMailRequestBody).message = n.getObjectValue<Message>(Message); }],
+            ["saveToSentItems", (o, n) => { (o as unknown as SendMailRequestBody).saveToSentItems = n.getBooleanValue(); }],
+        ]);
+    };
+    /**
+     * Serializes information the current object
+     * @param writer Serialization writer to use to serialize this model
+     */
+    public serialize(writer: SerializationWriter) : void {
+        if(!writer) throw new Error("writer cannot be undefined");
+        writer.writeObjectValue<Message>("message", this.message);
+        writer.writeBooleanValue("saveToSentItems", this.saveToSentItems);
+        writer.writeAdditionalData(this.additionalData);
+    };
+    /**
+     * Sets the additionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     * @param value Value to set for the AdditionalData property.
+     */
+    public set additionalData(value: Map<string, unknown>) {
+        this._additionalData = value;
+    };
+    /**
+     * Sets the message property value. 
+     * @param value Value to set for the Message property.
+     */
+    public set message(value: Message | undefined) {
+        this._message = value;
+    };
+    /**
+     * Sets the saveToSentItems property value. 
+     * @param value Value to set for the SaveToSentItems property.
+     */
+    public set saveToSentItems(value: boolean | undefined) {
+        this._saveToSentItems = value;
+    };
+}
+
+export interface SendMailRequestBody {
+    additionalData: Map<string, unknown>;
+    message: Message | undefined;
+    saveToSentItems: boolean | undefined;
+};
+```
+
+When using the core or service library, it's then possible to provide a simple structure that will be equivalent to the `interface` without having to initialize every models within the object structure, similar to how `json` represents data:
+
+```typescript
+await serviceclient.me.sendMail.post({
+	message: {
+		subject: 'My Subject'
+	},
+	saveToSentItems: true
+});
+```
+
+The different public methods available on the libraries should allow `Partial<Model>` instead of "full" objects to ensure we can pass in only the necessary properties. This will enable developers to pass in complex structure without specifying new objects every time :
+
+```typescript
+var mailBody = new SendMailRequestBody();
+const recipient = new Recipient();
+recipient.emailAddress = new EmailAddress();
+recipient.emailAddress.address = "admin@M365x55726300.OnMicrosoft.com";
+const message = new Message();
+message.subject = "Hello from Graph JS SDK";
+message.toRecipients = [recipient];
+message.body = new ItemBody();
+message.body.content = "Hello World!";
+message.body.contentType = BodyType.Text;
+mailBody.message = message;
+mailBody.saveToSentItems = true;
+
+await serviceclient.usersById(userId).sendMail.post();
+```
+
+vs.
+
+```typescript
+await serviceclient.usersById(userId).sendMail.post({
+	message: {
+		subject: 'Hello from Graph JS SDK',
+		toRecipients: [
+			{ 
+				emailAddress: 'admin@M365x55726300.OnMicrosoft.com' 
+			}
+		],
+		body: {
+			content: 'Hello World!',
+			contentType: 'Text'
+		}
+	},
+	saveToSentItems: true
+});
+```
 
 ## <a id="node-service-library"></a> NodeJS e2e using the Service library
 
