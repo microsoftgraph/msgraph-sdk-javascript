@@ -21,7 +21,7 @@ describe("RetryHandlerOptions.ts", () => {
 		it("Should throw error for both delay and maxRetries are higher than the limit", () => {
 			try {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const options = new RetryHandlerOptions(1000, 1000);
+				const options = new RetryHandlerOptions(100_000, 1000);
 				throw new Error("Test Failed - Something wrong with the delay and maxRetries max limit validation");
 			} catch (error) {
 				assert.equal(error.name, "MaxLimitExceeded");
@@ -31,7 +31,7 @@ describe("RetryHandlerOptions.ts", () => {
 		it("Should throw error for delay is higher than the limit", () => {
 			try {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const options = new RetryHandlerOptions(1000, 2);
+				const options = new RetryHandlerOptions(100_000, 2);
 				throw new Error("Test Failed - Test Failed - Something wrong with the delay max limit validation");
 			} catch (error) {
 				assert.equal(error.name, "MaxLimitExceeded");
