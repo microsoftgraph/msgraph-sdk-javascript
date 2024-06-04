@@ -55,7 +55,7 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 **Looking for IntelliSense on models (Users, Groups, etc.)? Check out the Microsoft Graph Types [v1.0](https://github.com/microsoftgraph/msgraph-typescript-typings) and [beta](https://github.com/microsoftgraph/msgraph-beta-typescript-typings)!!**
 
-[![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Node version requirement
 

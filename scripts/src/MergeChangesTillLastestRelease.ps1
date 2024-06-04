@@ -7,11 +7,11 @@ Param(
 Write-Host "Merge and Commit the changes into '$($branchName)' till last release:" -ForegroundColor Magenta;
 
 Write-Host "Checking out '$($branchName)'" -ForegroundColor Blue;
-git checkout master | Write-Host;
+git checkout main | Write-Host;
 Write-Host "Checked out" -ForegroundColor Green;
 
 Write-Host "Pulling '$($branchName)'" -ForegroundColor Blue;
-git pull origin master --allow-unrelated-histories | Write-Host;
+git pull origin main --allow-unrelated-histories | Write-Host;
 Write-Host "Pulled '$($branchName)'" -ForegroundColor Green;
 
 Write-Host "Getting SHA for last commit in the latest release" -ForegroundColor Blue;

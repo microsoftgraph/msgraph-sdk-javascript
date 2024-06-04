@@ -4,7 +4,7 @@
 
 ###### Links for more information -
 
--   [GitHub - Azure Identity client library for JavaScript ](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md)
+-   [GitHub - Azure Identity client library for JavaScript ](https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/identity/identity/README.md)
 
 -   [npm - Azure Identity client library for JavaScript](https://www.npmjs.com/package/@azure/identity)
 
@@ -22,7 +22,7 @@ import { TokenCredentialAuthenticationProvider, TokenCredentialAuthenticationPro
 // Create an instance of the TokenCredential class that is imported
 const tokenCredential = new ClientSecretCredential("your_tenantId", "your_clientId", "your_clientSecret");
 
-// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
+// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-auth/src/tokenCredential.ts])
 
 const options: TokenCredentialAuthenticationProviderOptions = { scopes: [scopes], getTokenOptions };
 
@@ -45,7 +45,7 @@ const { TokenCredentialAuthenticationProvider } = require("@microsoft/microsoft-
 // Create an instance of the TokenCredential class that is imported
 const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 
-// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
+// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-auth/src/tokenCredential.ts])
 
 const authProvider = new TokenCredentialAuthenticationProvider(credential, { scopes: [scopes] });
 
