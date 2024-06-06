@@ -1,12 +1,19 @@
-# This workflow is used to add new issues to GitHub Projects (Beta)
+# This workflow is used to add new issues to GitHub GraphSDKs Project
 
-name: Add PR to project
+name: Add Issue or PR to project
 on:
   issues:
     types:
       - opened
+  pull_request:
+    types:
+      - opened
+    branches:
+      - "dev"
+
 jobs:
   track_issue:
+    if: github.actor != 'dependabot[bot]' && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
@@ -20,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           ORGANIZATION: microsoftgraph
-          PROJECT_NUMBER: 44
+          PROJECT_NUMBER: 55
         run: |
           gh api graphql -f query='
             query($org: String!, $number: Int!) {
@@ -44,13 +51,13 @@ jobs:
             }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
 
           echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
-          echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
-          echo 'TRIAGE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Needs Triage 🔍") |.id' project_data.json) >> $GITHUB_ENV
+          echo 'LANGUAGE_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Language") | .id' project_data.json) >> $GITHUB_ENV
+          echo 'LANGUAGE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Language") | .options[] | select(.name=="JavaScript") |.id' project_data.json) >> $GITHUB_ENV
 
-      - name: Add Issue to project
+      - name: Add Issue or PR to project
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          ISSUE_ID: ${{ github.event.issue.node_id }}
+          ISSUE_ID: ${{ github.event_name == 'issues' && github.event.issue.node_id || github.event.pull_request.node_id }}
         run: |
           item_id="$( gh api graphql -f query='
             mutation($project:ID!, $issue:ID!) {
@@ -60,10 +67,10 @@ jobs:
                 }
               }
             }' -f project=$PROJECT_ID -f issue=$ISSUE_ID --jq '.data.addProjectV2ItemById.item.id')"
-          
+
           echo 'ITEM_ID='$item_id >> $GITHUB_ENV
 
-      - name: Set Triage
+      - name: Set Language
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
@@ -71,17 +78,17 @@ jobs:
             mutation (
               $project: ID!
               $item: ID!
-              $status_field: ID!
-              $status_value: String!              
+              $language_field: ID!
+              $language_value: String!
             ) {
               set_status: updateProjectV2ItemFieldValue(input: {
                 projectId: $project
                 itemId: $item
-                fieldId: $status_field
-                value: {singleSelectOptionId: $status_value} 
+                fieldId: $language_field
+                value: {singleSelectOptionId: $language_value}
               }) {
                 projectV2Item {
                   id
                   }
               }
-            }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.TRIAGE_OPTION_ID }} --silent
+            }' -f project=$PROJECT_ID -f item=$ITEM_ID -f language_field=$LANGUAGE_FIELD_ID -f language_value=${{ env.LANGUAGE_OPTION_ID }} --silent
