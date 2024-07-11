@@ -112,7 +112,7 @@ try {
 
 ## RESPONSETYPE
 
-To set a custom response type, use the`.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./src/ResponseType.ts) for available options.
+To set a custom response type, use the`.responseType(<ResponseType>)` method. Refer [ResponseType.ts](./../src/ResponseType.ts) for available options.
 
 ```typescript
 try {
