@@ -14,5 +14,5 @@ import { Context } from "../IContext";
  */
 export interface Middleware {
 	execute: (context: Context) => Promise<void>;
-	setNext?: (middleware: Middleware) => void;
+	setNext: (middleware: Middleware) => void;
 }
