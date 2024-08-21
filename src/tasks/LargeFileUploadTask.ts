@@ -22,7 +22,7 @@ import { UploadResult } from "./FileUploadTask/UploadResult";
  * Signature to representing key value pairs
  * @property {[key: string] : string | number} - The Key value pair
  */
-interface KeyValuePairObjectStringNumber {
+export interface KeyValuePairObjectStringNumber {
 	[key: string]: string | number;
 }
 
@@ -42,10 +42,12 @@ interface UploadStatusResponse {
  * Signature to define options for upload task
  * @property {number} [rangeSize = LargeFileUploadTask.DEFAULT_FILE_SIZE] - Specifies the range chunk size
  * @property {UploadEventHandlers} uploadEventHandlers - UploadEventHandlers attached to an upload task
+ * @property {KeyValuePairObjectStringNumber} extraUploadHeaders - Extra headers added to upload calls for individual chunks 
  */
 export interface LargeFileUploadTaskOptions {
 	rangeSize?: number;
 	uploadEventHandlers?: UploadEventHandlers;
+	extraUploadHeaders?: KeyValuePairObjectStringNumber;
 }
 
 /**
@@ -298,6 +300,7 @@ export class LargeFileUploadTask<T> {
 		return await this.client
 			.api(this.uploadSession.url)
 			.headers({
+				...this.options.extraUploadHeaders,
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
 				"Content-Type": "application/octet-stream",
@@ -318,6 +321,7 @@ export class LargeFileUploadTask<T> {
 		return await this.client
 			.api(this.uploadSession.url)
 			.headers({
+				...this.options.extraUploadHeaders,
 				"Content-Length": `${range.maxValue - range.minValue + 1}`,
 				"Content-Range": `bytes ${range.minValue}-${range.maxValue}/${totalSize}`,
 				"Content-Type": "application/octet-stream",

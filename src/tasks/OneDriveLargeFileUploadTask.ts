@@ -13,7 +13,7 @@ import { GraphClientError } from "../GraphClientError";
 import { Client } from "../index";
 import { FileUpload } from "./FileUploadTask/FileObjectClasses/FileUpload";
 import { UploadEventHandlers } from "./FileUploadTask/Interfaces/IUploadEventHandlers";
-import { FileObject, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
+import { FileObject, KeyValuePairObjectStringNumber, LargeFileUploadSession, LargeFileUploadTask, LargeFileUploadTaskOptions } from "./LargeFileUploadTask";
 import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
 
 /**
@@ -25,6 +25,7 @@ import { getValidRangeSize } from "./OneDriveLargeFileUploadTaskUtil";
  * @property {number} [rangeSize] - Specifies the range chunk size
  * @property {string} [conflictBehavior] - Conflict behaviour option
  * @property {UploadEventHandlers} [uploadEventHandlers] - UploadEventHandlers attached to an upload task
+ * @property {KeyValuePairObjectStringNumber} [extraUploadHeaders] - Extra headers added for upload of individual chunks
  */
 export interface OneDriveLargeFileUploadOptions {
 	fileName: string;
@@ -38,6 +39,7 @@ export interface OneDriveLargeFileUploadOptions {
     /// Set this property to override the default upload session url. Example: "/me/drive/special/{name}"
     /// </summary>
     uploadSessionURL?: string;
+	extraUploadHeaders?: KeyValuePairObjectStringNumber;
 }
 
 /**
@@ -177,6 +179,7 @@ export class OneDriveLargeFileUploadTask<T> extends LargeFileUploadTask<T> {
 		return new OneDriveLargeFileUploadTask(client, fileObject, session, {
 			rangeSize,
 			uploadEventHandlers: options.uploadEventHandlers,
+			extraUploadHeaders: options.extraUploadHeaders,
 		});
 	}
 
