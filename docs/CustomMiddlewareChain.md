@@ -117,7 +117,7 @@ import { Middleware } from "@microsoft/microsoft-graph-client";
 import { Context } from "@microsoft/microsoft-graph-client";
 
 export class MyLoggingHandler implements Middleware {
-	private nextMiddleware: Middleware;
+	private nextMiddleware: Middleware | undefined;
 
 	public async execute(context: Context): Promise<void> {
 		try {
@@ -132,7 +132,9 @@ export class MyLoggingHandler implements Middleware {
 			} else {
 				console.log(url);
 			}
-			await this.nextMiddleware.execute(context);
+			if (this.nextMiddleware) {
+				await this.nextMiddleware.execute(context);
+			}
 		} catch (error) {
 			throw error;
 		}
