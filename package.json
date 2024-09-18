@@ -87,7 +87,7 @@
     },
     "devDependencies": {
         "@azure/identity": "^4.0.0",
-        "@azure/msal-browser": "^2.15.0",
+        "@azure/msal-browser": "^3.23.0",
         "@babel/core": "^7.12.10",
         "@babel/plugin-transform-runtime": "^7.12.10",
         "@babel/preset-env": "^7.12.11",
