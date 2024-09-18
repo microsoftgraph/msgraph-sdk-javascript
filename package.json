@@ -121,7 +121,7 @@
         "lint-staged": "^15.0.2",
         "mocha": "^10.2.0",
         "mocha-junit-reporter": "^2.1.1",
-        "nyc": "^15.1.0",
+        "nyc": "^17.0.0",
         "prettier": "^3.0.0",
         "rollup": "^4.3.0",
         "sinon": "^15.0.0",
