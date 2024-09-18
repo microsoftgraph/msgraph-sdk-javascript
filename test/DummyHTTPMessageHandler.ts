@@ -25,6 +25,12 @@ export class DummyHTTPMessageHandler implements Middleware {
 	private responses: Response[];
 
 	/**
+	 * @private
+	 * A member to hold next middleware in the middleware chain
+	 */
+	private nextMiddleware?: Middleware;
+
+	/**
 	 * @public
 	 * @constructor
 	 * To create an instance of DummyHTTPMessageHandler
@@ -54,6 +60,11 @@ export class DummyHTTPMessageHandler implements Middleware {
 	 */
 	public async execute(context: Context) {
 		context.response = this.responses.shift();
-		return;
+		if (!this.nextMiddleware) return;
+		return await this.nextMiddleware.execute(context);
+	}
+
+	public setNext(middleware: Middleware) {
+		this.nextMiddleware = middleware;
 	}
 }

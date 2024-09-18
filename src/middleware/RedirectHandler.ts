@@ -75,7 +75,7 @@ export class RedirectHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	private nextMiddleware?: Middleware;
 
 	/**
 	 * @public
@@ -190,7 +190,7 @@ export class RedirectHandler implements Middleware {
 	 * @returns A promise that resolves to nothing
 	 */
 	private async executeWithRedirect(context: Context, redirectCount: number, options: RedirectHandlerOptions): Promise<void> {
-		await this.nextMiddleware.execute(context);
+		await this.nextMiddleware?.execute(context);
 		const response = context.response;
 		if (redirectCount < options.maxRedirects && this.isRedirect(response) && this.hasLocationHeader(response) && options.shouldRedirect(response)) {
 			++redirectCount;
