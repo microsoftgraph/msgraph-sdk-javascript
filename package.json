@@ -103,7 +103,7 @@
         "@types/sinon": "^10.0.8",
         "@typescript-eslint/eslint-plugin": "^8.2.0",
         "@typescript-eslint/parser": "^8.2.0",
-        "chai": "^4.2.0",
+        "chai": "^5.1.1",
         "eslint": "^9.9.1",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.0",
