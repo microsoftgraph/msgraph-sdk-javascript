@@ -124,7 +124,7 @@
         "nyc": "^17.1.0",
         "prettier": "^3.0.0",
         "rollup": "^4.3.0",
-        "sinon": "^15.0.0",
+        "sinon": "^19.0.2",
         "source-map-support": "^0.5.19",
         "stream-browserify": "^3.0.0",
         "ts-node": "^10.4.0",
