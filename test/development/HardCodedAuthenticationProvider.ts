@@ -10,7 +10,7 @@
  */
 
 import { AuthenticationProvider } from "../../src/IAuthenticationProvider";
-import { AccessToken } from "./secrets";
+import { AccessToken } from "./secrets.sample";
 
 /**
  * @class
