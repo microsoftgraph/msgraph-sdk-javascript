@@ -87,29 +87,20 @@ export const isCustomHost = (url: string, customHosts: Set<string>): boolean => 
  * @returns {boolean} - Returns true is for one of the provided endpoints.
  */
 const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): boolean => {
-	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
-	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
-	url = url.toLowerCase();
-
-	if (url.indexOf("https://") !== -1) {
-		url = url.replace("https://", "");
-
-		// Find where the host ends
-		const startofPortNoPos = url.indexOf(":");
-		const endOfHostStrPos = url.indexOf("/");
-		let hostName = "";
-		if (endOfHostStrPos !== -1) {
-			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
-				hostName = url.substring(0, startofPortNoPos);
-				return allowedHosts.has(hostName);
-			}
-			// Parse out the host
-			hostName = url.substring(0, endOfHostStrPos);
-			return allowedHosts.has(hostName);
-		}
+	let parsedUrl: URL;
+	try {
+		parsedUrl = new URL(url);
+	} catch {
+		return false;
 	}
-
-	return false;
+	if (parsedUrl.protocol !== "https:") {
+		return false;
+	}
+	// Reject URLs with userinfo to prevent host-confusion attacks
+	if (parsedUrl.username !== "" || parsedUrl.password !== "") {
+		return false;
+	}
+	return allowedHosts.has(parsedUrl.hostname.toLowerCase());
 };
 
 /**

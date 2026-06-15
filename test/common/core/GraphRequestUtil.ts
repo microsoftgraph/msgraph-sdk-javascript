@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { serializeContent, urlJoin } from "../../../src/GraphRequestUtil";
+import { serializeContent, urlJoin, isGraphURL, isCustomHost } from "../../../src/GraphRequestUtil";
 
 describe("GraphRequestUtil.ts", () => {
 	describe("urlJoin", () => {
@@ -75,6 +75,51 @@ describe("GraphRequestUtil.ts", () => {
 		it("Should return 'null' for the case of null content value", () => {
 			const val = null;
 			assert.equal(serializeContent(val), "null");
+		});
+	});
+
+	describe("isGraphURL - host confusion regression", () => {
+		it("Should accept valid Graph URLs", () => {
+			assert.isTrue(isGraphURL("https://graph.microsoft.com/v1.0/me"));
+			assert.isTrue(isGraphURL("https://graph.microsoft.com:443/v1.0/me"));
+			assert.isTrue(isGraphURL("https://graph.microsoft.us/v1.0/me"));
+			assert.isTrue(isGraphURL("https://dod-graph.microsoft.us/v1.0/me"));
+			assert.isTrue(isGraphURL("https://graph.microsoft.de/v1.0/me"));
+			assert.isTrue(isGraphURL("https://microsoftgraph.chinacloudapi.cn/v1.0/me"));
+			assert.isTrue(isGraphURL("https://canary.graph.microsoft.com/v1.0/me"));
+		});
+
+		it("Should reject URLs with userinfo (host confusion attack)", () => {
+			assert.isFalse(isGraphURL("https://graph.microsoft.com:443@attacker.example/v1.0/me"));
+			assert.isFalse(isGraphURL("https://graph.microsoft.com:8080@attacker.example/v1.0/me"));
+			assert.isFalse(isGraphURL("https://graph.microsoft.com@attacker.example/v1.0/me"));
+			assert.isFalse(isGraphURL("https://user:pass@graph.microsoft.com/v1.0/me"));
+		});
+
+		it("Should reject non-Graph hosts", () => {
+			assert.isFalse(isGraphURL("https://attacker.example/v1.0/me"));
+			assert.isFalse(isGraphURL("https://graph.microsoft.com.evil.example/v1.0/me"));
+		});
+
+		it("Should reject non-HTTPS URLs", () => {
+			assert.isFalse(isGraphURL("http://graph.microsoft.com/v1.0/me"));
+		});
+
+		it("Should reject malformed URLs", () => {
+			assert.isFalse(isGraphURL("not-a-url"));
+			assert.isFalse(isGraphURL(""));
+		});
+	});
+
+	describe("isCustomHost - host confusion regression", () => {
+		const customHosts = new Set<string>(["api.example.com"]);
+
+		it("Should accept valid custom host URLs", () => {
+			assert.isTrue(isCustomHost("https://api.example.com/v1.0/data", customHosts));
+		});
+
+		it("Should reject URLs with userinfo targeting custom hosts", () => {
+			assert.isFalse(isCustomHost("https://api.example.com:443@attacker.example/v1.0/data", customHosts));
 		});
 	});
 });
