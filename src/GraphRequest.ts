@@ -132,15 +132,25 @@ export class GraphRequest {
 	private parsePath = (path: string): void => {
 		// Strips out the base of the url if they passed in
 		if (path.indexOf("https://") !== -1) {
-			path = path.replace("https://", "");
+			// Use structured URL parsing to validate the URL and reject userinfo
+			let parsedUrl: URL;
+			try {
+				parsedUrl = new URL(path);
+			} catch {
+				throw new GraphClientError("Unable to parse the URL: " + path);
+			}
+			// Reject URLs with userinfo to prevent host-confusion attacks
+			if (parsedUrl.username !== "" || parsedUrl.password !== "") {
+				throw new GraphClientError("URL cannot contain user credentials: " + path);
+			}
 
-			// Find where the host ends
-			const endOfHostStrPos = path.indexOf("/");
+			// Extract host from the original string using the first "/" after "https://"
+			const withoutScheme = path.substring("https://".length);
+			const endOfHostStrPos = withoutScheme.indexOf("/");
 			if (endOfHostStrPos !== -1) {
-				// Parse out the host
-				this.urlComponents.host = "https://" + path.substring(0, endOfHostStrPos);
+				this.urlComponents.host = "https://" + withoutScheme.substring(0, endOfHostStrPos);
 				// Strip the host from path
-				path = path.substring(endOfHostStrPos + 1, path.length);
+				path = withoutScheme.substring(endOfHostStrPos + 1, withoutScheme.length);
 			}
 
 			// Remove the following version
