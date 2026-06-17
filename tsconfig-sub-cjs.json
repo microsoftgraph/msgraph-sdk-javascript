@@ -4,7 +4,10 @@
 		"module": "commonjs",
 		"target": "es5",
 		"lib": ["dom", "esnext"],
-		"outDir": "authProviders"
+		"outDir": "authProviders",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "test/", "src"],
 	"include": ["authProviderOptions/azureTokenCredentials/", "authProviderOptions/authCodeMsalBrowser"],
