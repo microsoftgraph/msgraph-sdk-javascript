@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
         "noEmitOnError": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
