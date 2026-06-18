@@ -50,7 +50,7 @@
         "pre-build": "npm run setVersion",
         "setVersion": "gulp setVersion",
         "test": "npm run test:cjs && npm run karma",
-        "test:cjs": "npm run build:sub_cjs && mocha",
+        "test:cjs": "npm run build:sub_cjs && mocha --exit",
         "test:coverage": "TS_NODE_PROJECT='./tsconfig-cjs.json' nyc mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts && mocha --require isomorphic-fetch -r ts-node/register test/common/**/*.ts",
         "test:development": "tsc --p test/tsconfig-test-development.json &&  mocha  'lib/test/development/**/*.js' --require  isomorphic-fetch"
     },
