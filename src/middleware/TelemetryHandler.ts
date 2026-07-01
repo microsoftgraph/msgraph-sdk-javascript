@@ -54,7 +54,7 @@ export class TelemetryHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	private nextMiddleware?: Middleware;
 
 	/**
 	 * @public
@@ -88,6 +88,7 @@ export class TelemetryHandler implements Middleware {
 			delete context.options.headers[TelemetryHandler.CLIENT_REQUEST_ID_HEADER];
 			delete context.options.headers[TelemetryHandler.SDK_VERSION_HEADER];
 		}
+		if (!this.nextMiddleware) return;
 		return await this.nextMiddleware.execute(context);
 	}
 

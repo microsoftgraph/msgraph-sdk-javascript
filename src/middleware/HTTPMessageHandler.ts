@@ -19,6 +19,12 @@ import { Middleware } from "./IMiddleware";
  */
 export class HTTPMessageHandler implements Middleware {
 	/**
+	 * @private
+	 * A member to hold next middleware in the middleware chain
+	 */
+	private nextMiddleware?: Middleware;
+
+	/**
 	 * @public
 	 * @async
 	 * To execute the current middleware
@@ -27,5 +33,17 @@ export class HTTPMessageHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		context.response = await fetch(context.request, context.options);
+		if (!this.nextMiddleware) return;
+		return await this.nextMiddleware.execute(context);
+	}
+
+	/**
+	 * @public
+	 * To set the next middleware in the chain
+	 * @param {Middleware} next - The middleware instance
+	 * @returns Nothing
+	 */
+	public setNext(next: Middleware): void {
+		this.nextMiddleware = next;
 	}
 }

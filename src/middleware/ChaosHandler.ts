@@ -43,7 +43,7 @@ export class ChaosHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	private nextMiddleware?: Middleware;
 
 	/**
 	 * @public
