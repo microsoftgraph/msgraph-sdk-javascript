@@ -120,6 +120,9 @@ The Microsoft Graph client is designed to make it simple to make calls to Micros
 
 For information on how to create a client instance, see [Creating Client Instance](./docs/CreatingClientInstance.md)
 
+> **Note:** Authentication provider samples in the README and docs are illustrative. They show how to wire an `AuthenticationProvider` into the client; they are not production-ready credential handling. For unit tests and mocking, see [`test/DummyAuthenticationProvider.ts`](./test/DummyAuthenticationProvider.ts) and the helpers under [`test/`](./test/).
+
+
 ### 3. Make requests to the graph
 
 Once you have authentication setup and an instance of Client, you can begin to make calls to the service. All requests should start with `client.api(path)` and end with an [action](./docs/Actions.md).
