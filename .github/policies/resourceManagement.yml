@@ -16,7 +16,7 @@ configuration:
       - isIssue
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'status:waiting-for-author-feedback'
       - hasLabel:
           label: no-recent-activity
       - noActivitySince:
@@ -33,7 +33,7 @@ configuration:
       - isIssue
       - isOpen
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'status:waiting-for-author-feedback'
       - noActivitySince:
           days: 4
       - isNotLabeledWith:
@@ -60,18 +60,28 @@ configuration:
       - closeIssue
     eventResponderTasks:
     - if:
+      - payloadType: Issues
+      - isAction:
+          action: Closed
+      - hasLabel:
+          label: 'status:waiting-for-author-feedback'
+      then:
+      - removeLabel:
+          label: 'status:waiting-for-author-feedback'
+      description:
+    - if:
       - payloadType: Issue_Comment
       - isAction:
           action: Created
       - isActivitySender:
           issueAuthor: True
       - hasLabel:
-          label: 'Needs: Author Feedback'
+          label: 'status:waiting-for-author-feedback'
       then:
       - addLabel:
           label: 'Needs: Attention :wave:'
       - removeLabel:
-          label: 'Needs: Author Feedback'
+          label: 'status:waiting-for-author-feedback'
       description: 
     - if:
       - payloadType: Issues
@@ -102,7 +112,7 @@ configuration:
           isRegex: False
       then:
       - addLabel:
-          label: 'Needs: Author Feedback'
+          label: 'status:waiting-for-author-feedback'
       description: 
     - if:
       - payloadType: Issues

@@ -33,7 +33,7 @@ const client = Client.initWithMiddleware(clientOptions);
 
 The Microsoft Graph JavaScript Client Library has an adapter implementation for the following -
 
--   ([TokenCredentialAuthenticationProvider](../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider.ts)) to support [Azure Identity TokenCredential](https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/identity/identity/README.md) (Azure Identity client library for JavaScript) which takes care of getting the `accessToken`. @azure/identity library does not ship with this library, user has to include it externally (For including @azure/identity, refer [this](https://www.npmjs.com/package/@azure/identity)).
+-   ([TokenCredentialAuthenticationProvider](../src/authentication/azureTokenCredentials/TokenCredentialAuthenticationProvider.ts)) to support [Azure Identity TokenCredential](https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/identity/identity/README.md) (Azure Identity client library for JavaScript) which takes care of getting the `accessToken`. @azure/identity library does not ship with this library, user has to include it externally (For including @azure/identity, refer [this](https://www.npmjs.com/package/@azure/identity)).
 
     > Learn how to [create an instance of TokenCredentialAuthenticationProvider](./TokenCredentialAuthenticationProvider.md).
 
