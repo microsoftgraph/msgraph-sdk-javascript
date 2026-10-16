@@ -5,7 +5,8 @@
 		"target": "es6",
 		"lib": ["dom", "esnext"],
 		"outDir": "lib/es",
-		"composite": true
+		"composite": true,
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "test/development"],
 	"include": ["./src/**/*.ts", "./test/**/*.ts"]

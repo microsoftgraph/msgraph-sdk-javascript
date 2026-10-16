@@ -4,7 +4,8 @@
 		"module": "es6",
 		"target": "es6",
 		"lib": ["dom", "esnext"],
-		"outDir": "authProviders/es"
+		"outDir": "authProviders/es",
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "test/**", "src"],
 	"include": ["authProviderOptions/es/**/*.ts"],

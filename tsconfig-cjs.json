@@ -5,7 +5,10 @@
 		"target": "es5",
 		"lib": ["dom", "esnext"],
 		"outDir": "lib",
-		"composite": true
+		"composite": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", "lib", "samples", "test/development"],
 	"include": ["./src/**/*.ts", "./test"]
