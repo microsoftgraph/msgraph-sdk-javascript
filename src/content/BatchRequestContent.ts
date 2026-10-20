@@ -44,7 +44,7 @@ export interface BatchRequestStep {
  * @interface
  * Signature representing single request in a Batching
  * @extends RequestInit
- * @see {@link https://github.com/Microsoft/TypeScript/blob/master/lib/lib.dom.d.ts#L1337} and {@link https://fetch.spec.whatwg.org/#requestinit}
+ * @see {@link https://github.com/Microsoft/TypeScript/blob/main/lib/lib.dom.d.ts#L1337} and {@link https://fetch.spec.whatwg.org/#requestinit}
  *
  * @property {string} url - The url value of the request
  */
@@ -198,9 +198,8 @@ export class BatchRequestContent {
 		const requestData: RequestData = {
 			url: "",
 		};
-		const hasHttpRegex = new RegExp("^https?://");
 		// Stripping off hostname, port and url scheme
-		requestData.url = hasHttpRegex.test(request.url) ? "/" + request.url.split(/.*?\/\/.*?\//)[1] : request.url;
+		requestData.url = request.url.replace(/^(?:http)?s?:?(?:\/\/)?[^/]+\/(?:v1.0|beta)?/i, ""); // replaces <scheme>?<?>?<//><hostname:port>+</>?<version>+ by an empty string
 		requestData.method = request.method;
 		const headers = {};
 		request.headers.forEach((value, key) => {

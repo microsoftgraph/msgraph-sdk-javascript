@@ -55,7 +55,7 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 **Looking for IntelliSense on models (Users, Groups, etc.)? Check out the Microsoft Graph Types [v1.0](https://github.com/microsoftgraph/msgraph-typescript-typings) and [beta](https://github.com/microsoftgraph/msgraph-beta-typescript-typings)!!**
 
-[![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![TypeScript demo](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Node version requirement
 
@@ -119,6 +119,9 @@ To call Microsoft Graph, your app must acquire an access token from the Microsof
 The Microsoft Graph client is designed to make it simple to make calls to Microsoft Graph. You can use a single client instance for the lifetime of the application.
 
 For information on how to create a client instance, see [Creating Client Instance](./docs/CreatingClientInstance.md)
+
+> **Note:** Authentication provider samples in the README and docs are illustrative. They show how to wire an `AuthenticationProvider` into the client; they are not production-ready credential handling. For unit tests and mocking, see [`test/DummyAuthenticationProvider.ts`](./test/DummyAuthenticationProvider.ts) and the helpers under [`test/`](./test/).
+
 
 ### 3. Make requests to the graph
 

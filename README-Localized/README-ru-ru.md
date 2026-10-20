@@ -6,7 +6,7 @@
 
 **Требуется IntelliSense для моделей (пользователи, группы и т. п.)? Ознакомьтесь с репозиторием [Microsoft Graph Types](https://github.com/microsoftgraph/msgraph-typescript-typings).**
 
-[![Демонстрация TypeScript](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![Демонстрация TypeScript](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Установка
 

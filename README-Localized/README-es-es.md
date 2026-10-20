@@ -6,7 +6,7 @@ La biblioteca cliente de JavaScript de Microsoft Graph es un envase reducido en 
 
 **¿Busca IntelliSense en los modelos (usuarios, grupos, etc.)? Vea el repositorio de [tipos de Microsoft Graph](https://github.com/microsoftgraph/msgraph-typescript-typings).**
 
-[![Demostración de TypeScript](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/master/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
+[![Demostración de TypeScript](https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-javascript/main/types-demo.PNG)](https://github.com/microsoftgraph/msgraph-typescript-typings)
 
 ## Instalación
 

@@ -61,4 +61,34 @@ describe("urlParsing.ts", () => {
 			}
 		}
 	});
+
+	describe("parsePath - userinfo rejection (security)", () => {
+		it("should throw for URLs with userinfo (host confusion attack)", () => {
+			assert.throws(() => {
+				client.api("https://graph.microsoft.com:443@attacker.example/v1.0/me");
+			}, /URL cannot contain user credentials/);
+		});
+
+		it("should throw for URLs with username only", () => {
+			assert.throws(() => {
+				client.api("https://graph.microsoft.com@attacker.example/v1.0/me");
+			}, /URL cannot contain user credentials/);
+		});
+
+		it("should throw for URLs with user:pass", () => {
+			assert.throws(() => {
+				client.api("https://user:pass@graph.microsoft.com/v1.0/me");
+			}, /URL cannot contain user credentials/);
+		});
+
+		it("should accept valid absolute URLs without userinfo", () => {
+			const request = client.api("https://graph.microsoft.com/v1.0/me");
+			assert.equal(request["buildFullUrl"](), "https://graph.microsoft.com/v1.0/me");
+		});
+
+		it("should accept valid absolute URLs with port", () => {
+			const request = client.api("https://graph.microsoft.com:443/v1.0/me");
+			assert.equal(request["buildFullUrl"](), "https://graph.microsoft.com:443/v1.0/me");
+		});
+	});
 });
