@@ -146,7 +146,7 @@
         }
     },
     "overrides": {
-        "serialize-javascript": "7.0.2"
+        "serialize-javascript": "7.1.1"
     },
     "engines": {
         "node": ">=22.0.0"
