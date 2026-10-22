@@ -106,6 +106,8 @@ To make the contribution process as seamless as possible, follow these steps.
 
 You navigate to the repository on your computer by using File Explorer. The repository files are in `C:\Users\<yourusername>\<repo name>`.
 
+Use Node.js 22 or higher for development. CI builds and tests run on Node.js 22, 24, and 26, and production release artifacts are built using Node.js 22.
+
 To install dependencies that are necessary for development run,
 
 ```cmd
