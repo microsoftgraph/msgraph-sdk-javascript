@@ -65,7 +65,7 @@ Bug Fixes
 
 ## 0.3.1
 
--   Support for Node.js versions 4 and 5
+-   Expanded Node.js runtime support.
 
 ## 0.3.0
 

@@ -13,7 +13,7 @@ import { Context } from "../IContext";
 import { RequestMethod } from "../RequestMethod";
 import { Middleware } from "./IMiddleware";
 import { MiddlewareControl } from "./MiddlewareControl";
-import { cloneRequestWithNewUrl } from "./MiddlewareUtil";
+import { cloneRequestWithNewUrl, removeRequestHeader } from "./MiddlewareUtil";
 import { RedirectHandlerOptions } from "./options/RedirectHandlerOptions";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "./options/TelemetryHandlerOptions";
 
@@ -57,6 +57,13 @@ export class RedirectHandler implements Middleware {
 	 * A member representing the authorization header name
 	 */
 	private static AUTHORIZATION_HEADER = "Authorization";
+
+	/**
+	 * @private
+	 * @static
+	 * A member representing the cookie header name
+	 */
+	private static COOKIE_HEADER = "Cookie";
 
 	/**
 	 * @private
@@ -131,10 +138,10 @@ export class RedirectHandler implements Middleware {
 
 	/**
 	 * @private
-	 * To check whether the authorization header in the request should be dropped for consequent redirected requests
+	 * To check whether the sensitive headers (Authorization, Cookie) in the request should be dropped for consequent redirected requests
 	 * @param {string} requestUrl - The request url value
 	 * @param {string} redirectUrl - The redirect url value
-	 * @returns A boolean representing whether the authorization header in the request should be dropped for consequent redirected requests
+	 * @returns A boolean representing whether the sensitive headers in the request should be dropped for consequent redirected requests
 	 */
 	private shouldDropAuthorizationHeader(requestUrl: string, redirectUrl: string): boolean {
 		const schemeHostRegex = /^[A-Za-z].+?:\/\/.+?(?=\/|$)/;
@@ -200,7 +207,8 @@ export class RedirectHandler implements Middleware {
 			} else {
 				const redirectUrl: string = this.getLocationHeader(response);
 				if (!this.isRelativeURL(redirectUrl) && this.shouldDropAuthorizationHeader(response.url, redirectUrl)) {
-					delete context.options.headers[RedirectHandler.AUTHORIZATION_HEADER];
+					removeRequestHeader(context.request, context.options, RedirectHandler.AUTHORIZATION_HEADER);
+					removeRequestHeader(context.request, context.options, RedirectHandler.COOKIE_HEADER);
 				}
 				await this.updateRequestUrl(redirectUrl, context);
 			}

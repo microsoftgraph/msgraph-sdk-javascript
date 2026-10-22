@@ -59,9 +59,7 @@ The Microsoft Graph JavaScript client library is a lightweight wrapper around th
 
 ## Node version requirement
 
-Node.js 12 LTS or higher. The active Long Term Service (LTS) version of Node.js is used for on-going testing of existing and upcoming product features.
-
-For Node.js 18 users, it is recommended to disable the experimental `fetch` feature  by supplying the `--no-experimental-fetch` command-line flag while using the Microsoft Graph JavaScript client library.
+Node.js 22 or higher is required. Builds and tests run on Node.js 22, 24, and 26. Production release artifacts are built using Node.js 22.
 
 ## Installation
 
@@ -119,6 +117,9 @@ To call Microsoft Graph, your app must acquire an access token from the Microsof
 The Microsoft Graph client is designed to make it simple to make calls to Microsoft Graph. You can use a single client instance for the lifetime of the application.
 
 For information on how to create a client instance, see [Creating Client Instance](./docs/CreatingClientInstance.md)
+
+> **Note:** Authentication provider samples in the README and docs are illustrative. They show how to wire an `AuthenticationProvider` into the client; they are not production-ready credential handling. For unit tests and mocking, see [`test/DummyAuthenticationProvider.ts`](./test/DummyAuthenticationProvider.ts) and the helpers under [`test/`](./test/).
+
 
 ### 3. Make requests to the graph
 

@@ -10,7 +10,6 @@
 
 import { OneDriveLargeFileUploadOptions, OneDriveLargeFileUploadTask, Range, StreamUpload, UploadEventHandlers, UploadResult } from "@microsoft/microsoft-graph-client";
 import * as fs from "fs";
-import { Readable } from "stream";
 import { client } from "../clientInitialization/ClientWithOptions";
 /**
  * OR
@@ -46,7 +45,7 @@ async function upload() {
 	};
 
 	const stream = new StreamUpload(file, "test.pdf", totalSize);
-	const task = await OneDriveLargeFileUploadTask.createTaskWithFileObject<Readable>(client, stream, options);
+	const task = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, stream, options);
 	const uploadResult: UploadResult = await task.upload();
 	return uploadResult;
 }

@@ -132,6 +132,40 @@ export const appendRequestHeader = (request: RequestInfo, options: FetchOptions 
 
 /**
  * @constant
+ * To remove a header from the given request
+ * @param {RequestInfo} request - The request object or the url string
+ * @param {FetchOptions|undefined} options - The request options object
+ * @param {string} key - The header key string
+ * @returns Nothing
+ */
+export const removeRequestHeader = (request: RequestInfo, options: FetchOptions | undefined, key: string): void => {
+	if (typeof Request !== "undefined" && request instanceof Request) {
+		(request as Request).headers.delete(key);
+	}
+	if (typeof options !== "undefined" && options.headers !== undefined) {
+		if (typeof Headers !== "undefined" && options.headers instanceof Headers) {
+			(options.headers as Headers).delete(key);
+		} else if (options.headers instanceof Array) {
+			const headers = options.headers as string[][];
+			const lowerKey = key.toLowerCase();
+			for (let i = headers.length - 1; i >= 0; i--) {
+				if (headers[i][0].toLowerCase() === lowerKey) {
+					headers.splice(i, 1);
+				}
+			}
+		} else {
+			const headers = options.headers as Record<string, string>;
+			for (const headerKey of Object.keys(headers)) {
+				if (headerKey.toLowerCase() === key.toLowerCase()) {
+					delete headers[headerKey];
+				}
+			}
+		}
+	}
+};
+
+/**
+ * @constant
  * To clone the request with the new url
  * @param {string} url - The new url string
  * @param {Request} request - The request object

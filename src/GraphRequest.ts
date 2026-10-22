@@ -502,7 +502,7 @@ export class GraphRequest {
 
 	/**
 	 * @public
-	 * Sets the api endpoint version for a request
+	 * Sets the response type for a request
 	 * @param {ResponseType} responseType - The response type value
 	 * @returns The same GraphRequest instance that is being called with
 	 */

@@ -14,7 +14,7 @@ Here are some ways you can contribute to this documentation:
 -   To make small changes to an article, [Contribute using GitHub](#contribute-using-github).
 -   To make large changes, or changes that involve code, [Contribute using Git](#contribute-using-git).
 -   Report documentation bugs via GitHub Issues
--   Request new documentation at the [Office Developer Platform UserVoice](http://officespdev.uservoice.com) site.
+-   Request new documentation or report documentation issues via [GitHub Issues](https://github.com/microsoftgraph/msgraph-sdk-javascript/issues) in this repository.
 
 ## Contribute using GitHub
 
@@ -105,6 +105,8 @@ To make the contribution process as seamless as possible, follow these steps.
 #### Add new content or edit existing content
 
 You navigate to the repository on your computer by using File Explorer. The repository files are in `C:\Users\<yourusername>\<repo name>`.
+
+Use Node.js 22 or higher for development. CI builds and tests run on Node.js 22, 24, and 26, and production release artifacts are built using Node.js 22.
 
 To install dependencies that are necessary for development run,
 

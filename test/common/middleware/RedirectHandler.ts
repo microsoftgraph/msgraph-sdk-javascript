@@ -6,6 +6,7 @@
  */
 
 import { assert } from "chai";
+import * as sinon from "sinon";
 
 import { Context } from "../../../src/IContext";
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
@@ -290,6 +291,67 @@ describe("RedirectHandler.ts", () => {
 			]);
 			await handler["executeWithRedirect"](cxt, 0, options);
 			assert.isDefined(cxt.options.headers[RedirectHandler["AUTHORIZATION_HEADER"]]);
+			assert.equal(cxt.response.status, 200);
+		});
+
+		it("Should not drop Cookie header for same authority redirect url", async () => {
+			const options = new RedirectHandlerOptions();
+			const cxt: Context = {
+				request: "https://graph.microsoft.com/v1.0/me",
+				options: {
+					method: "POST",
+					body: "dummy body",
+					headers: {
+						[RedirectHandler["COOKIE_HEADER"]]: "session=abc",
+					},
+				},
+			};
+			dummyHTTPHandler.setResponses([
+				new Response("", {
+					status: 301,
+					headers: {
+						[RedirectHandler["LOCATION_HEADER"]]: "https://graph.microsoft.com/v2.0/me",
+					},
+				}),
+				new Response("ok", { status: 200 }),
+			]);
+			await handler["executeWithRedirect"](cxt, 0, options);
+			assert.isDefined(cxt.options.headers[RedirectHandler["COOKIE_HEADER"]]);
+			assert.equal(cxt.response.status, 200);
+		});
+
+		it("Should drop both Authorization and Cookie headers for cross origin redirects", async () => {
+			const options = new RedirectHandlerOptions();
+			const cxt: Context = {
+				request: "https://graph.microsoft.com/v1.0/me",
+				options: {
+					method: "POST",
+					body: "dummy body",
+					headers: {
+						[RedirectHandler["AUTHORIZATION_HEADER"]]: "******",
+						[RedirectHandler["COOKIE_HEADER"]]: "session=abc",
+						"X-Custom-Header": "custom-value",
+					},
+				},
+			};
+			dummyHTTPHandler.setResponses([
+				new Response("", {
+					status: 301,
+					headers: {
+						[RedirectHandler["LOCATION_HEADER"]]: "https://graphredirection.microsoft.com/v1.0/me",
+					},
+				}),
+				new Response("ok", { status: 200 }),
+			]);
+			const stub = sinon.stub(handler as any, "shouldDropAuthorizationHeader").returns(true);
+			try {
+				await handler["executeWithRedirect"](cxt, 0, options);
+			} finally {
+				stub.restore();
+			}
+			assert.isUndefined(cxt.options.headers[RedirectHandler["AUTHORIZATION_HEADER"]]);
+			assert.isUndefined(cxt.options.headers[RedirectHandler["COOKIE_HEADER"]]);
+			assert.equal(cxt.options.headers["X-Custom-Header"], "custom-value");
 			assert.equal(cxt.response.status, 200);
 		});
 

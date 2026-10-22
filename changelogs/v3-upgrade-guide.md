@@ -8,7 +8,7 @@
 
 ### Supported Node version and TypeScript update
 
--   Microsoft Graph JS SDK requires Node.js 12 LTS or higher. The active Long Term Service (LTS) version of Node.js is used for on-going testing of existing and upcoming product features.
+-   For current runtime requirements, see [Node version requirement](../README.md#node-version-requirement).
 -   Updated to TypeScript 4.x.
 
 ### Removing `ImplicitMSALAuthenticationProvider` and `MSALAuthenticationProviderOptions` class.
