@@ -20,20 +20,18 @@ stages:
       vmImage: windows-latest
     strategy:
       matrix:
-        Node 14:
-          NODE_VERSION: '14.x'
-        Node 16:
-          NODE_VERSION: '16.x'
-        Node 18:
-          NODE_VERSION: '18.x'
-        Node 20:
-          NODE_VERSION: '20.x'
+        Node 22:
+          NODE_VERSION: '22.x'
+        Node 24:
+          NODE_VERSION: '24.x'
+        Node 26:
+          NODE_VERSION: '26.x'
       maxParallel: 2 
     steps:
     - template: ./common-templates/security-pre-checks.yml
-    - task: NodeTool@0
+    - task: UseNode@1
       inputs:
-        versionSpec: $(NODE_VERSION)
+        version: $(NODE_VERSION)
       displayName: 'Install Node.js'
 
     - script: npm ci
@@ -61,9 +59,9 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: NodeTool@0
+    - task: UseNode@1
       inputs:
-        versionSpec: '16.x'
+        version: '22.x'
       displayName: 'Install Node.js'
 
     - script: |

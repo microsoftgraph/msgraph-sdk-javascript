@@ -15,7 +15,7 @@ Before we jump into the end-to-end walk-through, it's important to set some cons
 
 | Type      | Environment | Description                                                                                       |
 | --------- | ----------- | ------------------------------------------------------------------------------------------------- |
-| Platforms | Node        | Current and Previous LTS (14 / 16)                                                                |
+| Platforms | Node        | Node.js 22 or higher; builds and tests run on 22, 24, and 26                                       |
 | Platforms | Web         | Edge, Chrome, Firefox and Safari (Latest released version + immediate previous version)           |
 | Modules   | Node        | ESM + CJS                                                                                         |
 | Modules   | Web         | ESM                                                                                               |
