@@ -136,6 +136,20 @@ To run linting,
 npm run lint
 ```
 
+#### Production pipeline
+
+The Azure DevOps production pipeline in `.azure-pipelines/ci-build-production.yml` extends `v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates`. The official template manages SDL scanning and artifact publication instead of the legacy security-check step templates.
+
+The **Build** stage tests the SDK on Windows with Node.js 22, 24, and 26, and builds the production SDK on Linux with Node.js 22. It publishes an intermediate `sdk-build` pipeline artifact for inspection. Pushes to `main` run this stage without publishing `release-drop`.
+
+To validate the migration before merging, manually queue **Graph JS SDK Build pipeline** against the PR branch and leave **Publish release-drop for the external release pipeline** unchecked. An Azure DevOps administrator may need to authorize the `1ESPipelineTemplates/1ESPipelineTemplates` repository and the `Azure-Pipelines-1ESPT-ExDShared` pool for this pipeline. Confirm that the pool provides the Windows and Ubuntu images used here, including Chrome for the Windows browser tests, and that the template's SDL checks pass.
+
+After a successful validation and merge, manually queue the pipeline against `main` with **Publish release-drop for the external release pipeline** checked. The separate **Publish** stage runs only after the build and tests succeed, and only for manual runs on `main`. It republishes the same `sdk-build` contents as `release-drop` without rebuilding or installing dependencies. This pipeline does not publish to npm.
+
+`release-drop` is now a Pipeline Artifact rather than the Build Artifact produced by `PublishBuildArtifacts@1`. Before enabling publication, confirm the external release pipeline can download Pipeline Artifacts and triggers only on runs with `release-drop` (not build-only runs with `sdk-build`). Update its artifact download and trigger configuration if needed. The artifact name and staged file layout are unchanged.
+
+#### Commit your changes
+
 The files in `C:\Users\<yourusername>\<repo name>` are a working copy of the new branch that you created in your local repository. Changing anything in this folder doesn't affect the local repository until you commit a change. To commit a change to the local repository, type the following commands in GitBash:
 
     git add .
