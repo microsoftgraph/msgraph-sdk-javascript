@@ -53,7 +53,7 @@ export class RetryHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	private nextMiddleware?: Middleware;
 
 	/**
 	 * @private
@@ -170,7 +170,10 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	private async executeWithRetry(context: Context, retryAttempts: number, options: RetryHandlerOptions): Promise<void> {
-		await this.nextMiddleware.execute(context);
+		// The execute method ensures the nextMiddleware will exist.
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		await this.nextMiddleware!.execute(context);
+
 		if (retryAttempts < options.maxRetries && this.isRetry(context.response) && this.isBuffered(context.request, context.options) && options.shouldRetry(options.delay, retryAttempts, context.request, context.options, context.response)) {
 			++retryAttempts;
 			setRequestHeader(context.request, context.options, RetryHandler.RETRY_ATTEMPT_HEADER, retryAttempts.toString());
@@ -190,6 +193,8 @@ export class RetryHandler implements Middleware {
 	 * @returns A Promise that resolves to nothing
 	 */
 	public async execute(context: Context): Promise<void> {
+		if (!this.nextMiddleware) return;
+
 		const retryAttempts = 0;
 		const options: RetryHandlerOptions = this.getOptions(context);
 		TelemetryHandlerOptions.updateFeatureUsageFlag(context, FeatureUsageFlag.RETRY_HANDLER_ENABLED);

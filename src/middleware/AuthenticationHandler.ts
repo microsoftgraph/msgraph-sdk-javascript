@@ -41,7 +41,7 @@ export class AuthenticationHandler implements Middleware {
 	 * @private
 	 * A member to hold next middleware in the middleware chain
 	 */
-	private nextMiddleware: Middleware;
+	private nextMiddleware?: Middleware;
 
 	/**
 	 * @public
@@ -85,6 +85,7 @@ export class AuthenticationHandler implements Middleware {
 				delete context.options.headers[AuthenticationHandler.AUTHORIZATION_HEADER];
 			}
 		}
+		if (!this.nextMiddleware) return;
 		return await this.nextMiddleware.execute(context);
 	}
 
