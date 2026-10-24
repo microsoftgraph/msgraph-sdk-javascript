@@ -6,7 +6,8 @@
 		"esModuleInterop": true,
 		"noEmitOnError": true,
 		"lib": ["dom", "esnext"],
-		"outDir": "../lib/"
+		"outDir": "../lib/",
+		"isolatedModules": true
 	},
 	"include": ["./development/", "../src/"]
 }
