@@ -16,7 +16,7 @@ import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
 import { Options } from "./IOptions";
-import { validatePolyFilling } from "./ValidatePolyFilling";
+import { validatePolyfilling } from "./ValidatePolyfilling";
 
 export class Client {
 	/**
@@ -70,7 +70,7 @@ export class Client {
 	 * @param {ClientOptions} clientOptions - The options to instantiate the client object
 	 */
 	private constructor(clientOptions: ClientOptions) {
-		validatePolyFilling();
+		validatePolyfilling();
 		for (const key in clientOptions) {
 			if (Object.prototype.hasOwnProperty.call(clientOptions, key)) {
 				this.config[key] = clientOptions[key];
