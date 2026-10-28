@@ -136,6 +136,24 @@ To run linting,
 npm run lint
 ```
 
+#### Production pipeline
+
+The Azure DevOps production pipeline in `.azure-pipelines/ci-build-production.yml` extends `v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates`. The official template manages SDL scanning and artifact publication instead of the legacy security-check step templates.
+
+The release flow follows the [TypeScript SDK's Azure release pipeline](https://github.com/microsoftgraph/msgraph-sdk-typescript/blob/main/.azure-pipelines/release.yml): build and pack npm tarballs, then deploy those tarballs through ESRP. Version bumps and release tags remain explicit; this repository does not adopt the TypeScript SDK's Release Please automation.
+
+The **Build** stage tests the SDK on Windows with Node.js 22, 24, and 26, and builds the production SDK on Linux with Node.js 22. It runs `npm pack --ignore-scripts` to package the built SDK without invoking the `prepack` hook, which would otherwise reinstall dependencies, rebuild, and rerun tests. The intermediate `sdk-build` Pipeline Artifact contains the npm tarball, not a source-directory snapshot. Pushes to `main` run this stage without publishing to npm or creating `release-drop`.
+
+To validate the migration before merging, manually queue **Graph JS SDK Build pipeline** against the PR branch. Manual runs never deploy to npm or publish `release-drop`, including manual runs targeting a tag. An Azure DevOps administrator may need to authorize the `1ESPipelineTemplates/1ESPipelineTemplates` repository and the `Azure-Pipelines-1ESPT-ExDShared` pool for this pipeline. Confirm that the pool provides the Windows and Ubuntu images used here, including Chrome for the Windows browser tests, and that the template's SDL checks pass. Download `sdk-build` and inspect/install the tarball in a clean consumer project before releasing.
+
+After a successful validation and merge to `main`, push a release tag that exactly matches `package.json`'s version, such as `3.1.0` (without a `v` prefix), on the intended release commit. Tag pushes trigger the pipeline, and a mismatched tag fails the production build before artifact creation. The separate **Publish** stage runs only after the build and tests succeed, and only for CI runs triggered by a tag push. Its production deployment job downloads the same `sdk-build` tarball and submits it to `EsrpRelease@9` for npm package distribution. It also publishes the tarball as `release-drop`; neither packing nor building runs again during deployment. Creating or pushing a release tag is a release action; do not do so for build-only validation.
+
+Deployment reuses the TypeScript SDK's `msgraph-npm-org` environment, federated DevX ESRP service connection, certificate references, and configured release owners/approvers. Before pushing a release tag, authorize this pipeline to use those resources, verify the environment's approval/check policies, confirm ESRP is authorized to distribute `@microsoft/microsoft-graph-client`, and confirm the intended npm dist-tag policy. The shared configuration's name alone does not establish access to this package's `@microsoft` scope. Check that the release version is not already published.
+
+Disable any legacy external npm publication trigger for this pipeline before enabling the ESRP release path, to avoid duplicate publication. `release-drop` is now a Pipeline Artifact containing the packed `.tgz`, not the previous source-directory Build Artifact. Any remaining consumers must support both the artifact type and the new contents. Do not retry publication blindly after a partial ESRP failure; first check ESRP and npm for the submitted version.
+
+#### Commit your changes
+
 The files in `C:\Users\<yourusername>\<repo name>` are a working copy of the new branch that you created in your local repository. Changing anything in this folder doesn't affect the local repository until you commit a change. To commit a change to the local repository, type the following commands in GitBash:
 
     git add .
