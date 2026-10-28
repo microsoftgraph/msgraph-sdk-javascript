@@ -1,15 +1,12 @@
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
-parameters:
-  - name: publishReleaseArtifact
-    displayName: Publish release-drop for the external release pipeline (manual main runs only)
-    type: boolean
-    default: false
-
 trigger:
   branches:
     include:
       - main
+  tags:
+    include:
+      - '*'
 
 pr: none
 
@@ -85,6 +82,18 @@ extends:
                   version: '22.x'
                 displayName: Install Node.js
 
+              - script: |
+                  node -e "
+                    const version = require('./package.json').version;
+                    const branch = process.env.BUILD_SOURCEBRANCH;
+                    if (branch.startsWith('refs/tags/')) {
+                      const tag = branch.slice('refs/tags/'.length);
+                      if (tag !== version) {
+                        throw new Error('Release tag ' + tag + ' must match package version ' + version);
+                      }
+                    }
+                  "
+                displayName: Validate release tag matches package version
               - script: npm ci
                 displayName: Install production build dependencies
               - script: npm run build
@@ -104,7 +113,7 @@ extends:
       - stage: Publish
         displayName: Publish release artifact
         dependsOn: Build
-        condition: and(succeeded(), ${{ eq(parameters.publishReleaseArtifact, true) }}, eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
         jobs:
           - job: PublishReleaseArtifact
             displayName: Publish validated SDK for external release
