@@ -72,7 +72,7 @@ extends:
             templateContext:
               outputs:
                 - output: pipelineArtifact
-                  displayName: Publish SDK build for validation
+                  displayName: Publish packed SDK for validation
                   artifactName: sdk-build
                   targetPath: $(Build.ArtifactStagingDirectory)
             steps:
@@ -98,38 +98,54 @@ extends:
                 displayName: Install production build dependencies
               - script: npm run build
                 displayName: Build production SDK
-              - task: CopyFiles@2
-                inputs:
-                  sourceFolder: $(Build.SourcesDirectory)
-                  targetFolder: $(Build.ArtifactStagingDirectory)
-                  Contents: |
-                    **/*
-                    !.azure-pipelines/**
-                    !.github/**
-                    !.git/**
-                    !.vscode/**
-                displayName: Stage npm package
+              - script: npm pack --ignore-scripts --pack-destination "$(Build.ArtifactStagingDirectory)"
+                displayName: Pack built SDK without rerunning prepack
 
       - stage: Publish
-        displayName: Publish release artifact
+        displayName: Publish SDK to npm via ESRP
         dependsOn: Build
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
         jobs:
-          - job: PublishReleaseArtifact
-            displayName: Publish validated SDK for external release
+          - deployment: PublishNpm
+            displayName: Publish validated SDK via ESRP Release
+            environment: msgraph-npm-org
             pool:
               name: Azure-Pipelines-1ESPT-ExDShared
               image: ubuntu-latest
               os: linux
             templateContext:
+              type: releaseJob
+              isProduction: true
               inputs:
                 - input: pipelineArtifact
                   artifactName: sdk-build
-                  targetPath: $(Build.ArtifactStagingDirectory)
+                  targetPath: $(Build.ArtifactStagingDirectory)/npm
               outputs:
                 - output: pipelineArtifact
                   displayName: Publish release-drop
                   artifactName: release-drop
-                  targetPath: $(Build.ArtifactStagingDirectory)
-            steps:
-              - checkout: none
+                  targetPath: $(Build.ArtifactStagingDirectory)/npm
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: none
+                    - download: none
+                    - task: EsrpRelease@9
+                      displayName: Publish npm package via ESRP Release
+                      inputs:
+                        connectedservicename: Federated DevX ESRP Managed Identity Connection
+                        usemanagedidentity: false
+                        keyvaultname: akv-prod-eastus
+                        authcertname: ReferenceLibraryPrivateCert
+                        signcertname: ReferencePackagePublisherCertificate
+                        clientid: 65035b7f-7357-4f29-bf25-c5ee5c3949f8
+                        intent: PackageDistribution
+                        contenttype: npm
+                        contentsource: Folder
+                        folderlocation: $(Build.ArtifactStagingDirectory)/npm
+                        owners: christiano@microsoft.com,ramsess@microsoft.com,gavinbarron@microsoft.com,jingjingjia@microsoft.com,peombwa@microsoft.com,treicys@microsoft.com
+                        approvers: christiano@microsoft.com,ramsess@microsoft.com,gavinbarron@microsoft.com,jingjingjia@microsoft.com,peombwa@microsoft.com,treicys@microsoft.com
+                        serviceendpointurl: https://api.esrp.microsoft.com
+                        mainpublisher: ESRPRELPACMAN
+                        domaintenantid: cdc5aeea-15c5-4db6-b079-fcadd2505dc2
