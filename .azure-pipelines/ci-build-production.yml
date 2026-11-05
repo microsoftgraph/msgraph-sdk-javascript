@@ -86,17 +86,10 @@ extends:
                   node -e "
                     const version = require('./package.json').version;
                     const branch = process.env.BUILD_SOURCEBRANCH;
-                    if (!branch) {
-                      throw new Error('BUILD_SOURCEBRANCH is required to validate the release tag');
-                    }
                     if (branch.startsWith('refs/tags/')) {
                       const tag = branch.slice('refs/tags/'.length);
-                      const match = /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.exec(tag);
-                      if (!match || match[0] !== tag) {
-                        throw new Error('Release tag ' + JSON.stringify(tag) + ' must be exactly v<major>.<minor>.<patch>, with no leading zeroes, suffixes, or whitespace');
-                      }
-                      if (tag !== 'v' + version) {
-                        throw new Error('Release tag ' + tag + ' must match package version: v' + version);
+                      if (!/^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(tag) || tag !== 'v' + version) {
+                        throw new Error('Release tag ' + tag + ' must follow vX.X.X and match package version: v' + version);
                       }
                     }
                   "
