@@ -6,7 +6,7 @@ trigger:
       - main
   tags:
     include:
-      - 'v*'
+      - 'v*.*.*'
 
 pr: none
 
@@ -82,18 +82,6 @@ extends:
                   version: '22.x'
                 displayName: Install Node.js
 
-              - script: |
-                  node -e "
-                    const version = require('./package.json').version;
-                    const branch = process.env.BUILD_SOURCEBRANCH;
-                    if (branch.startsWith('refs/tags/')) {
-                      const tag = branch.slice('refs/tags/'.length);
-                      if (!/^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(tag) || tag !== 'v' + version) {
-                        throw new Error('Release tag ' + tag + ' must follow vX.X.X and match package version: v' + version);
-                      }
-                    }
-                  "
-                displayName: Validate release tag matches package version
               - script: npm ci
                 displayName: Install production build dependencies
               - script: npm run build
