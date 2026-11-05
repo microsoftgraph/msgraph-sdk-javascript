@@ -6,7 +6,7 @@ trigger:
       - main
   tags:
     include:
-      - '*'
+      - 'v*'
 
 pr: none
 
@@ -88,8 +88,8 @@ extends:
                     const branch = process.env.BUILD_SOURCEBRANCH;
                     if (branch.startsWith('refs/tags/')) {
                       const tag = branch.slice('refs/tags/'.length);
-                      if (tag !== version) {
-                        throw new Error('Release tag ' + tag + ' must match package version ' + version);
+                      if (!/^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(tag) || tag !== 'v' + version) {
+                        throw new Error('Release tag ' + tag + ' must follow vX.X.X and match package version: v' + version);
                       }
                     }
                   "
@@ -104,7 +104,7 @@ extends:
       - stage: Publish
         displayName: Publish SDK to npm via ESRP
         dependsOn: Build
-        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
         jobs:
           - deployment: PublishNpm
             displayName: Publish validated SDK via ESRP Release
