@@ -120,11 +120,6 @@ extends:
                 - input: pipelineArtifact
                   artifactName: sdk-build
                   targetPath: $(Build.ArtifactStagingDirectory)/npm
-              outputs:
-                - output: pipelineArtifact
-                  displayName: Publish release-drop
-                  artifactName: release-drop
-                  targetPath: $(Build.ArtifactStagingDirectory)/npm
             strategy:
               runOnce:
                 deploy:
