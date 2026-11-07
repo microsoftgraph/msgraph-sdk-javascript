@@ -37,21 +37,21 @@ export class RetryHandlerOptions implements MiddlewareOptions {
 	 * @static
 	 * A member holding default maxRetries value
 	 */
-	private static DEFAULT_MAX_RETRIES = 3;
+	private static DEFAULT_MAX_RETRIES = 12;
 
 	/**
 	 * @private
 	 * @static
-	 * A member holding maximum delay value in seconds
+	 * A member holding maximum delay value (1 hour) in seconds
 	 */
-	private static MAX_DELAY = 180;
+	private static MAX_DELAY = 3_600;
 
 	/**
 	 * @private
 	 * @static
 	 * A member holding maximum maxRetries value
 	 */
-	private static MAX_MAX_RETRIES = 10;
+	private static MAX_MAX_RETRIES = 64;
 
 	/**
 	 * @public
