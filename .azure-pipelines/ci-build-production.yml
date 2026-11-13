@@ -125,7 +125,6 @@ extends:
                 deploy:
                   steps:
                     - checkout: none
-                    - download: none
                     - task: EsrpRelease@14
                       displayName: Publish npm package via ESRP Release
                       inputs:
