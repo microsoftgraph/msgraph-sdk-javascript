@@ -62,6 +62,19 @@ describe("urlParsing.ts", () => {
 		}
 	});
 
+	describe("parsePath - relative paths containing https:// in the query", () => {
+		const relativeCases = {
+			"/sites?search=https://contoso.sharepoint.com": "https://graph.microsoft.com/v1.0/sites?search=https://contoso.sharepoint.com",
+			"/me/drive/root/search(q='https://example')": "https://graph.microsoft.com/v1.0/me/drive/root/search(q='https://example')",
+		};
+		for (const path in relativeCases) {
+			it("should treat as relative: " + path, () => {
+				const request = client.api(path);
+				assert.equal(request["buildFullUrl"](), relativeCases[path]);
+			});
+		}
+	});
+
 	describe("parsePath - userinfo rejection (security)", () => {
 		it("should throw for URLs with userinfo (host confusion attack)", () => {
 			assert.throws(() => {

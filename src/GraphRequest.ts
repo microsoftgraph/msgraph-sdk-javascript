@@ -131,7 +131,7 @@ export class GraphRequest {
 	 */
 	private parsePath = (path: string): void => {
 		// Strips out the base of the url if they passed in
-		if (path.indexOf("https://") !== -1) {
+		if (path.startsWith("https://")) {
 			// Use structured URL parsing to validate the URL and reject userinfo
 			let parsedUrl: URL;
 			try {
